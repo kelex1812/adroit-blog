@@ -12,6 +12,7 @@ export const siteConfig = {
   url: "https://adroit.io",
   blogPath: "/blog",
   logo: "/logo.png",
+  defaultOgImage: "/og-blog-card.png",
   social: {
     twitter: "@adroitconsult",
   },
@@ -29,28 +30,29 @@ export interface PageSEO {
 
 export function buildMetadata(page: PageSEO) {
   const url = `${siteConfig.url}${page.path}`;
-  const images = page.ogImage
-    ? [{ url: page.ogImage, width: 1200, height: 630 }]
-    : undefined;
+  const ogImagePath = page.ogImage || siteConfig.defaultOgImage;
+  const imageUrl = `${siteConfig.url}${ogImagePath}`;
+  const images = [{ url: imageUrl, width: 1200, height: 630 }];
 
   return {
     title: page.title,
     description: page.description,
     alternates: { canonical: url },
+    metadataBase: new URL(siteConfig.url),
     openGraph: {
       title: page.title,
       description: page.description,
       url,
       siteName: siteConfig.name,
       type: "article" as const,
-      ...(images ? { images } : {}),
+      images,
       ...(page.publishedTime ? { publishedTime: page.publishedTime } : {}),
     },
     twitter: {
       card: "summary_large_image" as const,
       title: page.title,
       description: page.description,
-      ...(images ? { images: images.map((i) => i.url) } : {}),
+      images: [imageUrl],
     },
     robots: page.noindex
       ? { index: false, follow: false }
