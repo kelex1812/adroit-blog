@@ -1,0 +1,19 @@
+## Server Components Are Default
+
+React Server Components are no longer experimental — they're the default rendering model in Next.js 16. Every component is a server component unless you explicitly mark it with "use client".
+
+This means less JavaScript shipped to the browser, faster initial page loads, and better SEO out of the box.
+
+## Edge Rendering for Dynamic Content
+
+For pages that need fresh data on every request but can't justify a full server-rendered approach, edge rendering provides the best balance of performance and freshness.
+
+## State Management in 2026
+
+The pendulum has swung back toward simplicity. Most applications don't need Redux or Zustand — React's built-in `use()` hook and Server Component data fetching handle 90% of use cases.
+
+## Key Takeaways
+
+- Start with server components by default
+- Use edge rendering for authenticated or personalized content
+- Reach for external state management only when you truly need cross-component synchronization

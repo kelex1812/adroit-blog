@@ -13,6 +13,7 @@ export const metadata: Metadata = buildMetadata({
   title: siteConfig.title,
   description: siteConfig.description,
   path: "/",
+  ogImage: "/og-blog-card.png",
 });
 
 export default function RootLayout({

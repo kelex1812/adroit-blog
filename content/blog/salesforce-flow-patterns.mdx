@@ -1,0 +1,25 @@
+## Designing Flows That Scale
+
+Salesforce Flow has evolved from a simple point-and-click tool into a powerful automation engine. But with great power comes great complexity.
+
+Here are five design patterns that will help you build flows that scale.
+
+## Pattern 1: The Dispatcher
+
+Use a single "decision" flow at the top of your automation hierarchy to route records to the appropriate subflow. This keeps your logic modular and testable.
+
+## Pattern 2: The Collector
+
+When processing batches of records, collect them in a single collection variable before performing bulk operations. This minimizes DML statements and keeps you within governor limits.
+
+## Pattern 3: The Error Handler
+
+Wrap destructive operations in fault paths. Log failures to a custom object and send alerts through email or platform events instead of letting flows silently fail.
+
+## Pattern 4: The State Machine
+
+Model multi-step business processes as state machines using picklist values and entry conditions. Each state is a separate flow triggered by record changes.
+
+## Pattern 5: The Flow Template
+
+Create reusable flow templates with custom metadata types. Let your team configure behavior through metadata rather than cloning and modifying flows.
