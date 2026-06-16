@@ -5,6 +5,26 @@ All notable changes to the Adroit Consulting Blog project will be documented in 
 ## [Unreleased]
 
 ### Added
+- **SEO metadata** — per-page `generateMetadata()` on all blog routes with OpenGraph, Twitter cards, canonical URLs, and roboted directives. Root layout sets base metadata; blog/[slug] and tags/[tag] generate dynamic per-post/tag metadata.
+- **RSS feed** (`/feed.xml`) — RSS 2.0 feed via `feed` library, showing 20 most recent posts with title, link, description, pubDate, and category. Atom link in channel for self-discovery.
+- **XML sitemap** (`/sitemap.xml`) — dynamic sitemap including static pages (/blog, /blog/categories, /tags) plus all blog posts and tag pages with appropriate change frequencies and priorities.
+- **Tags system** — `/tags` index page with clickable tag chips (post counts), `/tags/[tag]` dynamic pages with `generateStaticParams`, featured post, and post grid for each tag. Tag aggregation in `src/lib/tags.ts`.
+- **Content generation pipeline** — `scripts/pick-topic.py` (rotational topic picker), `scripts/content-calendar.json` (4 pillars, 20 topics), state tracking via `.picked-topics.json`. Hermes cron job `adroit-blog-writer` runs weekly to auto-generate posts.
+- **kelexconsulting.com redirect** — path-preserving 301 redirect from `kelexconsulting.com` and `www.kelexconsulting.com` to `adroit.io` in `next.config.ts`.
+- **Security headers** — `X-Content-Type-Options: nosniff`, `X-Frame-Options: DENY`, `Referrer-Policy: strict-origin-when-cross-origin` on all routes.
+- **`noUnusedLocals`** — enabled in tsconfig compilerOptions for stricter TypeScript checking.
+- Blog listing (`/blog`) — layout wrapper with static metadata export (client component compatible).
+
+### Changed
+- CHANGELOG restructured to reflect full platform feature set.
+
+### Fixed
+- **SEO robots** — layout now exports proper `robots: { index: true, follow: true }` via `buildMetadata()` (was default noindex).
+- **Blog listing metadata** — added metadata layout wrapper so `/blog` has proper title/description/OG tags.
+
+## [2026-06-15] — Brand Styling (Round 2)
+
+### Added
 - **Next.js 16 project** with Tailwind CSS v4 and TypeScript
 - **Design token system** — brand colors (navy #0B1D3A, red #C8102E, navy-dark #060F1F), Inter typography, border radii, shadows — mapped to Tailwind v4 `@theme` custom tokens
 - **Header component** — sticky global navigation with logo (Adroit + BLOG badge), nav links (Posts, Categories, Adroit.io), CTA button, mobile hamburger menu with toggle
@@ -19,11 +39,6 @@ All notable changes to the Adroit Consulting Blog project will be documented in 
 - **Kara's design mockup** — copied to workspace as reference
 - **Responsive breakpoints**: mobile (320px-767px: single column, hamburger nav, smaller fonts), tablet (768px-1023px: single column grid, full nav visible, 2-col footer), desktop (1024px+: full 2-col grid, 4-col footer, 1120px container), large desktop (1280px+: centered layout)
 
-### Why
-- Implement Round 2 brand styling per Kara's design mockup (`adroit-blog-design.html`)
-- Apply Adroit brand tokens consistently across all 5 screens and 3 breakpoints
-- Create production-ready blog as a Next.js App Router site
-
 ### Fixed
 - **Categories page** — added `<Header />` and `<Footer />` (was rendering without navigation or footer)
 - **Blog listing URL sync** — category filter now reads `?category=` query param from URL on load, and updates URL when pills are clicked
@@ -33,7 +48,5 @@ All notable changes to the Adroit Consulting Blog project will be documented in 
 - **Build compliance** — wrapped `useSearchParams()` in `<Suspense>` per Next.js 16 requirements
 
 ### Known Issues
-- GitHub repo not yet created — needs to be set up before Vercel deployment
 - Subscribe form and social share buttons are UI-only (no backend integration)
 - Post card images use CSS gradients as placeholders — replace with actual images when available
-- Blog post content is demo data for layout verification

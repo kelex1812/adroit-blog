@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { siteConfig, buildMetadata } from "@/lib/seo";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -8,11 +9,11 @@ const inter = Inter({
   weight: ["300", "400", "500", "600", "700", "800"],
 });
 
-export const metadata: Metadata = {
-  title: "Adroit Consulting Blog",
-  description:
-    "Insights on Salesforce, React, AI, and digital transformation to help your business scale smarter.",
-};
+export const metadata: Metadata = buildMetadata({
+  title: siteConfig.title,
+  description: siteConfig.description,
+  path: "/",
+});
 
 export default function RootLayout({
   children,

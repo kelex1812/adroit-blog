@@ -2,7 +2,7 @@
 
 import { Suspense, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
-import { posts as allPosts, BlogPost } from "@/data/posts";
+import { posts as allPosts } from "@/data/posts";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import FeaturedPost from "@/components/BlogListing/FeaturedPost";
@@ -68,6 +68,19 @@ function BlogListingContent() {
             Insights on Salesforce, React, AI, and digital transformation to
             help your business scale smarter.
           </p>
+          <a
+            href="/feed.xml"
+            className="inline-flex items-center gap-1.5 text-xs text-gray-400 mt-2 hover:text-navy transition-colors duration-150 no-underline"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+              <circle cx="4" cy="20" r="3" />
+              <path d="M4 11a9 9 0 0 1 9 9h3a12 12 0 0 0-12-12v3z" />
+              <path d="M4 4a16 16 0 0 1 16 16h3a19 19 0 0 0-19-19v3z" />
+            </svg>
+            RSS Feed
+          </a>
 
           {/* Category Pills */}
           <div className="flex flex-wrap gap-2 mt-6 pb-8 border-b border-gray-200">

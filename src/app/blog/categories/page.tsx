@@ -1,6 +1,15 @@
 import Link from "next/link";
+import type { Metadata } from "next";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { buildMetadata } from "@/lib/seo";
+
+export const metadata: Metadata = buildMetadata({
+  title: "Blog Categories — Adroit Consulting",
+  description:
+    "Browse our content by topic — Salesforce, React & Web Dev, AI & Consulting, and Marketing.",
+  path: "/blog/categories",
+});
 
 const categories = [
   {
