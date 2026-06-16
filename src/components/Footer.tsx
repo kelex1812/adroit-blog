@@ -61,6 +61,7 @@ export default function Footer() {
               <input
                 type="email"
                 placeholder="your@email.com"
+                aria-label="Email for newsletter"
                 className="flex-1 px-2.5 py-2 rounded-md border border-white/15 bg-white/8 text-white text-xs font-sans outline-none focus:border-red transition-colors duration-150 placeholder:text-white/35"
               />
               <button className="px-3.5 py-2 bg-red text-white border-none rounded-md text-xs font-semibold font-sans cursor-pointer hover:bg-red-dark transition-colors duration-150 whitespace-nowrap">
@@ -101,7 +102,7 @@ function SocialIcon({ title, children }: { title: string; children: React.ReactN
   return (
     <span
       title={title}
-      className="w-7 h-7 rounded-full bg-white/8 flex items-center justify-center text-white/40 text-[0.65rem] cursor-pointer hover:bg-red hover:text-white transition-all duration-150 select-none"
+      className="w-7 h-7 rounded-full bg-white/8 flex items-center justify-center text-white/40 text-[0.65rem] select-none"
     >
       {children}
     </span>

@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { Suspense, useState } from "react";
+import { useSearchParams, useRouter } from "next/navigation";
 import { posts as allPosts, BlogPost } from "@/data/posts";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -15,8 +16,13 @@ const categories = [
   { key: "mkt", label: "Marketing" },
 ];
 
-export default function BlogListing() {
-  const [activeCategory, setActiveCategory] = useState("all");
+function BlogListingContent() {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const categoryFromUrl = searchParams.get("category") || "all";
+  const normalized =
+    categories.some((c) => c.key === categoryFromUrl) ? categoryFromUrl : "all";
+  const [activeCategory, setActiveCategory] = useState(normalized);
   const [currentPage, setCurrentPage] = useState(1);
   const postsPerPage = 4;
 
@@ -34,6 +40,19 @@ export default function BlogListing() {
   );
   const startIdx = (currentPage - 1) * postsPerPage;
   const paginatedPosts = nonFeatured.slice(startIdx, startIdx + postsPerPage);
+
+  function handleCategoryClick(key: string) {
+    setActiveCategory(key);
+    setCurrentPage(1);
+    const params = new URLSearchParams(searchParams.toString());
+    if (key === "all") {
+      params.delete("category");
+    } else {
+      params.set("category", key);
+    }
+    const qs = params.toString();
+    router.replace(qs ? `/blog?${qs}` : "/blog", { scroll: false });
+  }
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -55,10 +74,7 @@ export default function BlogListing() {
             {categories.map((cat) => (
               <button
                 key={cat.key}
-                onClick={() => {
-                  setActiveCategory(cat.key);
-                  setCurrentPage(1);
-                }}
+                onClick={() => handleCategoryClick(cat.key)}
                 className={`px-4 py-1.5 rounded-full text-xs font-semibold cursor-pointer no-underline transition-all duration-150 ${
                   activeCategory === cat.key
                     ? "bg-navy text-white"
@@ -127,5 +143,13 @@ export default function BlogListing() {
 
       <Footer />
     </div>
+  );
+}
+
+export default function BlogListing() {
+  return (
+    <Suspense fallback={<div className="min-h-screen flex flex-col"><Header /><main className="flex-1 flex items-center justify-center"><div className="text-gray-400 text-sm">Loading posts...</div></main><Footer /></div>}>
+      <BlogListingContent />
+    </Suspense>
   );
 }

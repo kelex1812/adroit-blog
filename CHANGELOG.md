@@ -24,6 +24,14 @@ All notable changes to the Adroit Consulting Blog project will be documented in 
 - Apply Adroit brand tokens consistently across all 5 screens and 3 breakpoints
 - Create production-ready blog as a Next.js App Router site
 
+### Fixed
+- **Categories page** — added `<Header />` and `<Footer />` (was rendering without navigation or footer)
+- **Blog listing URL sync** — category filter now reads `?category=` query param from URL on load, and updates URL when pills are clicked
+- **Accessibility** — added `aria-label="Email for newsletter"` to both subscribe email inputs (Footer and Categories page)
+- **Social icons** — removed `cursor-pointer` and hover effects from Footer social icons (they were decorative but looked interactive)
+- **Client navigation** — converted `<a>` tags to `<Link>` for client-side routing on Categories page
+- **Build compliance** — wrapped `useSearchParams()` in `<Suspense>` per Next.js 16 requirements
+
 ### Known Issues
 - GitHub repo not yet created — needs to be set up before Vercel deployment
 - Subscribe form and social share buttons are UI-only (no backend integration)

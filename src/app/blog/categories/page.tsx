@@ -1,3 +1,7 @@
+import Link from "next/link";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+
 const categories = [
   {
     key: "sf",
@@ -60,17 +64,17 @@ const categories = [
 export default function CategoriesPage() {
   return (
     <div className="min-h-screen flex flex-col">
-      {/* Header injected via layout */}
+      <Header />
 
       <main className="flex-1">
         {/* Hero */}
         <div className="max-w-[1120px] mx-auto px-6 pt-10 pb-0">
-          <a
+          <Link
             href="/blog"
             className="inline-flex items-center gap-1.5 text-gray-500 text-xs font-medium no-underline mb-6 hover:text-navy transition-colors duration-150"
           >
             &larr; Back to Blog
-          </a>
+          </Link>
           <h1 className="text-3xl md:text-4xl font-extrabold text-navy tracking-tight mb-2">
             Blog Categories
           </h1>
@@ -84,7 +88,7 @@ export default function CategoriesPage() {
         <div className="max-w-[1120px] mx-auto px-6 py-6 pb-10">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {categories.map((cat) => (
-              <a
+              <Link
                 key={cat.key}
                 href={`/blog?category=${cat.key}`}
                 className={`p-6 rounded-xl border border-transparent bg-gradient-to-br ${cat.bg} ${cat.border} hover:-translate-y-0.5 hover:shadow-md transition-all duration-200 cursor-pointer relative overflow-hidden no-underline block`}
@@ -105,7 +109,7 @@ export default function CategoriesPage() {
                 >
                   {cat.postCount} posts &rarr;
                 </span>
-              </a>
+              </Link>
             ))}
           </div>
         </div>
@@ -130,6 +134,7 @@ export default function CategoriesPage() {
               <input
                 type="email"
                 placeholder="your@email.com"
+                aria-label="Email for newsletter"
                 className="flex-1 px-4 py-3 rounded-md border border-white/15 bg-white/8 text-white text-sm font-sans outline-none focus:border-red transition-colors duration-150 placeholder:text-white/35"
               />
               <button className="px-6 py-3 bg-red text-white border-none rounded-md text-sm font-semibold font-sans cursor-pointer hover:bg-red-dark transition-colors duration-150 whitespace-nowrap">
@@ -139,6 +144,8 @@ export default function CategoriesPage() {
           </div>
         </div>
       </main>
+
+      <Footer />
     </div>
   );
 }
