@@ -23,25 +23,3 @@ export function Tag({ label, color = "sf" }: TagProps) {
   );
 }
 
-// Category pill for blog listing filters
-interface PillProps {
-  label: string;
-  active?: boolean;
-  onClick?: () => void;
-}
-
-export function Pill({ label, active = false, onClick }: PillProps) {
-  return (
-    <span
-      onClick={onClick}
-      className={`inline-block px-4 py-1.5 rounded-full text-xs font-semibold cursor-pointer no-underline transition-all duration-150 select-none
-        ${
-          active
-            ? "bg-navy text-white"
-            : "bg-gray-100 text-gray-600 border border-gray-200 hover:bg-gray-200 hover:border-gray-300"
-        }`}
-    >
-      {label}
-    </span>
-  );
-}
