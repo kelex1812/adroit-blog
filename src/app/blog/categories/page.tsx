@@ -12,14 +12,13 @@ export const metadata: Metadata = buildMetadata({
   path: "/blog/categories",
 });
 
-const categories = [
+const categoryDefs = [
   {
     key: "sf",
     name: "Salesforce",
     description:
       "Flow design tips, Apex patterns, integration guides, and release highlights.",
-    icon: "\u2601",
-    postCount: posts.filter((p) => p.categoryColor === "sf").length,
+    icon: "☁",
     color: "sf",
     bg: "from-[#F0F9FF] to-[#E0F2FE]",
     border: "border-[#BAE6FD]",
@@ -32,8 +31,7 @@ const categories = [
     name: "React & Web Dev",
     description:
       "Architecture patterns, component design, performance, and Next.js.",
-    icon: "\u27E8/\u27E9",
-    postCount: posts.filter((p) => p.categoryColor === "react").length,
+    icon: "⟨/⟩",
     color: "react",
     bg: "from-[#ECFDF5] to-[#D1FAE5]",
     border: "border-[#6EE7B7]",
@@ -46,8 +44,7 @@ const categories = [
     name: "AI & Consulting",
     description:
       "How AI accelerates Salesforce delivery, AI-assisted React dev, and agent workflows.",
-    icon: "\u2B21",
-    postCount: posts.filter((p) => p.categoryColor === "ai").length,
+    icon: "⬡",
     color: "ai",
     bg: "from-[#FFFBEB] to-[#FEF3C7]",
     border: "border-[#FCD34D]",
@@ -60,8 +57,7 @@ const categories = [
     name: "Marketing",
     description:
       "Showcasing Adroit's capabilities and how we can help your business.",
-    icon: "\u2726",
-    postCount: posts.filter((p) => p.categoryColor === "mkt").length,
+    icon: "✦",
     color: "mkt",
     bg: "from-[#FDF2F8] to-[#FCE7F3]",
     border: "border-[#F9A8D4]",
@@ -70,6 +66,12 @@ const categories = [
     countColor: "text-[#BE185D]",
   },
 ];
+
+// Derive post counts from actual data
+const categories = categoryDefs.map((cat) => ({
+  ...cat,
+  postCount: posts.filter((p) => p.categoryColor === cat.key).length,
+}));
 
 export default function CategoriesPage() {
   return (
