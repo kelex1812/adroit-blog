@@ -234,4 +234,126 @@ export const posts: BlogPost[] = [
 <h2>Preparing Your Organization</h2>
 <p>The companies that succeed with digital transformation share one thing in common: they invest as much in change management as they do in technology. Culture eats strategy for breakfast.</p>`,
   },
+  {
+    slug: "salesforce-flow-vs-apex-when-to-use-which",
+    title: "Salesforce Flow vs Apex: When to Use Which",
+    excerpt:
+      "Every Salesforce team faces this decision. Here's a practical framework for choosing the right automation tool — plus when to use both.",
+    category: "Salesforce",
+    categoryColor: "sf",
+    categoryGradient: "from-sky to-sky-dark",
+    date: "July 22, 2026",
+    author: "Adroit Consulting",
+    authorInitials: "AC",
+    readTime: "9 min read",
+    tags: ["Salesforce", "Flow", "Apex", "Automation"],
+    body: `<h2>The Great Debate: Flow or Apex?</h2>
+
+<p>Every Salesforce implementation team eventually faces this question: should this automation be built in Flow or in Apex? The answer isn't always obvious, and choosing the wrong tool can lead to technical debt, performance issues, or a maintenance nightmare.</p>
+
+<p>At Adroit, we've built dozens of Salesforce solutions and developed a clear framework for making this decision. Here's what we've learned.</p>
+
+<h2>Understanding the Tools</h2>
+
+<p><strong>Salesforce Flow</strong> is the low-code automation platform that lets you build processes visually — drag-and-drop screens, decisions, and actions. It's built into the platform, requires no compilation, and can be maintained by administrators without developer support.</p>
+
+<p><strong>Apex</strong> is Salesforce's proprietary programming language, similar to Java. It gives you full programmatic control — complex data structures, custom logic, and the ability to integrate with external systems. It requires a developer, compilation, and test coverage.</p>
+
+<p>Both tools run on the same platform and share the same governor limits. The question is really about maintainability, team skills, and long-term cost.</p>
+
+<h2>When to Choose Flow</h2>
+
+<h3>Simple, Linear Processes</h3>
+
+<p>If your automation follows a straightforward sequence — "when a record is created, update a field, send an email, notify a user" — Flow is the clear winner. It's faster to build, easier to read, and can be modified in the org without deploying code.</p>
+
+<h3>Admin-Maintained Solutions</h3>
+
+<p>If the person who will maintain this automation after launch is an administrator, not a developer, Flow is your only sensible choice. Admins can troubleshoot, adjust, and extend flows without needing a deployment pipeline or code review process.</p>
+
+<h3>Rapid Prototyping</h3>
+
+<p>When you need to validate a business process before committing to a full development effort, build it in Flow first. If the process proves valuable and grows complex, you can always refactor to Apex later.</p>
+
+<blockquote>"Flow is not a lesser version of Apex. It's a different tool optimized for a different audience."</blockquote>
+
+<h2>When to Choose Apex</h2>
+
+<h3>Complex Business Logic</h3>
+
+<p>If your automation requires nested conditionals, recursive operations, or algorithms that would produce an unreadable spaghetti-flow diagram, Apex is the right choice. Code is more maintainable when the logic is too complex for visual tools.</p>
+
+<h3>Bulk Data Operations</h3>
+
+<p>While Flow can process records in bulk, Apex gives you precise control over batch sizes, DML statements, and governor limit management. For operations processing millions of records, Apex with Batchable interfaces is significantly more reliable.</p>
+
+<h3>External Integrations</h3>
+
+<p>When you need to call external APIs, parse complex JSON responses, or implement custom authentication flows, Apex provides the flexibility and error handling you need. Flow's HTTP callout actions are limited and harder to debug.</p>
+
+<h3>Testability and Version Control</h3>
+
+<p>Apex integrates with version control systems, CI/CD pipelines, and automated testing frameworks. If your organization demands code review, automated testing, and deployment tracking, Apex is the better fit.</p>
+
+<h2>The Hybrid Approach</h2>
+
+<p>Here's what most teams get wrong: they think they have to choose one or the other. In practice, the best solutions combine both tools.</p>
+
+<p>Use Flow as the entry point — it handles the trigger logic, screen interactions, and simple record updates. Then call Apex from Flow when you need complex processing. This gives you the best of both worlds: Flow's accessibility and Apex's power.</p>
+
+<p>We've found that the most maintainable architectures use Flow for orchestration and Apex for computation. The flow handles "what happens next" and the Apex handles "how to compute the result."</p>
+
+<h2>Decision Framework</h2>
+
+<p>When evaluating Flow vs Apex for a specific requirement, walk through these questions:</p>
+
+<table>
+<tr><td>Can an admin maintain this?</td><td>Flow</td></tr>
+<tr><td>Does it need unit tests and CI/CD?</td><td>Apex</td></tr>
+<tr><td>Is the logic a simple sequence?</td><td>Flow</td></tr>
+<tr><td>Does it involve complex algorithms?</td><td>Apex</td></tr>
+<tr><td>Will it process fewer than 10,000 records?</td><td>Flow</td></tr>
+<tr><td>Does it integrate with external APIs?</td><td>Apex</td></tr>
+<tr><td>Is the business process likely to change?</td><td>Flow</td></tr>
+<tr><td>Does it need version control history?</td><td>Apex</td></tr>
+</table>
+
+<p>If more questions lean toward one side, that's your answer.</p>
+
+<h2>Common Pitfalls</h2>
+
+<h3>Over-Engineering with Apex</h3>
+
+<p>Don't build an Apex trigger for a problem that Flow solves in 15 minutes. The maintenance cost of Apex (deployment, testing, code review) is real and ongoing.</p>
+
+<h3>Under-Engineering with Flow</h3>
+
+<p>Don't build a Flow that calls 50 other Flows in a chain. This creates an invisible spaghetti architecture that no one can trace. If your Flow triggers more than three subflows, it's time to refactor to Apex.</p>
+
+<h3>Ignoring Governor Limits</h3>
+
+<p>Both Flow and Apex share governor limits. A Flow that makes too many DML statements or queries will fail just like Apex would. Always test with realistic data volumes.</p>
+
+<h2>Real-World Example</h2>
+
+<p>Consider lead routing: when a new lead arrives, assign it based on territory, capacity, and skill matching.</p>
+
+<p><strong>Flow approach:</strong> Query existing leads, check territory rules, assign manually. Simple but doesn't handle capacity balancing well.</p>
+
+<p><strong>Apex approach:</strong> Calculate capacity scores across the team, apply skill matching algorithms, handle conflicts with priority rules. More complex but produces better results at scale.</p>
+
+<p><strong>Hybrid approach:</strong> Use Flow to validate the lead and collect territory data, then call Apex to calculate the optimal assignment. This gives you validation and routing in one solution.</p>
+
+<h2>Key Takeaways</h2>
+
+<ul>
+<li>Flow is faster, cheaper, and more accessible — use it when it fits</li>
+<li>Apex is more powerful and testable — use it when Flow can't handle the complexity</li>
+<li>The hybrid approach (Flow orchestrating Apex) is the most common pattern in production</li>
+<li>Always consider who will maintain the solution, not just who will build it</li>
+<li>Start simple in Flow; refactor to Apex only when the complexity demands it</li>
+</ul>
+
+<p>The best Salesforce architects don't ask "Flow or Apex?" They ask "what combination serves this business need best?"</p>`,
+  },
 ];
