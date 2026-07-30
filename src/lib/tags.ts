@@ -2,7 +2,8 @@
  * Tag aggregation utilities for the Adroit Blog tags system.
  */
 
-import { posts, type BlogPost } from "@/data/posts";
+import { posts } from "@/data/posts";
+import { BlogPost } from "@/data/types";
 
 export interface TagInfo {
   tag: string;

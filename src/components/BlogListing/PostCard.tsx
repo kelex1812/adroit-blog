@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { BlogPost } from "@/data/posts";
+import { BlogPost } from "@/data/types";
 import { Tag } from "@/components/Tag";
 
 interface PostCardProps {
