@@ -2,6 +2,25 @@ import { BlogPost } from "./types";
 
 export const posts: BlogPost[] = [
   {
+    "slug": "typescript-7-go-native-compiler",
+    "title": "TypeScript 7.0 Is Here: The 10x Faster Go-Native Compiler and What It Means for Your Builds",
+    "excerpt": "TypeScript 7.0 is stable — a complete rewrite of the compiler in Go that cuts build times by 8-12x. Here's what changed, what breaks, and how to migrate.",
+    "category": "React & Web Dev",
+    "categoryColor": "react",
+    "categoryGradient": "from-emerald to-emerald-dark",
+    "date": "August 3, 2026",
+    "author": "Adroit Consulting",
+    "authorInitials": "AC",
+    "readTime": "6 min read",
+    "featured": false,
+    "tags": [
+      "TypeScript",
+      "Web Development",
+      "Performance",
+      "Compilers"
+    ]
+  },
+  {
     "slug": "salesforce-summer-26-three-things",
     "title": "Salesforce Summer '26: 3 Things Every Agency Team Should Know Before Production Hits",
     "excerpt": "The SOAP login retirement Flow enhancements and Agentforce migration what actually matters before production hits.",
