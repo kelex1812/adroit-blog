@@ -2,6 +2,26 @@ import { BlogPost } from "./types";
 
 export const posts: BlogPost[] = [
   {
+    "slug": "ai-generated-code-cicd-guardrails",
+    "title": "AI Writes the Code. Your CI/CD Pipeline Is the Last Line of Defense.",
+    "excerpt": "Agents are in a growing share of pull requests and the review queue is the new bottleneck — AI PRs wait 4.6x longer, get rejected at 2.6x the rate, and 45% of AI-involved deployments cause problems. Here's the CI/CD gate stack that actually ships agent code safely.",
+    "category": "AI & Consulting",
+    "categoryColor": "ai",
+    "categoryGradient": "from-amber to-amber-dark",
+    "date": "August 04, 2026",
+    "author": "Adroit Consulting",
+    "authorInitials": "AC",
+    "readTime": "8 min read",
+    "featured": false,
+    "tags": [
+      "CI/CD",
+      "AI Agents",
+      "DevOps",
+      "Code Review",
+      "AI-Generated Code"
+    ]
+  },
+  {
     "slug": "local-llm-infrastructure-2026",
     "title": "Local LLM Infrastructure in 2026: When Self-Hosting Inference Actually Pays Off",
     "excerpt": "The local inference landscape matured fast in 2026 — MLX backends, streaming tool-call parsers, and cheaper break-even points. Here's the TCO reality and what running a hybrid stack for months taught us.",
