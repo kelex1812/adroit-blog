@@ -2,6 +2,26 @@ import { BlogPost } from "./types";
 
 export const posts: BlogPost[] = [
   {
+    "slug": "multi-agent-orchestration-production-lessons",
+    "title": "Multi-Agent Orchestration Just Went Mainstream — What Running a 10-Agent Pipeline Taught Us",
+    "excerpt": "Agentforce made multi-agent orchestration GA in June 2026, and LangGraph made the supervisor pattern the default. The failure data says teams of agents aren't automatically smarter — here's what our 10-agent delivery pipeline learned in production.",
+    "category": "AI & Consulting",
+    "categoryColor": "ai",
+    "categoryGradient": "from-amber to-amber-dark",
+    "date": "August 04, 2026",
+    "author": "Adroit Consulting",
+    "authorInitials": "AC",
+    "readTime": "7 min read",
+    "featured": false,
+    "tags": [
+      "AI Agents",
+      "Multi-Agent Orchestration",
+      "Agentforce",
+      "Agentic AI",
+      "Production Patterns"
+    ]
+  },
+  {
     "slug": "typescript-7-go-native-compiler",
     "title": "TypeScript 7.0 Is Here: The 10x Faster Go-Native Compiler and What It Means for Your Builds",
     "excerpt": "TypeScript 7.0 is stable — a complete rewrite of the compiler in Go that cuts build times by 8-12x. Here's what changed, what breaks, and how to migrate.",
