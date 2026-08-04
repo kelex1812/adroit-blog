@@ -2,15 +2,19 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const navLinks = [
   { href: "/blog", label: "Posts" },
   { href: "/blog/categories", label: "Categories" },
+  { href: "/learn", label: "Learn" },
   { href: "https://adroit.io", label: "Adroit.io", external: true },
 ];
 
 export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const pathname = usePathname();
+  const isLearnActive = pathname === "/learn" || pathname.startsWith("/learn/");
 
   return (
     <header className="sticky top-0 z-50 bg-white border-b border-gray-200">
@@ -42,6 +46,9 @@ export default function Header() {
               <Link
                 key={link.href}
                 href={link.href}
+                aria-current={
+                  link.href === "/learn" && isLearnActive ? "page" : undefined
+                }
                 className="text-gray-500 text-sm font-medium hover:text-navy transition-colors duration-150 no-underline aria-[current=page]:text-navy aria-[current=page]:font-semibold"
               >
                 {link.label}
@@ -86,7 +93,10 @@ export default function Header() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="text-gray-700 text-sm font-medium py-2 border-b border-gray-100 no-underline"
+                aria-current={
+                  link.href === "/learn" && isLearnActive ? "page" : undefined
+                }
+                className="text-gray-700 text-sm font-medium py-2 border-b border-gray-100 no-underline aria-[current=page]:text-navy aria-[current=page]:font-semibold"
                 onClick={() => setMobileOpen(false)}
               >
                 {link.label}

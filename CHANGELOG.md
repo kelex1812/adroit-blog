@@ -5,6 +5,17 @@ All notable changes to the Adroit Consulting Blog project will be documented in 
 ## [Unreleased]
 
 ### Added
+- **Learn tab** (`/learn`) — top-level nav section with two structured learning paths (Salesforce System Architect Primer, Agentic AI Implementation Path), matching Kara's mockups:
+  - `/learn` hub — LearnHero display + PathCard per track with progress bar (red fill) and mono "Lesson N of M" counter, or a "Coming soon" badge for empty series
+  - `/learn/[series]` — series page with gradient header strip, progress, and a syllabus list of lessons **newest first** (date desc), each row with a mono "Lesson N" badge, title, date, read time, and "New" pill on the newest item
+  - `/learn/[series]/[slug]` — lesson page reusing the blog post chrome (ReadingProgress, ShareBar, author row, tags) with a series crumb, BackLink to the series, and LessonNavigation (prev/next by authored lesson number)
+  - **Learn components** — `src/components/Learn/` (PathCard, LessonCard, LessonProgress, LessonNavigation, EmptyState)
+- **Learn data pipeline** — `scripts/build-learn.js` mirrors `build-posts.js`: scans `content/learn/**/*.mdx`, parses frontmatter (title, slug, series, lesson, excerpt, date, author, readTime, tags), reads optional per-series `series.json` (name/description/gradient), sorts lessons newest-first, emits `src/data/learn.ts` (learnSeries + learnLessons). Wired into `package.json` prebuild.
+- **Learn data-access layer** — `src/lib/learn.ts` (getAllSeries, getSeriesBySlug, getLessonsForSeries, getLesson, getLearnMDXContent, getSeriesProgress, seriesShortLabel, getAuthorInitials, stripMDXFrontmatter) with defensive newest-first re-sort per ADR-002
+- **Types** — `LearnLesson` + `LearningSeries` appended to `src/data/types.ts` (BlogPost untouched)
+- **SEO** — per-route metadata on all learn pages, JSON-LD (ItemList on /learn, LearningPath + ItemList on series pages, Article isPartOf LearningPath on lessons), and sitemap entries for /learn, all series, and all lessons (feed.xml stays blog-only)
+- **Series configs** — `content/learn/salesforce-architect/series.json` and `content/learn/agentic-ai/series.json` (adding a track = drop a folder + optional JSON; no code change)
+- **Header** — "Learn" nav link between Categories and Adroit.io (desktop + mobile), with pathname-based active highlight on all /learn routes
 - **SEO metadata** — per-page `generateMetadata()` on all blog routes with OpenGraph, Twitter cards, canonical URLs, and roboted directives. Root layout sets base metadata; blog/[slug] and tags/[tag] generate dynamic per-post/tag metadata.
 - **RSS feed** (`/feed.xml`) — RSS 2.0 feed via `feed` library, showing 20 most recent posts with title, link, description, pubDate, and category. Atom link in channel for self-discovery.
 - **XML sitemap** (`/sitemap.xml`) — dynamic sitemap including static pages (/blog, /blog/categories, /tags) plus all blog posts and tag pages with appropriate change frequencies and priorities.
@@ -16,11 +27,19 @@ All notable changes to the Adroit Consulting Blog project will be documented in 
 - Blog listing (`/blog`) — layout wrapper with static metadata export (client component compatible).
 
 ### Changed
+- `package.json` prebuild now runs `node scripts/build-posts.js && node scripts/build-learn.js`
+- `src/app/sitemap.ts` extended with learn URLs (weekly cadence, lessons priority 0.7)
 - CHANGELOG restructured to reflect full platform feature set.
 
 ### Fixed
+- **Learn lesson MDX rendering** — frontmatter is stripped before MDX rendering. (The blog renderer passes raw content through and renders the frontmatter blob as a heading — pre-existing behavior left untouched per scope; Learn does not replicate it.)
 - **SEO robots** — layout now exports proper `robots: { index: true, follow: true }` via `buildMetadata()` (was default noindex).
 - **Blog listing metadata** — added metadata layout wrapper so `/blog` has proper title/description/OG tags.
+
+### Known Issues
+- No lessons published yet (Jimmy cron starts daily content 2026-08-04) — both series render the graceful "coming soon" empty state; when lessons land, ordering is newest-first automatically
+- `/learn` hub card bands use CSS gradients only (design's placeholder texture assets were intentionally not wired into production — replace with real imagery if desired later)
+- Unknown series/lesson slugs render the framework default 404 (no custom not-found page yet)
 
 ## [2026-06-15] — Brand Styling (Round 2)
 

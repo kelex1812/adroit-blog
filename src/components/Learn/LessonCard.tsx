@@ -1,0 +1,52 @@
+import Link from "next/link";
+import { LearnLesson } from "@/data/types";
+
+interface LessonCardProps {
+  lesson: LearnLesson;
+  totalLessons: number;
+  /** Marks the newest lesson in the series (first row). */
+  isNewest?: boolean;
+}
+
+/** Syllabus row (mockup: learn-series.html) — mono sequence badge + meta. */
+export default function LessonCard({
+  lesson,
+  totalLessons,
+  isNewest = false,
+}: LessonCardProps) {
+  return (
+    <Link
+      href={`/learn/${lesson.series}/${lesson.slug}`}
+      className="group flex items-center gap-[18px] px-2 py-[18px] border-b border-gray-200 rounded-lg transition-colors duration-150 no-underline hover:bg-gray-50"
+    >
+      {/* Sequence badge */}
+      <div className="flex-shrink-0 w-14 h-10 rounded-lg bg-navy text-white flex flex-col items-center justify-center font-mono">
+        <span className="text-[15px] font-bold leading-none">{lesson.lesson}</span>
+        <span className="text-[7.5px] uppercase tracking-[0.06em] text-white/55 mt-0.5">
+          Lesson
+        </span>
+      </div>
+
+      {/* Title + meta */}
+      <div className="flex-1 min-w-0">
+        <div className="text-[15px] font-semibold text-gray-800 leading-snug truncate transition-colors duration-150 group-hover:text-red">
+          {lesson.title}
+        </div>
+        <div className="flex items-center gap-2 text-xs text-gray-400 mt-1">
+          <span>{lesson.date}</span>
+          <span className="w-[3px] h-[3px] rounded-full bg-gray-300" />
+          <span>{lesson.readTime}</span>
+        </div>
+      </div>
+
+      {isNewest && (
+        <span className="flex-shrink-0 text-[10px] font-bold text-red bg-red/8 px-2 py-0.5 rounded-full uppercase tracking-[0.05em]">
+          New
+        </span>
+      )}
+      <span className="flex-shrink-0 text-gray-300 text-sm transition-colors duration-150 group-hover:text-red">
+        &rarr;
+      </span>
+    </Link>
+  );
+}

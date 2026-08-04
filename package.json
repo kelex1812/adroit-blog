@@ -7,7 +7,7 @@
     "build": "npm run prebuild && next build",
     "start": "next start",
     "lint": "eslint",
-    "prebuild": "node scripts/build-posts.js"
+    "prebuild": "node scripts/build-posts.js && node scripts/build-learn.js"
   },
   "dependencies": {
     "next": "16.2.9",

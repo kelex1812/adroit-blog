@@ -1,5 +1,6 @@
 import { type MetadataRoute } from "next";
 import { posts } from "@/data/posts";
+import { learnLessons, learnSeries } from "@/data/learn";
 import { siteConfig } from "@/lib/seo";
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -44,5 +45,35 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.5,
   }));
 
-  return [...staticPages, ...blogPages, ...tagPages];
+  // Learn hub + series pages (daily content cadence → weekly)
+  const learnHubPages: MetadataRoute.Sitemap = [
+    {
+      url: `${siteConfig.url}/learn`,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.9,
+    },
+    ...learnSeries.map((s) => ({
+      url: `${siteConfig.url}/learn/${s.slug}`,
+      lastModified: s.lessons[0]?.date ? new Date(s.lessons[0].date) : new Date(),
+      changeFrequency: "weekly" as const,
+      priority: 0.8,
+    })),
+  ];
+
+  // Learn lesson pages
+  const learnLessonPages: MetadataRoute.Sitemap = learnLessons.map((lesson) => ({
+    url: `${siteConfig.url}/learn/${lesson.series}/${lesson.slug}`,
+    lastModified: lesson.date ? new Date(lesson.date) : new Date(),
+    changeFrequency: "weekly" as const,
+    priority: 0.7,
+  }));
+
+  return [
+    ...staticPages,
+    ...blogPages,
+    ...tagPages,
+    ...learnHubPages,
+    ...learnLessonPages,
+  ];
 }
