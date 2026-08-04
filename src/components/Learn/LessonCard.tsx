@@ -20,7 +20,10 @@ export default function LessonCard({
       className="group flex items-center gap-[18px] px-2 py-[18px] border-b border-gray-200 rounded-lg transition-colors duration-150 no-underline hover:bg-gray-50"
     >
       {/* Sequence badge */}
-      <div className="flex-shrink-0 w-14 h-10 rounded-lg bg-navy text-white flex flex-col items-center justify-center font-mono">
+      <div
+        className="flex-shrink-0 w-14 h-10 rounded-lg bg-navy text-white flex flex-col items-center justify-center font-mono"
+        aria-label={`Lesson ${lesson.lesson} of ${totalLessons}`}
+      >
         <span className="text-[15px] font-bold leading-none">{lesson.lesson}</span>
         <span className="text-[7.5px] uppercase tracking-[0.06em] text-white/55 mt-0.5">
           Lesson
