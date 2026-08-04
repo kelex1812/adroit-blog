@@ -2,6 +2,25 @@ import { BlogPost } from "./types";
 
 export const posts: BlogPost[] = [
   {
+    "slug": "local-llm-infrastructure-2026",
+    "title": "Local LLM Infrastructure in 2026: When Self-Hosting Inference Actually Pays Off",
+    "excerpt": "The local inference landscape matured fast in 2026 — MLX backends, streaming tool-call parsers, and cheaper break-even points. Here's the TCO reality and what running a hybrid stack for months taught us.",
+    "category": "AI & Consulting",
+    "categoryColor": "ai",
+    "categoryGradient": "from-amber to-amber-dark",
+    "date": "August 04, 2026",
+    "author": "Adroit Consulting",
+    "authorInitials": "AC",
+    "readTime": "8 min read",
+    "featured": false,
+    "tags": [
+      "LLM Infrastructure",
+      "Model Serving",
+      "DevOps",
+      "TCO"
+    ]
+  },
+  {
     "slug": "multi-agent-orchestration-production-lessons",
     "title": "Multi-Agent Orchestration Just Went Mainstream — What Running a 10-Agent Pipeline Taught Us",
     "excerpt": "Agentforce made multi-agent orchestration GA in June 2026, and LangGraph made the supervisor pattern the default. The failure data says teams of agents aren't automatically smarter — here's what our 10-agent delivery pipeline learned in production.",
