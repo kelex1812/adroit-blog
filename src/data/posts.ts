@@ -2,6 +2,25 @@ import { BlogPost } from "./types";
 
 export const posts: BlogPost[] = [
   {
+    "slug": "supabase-realtime-binary-payloads",
+    "title": "Supabase Realtime Can Now Broadcast Binary Payloads — What Changes for Real-Time Apps",
+    "excerpt": "Supabase Realtime Broadcast now sends binary payloads alongside JSON. Here's when it saves you real bandwidth, the exact minimum SDK versions, and the silent-drop trap to avoid.",
+    "category": "React & Web Dev",
+    "categoryColor": "react",
+    "categoryGradient": "from-emerald to-emerald-dark",
+    "date": "August 5, 2026",
+    "author": "Adroit Consulting",
+    "authorInitials": "AC",
+    "readTime": "6 min read",
+    "featured": false,
+    "tags": [
+      "Supabase",
+      "Realtime",
+      "Web Development",
+      "TypeScript"
+    ]
+  },
+  {
     "slug": "ai-generated-code-cicd-guardrails",
     "title": "AI Writes the Code. Your CI/CD Pipeline Is the Last Line of Defense.",
     "excerpt": "Agents are in a growing share of pull requests and the review queue is the new bottleneck — AI PRs wait 4.6x longer, get rejected at 2.6x the rate, and 45% of AI-involved deployments cause problems. Here's the CI/CD gate stack that actually ships agent code safely.",
