@@ -2,6 +2,26 @@ import { BlogPost } from "./types";
 
 export const posts: BlogPost[] = [
   {
+    "slug": "experience-cloud-data-cloud-personalization-pattern",
+    "title": "Experience Cloud + Data Cloud: The Practical Pattern for Personalized Portals",
+    "excerpt": "Your portal already knows who's visiting. Wiring enhanced LWR sites to Data Cloud (now Data 360) turns clicks and scrolls into unified profiles, segments, and agent grounding — here's the setup, the consent gotcha, and the cost traps.",
+    "category": "Salesforce",
+    "categoryColor": "sf",
+    "categoryGradient": "from-sky to-sky-dark",
+    "date": "August 5, 2026",
+    "author": "Adroit Consulting",
+    "authorInitials": "AC",
+    "readTime": "7 min read",
+    "featured": false,
+    "tags": [
+      "Salesforce",
+      "Data Cloud",
+      "Experience Cloud",
+      "Agentforce",
+      "Personalization"
+    ]
+  },
+  {
     "slug": "supabase-realtime-binary-payloads",
     "title": "Supabase Realtime Can Now Broadcast Binary Payloads — What Changes for Real-Time Apps",
     "excerpt": "Supabase Realtime Broadcast now sends binary payloads alongside JSON. Here's when it saves you real bandwidth, the exact minimum SDK versions, and the silent-drop trap to avoid.",
