@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { posts } from "@/data/posts";
-import { getMDXContent, getAllMDXSlugs, stripMDXFrontmatter } from "@/lib/mdx";
+import { getMDXContent, getAllMDXSlugs, stripMDXFrontmatter, linkifySourceCitations } from "@/lib/mdx";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import BackLink from "@/components/BackLink";
@@ -47,7 +47,7 @@ export default async function BlogPostPage({ params }: Props) {
   // YAML blob renders as a stray heading inside the article body)
   const mdxContent = getMDXContent(slug);
   if (!mdxContent) notFound();
-  const mdxBody = stripMDXFrontmatter(mdxContent);
+  const mdxBody = linkifySourceCitations(stripMDXFrontmatter(mdxContent));
 
   const currentIdx = posts.findIndex((p) => p.slug === slug);
   const prev = currentIdx > 0 ? posts[currentIdx - 1] : undefined;
@@ -150,8 +150,18 @@ export default async function BlogPostPage({ params }: Props) {
 
 /**
  * MDX Article Renderer — uses next-mdx-remote/rsc for server-side MDX rendering.
+ * remark-gfm autolinks bare http(s) URLs (GFM autolink literals), so
+ * `[Source: https://...]` citations render as clickable links.
  */
 async function MDXArticle({ mdx }: { mdx: string }) {
-  const { MDXRemote } = await import("next-mdx-remote/rsc");
-  return <MDXRemote source={mdx} />;
+  const [{ MDXRemote }, remarkGfm] = await Promise.all([
+    import("next-mdx-remote/rsc"),
+    import("remark-gfm"),
+  ]);
+  return (
+    <MDXRemote
+      source={mdx}
+      options={{ mdxOptions: { remarkPlugins: [remarkGfm.default] } }}
+    />
+  );
 }

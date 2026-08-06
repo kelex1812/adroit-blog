@@ -15,6 +15,7 @@ import {
   getSeriesBySlug,
   stripMDXFrontmatter,
 } from "@/lib/learn";
+import { linkifySourceCitations } from "@/lib/mdx";
 import { buildMetadata, siteConfig } from "@/lib/seo";
 
 interface Props {
@@ -53,7 +54,7 @@ export default async function LessonPage({ params }: Props) {
   // replicated for Learn; see lib/learn.ts stripMDXFrontmatter)
   const mdxContent = getLearnMDXContent(series, slug);
   if (!mdxContent) notFound();
-  const mdxBody = stripMDXFrontmatter(mdxContent);
+  const mdxBody = linkifySourceCitations(stripMDXFrontmatter(mdxContent));
 
   const lessons = getLessonsForSeries(series);
 
@@ -162,9 +163,18 @@ export default async function LessonPage({ params }: Props) {
 
 /**
  * MDX Article Renderer — uses next-mdx-remote/rsc for server-side MDX rendering
- * (same pattern as src/app/blog/[slug]/page.tsx).
+ * (same pattern as src/app/blog/[slug]/page.tsx). remark-gfm autolinks bare
+ * http(s) URLs so citations render as clickable links.
  */
 async function MDXArticle({ mdx }: { mdx: string }) {
-  const { MDXRemote } = await import("next-mdx-remote/rsc");
-  return <MDXRemote source={mdx} />;
+  const [{ MDXRemote }, remarkGfm] = await Promise.all([
+    import("next-mdx-remote/rsc"),
+    import("remark-gfm"),
+  ]);
+  return (
+    <MDXRemote
+      source={mdx}
+      options={{ mdxOptions: { remarkPlugins: [remarkGfm.default] } }}
+    />
+  );
 }

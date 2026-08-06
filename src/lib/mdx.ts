@@ -34,6 +34,26 @@ export function stripMDXFrontmatter(raw: string): string {
 }
 
 /**
+ * Convert `[Source: https://...]` citation literals into proper markdown
+ * links with a clean anchor (`[Source: domain.com](url)`) so article bodies
+ * stop showing raw URL text. Used by the blog + learn MDX renderers.
+ */
+export function linkifySourceCitations(raw: string): string {
+  return raw.replace(
+    /\[Source:\s+(https?:\/\/[^\]\s]+)\]/g,
+    (_match, url: string) => {
+      let domain = url;
+      try {
+        domain = new URL(url).hostname.replace(/^www\./, "");
+      } catch {
+        // keep the URL as anchor text if it won't parse
+      }
+      return `[Source: ${domain}](${url})`;
+    },
+  );
+}
+
+/**
  * Get a list of all MDX slugs available in content/blog/.
  */
 export function getAllMDXSlugs(): string[] {
