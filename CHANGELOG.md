@@ -4,6 +4,17 @@ All notable changes to the Adroit Consulting Blog project will be documented in 
 
 ## [Unreleased]
 
+### Integration Verification (t_b4ac5a38)
+- **Build gate** — `npm run build` + `npm run lint` pass clean (Next 16.2.9, TS strict, eslint no findings)
+- **API contracts verified** — `GET /api/progress/summary` returns `{readContent:{blog,lesson}, completedLessons}` (200, empty for guests); `POST /api/progress/read` / `lesson` / `quiz` accept the documented payloads, 400 on invalid type / missing slug, `unauthenticated` fallback for guests
+- **Routes verified in running app** (dev server, localhost:3000) — `/blog` (progress bar "N of 13 posts read" + per-card MarkAsRead), `/blog/[slug]` (PostReadProgress + MarkAsRead toggle, state syncs with listing), `/learn` (per-series completion bars), `/learn/[series]` (SeriesProgress + MarkComplete + "Take the quiz" CTA), `/learn/[series]/[slug]` (completion state + toggle), `/learn/[series]/quiz` (5-question MCQ, Check Answer / Next / score ring / Retake), `/tags`, `/blog/categories`, `/feed.xml`, `/sitemap.xml`; quiz-less series `/learn/agentic-ai/quiz` correctly 404s
+- **Interactions verified as real handlers** — MarkAsRead toggles localStorage `adroit-blog:read:blog/<slug>` and updates the aggregate bar live (0→1 of 13); MarkComplete toggles `adroit-blog:lesson:<slug>` and SeriesProgress updates live (0→1 of 3); quiz attempts persist to `adroit-blog:quiz:<name>` with correct/incorrect tracked (5/5 attempted, results view + Retake). No `() => {}` stubs found
+- **Supabase connectivity** — project `zrggxfdyptiahskogwnn` ACTIVE_HEALTHY; `read_progress`, `lesson_completion`, `quiz_attempt` tables present (REST 200, RLS blocks anonymous reads as intended); guest path falls back to localStorage cleanly
+
+### Known Issues
+- **ShareBar hydration mismatch (pre-existing, out of scope)** — `src/components/BlogPost/ShareBar.tsx` builds share URLs from `window.location.href` during client render vs empty string on the server, producing a React hydration warning and an empty `?text=`/`?url=`/`?u=` in the server-rendered share links. Present before this feature (untouched by d15ba1e); the "1 issue" badge in Next dev tools. Recommend a follow-up fix (render href from `useEffect` state or a static canonical URL). ShareBar itself predates progress tracking.
+- Quiz answers persist only in localStorage per ADR-004 (intended); authenticated quiz sync to Supabase is fire-and-forget
+
 ### Added
 - **Progress tracking — Blog Life & Depth (per arch plan t_718bb3ca, tasks 2–5)**:
   - **Supabase client layer** — `src/lib/supabase/client.ts` (singleton anon browser client) + `src/lib/supabase/server.ts` (cookie-based server client via `@supabase/ssr`, new dependency) + typed rows in `src/lib/supabase/types.ts`
