@@ -4,6 +4,37 @@ All notable changes to the Adroit Consulting Blog project will be documented in 
 
 ## [Unreleased]
 
+### Fix: quiz hydration mismatch + attempt-count inflation (QA t_51d10f42)
+
+Resolves all findings from zod's quiz review: F-1 HIGH (hydration mismatch on every quiz page for returning users), F-2 MEDIUM (attemptCount inflates +1 per page visit/refresh), F-3 MEDIUM (no automated test coverage), and the optional F-4 (radiogroup arrow-key roving).
+
+**HIGH — hydration mismatch eliminated (F-1)**
+
+- `useQuizProgress` no longer reads `localStorage` synchronously in the `useState` initializer. It starts from the empty state on both server and client, reads the stored value in a post-mount effect, and exposes a `hydrated` flag. Server HTML and the client's first paint are now identical, so React no longer throws "Hydration failed because the server rendered HTML didn't match the client" and the SSR tree is no longer discarded.
+- `QuizWidget` renders a lightweight pulse placeholder until `hydrated` — no more flash of the question view before the results view for users with a completed quiz.
+- `QuizStats` returns `null` until `hydrated` (after all hooks) — the "Quiz avg X% · N attempts" strip appears only after hydration on `/learn` and `/learn/[series]`.
+
+**MEDIUM — attemptCount no longer inflates on reload/visit (F-2)**
+
+- Removed the `completeRun()` effect that fired on the `allAnswered` false→true transition with a `prevAllAnswered` ref that reset to `false` on every remount — reloading a completed quiz re-fired it and bumped attemptCount with no new run.
+- Run completion is now session-scoped and atomic: `useQuizProgress` accepts the optional `totalQuestions` count and records `bestScore`/`attemptCount` (and POSTs the run to Supabase) inside `submitAnswer` at the exact moment the submitted answer completes the quiz. A reload/back-navigation never reaches `submitAnswer`, so it can never record a phantom run.
+- Verified live: 2 real runs → "3 attempts" after reload → "4 attempts" after 2nd visit (old) is now 2 → reload → 2 (stable); a resumed partial run completes exactly once; retake still increments.
+
+**MEDIUM — automated test coverage added (F-3)**
+
+- Added Vitest + jsdom + Testing Library: `vitest.config.mts`, `vitest.setup.ts`, `"test"` / `"test:watch"` scripts.
+- 18 tests across 3 files: `useQuizProgress.test.tsx` (hydration-safe initial state incl. SSR `renderToString` check, reset preserves bestScore/attemptCount, completeRun max-bestScore + increment, submit-time run completion exactly once, remount-with-completed-quiz does not inflate), `QuizWidget.test.tsx` (fresh run records once, remount no inflation, wrong-answer scoring, retake preserves + increments, keyboard roving, 390px mobile), `QuizStats.test.tsx` (no strip without attempts, strip after hydration, link href).
+
+**LOW — radiogroup arrow-key roving (F-4)**
+
+- `QuizWidget` option group now handles ArrowUp/Down/Left/Right with wrap-around and automatic activation per the WAI-ARIA radiogroup pattern (previously Tab/Space/Enter only).
+
+**Static checks:** `tsc --noEmit` 0 errors, `eslint` 0 errors (`.vercel/**` build output added to eslint ignores alongside `.next`/`out`/`build`), `npm run build` clean, `npm test` 18/18 pass. Browser-verified with seeded localStorage: no hydration errors on `/learn`, `/learn/[series]`, `/learn/[series]/quiz`; attemptCount stable across reloads for completed and partial quizzes; real runs and retakes still record exactly once.
+
+### Known Issues (new)
+
+- None introduced. F-1/F-2/F-3/F-4 resolved; quiz mechanics, a11y, security, and mobile behavior unchanged and still passing.
+
 ### Fix: /api/progress/read 400s on blog contentSlug (QA t_b0f76a83, t_808e5885)
 
 Resolves the HIGH finding from zod's progress-tracking review: POST/DELETE `/api/progress/read` always returned 400 for blog content because every blog call site sends the canonical ADR-002 namespaced slug `blog/<slug>` while `validateSlug` (SLUG_RE `^[a-zA-Z0-9_-]+$`) rejected the `/`. Authed cross-device read sync (US-003 AC4) never wrote/removed Supabase rows, and every mark/unmark toggle fired a console 400 even for guests.

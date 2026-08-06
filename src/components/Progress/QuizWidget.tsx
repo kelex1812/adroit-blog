@@ -8,7 +8,7 @@
  */
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { useQuizProgress } from "@/lib/hooks/useQuizProgress";
 
 export interface QuizQuestion {
@@ -31,7 +31,10 @@ export default function QuizWidget({
   const [selected, setSelected] = useState<number | null>(null);
   const [showExplanation, setShowExplanation] = useState(false);
 
-  const { progress, submitAnswer, resetQuiz, completeRun } = useQuizProgress(quizName);
+  const { progress, hydrated, submitAnswer, resetQuiz } = useQuizProgress(
+    quizName,
+    questions.length,
+  );
 
   const answeredIndexes = new Set(
     progress.attempts.map((a) => a.questionIndex),
@@ -41,20 +44,56 @@ export default function QuizWidget({
 
   const allAnswered = questions.length > 0 && questions.every((_, i) => answeredIndexes.has(i));
 
-  // Record the completed run exactly once when the quiz becomes fully
-  // answered (updates bestScore + attemptCount so retakes preserve the
-  // original score — US-005 AC4).
-  const prevAllAnswered = useRef(false);
-  useEffect(() => {
-    if (allAnswered && !prevAllAnswered.current) {
-      completeRun();
-    }
-    prevAllAnswered.current = allAnswered;
-  }, [allAnswered, completeRun]);
+  // Hydration gate (QA F-1): before the stored quiz state has been read
+  // after mount, render a placeholder instead of the question/results view.
+  // This keeps server HTML and the client's first paint identical — the
+  // server always renders the empty state, and the client does too until
+  // useQuizProgress has hydrated. Avoids the "Hydration failed because the
+  // server rendered HTML didn't match the client" error for returning users.
+  if (!hydrated) {
+    return (
+      <div className="mt-8 max-w-[640px] rounded-[20px] border border-gray-200 bg-white p-7 shadow-sm">
+        <div className="flex items-center gap-2 font-mono text-[11px] font-bold text-red uppercase tracking-[0.08em] mb-1.5">
+          <span className="w-[3px] h-3 rounded-sm bg-red" />
+          Quiz
+        </div>
+        <div className="h-4 w-1/3 rounded bg-gray-100 animate-pulse mb-4" />
+        <div className="h-4 w-full rounded bg-gray-100 animate-pulse mb-2" />
+        <div className="h-4 w-5/6 rounded bg-gray-100 animate-pulse mb-6" />
+        <div className="flex flex-col gap-2.5 mb-5">
+          {[0, 1, 2, 3].map((i) => (
+            <div key={i} className="h-12 rounded-[14px] bg-gray-100 animate-pulse" />
+          ))}
+        </div>
+        <div className="h-11 w-2/3 rounded-xl bg-gray-100 animate-pulse" />
+        <span className="sr-only">Loading quiz…</span>
+      </div>
+    );
+  }
 
   function handleSelect(index: number) {
     if (isAnswered) return;
     setSelected(index);
+  }
+
+  // WAI-ARIA radiogroup arrow-key roving (QA F-4): ArrowDown/Right move to
+  // the next option, ArrowUp/Left to the previous, wrapping around. The
+  // newly focused option becomes selected (automatic-activation pattern).
+  function handleRadiogroupKeyDown(event: React.KeyboardEvent<HTMLDivElement>) {
+    if (isAnswered) return; // options disabled after submission
+    const dir =
+      event.key === "ArrowDown" || event.key === "ArrowRight"
+        ? 1
+        : event.key === "ArrowUp" || event.key === "ArrowLeft"
+          ? -1
+          : 0;
+    if (dir === 0) return;
+    event.preventDefault();
+    const optionCount = question.options.length;
+    const start = selected === null ? -1 : selected;
+    const next = (start + dir + optionCount) % optionCount;
+    handleSelect(next);
+    document.getElementById(`quiz-option-${quizName}-${currentQ}-${next}`)?.focus();
   }
 
   function handleSubmit() {
@@ -266,6 +305,7 @@ export default function QuizWidget({
         className="flex flex-col gap-2.5 mb-5"
         role="radiogroup"
         aria-label="Answer options"
+        onKeyDown={handleRadiogroupKeyDown}
       >
         {question.options.map((option, i) => {
           const isSelected = selected === i;
@@ -304,6 +344,7 @@ export default function QuizWidget({
           return (
             <button
               key={i}
+              id={`quiz-option-${quizName}-${currentQ}-${i}`}
               role="radio"
               aria-checked={isSelected}
               onClick={() => handleSelect(i)}

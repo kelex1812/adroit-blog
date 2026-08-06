@@ -36,7 +36,7 @@ export default function QuizStats({
   onGradient = false,
   as = "link",
 }: QuizStatsProps) {
-  const { progress } = useQuizProgress(seriesSlug);
+  const { progress, hydrated } = useQuizProgress(seriesSlug);
   const { user } = useAuth();
   const [server, setServer] = useState<ServerStats | null>(null);
 
@@ -69,7 +69,11 @@ export default function QuizStats({
   const attempts = user ? (server?.attempts ?? localAttempts) : localAttempts;
   const best = user ? (server?.bestScore ?? localBest) : localBest;
 
-  if (attempts === 0) return null;
+  // Hydration gate (QA F-1): until useQuizProgress has read the stored
+  // state after mount, progress is the empty state. Rendering the strip
+  // only after hydration keeps server HTML and the client's first paint
+  // identical (no hydration error for returning users with saved attempts).
+  if (!hydrated || attempts === 0) return null;
 
   const tone = onGradient
     ? "text-white/85 bg-white/15 backdrop-blur-sm px-2.5 py-1 rounded-full"
