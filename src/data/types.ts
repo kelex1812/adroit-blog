@@ -11,6 +11,8 @@ export interface BlogPost {
   readTime: string;
   featured?: boolean;
   tags: string[];
+  /** Optional banner image path (public/) — gradient fallback when absent. */
+  bannerImage?: string;
 }
 
 /** A single lesson MDX file under content/learn/<series>/<slug>.mdx */
@@ -43,6 +45,8 @@ export interface LearningSeries {
   name: string;
   /** One-line description from series.json; fallback: "" */
   description: string;
+  /** Optional grouping label for the Learn hub (e.g. "Salesforce Certifications") */
+  group?: string;
   /** Tailwind gradient classes for card headers, e.g. "from-sky to-blue-600"; fallback: "from-navy to-navy-light" */
   gradient: string;
   /** Lessons sorted NEWEST FIRST (date desc) — enforced by build-learn.js AND lib/learn.ts */

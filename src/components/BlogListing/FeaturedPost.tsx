@@ -1,16 +1,10 @@
 import Link from "next/link";
 import { BlogPost } from "@/data/types";
+import BannerImage from "@/components/BlogListing/BannerImage";
 
 interface FeaturedPostProps {
   post: BlogPost;
 }
-
-const gradientMap: Record<string, string> = {
-  sf: "from-sky via-sky to-blue-600",
-  react: "from-emerald via-emerald to-green-600",
-  ai: "from-amber via-amber to-yellow-600",
-  mkt: "from-pink via-pink to-rose-600",
-};
 
 export default function FeaturedPost({ post }: FeaturedPostProps) {
   return (
@@ -20,20 +14,11 @@ export default function FeaturedPost({ post }: FeaturedPostProps) {
         className="block rounded-xl overflow-hidden bg-navy border border-gray-200 grid grid-cols-1 md:grid-cols-2 hover:shadow-lg transition-shadow duration-200 no-underline"
       >
         {/* Image side */}
-        <div
-          className={`bg-gradient-to-br ${gradientMap[post.categoryColor]} min-h-[160px] md:min-h-[240px] flex items-center justify-center relative overflow-hidden`}
-        >
-          <div
-            className="absolute inset-0"
-            style={{
-              background:
-                "radial-gradient(circle at 30% 40%, rgba(200,16,46,0.15) 0%, transparent 50%), radial-gradient(circle at 70% 60%, rgba(14,165,233,0.1) 0%, transparent 50%)",
-            }}
-          />
-          <span className="text-white/15 text-6xl md:text-7xl font-extrabold relative z-10 select-none">
-            {post.category === "AI & Consulting" ? "AI" : "AC"}
-          </span>
-        </div>
+        <BannerImage
+          post={post}
+          className="min-h-[160px] md:min-h-[240px]"
+          watermark
+        />
 
         {/* Content side */}
         <div className="p-6 md:p-8 flex flex-col justify-center">

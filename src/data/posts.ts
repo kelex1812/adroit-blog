@@ -19,7 +19,8 @@ export const posts: BlogPost[] = [
       "Experience Cloud",
       "Agentforce",
       "Personalization"
-    ]
+    ],
+    "bannerImage": "/banners/experience-cloud-data-cloud-personalization-pattern.png"
   },
   {
     "slug": "supabase-realtime-binary-payloads",

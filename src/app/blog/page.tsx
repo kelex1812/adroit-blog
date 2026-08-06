@@ -7,6 +7,8 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import FeaturedPost from "@/components/BlogListing/FeaturedPost";
 import PostCard from "@/components/BlogListing/PostCard";
+import SortToggle from "@/components/BlogListing/SortToggle";
+import { sortPosts, type SortOrder } from "@/lib/sort";
 
 const categories = [
   { key: "all", label: "All Posts" },
@@ -25,14 +27,18 @@ function BlogListingContent() {
   const [activeCategory, setActiveCategory] = useState(normalized);
   const [currentPage, setCurrentPage] = useState(1);
   const postsPerPage = 4;
+  const sortOrder: SortOrder =
+    searchParams.get("sort") === "oldest" ? "oldest" : "newest";
 
   const filtered = allPosts.filter((post) => {
     if (activeCategory === "all") return true;
     return post.categoryColor === activeCategory;
   });
 
-  const featured = filtered.find((p) => p.featured);
-  const nonFeatured = filtered.filter((p) => !p.featured);
+  // Defensive sort — never trust generated array order in a view.
+  const sorted = sortPosts(filtered, sortOrder);
+  const featured = sorted.find((p) => p.featured);
+  const nonFeatured = sorted.filter((p) => !p.featured);
 
   const totalPages = Math.max(
     1,
@@ -83,20 +89,25 @@ function BlogListingContent() {
           </a>
 
           {/* Category Pills */}
-          <div className="flex flex-wrap gap-2 mt-6 pb-8 border-b border-gray-200">
-            {categories.map((cat) => (
-              <button
-                key={cat.key}
-                onClick={() => handleCategoryClick(cat.key)}
-                className={`px-4 py-1.5 rounded-full text-xs font-semibold cursor-pointer no-underline transition-all duration-150 ${
-                  activeCategory === cat.key
-                    ? "bg-navy text-white"
-                    : "bg-gray-100 text-gray-600 border border-gray-200 hover:bg-gray-200 hover:border-gray-300"
-                }`}
-              >
-                {cat.label}
-              </button>
-            ))}
+          <div className="flex flex-wrap items-center gap-2 mt-6 pb-8 border-b border-gray-200">
+            <div className="flex flex-wrap gap-2">
+              {categories.map((cat) => (
+                <button
+                  key={cat.key}
+                  onClick={() => handleCategoryClick(cat.key)}
+                  className={`px-4 py-1.5 rounded-full text-xs font-semibold cursor-pointer no-underline transition-all duration-150 ${
+                    activeCategory === cat.key
+                      ? "bg-navy text-white"
+                      : "bg-gray-100 text-gray-600 border border-gray-200 hover:bg-gray-200 hover:border-gray-300"
+                  }`}
+                >
+                  {cat.label}
+                </button>
+              ))}
+            </div>
+            <div className="ml-auto">
+              <SortToggle />
+            </div>
           </div>
         </div>
 

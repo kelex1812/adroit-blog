@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import Header from "@/components/Header";
@@ -6,6 +7,7 @@ import Footer from "@/components/Footer";
 import LessonCard from "@/components/Learn/LessonCard";
 import LessonProgress from "@/components/Learn/LessonProgress";
 import EmptyState from "@/components/Learn/EmptyState";
+import SortToggle from "@/components/BlogListing/SortToggle";
 import { learnSeries } from "@/data/learn";
 import {
   getLessonsForSeries,
@@ -13,10 +15,12 @@ import {
   getSeriesProgress,
   seriesShortLabel,
 } from "@/lib/learn";
+import { sortPosts } from "@/lib/sort";
 import { buildMetadata, siteConfig } from "@/lib/seo";
 
 interface Props {
   params: Promise<{ series: string }>;
+  searchParams: Promise<{ sort?: string }>;
 }
 
 export async function generateStaticParams() {
@@ -34,13 +38,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   });
 }
 
-export default async function SeriesPage({ params }: Props) {
+export default async function SeriesPage({ params, searchParams }: Props) {
   const { series } = await params;
+  const { sort } = await searchParams;
   const s = getSeriesBySlug(series);
   if (!s) notFound();
 
   // Defensive newest-first (ADR-002) — never trust generated order blindly.
-  const lessons = getLessonsForSeries(series);
+  const baseLessons = getLessonsForSeries(series);
+  const lessons = sortPosts(baseLessons, sort === "oldest" ? "oldest" : "newest");
   const { published, total } = getSeriesProgress(s);
   const upcoming = Math.max(0, total - published);
 
@@ -103,13 +109,18 @@ export default async function SeriesPage({ params }: Props) {
         <div className="max-w-[1120px] mx-auto px-6 py-8 pb-24">
           {lessons.length > 0 ? (
             <>
-              <div className="flex items-baseline justify-between px-2 mb-1.5">
+              <div className="flex items-center justify-between px-2 mb-1.5">
                 <h2 className="font-mono text-[13px] font-bold text-gray-400 uppercase tracking-[0.08em]">
-                  Newest First
+                  {sort === "oldest" ? "Oldest First" : "Newest First"}
                 </h2>
-                <span className="font-mono text-[11.5px] text-gray-400 font-medium">
-                  {published} published · {upcoming} upcoming
-                </span>
+                <div className="flex items-center gap-3">
+                  <span className="font-mono text-[11.5px] text-gray-400 font-medium">
+                    {published} published · {upcoming} upcoming
+                  </span>
+                  <Suspense fallback={null}>
+                    <SortToggle compact />
+                  </Suspense>
+                </div>
               </div>
               <div className="border-t border-gray-200 mt-3">
                 {lessons.map((lesson, i) => (
@@ -117,7 +128,7 @@ export default async function SeriesPage({ params }: Props) {
                     key={lesson.slug}
                     lesson={lesson}
                     totalLessons={total}
-                    isNewest={i === 0}
+                    isNewest={sort !== "oldest" && i === 0}
                   />
                 ))}
               </div>

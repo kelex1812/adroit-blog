@@ -12,18 +12,244 @@ export const learnSeries: LearningSeries[] = [
     "name": "Agentic AI Implementation Path",
     "description": "From single-agent prototypes to multi-agent orchestration — a practitioner's curriculum for shipping agentic systems.",
     "gradient": "from-amber to-yellow-600",
-    "lessons": [],
-    "totalLessons": 0
+    "lessons": [
+      {
+        "slug": "how-llms-work-tokens-context-inference",
+        "title": "Lesson 2: How LLMs Work for Implementers — Tokens, Context, Inference, Temperature",
+        "series": "agentic-ai",
+        "lesson": 2,
+        "excerpt": "The four knobs that decide every LLM bill, latency budget, and reliability call: what tokens actually are, how the context window constrains agents, how inference really runs, and what temperature does and doesn't do.",
+        "date": "August 05, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "9 min read",
+        "tags": [
+          "Learn",
+          "AI",
+          "Agentic",
+          "Foundations"
+        ]
+      },
+      {
+        "slug": "what-is-an-agent",
+        "title": "Lesson 1: What an Agent Actually Is — LLMs vs Rules vs Workflows",
+        "series": "agentic-ai",
+        "lesson": 1,
+        "excerpt": "The definitions that matter for the whole 90-lesson track: what separates a rules system, an LLM workflow, and a true agent — and how to tell which one you're actually building.",
+        "date": "August 04, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "9 min read",
+        "tags": [
+          "Learn",
+          "AI",
+          "Agentic",
+          "Foundations"
+        ]
+      }
+    ],
+    "totalLessons": 2
+  },
+  {
+    "slug": "omni-studio-cert",
+    "name": "OmniStudio Developer Certification",
+    "description": "A 46-requirement deep dive for the Salesforce Certified OmniStudio Developer exam — one official exam-guide requirement per day, with config walkthroughs, exam traps, and practice questions.",
+    "group": "Salesforce Certifications",
+    "gradient": "from-red to-rose-600",
+    "lessons": [
+      {
+        "slug": "day-03-f3-managed-package-vs-standard-runtime-upgrades",
+        "title": "OmniStudio F-3: Managed Package vs Standard Runtime; Upgrades",
+        "series": "omni-studio-cert",
+        "lesson": 3,
+        "excerpt": "Explain Managed Package Runtime vs. Standard Runtime, Automatic Upgrades, and Manual Intervention Upgrade. — Day 3 of the 46-requirement OmniStudio Developer exam prep.",
+        "date": "August 05, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "6 min read",
+        "tags": [
+          "OmniStudio",
+          "OmniStudio Fundamentals"
+        ]
+      },
+      {
+        "slug": "day-02-f2-project-needs-requirements-assumptions-risks-const",
+        "title": "OmniStudio F-2: Project Needs: Requirements, Assumptions, Risks, Constraints",
+        "series": "omni-studio-cert",
+        "lesson": 2,
+        "excerpt": "Determine a project's needs by evaluating a customer's requirements, assumptions, risks, and constraints. — Day 2 of the 46-requirement OmniStudio Developer exam prep.",
+        "date": "August 04, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "6 min read",
+        "tags": [
+          "OmniStudio",
+          "OmniStudio Fundamentals"
+        ]
+      },
+      {
+        "slug": "day-01-f1-omnistudio-solution-and-industry-use-cases",
+        "title": "OmniStudio F-1: OmniStudio Solution & Industry Use Cases",
+        "series": "omni-studio-cert",
+        "lesson": 1,
+        "excerpt": "Describe the OmniStudio solution as it applies to common customer use case scenarios in different industries (telco, energy, healthcare, public sector — Day 1 of the 46-requirement OmniStudio Developer exam prep.",
+        "date": "August 03, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "6 min read",
+        "tags": [
+          "OmniStudio",
+          "OmniStudio Fundamentals"
+        ]
+      }
+    ],
+    "totalLessons": 3
   },
   {
     "slug": "salesforce-architect",
     "name": "Salesforce System Architect Primer",
     "description": "A 90-lesson deep dive into Flow design, Apex patterns, and platform architecture for teams scaling on Salesforce.",
+    "group": "Salesforce Certifications",
     "gradient": "from-sky to-blue-600",
-    "lessons": [],
-    "totalLessons": 0
+    "lessons": [
+      {
+        "slug": "multi-tenant-platform-architecture",
+        "title": "Lesson 2: Multi-Tenant Platform Architecture — Orgs, Environments, and the Instance Model",
+        "series": "salesforce-architect",
+        "lesson": 2,
+        "excerpt": "Why every Salesforce org rents a slice of a shared platform: multi-tenancy, metadata-driven design, the instance model, and the sandbox environments that keep Dev/QA/UAT/Prod safe.",
+        "date": "August 05, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "8 min read",
+        "tags": [
+          "Learn",
+          "Salesforce",
+          "Architect",
+          "Multi-Tenancy"
+        ]
+      },
+      {
+        "slug": "what-salesforce-system-architect-does",
+        "title": "Lesson 1: What a Salesforce System Architect Actually Does — Role, Cert Track, CTA Endgame",
+        "series": "salesforce-architect",
+        "lesson": 1,
+        "excerpt": "The Salesforce architect arc in one lesson: what System vs Application vs Technical Architects actually do, the certification ladder, and the CTA endgame.",
+        "date": "August 04, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "8 min read",
+        "tags": [
+          "Learn",
+          "Salesforce",
+          "Architect",
+          "Certifications"
+        ]
+      }
+    ],
+    "totalLessons": 2
   }
 ];
 
 /** Flat list of every lesson, NEWEST FIRST (for sitemap, nav, flat lookups). */
-export const learnLessons: LearnLesson[] = [];
+export const learnLessons: LearnLesson[] = [
+  {
+    "slug": "how-llms-work-tokens-context-inference",
+    "title": "Lesson 2: How LLMs Work for Implementers — Tokens, Context, Inference, Temperature",
+    "series": "agentic-ai",
+    "lesson": 2,
+    "excerpt": "The four knobs that decide every LLM bill, latency budget, and reliability call: what tokens actually are, how the context window constrains agents, how inference really runs, and what temperature does and doesn't do.",
+    "date": "August 05, 2026",
+    "author": "Adroit Consulting",
+    "readTime": "9 min read",
+    "tags": [
+      "Learn",
+      "AI",
+      "Agentic",
+      "Foundations"
+    ]
+  },
+  {
+    "slug": "day-03-f3-managed-package-vs-standard-runtime-upgrades",
+    "title": "OmniStudio F-3: Managed Package vs Standard Runtime; Upgrades",
+    "series": "omni-studio-cert",
+    "lesson": 3,
+    "excerpt": "Explain Managed Package Runtime vs. Standard Runtime, Automatic Upgrades, and Manual Intervention Upgrade. — Day 3 of the 46-requirement OmniStudio Developer exam prep.",
+    "date": "August 05, 2026",
+    "author": "Adroit Consulting",
+    "readTime": "6 min read",
+    "tags": [
+      "OmniStudio",
+      "OmniStudio Fundamentals"
+    ]
+  },
+  {
+    "slug": "multi-tenant-platform-architecture",
+    "title": "Lesson 2: Multi-Tenant Platform Architecture — Orgs, Environments, and the Instance Model",
+    "series": "salesforce-architect",
+    "lesson": 2,
+    "excerpt": "Why every Salesforce org rents a slice of a shared platform: multi-tenancy, metadata-driven design, the instance model, and the sandbox environments that keep Dev/QA/UAT/Prod safe.",
+    "date": "August 05, 2026",
+    "author": "Adroit Consulting",
+    "readTime": "8 min read",
+    "tags": [
+      "Learn",
+      "Salesforce",
+      "Architect",
+      "Multi-Tenancy"
+    ]
+  },
+  {
+    "slug": "what-is-an-agent",
+    "title": "Lesson 1: What an Agent Actually Is — LLMs vs Rules vs Workflows",
+    "series": "agentic-ai",
+    "lesson": 1,
+    "excerpt": "The definitions that matter for the whole 90-lesson track: what separates a rules system, an LLM workflow, and a true agent — and how to tell which one you're actually building.",
+    "date": "August 04, 2026",
+    "author": "Adroit Consulting",
+    "readTime": "9 min read",
+    "tags": [
+      "Learn",
+      "AI",
+      "Agentic",
+      "Foundations"
+    ]
+  },
+  {
+    "slug": "day-02-f2-project-needs-requirements-assumptions-risks-const",
+    "title": "OmniStudio F-2: Project Needs: Requirements, Assumptions, Risks, Constraints",
+    "series": "omni-studio-cert",
+    "lesson": 2,
+    "excerpt": "Determine a project's needs by evaluating a customer's requirements, assumptions, risks, and constraints. — Day 2 of the 46-requirement OmniStudio Developer exam prep.",
+    "date": "August 04, 2026",
+    "author": "Adroit Consulting",
+    "readTime": "6 min read",
+    "tags": [
+      "OmniStudio",
+      "OmniStudio Fundamentals"
+    ]
+  },
+  {
+    "slug": "what-salesforce-system-architect-does",
+    "title": "Lesson 1: What a Salesforce System Architect Actually Does — Role, Cert Track, CTA Endgame",
+    "series": "salesforce-architect",
+    "lesson": 1,
+    "excerpt": "The Salesforce architect arc in one lesson: what System vs Application vs Technical Architects actually do, the certification ladder, and the CTA endgame.",
+    "date": "August 04, 2026",
+    "author": "Adroit Consulting",
+    "readTime": "8 min read",
+    "tags": [
+      "Learn",
+      "Salesforce",
+      "Architect",
+      "Certifications"
+    ]
+  },
+  {
+    "slug": "day-01-f1-omnistudio-solution-and-industry-use-cases",
+    "title": "OmniStudio F-1: OmniStudio Solution & Industry Use Cases",
+    "series": "omni-studio-cert",
+    "lesson": 1,
+    "excerpt": "Describe the OmniStudio solution as it applies to common customer use case scenarios in different industries (telco, energy, healthcare, public sector — Day 1 of the 46-requirement OmniStudio Developer exam prep.",
+    "date": "August 03, 2026",
+    "author": "Adroit Consulting",
+    "readTime": "6 min read",
+    "tags": [
+      "OmniStudio",
+      "OmniStudio Fundamentals"
+    ]
+  }
+];

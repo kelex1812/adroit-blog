@@ -11,12 +11,20 @@ import { siteConfig } from "@/lib/seo";
 export default function LearnLandingPage() {
   const series = getAllSeries();
 
+  // Group by series.group (undefined → "Learning Paths")
+  const groups = new Map<string, typeof series>();
+  for (const s of series) {
+    const g = s.group || "Learning Paths";
+    if (!groups.has(g)) groups.set(g, []);
+    groups.get(g)!.push(s);
+  }
+
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "ItemList",
     name: "Adroit Learn — Learning Paths",
     description:
-      "Structured, sequence-aware learning paths on Salesforce architecture and agentic AI implementation.",
+      "Structured, sequence-aware learning paths on Salesforce architecture, OmniStudio certification, and agentic AI implementation.",
     itemListElement: series.map((s, i) => ({
       "@type": "ListItem",
       position: i + 1,
@@ -41,18 +49,25 @@ export default function LearnLandingPage() {
           </h1>
           <p className="text-[17px] text-gray-500 max-w-[560px] leading-relaxed">
             Structured, sequence-aware learning paths on Salesforce
-            architecture and agentic AI implementation — published daily, read
-            in order.
+            architecture, certification prep, and agentic AI implementation —
+            published daily, read in order.
           </p>
         </section>
 
-        {/* Track grid */}
+        {/* Track grid, grouped */}
         <section className="max-w-[1120px] mx-auto px-6 py-10 pb-24">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            {series.map((s) => (
-              <PathCard key={s.slug} series={s} />
-            ))}
-          </div>
+          {Array.from(groups.entries()).map(([group, items]) => (
+            <div key={group} className="mb-12 last:mb-0">
+              <h2 className="font-mono text-[12px] font-bold text-gray-400 uppercase tracking-[0.1em] mb-4">
+                {group}
+              </h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                {items.map((s) => (
+                  <PathCard key={s.slug} series={s} />
+                ))}
+              </div>
+            </div>
+          ))}
         </section>
 
         <script

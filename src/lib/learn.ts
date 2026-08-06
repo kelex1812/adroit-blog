@@ -124,6 +124,7 @@ export function seriesShortLabel(slug: string): string {
   const map: Record<string, string> = {
     "salesforce-architect": "Salesforce",
     "agentic-ai": "Agentic AI",
+    "omni-studio-cert": "OmniStudio",
   };
   if (map[slug]) return map[slug];
   return slug

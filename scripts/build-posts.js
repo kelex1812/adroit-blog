@@ -54,6 +54,7 @@ for (const file of files) {
     readTime: fm.readTime || "5 min read",
     featured: fm.featured || false,
     tags: fm.tags || [],
+    bannerImage: fm.bannerImage || undefined,
   });
 }
 

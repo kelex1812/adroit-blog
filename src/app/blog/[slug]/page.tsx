@@ -8,6 +8,7 @@ import BackLink from "@/components/BackLink";
 import ReadingProgress from "@/components/BlogPost/ReadingProgress";
 import ShareBar from "@/components/BlogPost/ShareBar";
 import PostNavigation from "@/components/BlogPost/PostNavigation";
+import BannerImage from "@/components/BlogListing/BannerImage";
 import { Tag } from "@/components/Tag";
 import { buildMetadata } from "@/lib/seo";
 
@@ -99,6 +100,17 @@ export default async function BlogPostPage({ params }: Props) {
 
           <ShareBar />
         </div>
+
+        {/* Post Banner — real image when present, gradient fallback */}
+        {post.bannerImage && (
+          <div className="max-w-[920px] mx-auto px-6 py-6">
+            <BannerImage
+              post={post}
+              className="h-[220px] md:h-[320px] rounded-2xl"
+              watermark
+            />
+          </div>
+        )}
 
         {/* Article Body — rendered from MDX content */}
         <article className="article-body max-w-[720px] mx-auto px-6 pb-16">
