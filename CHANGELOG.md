@@ -4,6 +4,25 @@ All notable changes to the Adroit Consulting Blog project will be documented in 
 
 ## [Unreleased]
 
+### Security Fixes — Auth/session hardening follow-up (t_a719a31c)
+
+Fixes remaining findings from val-el's auth-session audit (t_4ee14a75) + RLS audit (t_ea38d052), layered on top of t_c7f51ff6.
+
+**MEDIUM**
+- **F1 Admin-endpoint script misuse (CWE-798 / OWASP A07)** — `scripts/update-supabase-auth.py` previously sent the **anon key** as `Bearer` to the GoTrue admin endpoint `/auth/v1/admin/settings` with a false comment claiming anon can act as service_role. Rewritten: reads `SUPABASE_SERVICE_ROLE_KEY` from the **environment only** (never a tracked file), decodes the JWT `role` claim, and **fails closed** (exit 1, no request) when the key is missing, truncated, or not `service_role`. Comment corrected. Covered by `scripts/test_update_supabase_auth.py` (4 fail-closed/pass-through checks).
+
+**LOW**
+- **F2 Slug charset / path traversal (CWE-22 / OWASP A03)** — defense-in-depth added at the filesystem chokepoint: `getQuizForSeries()` in `src/lib/quiz.ts` now rejects any series that is not `/^[a-zA-Z0-9_-]+$/` (≤200 chars) before `path.join` — even though the API routes already validate via `validateSlug`, the page routes feed the raw URL `series` param directly into this function. Rejects `../../etc`, `..%2f`, etc. with a server-side warning.
+- **F3 No session-refresh middleware (CWE-613 / OWASP A07)** — new `src/proxy.ts` (Next 16 renamed `middleware` → `proxy`): creates a `@supabase/ssr` cookie-bound client from request cookies, calls `auth.getUser()` on navigation so an expired access token refreshes before any protected server component ships, and writes refreshed cookies back to the response. Matcher excludes `api`, static assets, and images (API routes do their own `getUser()` + cookie refresh).
+
+**LOW (RLS hardening from t_ea38d052 I3)**
+- **I3 RLS posture** — new `supabase/migrations/003_security_hardening.sql`: all 12 policies re-created with explicit `TO authenticated` (was implicit PUBLIC); all 3 UPDATE policies now carry an explicit `WITH CHECK (auth.uid() = user_id)`; `user_id` columns on `read_progress` / `lesson_completion` / `quiz_attempt` gain `REFERENCES auth.users(id) ON DELETE CASCADE` (named FK constraints, dropped if present).
+
+### Known Issues (new)
+- `scripts/update-supabase-auth.py` now requires `SUPABASE_SERVICE_ROLE_KEY` in the shell env — if you need to re-run the GoTrue settings PATCH, export the real service_role key first (do not add it to any tracked file).
+- Migration 003 must be applied to the linked Supabase project (local stack wasn't running during this fix; repo state verified by build/lint/tests only). `user_id` FK constraints require `auth.users` to exist (it does in every Supabase project).
+- Proxy adds a `getUser()` round-trip on every page navigation; acceptable for a low-traffic blog. Excluded from API routes so progress POSTs are not double-refreshed.
+
 ### Security Fixes — Next upgrade + progress API hardening (t_c7f51ff6)
 
 Fixes all findings from val-el's security audit (t_3bbee885) of the progress-tracking feature (Supabase RLS + auth + progress API).

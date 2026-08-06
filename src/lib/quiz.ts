@@ -19,8 +19,26 @@ export interface QuizData {
   questions: QuizQuestion[];
 }
 
+/**
+ * Strict charset for values that flow into a filesystem path join.
+ * Kebab/snake-case slugs only — no dots, slashes, or path separators
+ * (blocks `../` traversal). Defense-in-depth: the API routes already
+ * validate via `validateSlug`, but page routes feed the raw `series`
+ * URL param here, so the join itself must refuse anything unsafe.
+ * (Security audit t_4ee14a75 F2.)
+ */
+const QUIZ_SERIES_RE = /^[a-zA-Z0-9_-]+$/;
+
 /** Read a series quiz from `content/<series>/questions.json`, or null. */
 export function getQuizForSeries(series: string): QuizData | null {
+  if (typeof series !== "string" || series.length === 0) {
+    return null;
+  }
+  if (series.length > 200 || !QUIZ_SERIES_RE.test(series)) {
+    // Log server-side; never let an invalid slug reach path.join.
+    console.warn("[quiz] rejecting invalid series slug:", JSON.stringify(series));
+    return null;
+  }
   const quizPath = path.join(
     process.cwd(),
     "content",
