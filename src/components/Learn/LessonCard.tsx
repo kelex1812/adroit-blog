@@ -17,14 +17,16 @@ export default function LessonCard({
   return (
     <Link
       href={`/learn/${lesson.series}/${lesson.slug}`}
-      className="group flex items-center gap-[18px] px-2 py-[18px] border-b border-gray-200 rounded-lg transition-colors duration-150 no-underline hover:bg-gray-50"
+      className="group flex items-center gap-[18px] px-3 py-[18px] border-b border-gray-200 rounded-lg transition-all duration-150 no-underline hover:bg-gray-50 hover:pl-4"
     >
       {/* Sequence badge */}
       <div
-        className="flex-shrink-0 w-14 h-10 rounded-lg bg-navy text-white flex flex-col items-center justify-center font-mono"
+        className="flex-shrink-0 w-14 h-10 rounded-xl bg-navy flex flex-col items-center justify-center font-mono transition-colors duration-150 group-hover:bg-red"
         aria-label={`Lesson ${lesson.lesson} of ${totalLessons}`}
       >
-        <span className="text-[15px] font-bold leading-none">{lesson.lesson}</span>
+        <span className="text-[15px] font-bold leading-none text-red group-hover:text-white">
+          {lesson.lesson}
+        </span>
         <span className="text-[7.5px] uppercase tracking-[0.06em] text-white/55 mt-0.5">
           Lesson
         </span>
@@ -47,7 +49,7 @@ export default function LessonCard({
           New
         </span>
       )}
-      <span className="flex-shrink-0 text-gray-300 text-sm transition-colors duration-150 group-hover:text-red">
+      <span className="flex-shrink-0 text-gray-300 text-sm transition-all duration-200 group-hover:text-red group-hover:translate-x-0.5">
         &rarr;
       </span>
     </Link>

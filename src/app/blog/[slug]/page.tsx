@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { posts } from "@/data/posts";
-import { getMDXContent, getAllMDXSlugs } from "@/lib/mdx";
+import { getMDXContent, getAllMDXSlugs, stripMDXFrontmatter } from "@/lib/mdx";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import BackLink from "@/components/BackLink";
@@ -43,8 +43,11 @@ export default async function BlogPostPage({ params }: Props) {
   if (!post) notFound();
 
   // Load and compile MDX content from content/blog/[slug].mdx
+  // (frontmatter stripped — same fix Learn already applies; without it the
+  // YAML blob renders as a stray heading inside the article body)
   const mdxContent = getMDXContent(slug);
   if (!mdxContent) notFound();
+  const mdxBody = stripMDXFrontmatter(mdxContent);
 
   const currentIdx = posts.findIndex((p) => p.slug === slug);
   const prev = currentIdx > 0 ? posts[currentIdx - 1] : undefined;
@@ -63,7 +66,7 @@ export default async function BlogPostPage({ params }: Props) {
 
           {/* Author row */}
           <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 rounded-full bg-navy flex items-center justify-center text-white font-bold text-xs">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-navy to-navy-light ring-2 ring-white shadow-sm flex items-center justify-center text-white font-bold text-xs transition-all duration-150 hover:ring-red">
               {post.authorInitials}
             </div>
             <div className="flex flex-col">
@@ -78,9 +81,17 @@ export default async function BlogPostPage({ params }: Props) {
             </div>
           </div>
 
-          <Tag label={post.category} color={post.categoryColor} />
+          <div className="flex items-center gap-2 mb-1">
+            <Tag label={post.category} color={post.categoryColor} />
+            {post.featured && (
+              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-red/10 text-red text-[0.6rem] font-bold uppercase tracking-wider">
+                <span className="w-1 h-1 rounded-full bg-red animate-pulse" />
+                Featured
+              </span>
+            )}
+          </div>
 
-          <h1 className="text-3xl md:text-4xl font-extrabold text-navy tracking-tight leading-tight mt-4 mb-4">
+          <h1 className="text-[clamp(1.875rem,4.5vw,2.625rem)] font-extrabold text-navy tracking-[-0.025em] leading-[1.12] mt-4 mb-4">
             {post.title}
           </h1>
 
@@ -90,7 +101,7 @@ export default async function BlogPostPage({ params }: Props) {
               {post.tags.map((tag) => (
                 <span
                   key={tag}
-                  className="px-2.5 py-0.5 rounded-full bg-gray-100 text-gray-500 text-[11px] font-medium"
+                  className="px-2.5 py-0.5 rounded-full bg-gray-100 text-gray-500 text-[11px] font-medium hover:bg-gray-200 hover:text-navy transition-colors duration-150"
                 >
                   {tag}
                 </span>
@@ -104,17 +115,28 @@ export default async function BlogPostPage({ params }: Props) {
         {/* Post Banner — real image when present, gradient fallback */}
         {post.bannerImage && (
           <div className="max-w-[920px] mx-auto px-6 py-6">
-            <BannerImage
-              post={post}
-              className="h-[220px] md:h-[320px] rounded-2xl"
-              watermark
-            />
+            <div className="relative rounded-2xl overflow-hidden shadow-lg shadow-navy/10 ring-1 ring-gray-200">
+              <BannerImage
+                post={post}
+                className="h-[220px] md:h-[380px]"
+                watermark
+              />
+              {/* Bottom scrim */}
+              <div
+                aria-hidden
+                className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-navy/40 pointer-events-none"
+              />
+              {/* Category chip overlay */}
+              <span className="absolute top-3.5 left-3.5 bg-navy/45 backdrop-blur-sm border border-white/18 px-2.5 py-1 rounded-full text-[10.5px] font-bold text-white uppercase tracking-[0.06em] z-10">
+                {post.category}
+              </span>
+            </div>
           </div>
         )}
 
         {/* Article Body — rendered from MDX content */}
         <article className="article-body max-w-[720px] mx-auto px-6 pb-16">
-          <MDXArticle mdx={mdxContent} />
+          <MDXArticle mdx={mdxBody} />
         </article>
 
         {/* Next/Prev */}

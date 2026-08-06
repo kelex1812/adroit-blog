@@ -21,6 +21,19 @@ export function getMDXContent(slug: string): string | null {
 }
 
 /**
+ * Strip the `---` frontmatter block from raw MDX before rendering.
+ * Mirrors the Learn renderer fix (lib/learn.ts) — without this the
+ * frontmatter YAML blob renders as a stray heading inside the article.
+ */
+export function stripMDXFrontmatter(raw: string): string {
+  const lines = raw.split("\n");
+  if (lines[0]?.trim() !== "---") return raw;
+  const end = lines.findIndex((l, i) => i > 0 && l.trim() === "---");
+  if (end === -1) return raw;
+  return lines.slice(end + 1).join("\n");
+}
+
+/**
  * Get a list of all MDX slugs available in content/blog/.
  */
 export function getAllMDXSlugs(): string[] {

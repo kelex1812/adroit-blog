@@ -17,10 +17,10 @@ export default function Header() {
   const isLearnActive = pathname === "/learn" || pathname.startsWith("/learn/");
 
   return (
-    <header className="sticky top-0 z-50 bg-white border-b border-gray-200">
+    <header className="sticky top-0 z-50 bg-white/95 backdrop-blur border-b border-gray-200 shadow-[0_1px_0_rgba(11,29,58,0.03)]">
       <div className="max-w-[1120px] mx-auto px-6 h-16 flex items-center justify-between">
-        <Link href="/blog" className="flex items-center gap-2.5 no-underline text-navy">
-          <div className="w-8 h-8 bg-navy rounded-sm flex items-center justify-center text-white font-extrabold text-sm">
+        <Link href="/blog" className="flex items-center gap-2.5 no-underline text-navy group">
+          <div className="w-8 h-8 bg-navy rounded-sm flex items-center justify-center text-white font-extrabold text-sm transition-transform duration-150 group-hover:scale-105">
             A
           </div>
           <span className="font-bold text-lg tracking-tight">Adroit</span>
@@ -38,7 +38,7 @@ export default function Header() {
                 href={link.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-gray-500 text-sm font-medium hover:text-navy transition-colors duration-150 no-underline"
+                className="relative text-gray-500 text-sm font-medium hover:text-navy transition-colors duration-150 no-underline"
               >
                 {link.label}
               </a>
@@ -49,15 +49,24 @@ export default function Header() {
                 aria-current={
                   link.href === "/learn" && isLearnActive ? "page" : undefined
                 }
-                className="text-gray-500 text-sm font-medium hover:text-navy transition-colors duration-150 no-underline aria-[current=page]:text-navy aria-[current=page]:font-semibold"
+                className="relative text-gray-500 text-sm font-medium hover:text-navy transition-colors duration-150 no-underline aria-[current=page]:text-navy aria-[current=page]:font-semibold"
               >
                 {link.label}
+                <span
+                  aria-hidden
+                  className={`absolute -bottom-[18px] left-0 right-0 h-[2px] rounded-full bg-red transition-opacity duration-150 ${
+                    (link.href === "/learn" && isLearnActive) ||
+                    pathname === link.href
+                      ? "opacity-100"
+                      : "opacity-0"
+                  }`}
+                />
               </Link>
             ),
           )}
           <Link
             href="https://adroit.io/contact"
-            className="bg-navy text-white px-[18px] py-2 rounded-sm text-[0.8rem] font-semibold hover:bg-navy-light transition-colors duration-150 no-underline"
+            className="bg-navy text-white px-[18px] py-2 rounded-sm text-[0.8rem] font-semibold hover:bg-navy-light hover:-translate-y-px transition-all duration-150 no-underline"
           >
             Contact Us
           </Link>

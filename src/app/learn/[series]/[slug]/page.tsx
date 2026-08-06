@@ -109,7 +109,7 @@ export default async function LessonPage({ params }: Props) {
 
           {/* Author row */}
           <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 rounded-full bg-navy flex items-center justify-center text-white font-bold text-xs">
+            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-navy to-navy-light ring-2 ring-white shadow-sm flex items-center justify-center text-white font-bold text-xs">
               {getAuthorInitials(lesson.author)}
             </div>
             <div className="flex flex-col">

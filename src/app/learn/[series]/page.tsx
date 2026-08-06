@@ -82,19 +82,27 @@ export default async function SeriesPage({ params, searchParams }: Props) {
           </Link>
 
           <div
-            className={`rounded-2xl overflow-hidden relative bg-gradient-to-br ${s.gradient} p-8 pb-7`}
+            className={`rounded-2xl overflow-hidden relative bg-gradient-to-br ${s.gradient} p-8 pb-7 shadow-lg shadow-navy/10`}
           >
-            <span className="inline-flex items-center gap-1.5 font-mono text-[11px] font-bold text-white uppercase tracking-[0.07em] bg-white/20 backdrop-blur-sm px-[11px] py-1 rounded-full mb-3.5">
+            <div
+              aria-hidden
+              className="absolute inset-0"
+              style={{
+                background:
+                  "radial-gradient(circle at 85% 15%, rgba(255,255,255,0.22) 0%, transparent 45%)",
+              }}
+            />
+            <span className="relative inline-flex items-center gap-1.5 font-mono text-[11px] font-bold text-white uppercase tracking-[0.07em] bg-white/20 backdrop-blur-sm px-[11px] py-1 rounded-full mb-3.5">
               {seriesShortLabel(s.slug)}
             </span>
-            <h1 className="text-[clamp(1.5rem,3vw,2rem)] font-extrabold text-white tracking-[-0.02em] mb-2 leading-tight">
+            <h1 className="relative text-[clamp(1.5rem,3vw,2rem)] font-extrabold text-white tracking-[-0.02em] mb-2 leading-tight">
               {s.name}
             </h1>
-            <p className="text-white/80 text-sm max-w-[560px] leading-relaxed mb-5">
+            <p className="relative text-white/80 text-sm max-w-[560px] leading-relaxed mb-5">
               {s.description}
             </p>
             {total > 0 && (
-              <div className="max-w-[420px]">
+              <div className="relative max-w-[420px]">
                 <LessonProgress
                   published={published}
                   total={total}

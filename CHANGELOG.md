@@ -27,6 +27,17 @@ All notable changes to the Adroit Consulting Blog project will be documented in 
 - Blog listing (`/blog`) — layout wrapper with static metadata export (client component compatible).
 
 ### Changed
+- **Design pass — elevated editorial polish (per Brainiac's implementation plan t_71faff13 + Kara's design system)**:
+  - **Design tokens** — added `shadow-card`, `shadow-card-hover`, and per-category glow tokens (`shadow-glow-sf/react/ai/mkt`) to the `@theme inline` block in `globals.css` so cards, tag chips, and category panels use the token-based elevation system instead of ad-hoc shadows
+  - **Article typography** (`globals.css` `.article-body`) — body bumped to `1.125rem`/`1.8` line-height; h2 downscaled to `1.5rem` with a bottom hairline (`border-bottom: 1px solid gray-200`, 10px padding); h3 to `1.125rem`; inline links now navy text-weight-600 with a 2px red underline (`rgba(200,16,46,0.4)`); blockquote flattened to gray-50 background, 16×24 padding, 1rem italic, big quote glyph removed; added global `prefers-reduced-motion` block (motion discipline)
+  - **PostCard** — resting `shadow-card`, hover `shadow-card-hover` + `border-navy/15`, title `text-lg tracking-tight`
+  - **FeaturedPost** — category-tinted glow (`var(--shadow-glow-<cat>)` inline on the card, `sf` fallback), radial red tint inside the navy panel, solid red FEATURED pill with white pulsing dot, title bumped to `text-2xl md:text-3xl`, category chip overlaid top-left of the image
+  - **Post detail** (`/blog/[slug]`) — banner height to `h-[220px] md:h-[380px]` with bottom navy scrim + top-left category chip (navy/45 + blur + white border); author avatar `rounded-xl` with white ring and red hover ring; tag pills hover to navy text
+  - **Blog listing hero** — kicker copy to "Adroit Consulting — Field Notes"; H1 uses navy→navy-light gradient text (matching Learn)
+  - **Learn** — PathCard progress wrapped in a bordered progress row (`mt-4 pt-3 border-t border-gray-100`), "Coming soon" badge gets dashed border; LessonCard sequence badge `rounded-xl` with red lesson number on navy
+  - **Categories** (`/blog/categories`) — flat pastel cards replaced with photographic bands: `h-[108px]` image band (`public/categories/*.jpg` copied from Kara's `design/assets/`), per-category multiply tint, bottom scrim, white icon chip on the band, mono count pill, category-tinted hover glow
+  - **Tags** (`/tags`) — weighted tag cloud (chips scale lg/md/sm by post-count tercile); tag H1s (index + single tag) use gradient text; single-tag page reuses FeaturedPost/PostCard elevation
+  - **ShareBar** — icons bumped to 14px, buttons to `w-9 h-9` (mockup parity)
 - `package.json` prebuild now runs `node scripts/build-posts.js && node scripts/build-learn.js`
 - `src/app/sitemap.ts` extended with learn URLs (weekly cadence, lessons priority 0.7)
 - CHANGELOG restructured to reflect full platform feature set.

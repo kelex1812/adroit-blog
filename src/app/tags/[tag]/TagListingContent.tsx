@@ -31,7 +31,11 @@ function TagPageContent({ tagInfo }: { tagInfo: TagInfo }) {
           >
             &larr; All Tags
           </Link>
-          <h1 className="text-3xl md:text-4xl font-extrabold text-navy tracking-tight mb-2">
+          <div className="inline-flex items-center gap-2 font-mono text-[11px] font-semibold text-red uppercase tracking-[0.08em] mb-[14px]">
+            <span className="w-1.5 h-1.5 rounded-full bg-red" />
+            Topic
+          </div>
+          <h1 className="text-[clamp(2rem,4.5vw,2.75rem)] font-extrabold text-navy tracking-[-0.03em] leading-[1.05] mb-3 bg-gradient-to-r from-navy to-navy-light bg-clip-text text-transparent">
             {tagInfo.tag}
           </h1>
           <div className="flex flex-wrap items-center justify-between gap-3">

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import type { Metadata } from "next";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -19,11 +20,12 @@ const categoryDefs = [
     description:
       "Flow design tips, Apex patterns, integration guides, and release highlights.",
     icon: "☁",
-    color: "sf",
-    bg: "from-[#F0F9FF] to-[#E0F2FE]",
-    border: "border-[#BAE6FD]",
-    iconBg: "bg-white",
-    iconColor: "text-[#0284C7]",
+    image: "/categories/sf.jpg",
+    alt: "Salesforce category",
+    // Category tint overlay (multiply) — mockup .cat-band .tint
+    tint: "linear-gradient(135deg, rgba(14,165,233,0.55), rgba(37,99,235,0.55))",
+    // Category-tinted hover glow (token utility — literal so Tailwind scans it)
+    glow: "hover:shadow-glow-sf",
     countColor: "text-[#0369A1]",
   },
   {
@@ -32,11 +34,10 @@ const categoryDefs = [
     description:
       "Architecture patterns, component design, performance, and Next.js.",
     icon: "⟨/⟩",
-    color: "react",
-    bg: "from-[#ECFDF5] to-[#D1FAE5]",
-    border: "border-[#6EE7B7]",
-    iconBg: "bg-white",
-    iconColor: "text-[#059669]",
+    image: "/categories/react.jpg",
+    alt: "React & Web Dev category",
+    tint: "linear-gradient(135deg, rgba(16,185,129,0.55), rgba(5,150,105,0.55))",
+    glow: "hover:shadow-glow-react",
     countColor: "text-[#047857]",
   },
   {
@@ -45,24 +46,21 @@ const categoryDefs = [
     description:
       "How AI accelerates Salesforce delivery, AI-assisted React dev, and agent workflows.",
     icon: "⬡",
-    color: "ai",
-    bg: "from-[#FFFBEB] to-[#FEF3C7]",
-    border: "border-[#FCD34D]",
-    iconBg: "bg-white",
-    iconColor: "text-[#D97706]",
-    countColor: "text-[#92400E]",
+    image: "/categories/ai.jpg",
+    alt: "AI & Consulting category",
+    tint: "linear-gradient(135deg, rgba(245,158,11,0.55), rgba(217,119,6,0.55))",
+    glow: "hover:shadow-glow-ai",
+    countColor: "text-[#B45309]",
   },
   {
     key: "mkt",
     name: "Marketing",
-    description:
-      "Showcasing Adroit's capabilities and how we can help your business.",
+    description: "Showcasing Adroit's capabilities and how we can help your business.",
     icon: "✦",
-    color: "mkt",
-    bg: "from-[#FDF2F8] to-[#FCE7F3]",
-    border: "border-[#F9A8D4]",
-    iconBg: "bg-white",
-    iconColor: "text-[#DB2777]",
+    image: "/categories/mkt.jpg",
+    alt: "Marketing category",
+    tint: "linear-gradient(135deg, rgba(236,72,153,0.55), rgba(225,29,72,0.55))",
+    glow: "hover:shadow-glow-mkt",
     countColor: "text-[#BE185D]",
   },
 ];
@@ -87,7 +85,11 @@ export default function CategoriesPage() {
           >
             &larr; Back to Blog
           </Link>
-          <h1 className="text-3xl md:text-4xl font-extrabold text-navy tracking-tight mb-2">
+          <div className="inline-flex items-center gap-2 font-mono text-[11px] font-semibold text-red uppercase tracking-[0.08em] mb-[14px]">
+            <span className="w-1.5 h-1.5 rounded-full bg-red" />
+            Browse by Topic
+          </div>
+          <h1 className="text-[clamp(2rem,4.5vw,2.75rem)] font-extrabold text-navy tracking-[-0.03em] leading-[1.05] mb-3 bg-gradient-to-r from-navy to-navy-light bg-clip-text text-transparent">
             Blog Categories
           </h1>
           <p className="text-base text-gray-500 max-w-[520px] leading-relaxed">
@@ -96,31 +98,63 @@ export default function CategoriesPage() {
           </p>
         </div>
 
-        {/* Category Cards */}
-        <div className="max-w-[1120px] mx-auto px-6 py-6 pb-10">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {/* Category Cards — photographic bands + tint + glow */}
+        <div className="max-w-[1120px] mx-auto px-6 py-8 pb-10">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             {categories.map((cat) => (
               <Link
                 key={cat.key}
                 href={`/blog?category=${cat.key}`}
-                className={`p-6 rounded-xl border border-transparent bg-gradient-to-br ${cat.bg} ${cat.border} hover:-translate-y-0.5 hover:shadow-md transition-all duration-200 cursor-pointer relative overflow-hidden no-underline block`}
+                className={`group relative rounded-xl overflow-hidden border border-gray-200 bg-white shadow-card hover:-translate-y-1 ${cat.glow} transition-all duration-300 cursor-pointer no-underline block`}
               >
-                <div
-                  className={`w-9 h-9 rounded-md ${cat.iconBg} flex items-center justify-center text-base mb-3 ${cat.iconColor}`}
-                >
-                  {cat.icon}
+                {/* Photographic band */}
+                <div className="relative h-[108px] overflow-hidden">
+                  <Image
+                    src={cat.image}
+                    alt={cat.alt}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 560px"
+                    className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.05]"
+                  />
+                  {/* Category tint (multiply) */}
+                  <div
+                    aria-hidden
+                    className="absolute inset-0 mix-blend-multiply opacity-70"
+                    style={{ background: cat.tint }}
+                  />
+                  {/* Bottom scrim */}
+                  <div
+                    aria-hidden
+                    className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-navy/55"
+                  />
+                  {/* Icon chip on band */}
+                  <div className="absolute bottom-3 left-4 w-10 h-10 rounded-lg bg-white/90 backdrop-blur-sm shadow-md flex items-center justify-center text-lg transition-transform duration-200 group-hover:scale-110">
+                    {cat.icon}
+                  </div>
                 </div>
-                <h3 className="text-lg font-bold text-gray-800 mb-1.5">
-                  {cat.name}
-                </h3>
-                <p className="text-xs text-gray-600 leading-relaxed mb-3">
-                  {cat.description}
-                </p>
-                <span
-                  className={`text-xs font-semibold flex items-center gap-1 ${cat.countColor}`}
-                >
-                  {cat.postCount} posts &rarr;
-                </span>
+
+                {/* Body */}
+                <div className="p-[20px_22px_22px]">
+                  <h3 className="text-[1.25rem] font-extrabold text-gray-900 tracking-[-0.02em] mb-2 group-hover:text-navy transition-colors duration-200">
+                    {cat.name}
+                  </h3>
+                  <p className="text-[13px] text-gray-500 leading-relaxed mb-4">
+                    {cat.description}
+                  </p>
+                  <span className="inline-flex items-center gap-1.5">
+                    <span
+                      className={`inline-flex items-center justify-center min-w-[20px] h-5 px-1.5 rounded-full bg-white/90 font-mono text-[10.5px] font-bold tabular-nums ${cat.countColor}`}
+                    >
+                      {cat.postCount}
+                    </span>
+                    <span className="text-xs font-semibold flex items-center gap-1 text-gray-600">
+                      posts
+                      <span className="transition-transform duration-200 group-hover:translate-x-0.5">
+                        &rarr;
+                      </span>
+                    </span>
+                  </span>
+                </div>
               </Link>
             ))}
           </div>
