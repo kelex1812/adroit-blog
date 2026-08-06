@@ -59,9 +59,10 @@ export default function PathCard({ series }: PathCardProps) {
               published={series.lessons.length}
               total={series.totalLessons}
             />
-            {/* Quiz average + attempt count (design brief §5.3) */}
+            {/* Quiz average + attempt count (design brief §5.3) — informational only;
+                the whole card links to the series, so the strip must not be a nested anchor. */}
             <div className="mt-2.5">
-              <QuizStats seriesSlug={series.slug} />
+              <QuizStats seriesSlug={series.slug} as="span" />
             </div>
           </div>
         )}

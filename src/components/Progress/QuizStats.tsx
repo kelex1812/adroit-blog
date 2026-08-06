@@ -18,6 +18,12 @@ interface QuizStatsProps {
   seriesSlug: string;
   /** Where the strip sits — controls onGradient (white) treatment. */
   onGradient?: boolean;
+  /**
+   * Rendering mode. "link" (default) wraps the strip in a <Link> to the quiz.
+   * "span" renders a plain informational strip — use when the parent is already
+   * a link (nested anchors are invalid HTML and trigger React hydration errors).
+   */
+  as?: "link" | "span";
 }
 
 interface ServerStats {
@@ -25,7 +31,11 @@ interface ServerStats {
   attempts: number;
 }
 
-export default function QuizStats({ seriesSlug, onGradient = false }: QuizStatsProps) {
+export default function QuizStats({
+  seriesSlug,
+  onGradient = false,
+  as = "link",
+}: QuizStatsProps) {
   const { progress } = useQuizProgress(seriesSlug);
   const { user } = useAuth();
   const [server, setServer] = useState<ServerStats | null>(null);
@@ -61,15 +71,12 @@ export default function QuizStats({ seriesSlug, onGradient = false }: QuizStatsP
 
   if (attempts === 0) return null;
 
-  return (
-    <Link
-      href={`/learn/${seriesSlug}/quiz`}
-      className={`inline-flex items-center gap-2 font-mono text-[10.5px] font-semibold no-underline transition-colors duration-150 active:scale-[0.98] ${
-        onGradient
-          ? "text-white/85 hover:text-white bg-white/15 backdrop-blur-sm px-2.5 py-1 rounded-full"
-          : "text-gray-500 hover:text-navy"
-      }`}
-    >
+  const tone = onGradient
+    ? "text-white/85 bg-white/15 backdrop-blur-sm px-2.5 py-1 rounded-full"
+    : "text-gray-500";
+
+  const content = (
+    <>
       <svg
         aria-hidden="true"
         width="12"
@@ -85,6 +92,27 @@ export default function QuizStats({ seriesSlug, onGradient = false }: QuizStatsP
         <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
       </svg>
       Quiz avg {best}% &middot; {attempts} {attempts === 1 ? "attempt" : "attempts"}
+    </>
+  );
+
+  // Non-interactive strip: parent is already a link (e.g. PathCard) — nested
+  // anchors are invalid HTML and trigger React hydration errors.
+  if (as === "span") {
+    return (
+      <span className={`inline-flex items-center gap-2 font-mono text-[10.5px] font-semibold ${tone}`}>
+        {content}
+      </span>
+    );
+  }
+
+  return (
+    <Link
+      href={`/learn/${seriesSlug}/quiz`}
+      className={`inline-flex items-center gap-2 font-mono text-[10.5px] font-semibold no-underline transition-colors duration-150 active:scale-[0.98] ${tone} ${
+        onGradient ? "hover:text-white" : "hover:text-navy"
+      }`}
+    >
+      {content}
     </Link>
   );
 }

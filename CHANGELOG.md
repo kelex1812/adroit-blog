@@ -4,6 +4,18 @@ All notable changes to the Adroit Consulting Blog project will be documented in 
 
 ## [Unreleased]
 
+### Fix: QuizStats nested anchor on /learn (QA run #2557, t_97f2451c)
+
+Resolves the single remaining MEDIUM finding from zod's re-review (t_dfa1c8cd) of commit db25389.
+
+**MEDIUM — nested interactive element (invalid HTML + hydration error)**
+- `QuizStats` gains an `as` prop (`"link"` default | `"span"`). `PathCard` (learn hub) now renders the strip as a non-interactive `<span>` — the whole card already links to the series, so the strip is purely informational ("Quiz avg X% · N attempts"). The series-header usage (`/learn/[series]`, `onGradient`) keeps the interactive `Link` variant, which is not nested.
+- Why: the previous `Link` inside `PathCard`'s `Link` produced `<a><a>…</a></a>`, invalid HTML that React flagged with "In HTML, <a> cannot be a descendant of <a>" after client hydration injected the strip (server HTML was clean because the strip only renders when attempts exist in localStorage). Removing the nested anchor also removes the ambiguous click target for assistive tech and the flaky first-click navigation.
+- Verified: `tsc --noEmit`, `eslint`, `npm run build` all clean; production server loaded `/learn` with quiz attempts present — no nested anchors in DOM, no console errors/hydration warnings; series header still links to `/learn/<series>/quiz`.
+
+### Known Issues (new)
+- None introduced. The nested-anchor error was the only open finding; all 9 prior findings remain fixed (db25389).
+
 ### QA Findings — Blog Life & Depth re-review (t_574d3153)
 
 Resolves all 9 findings from zod's QA review run #2552 (t_dfa1c8cd) of the Blog Life & Depth feature (read tracking, lesson completion, quiz engine, auth).
