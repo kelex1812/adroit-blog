@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Adroit Blog — Life & Depth Requirements</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #f8f9fa; color: #1a1a2e; line-height: 1.6; }
+  .container { max-width: 860px; margin: 0 auto; padding: 40px 24px; }
+  header { background: #0B1D3A; color: white; padding: 48px 0; margin-bottom: 40px; }
+  header .container { padding: 0 24px; }
+  header h1 { font-size: 2rem; font-weight: 800; letter-spacing: -0.03em; margin-bottom: 8px; }
+  header .subtitle { font-size: 1rem; color: rgba(255,255,255,0.7); }
+  header .meta { font-size: 0.85rem; color: rgba(255,255,255,0.5); margin-top: 16px; }
+  section { background: white; border-radius: 8px; padding: 32px; margin-bottom: 24px; box-shadow: 0 1px 2px rgba(11,29,58,0.04), 0 4px 12px -2px rgba(11,29,58,0.06); }
+  section h2 { font-size: 1.25rem; font-weight: 700; color: #0B1D3A; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 1px solid #e5e7eb; }
+  section h3 { font-size: 1.05rem; font-weight: 600; color: #0B1D3A; margin: 20px 0 8px; }
+  section p { margin-bottom: 12px; color: #374151; }
+  table { width: 100%; border-collapse: collapse; margin: 16px 0; }
+  th, td { padding: 10px 14px; text-align: left; border: 1px solid #e5e7eb; font-size: 0.9rem; }
+  th { background: #0B1D3A; color: white; font-weight: 600; }
+  td { color: #374151; }
+  tr:nth-child(even) td { background: #f9fafb; }
+  .us-card { border: 1px solid #e5e7eb; border-radius: 6px; padding: 20px; margin: 16px 0; background: #fafbfc; }
+  .us-card .us-id { font-family: "SF Mono", "Fira Code", monospace; font-size: 0.8rem; font-weight: 700; color: #C8102E; text-transform: uppercase; letter-spacing: 0.05em; }
+  .us-card .us-title { font-size: 1rem; font-weight: 600; color: #0B1D3A; margin: 6px 0 10px; }
+  .us-card .us-body { font-size: 0.9rem; color: #374151; margin-bottom: 12px; }
+  .us-card .ac-list { margin: 0; padding-left: 20px; }
+  .us-card .ac-list li { margin-bottom: 6px; font-size: 0.88rem; color: #4b5563; }
+  .scope-in { color: #059669; font-weight: 600; }
+  .scope-out { color: #C8102E; font-weight: 600; }
+  .scope-needs { color: #D97706; font-weight: 600; }
+  .question-box { border-left: 3px solid #D97706; padding: 12px 16px; background: #FFFBEB; margin: 8px 0; border-radius: 0 6px 6px 0; font-size: 0.9rem; color: #92400E; }
+  .handoff { background: #EFF6FF; border: 1px solid #BFDBFE; border-radius: 6px; padding: 20px; margin-top: 16px; }
+  .handoff strong { color: #1E40AF; }
+  .priority-badge { display: inline-block; padding: 2px 10px; border-radius: 12px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; }
+  .priority-high { background: #FEE2E2; color: #C8102E; }
+  .priority-medium { background: #FEF3C7; color: #92400E; }
+  .constraint-list { padding-left: 20px; color: #374151; }
+  .constraint-list li { margin-bottom: 6px; font-size: 0.9rem; }
+  .dependency-list { list-style: none; padding: 0; }
+  .dependency-list li { padding: 8px 12px; border-bottom: 1px solid #e5e7eb; font-size: 0.9rem; color: #374151; }
+  .dependency-list li:last-child { border-bottom: none; }
+  .dependency-list .dep-id { font-family: "SF Mono", "Fira Code", monospace; font-size: 0.78rem; font-weight: 700; color: #0B1D3A; }
+  footer { text-align: center; padding: 24px; color: #9CA3AF; font-size: 0.8rem; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <h1>Adroit Blog — Life & Depth</h1>
+    <p class="subtitle">Requirements Analysis: Banners, Motion System, Supabase Progress Tracking, and Interactive Quizzes</p>
+    <p class="meta">
+      Author: Lois (Business Analyst) &nbsp;|&nbsp; Date: 2026-08-06 &nbsp;|&nbsp; Tenant: adroit-blog &nbsp;|&nbsp; Task: t_8f4504ca
+    </p>
+  </div>
+</header>
+
+<div class="container">
+
+<!-- Executive Summary -->
+<section>
+  <h2>Executive Summary</h2>
+  <p>
+    The Adroit Blog has completed its Phase 1 design pass: elevated card surfaces, editorial typography, category-tinted glows, photographic category cards, and weighted tag cloud. The existing codebase builds cleanly and all Phase 1 design criteria have been verified by QA.
+  </p>
+  <p>
+    Phase 2 ("Life & Depth") adds <strong>dynamic banners</strong>, a <strong>site-wide motion system</strong>, <strong>user progress tracking via Supabase</strong> (read/unread for blog posts, completion for learning lessons), and <strong>interactive quiz components</strong> for the Learn hub. The Supabase project is provisioned (zrggxfdyptiahskogwnn). Kara's design discovery (t_7e4e4898) is currently blocked and needs Chris to unblock before motion/progress/quiz mockups can be produced.
+  </p>
+  <p>
+    These requirements define the business-level user stories and acceptance criteria. The architect (brainiac) will design the Supabase schema, data contracts, and component architecture. Steel will implement from the arch plan.
+  </p>
+</section>
+
+<!-- User Stories -->
+<section>
+  <h2>User Stories</h2>
+
+  <div class="us-card">
+    <span class="us-id">US-001</span>
+    <div class="us-title">Dynamic Banners — Category-Tinted Rotating Hero</div>
+    <div class="us-body">
+      As a <strong>blog visitor</strong>, I want <strong>the blog listing hero to display rotating category banners with smooth transitions</strong>, so that <strong>the homepage feels alive and immediately communicates the breadth of content available</strong>.
+    </div>
+    <h3>Acceptance Criteria</h3>
+    <ol class="ac-list">
+      <li><strong>Given</strong> the blog listing page loads, <strong>when</strong> the hero banner renders, <strong>then</strong> it displays a full-width banner image with the category's accent gradient overlay and a kicker label (e.g., "Salesforce," "React &amp; Web Dev").</li>
+      <li><strong>Given</strong> a banner is displayed, <strong>when</strong> 6 seconds elapse, <strong>then</strong> the banner transitions to the next category's banner with a fade or slide animation (duration 400ms, ease-out).</li>
+      <li><strong>Given</strong> the user hovers over the banner, <strong>when</strong> the mouse enters, <strong>then</strong> the auto-advance pauses; <strong>when</strong> the mouse leaves, <strong>then</strong> auto-advance resumes from where it left off.</li>
+      <li><strong>Given</strong> the user is on a reduced-motion preference, <strong>when</strong> the page loads, <strong>then</strong> the banner shows the current category without auto-advance (static display).</li>
+      <li><strong>Given</strong> the banner has no matching image for a category, <strong>when</strong> it renders, <strong>then</strong> it falls back to the category gradient (sky, emerald, amber, pink) with a subtle noise texture.</li>
+    </ol>
+  </div>
+
+  <div class="us-card">
+    <span class="us-id">US-002</span>
+    <div class="us-title">Site-Wide Motion System</div>
+    <div class="us-body">
+      As a <strong>reader</strong>, I want <strong>subtle micro-interactions on cards, links, and buttons</strong>, so that <strong>the site feels responsive and crafted without being distracting</strong>.
+    </div>
+    <h3>Acceptance Criteria</h3>
+    <ol class="ac-list">
+      <li><strong>Given</strong> a user moves their cursor over a PostCard, <strong>when</strong> the hover state activates, <strong>then</strong> the card lifts (-translate-y-1) with a category-tinted glow shadow and the banner image zooms (scale 1.03) over 300ms ease-out.</li>
+      <li><strong>Given</strong> a link is focused via keyboard (tab), <strong>when</strong> the focus-visible ring activates, <strong>then</strong> it displays a red (C8102E) 2px outline with 2px offset.</li>
+      <li><strong>Given</strong> a button is clicked, <strong>when</strong> the click occurs, <strong>then</strong> the button shows a brief scale-down (0.97) feedback animation (100ms) before returning to normal.</li>
+      <li><strong>Given</strong> the user has prefers-reduced-motion set to reduce, <strong>when</strong> any interactive element enters hover or focus, <strong>then</strong> all transforms, zooms, and lifts are suppressed (no motion, only color/state changes).</li>
+      <li><strong>Given</strong> a page loads, <strong>when</strong> the hero section becomes visible in the viewport, <strong>then</strong> it fades in from below (opacity 0 to 1, translate-y 8px to 0) over 300ms.</li>
+    </ol>
+  </div>
+
+  <div class="us-card">
+    <span class="us-id">US-003</span>
+    <div class="us-title">Blog Post Progress — Read/Unread Tracking</div>
+    <div class="us-body">
+      As a <strong>returning reader</strong>, I want <strong>blog post cards to show whether I have read each post</strong>, so that <strong>I can track my reading progress and pick up where I left off</strong>.
+    </div>
+    <h3>Acceptance Criteria</h3>
+    <ol class="ac-list">
+      <li><strong>Given</strong> a user visits the blog listing page while logged in, <strong>when</strong> PostCards render, <strong>then</strong> unread posts have a solid banner image and read posts have a dimmed overlay (opacity 0.6 on the banner).</li>
+      <li><strong>Given</strong> a user sees a dimmed (read) PostCard, <strong>when</strong> they click the card, <strong>then</strong> they navigate to the post detail page.</li>
+      <li><strong>Given</strong> a user is on the blog listing page, <strong>when</strong> they toggle the "Show unread only" filter, <strong>then</strong> only unread PostCards are displayed.</li>
+      <li><strong>Given</strong> a user has not logged in, <strong>when</strong> they visit the blog listing, <strong>then</strong> all PostCards render as unread (no dimming), and a subtle "Sign in to track reading progress" prompt appears near the filter toggle.</li>
+      <li><strong>Given</strong> a user reads a post, <strong>when</strong> they scroll past 75% of the article body, <strong>then</strong> the post is marked as read in Supabase and the listing card updates to dimmed state on next visit.</li>
+    </ol>
+  </div>
+
+  <div class="us-card">
+    <span class="us-id">US-004</span>
+    <div class="us-title">Learn Lesson Completion Tracking</div>
+    <div class="us-body">
+      As a <strong>learner</strong>, I want <strong>to mark individual lessons as complete and see my series progress bar update</strong>, so that <strong>I can track my certification or learning path progress</strong>.
+    </div>
+    <h3>Acceptance Criteria</h3>
+    <ol class="ac-list">
+      <li><strong>Given</strong> a user is viewing a lesson page, <strong>when</strong> they click "Mark complete," <strong>then</strong> the lesson is recorded in Supabase and the button changes to "Completed" with a check icon.</li>
+      <li><strong>Given</strong> a user has completed some lessons in a series, <strong>when</strong> they view the series page, <strong>then</strong> completed lessons display a checkmark badge and the PathCard progress bar reflects the updated percentage.</li>
+      <li><strong>Given</strong> a user unmarks a lesson (long-press or undo button within 10 seconds), <strong>when</strong> the action is confirmed, <strong>then</strong> the completion is removed from Supabase and the progress bar recalculates.</li>
+      <li><strong>Given</strong> a user is not logged in, <strong>when</strong> they click "Mark complete," <strong>then</strong> they are prompted to sign in (or create a free account) and redirected back to the lesson after auth.</li>
+      <li><strong>Given</strong> a series has N total lessons and M are completed, <strong>when</strong> the progress bar renders, <strong>then</strong> it displays "M/N completed" with a gradient fill from the series accent color.</li>
+    </ol>
+  </div>
+
+  <div class="us-card">
+    <span class="us-id">US-005</span>
+    <div class="us-title">Interactive Quiz Component</div>
+    <div class="us-body">
+      As a <strong>learner</strong>, I want <strong>to take quizzes embedded in lessons and see instant feedback</strong>, so that <strong>I can test my understanding before moving on</strong>.
+    </div>
+    <h3>Acceptance Criteria</h3>
+    <ol class="ac-list">
+      <li><strong>Given</strong> a lesson contains a quiz block, <strong>when</strong> the lesson page renders, <strong>then</strong> the quiz displays as a styled card with the question text and clickable option buttons.</li>
+      <li><strong>Given</strong> a user selects an option and clicks "Submit," <strong>when</strong> the submission is processed, <strong>then</strong> the correct answer is highlighted in green, incorrect answers in red, and the explanation text is revealed below.</li>
+      <li><strong>Given</strong> a user submits a quiz, <strong>when</strong> the result is shown, <strong>then</strong> the score (X/Y correct) displays with a color-coded status (green if 100%, amber if 50-99%, red if below 50%).</li>
+      <li><strong>Given</strong> a user has completed a quiz, <strong>when</strong> they revisit the same lesson, <strong>then</strong> their previous answers and score are displayed (they can retake for practice, but the original score is preserved).</li>
+      <li><strong>Given</strong> a series has quiz completion data, <strong>when</strong> the learner views the series overview, <strong>then</strong> the average quiz score for that series is displayed alongside the progress bar.</li>
+    </ol>
+  </div>
+
+  <div class="us-card">
+    <span class="us-id">US-006</span>
+    <div class="us-title">Supabase Data Model for User Progress</div>
+    <div class="us-body">
+      As a <strong>system</strong>, I need <strong>a Supabase schema to store user progress data (blog reads, lesson completions, quiz results)</strong>, so that <strong>user progress persists across sessions and devices</strong>.
+    </div>
+    <h3>Acceptance Criteria</h3>
+    <ol class="ac-list">
+      <li><strong>Given</strong> the schema is deployed, <strong>when</strong> a user reads a post, <strong>then</strong> a record is upserted in the user_progress table with user_id, post_slug, read_at timestamp.</li>
+      <li><strong>Given</strong> a user completes a lesson, <strong>when</strong> the action is recorded, <strong>then</strong> a record is upserted with user_id, series_slug, lesson_slug, completed_at timestamp.</li>
+      <li><strong>Given</strong> a user takes a quiz, <strong>when</strong> the result is stored, <strong>then</strong> a record is upserted with user_id, series_slug, quiz_id, score, total_questions, taken_at timestamp.</li>
+      <li><strong>Given</strong> a user signs in via Supabase Auth, <strong>when</strong> their progress is queried, <strong>then</strong> all their records are returned in a single efficient query (indexed on user_id).</li>
+      <li><strong>Given</strong> Row Level Security (RLS) is enabled, <strong>when</strong> a user queries their data, <strong>then</strong> they can only read/modify their own records (never another user's).</li>
+    </ol>
+  </div>
+
+  <div class="us-card">
+    <span class="us-id">US-007</span>
+    <div class="us-title">Guest Mode Progress (Local Storage Fallback)</div>
+    <div class="us-body">
+      As a <strong>visitor who has not signed in</strong>, I want <strong>my reading progress to be tracked locally so I still get the dimmed-card experience</strong>, so that <strong>even without an account I can see what I have already read on this device</strong>.
+    </div>
+    <h3>Acceptance Criteria</h3>
+    <ol class="ac-list">
+      <li><strong>Given</strong> a user is not logged in, <strong>when</strong> they read a post, <strong>then</strong> the post slug is stored in localStorage and the card is dimmed on their device.</li>
+      <li><strong>Given</strong> a user later signs in, <strong>when</strong> they visit the blog listing, <strong>then</strong> their local progress is merged with their cloud progress (cloud takes precedence for matching slugs).</li>
+      <li><strong>Given</strong> a user clears their browser data, <strong>when</strong> they revisit the blog, <strong>then</strong> all cards render as unread (no stale local data).</li>
+    </ol>
+  </div>
+</section>
+
+<!-- Scope Boundaries -->
+<section>
+  <h2>Scope Boundaries</h2>
+  <table>
+    <thead>
+      <tr><th>Category</th><th>Status</th><th>Details</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Dynamic banner hero</strong></td>
+        <td><span class="scope-in">In Scope</span></td>
+        <td>Rotating category banners on /blog hero. Fade/slide transitions. Pause on hover. Reduced-motion fallback.</td>
+      </tr>
+      <tr>
+        <td><strong>Motion system</strong></td>
+        <td><span class="scope-in">In Scope</span></td>
+        <td>Card lifts, image zooms, focus-visible rings, click feedback, hero fade-in. All respects prefers-reduced-motion.</td>
+      </tr>
+      <tr>
+        <td><strong>Blog read/unread tracking</strong></td>
+        <td><span class="scope-in">In Scope</span></td>
+        <td>Supabase storage, localStorage fallback, filter toggle, 75% scroll threshold for mark-as-read.</td>
+      </tr>
+      <tr>
+        <td><strong>Lesson completion tracking</strong></td>
+        <td><span class="scope-in">In Scope</span></td>
+        <td>Mark complete/uncomplete, progress bar updates, series-level stats.</td>
+      </tr>
+      <tr>
+        <td><strong>Interactive quiz component</strong></td>
+        <td><span class="scope-in">In Scope</span></td>
+        <td>Option buttons, submit/grading, explanation reveal, score display, series stats. Multi-choice only (no essay/short-answer).</td>
+      </tr>
+      <tr>
+        <td><strong>Supabase RLS and auth</strong></td>
+        <td><span class="scope-in">In Scope</span></td>
+        <td>RLS policies, indexed queries, guest-mode merge. Security review task (val-el) is separate.</td>
+      </tr>
+      <tr>
+        <td><strong>Guest mode local storage</strong></td>
+        <td><span class="scope-in">In Scope</span></td>
+        <td>localStorage fallback for unread visitors. Merge on sign-in.</td>
+      </tr>
+      <tr>
+        <td><strong>Quiz essay/short-answer types</strong></td>
+        <td><span class="scope-out">Out of Scope</span></td>
+        <td>Only multiple-choice quizzes. Essay grading is future scope.</td>
+      </tr>
+      <tr>
+        <td><strong>Real-time sync across devices</strong></td>
+        <td><span class="scope-out">Out of Scope</span></td>
+        <td>Progress updates are on-demand (next page load). No live cross-device sync in Phase 2.</td>
+      </tr>
+      <tr>
+        <td><strong>Email digest of progress</strong></td>
+        <td><span class="scope-out">Out of Scope</span></td>
+        <td>Progress summaries via email are Phase 3+.</td>
+      </tr>
+      <tr>
+        <td><strong>Social sharing of quiz scores</strong></td>
+        <td><span class="scope-out">Out of Scope</span></td>
+        <td>Score sharing to social platforms is future scope.</td>
+      </tr>
+      <tr>
+        <td><strong>Phase 1 content</strong></td>
+        <td><span class="scope-out">Out of Scope</span></td>
+        <td>Phase 1 design pass is complete and verified. This task builds ON the existing code, not on top of a redesign.</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- Constraints -->
+<section>
+  <h2>Constraints</h2>
+  <ol class="constraint-list">
+    <li><strong>No new npm dependencies.</strong> All motion uses existing Tailwind utility classes and CSS transitions. Supabase client is the only external dependency (already in .env.local).</li>
+    <li><strong>Must respect prefers-reduced-motion.</strong> All transforms, zooms, and lifts must be suppressed for users with reduced-motion preference. This is a hard requirement, not optional.</li>
+    <li><strong>Existing codebase integrity.</strong> Phase 1 code in src/ must not be reverted. This task adds features on top of the verified, building codebase.</li>
+    <li><strong>Build must pass.</strong> npm run build must exit 0 at all times. No TypeScript errors.</li>
+    <li><strong>Supabase project is pre-provisioned.</strong> zrggxfdyptiahskogwnn exists. Schema and RLS are in scope of this task; provisioning is a separate infra task (t_596af0ac).</li>
+    <li><strong>Server-side rendering compatibility.</strong> Progress tracking must work with Next.js App Router (SSR + client components). localStorage data is client-only; Supabase queries are client-side.</li>
+    <li><strong>No backend API routes for progress.</strong> All progress data goes directly to Supabase from the client via the anon key. No custom API layer.</li>
+  </ol>
+</section>
+
+<!-- Dependencies -->
+<section>
+  <h2>Dependencies</h2>
+  <ul class="dependency-list">
+    <li><strong>t_7e4e4898</strong> (kara) — Design Discovery: motion + progress UI + quiz UI direction. <em>Status: BLOCKED — needs Chris to unblock.</em></li>
+    <li><strong>t_bd445853</strong> (kara) — Design Execution: motion + progress + quiz mockups. <em>Depends on t_7e4e4898 completing.</em></li>
+    <li><strong>t_718bb3ca</strong> (brainiac) — Architecture: Supabase schema, auth flows, data contracts. <em>Depends on t_7e4e4898 for design direction.</em></li>
+    <li><strong>t_596af0ac</strong> (alpha) — Infra: Supabase schema + RLS + auth provision. <em>Depends on t_718bb3ca for schema design.</em></li>
+    <li><strong>Phase 1 complete</strong> — Design pass (t_e3c87690) and implementation (t_51178c89) are done and QA-passed. Foundation is ready.</li>
+  </ul>
+</section>
+
+<!-- Priority -->
+<section>
+  <h2>Priority</h2>
+  <p><span class="priority-badge priority-high">High</span></p>
+  <p>
+    This is the critical differentiation layer for the Adroit Blog. Without progress tracking and quizzes, the blog is a static content repository. With them, it becomes an interactive learning platform — the core value proposition for the Learn hub and a key differentiator from generic blog platforms.
+  </p>
+</section>
+
+<!-- Open Questions -->
+<section>
+  <h2>Open Questions for Chris</h2>
+
+  <div class="question-box">
+    <strong>Q1: Supabase Auth provider.</strong> The .env.local has Supabase credentials. Should users sign in with email magic link, Google OAuth, or both? This affects the auth flow design and the guest-mode merge strategy.
+  </div>
+
+  <div class="question-box">
+    <strong>Q2: Quiz content format.</strong> Quizzes are embedded in MDX lessons. Should quiz data live in the MDX frontmatter (simple, author-editable) or in a separate Supabase table (more flexible, version-controlled)? This is an authoring workflow decision.
+  </div>
+
+  <div class="question-box">
+    <strong>Q3: Progress retention period.</strong> Should old read/unread history be pruned? If a user has read 500 posts, do they all stay dimmed forever, or should there be a "last 30 days" window? This affects Supabase table size and query performance.
+  </div>
+
+  <div class="question-box">
+    <strong>Q4: Quiz scoring weight.</strong> Does quiz performance affect the learning path recommendation? E.g., if a user scores below 50% on a quiz, should the system flag it to revisit? This is a product decision that affects the data model.
+  </div>
+
+  <div class="question-box">
+    <strong>Q5: Kara's design discovery blocker.</strong> Kara's discovery task (t_7e4e4898) is blocked. What is the blocker? Is it a resource question, a scope clarification, or a technical constraint? This blocks the entire downstream pipeline (design -> arch -> infra -> impl).
+  </div>
+</section>
+
+<!-- Handoff -->
+<section>
+  <h2>Handoff to Architect</h2>
+  <div class="handoff">
+    <strong>Handoff to: brainiac (web architect)</strong>
+    <p style="margin-top: 8px;">
+      These 7 user stories define the requirements for the "Blog Life &amp; Depth" Phase 2. The architect should:
+    </p>
+    <ol style="margin: 12px 0 0 20px; font-size: 0.9rem; color: #374151;">
+      <li>Design the Supabase schema for user_progress (posts, lessons, quizzes) with RLS policies</li>
+      <li>Define the data contracts between client components and Supabase</li>
+      <li>Plan the Supabase client integration (SSR-compatible, anon key usage)</li>
+      <li>Review Kara's motion/progress/quiz design mockups (pending from t_7e4e4898) and scope the implementation delta</li>
+      <li>Create the implementation plan (t_718bb3ca) that Steel will follow</li>
+    </ol>
+    <p style="margin-top: 12px; font-size: 0.9rem; color: #374151;">
+      <strong>Note:</strong> The existing codebase builds cleanly. Phase 1 design is verified. Steel's implementation should layer features on top without touching Phase 1 code. See the implementation plan (design/implementation-plan.md) for the Phase 1 delta — do not re-implement what is already in place.
+    </p>
+  </div>
+</section>
+
+</div>
+
+<footer>
+  <p>Adroit Consulting &middot; Adroit Blog Requirements &middot; Generated 2026-08-06 &middot; Task t_8f4504ca</p>
+</footer>
+
+</body>
+</html>

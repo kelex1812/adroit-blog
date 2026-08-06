@@ -5,6 +5,22 @@ All notable changes to the Adroit Consulting Blog project will be documented in 
 ## [Unreleased]
 
 ### Added
+- **Progress tracking — Blog Life & Depth (per arch plan t_718bb3ca, tasks 2–5)**:
+  - **Supabase client layer** — `src/lib/supabase/client.ts` (singleton anon browser client) + `src/lib/supabase/server.ts` (cookie-based server client via `@supabase/ssr`, new dependency) + typed rows in `src/lib/supabase/types.ts`
+  - **Read tracking** — `src/lib/hooks/useReadProgress.ts` (optimistic, localStorage fallback `adroit-blog:read:<slug>`, Supabase sync for authed users) + `POST /api/progress/read` (upsert read_progress) + `GET /api/progress/summary` (single aggregate endpoint, ADR-005)
+  - **Lesson completion** — `src/lib/hooks/useLessonProgress.ts` (localStorage `adroit-blog:lesson:<slug>` + Supabase lesson_completion sync) + `POST /api/progress/lesson`
+  - **Quiz** — `src/lib/hooks/useQuizProgress.ts` (localStorage-only per ADR-004, fire-and-forget sync to `POST /api/progress/quiz` for authed users) + QuizWidget component
+  - **UI components** — `src/components/Progress/` (`MarkAsRead` pill toggle, `MarkComplete` circular check toggle per mockup-progress-series-lessons, `ProgressIndicator` bar, `QuizWidget` matching mockup-quiz.html, `PostReadProgress`, `LessonCompleteProgress`, `SeriesProgress`, `BlogReadProgress`)
+  - **Real progress aggregation** — `src/lib/progress.ts` (namespaced keys + merged localStorage/Supabase sets) + `src/lib/hooks/useProgressSummary.ts` (live updates via `adroit-blog:progress-changed` custom event)
+  - **Page integrations** — `/blog` top reading-progress bar (`BlogReadProgress`, real merged count), `/blog/[slug]` read state + toggle, `/learn` per-series completion bars, `/learn/[series]` header progress + per-lesson MarkComplete toggles + "Take the quiz" CTA, `/learn/[series]/[slug]` completion state + toggle
+  - **Quiz content + page** — `content/omni-studio-cert/questions.json` (5-question OmniStudio cert MCQ with explanations) + `/learn/[series]/quiz` page (SSG, loads questions.json, 4-option MCQ with progress segments, Check Answer / Next, score-ring results + Retake)
+  - **Quiz loader** — `src/lib/quiz.ts` (getQuizForSeries / getQuizSeriesSlugs, reads `content/<series>/questions.json`)
+
+### Changed
+- **API routes now use the cookie-based server client** (`src/lib/supabase/server.ts`) instead of the browser singleton — RLS-authenticated upserts work in route handlers; guests still get `unauthenticated` fallback
+- **Lesson pages use completion semantics** (useLessonProgress / lesson_completion) instead of read tracking — the old `series/<slug>` MarkAsRead toggle and per-lesson read pills were removed
+- **Progress bars reflect real user progress** (localStorage + Supabase summary) — the learn hub no longer renders a hard-coded full bar from the published lesson count
+
 - **Learn tab** (`/learn`) — top-level nav section with two structured learning paths (Salesforce System Architect Primer, Agentic AI Implementation Path), matching Kara's mockups:
   - `/learn` hub — LearnHero display + PathCard per track with progress bar (red fill) and mono "Lesson N of M" counter, or a "Coming soon" badge for empty series
   - `/learn/[series]` — series page with gradient header strip, progress, and a syllabus list of lessons **newest first** (date desc), each row with a mono "Lesson N" badge, title, date, read time, and "New" pill on the newest item

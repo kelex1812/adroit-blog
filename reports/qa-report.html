@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QA Report — Adroit Blog Design Pass</title>
+<style>
+  :root { --navy:#0B1D3A; --red:#C8102E; --bg:#F7F8FA; --card:#fff; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:Inter,-apple-system,sans-serif; background:var(--bg); color:#1F2937; line-height:1.6; padding:40px 20px; }
+  .container { max-width:900px; margin:0 auto; }
+  h1 { color:var(--navy); font-size:1.9rem; letter-spacing:-0.02em; margin-bottom:4px; }
+  .sub { color:#6B7280; font-size:0.95rem; margin-bottom:24px; }
+  .verdict { display:inline-flex; align-items:center; gap:8px; padding:8px 18px; border-radius:999px; font-weight:700; font-size:0.9rem; margin-bottom:24px; }
+  .verdict.approved { background:#DCFCE7; color:#166534; }
+  .verdict.rejected { background:#FEE2E2; color:#991B1B; }
+  .card { background:var(--card); border:1px solid #E5E7EB; border-radius:16px; padding:24px; margin-bottom:20px; box-shadow:0 1px 2px rgba(11,29,58,.04),0 4px 12px -2px rgba(11,29,58,.06); }
+  .card h2 { font-size:1.1rem; color:var(--navy); margin-bottom:14px; letter-spacing:-0.01em; }
+  table { width:100%; border-collapse:collapse; font-size:0.9rem; }
+  th, td { text-align:left; padding:9px 10px; border-bottom:1px solid #F0F1F3; vertical-align:top; }
+  th { color:#6B7280; font-size:0.75rem; text-transform:uppercase; letter-spacing:0.06em; }
+  .pass { color:#15803D; font-weight:700; }
+  .fail { color:#B91C1C; font-weight:700; }
+  .ok-badge { display:inline-block; background:#DCFCE7; color:#166534; font-size:0.72rem; font-weight:700; padding:2px 8px; border-radius:999px; }
+  .code { font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:0.8rem; background:#F3F4F6; padding:1px 5px; border-radius:4px; }
+  ul { padding-left:20px; font-size:0.9rem; }
+  li { margin-bottom:5px; }
+  .meta { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:12px; margin-bottom:8px; }
+  .meta div { background:#F9FAFB; border:1px solid #F0F1F3; border-radius:10px; padding:12px; }
+  .meta .label { font-size:0.7rem; text-transform:uppercase; letter-spacing:0.06em; color:#6B7280; }
+  .meta .value { font-size:1.15rem; font-weight:700; color:var(--navy); margin-top:2px; }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>QA Report — Adroit Blog Design Pass</h1>
+  <div class="sub">Task t_6bb01125 &middot; QA Reviewer: Zod &middot; Upstream: steel (t_51178c89) &rarr; brainiac (t_71faff13) &rarr; kara (t_e3c87690) &middot; 2026-08-05</div>
+
+  <div class="verdict approved">&#10003; APPROVED — ready for deployment</div>
+
+  <div class="card">
+    <h2>Summary</h2>
+    <div class="meta">
+      <div><div class="label">Build</div><div class="value pass">PASS</div></div>
+      <div><div class="label">Design delivered</div><div class="value pass">YES</div></div>
+      <div><div class="label">Regressions</div><div class="value pass">NONE</div></div>
+      <div><div class="label">Deps changed</div><div class="value pass">NONE</div></div>
+      <div><div class="label">Lint</div><div class="value pass">PASS</div></div>
+      <div><div class="label">Visual verify</div><div class="value pass">PASS</div></div>
+    </div>
+    <p style="font-size:0.9rem;margin-top:12px;">All 9 acceptance criteria verified by source review, build, lint, and live browser inspection of /blog, /blog/[slug], /blog/categories, /learn, /learn/[series], /learn/[series]/[slug], /tags, /tags/[tag]. 0 blocking findings.</p>
+  </div>
+
+  <div class="card">
+    <h2>Acceptance Criteria Checklist</h2>
+    <table>
+      <tr><th>#</th><th>Criterion</th><th>Status</th><th>Evidence</th></tr>
+      <tr><td>1</td><td>PostCard lifts on hover + banner image zooms</td><td class="pass">PASS</td><td><span class="code">PostCard.tsx</span>: <span class="code">shadow-card</span> resting, <span class="code">hover:shadow-card-hover hover:-translate-y-1 hover:border-navy/15</span>, image <span class="code">group-hover:scale-[1.04]</span>, title <span class="code">text-lg tracking-tight</span>, mono date/readTime</td></tr>
+      <tr><td>2</td><td>FeaturedPost category glow + image zoom + pulsing Featured dot</td><td class="pass">PASS</td><td><span class="code">FeaturedPost.tsx</span>: inline <span class="code">boxShadow: var(--shadow-glow-&lt;cat&gt;)</span> w/ <span class="code">sf</span> fallback, radial red tint, solid red pill + white pulsing dot, category chip on image, title <span class="code">text-2xl md:text-3xl</span>; DOM-confirmed glow + chip + pulse</td></tr>
+      <tr><td>3</td><td>Article body ≥1.125rem, lh ≥1.75, h2 hairline, red-underline links</td><td class="pass">PASS</td><td><span class="code">globals.css .article-body</span>: 1.125rem/1.8 (computed 18px/32.4px), h2 1.5rem + 10px <span class="code">border-bottom: 1px solid gray-200</span>, links navy/600 + 2px red underline <span class="code">rgba(200,16,46,.4)</span> offset 4px</td></tr>
+      <tr><td>4</td><td>ShareBar SVG icons + copy ✓ state</td><td class="pass">PASS</td><td><span class="code">ShareBar.tsx</span>: real inline SVG paths (X/LinkedIn/Facebook), copy button swaps to emerald + checkmark SVG on <span class="code">setCopied(true)</span> (clipboard write denied in headless browser, so state not observable there; code path correct)</td></tr>
+      <tr><td>5</td><td>PathCard progress row prominent; section headers have count badges</td><td class="pass">PASS</td><td><span class="code">PathCard.tsx</span>: progress wrapped in <span class="code">mt-4 pt-3 border-t border-gray-100</span> row; learn page: navy count badge + hairline rule per group; DOM-verified "Lesson N of M" on all 3 cards</td></tr>
+      <tr><td>6</td><td>Focus-visible red ring on interactive elements</td><td class="pass">PASS</td><td><span class="code">globals.css</span>: <span class="code">a:focus-visible, button:focus-visible { outline: 2px solid var(--color-red); outline-offset: 2px }</span></td></tr>
+      <tr><td>7</td><td>Category cards photographic bands + tint + icon chip + glow</td><td class="pass">PASS</td><td><span class="code">categories/page.tsx</span>: 108px image bands (<span class="code">public/categories/*.jpg</span>), per-category multiply tint, bottom scrim, icon chip, mono count pill, <span class="code">hover:shadow-glow-*</span>; built CSS contains hover rules; images serve via next/image</td></tr>
+      <tr><td>8</td><td>Tag cloud scales by post count; single-tag reuses elevated cards</td><td class="pass">PASS</td><td><span class="code">tags/page.tsx</span>: tercile buckets lg/md/sm (12/12/11 chips observed); <span class="code">TagListingContent.tsx</span>: gradient H1 + kicker; uses shared FeaturedPost/PostCard</td></tr>
+      <tr><td>9</td><td>No sort.ts / content/ changes; build passes</td><td class="pass">PASS</td><td><span class="code">git diff --stat src/lib/sort.ts content/</span> empty; <span class="code">npm run build</span> exit 0 (70 pages); <span class="code">npm run lint</span> exit 0</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2>Regression &amp; Constraint Verification</h2>
+    <table>
+      <tr><th>Constraint</th><th>Status</th><th>Evidence</th></tr>
+      <tr><td>Sort/filter toggle intact</td><td class="pass">PASS</td><td><span class="code">src/lib/sort.ts</span> + <span class="code">SortToggle.tsx</span> untouched; live-tested Newest/Oldest (URL <span class="code">?sort=oldest</span>, order flipped) and category filter (<span class="code">?category=sf</span>, 4 SF posts)</td></tr>
+      <tr><td>BannerImage rendering intact</td><td class="pass">PASS</td><td><span class="code">BannerImage.tsx</span> not in modified set; banner renders on post detail (image, scrim, chip)</td></tr>
+      <tr><td>Learn grouping intact</td><td class="pass">PASS</td><td>3 series across 2 groups render with progress; series + lesson pages verified</td></tr>
+      <tr><td>content/ untouched</td><td class="pass">PASS</td><td>zero diff; 14 posts / 3 series regenerated identically</td></tr>
+      <tr><td>No new dependencies</td><td class="pass">PASS</td><td><span class="code">package.json</span> unchanged (next 16.2.9, react 19.2.4, tailwind 4, next-mdx-remote)</td></tr>
+      <tr><td>Palette/gradients/rounded-xl/fonts kept</td><td class="pass">PASS</td><td>navy #0B1D3A / red #C8102E, sf/react/ai/mkt glows, <span class="code">rounded-xl</span> cards, Inter stack retained</td></tr>
+      <tr><td>prefers-reduced-motion respected</td><td class="pass">PASS</td><td>global reduce block appended to <span class="code">globals.css</span> (transforms/transitions disabled)</td></tr>
+      <tr><td>CHANGELOG.md updated</td><td class="pass">PASS</td><td>Unreleased section documents design pass + all token/typography/component changes</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2>Code Quality &amp; Findings</h2>
+    <ul>
+      <li>TypeScript strict — no <span class="code">any</span>, no <span class="code">@ts-ignore</span>, no <span class="code">as any</span> in any changed file. <span class="ok-badge">PASS</span></li>
+      <li>No empty/stub handlers (<span class="code">()=&gt;{}</span>), no mock fallthrough in <span class="code">catch</span> blocks. All interactive elements do real work. <span class="ok-badge">PASS</span></li>
+      <li>Category glow uses a whitelist + <span class="code">sf</span> fallback for unknown colors — safe.</li>
+      <li>New <span class="code">stripMDXFrontmatter()</span> in <span class="code">src/lib/mdx.ts</span> (functional fix from plan §0 — keeps stray frontmatter YAML out of article body); verified no YAML renders.</li>
+      <li>LOW (non-blocking): copy-link <span class="code">catch</span> block is empty — if clipboard permission is denied, no user feedback. Pre-existing behavior, not introduced by this pass.</li>
+      <li>LOW (non-blocking): dev-mode LCP warnings suggest <span class="code">loading="eager"</span> on above-fold banner images (perf optimization for sato, not a design defect).</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>Upstream Deliverables Verified</h2>
+    <table>
+      <tr><th>Source</th><th>Deliverable</th><th>Status</th></tr>
+      <tr><td>kara (design)</td><td>design/design-direction.md, mockups, design-tokens.css</td><td class="pass">used as spec — all 9 ACs trace to design direction §3/§7</td></tr>
+      <tr><td>brainiac (arch)</td><td>design/implementation-plan.md</td><td class="pass">delta plan followed file-by-file; hard constraints honored</td></tr>
+      <tr><td>steel (impl)</td><td>20 changed files (19 src/ + CHANGELOG.md) + public/categories/</td><td class="pass">every file reviewed; matches plan §2.1–§2.11</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2>Final Recommendation</h2>
+    <p><span class="verdict approved" style="margin-bottom:0;">&#10003; APPROVE</span> — All acceptance criteria met, zero regressions, build + lint clean, visual verification passed across all 8 reviewed surfaces. Ready for orchestrator commit/push → Vercel deploy.</p>
+  </div>
+</div>
+</body>
+</html>

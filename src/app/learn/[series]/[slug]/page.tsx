@@ -17,6 +17,8 @@ import {
 } from "@/lib/learn";
 import { linkifySourceCitations } from "@/lib/mdx";
 import { buildMetadata, siteConfig } from "@/lib/seo";
+import MarkComplete from "@/components/Progress/MarkComplete";
+import LessonCompleteProgress from "@/components/Progress/LessonCompleteProgress";
 
 interface Props {
   params: Promise<{ series: string; slug: string }>;
@@ -140,6 +142,14 @@ export default async function LessonPage({ params }: Props) {
           )}
 
           <ShareBar />
+
+          {/* Lesson completion progress */}
+          <div className="mt-4 pt-4 border-t border-gray-100">
+            <LessonCompleteProgress lessonSlug={lesson.slug} />
+            <div className="mt-3">
+              <MarkComplete lessonSlug={lesson.slug} label={`lesson ${lesson.slug}`} />
+            </div>
+          </div>
         </div>
 
         {/* Article Body — rendered from MDX content */}

@@ -3,6 +3,7 @@ import Footer from "@/components/Footer";
 import PathCard from "@/components/Learn/PathCard";
 import { getAllSeries } from "@/lib/learn";
 import { siteConfig } from "@/lib/seo";
+import SeriesProgress from "@/components/Progress/SeriesProgress";
 
 /**
  * /learn hub — one PathCard per learning path with progress
@@ -79,7 +80,18 @@ export default function LearnLandingPage() {
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 {items.map((s) => (
-                  <PathCard key={s.slug} series={s} />
+                  <div key={s.slug} className="relative">
+                    <PathCard series={s} />
+                    {/* Real per-series completion progress (localStorage + Supabase) */}
+                    {s.lessons.length > 0 && (
+                      <div className="mt-3 px-1">
+                        <SeriesProgress
+                          lessonSlugs={s.lessons.map((l) => l.slug)}
+                          showPercent
+                        />
+                      </div>
+                    )}
+                  </div>
                 ))}
               </div>
             </div>

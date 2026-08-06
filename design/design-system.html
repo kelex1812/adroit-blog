@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Adroit Blog — Design System Report (t_e3c87690)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --navy: #0B1D3A; --navy-light: #132D54; --navy-dark: #060F1F;
+    --red: #C8102E; --red-dark: #A00D24; --red-light: #E8354A;
+    --off-white: #F7F8FA;
+    --gray-50: #F9FAFB; --gray-100: #F3F4F6; --gray-200: #E5E7EB; --gray-300: #D1D5DB;
+    --gray-400: #9CA3AF; --gray-500: #6B7280; --gray-600: #4B5563; --gray-700: #374151;
+    --gray-800: #1F2937; --gray-900: #111827;
+    --sky: #0EA5E9; --emerald: #10B981; --amber: #F59E0B; --pink: #EC4899;
+    --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+    --font-mono: 'JetBrains Mono', 'SF Mono', ui-monospace, monospace;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: var(--font-sans); background: var(--off-white); color: var(--gray-800); -webkit-font-smoothing: antialiased; line-height: 1.6; }
+  .page { max-width: 1080px; margin: 0 auto; padding: 40px 28px 80px; }
+
+  /* Report header */
+  .report-head { background: var(--navy); border-radius: 16px; padding: 36px 40px; color: #fff; position: relative; overflow: hidden; margin-bottom: 36px; }
+  .report-head::after { content: ""; position: absolute; inset: 0; background: radial-gradient(60% 90% at 88% 15%, rgba(200,16,46,0.22) 0%, transparent 55%), radial-gradient(50% 80% at 10% 100%, rgba(14,165,233,0.12) 0%, transparent 55%); pointer-events: none; }
+  .report-head .kicker { font-family: var(--font-mono); font-size: 11px; font-weight: 700; color: var(--red-light); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 12px; }
+  .report-head h1 { font-size: 1.9rem; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 10px; position: relative; }
+  .report-head p { color: rgba(255,255,255,0.65); font-size: 14.5px; max-width: 640px; position: relative; }
+  .report-head .meta { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; position: relative; }
+  .report-head .meta span { font-family: var(--font-mono); font-size: 11px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.14); padding: 5px 11px; border-radius: 999px; }
+
+  /* Sections */
+  section { margin-bottom: 44px; }
+  h2.sec { font-size: 1.2rem; font-weight: 800; color: var(--navy); letter-spacing: -0.01em; margin-bottom: 6px; display: flex; align-items: center; gap: 10px; }
+  h2.sec .num { font-family: var(--font-mono); font-size: 11px; font-weight: 700; color: var(--red); background: rgba(200,16,46,0.08); padding: 3px 8px; border-radius: 6px; }
+  .sec-sub { color: var(--gray-500); font-size: 13.5px; margin-bottom: 18px; max-width: 720px; }
+
+  /* Token table */
+  .tokens { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 14px; }
+  .token-card { background: #fff; border: 1px solid var(--gray-200); border-radius: 12px; padding: 16px 18px; }
+  .token-card .swatch-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+  .swatch { width: 34px; height: 34px; border-radius: 8px; border: 1px solid rgba(0,0,0,0.08); flex-shrink: 0; }
+  .token-card h4 { font-size: 12.5px; font-weight: 700; color: var(--gray-800); }
+  .token-card .hex { font-family: var(--font-mono); font-size: 11px; color: var(--gray-400); }
+  .token-card p { font-size: 12px; color: var(--gray-500); }
+
+  /* Component gallery */
+  .gallery { display: grid; grid-template-columns: 1fr; gap: 22px; }
+  .shot { background: #fff; border: 1px solid var(--gray-200); border-radius: 14px; overflow: hidden; }
+  .shot img { width: 100%; display: block; }
+  .shot-cap { padding: 14px 18px; border-top: 1px solid var(--gray-100); font-size: 12.5px; color: var(--gray-500); }
+  .shot-cap b { color: var(--navy); }
+
+  /* State matrix */
+  table { width: 100%; border-collapse: collapse; background: #fff; border: 1px solid var(--gray-200); border-radius: 12px; overflow: hidden; font-size: 13px; }
+  th, td { text-align: left; padding: 11px 14px; border-bottom: 1px solid var(--gray-100); vertical-align: top; }
+  th { background: var(--gray-50); font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--gray-500); font-weight: 700; }
+  td .pill { display: inline-block; padding: 2px 9px; border-radius: 999px; font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; }
+  .pill.yes { background: #D1FAE5; color: #047857; }
+  .pill.new { background: #FEF3C7; color: #B45309; }
+
+  /* Handoff */
+  .handoff { background: var(--navy-dark); border-radius: 14px; padding: 24px 28px; color: #fff; }
+  .handoff h3 { font-size: 15px; font-weight: 800; margin-bottom: 12px; color: #fff; }
+  .handoff ul { list-style: none; }
+  .handoff li { padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.08); font-size: 13px; color: rgba(255,255,255,0.8); display: flex; gap: 10px; }
+  .handoff li:last-child { border-bottom: none; }
+  .handoff li .arrow { color: var(--red-light); font-family: var(--font-mono); }
+  .handoff li code { font-family: var(--font-mono); font-size: 11.5px; background: rgba(255,255,255,0.1); padding: 1px 6px; border-radius: 4px; color: #fff; }
+
+  .files { display: flex; flex-wrap: wrap; gap: 8px; }
+  .files a { font-family: var(--font-mono); font-size: 11.5px; background: #fff; border: 1px solid var(--gray-200); border-radius: 8px; padding: 6px 12px; color: var(--navy); text-decoration: none; transition: all 150ms; }
+  .files a:hover { border-color: var(--red); color: var(--red); }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- Report header -->
+  <header class="report-head">
+    <div class="kicker">Adroit Consulting · Design System</div>
+    <h1>Adroit Blog — Elevated Design System</h1>
+    <p>Direction, tokens, and visual references for elevating the Adroit blog feel: card grid elevation, richer featured post, article reading experience, and Learn hub polish — evolved from the existing navy/red system, not replaced.</p>
+    <div class="meta">
+      <span>task t_e3c87690 + t_bd445853</span>
+      <span>kara · designer</span>
+      <span>2026-08-05 / 2026-08-06</span>
+      <span>surface: Explore + Decide/Learn + Monitor + Operate</span>
+      <span>slop score: 1/10</span>
+      <span>wow score: 6/6</span>
+    </div>
+  </header>
+
+  <!-- 0. Update banner for t_bd445853 execution -->
+  <section style="margin-bottom: 28px;">
+    <div style="background:#fff; border:1px solid var(--gray-200); border-left:4px solid var(--red); border-radius:12px; padding:16px 20px;">
+      <div style="font-family:var(--font-mono); font-size:11px; font-weight:700; color:var(--red); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:6px;">Update — t_bd445853 (execution)</div>
+      <p style="font-size:13px; color:var(--gray-600); line-height:1.6;">Adds three connected systems on top of the elevation pass above: <b>motion system</b> (Micro/Standard/Moment posture), <b>progress tracking</b> (read/unread, mark-complete, dual progress bars), and <b>interactive quiz</b> (options, grading, explanation, results). Built from discovery brief t_7e4e4898. New mockups and tokens are additive — nothing in sections 1&ndash;6 below changes.</p>
+    </div>
+  </section>
+
+  <!-- 1. Design tokens -->
+  <section>
+    <h2 class="sec"><span class="num">01</span> Design Tokens</h2>
+    <p class="sec-sub">Existing palette preserved (navy #0B1D3A, red #C8102E, category gradients, Inter). New elevation/glow tokens added for depth. Full patterns in <b>design-tokens.css</b>.</p>
+    <div class="tokens">
+      <div class="token-card">
+        <div class="swatch-row"><div class="swatch" style="background:#0B1D3A;"></div><div><h4>Navy</h4><div class="hex">#0B1D3A · --color-navy</div></div></div>
+        <p>Primary brand. Headlines, active pills, panel backgrounds.</p>
+      </div>
+      <div class="token-card">
+        <div class="swatch-row"><div class="swatch" style="background:#C8102E;"></div><div><h4>Red</h4><div class="hex">#C8102E · --color-red</div></div></div>
+        <p>Accent. Links, progress fills, Featured pill, focus ring.</p>
+      </div>
+      <div class="token-card">
+        <div class="swatch-row"><div class="swatch" style="background:linear-gradient(135deg,#0EA5E9,#2563EB);"></div><div><h4>Category: Salesforce</h4><div class="hex">sky → blue-600</div></div></div>
+        <p>Tag + banner gradient for the sf category.</p>
+      </div>
+      <div class="token-card">
+        <div class="swatch-row"><div class="swatch" style="background:linear-gradient(135deg,#10B981,#059669);"></div><div><h4>Category: React</h4><div class="hex">emerald → green-600</div></div></div>
+        <p>Tag + banner gradient for the react category.</p>
+      </div>
+      <div class="token-card">
+        <div class="swatch-row"><div class="swatch" style="background:linear-gradient(135deg,#F59E0B,#D97706);"></div><div><h4>Category: AI</h4><div class="hex">amber → yellow-600</div></div></div>
+        <p>Tag + banner gradient for the ai category.</p>
+      </div>
+      <div class="token-card">
+        <div class="swatch-row"><div class="swatch" style="background:linear-gradient(135deg,#EC4899,#E11D48);"></div><div><h4>Category: Marketing</h4><div class="hex">pink → rose-600</div></div></div>
+        <p>Tag + banner gradient for the mkt category.</p>
+      </div>
+      <div class="token-card">
+        <div class="swatch-row"><div class="swatch" style="background:linear-gradient(90deg,#0B1D3A,#132D54);"></div><div><h4>Display Headline</h4><div class="hex">navy → navy-light · bg-clip-text</div></div></div>
+        <p>Hero titles use the gradient text treatment (listing, learn, tags).</p>
+      </div>
+      <div class="token-card">
+        <div class="swatch-row"><div class="swatch" style="background:linear-gradient(135deg,#F7F8FA,#E5E7EB); box-shadow:0 4px 12px -2px rgba(11,29,58,0.08);"></div><div><h4>Card Elevation</h4><div class="hex">shadow-card / shadow-card-hover</div></div></div>
+        <p>Resting + hover elevation with navy-tinted depth and a faint red lift.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. Component gallery -->
+  <section>
+    <h2 class="sec"><span class="num">02</span> Component Gallery</h2>
+    <p class="sec-sub">Browser-verified renders of the elevated pages. Hover interactions (lift, image zoom, arrow slide) are live in the mockup HTML files.</p>
+    <div class="gallery">
+      <div class="shot">
+        <img src="screenshots/blog-listing.png" alt="Blog listing mockup" />
+        <div class="shot-cap"><b>Blog listing (/blog)</b> — typographic hero with glow + RSS pill, category pills with red indicator, featured navy panel with category glow + pulsing dot + image zoom, elevated 2-col card grid, refined pagination.</div>
+      </div>
+      <div class="shot">
+        <img src="screenshots/post-detail.png" alt="Post detail mockup" />
+        <div class="shot-cap"><b>Post detail</b> — reading progress bar with glow, rounded avatar with red ring, SVG share bar with copy state, 380px banner with depth scrim + category chip, editorial article type (1.125rem/1.8, h2 hairlines, red underline links), refined prev/next cards.</div>
+      </div>
+      <div class="shot">
+        <img src="screenshots/learn-hub.png" alt="Learn hub mockup" />
+        <div class="shot-cap"><b>Learn hub (/learn)</b> — glow behind gradient "Learn" display, grouped section headers with red tick + count badge + rule, PathCards with real imagery bands + lesson-count chips + prominent progress rows, dashed-border "coming soon" state.</div>
+      </div>
+      <div class="shot">
+        <img src="screenshots/categories.png" alt="Categories mockup" />
+        <div class="shot-cap"><b>Categories (/blog/categories)</b> — hero mirrors listing/learn language (kicker + gradient headline + glow), category cards get real photographic bands (tinted per category) with icon chip, hover lift + category-tinted glow, arrow-slide post count. Subscribe CTA kept, glow refined.</div>
+      </div>
+      <div class="shot">
+        <img src="screenshots/tags.png" alt="Tags mockup" />
+        <div class="shot-cap"><b>Tags (/tags + /tags/[tag])</b> — weighted tag cloud (size scales with post count), chip lift-to-navy on hover; single-tag view reuses the elevated FeaturedPost (category-tinted glow) and PostCard grid for full consistency with the blog listing.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. State matrix -->
+  <section>
+    <h2 class="sec"><span class="num">03</span> State Matrix</h2>
+    <p class="sec-sub">Every component's states as designed. "New" = added in this elevation pass.</p>
+    <table>
+      <tr><th>Component</th><th>Default</th><th>Hover</th><th>Active / Selected</th><th>Empty / Edge</th></tr>
+      <tr><td><b>PostCard</b></td><td>border gray-200, shadow-card</td><td><span class="pill new">new</span> -translate-y-1, shadow-card-hover, image zoom 1.05, arrow slide</td><td>—</td><td>gradient fallback banner + watermark letter</td></tr>
+      <tr><td><b>FeaturedPost</b></td><td>navy panel, category glow</td><td><span class="pill new">new</span> lift -2px, deeper category glow, image zoom 1.03</td><td>—</td><td>gradient fallback + watermark</td></tr>
+      <tr><td><b>Category pill</b></td><td>gray-100 chip</td><td>border navy-300</td><td>navy bg + shadow + red underline indicator</td><td>—</td></tr>
+      <tr><td><b>SortToggle</b></td><td>white pill</td><td>navy text</td><td>navy bg, white text</td><td>—</td></tr>
+      <tr><td><b>PathCard</b></td><td>white, shadow-card</td><td><span class="pill new">new</span> lift -4px, band zoom, title → red-dark</td><td>—</td><td>"Coming soon" dashed badge</td></tr>
+      <tr><td><b>LessonCard</b></td><td>row, mono badge</td><td>bg tint, arrow slide</td><td>—</td><td>"New" pulse badge on first row</td></tr>
+      <tr><td><b>LessonProgress</b></td><td>red bar on gray track, mono counter</td><td>—</td><td>—</td><td>0% bar when no lessons</td></tr>
+      <tr><td><b>ShareBar</b></td><td>SVG icon circles</td><td><span class="pill new">new</span> navy bg + lift</td><td>copy → ✓ state (2s)</td><td>—</td></tr>
+      <tr><td><b>Article links</b></td><td><span class="pill new">new</span> navy + red underline 40%</td><td><span class="pill new">new</span> underline → full red</td><td>—</td><td>—</td></tr>
+      <tr><td><b>Focus-visible</b></td><td><span class="pill new">new</span> red 2px outline + offset</td><td>—</td><td>—</td><td>keyboard a11y requirement</td></tr>
+      <tr><td><b>Category card</b></td><td><span class="pill new">new</span> photographic band, tinted, icon chip</td><td><span class="pill new">new</span> lift -4px, band zoom 1.05, category-tinted glow</td><td>—</td><td>—</td></tr>
+      <tr><td><b>Tag chip</b></td><td><span class="pill new">new</span> white pill, count badge</td><td><span class="pill new">new</span> navy bg + lift -2px</td><td>—</td><td>—</td></tr>
+    </table>
+  </section>
+
+  <!-- 4. Responsive behavior -->
+  <section>
+    <h2 class="sec"><span class="num">04</span> Responsive Behavior</h2>
+    <p class="sec-sub">Layouts already responsive in current code; this pass preserves and refines them.</p>
+    <table>
+      <tr><th>Breakpoint</th><th>Blog listing</th><th>Post detail</th><th>Learn hub</th><th>Categories / Tags</th></tr>
+      <tr><td><b>Mobile ≤480</b></td><td>1-col grid; pills wrap; sort drops below; featured stacks (image top)</td><td>banner 220px; author row stacks; share bar wraps</td><td>1-col PathCards; section headers keep tick + count</td><td>1-col category grid; tag cloud wraps; single-tag grid 1-col</td></tr>
+      <tr><td><b>Tablet ≤768</b></td><td>2-col grid; featured stacks</td><td>banner 300px; prev/next single col</td><td>2-col grid (unchanged)</td><td>2-col category grid; single-tag grid 2-col</td></tr>
+      <tr><td><b>Desktop ≥1024</b></td><td>2-col grid; featured 2-col panel</td><td>banner 380px; 2-col prev/next</td><td>2-col grid</td><td>2-col category grid; single-tag featured 2-col panel</td></tr>
+      <tr><td><b>Wide ≥1440</b></td><td>max-w 1120 container centered</td><td>article max-w 720 / banner 920</td><td>max-w 1120 container centered</td><td>max-w 1120 container centered</td></tr>
+    </table>
+  </section>
+
+  <!-- 5. Handoff to steel -->
+  <section>
+    <h2 class="sec"><span class="num">05</span> Handoff to Steel</h2>
+    <p class="sec-sub">Implementation guidance. Component structure stays; only className/Tailwind patterns change. Read design-direction.md for the full rationale.</p>
+    <div class="handoff">
+      <h3>Steel needs to build</h3>
+      <ul>
+        <li><span class="arrow">→</span> PostCard: <code>hover:-translate-y-1</code> + <code>shadow-card-hover</code> + banner zoom wrapper (<code>group-hover:scale-[1.03]</code>) + mono meta row</li>
+        <li><span class="arrow">→</span> FeaturedPost: category-tinted glow (pseudo-element radial), pulsing Featured dot, <code>md:text-3xl</code> title, sliding "Read article" arrow</li>
+        <li><span class="arrow">→</span> Blog hero: mono kicker + gradient headline + <code>.hero-glow</code>; mirror on /tags and /learn</li>
+        <li><span class="arrow">→</span> Category pills: red underline indicator on active + shadow</li>
+        <li><span class="arrow">→</span> Article body: 1.125rem / line-height 1.8, h2 hairlines, red-underline links, refined blockquote/pre/code</li>
+        <li><span class="arrow">→</span> ShareBar: replace glyphs with inline SVGs; copy button ✓ state</li>
+        <li><span class="arrow">→</span> Post banner: taller (380px), rounded-2xl, depth scrim, category chip</li>
+        <li><span class="arrow">→</span> Learn hub: group headers (tick + count + rule), PathCard band imagery + lesson chips + prominent progress</li>
+        <li><span class="arrow">→</span> Global: <code>:focus-visible</code> red ring, <code>prefers-reduced-motion</code> block, new shadow tokens</li>
+        <li><span class="arrow">→</span> Categories page: category cards get photographic band (tinted per category) + icon chip + category-tinted hover glow, replacing flat gradient-only cards</li>
+        <li><span class="arrow">→</span> Tags index: weighted tag cloud (size scales with count) + count badges; single-tag view reuses elevated FeaturedPost + PostCard grid (shared components = free consistency)</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 6. Files -->
+  <section>
+    <h2 class="sec"><span class="num">06</span> Deliverable Files (t_e3c87690)</h2>
+    <div class="files">
+      <a href="design-direction.md">design-direction.md</a>
+      <a href="design-tokens.css">design-tokens.css</a>
+      <a href="mockup-blog-listing.html">mockup-blog-listing.html</a>
+      <a href="mockup-post-detail.html">mockup-post-detail.html</a>
+      <a href="mockup-learn-hub.html">mockup-learn-hub.html</a>
+      <a href="mockup-categories.html">mockup-categories.html</a>
+      <a href="mockup-tags.html">mockup-tags.html</a>
+      <a href="screenshots/blog-listing.png">screenshot: blog-listing</a>
+      <a href="screenshots/post-detail.png">screenshot: post-detail</a>
+      <a href="screenshots/learn-hub.png">screenshot: learn-hub</a>
+      <a href="screenshots/categories.png">screenshot: categories</a>
+      <a href="screenshots/tags.png">screenshot: tags</a>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       t_bd445853 EXECUTION — Motion + Progress + Quiz
+       ═══════════════════════════════════════════════════════════ -->
+
+  <section style="margin-top:56px; padding-top:24px; border-top:2px solid var(--navy);">
+    <div class="kicker" style="color:var(--red); font-family:var(--font-mono); font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; margin-bottom:6px;">t_bd445853 · Execution (sonnet)</div>
+    <h1 style="font-size:1.5rem; font-weight:800; color:var(--navy); letter-spacing:-0.02em;">Motion System + Progress Tracking + Interactive Quiz</h1>
+    <p class="sec-sub" style="margin-top:8px;">"Alive, not animated." Three connected systems built on the direction brief (t_7e4e4898): a shared motion language, dual-layer progress signals (content vs user), and a focused Operate-surface quiz. Surfaces: Monitor (read state, progress bars), Operate (mark-read, filter, quiz), cross-cutting motion.</p>
+  </section>
+
+  <!-- 7. Motion tokens -->
+  <section>
+    <h2 class="sec"><span class="num">07</span> Motion System — Postures</h2>
+    <p class="sec-sub">Three speeds, one language. Micro/Standard are everywhere; Moment is earned — reserved for accomplishment (read check, lesson complete, quiz grade, score ring). All CSS-based, auto-covered by the existing <code>prefers-reduced-motion</code> block.</p>
+    <table>
+      <tr><th>Posture</th><th>Duration</th><th>Easing</th><th>Use</th></tr>
+      <tr><td><b>Micro</b></td><td>120&ndash;150ms</td><td><code>ease-out</code></td><td>Color, underline draw, icon swap, button press (<code>active:scale-[0.98]</code>)</td></tr>
+      <tr><td><b>Standard</b></td><td>200&ndash;250ms</td><td><code>ease-out</code></td><td>Card hover lift, arrow slide, filter switch, checkbox fill</td></tr>
+      <tr><td><b>Moment</b></td><td>400&ndash;550ms</td><td><code>cubic-bezier(0.34,1.56,0.64,1)</code> spring</td><td><span class="pill new">accomplishment only</span> check pop, lesson complete, quiz grade + explanation reveal, score ring fill</td></tr>
+    </table>
+    <p class="sec-sub" style="margin-top:12px;">See <b>mockup-motion-lab.html</b> for a live comparison of all three postures on signature components.</p>
+  </section>
+
+  <!-- 8. New design tokens -->
+  <section>
+    <h2 class="sec"><span class="num">08</span> New Design Tokens (additive)</h2>
+    <p class="sec-sub">Full draft with usage examples in <b>design/discovery/design-tokens-draft.css</b>. Existing navy/red/gray tokens unchanged.</p>
+    <div class="tokens">
+      <div class="token-card">
+        <div class="swatch-row"><div class="swatch" style="background:#10B981;"></div><div><h4>Read / Done</h4><div class="hex">#10B981 · --color-read</div></div></div>
+        <p>Emerald — read check, lesson complete, correct quiz answer. Never confused with brand red.</p>
+      </div>
+      <div class="token-card">
+        <div class="swatch-row"><div class="swatch" style="background:#ECFDF5;"></div><div><h4>Read / Correct BG</h4><div class="hex">#ECFDF5 · --color-read-bg</div></div></div>
+        <p>Light emerald row background for correct quiz options.</p>
+      </div>
+      <div class="token-card">
+        <div class="swatch-row"><div class="swatch" style="background:#FDE8EB;"></div><div><h4>Wrong BG</h4><div class="hex">#FDE8EB · --color-wrong-bg</div></div></div>
+        <p>Light red row background for incorrect quiz options (new token).</p>
+      </div>
+      <div class="token-card">
+        <div class="swatch-row"><div class="swatch" style="background:linear-gradient(90deg,#C8102E,#10B981);"></div><div><h4>Dual Progress</h4><div class="hex">fill-content (red) / fill-user (emerald)</div></div></div>
+        <p>Two distinct fill colors so content progress vs user progress can never be confused.</p>
+      </div>
+      <div class="token-card">
+        <div class="swatch-row"><div class="swatch" style="background:#fff; border:2px dashed var(--gray-300);"></div><div><h4>Quiz option</h4><div class="hex">--quiz-option-h: 44px</div></div></div>
+        <p>Touch-target-safe option row height, radius reuses --radius-xl.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9. Component gallery — new -->
+  <section>
+    <h2 class="sec"><span class="num">09</span> Component Gallery — Motion / Progress / Quiz</h2>
+    <p class="sec-sub">Browser-verified renders of all new mockups (t_bd445853).</p>
+    <div class="gallery">
+      <div class="shot">
+        <img src="screenshots/progress-blog.png" alt="Blog listing read/unread + filter mockup" />
+        <div class="shot-cap"><b>Blog listing — read/unread + filter</b> — All/Unread/Read segmented control with mono counts, dimmed read-card state (banner opacity, gray text) + emerald check badge (Moment spring), empty state for zero-match filter.</div>
+      </div>
+      <div class="shot">
+        <img src="screenshots/quiz.png" alt="Interactive quiz component mockup" />
+        <div class="shot-cap"><b>Quiz component — full flow</b> — unanswered → selected → grading → submitted (correct/wrong) with explanation reveal → results card with SVG score ring (Moment 400ms) and per-question review list. Radio-row semantics, not grid tiles (anti-slop).</div>
+      </div>
+      <div class="shot">
+        <img src="screenshots/progress-learn-hub.png" alt="Learn hub dual progress rows mockup" />
+        <div class="shot-cap"><b>Learn hub — dual progress + quiz stats</b> — PathCard gets two distinct progress rows (red "published" vs emerald "complete"), quiz average strip shown only when attempts exist, on-gradient series header strip variant.</div>
+      </div>
+      <div class="shot">
+        <img src="screenshots/progress-series-lessons.png" alt="LessonCard mark complete mockup" />
+        <div class="shot-cap"><b>Series page — mark-complete toggle</b> — 48px circular touch target per lesson row, completed state (dimmed badge + emerald check), current-lesson red dot indicator + "Current" tag.</div>
+      </div>
+    </div>
+    <p class="sec-sub" style="margin-top:16px;">Additional mockups (not screenshot-captured, verified via browser render): <b>mockup-progress-post-detail.html</b> (Mark-as-read pill: unread/read/guest/synced/error states + sticky bottom CTA), <b>mockup-motion-lab.html</b> (Micro/Standard/Moment side-by-side demo).</p>
+  </section>
+
+  <!-- 10. State matrix — new -->
+  <section>
+    <h2 class="sec"><span class="num">10</span> State Matrix — New Components</h2>
+    <table>
+      <tr><th>Component</th><th>Default</th><th>Interaction / Selected</th><th>Accomplishment (Moment)</th><th>Empty / Error / Edge</th></tr>
+      <tr><td><b>PostCard (read state)</b></td><td>unread — unchanged card</td><td>—</td><td><span class="pill new">new</span> check-pop badge on state change</td><td>read — dimmed banner + gray text + emerald badge</td></tr>
+      <tr><td><b>Segmented filter</b></td><td>All active, mono counts</td><td><span class="pill new">new</span> tab switch, Standard 220ms</td><td>—</td><td>0-count empty state, no emoji copy</td></tr>
+      <tr><td><b>Mark-as-read pill</b></td><td>outline navy, "Mark as read"</td><td>hover invert</td><td><span class="pill new">new</span> check-pop → solid navy "Read" + undo link</td><td>guest "Saved on this device" / signed-in "Synced" / offline banner</td></tr>
+      <tr><td><b>Lesson complete toggle</b></td><td>empty circle, 48px</td><td>hover border emerald</td><td><span class="pill new">new</span> check-pop fill</td><td>optimistic update + revert on Supabase failure</td></tr>
+      <tr><td><b>Dual progress bars</b></td><td>red content bar + emerald user bar</td><td>width transition Standard 220ms</td><td>—</td><td>0% user bar when nothing completed; quiz stat hidden when no attempts</td></tr>
+      <tr><td><b>Quiz option row</b></td><td>white, gray border, radio</td><td>selected — navy border + fill</td><td>—</td><td>disabled after submit; correct/wrong colored post-grade</td></tr>
+      <tr><td><b>Quiz submit</b></td><td>disabled until selection</td><td>enabled navy</td><td>—</td><td>"Grading…" spinner state</td></tr>
+      <tr><td><b>Explanation panel</b></td><td>—</td><td><span class="pill new">new</span> reveal-up 350ms Standard</td><td>—</td><td>bordered card, NOT colored left strip (anti-slop)</td></tr>
+      <tr><td><b>Score ring</b></td><td>—</td><td>—</td><td><span class="pill new">new</span> stroke-dashoffset fill 400ms + counter tick-up</td><td>best score + attempts count shown, not just latest</td></tr>
+      <tr><td><b>Current-lesson indicator</b></td><td>—</td><td>—</td><td>—</td><td>red dot + mono "Current" tag on first uncompleted lesson</td></tr>
+    </table>
+  </section>
+
+  <!-- 11. Handoff — execution -->
+  <section>
+    <h2 class="sec"><span class="num">11</span> Handoff to Steel — Motion / Progress / Quiz</h2>
+    <div class="handoff">
+      <h3>Steel needs to build</h3>
+      <ul>
+        <li><span class="arrow">→</span> Keep the existing <code>prefers-reduced-motion</code> block untouched — all new motion is CSS transitions/animations, auto-covered. Any JS/WAAPI animation (score ring counter) MUST check <code>matchMedia('(prefers-reduced-motion: reduce)')</code></li>
+        <li><span class="arrow">→</span> Supabase tables: <code>post_reads</code>, <code>lesson_completions</code>, <code>quiz_attempts</code>, <code>quiz_answers</code> (schema owned by arch t_718bb3ca); guest fallback = localStorage keyed by slug, merged on sign-in</li>
+        <li><span class="arrow">→</span> Blog listing: add <code>read</code> URL param alongside <code>category</code> + <code>sort</code>; pagination resets on filter change</li>
+        <li><span class="arrow">→</span> PostCard: read state = banner <code>opacity-60</code> + <code>saturate(0.7)</code>, title/excerpt <code>text-gray-400</code>, top-right check badge with Moment spring on state change only</li>
+        <li><span class="arrow">→</span> Mark-as-read: two affordances (meta row top + sticky bottom CTA on long-form), same action; guest writes localStorage with "Saved on this device" note, signed-in writes Supabase with "Synced across devices"</li>
+        <li><span class="arrow">→</span> LessonCard: trailing 48px circular <code>&lt;button&gt;</code> (real element, a11y), <code>stopPropagation</code> so it doesn't navigate; current lesson = first uncompleted in order, red dot + mono "current" tag</li>
+        <li><span class="arrow">→</span> LessonProgress: keep existing content-metric bar; add a second distinct row (emerald) for user progress — augment, don't replace. On-gradient variant needs white/emerald treatment</li>
+        <li><span class="arrow">→</span> Quiz: sidecar <code>questions.json</code> per lesson (<code>content/learn/&lt;series&gt;/&lt;slug&gt;/questions.json</code>), typed via <code>src/lib/quiz.ts</code>; client <code>&lt;Quiz&gt;</code> component, real <code>&lt;button&gt;</code> option rows with radio semantics + keyboard nav</li>
+        <li><span class="arrow">→</span> Quiz grading: disable all rows on submit, flip states (correct = emerald, wrong-selected = red, correct-unselected = emerald outline + "Correct answer" tag); explanation panel is a bordered card, NOT a colored left strip</li>
+        <li><span class="arrow">→</span> Results: SVG <code>stroke-dashoffset</code> score ring (no chart lib), best score + attempts count displayed, "Retry quiz" resets state and records a new attempt</li>
+        <li><span class="arrow">→</span> Quiz empty (no questions.json yet): render nothing — do not show a placeholder "coming soon" card (avoids fake content)</li>
+        <li><span class="arrow">→</span> Series quiz stats strip: only render when <code>quiz_attempts</code> exist for that series — never invent stats</li>
+        <li><span class="arrow">→</span> No new npm dependencies: all motion is CSS transitions/animations, score ring is plain SVG</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 12. Files — execution -->
+  <section>
+    <h2 class="sec"><span class="num">12</span> Deliverable Files (t_bd445853)</h2>
+    <div class="files">
+      <a href="discovery/direction-brief.md">discovery/direction-brief.md</a>
+      <a href="discovery/design-tokens-draft.css">discovery/design-tokens-draft.css</a>
+      <a href="mockup-progress-blog.html">mockup-progress-blog.html</a>
+      <a href="mockup-progress-post-detail.html">mockup-progress-post-detail.html</a>
+      <a href="mockup-progress-learn-hub.html">mockup-progress-learn-hub.html</a>
+      <a href="mockup-progress-series-lessons.html">mockup-progress-series-lessons.html</a>
+      <a href="mockup-quiz.html">mockup-quiz.html</a>
+      <a href="mockup-motion-lab.html">mockup-motion-lab.html</a>
+      <a href="screenshots/progress-blog.png">screenshot: progress-blog</a>
+      <a href="screenshots/progress-learn-hub.png">screenshot: progress-learn-hub</a>
+      <a href="screenshots/progress-series-lessons.png">screenshot: progress-series-lessons</a>
+      <a href="screenshots/quiz.png">screenshot: quiz</a>
+      <a href="discovery/moodboards/moodboard-motion.png">moodboard: motion</a>
+      <a href="discovery/moodboards/moodboard-progress.png">moodboard: progress</a>
+      <a href="discovery/moodboards/moodboard-quiz.png">moodboard: quiz</a>
+    </div>
+  </section>
+
+</div>
+</body>
+</html>

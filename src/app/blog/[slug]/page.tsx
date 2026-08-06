@@ -11,6 +11,8 @@ import PostNavigation from "@/components/BlogPost/PostNavigation";
 import BannerImage from "@/components/BlogListing/BannerImage";
 import { Tag } from "@/components/Tag";
 import { buildMetadata } from "@/lib/seo";
+import MarkAsRead from "@/components/Progress/MarkAsRead";
+import PostReadProgress from "@/components/Progress/PostReadProgress";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -110,6 +112,14 @@ export default async function BlogPostPage({ params }: Props) {
           )}
 
           <ShareBar />
+
+          {/* Read progress */}
+          <div className="mt-4 pt-4 border-t border-gray-100">
+            <PostReadProgress slug={`blog/${post.slug}`} contentType="blog" unreadLabel="Not read yet" />
+            <div className="mt-3">
+              <MarkAsRead slug={`blog/${post.slug}`} contentType="blog" />
+            </div>
+          </div>
         </div>
 
         {/* Post Banner — real image when present, gradient fallback */}

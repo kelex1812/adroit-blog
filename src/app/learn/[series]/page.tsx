@@ -17,6 +17,9 @@ import {
 } from "@/lib/learn";
 import { sortPosts } from "@/lib/sort";
 import { buildMetadata, siteConfig } from "@/lib/seo";
+import MarkComplete from "@/components/Progress/MarkComplete";
+import SeriesProgress from "@/components/Progress/SeriesProgress";
+import { getQuizForSeries } from "@/lib/quiz";
 
 interface Props {
   params: Promise<{ series: string }>;
@@ -49,6 +52,7 @@ export default async function SeriesPage({ params, searchParams }: Props) {
   const lessons = sortPosts(baseLessons, sort === "oldest" ? "oldest" : "newest");
   const { published, total } = getSeriesProgress(s);
   const upcoming = Math.max(0, total - published);
+  const hasQuiz = getQuizForSeries(series) !== null;
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -101,6 +105,18 @@ export default async function SeriesPage({ params, searchParams }: Props) {
             <p className="relative text-white/80 text-sm max-w-[560px] leading-relaxed mb-5">
               {s.description}
             </p>
+            {hasQuiz && (
+              <Link
+                href={`/learn/${series}/quiz`}
+                className="relative inline-flex items-center gap-2 px-5 py-2 rounded-full bg-white text-navy text-sm font-bold no-underline shadow-md hover:bg-gray-100 transition-colors duration-150"
+              >
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M9 11l3 3L22 4" />
+                  <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
+                </svg>
+                Take the quiz
+              </Link>
+            )}
             {total > 0 && (
               <div className="relative max-w-[420px]">
                 <LessonProgress
@@ -108,6 +124,13 @@ export default async function SeriesPage({ params, searchParams }: Props) {
                   total={total}
                   onGradient
                 />
+                {/* Real user completion progress */}
+                <div className="mt-3">
+                  <SeriesProgress
+                    lessonSlugs={lessons.map((l) => l.slug)}
+                    showPercent
+                  />
+                </div>
               </div>
             )}
           </div>
@@ -132,12 +155,20 @@ export default async function SeriesPage({ params, searchParams }: Props) {
               </div>
               <div className="border-t border-gray-200 mt-3">
                 {lessons.map((lesson, i) => (
-                  <LessonCard
-                    key={lesson.slug}
-                    lesson={lesson}
-                    totalLessons={total}
-                    isNewest={sort !== "oldest" && i === 0}
-                  />
+                  <div key={lesson.slug} className="relative">
+                    <LessonCard
+                      lesson={lesson}
+                      totalLessons={total}
+                      isNewest={sort !== "oldest" && i === 0}
+                    />
+                    {/* Per-lesson completion tracking */}
+                    <div className="flex items-center justify-between px-3 py-2">
+                      <span className="font-mono text-[10px] font-bold text-gray-400 uppercase tracking-[0.07em]">
+                        Mark complete
+                      </span>
+                      <MarkComplete lessonSlug={lesson.slug} label={`lesson ${lesson.slug}`} />
+                    </div>
+                  </div>
                 ))}
               </div>
             </>

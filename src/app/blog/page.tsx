@@ -9,6 +9,8 @@ import FeaturedPost from "@/components/BlogListing/FeaturedPost";
 import PostCard from "@/components/BlogListing/PostCard";
 import SortToggle from "@/components/BlogListing/SortToggle";
 import { sortPosts, type SortOrder } from "@/lib/sort";
+import MarkAsRead from "@/components/Progress/MarkAsRead";
+import BlogReadProgress from "@/components/Progress/BlogReadProgress";
 
 const categories = [
   { key: "all", label: "All Posts" },
@@ -153,11 +155,19 @@ function BlogListingContent() {
           </div>
         )}
 
+        {/* Reading progress — real merged read count across the listing */}
+        <BlogReadProgress postSlugs={filtered.map((p) => p.slug)} />
+
         {/* Post Cards Grid */}
         <div className="max-w-[1120px] mx-auto px-6 pb-10">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             {paginatedPosts.map((post) => (
-              <PostCard key={post.slug} post={post} />
+              <div key={post.slug} className="relative">
+                <PostCard post={post} />
+                <div className="mt-2 px-1">
+                  <MarkAsRead slug={`blog/${post.slug}`} contentType="blog" showLabel={false} />
+                </div>
+              </div>
             ))}
           </div>
 
