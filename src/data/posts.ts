@@ -2,6 +2,27 @@ import { BlogPost } from "./types";
 
 export const posts: BlogPost[] = [
   {
+    "slug": "github-actions-supply-chain-security-2026",
+    "title": "GitHub Actions Is Getting a Lockfile: Inside the 2026 Security Roadmap",
+    "excerpt": "GitHub's 2026 Actions security roadmap promises workflow dependency locking, scoped secrets, and a native egress firewall — and parts are already shipping. Here's what changes for teams that live in CI/CD, and what you can do today.",
+    "category": "AI & Consulting",
+    "categoryColor": "ai",
+    "categoryGradient": "from-amber to-amber-dark",
+    "date": "August 6, 2026",
+    "author": "Adroit Consulting",
+    "authorInitials": "AC",
+    "readTime": "8 min read",
+    "featured": false,
+    "tags": [
+      "DevOps",
+      "GitHub Actions",
+      "CI/CD",
+      "Supply Chain Security",
+      "DevSecOps"
+    ],
+    "bannerImage": "/banners/github-actions-supply-chain-security-2026.png"
+  },
+  {
     "slug": "experience-cloud-data-cloud-personalization-pattern",
     "title": "Experience Cloud + Data Cloud: The Practical Pattern for Personalized Portals",
     "excerpt": "Your portal already knows who's visiting. Wiring enhanced LWR sites to Data Cloud (now Data 360) turns clicks and scrolls into unified profiles, segments, and agent grounding — here's the setup, the consent gotcha, and the cost traps.",
