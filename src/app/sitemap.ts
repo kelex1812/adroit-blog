@@ -1,6 +1,7 @@
 import { type MetadataRoute } from "next";
 import { posts } from "@/data/posts";
 import { learnLessons, learnSeries } from "@/data/learn";
+import { getQuizSeriesSlugs } from "@/lib/quiz";
 import { siteConfig } from "@/lib/seo";
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -69,11 +70,20 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }));
 
+  // Quiz pages (one per series with a questions.json)
+  const quizPages: MetadataRoute.Sitemap = getQuizSeriesSlugs().map((slug) => ({
+    url: `${siteConfig.url}/learn/${slug}/quiz`,
+    lastModified: new Date(),
+    changeFrequency: "monthly" as const,
+    priority: 0.6,
+  }));
+
   return [
     ...staticPages,
     ...blogPages,
     ...tagPages,
     ...learnHubPages,
     ...learnLessonPages,
+    ...quizPages,
   ];
 }

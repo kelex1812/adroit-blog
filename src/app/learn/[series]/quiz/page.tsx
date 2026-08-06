@@ -7,7 +7,7 @@ import QuizWidget from "@/components/Progress/QuizWidget";
 import { learnSeries } from "@/data/learn";
 import { getSeriesBySlug, seriesShortLabel } from "@/lib/learn";
 import { getQuizForSeries } from "@/lib/quiz";
-import { buildMetadata } from "@/lib/seo";
+import { buildMetadata, siteConfig } from "@/lib/seo";
 
 interface Props {
   params: Promise<{ series: string }>;
@@ -44,11 +44,27 @@ export default async function SeriesQuizPage({ params }: Props) {
   const quiz = getQuizForSeries(series);
   if (!quiz) notFound();
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    url: `${siteConfig.url}/learn/${series}/quiz`,
+    mainEntity: quiz.questions.map((q) => ({
+      "@type": "Question",
+      name: q.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text:
+          q.options[q.correct_answer_index] +
+          (q.explanation ? ` — ${q.explanation}` : ""),
+      },
+    })),
+  };
+
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
 
-      <main className="flex-1">
+      <main id="main" className="flex-1">
         <div className="max-w-[720px] mx-auto px-6 pt-10 pb-24">
           <Link
             href={`/learn/${series}`}
@@ -84,6 +100,11 @@ export default async function SeriesQuizPage({ params }: Props) {
 
           <QuizWidget quizName={quiz.quizName} questions={quiz.questions} />
         </div>
+
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
       </main>
 
       <Footer />

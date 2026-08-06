@@ -23,7 +23,7 @@ function TagPageContent({ tagInfo }: { tagInfo: TagInfo }) {
     <div className="min-h-screen flex flex-col">
       <Header />
 
-      <main className="flex-1">
+      <main id="main" className="flex-1">
         <div className="max-w-[1120px] mx-auto px-6 pt-12 pb-0">
           <Link
             href="/tags"
@@ -75,7 +75,7 @@ export default function TagListingContent({ tagInfo }: { tagInfo: TagInfo }) {
       fallback={
         <div className="min-h-screen flex flex-col">
           <Header />
-          <main className="flex-1 flex items-center justify-center">
+          <main id="main" className="flex-1 flex items-center justify-center">
             <div className="text-gray-400 text-sm">Loading posts...</div>
           </main>
           <Footer />

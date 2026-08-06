@@ -66,7 +66,7 @@ function BlogListingContent() {
     <div className="min-h-screen flex flex-col">
       <Header />
 
-      <main className="flex-1">
+      <main id="main" className="flex-1">
         {/* Hero */}
         <div className="relative overflow-hidden">
           {/* Ambient brand glow — subtle depth behind the hero */}
@@ -165,7 +165,7 @@ function BlogListingContent() {
               <div key={post.slug} className="relative">
                 <PostCard post={post} />
                 <div className="mt-2 px-1">
-                  <MarkAsRead slug={`blog/${post.slug}`} contentType="blog" showLabel={false} />
+                  <MarkAsRead slug={`blog/${post.slug}`} contentType="blog" showLabel={false} label={post.title} />
                 </div>
               </div>
             ))}
@@ -173,10 +173,14 @@ function BlogListingContent() {
 
           {/* Pagination */}
           {totalPages > 1 && (
-            <div className="flex items-center justify-center gap-1.5 mt-8">
+            <nav
+              aria-label="Pagination"
+              className="flex items-center justify-center gap-1.5 mt-8"
+            >
               <button
                 onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
                 disabled={currentPage === 1}
+                aria-label="Previous page"
                 className="w-9 h-9 rounded-md border border-gray-200 bg-white flex items-center justify-center text-xs font-medium text-gray-600 cursor-pointer hover:bg-gray-50 hover:border-gray-300 transition-all duration-150 disabled:opacity-40 disabled:cursor-not-allowed"
               >
                 &lsaquo;
@@ -186,6 +190,8 @@ function BlogListingContent() {
                   <button
                     key={page}
                     onClick={() => setCurrentPage(page)}
+                    aria-current={page === currentPage ? "page" : undefined}
+                    aria-label={`Page ${page}`}
                     className={`w-9 h-9 rounded-md border flex items-center justify-center text-xs font-medium cursor-pointer transition-all duration-150 ${
                       page === currentPage
                         ? "bg-navy text-white border-navy"
@@ -201,11 +207,12 @@ function BlogListingContent() {
                   setCurrentPage(Math.min(totalPages, currentPage + 1))
                 }
                 disabled={currentPage === totalPages}
+                aria-label="Next page"
                 className="w-9 h-9 rounded-md border border-gray-200 bg-white flex items-center justify-center text-sm font-medium text-gray-600 cursor-pointer hover:bg-gray-50 hover:border-gray-300 transition-all duration-150 disabled:opacity-40 disabled:cursor-not-allowed"
               >
                 &rsaquo;
               </button>
-            </div>
+            </nav>
           )}
         </div>
       </main>
@@ -217,7 +224,7 @@ function BlogListingContent() {
 
 export default function BlogListing() {
   return (
-    <Suspense fallback={<div className="min-h-screen flex flex-col"><Header /><main className="flex-1 flex items-center justify-center"><div className="text-gray-400 text-sm">Loading posts...</div></main><Footer /></div>}>
+    <Suspense fallback={<div className="min-h-screen flex flex-col"><Header /><main id="main" className="flex-1 flex items-center justify-center"><div className="text-gray-400 text-sm">Loading posts...</div></main><Footer /></div>}>
       <BlogListingContent />
     </Suspense>
   );

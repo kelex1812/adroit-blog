@@ -80,7 +80,7 @@ export default async function LessonPage({ params }: Props) {
       <ReadingProgress />
       <Header />
 
-      <main className="flex-1">
+      <main id="main" className="flex-1">
         {/* Lesson hero */}
         <div className="max-w-[720px] mx-auto px-6 pt-10 pb-0">
           <Link

@@ -86,6 +86,31 @@ button:focus-visible {
 }
 
 /* ─────────────────────────────────────────────
+   SKIP LINK (WCAG 2.4.1)
+   ───────────────────────────────────────────── */
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 120;
+  background: var(--color-navy);
+  color: #fff;
+  font-size: 0.875rem;
+  font-weight: 600;
+  padding: 12px 20px;
+  border-radius: 0 0 8px 0;
+  text-decoration: none;
+}
+
+.skip-link:focus {
+  left: 0;
+  position: fixed;
+  outline: 2px solid var(--color-red);
+  outline-offset: 2px;
+}
+
+/* ─────────────────────────────────────────────
    READING PROGRESS BAR
    ───────────────────────────────────────────── */
 

@@ -34,10 +34,10 @@ export default function LessonCard({
 
       {/* Title + meta */}
       <div className="flex-1 min-w-0">
-        <div className="text-[15px] font-semibold text-gray-800 leading-snug truncate transition-colors duration-150 group-hover:text-red">
+        <h3 className="text-[15px] font-semibold text-gray-800 leading-snug truncate transition-colors duration-150 group-hover:text-red">
           {lesson.title}
-        </div>
-        <div className="flex items-center gap-2 text-xs text-gray-400 mt-1">
+        </h3>
+        <div className="flex items-center gap-2 text-xs text-gray-500 mt-1">
           <span>{lesson.date}</span>
           <span className="w-[3px] h-[3px] rounded-full bg-gray-300" />
           <span>{lesson.readTime}</span>

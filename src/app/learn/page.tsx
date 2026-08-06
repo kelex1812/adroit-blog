@@ -38,7 +38,7 @@ export default function LearnLandingPage() {
     <div className="min-h-screen flex flex-col">
       <Header />
 
-      <main className="flex-1">
+      <main id="main" className="flex-1">
         {/* Learn hero — typographic display, not a stock photo */}
         <section className="relative overflow-hidden">
           <div

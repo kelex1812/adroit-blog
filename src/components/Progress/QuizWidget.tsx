@@ -68,8 +68,14 @@ export default function QuizWidget({
       <div className="mt-8 max-w-[640px]">
         <div className="rounded-[20px] border border-gray-200 bg-white p-8 text-center shadow-sm">
           {/* Score ring */}
+          <h2 className="sr-only">Quiz results</h2>
           <div className="relative w-32 h-32 mx-auto mb-4">
-            <svg viewBox="0 0 128 128" className="w-full h-full -rotate-90">
+            <svg
+              viewBox="0 0 128 128"
+              className="w-full h-full -rotate-90"
+              role="img"
+              aria-label={`${progress.correct} of ${progress.total} questions correct`}
+            >
               <circle
                 cx="64"
                 cy="64"
@@ -113,6 +119,7 @@ export default function QuizWidget({
                   className="flex items-start gap-2.5 py-2.5 border-b border-gray-100 text-[12.5px] last:border-0"
                 >
                   <svg
+                    aria-hidden="true"
                     className="w-4 h-4 mt-0.5 shrink-0"
                     viewBox="0 0 24 24"
                     fill="none"
@@ -155,6 +162,15 @@ export default function QuizWidget({
 
   const isCorrect = selected !== null && selected === question.correct_answer_index;
 
+  const segmentsLabel = questions
+    .map((_, i) => {
+      const attempt = progress.attempts.find((a) => a.questionIndex === i);
+      return attempt
+        ? `Question ${i + 1} ${attempt.isCorrect ? "correct" : "incorrect"}`
+        : `Question ${i + 1} unanswered`;
+    })
+    .join(". ");
+
   return (
     <div className="mt-8 max-w-[640px] rounded-[20px] border border-gray-200 bg-white p-7 shadow-sm">
       {/* Kicker */}
@@ -164,16 +180,21 @@ export default function QuizWidget({
       </div>
 
       {/* Progress label + segment bar */}
-      <div className="font-mono text-[11.5px] text-gray-400 mb-4">
+      <div className="font-mono text-[11.5px] text-gray-500 mb-4">
         Question {currentQ + 1} of {questions.length}
       </div>
-      <div className="flex gap-[5px] mb-5">
+      <div
+        role="img"
+        aria-label={`Quiz progress: ${segmentsLabel}`}
+        className="flex gap-[5px] mb-5"
+      >
         {questions.map((_, i) => {
           const answered = answeredIndexes.has(i);
           const correct = progress.attempts.find((a) => a.questionIndex === i)?.isCorrect;
           return (
             <div
               key={i}
+              title={answered ? (correct ? "Correct" : "Incorrect") : "Unanswered"}
               className={`h-1 flex-1 rounded-full transition-colors duration-200 ${
                 answered
                   ? correct
@@ -186,11 +207,40 @@ export default function QuizWidget({
         })}
       </div>
 
+      {/* Segment legend — non-color state cues (WCAG 1.4.1) */}
+      {answeredIndexes.size > 0 && (
+        <div
+          aria-hidden="true"
+          className="flex items-center gap-4 -mt-2 mb-5 font-mono text-[10px] font-medium text-gray-500"
+        >
+          <span className="inline-flex items-center gap-1.5">
+            <span className="inline-flex items-center justify-center w-3.5 h-3.5 rounded-full border-[1.5px] border-green-500 text-green-700 text-[9px] font-bold leading-none">
+              ✓
+            </span>
+            correct
+          </span>
+          <span className="inline-flex items-center gap-1.5">
+            <span className="inline-flex items-center justify-center w-3.5 h-3.5 rounded-full border-[1.5px] border-red text-red text-[9px] font-bold leading-none">
+              ✕
+            </span>
+            incorrect
+          </span>
+          <span className="inline-flex items-center gap-1.5">
+            <span className="inline-flex items-center justify-center w-3.5 h-3.5 rounded-full border-[1.5px] border-gray-300" />
+            unanswered
+          </span>
+        </div>
+      )}
+
       <p className="text-[17px] font-bold text-navy leading-snug mb-[18px]">
         {question.question}
       </p>
 
-      <div className="flex flex-col gap-2.5 mb-5">
+      <div
+        className="flex flex-col gap-2.5 mb-5"
+        role="radiogroup"
+        aria-label="Answer options"
+      >
         {question.options.map((option, i) => {
           const isSelected = selected === i;
           const isCorrectOption = i === question.correct_answer_index;
@@ -228,6 +278,8 @@ export default function QuizWidget({
           return (
             <button
               key={i}
+              role="radio"
+              aria-checked={isSelected}
               onClick={() => handleSelect(i)}
               disabled={isAnswered}
               className={`w-full min-h-12 flex items-center gap-3 px-4 rounded-[14px] border-[1.5px] text-left text-[14.5px] font-medium transition-all duration-150 cursor-pointer disabled:cursor-not-allowed ${borderClass} ${textClass}`}
@@ -252,16 +304,22 @@ export default function QuizWidget({
         })}
       </div>
 
+      {/* Answer correctness live region (WCAG 4.1.3) */}
+      <span role="status" className="sr-only">
+        {showExplanation ? (isCorrect ? "Correct answer" : "Incorrect answer") : ""}
+      </span>
+
       {/* Explanation panel */}
       {showExplanation && question.explanation && (
         <div
+          role="status"
           className={`rounded-[14px] border p-[18px] mb-5 text-[13px] leading-relaxed ${
             isCorrect
               ? "border-green-200 bg-green-50 text-green-800"
               : "border-red/20 bg-red/5 text-gray-600"
           }`}
         >
-          <div className="font-mono text-[10px] font-bold text-gray-400 uppercase tracking-[0.08em] mb-1.5">
+          <div className="font-mono text-[10px] font-bold text-gray-500 uppercase tracking-[0.08em] mb-1.5">
             Why
           </div>
           <p>{question.explanation}</p>

@@ -30,7 +30,7 @@ export default function Header() {
         </Link>
 
         {/* Desktop Nav */}
-        <nav className="hidden md:flex items-center gap-7">
+        <nav aria-label="Main" className="hidden md:flex items-center gap-7">
           {navLinks.map((link) =>
             link.external ? (
               <a
@@ -77,6 +77,8 @@ export default function Header() {
           className="md:hidden bg-none border-none cursor-pointer p-1"
           onClick={() => setMobileOpen(!mobileOpen)}
           aria-label="Toggle menu"
+          aria-expanded={mobileOpen}
+          aria-controls="mobile-nav"
         >
           <span className="block w-5 h-[2px] bg-navy my-[3px] rounded-[1px] transition-all duration-150" />
           <span className="block w-5 h-[2px] bg-navy my-[3px] rounded-[1px] transition-all duration-150" />
@@ -86,7 +88,11 @@ export default function Header() {
 
       {/* Mobile Nav */}
       {mobileOpen && (
-        <div className="md:hidden flex flex-col px-5 py-4 gap-4 border-t border-gray-200 bg-white">
+        <nav
+          id="mobile-nav"
+          aria-label="Mobile"
+          className="md:hidden flex flex-col px-5 py-4 gap-4 border-t border-gray-200 bg-white"
+        >
           {navLinks.map((link) =>
             link.external ? (
               <a
@@ -119,7 +125,7 @@ export default function Header() {
           >
             Contact Us
           </Link>
-        </div>
+        </nav>
       )}
     </header>
   );

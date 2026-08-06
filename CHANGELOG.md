@@ -4,16 +4,43 @@ All notable changes to the Adroit Consulting Blog project will be documented in 
 
 ## [Unreleased]
 
+### A11y/SEO Fixes — Progress UI + Quiz (t_08b3706e)
+
+Fixes all HIGH/MEDIUM/LOW findings from lara's a11y audit of the progress-tracking feature (parent t_c9c0a24f).
+
+**HIGH**
+- **H1 Quiz options selection state** — `QuizWidget` option buttons now expose a real radio group: container `role="radiogroup"` + `aria-label="Answer options"`, each option `role="radio"` + `aria-checked` (WCAG 4.1.2/1.3.1)
+- **H2 Answer feedback announced** — explanation panel is `role="status"` (polite live region) and a visually-hidden status span announces "Correct answer"/"Incorrect answer" on submit (WCAG 4.1.3)
+- **H3 Icon-only MarkAsRead named** — new `label` prop; blog listing passes the post title so `aria-label="Mark as read: <title>"` replaces the unnamed icon button (WCAG 4.1.2)
+- **H4 Skip link** — `Skip to content` link (`a.skip-link` in root layout, visible on focus) targets `id="main"` added to every page's `<main>` (WCAG 2.4.1)
+
+**MEDIUM**
+- **M1 Segment bar not color-only** — quiz progress bar is now `role="img"` with a text summary (`Quiz progress: Question 1 correct. Question 2 unanswered…`), each segment has a `title`, and a visible legend (✓/✕/○ glyphs + labels — shape-distinct, not color-only) appears once any question is answered (WCAG 1.4.1)
+- **M2 Mobile menu semantics** — hamburger has `aria-expanded`/`aria-controls="mobile-nav"`, mobile menu is a `<nav aria-label="Mobile">` landmark; desktop nav labelled `Main` (WCAG 4.1.2)
+- **M3 Pagination** — wrapped in `<nav aria-label="Pagination">`, arrows get `aria-label="Previous page"`/`"Next page"`, active page gets `aria-current="page"` (WCAG 4.1.2)
+- **M4 Contrast** — `text-gray-400` → `text-gray-500` on quiz "Question X of Y" label, "Why" kicker, and LessonCard meta (now ≥4.5:1 on white)
+- **M5 Sitemap quiz pages** — `/learn/<series>/quiz` entries added via `getQuizSeriesSlugs()` (only series with a `questions.json`)
+- **M6 Quiz JSON-LD** — FAQPage structured data (question + accepted answer w/ explanation) + canonical URL on the quiz page
+- **M7 LessonCard heading** — lesson title is now an `<h3>` instead of a bare `div`
+
+**LOW**
+- `ProgressIndicator` + `LessonProgress` expose `role="progressbar"` with `aria-valuemin/valuemax/valuenow` + `aria-valuetext`
+- Quiz score-ring SVG is `role="img"` with `aria-label="N of M questions correct"`; review-list icons `aria-hidden`
+- Results card has a visually-hidden `h2` ("Quiz results") so the heading outline stays valid
+- ReadingProgress bar `aria-hidden` (decorative)
+- MarkAsRead touch target increased (labeled variant `min-h-11` = 44px, icon-only `min-h-9` = 36px)
+
+### Known Issues
+- **ShareBar hydration mismatch (pre-existing, out of scope)** — `src/components/BlogPost/ShareBar.tsx` builds share URLs from `window.location.href` during client render vs empty string on the server, producing a React hydration warning and an empty `?text=`/`?url=`/`?u=` in the server-rendered share links. Present before this feature (untouched by d15ba1e); the "1 issue" badge in Next dev tools. Recommend a follow-up fix (render href from `useEffect` state or a static canonical URL). ShareBar itself predates progress tracking.
+- Quiz radio buttons remain individually tabbable (click-first interaction) rather than the arrow-key navigation of a classic APG radio group — deliberate: the widget is mouse/touch-first and all options stay discoverable.
+- Quiz answers persist only in localStorage per ADR-004 (intended); authenticated quiz sync to Supabase is fire-and-forget
+
 ### Integration Verification (t_b4ac5a38)
 - **Build gate** — `npm run build` + `npm run lint` pass clean (Next 16.2.9, TS strict, eslint no findings)
 - **API contracts verified** — `GET /api/progress/summary` returns `{readContent:{blog,lesson}, completedLessons}` (200, empty for guests); `POST /api/progress/read` / `lesson` / `quiz` accept the documented payloads, 400 on invalid type / missing slug, `unauthenticated` fallback for guests
 - **Routes verified in running app** (dev server, localhost:3000) — `/blog` (progress bar "N of 13 posts read" + per-card MarkAsRead), `/blog/[slug]` (PostReadProgress + MarkAsRead toggle, state syncs with listing), `/learn` (per-series completion bars), `/learn/[series]` (SeriesProgress + MarkComplete + "Take the quiz" CTA), `/learn/[series]/[slug]` (completion state + toggle), `/learn/[series]/quiz` (5-question MCQ, Check Answer / Next / score ring / Retake), `/tags`, `/blog/categories`, `/feed.xml`, `/sitemap.xml`; quiz-less series `/learn/agentic-ai/quiz` correctly 404s
 - **Interactions verified as real handlers** — MarkAsRead toggles localStorage `adroit-blog:read:blog/<slug>` and updates the aggregate bar live (0→1 of 13); MarkComplete toggles `adroit-blog:lesson:<slug>` and SeriesProgress updates live (0→1 of 3); quiz attempts persist to `adroit-blog:quiz:<name>` with correct/incorrect tracked (5/5 attempted, results view + Retake). No `() => {}` stubs found
 - **Supabase connectivity** — project `zrggxfdyptiahskogwnn` ACTIVE_HEALTHY; `read_progress`, `lesson_completion`, `quiz_attempt` tables present (REST 200, RLS blocks anonymous reads as intended); guest path falls back to localStorage cleanly
-
-### Known Issues
-- **ShareBar hydration mismatch (pre-existing, out of scope)** — `src/components/BlogPost/ShareBar.tsx` builds share URLs from `window.location.href` during client render vs empty string on the server, producing a React hydration warning and an empty `?text=`/`?url=`/`?u=` in the server-rendered share links. Present before this feature (untouched by d15ba1e); the "1 issue" badge in Next dev tools. Recommend a follow-up fix (render href from `useEffect` state or a static canonical URL). ShareBar itself predates progress tracking.
-- Quiz answers persist only in localStorage per ADR-004 (intended); authenticated quiz sync to Supabase is fire-and-forget
 
 ### Added
 - **Progress tracking — Blog Life & Depth (per arch plan t_718bb3ca, tasks 2–5)**:

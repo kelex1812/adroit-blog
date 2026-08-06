@@ -12,17 +12,35 @@ interface MarkAsReadProps {
   contentType?: "blog" | "lesson";
   /** Show text label alongside icon. */
   showLabel?: boolean;
+  /** Accessible name used when showLabel=false (icon-only variant). */
+  label?: string;
 }
 
-export default function MarkAsRead({ slug, contentType = "blog", showLabel = true }: MarkAsReadProps) {
+export default function MarkAsRead({
+  slug,
+  contentType = "blog",
+  showLabel = true,
+  label,
+}: MarkAsReadProps) {
   const { isRead, markAsRead, isLoading } = useReadProgress(slug, contentType);
+
+  const actionText = isRead ? "Marked as read" : "Mark as read";
 
   return (
     <button
       onClick={markAsRead}
       disabled={isLoading}
       aria-pressed={isRead}
-      className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold transition-all duration-150 no-underline ${
+      aria-label={
+        showLabel
+          ? undefined
+          : label
+            ? `${actionText}: ${label}`
+            : `${actionText}: ${slug}`
+      }
+      className={`inline-flex items-center gap-2 rounded-full text-xs font-semibold transition-all duration-150 no-underline ${
+        showLabel ? "px-4 min-h-11" : "px-3 min-h-9"
+      } ${
         isRead
           ? "bg-green-100 text-green-700 hover:bg-green-200"
           : "bg-gray-100 text-gray-600 hover:bg-navy hover:text-white"

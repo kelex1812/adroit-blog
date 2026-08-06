@@ -75,7 +75,7 @@ export default async function SeriesPage({ params, searchParams }: Props) {
     <div className="min-h-screen flex flex-col">
       <Header />
 
-      <main className="flex-1">
+      <main id="main" className="flex-1">
         {/* Series header strip */}
         <div className="max-w-[1120px] mx-auto px-6 pt-9">
           <Link

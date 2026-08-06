@@ -76,7 +76,7 @@ export default function CategoriesPage() {
     <div className="min-h-screen flex flex-col">
       <Header />
 
-      <main className="flex-1">
+      <main id="main" className="flex-1">
         {/* Hero */}
         <div className="max-w-[1120px] mx-auto px-6 pt-10 pb-0">
           <Link

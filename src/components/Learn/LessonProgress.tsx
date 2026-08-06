@@ -20,6 +20,12 @@ export default function LessonProgress({
   return (
     <div className="flex items-center gap-3">
       <div
+        role="progressbar"
+        aria-valuemin={0}
+        aria-valuemax={Math.max(1, total)}
+        aria-valuenow={Math.min(published, total)}
+        aria-valuetext={`${published} of ${total} lessons published`}
+        aria-label={`Lesson progress: ${published} of ${total}`}
         className={`flex-1 h-1.5 rounded-full overflow-hidden ${
           onGradient ? "bg-white/25" : "bg-gray-200"
         }`}

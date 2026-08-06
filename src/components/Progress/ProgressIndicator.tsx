@@ -32,7 +32,15 @@ export default function ProgressIndicator({
           </span>
         )}
       </div>
-      <div className="h-1.5 rounded-full overflow-hidden bg-gray-200">
+      <div
+        role="progressbar"
+        aria-valuemin={0}
+        aria-valuemax={Math.max(1, total)}
+        aria-valuenow={Math.min(current, total)}
+        aria-valuetext={pct > 0 ? `${pct}%` : `${current} of ${total}`}
+        aria-label={label || "Progress"}
+        className="h-1.5 rounded-full overflow-hidden bg-gray-200"
+      >
         <div
           className="h-full rounded-full bg-red transition-[width] duration-300"
           style={{ width: `${pct}%` }}

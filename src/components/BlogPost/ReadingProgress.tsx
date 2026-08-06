@@ -18,7 +18,7 @@ export default function ReadingProgress() {
   }, []);
 
   return (
-    <div className="reading-progress">
+    <div className="reading-progress" aria-hidden="true">
       <div className="reading-progress-fill" style={{ width: `${progress}%` }} />
     </div>
   );
