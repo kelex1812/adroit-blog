@@ -176,24 +176,6 @@ export const posts: BlogPost[] = [
     ]
   },
   {
-    "slug": "ai-strategy-marketing",
-    "title": "Why Every Business Needs an AI Strategy in 2026",
-    "excerpt": "Three waves of AI adoption from augmentation to innovation and where your company should focus.",
-    "category": "Marketing",
-    "categoryColor": "mkt",
-    "categoryGradient": "from-pink to-pink-dark",
-    "date": "June 1, 2026",
-    "author": "Adroit Consulting",
-    "authorInitials": "AC",
-    "readTime": "5 min read",
-    "featured": false,
-    "tags": [
-      "AI Strategy",
-      "Marketing",
-      "Business Growth"
-    ]
-  },
-  {
     "slug": "salesforce-flow-patterns",
     "title": "5 Salesforce Flow Design Patterns for Complex Automation",
     "excerpt": "Master these five flow patterns to build scalable maintainable automation across your org.",
