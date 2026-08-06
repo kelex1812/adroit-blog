@@ -4,6 +4,23 @@ All notable changes to the Adroit Consulting Blog project will be documented in 
 
 ## [Unreleased]
 
+### Fix: /api/progress/read 400s on blog contentSlug (QA t_b0f76a83, t_808e5885)
+
+Resolves the HIGH finding from zod's progress-tracking review: POST/DELETE `/api/progress/read` always returned 400 for blog content because every blog call site sends the canonical ADR-002 namespaced slug `blog/<slug>` while `validateSlug` (SLUG_RE `^[a-zA-Z0-9_-]+$`) rejected the `/`. Authed cross-device read sync (US-003 AC4) never wrote/removed Supabase rows, and every mark/unmark toggle fired a console 400 even for guests.
+
+**HIGH — namespaced contentSlug now accepted (traversal still blocked)**
+- `src/lib/api-security.ts`: `validateSlug` gains an optional `{ allowNamespaced: true }` option. When set, it accepts the bare form OR the canonical `blog/<slug>` / `lesson/<slug>` form (`NAMESPACED_SLUG_RE`). Path traversal stays blocked: no `..`, no dots, no extra slashes (F2 posture unchanged).
+- `src/app/api/progress/read/route.ts`: contentSlug validation passes `allowNamespaced: true`. `lessonSlug` (lesson route) and `quizName` (quiz routes) remain strict bare-slug-only — no loosening outside the read API.
+- Canonical form stays consistent everywhere: localStorage key `adroit-blog:read:blog/<slug>`, DB `content_slug`, and the summary merge (`src/lib/progress.ts`) all use the same prefixed slug, so authed read state now survives reloads and syncs across devices.
+- `scripts/verify-security-followup.py`: added contract cases — prefixed `blog/<slug>` / `lesson/<slug>` → 200, prefixed traversal `blog/../etc` → 400, prefixed double-slash → 400 (16/16 PASS against the dev server).
+- Verified: `tsc --noEmit`, `eslint`, `npm run build` clean; live curl POST/DELETE `blog/<slug>` → 200 (was 400); browser mark/unmark on listing + post page fires the API with 200 and flips localStorage; no console 400.
+
+**LOW — mobile 390px "Oldest" sort control no longer clipped**
+- `src/app/blog/page.tsx`: the toolbar's `.ml-auto` row (ReadFilter + SortToggle) is now `flex flex-wrap items-center justify-end` — at 390px the row needs ~385px (241+136+8) but only has 342px, so SortToggle wraps to its own right-aligned line instead of being cut off by the hero's `overflow-hidden`. Desktop layout unchanged (verified visually; computed style confirms `flex-wrap: wrap`).
+
+### Known Issues (new)
+- None introduced. The 400 was the only open HIGH; the sort clip the only LOW. Both resolved with no API surface or storage-format changes.
+
 ### Fix: QuizStats nested anchor on /learn (QA run #2557, t_97f2451c)
 
 Resolves the single remaining MEDIUM finding from zod's re-review (t_dfa1c8cd) of commit db25389.

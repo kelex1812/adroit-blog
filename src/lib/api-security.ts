@@ -15,6 +15,21 @@ const SLUG_MAX = 200;
 // Kebab/snake-case slugs only — no dots, slashes, or path separators
 // (blocks `../` traversal and any encoded path tricks).
 const SLUG_RE = /^[a-zA-Z0-9_-]+$/;
+// Canonical namespaced content slug, e.g. `blog/<slug>` / `lesson/<slug>`
+// (ADR-002 storage form — localStorage keys, DB content_slug, and the
+// summary merge all use the prefixed form). One fixed namespace + one
+// bare slug: still no `..`, no dots, no extra slashes → path traversal
+// stays blocked (F2).
+const NAMESPACED_SLUG_RE = /^(blog|lesson)\/[a-zA-Z0-9_-]+$/;
+
+export interface ValidateSlugOptions {
+  /**
+   * Accept the canonical namespaced form `blog/<slug>` / `lesson/<slug>`
+   * in addition to the bare slug form. Used by contentSlug on the read
+   * API; lessonSlug / quizName stay strict (bare only).
+   */
+  allowNamespaced?: boolean;
+}
 
 /**
  * Validate a slug (contentSlug / lessonSlug / quizName).
@@ -23,6 +38,7 @@ const SLUG_RE = /^[a-zA-Z0-9_-]+$/;
 export function validateSlug(
   value: unknown,
   label: string,
+  options?: ValidateSlugOptions,
 ): string | null {
   if (typeof value !== "string" || value.length === 0) {
     return `${label} is required`;
@@ -30,7 +46,10 @@ export function validateSlug(
   if (value.length > SLUG_MAX) {
     return `${label} must be ${SLUG_MAX} characters or fewer`;
   }
-  if (!SLUG_RE.test(value)) {
+  const ok = options?.allowNamespaced
+    ? SLUG_RE.test(value) || NAMESPACED_SLUG_RE.test(value)
+    : SLUG_RE.test(value);
+  if (!ok) {
     return `${label} contains invalid characters`;
   }
   return null;

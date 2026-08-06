@@ -179,7 +179,9 @@ function BlogListingContent() {
                   );
                 })}
               </div>
-              <div className="ml-auto flex items-center gap-2">
+              {/* Read Filter + Sort — wrap on narrow viewports so the
+                  controls never clip off the right edge (390px QA finding) */}
+              <div className="ml-auto flex flex-wrap items-center justify-end gap-2">
                 <ReadFilter
                   readKeys={readKeys}
                   value={readFilter}

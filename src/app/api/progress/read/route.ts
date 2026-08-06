@@ -46,8 +46,15 @@ async function parseBody(req: NextRequest): Promise<
     };
   }
 
-  /* --- Slug validation (F2) --- */
-  const slugErr = validateSlug(body.contentSlug, "contentSlug");
+  /* --- Slug validation (F2) ---
+   * contentSlug uses the canonical ADR-002 namespaced form
+   * (`blog/<slug>` / `lesson/<slug>` — matches localStorage keys, the DB
+   * content_slug, and the summary merge in src/lib/progress.ts), so the
+   * namespaced form is allowed here. Path traversal (`../`, extra slashes,
+   * dots) is still rejected. */
+  const slugErr = validateSlug(body.contentSlug, "contentSlug", {
+    allowNamespaced: true,
+  });
   if (slugErr) {
     return {
       ok: false,
