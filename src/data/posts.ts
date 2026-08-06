@@ -2,6 +2,28 @@ import { BlogPost } from "./types";
 
 export const posts: BlogPost[] = [
   {
+    "slug": "ai-agent-identity-2026",
+    "title": "Who Is Your AI Agent? The 2026 Push to Give Agents Real Identities",
+    "excerpt": "NIST, the IETF, and Microsoft all moved on agent identity in 2026, and MCP now mandates OAuth 2.1 for remote servers. Here's what giving agents their own credentials looks like — from the standards to a 10-agent pipeline that runs on isolated identities.",
+    "category": "AI & Consulting",
+    "categoryColor": "ai",
+    "categoryGradient": "from-amber to-amber-dark",
+    "date": "August 06, 2026",
+    "author": "Adroit Consulting",
+    "authorInitials": "AC",
+    "readTime": "7 min read",
+    "featured": false,
+    "tags": [
+      "AI Agents",
+      "Agent Identity",
+      "Authentication",
+      "IAM",
+      "MCP",
+      "AI Security"
+    ],
+    "bannerImage": "/banners/ai-agent-identity-2026.png"
+  },
+  {
     "slug": "github-actions-supply-chain-security-2026",
     "title": "GitHub Actions Is Getting a Lockfile: Inside the 2026 Security Roadmap",
     "excerpt": "GitHub's 2026 Actions security roadmap promises workflow dependency locking, scoped secrets, and a native egress firewall — and parts are already shipping. Here's what changes for teams that live in CI/CD, and what you can do today.",
