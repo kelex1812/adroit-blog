@@ -36,7 +36,7 @@ export default function SortToggle({ compact = false }: SortToggleProps) {
       <button
         onClick={() => setSort("newest")}
         aria-pressed={sort === "newest"}
-        className={`px-3 py-1 rounded-full cursor-pointer transition-all duration-150 ${
+        className={`px-3 py-1 rounded-full cursor-pointer transition-all duration-150 active:scale-[0.98] ${
           sort === "newest"
             ? "bg-navy text-white"
             : "text-gray-500 hover:text-navy"
@@ -47,7 +47,7 @@ export default function SortToggle({ compact = false }: SortToggleProps) {
       <button
         onClick={() => setSort("oldest")}
         aria-pressed={sort === "oldest"}
-        className={`px-3 py-1 rounded-full cursor-pointer transition-all duration-150 ${
+        className={`px-3 py-1 rounded-full cursor-pointer transition-all duration-150 active:scale-[0.98] ${
           sort === "oldest"
             ? "bg-navy text-white"
             : "text-gray-500 hover:text-navy"

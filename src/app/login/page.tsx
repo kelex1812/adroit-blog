@@ -1,0 +1,211 @@
+/**
+ * /login — email/password sign in + sign up (Supabase).
+ *
+ * Design: matches the blog's editorial form language — mono kicker,
+ * navy primary button, red focus ring. Session cookie is written by
+ * the SSR client in /api/auth/login, so progress syncs across devices
+ * after sign-in.
+ */
+"use client";
+
+import { useState, useTransition } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { Suspense } from "react";
+import Link from "next/link";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import { notifyAuthChanged } from "@/lib/hooks/useAuth";
+
+function LoginForm() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const next = searchParams.get("next") || "/blog";
+
+  const [mode, setMode] = useState<"signin" | "signup">("signin");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState<string | null>(null);
+  const [info, setInfo] = useState<string | null>(null);
+  const [isPending, startTransition] = useTransition();
+
+  function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    setError(null);
+    setInfo(null);
+
+    startTransition(async () => {
+      try {
+        const res = await fetch("/api/auth/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ mode, email, password }),
+        });
+        const data = (await res.json()) as { status?: string; error?: string; message?: string };
+
+        if (!res.ok) {
+          setError(data.error ?? "Sign in failed. Please try again.");
+          return;
+        }
+
+        if (data.status === "check-email") {
+          setInfo(data.message ?? "Check your inbox to confirm your email.");
+          setMode("signin");
+          setPassword("");
+          return;
+        }
+
+        notifyAuthChanged();
+        router.push(next);
+        router.refresh();
+      } catch {
+        setError("Network error. Please try again.");
+      }
+    });
+  }
+
+  return (
+    <div className="min-h-screen flex flex-col">
+      <Header />
+      <main id="main" className="flex-1 flex items-center justify-center px-6 py-16">
+        <div className="w-full max-w-[420px]">
+          <div className="rounded-[20px] border border-gray-200 bg-white p-8 shadow-card">
+            <div className="inline-flex items-center gap-2 font-mono text-[11px] font-semibold text-red uppercase tracking-[0.08em] mb-2">
+              <span className="w-1.5 h-1.5 rounded-full bg-red" />
+              Adroit Academy
+            </div>
+            <h1 className="text-[1.6rem] font-extrabold text-navy tracking-[-0.02em] mb-1.5">
+              {mode === "signin" ? "Sign in" : "Create account"}
+            </h1>
+            <p className="text-[13px] text-gray-500 leading-relaxed mb-6">
+              {mode === "signin"
+                ? "Sign in to sync your reading progress, completions, and quiz scores across devices."
+                : "Create an account to save your progress and pick up where you left off on any device."}
+            </p>
+
+            {error && (
+              <div
+                role="alert"
+                className="rounded-xl border border-red/25 bg-red/5 px-4 py-3 text-[12.5px] text-red-dark mb-4"
+              >
+                {error}
+              </div>
+            )}
+            {info && (
+              <div
+                role="status"
+                className="rounded-xl border border-emerald/25 bg-emerald-light/40 px-4 py-3 text-[12.5px] text-emerald-700 mb-4"
+              >
+                {info}
+              </div>
+            )}
+
+            <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+              <label className="flex flex-col gap-1.5">
+                <span className="font-mono text-[10.5px] font-bold text-gray-500 uppercase tracking-[0.07em]">
+                  Email
+                </span>
+                <input
+                  type="email"
+                  required
+                  autoComplete="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="h-11 rounded-xl border border-gray-200 bg-white px-4 text-[14px] text-gray-800 placeholder:text-gray-300 focus:outline-none focus:border-navy focus:ring-2 focus:ring-red/30 transition-colors duration-150"
+                  placeholder="you@company.com"
+                />
+              </label>
+
+              <label className="flex flex-col gap-1.5">
+                <span className="font-mono text-[10.5px] font-bold text-gray-500 uppercase tracking-[0.07em]">
+                  Password
+                </span>
+                <input
+                  type="password"
+                  required
+                  minLength={6}
+                  autoComplete={mode === "signin" ? "current-password" : "new-password"}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="h-11 rounded-xl border border-gray-200 bg-white px-4 text-[14px] text-gray-800 placeholder:text-gray-300 focus:outline-none focus:border-navy focus:ring-2 focus:ring-red/30 transition-colors duration-150"
+                  placeholder="••••••••"
+                />
+              </label>
+
+              <button
+                type="submit"
+                disabled={isPending}
+                className="h-11 rounded-xl bg-navy text-white text-sm font-bold cursor-pointer hover:bg-navy-light active:scale-[0.98] transition-all duration-150 disabled:opacity-50 disabled:cursor-wait"
+              >
+                {isPending
+                  ? "Working…"
+                  : mode === "signin"
+                    ? "Sign in"
+                    : "Create account"}
+              </button>
+            </form>
+
+            <div className="mt-5 text-center text-[12.5px] text-gray-500">
+              {mode === "signin" ? (
+                <>
+                  New here?{" "}
+                  <button
+                    onClick={() => {
+                      setMode("signup");
+                      setError(null);
+                      setInfo(null);
+                    }}
+                    className="font-semibold text-navy underline underline-offset-2 decoration-red/40 hover:decoration-red cursor-pointer bg-none border-none"
+                  >
+                    Create an account
+                  </button>
+                </>
+              ) : (
+                <>
+                  Already have an account?{" "}
+                  <button
+                    onClick={() => {
+                      setMode("signin");
+                      setError(null);
+                      setInfo(null);
+                    }}
+                    className="font-semibold text-navy underline underline-offset-2 decoration-red/40 hover:decoration-red cursor-pointer bg-none border-none"
+                  >
+                    Sign in
+                  </button>
+                </>
+              )}
+            </div>
+          </div>
+
+          <p className="text-center mt-6">
+            <Link
+              href="/blog"
+              className="inline-flex items-center gap-1.5 text-gray-500 text-xs font-medium no-underline hover:text-navy transition-colors duration-150"
+            >
+              &larr; Back to blog
+            </Link>
+          </p>
+        </div>
+      </main>
+      <Footer />
+    </div>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen flex flex-col">
+          <Header />
+          <main id="main" className="flex-1 flex items-center justify-center">
+            <div className="text-gray-400 text-sm">Loading…</div>
+          </main>
+          <Footer />
+        </div>
+      }
+    >
+      <LoginForm />
+    </Suspense>
+  );
+}

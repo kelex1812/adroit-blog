@@ -10,7 +10,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { getSupabaseClient } from "@/lib/supabase/client";
-import { notifyProgressChanged } from "@/lib/progress";
+import { notifyProgressChanged, PROGRESS_CHANGED_EVENT } from "@/lib/progress";
 
 const STORAGE_KEY_PREFIX = "adroit-blog:read:";
 
@@ -75,12 +75,39 @@ async function markAsReadAPI(contentType: "blog" | "lesson", contentSlug: string
   }
 }
 
+/** Unmark content as read via API route (removes the Supabase row). */
+async function unmarkAsReadAPI(contentType: "blog" | "lesson", contentSlug: string): Promise<void> {
+  if (typeof window === "undefined") return;
+  try {
+    await fetch("/api/progress/read", {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ contentType, contentSlug }),
+    });
+  } catch {
+    // Fire-and-forget — localStorage already flipped to false
+  }
+}
+
 export function useReadProgress(
   slug: string,
   contentType: "blog" | "lesson" = "blog",
 ): UseReadProgressReturn {
   const [isRead, setIsRead] = useState(getReadFromStorage(slug));
   const [isLoading, setIsLoading] = useState(true);
+
+  // Sync from other hook instances: when any MarkAsRead / PostCardWithRead
+  // instance toggles, every instance of this hook for the same slug updates
+  // (same-tab via PROGRESS_CHANGED_EVENT, cross-tab via the storage event).
+  useEffect(() => {
+    const onChanged = () => setIsRead(getReadFromStorage(slug));
+    window.addEventListener(PROGRESS_CHANGED_EVENT, onChanged);
+    window.addEventListener("storage", onChanged);
+    return () => {
+      window.removeEventListener(PROGRESS_CHANGED_EVENT, onChanged);
+      window.removeEventListener("storage", onChanged);
+    };
+  }, [slug]);
 
   useEffect(() => {
     // Check Supabase first (if auth exists), fall back to localStorage
@@ -110,6 +137,8 @@ export function useReadProgress(
 
     if (newReadState) {
       markAsReadAPI(contentType, slug);
+    } else {
+      unmarkAsReadAPI(contentType, slug);
     }
   }, [isRead, slug, contentType]);
 

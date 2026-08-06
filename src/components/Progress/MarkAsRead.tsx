@@ -38,7 +38,7 @@ export default function MarkAsRead({
             ? `${actionText}: ${label}`
             : `${actionText}: ${slug}`
       }
-      className={`inline-flex items-center gap-2 rounded-full text-xs font-semibold transition-all duration-150 no-underline ${
+      className={`inline-flex items-center gap-2 rounded-full text-xs font-semibold transition-all duration-150 no-underline active:scale-[0.98] ${
         showLabel ? "px-4 min-h-11" : "px-3 min-h-9"
       } ${
         isRead

@@ -2,6 +2,7 @@ import Link from "next/link";
 import { LearningSeries } from "@/data/types";
 import { seriesShortLabel } from "@/lib/learn";
 import LessonProgress from "./LessonProgress";
+import QuizStats from "@/components/Progress/QuizStats";
 
 interface PathCardProps {
   series: LearningSeries;
@@ -58,6 +59,10 @@ export default function PathCard({ series }: PathCardProps) {
               published={series.lessons.length}
               total={series.totalLessons}
             />
+            {/* Quiz average + attempt count (design brief §5.3) */}
+            <div className="mt-2.5">
+              <QuizStats seriesSlug={series.slug} />
+            </div>
           </div>
         )}
       </div>

@@ -4,6 +4,31 @@ All notable changes to the Adroit Consulting Blog project will be documented in 
 
 ## [Unreleased]
 
+### QA Findings — Blog Life & Depth re-review (t_574d3153)
+
+Resolves all 9 findings from zod's QA review run #2552 (t_dfa1c8cd) of the Blog Life & Depth feature (read tracking, lesson completion, quiz engine, auth).
+
+**HIGH**
+- **US-003 AC1 — read cards now dim.** `PostCard` takes a `read` prop (banner `opacity-60`, title/excerpt `text-gray-400`, border `gray-100`, "Read again" CTA). New `PostCardWithRead` client wrapper wires the real merged read state per card (localStorage + Supabase) so the blog listing reflects actual progress. Emerald check badge (white circle + green check) sits top-right over the banner; read state also surfaces in the card `aria-label`.
+- **US-004 AC3 — unmark/uncomplete now syncs to Supabase.** `useReadProgress` / `useLessonProgress` call `DELETE /api/progress/read` and `DELETE /api/progress/lesson` when the new state is false (previously POST-only upserts meant an unmark flipped localStorage but the Supabase row survived a reload). Both routes share the POST validation (contentType/slug checks, origin, rate limit) and delete only the user's own row. RLS DELETE policies already existed in migrations 001/003 — no new migration required for the unmark path.
+
+**MEDIUM**
+- **US-003 AC3/AC4 + US-004 AC4 — read filter + auth UI.** Blog listing gains the All/Unread/Read segmented control (design brief §4.2) with live per-segment counts from the merged read state, driven by the `?read=` URL param (resets pagination, shares the same URL contract as `category`/`sort`), plus a proper empty state ("No unread posts in this category."). Full auth UI added: `src/app/login/page.tsx` (Supabase email/password sign in + create-account toggle), `useAuth` client hook (session read via `GET /api/auth/session`, no tokens in the browser), auth API routes (`/api/auth/session`, `/api/auth/login`, `/api/auth/logout` — SSR client writes the HttpOnly cookie so progress routes authenticate naturally), Header sign-in/user-menu/sign-out in desktop + mobile nav, and a guest sign-in prompt on the blog listing ("Progress is saved on this device. Sign in to sync across devices."). Per-user cross-device progress is now reachable end-to-end.
+- **US-005 AC4 — retake preserves the original score.** `useQuizProgress` now tracks `bestScore` (best completed-run %) and `attemptCount` (completed runs). `resetQuiz()` clears the current attempt but preserves both; `QuizWidget` records a run exactly once when the quiz becomes fully answered (via `completeRun()`) and shows "Best score X% · N attempts" on the results card.
+- **US-005 AC5 — series quiz stats shown.** New `supabase/migrations/004_quiz_run_stats.sql` (`quiz_run` table + RLS) records completed runs server-side; `POST/GET /api/progress/quiz/run` writes and reads back best score + attempt count. New `QuizStats` client component merges localStorage (guest) + Supabase (authed) and renders the mono "Quiz avg X% · N attempts" strip on PathCard (learn hub) and the series header gradient strip — only when attempts exist (never invents stats).
+- **MarkComplete aria-label ternary fixed** — both branches previously read "Mark"; now "Unmark lesson … incomplete" when complete, "Mark … complete" when not (screens readers announce the real action).
+
+**LOW**
+- **US-002 AC3 — button press feedback.** `active:scale-[0.98]` added to primary interactive controls: MarkAsRead, MarkComplete, category pills, read-filter segments, SortToggle, pagination, quiz Check/Next/Retake, header Contact CTA, login submit.
+- **US-002 AC5 — hero fade-in on load.** `hero-fade-in` keyframes (opacity + 10px rise, 0.6s ease-out) in `globals.css`, applied to the blog and learn heroes; the existing `prefers-reduced-motion` block neutralises it automatically.
+- **Banner backfill — 13/13 posts now have `bannerImage`.** Added `scripts/backfill-banners.js` (regenerates safely) and three on-brand category banners (`public/banners/category-sf.png`, `category-react.png`, `category-ai.png`), wired into MDX frontmatter; `build-posts.js` regenerated `src/data/posts.ts` so every card/post renders a real banner instead of the gradient fallback.
+
+### Known Issues (new)
+- `quiz_run` migration (004) must be applied to the linked Supabase project (local stack wasn't running during this fix; repo verified by build/lint). Without it, authed quiz stats fall back to localStorage — the guest path is unaffected.
+- `/login` requires Supabase email confirmation to be configured (already `enable_confirmations = true` in `supabase/config.toml`); sign-up returns a "check your email" notice until confirmed.
+- Read/lesson unmark and quiz-run writes are fire-and-forget like the mark path: if the network drops, localStorage remains authoritative and the next successful sync corrects Supabase.
+- Category banner art is a deliberate, brand-consistent placeholder set (generated, matching category gradients) — Jimmy's parallel content task can still swap in post-specific imagery later without code changes.
+
 ### Security Fixes — Auth/session hardening follow-up (t_a719a31c)
 
 Fixes remaining findings from val-el's auth-session audit (t_4ee14a75) + RLS audit (t_ea38d052), layered on top of t_c7f51ff6.

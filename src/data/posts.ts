@@ -39,7 +39,8 @@ export const posts: BlogPost[] = [
       "Realtime",
       "Web Development",
       "TypeScript"
-    ]
+    ],
+    "bannerImage": "/banners/category-react.png"
   },
   {
     "slug": "ai-generated-code-cicd-guardrails",
@@ -59,7 +60,8 @@ export const posts: BlogPost[] = [
       "DevOps",
       "Code Review",
       "AI-Generated Code"
-    ]
+    ],
+    "bannerImage": "/banners/category-ai.png"
   },
   {
     "slug": "local-llm-infrastructure-2026",
@@ -78,7 +80,8 @@ export const posts: BlogPost[] = [
       "Model Serving",
       "DevOps",
       "TCO"
-    ]
+    ],
+    "bannerImage": "/banners/category-ai.png"
   },
   {
     "slug": "multi-agent-orchestration-production-lessons",
@@ -98,7 +101,8 @@ export const posts: BlogPost[] = [
       "Agentforce",
       "Agentic AI",
       "Production Patterns"
-    ]
+    ],
+    "bannerImage": "/banners/category-ai.png"
   },
   {
     "slug": "typescript-7-go-native-compiler",
@@ -117,7 +121,8 @@ export const posts: BlogPost[] = [
       "Web Development",
       "Performance",
       "Compilers"
-    ]
+    ],
+    "bannerImage": "/banners/category-react.png"
   },
   {
     "slug": "salesforce-summer-26-three-things",
@@ -136,7 +141,8 @@ export const posts: BlogPost[] = [
       "Summer '26",
       "Flow",
       "Agentforce"
-    ]
+    ],
+    "bannerImage": "/banners/category-sf.png"
   },
   {
     "slug": "salesforce-flow-vs-apex-when-to-use-which",
@@ -155,7 +161,8 @@ export const posts: BlogPost[] = [
       "Flow",
       "Apex",
       "Automation"
-    ]
+    ],
+    "bannerImage": "/banners/category-sf.png"
   },
   {
     "slug": "ai-strategy-2026",
@@ -173,7 +180,8 @@ export const posts: BlogPost[] = [
       "AI Strategy",
       "Digital Transformation",
       "Business Growth"
-    ]
+    ],
+    "bannerImage": "/banners/category-ai.png"
   },
   {
     "slug": "salesforce-flow-patterns",
@@ -191,7 +199,8 @@ export const posts: BlogPost[] = [
       "Salesforce",
       "Flow Automation",
       "Apex"
-    ]
+    ],
+    "bannerImage": "/banners/category-sf.png"
   },
   {
     "slug": "scalable-react-2026",
@@ -210,7 +219,8 @@ export const posts: BlogPost[] = [
       "Next.js",
       "Architecture",
       "Performance"
-    ]
+    ],
+    "bannerImage": "/banners/category-react.png"
   },
   {
     "slug": "ai-agents-salesforce",
@@ -229,7 +239,8 @@ export const posts: BlogPost[] = [
       "Salesforce",
       "Agentforce",
       "Automation"
-    ]
+    ],
+    "bannerImage": "/banners/category-ai.png"
   },
   {
     "slug": "digital-transformation-2026",
@@ -247,6 +258,7 @@ export const posts: BlogPost[] = [
       "Digital Transformation",
       "Salesforce",
       "Enterprise"
-    ]
+    ],
+    "bannerImage": "/banners/category-sf.png"
   }
 ];

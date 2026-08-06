@@ -22,10 +22,10 @@ export default function MarkComplete({ lessonSlug, label }: MarkCompleteProps) {
       onClick={markComplete}
       disabled={isLoading}
       aria-pressed={isCompleted}
-      aria-label={`${isCompleted ? "Mark" : "Mark"} ${label ?? lessonSlug} ${
+      aria-label={`${isCompleted ? "Unmark" : "Mark"} ${label ?? lessonSlug} ${
         isCompleted ? "incomplete" : "complete"
       }`}
-      className={`flex-shrink-0 w-12 h-12 rounded-full border-2 flex items-center justify-center transition-all duration-200 cursor-pointer disabled:opacity-50 disabled:cursor-wait ${
+      className={`flex-shrink-0 w-12 h-12 rounded-full border-2 flex items-center justify-center transition-all duration-200 cursor-pointer disabled:opacity-50 disabled:cursor-wait active:scale-[0.98] ${
         isCompleted
           ? "border-green-500 bg-green-500 text-white"
           : "border-gray-300 bg-white text-transparent hover:border-green-500"

@@ -19,6 +19,7 @@ import { sortPosts } from "@/lib/sort";
 import { buildMetadata, siteConfig } from "@/lib/seo";
 import MarkComplete from "@/components/Progress/MarkComplete";
 import SeriesProgress from "@/components/Progress/SeriesProgress";
+import QuizStats from "@/components/Progress/QuizStats";
 import { getQuizForSeries } from "@/lib/quiz";
 
 interface Props {
@@ -131,6 +132,12 @@ export default async function SeriesPage({ params, searchParams }: Props) {
                     showPercent
                   />
                 </div>
+                {/* Quiz average + attempt count (design brief §5.3) */}
+                {hasQuiz && (
+                  <div className="mt-2.5">
+                    <QuizStats seriesSlug={series} onGradient />
+                  </div>
+                )}
               </div>
             )}
           </div>

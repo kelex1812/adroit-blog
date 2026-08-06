@@ -10,7 +10,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { getSupabaseClient } from "@/lib/supabase/client";
-import { notifyProgressChanged } from "@/lib/progress";
+import { notifyProgressChanged, PROGRESS_CHANGED_EVENT } from "@/lib/progress";
 
 const STORAGE_KEY_PREFIX = "adroit-blog:lesson:";
 
@@ -69,9 +69,34 @@ async function markCompleteAPI(lessonSlug: string): Promise<void> {
   }
 }
 
+/** Unmark a lesson complete via API route (removes the Supabase row). */
+async function unmarkCompleteAPI(lessonSlug: string): Promise<void> {
+  if (typeof window === "undefined") return;
+  try {
+    await fetch("/api/progress/lesson", {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ lessonSlug }),
+    });
+  } catch {
+    // fire-and-forget — localStorage already flipped to false
+  }
+}
+
 export function useLessonProgress(lessonSlug: string): UseLessonProgressReturn {
   const [isCompleted, setIsCompleted] = useState(getCompletedFromStorage(lessonSlug));
   const [isLoading, setIsLoading] = useState(true);
+
+  // Sync from other hook instances (same-tab + cross-tab).
+  useEffect(() => {
+    const onChanged = () => setIsCompleted(getCompletedFromStorage(lessonSlug));
+    window.addEventListener(PROGRESS_CHANGED_EVENT, onChanged);
+    window.addEventListener("storage", onChanged);
+    return () => {
+      window.removeEventListener(PROGRESS_CHANGED_EVENT, onChanged);
+      window.removeEventListener("storage", onChanged);
+    };
+  }, [lessonSlug]);
 
   useEffect(() => {
     const checkSupabase = async () => {
@@ -100,6 +125,8 @@ export function useLessonProgress(lessonSlug: string): UseLessonProgressReturn {
 
     if (newState) {
       markCompleteAPI(lessonSlug);
+    } else {
+      unmarkCompleteAPI(lessonSlug);
     }
   }, [isCompleted, lessonSlug]);
 

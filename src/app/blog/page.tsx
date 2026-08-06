@@ -1,16 +1,20 @@
 "use client";
 
-import { Suspense, useState } from "react";
+import { Suspense, useMemo, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
+import Link from "next/link";
 import { posts as allPosts } from "@/data/posts";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import FeaturedPost from "@/components/BlogListing/FeaturedPost";
-import PostCard from "@/components/BlogListing/PostCard";
+import PostCardWithRead from "@/components/BlogListing/PostCardWithRead";
+import ReadFilter, { type ReadFilterValue } from "@/components/BlogListing/ReadFilter";
 import SortToggle from "@/components/BlogListing/SortToggle";
 import { sortPosts, type SortOrder } from "@/lib/sort";
 import MarkAsRead from "@/components/Progress/MarkAsRead";
 import BlogReadProgress from "@/components/Progress/BlogReadProgress";
+import { useProgressSummary } from "@/lib/hooks/useProgressSummary";
+import { useAuth } from "@/lib/hooks/useAuth";
 
 const categories = [
   { key: "all", label: "All Posts" },
@@ -32,13 +36,33 @@ function BlogListingContent() {
   const sortOrder: SortOrder =
     searchParams.get("sort") === "oldest" ? "oldest" : "newest";
 
+  // Read filter from ?read=all|unread|read (design brief §4.2)
+  const readParam = searchParams.get("read");
+  const readFilter: ReadFilterValue =
+    readParam === "unread" || readParam === "read" ? readParam : "all";
+
   const filtered = allPosts.filter((post) => {
     if (activeCategory === "all") return true;
     return post.categoryColor === activeCategory;
   });
 
+  // Canonical read keys for the visible category set
+  // Canonical read keys for the visible category set (cheap — ≤13 posts)
+  const readKeys = filtered.map((post) => `blog/${post.slug}`);
+
+  const { merge } = useProgressSummary(readKeys, []);
+
+  // Apply the read filter against the REAL merged read state
+  const readFiltered = useMemo(() => {
+    if (readFilter === "all") return filtered;
+    return filtered.filter((post) => {
+      const isRead = merge.read.has(`blog/${post.slug}`);
+      return readFilter === "read" ? isRead : !isRead;
+    });
+  }, [filtered, readFilter, merge.read]);
+
   // Defensive sort — never trust generated array order in a view.
-  const sorted = sortPosts(filtered, sortOrder);
+  const sorted = sortPosts(readFiltered, sortOrder);
   const featured = sorted.find((p) => p.featured);
   const nonFeatured = sorted.filter((p) => !p.featured);
 
@@ -62,6 +86,20 @@ function BlogListingContent() {
     router.replace(qs ? `/blog?${qs}` : "/blog", { scroll: false });
   }
 
+  function handleReadFilterChange(value: ReadFilterValue) {
+    setCurrentPage(1);
+    const params = new URLSearchParams(searchParams.toString());
+    if (value === "all") {
+      params.delete("read");
+    } else {
+      params.set("read", value);
+    }
+    const qs = params.toString();
+    router.replace(qs ? `/blog?${qs}` : "/blog", { scroll: false });
+  }
+
+  const { user, isLoading: authLoading } = useAuth();
+
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
@@ -78,7 +116,7 @@ function BlogListingContent() {
                 "radial-gradient(60% 120% at 12% -10%, rgba(200,16,46,0.07) 0%, transparent 60%), radial-gradient(50% 100% at 88% -20%, rgba(11,29,58,0.08) 0%, transparent 55%)",
             }}
           />
-          <div className="max-w-[1120px] mx-auto px-6 pt-12 pb-0 relative">
+          <div className="max-w-[1120px] mx-auto px-6 pt-12 pb-0 relative hero-fade-in">
             <div className="inline-flex items-center gap-2 font-mono text-[11px] font-semibold text-red uppercase tracking-[0.08em] mb-[14px]">
               <span className="w-1.5 h-1.5 rounded-full bg-red" />
               Adroit Consulting &mdash; Field Notes
@@ -106,7 +144,7 @@ function BlogListingContent() {
               RSS Feed
             </a>
 
-            {/* Category Pills */}
+            {/* Category Pills + Read Filter + Sort */}
             <div className="flex flex-wrap items-center gap-2 mt-7 pb-8 border-b border-gray-200">
               <div className="flex flex-wrap gap-2">
                 {categories.map((cat) => {
@@ -121,7 +159,7 @@ function BlogListingContent() {
                       key={cat.key}
                       onClick={() => handleCategoryClick(cat.key)}
                       aria-pressed={active}
-                      className={`group inline-flex items-center gap-1.5 pl-4 pr-1.5 py-1.5 rounded-full text-xs font-semibold cursor-pointer no-underline transition-all duration-150 ${
+                      className={`group inline-flex items-center gap-1.5 pl-4 pr-1.5 py-1.5 rounded-full text-xs font-semibold cursor-pointer no-underline transition-all duration-150 active:scale-[0.98] ${
                         active
                           ? "bg-navy text-white shadow-md shadow-navy/20"
                           : "bg-white text-gray-600 border border-gray-200 hover:bg-gray-50 hover:border-gray-300 hover:-translate-y-px"
@@ -141,7 +179,12 @@ function BlogListingContent() {
                   );
                 })}
               </div>
-              <div className="ml-auto">
+              <div className="ml-auto flex items-center gap-2">
+                <ReadFilter
+                  readKeys={readKeys}
+                  value={readFilter}
+                  onChange={handleReadFilterChange}
+                />
                 <SortToggle />
               </div>
             </div>
@@ -149,7 +192,7 @@ function BlogListingContent() {
         </div>
 
         {/* Featured Post */}
-        {featured && activeCategory === "all" && (
+        {featured && activeCategory === "all" && readFilter === "all" && (
           <div className="mt-8">
             <FeaturedPost post={featured} />
           </div>
@@ -158,21 +201,67 @@ function BlogListingContent() {
         {/* Reading progress — real merged read count across the listing */}
         <BlogReadProgress postSlugs={filtered.map((p) => p.slug)} />
 
+        {/* Sign-in prompt — per-user cross-device sync (design brief §4.3) */}
+        {!authLoading && !user && (
+          <div className="max-w-[1120px] mx-auto px-6 pt-4">
+            <div className="flex items-center justify-between gap-3 rounded-xl border border-gray-200 bg-white px-4 py-3">
+              <p className="text-[12.5px] text-gray-500 leading-relaxed">
+                Progress is saved on this device.{" "}
+                <span className="hidden sm:inline">Sign in to sync across devices.</span>
+              </p>
+              <Link
+                href="/login?next=/blog"
+                className="flex-shrink-0 text-[12px] font-bold text-navy underline underline-offset-2 decoration-red/40 hover:decoration-red no-underline transition-colors duration-150"
+              >
+                Sign in
+              </Link>
+            </div>
+          </div>
+        )}
+
         {/* Post Cards Grid */}
         <div className="max-w-[1120px] mx-auto px-6 pb-10">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            {paginatedPosts.map((post) => (
-              <div key={post.slug} className="relative">
-                <PostCard post={post} />
-                <div className="mt-2 px-1">
-                  <MarkAsRead slug={`blog/${post.slug}`} contentType="blog" showLabel={false} label={post.title} />
+          {paginatedPosts.length === 0 ? (
+            <div className="mt-6 rounded-2xl border border-dashed border-gray-300 bg-white/60 px-6 py-12 text-center">
+              <p className="text-[14.5px] font-semibold text-gray-700">
+                {readFilter === "unread"
+                  ? "No unread posts in this category."
+                  : readFilter === "read"
+                    ? "No read posts in this category yet."
+                    : "No posts in this category yet."}
+              </p>
+              <p className="text-[12.5px] text-gray-400 mt-1.5">
+                {readFilter !== "all" ? (
+                  <>
+                    Try the{" "}
+                    <button
+                      onClick={() => handleReadFilterChange("all")}
+                      className="font-semibold text-navy underline underline-offset-2 decoration-red/40 hover:decoration-red cursor-pointer bg-none border-none"
+                    >
+                      All
+                    </button>{" "}
+                    filter to see everything.
+                  </>
+                ) : (
+                  "Check back soon for new posts."
+                )}
+              </p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+              {paginatedPosts.map((post) => (
+                <div key={post.slug} className="relative">
+                  <PostCardWithRead post={post} />
+                  <div className="mt-2 px-1">
+                    <MarkAsRead slug={`blog/${post.slug}`} contentType="blog" showLabel={false} label={post.title} />
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
 
           {/* Pagination */}
-          {totalPages > 1 && (
+          {totalPages > 1 && paginatedPosts.length > 0 && (
             <nav
               aria-label="Pagination"
               className="flex items-center justify-center gap-1.5 mt-8"
@@ -181,7 +270,7 @@ function BlogListingContent() {
                 onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
                 disabled={currentPage === 1}
                 aria-label="Previous page"
-                className="w-9 h-9 rounded-md border border-gray-200 bg-white flex items-center justify-center text-xs font-medium text-gray-600 cursor-pointer hover:bg-gray-50 hover:border-gray-300 transition-all duration-150 disabled:opacity-40 disabled:cursor-not-allowed"
+                className="w-9 h-9 rounded-md border border-gray-200 bg-white flex items-center justify-center text-xs font-medium text-gray-600 cursor-pointer hover:bg-gray-50 hover:border-gray-300 transition-all duration-150 disabled:opacity-40 disabled:cursor-not-allowed active:scale-[0.98]"
               >
                 &lsaquo;
               </button>
@@ -192,7 +281,7 @@ function BlogListingContent() {
                     onClick={() => setCurrentPage(page)}
                     aria-current={page === currentPage ? "page" : undefined}
                     aria-label={`Page ${page}`}
-                    className={`w-9 h-9 rounded-md border flex items-center justify-center text-xs font-medium cursor-pointer transition-all duration-150 ${
+                    className={`w-9 h-9 rounded-md border flex items-center justify-center text-xs font-medium cursor-pointer transition-all duration-150 active:scale-[0.98] ${
                       page === currentPage
                         ? "bg-navy text-white border-navy"
                         : "border-gray-200 bg-white text-gray-600 hover:bg-gray-50 hover:border-gray-300"
@@ -208,7 +297,7 @@ function BlogListingContent() {
                 }
                 disabled={currentPage === totalPages}
                 aria-label="Next page"
-                className="w-9 h-9 rounded-md border border-gray-200 bg-white flex items-center justify-center text-sm font-medium text-gray-600 cursor-pointer hover:bg-gray-50 hover:border-gray-300 transition-all duration-150 disabled:opacity-40 disabled:cursor-not-allowed"
+                className="w-9 h-9 rounded-md border border-gray-200 bg-white flex items-center justify-center text-sm font-medium text-gray-600 cursor-pointer hover:bg-gray-50 hover:border-gray-300 transition-all duration-150 disabled:opacity-40 disabled:cursor-not-allowed active:scale-[0.98]"
               >
                 &rsaquo;
               </button>

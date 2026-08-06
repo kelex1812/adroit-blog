@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useTransition } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { useAuth, notifyAuthChanged } from "@/lib/hooks/useAuth";
 
 const navLinks = [
   { href: "/blog", label: "Posts" },
@@ -14,7 +15,47 @@ const navLinks = [
 export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const pathname = usePathname();
+  const router = useRouter();
   const isLearnActive = pathname === "/learn" || pathname.startsWith("/learn/");
+  const { user, isLoading } = useAuth();
+  const [isSigningOut, startTransition] = useTransition();
+
+  function handleSignOut() {
+    startTransition(async () => {
+      try {
+        await fetch("/api/auth/logout", { method: "POST" });
+      } catch {
+        // best-effort — the session may already be gone
+      }
+      notifyAuthChanged();
+      router.refresh();
+    });
+  }
+
+  const authControl = isLoading ? null : user ? (
+    <div className="flex items-center gap-2">
+      <span
+        className="hidden lg:inline-block max-w-[140px] truncate font-mono text-[10.5px] font-semibold text-gray-400 uppercase tracking-wide"
+        title={user.email}
+      >
+        {user.email}
+      </span>
+      <button
+        onClick={handleSignOut}
+        disabled={isSigningOut}
+        className="text-gray-500 text-sm font-medium hover:text-navy transition-colors duration-150 cursor-pointer bg-none border-none disabled:opacity-50"
+      >
+        {isSigningOut ? "…" : "Sign out"}
+      </button>
+    </div>
+  ) : (
+    <Link
+      href={`/login${pathname && pathname !== "/login" ? `?next=${encodeURIComponent(pathname)}` : ""}`}
+      className="text-gray-500 text-sm font-medium hover:text-navy transition-colors duration-150 no-underline"
+    >
+      Sign in
+    </Link>
+  );
 
   return (
     <header className="sticky top-0 z-50 bg-white/95 backdrop-blur border-b border-gray-200 shadow-[0_1px_0_rgba(11,29,58,0.03)]">
@@ -64,26 +105,32 @@ export default function Header() {
               </Link>
             ),
           )}
-          <Link
-            href="https://adroit.io/contact"
-            className="bg-navy text-white px-[18px] py-2 rounded-sm text-[0.8rem] font-semibold hover:bg-navy-light hover:-translate-y-px transition-all duration-150 no-underline"
-          >
-            Contact Us
-          </Link>
+          <div className="flex items-center gap-4 pl-2 border-l border-gray-100">
+            {authControl}
+            <Link
+              href="https://adroit.io/contact"
+              className="bg-navy text-white px-[18px] py-2 rounded-sm text-[0.8rem] font-semibold hover:bg-navy-light hover:-translate-y-px active:scale-[0.98] transition-all duration-150 no-underline"
+            >
+              Contact Us
+            </Link>
+          </div>
         </nav>
 
         {/* Mobile Hamburger */}
-        <button
-          className="md:hidden bg-none border-none cursor-pointer p-1"
-          onClick={() => setMobileOpen(!mobileOpen)}
-          aria-label="Toggle menu"
-          aria-expanded={mobileOpen}
-          aria-controls="mobile-nav"
-        >
-          <span className="block w-5 h-[2px] bg-navy my-[3px] rounded-[1px] transition-all duration-150" />
-          <span className="block w-5 h-[2px] bg-navy my-[3px] rounded-[1px] transition-all duration-150" />
-          <span className="block w-5 h-[2px] bg-navy my-[3px] rounded-[1px] transition-all duration-150" />
-        </button>
+        <div className="flex items-center gap-3 md:hidden">
+          {authControl}
+          <button
+            className="bg-none border-none cursor-pointer p-1"
+            onClick={() => setMobileOpen(!mobileOpen)}
+            aria-label="Toggle menu"
+            aria-expanded={mobileOpen}
+            aria-controls="mobile-nav"
+          >
+            <span className="block w-5 h-[2px] bg-navy my-[3px] rounded-[1px] transition-all duration-150" />
+            <span className="block w-5 h-[2px] bg-navy my-[3px] rounded-[1px] transition-all duration-150" />
+            <span className="block w-5 h-[2px] bg-navy my-[3px] rounded-[1px] transition-all duration-150" />
+          </button>
+        </div>
       </div>
 
       {/* Mobile Nav */}
@@ -117,6 +164,26 @@ export default function Header() {
                 {link.label}
               </Link>
             ),
+          )}
+          {!isLoading && !user && (
+            <Link
+              href={`/login${pathname && pathname !== "/login" ? `?next=${encodeURIComponent(pathname)}` : ""}`}
+              className="text-gray-700 text-sm font-medium py-2 border-b border-gray-100 no-underline"
+              onClick={() => setMobileOpen(false)}
+            >
+              Sign in
+            </Link>
+          )}
+          {!isLoading && user && (
+            <button
+              onClick={() => {
+                handleSignOut();
+                setMobileOpen(false);
+              }}
+              className="text-left text-gray-700 text-sm font-medium py-2 border-b border-gray-100 no-underline cursor-pointer bg-none border-none"
+            >
+              Sign out ({user.email})
+            </button>
           )}
           <Link
             href="https://adroit.io/contact"

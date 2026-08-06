@@ -8,7 +8,7 @@
  */
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useQuizProgress } from "@/lib/hooks/useQuizProgress";
 
 export interface QuizQuestion {
@@ -31,7 +31,7 @@ export default function QuizWidget({
   const [selected, setSelected] = useState<number | null>(null);
   const [showExplanation, setShowExplanation] = useState(false);
 
-  const { progress, submitAnswer, resetQuiz } = useQuizProgress(quizName);
+  const { progress, submitAnswer, resetQuiz, completeRun } = useQuizProgress(quizName);
 
   const answeredIndexes = new Set(
     progress.attempts.map((a) => a.questionIndex),
@@ -40,6 +40,17 @@ export default function QuizWidget({
   const question = questions[currentQ];
 
   const allAnswered = questions.length > 0 && questions.every((_, i) => answeredIndexes.has(i));
+
+  // Record the completed run exactly once when the quiz becomes fully
+  // answered (updates bestScore + attemptCount so retakes preserve the
+  // original score — US-005 AC4).
+  const prevAllAnswered = useRef(false);
+  useEffect(() => {
+    if (allAnswered && !prevAllAnswered.current) {
+      completeRun();
+    }
+    prevAllAnswered.current = allAnswered;
+  }, [allAnswered, completeRun]);
 
   function handleSelect(index: number) {
     if (isAnswered) return;
@@ -108,6 +119,21 @@ export default function QuizWidget({
                 : `${Math.round((progress.correct / progress.total) * 100)}% correct — review the explanations below.`}
           </p>
 
+          {/* Preserved score + attempt history (US-005 AC4) */}
+          {progress.attemptCount > 0 && (
+            <div className="flex items-center justify-center gap-4 mb-5 font-mono text-[10.5px] font-semibold text-gray-500">
+              <span className="inline-flex items-center gap-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald" />
+                Best score {progress.bestScore}%
+              </span>
+              <span className="inline-flex items-center gap-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-navy/40" />
+                {progress.attemptCount}{" "}
+                {progress.attemptCount === 1 ? "attempt" : "attempts"}
+              </span>
+            </div>
+          )}
+
           {/* Review list */}
           <div className="text-left mb-6">
             {questions.map((q, i) => {
@@ -149,7 +175,7 @@ export default function QuizWidget({
               setSelected(null);
               setShowExplanation(false);
             }}
-            className="w-full h-11 rounded-xl bg-navy text-white text-sm font-bold cursor-pointer hover:bg-navy-light transition-colors duration-150"
+            className="w-full h-11 rounded-xl bg-navy text-white text-sm font-bold cursor-pointer hover:bg-navy-light active:scale-[0.98] transition-all duration-150"
           >
             Retake quiz
           </button>
@@ -331,14 +357,14 @@ export default function QuizWidget({
           <button
             onClick={handleSubmit}
             disabled={selected === null}
-            className="flex-[2] h-11 rounded-xl bg-navy text-white text-[13.5px] font-bold cursor-pointer hover:bg-navy-light transition-colors duration-150 disabled:opacity-40 disabled:cursor-not-allowed"
+            className="flex-[2] h-11 rounded-xl bg-navy text-white text-[13.5px] font-bold cursor-pointer hover:bg-navy-light active:scale-[0.98] transition-all duration-150 disabled:opacity-40 disabled:cursor-not-allowed disabled:active:scale-100"
           >
             Check Answer
           </button>
         ) : (
           <button
             onClick={handleNext}
-            className="flex-[2] h-11 rounded-xl bg-navy text-white text-[13.5px] font-bold cursor-pointer hover:bg-navy-light transition-colors duration-150"
+            className="flex-[2] h-11 rounded-xl bg-navy text-white text-[13.5px] font-bold cursor-pointer hover:bg-navy-light active:scale-[0.98] transition-all duration-150"
           >
             {currentQ < questions.length - 1 ? "Next Question" : "View Results"}
           </button>

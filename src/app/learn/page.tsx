@@ -49,7 +49,7 @@ export default function LearnLandingPage() {
                 "radial-gradient(55% 110% at 85% -15%, rgba(200,16,46,0.06) 0%, transparent 60%), radial-gradient(45% 90% at 10% -20%, rgba(11,29,58,0.07) 0%, transparent 55%)",
             }}
           />
-          <div className="max-w-[1120px] mx-auto px-6 pt-14 pb-2 relative">
+          <div className="max-w-[1120px] mx-auto px-6 pt-14 pb-2 relative hero-fade-in">
             <div className="inline-flex items-center gap-2 font-mono text-[11px] font-semibold text-red uppercase tracking-[0.08em] mb-[18px]">
               <span className="w-1.5 h-1.5 rounded-full bg-red" />
               Adroit Academy
