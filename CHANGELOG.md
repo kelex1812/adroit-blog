@@ -4,6 +4,51 @@ All notable changes to the Adroit Consulting Blog project will be documented in 
 
 ## [Unreleased]
 
+### Fix: motion QA findings — ShareBar hydration, score ring, read-sync (QA t_ea005360)
+
+Resolves all findings from zod's motion review: H-1 HIGH (ShareBar hydration mismatch + broken share URLs on every post page), M-1 MEDIUM (score ring fill never animates), M-2 MEDIUM (useReadProgress sync localStorage read → full hydration failure on post pages with read records), M-3 MEDIUM (Moment posture absent: no check-pop on read badge / MarkComplete, abrupt explanation reveal), L-1 LOW (no automated tests for animation behavior), L-2 LOW (LessonCard hover:pl-4 animates layout property).
+
+**HIGH — ShareBar hydration mismatch + broken share URLs eliminated (H-1)**
+
+- `ShareBar` no longer reads `window.location` during render. The share URL is captured in a post-mount effect (`currentUrl` state), so server HTML and the client's first paint both render the empty payload — React no longer leaves `?text=/?url=/?u=` empty in the DOM because the attribute never mismatched.
+- The Facebook builder previously ignored its `text` argument and re-read `window.location` at call time; it now uses the same hydrated URL as Twitter/LinkedIn.
+- Verified live on a post page: all three share links carry the full encoded current URL after mount.
+
+**MEDIUM — score ring Moment fill animates (M-1)**
+
+- `QuizWidget` score ring starts at dasharray `0` and flips to the final value on the next animation frame after the results view mounts (`ringFilled` state + `requestAnimationFrame`), so the CSS transition has a real from→to pair and plays.
+- Easing upgraded to the design §07 Moment spring (`cubic-bezier(0.34,1.56,0.64,1)`, 450ms) instead of default ease.
+- Retake re-arms `ringFilled` so every completion re-animates.
+
+**MEDIUM — read/complete hydration failures fixed (M-2)**
+
+- `useReadProgress` no longer reads `localStorage` in the `useState` initializer. Both server and first client render start unread; the stored record is read in a post-mount effect (same pattern as `useQuizProgress` QA F-1). Post pages with read records no longer throw a full hydration failure.
+- Same fix applied to `useLessonProgress` (identical bug class on lesson pages with completion records).
+- Verified live with a seeded read record: the post page hydrates cleanly and shows "Read" state with zero hydration errors in the console.
+
+**MEDIUM — Moment posture added (M-3)**
+
+- New `check-pop` keyframes (scale 0.6 → 1.1 → 1, spring `cubic-bezier(0.34,1.56,0.64,1)`, 450ms) in `globals.css`, matching `design/mockup-motion-lab.html`'s Moment demo.
+- PostCard read badge and MarkComplete toggle now apply `check-pop` when they mount/toggle to the completed state.
+- Explanation panel gets a `reveal-up` animation (fade + rise 8px, 450ms spring) instead of appearing abruptly.
+- All motion is CSS-driven — the existing global `prefers-reduced-motion` block collapses durations to 0.01ms, so reduced-motion users see no animation.
+
+**LOW — automated animation tests added (L-1)**
+
+- New test files: `ShareBar.test.tsx` (SSR emits empty payloads without reading window.location; hrefs populate after mount), `LessonCard.test.tsx` (hover uses transform, no layout-property animation), `useReadProgress.test.tsx` (SSR renders unread even when a read record exists; hydrates after mount; toggle persists).
+- `QuizWidget.test.tsx` extended: score ring reaches the final dasharray with the spring transition class, explanation panel carries `reveal-up`, and reduced-motion is CSS-driven (no inline-style JS animation).
+- Test count: 28 pass (was 18).
+
+**LOW — LessonCard layout animation removed (L-2)**
+
+- `LessonCard` hover now uses `hover:translate-x-1` (transform) instead of `hover:pl-4` (padding), and the transition is scoped to `background-color,transform` rather than `transition-all` — no per-frame layout/reflow on hover.
+
+**Static checks:** `tsc --noEmit` 0 errors, `eslint` 0 errors, `npm run build` clean, `npm test` 28/28 pass. Browser-verified live: share URLs populate, read state hydrates with no console errors, score ring spring class + final dasharray present, read badge `check-pop` class present, MarkComplete `check-pop` on toggle, LessonCard transform hover.
+
+### Known Issues (new)
+
+- None introduced. H-1 / M-1 / M-2 / M-3 / L-1 / L-2 resolved; quiz mechanics, a11y, security, and mobile behavior unchanged and still passing.
+
 ### Fix: quiz hydration mismatch + attempt-count inflation (QA t_51d10f42)
 
 Resolves all findings from zod's quiz review: F-1 HIGH (hydration mismatch on every quiz page for returning users), F-2 MEDIUM (attemptCount inflates +1 per page visit/refresh), F-3 MEDIUM (no automated test coverage), and the optional F-4 (radiogroup arrow-key roving).

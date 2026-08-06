@@ -8,7 +8,7 @@
  */
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useQuizProgress } from "@/lib/hooks/useQuizProgress";
 
 export interface QuizQuestion {
@@ -30,6 +30,10 @@ export default function QuizWidget({
   const [currentQ, setCurrentQ] = useState(0);
   const [selected, setSelected] = useState<number | null>(null);
   const [showExplanation, setShowExplanation] = useState(false);
+  // Score ring Moment fill (QA M-2): starts 0 and animates to the final
+  // dasharray once the results view mounts — setting the final value at
+  // mount meant the CSS transition had no from→to change and never played.
+  const [ringFilled, setRingFilled] = useState(false);
 
   const { progress, hydrated, submitAnswer, resetQuiz } = useQuizProgress(
     quizName,
@@ -43,6 +47,18 @@ export default function QuizWidget({
   const question = questions[currentQ];
 
   const allAnswered = questions.length > 0 && questions.every((_, i) => answeredIndexes.has(i));
+
+  // Score ring Moment fill (QA M-2): when the results view becomes visible,
+  // flip ringFilled on the next animation frame so the CSS transition has a
+  // from→to pair (0 → final dasharray) and actually plays. Retake resets it
+  // in the handler so every completion re-animates.
+  useEffect(() => {
+    if (!hydrated) return;
+    if (allAnswered || currentQ >= questions.length) {
+      const raf = requestAnimationFrame(() => setRingFilled(true));
+      return () => cancelAnimationFrame(raf);
+    }
+  }, [allAnswered, currentQ, questions.length, hydrated]);
 
   // Hydration gate (QA F-1): before the stored quiz state has been read
   // after mount, render a placeholder instead of the question/results view.
@@ -142,8 +158,8 @@ export default function QuizWidget({
                 stroke="var(--color-red, #C8102E)"
                 strokeWidth="10"
                 strokeLinecap="round"
-                strokeDasharray={`${(progress.total > 0 ? (progress.correct / progress.total) * 339.3 : 0)} 339.3`}
-                className="transition-[stroke-dasharray] duration-500"
+                strokeDasharray={`${ringFilled && progress.total > 0 ? (progress.correct / progress.total) * 339.3 : 0} 339.3`}
+                className="transition-[stroke-dasharray] duration-[450ms] ease-[cubic-bezier(0.34,1.56,0.64,1)]"
               />
             </svg>
             <div className="absolute inset-0 flex items-center justify-center font-mono text-[1.75rem] font-extrabold text-navy tabular-nums">
@@ -213,6 +229,7 @@ export default function QuizWidget({
               setCurrentQ(0);
               setSelected(null);
               setShowExplanation(false);
+              setRingFilled(false); // re-arm so the next completion re-animates
             }}
             className="w-full h-11 rounded-xl bg-navy text-white text-sm font-bold cursor-pointer hover:bg-navy-light active:scale-[0.98] transition-all duration-150"
           >
@@ -380,7 +397,7 @@ export default function QuizWidget({
       {showExplanation && question.explanation && (
         <div
           role="status"
-          className={`rounded-[14px] border p-[18px] mb-5 text-[13px] leading-relaxed ${
+          className={`reveal-up rounded-[14px] border p-[18px] mb-5 text-[13px] leading-relaxed ${
             isCorrect
               ? "border-green-200 bg-green-50 text-green-800"
               : "border-red/20 bg-red/5 text-gray-600"

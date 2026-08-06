@@ -17,7 +17,7 @@ export default function LessonCard({
   return (
     <Link
       href={`/learn/${lesson.series}/${lesson.slug}`}
-      className="group flex items-center gap-[18px] px-3 py-[18px] border-b border-gray-200 rounded-lg transition-all duration-150 no-underline hover:bg-gray-50 hover:pl-4"
+      className="group flex items-center gap-[18px] px-3 py-[18px] border-b border-gray-200 rounded-lg transition-[background-color,transform] duration-150 no-underline hover:bg-gray-50 hover:translate-x-1"
     >
       {/* Sequence badge */}
       <div

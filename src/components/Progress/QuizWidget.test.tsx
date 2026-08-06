@@ -10,7 +10,7 @@
  *  - keyboard + mobile basics still pass (radio selection, submit)
  */
 import { describe, it, expect, beforeEach } from "vitest";
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import QuizWidget, { QuizQuestion } from "./QuizWidget";
 
@@ -240,5 +240,67 @@ describe("QuizWidget", () => {
     if (card) {
       expect(card.scrollWidth).toBeLessThanOrEqual(390 + 1);
     }
+  });
+
+  it("score ring animates from 0 to the final dasharray after results mount (QA motion M-2)", async () => {
+    render(<QuizWidget quizName="test-quiz" questions={QUESTIONS} />);
+
+    // Answer all three questions correctly.
+    answerQuestion(0, false);
+    answerQuestion(1, false);
+    answerQuestion(2, true);
+
+    await screen.findByText(/Best score 100%/);
+
+    const ring = document.querySelector("svg circle:nth-of-type(2)");
+    expect(ring).not.toBeNull();
+    if (!ring) return;
+
+    // The ring starts empty (0) and, after the mount effect's animation
+    // frame, reaches 3/3 of the circumference (339.3). waitFor covers the
+    // rAF tick in jsdom.
+    await waitFor(() => {
+      expect(ring.getAttribute("stroke-dasharray")).toBe("339.3 339.3");
+    });
+
+    // Moment posture: spring easing class present (CSS-driven motion — the
+    // global prefers-reduced-motion block collapses it for reduced motion).
+    const cls = ring.getAttribute("class") ?? "";
+    expect(cls).toContain("transition-[stroke-dasharray]");
+    expect(cls).toContain("ease-[cubic-bezier(0.34,1.56,0.64,1)]");
+  });
+
+  it("explanation reveal uses the Moment reveal-up animation class (QA motion M-3)", async () => {
+    render(<QuizWidget quizName="test-quiz" questions={QUESTIONS} />);
+
+    fireEvent.click(screen.getAllByRole("radio")[0]);
+    fireEvent.click(screen.getByRole("button", { name: "Check Answer" }));
+
+    // The "Why" explanation panel carries the CSS reveal-up animation class.
+    const why = [...document.querySelectorAll("[role=status]")].find(
+      (el) => el.textContent?.includes("Because Alpha."),
+    );
+    expect(why).not.toBeNull();
+    expect(why?.getAttribute("class") ?? "").toContain("reveal-up");
+  });
+
+  it("prefers-reduced-motion: motion is CSS-driven (transition/animation classes, not JS inline styles)", async () => {
+    // jsdom cannot evaluate the @media (prefers-reduced-motion) block in
+    // globals.css, but the regression guard here is structural: every motion
+    // mechanism in this component is a CSS transition/animation class, which
+    // the global reduced-motion block neutralises (animation-duration /
+    // transition-duration → 0.01ms). No JS-driven frame-by-frame animation
+    // exists to bypass it.
+    render(<QuizWidget quizName="test-quiz" questions={QUESTIONS} />);
+
+    fireEvent.click(screen.getAllByRole("radio")[0]);
+    fireEvent.click(screen.getByRole("button", { name: "Check Answer" }));
+
+    // Explanation reveal is a CSS animation class, not an inline style.
+    const why = [...document.querySelectorAll("[role=status]")].find(
+      (el) => el.textContent?.includes("Because Alpha."),
+    );
+    expect(why?.getAttribute("style")).toBeNull();
+    expect(why?.getAttribute("class") ?? "").toContain("reveal-up");
   });
 });

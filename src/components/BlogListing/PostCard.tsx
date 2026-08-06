@@ -30,11 +30,13 @@ export default function PostCard({ post, read = false }: PostCardProps) {
         <span className="absolute bottom-2.5 left-3 bg-white/20 backdrop-blur-sm px-2 py-0.5 rounded text-[0.65rem] font-semibold text-white z-10">
           {post.category}
         </span>
-        {/* Emerald check badge — read state (design brief §4.1) */}
+        {/* Emerald check badge — read state (design brief §4.1) — Moment
+            check-pop (design §07): the badge mounts only after hydration
+            reports read=true, so the pop plays on state change. */}
         {read && (
           <span
             aria-hidden="true"
-            className="absolute top-2.5 right-2.5 z-10 w-6 h-6 rounded-full bg-white shadow-md flex items-center justify-center"
+            className="check-pop absolute top-2.5 right-2.5 z-10 w-6 h-6 rounded-full bg-white shadow-md flex items-center justify-center"
           >
             <svg
               width="13"

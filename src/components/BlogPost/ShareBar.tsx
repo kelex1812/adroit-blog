@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const shareButtons = [
   {
@@ -30,15 +30,26 @@ const shareButtons = [
         <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
       </svg>
     ),
-    url: () =>
-      `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
-        typeof window !== "undefined" ? window.location.href : "",
-      )}`,
+    url: (text: string) =>
+      `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(text)}`,
   },
 ];
 
 export default function ShareBar() {
   const [copied, setCopied] = useState(false);
+  // Hydration-safe share URL (QA H-1): window.location is read only after
+  // mount so the server HTML and the client's first paint both render the
+  // empty payload. Once mounted, the real URL populates every share link —
+  // no more empty ?text=/?url=/?u= persisting in the DOM.
+  const [currentUrl, setCurrentUrl] = useState("");
+
+  useEffect(() => {
+    // Mount-gate external-store read (same pattern as useQuizProgress QA F-1):
+    // the one-time setState here is intentional — window.location must only be
+    // read after hydration so SSR and first paint both render the empty URL.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setCurrentUrl(window.location.href);
+  }, []);
 
   const copyLink = async () => {
     try {
@@ -58,7 +69,7 @@ export default function ShareBar() {
       {shareButtons.map((btn) => (
         <a
           key={btn.label}
-          href={btn.url(typeof window !== "undefined" ? window.location.href : "")}
+          href={btn.url(currentUrl)}
           target="_blank"
           rel="noopener noreferrer"
           title={btn.label}

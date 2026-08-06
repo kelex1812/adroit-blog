@@ -93,7 +93,12 @@ export function useReadProgress(
   slug: string,
   contentType: "blog" | "lesson" = "blog",
 ): UseReadProgressReturn {
-  const [isRead, setIsRead] = useState(getReadFromStorage(slug));
+  // Hydration-safe (QA M-2): localStorage is NEVER read in the useState
+  // initializer — a stored read record would make the client's first paint
+  // differ from the server HTML and throw a full hydration failure. Both
+  // server and first client render start unread; the mounted effect below
+  // reads the stored value after hydration.
+  const [isRead, setIsRead] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
   // Sync from other hook instances: when any MarkAsRead / PostCardWithRead
@@ -101,6 +106,11 @@ export function useReadProgress(
   // (same-tab via PROGRESS_CHANGED_EVENT, cross-tab via the storage event).
   useEffect(() => {
     const onChanged = () => setIsRead(getReadFromStorage(slug));
+    // Mount-gate hydration read (QA M-2): the documented React pattern for
+    // client-only data — read AFTER mount so the server HTML and the
+    // client's first paint both render the unread state. The setState here
+    // runs inside the callback, so the rule above stays clean.
+    onChanged();
     window.addEventListener(PROGRESS_CHANGED_EVENT, onChanged);
     window.addEventListener("storage", onChanged);
     return () => {

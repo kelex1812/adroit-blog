@@ -84,12 +84,22 @@ async function unmarkCompleteAPI(lessonSlug: string): Promise<void> {
 }
 
 export function useLessonProgress(lessonSlug: string): UseLessonProgressReturn {
-  const [isCompleted, setIsCompleted] = useState(getCompletedFromStorage(lessonSlug));
+  // Hydration-safe (same class as QA M-2 on useReadProgress): localStorage
+  // is NEVER read in the useState initializer — a stored completion record
+  // would make the client's first paint differ from the server HTML and
+  // throw a full hydration failure on lesson pages. Both server and first
+  // client render start incomplete; the mounted effect below reads the
+  // stored value after hydration.
+  const [isCompleted, setIsCompleted] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
   // Sync from other hook instances (same-tab + cross-tab).
   useEffect(() => {
     const onChanged = () => setIsCompleted(getCompletedFromStorage(lessonSlug));
+    // Mount-gate hydration read (QA M-2 pattern): read AFTER mount so the
+    // server HTML and the client's first paint both render the incomplete
+    // state. The setState runs inside the callback, so the rule stays clean.
+    onChanged();
     window.addEventListener(PROGRESS_CHANGED_EVENT, onChanged);
     window.addEventListener("storage", onChanged);
     return () => {
