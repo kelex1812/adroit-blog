@@ -5,25 +5,78 @@
  * useQuizProgress hook). For authenticated users, the attempt is also
  * persisted to the quiz_attempt Supabase table so progress survives
  * device changes and session resets.
+ *
+ * Security (t_3bbee885 F3): correctness is recomputed server-side from
+ * the canonical `questions.json` — the client's `correctAnswerIndex` /
+ * `isCorrect` are treated as hints, never trusted verbatim.
  */
 import { NextRequest, NextResponse } from "next/server";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
+import { getQuizForSeries } from "@/lib/quiz";
+import {
+  checkOrigin,
+  checkRateLimit,
+  getClientIp,
+  sanitiseDbError,
+  validateIndex,
+  validateSlug,
+} from "@/lib/api-security";
+
+interface QuizPayload {
+  quizName: string;
+  questionIndex: number;
+  userAnswerIndex: number;
+  correctAnswerIndex: number;
+  isCorrect: boolean;
+}
 
 export async function POST(req: NextRequest) {
   try {
-    const body = (await req.json()) as {
-      quizName: string;
-      questionIndex: number;
-      userAnswerIndex: number;
-      correctAnswerIndex: number;
-      isCorrect: boolean;
-    } | null;
+    /* --- Origin / CSRF check (F6) --- */
+    const originErr = checkOrigin(req);
+    if (originErr) {
+      return NextResponse.json({ error: originErr }, { status: 403 });
+    }
+
+    /* --- Rate limit (F2) --- */
+    if (!checkRateLimit(getClientIp(req))) {
+      return NextResponse.json({ error: "Too many requests" }, { status: 429 });
+    }
+
+    const body = (await req.json()) as QuizPayload | null;
 
     if (!body || !body.quizName) {
       return NextResponse.json({ status: "ok" });
     }
 
-    const { quizName, questionIndex, userAnswerIndex, correctAnswerIndex, isCorrect } = body;
+    const { quizName, questionIndex, userAnswerIndex } = body;
+
+    /* --- Slug validation (F2) --- */
+    const quizErr = validateSlug(quizName, "quizName");
+    if (quizErr) {
+      return NextResponse.json({ error: quizErr }, { status: 400 });
+    }
+
+    /* --- Load canonical quiz and validate indexes (F3) --- */
+    const quiz = getQuizForSeries(quizName);
+    if (!quiz) {
+      return NextResponse.json({ status: "ok" }); // unknown quiz → client-only
+    }
+    const questionCount = quiz.questions.length;
+
+    const questionIdxErr = validateIndex(questionIndex, "questionIndex", questionCount);
+    if (questionIdxErr) {
+      return NextResponse.json({ error: questionIdxErr }, { status: 400 });
+    }
+
+    const userAnswerIdxErr = validateIndex(userAnswerIndex, "userAnswerIndex", quiz.questions[questionIndex]!.options.length);
+    if (userAnswerIdxErr) {
+      return NextResponse.json({ error: userAnswerIdxErr }, { status: 400 });
+    }
+
+    /* --- Recompute correctness server-side (F3) --- */
+    const correctAnswerIndex = quiz.questions[questionIndex]!.correct_answer_index;
+    const isCorrect = userAnswerIndex === correctAnswerIndex;
 
     const supabase = await getSupabaseServerClient();
     const { data: { user } } = await supabase.auth.getUser();
@@ -32,18 +85,21 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ status: "unauthenticated" });
     }
 
-    const { error } = await supabase.from("quiz_attempt").insert({
-      user_id: user.id,
-      quiz_name: quizName,
-      question_index: questionIndex,
-      correct_answer_index: correctAnswerIndex,
-      user_answer_index: userAnswerIndex,
-      is_correct: isCorrect,
-      attempted_at: new Date().toISOString(),
-    });
+    const { error } = await supabase.from("quiz_attempt").upsert(
+      {
+        user_id: user.id,
+        quiz_name: quizName,
+        question_index: questionIndex,
+        correct_answer_index: correctAnswerIndex,
+        user_answer_index: userAnswerIndex,
+        is_correct: isCorrect,
+        attempted_at: new Date().toISOString(),
+      },
+      { onConflict: "user_id,quiz_name,question_index" },
+    );
 
     if (error) {
-      return NextResponse.json({ status: "error", error: error.message }, { status: 500 });
+      return NextResponse.json({ status: "error", error: sanitiseDbError(error) }, { status: 500 });
     }
 
     return NextResponse.json({ status: "ok" });

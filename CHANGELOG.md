@@ -4,6 +4,31 @@ All notable changes to the Adroit Consulting Blog project will be documented in 
 
 ## [Unreleased]
 
+### Security Fixes — Next upgrade + progress API hardening (t_c7f51ff6)
+
+Fixes all findings from val-el's security audit (t_3bbee885) of the progress-tracking feature (Supabase RLS + auth + progress API).
+
+**HIGH**
+- **F1 Dependencies (CWE-1104 / OWASP A06)** — `next` upgraded `16.2.9 → 16.3.0` (exact pin; `eslint-config-next` matches). Clears 5 high + 1 moderate advisories (image-opt DoS via SVG GHSA-q8wf-6r8g-63ch, cache confusion GHSA-68g3-v927-f742 / GHSA-4633-3j49-mh5q, SSRF in rewrites GHSA-p9j2-gv94-2wf4, internal Server Function disclosure GHSA-955p-x3mx-jcvp). `npm audit fix` additionally patched `sharp`/`postcss`/`js-yaml`/`brace-expansion` transitive CVEs — **`npm audit` now reports 0 vulnerabilities**.
+
+**MEDIUM**
+- **F2 No rate limiting / unbounded input (CWE-770 / OWASP A04)** — all three progress POST routes (`read`, `lesson`, `quiz`) now: validate slug length ≤ 200 + kebab/snake charset (blocks path traversal like `../../`), and apply an in-memory sliding-window rate limit (30 req/min/IP, 429 on breach). New `supabase/migrations/002_quiz_attempt_unique.sql` adds `UNIQUE (user_id, quiz_name, question_index)`; quiz route upserts on it so each user keeps at most one latest-attempt row per question (no unbounded table growth).
+- **F3 Client-supplied quiz correctness (CWE-345 / OWASP A04)** — `POST /api/progress/quiz` now loads the canonical quiz via `getQuizForSeries`, validates `questionIndex`/`userAnswerIndex` are integers ≥ 0 and within the quiz's question/option bounds (400 on out-of-range), and **recomputes `is_correct` + `correct_answer_index` server-side** from `questions.json`. Client `correctAnswerIndex`/`isCorrect` are ignored (still accepted for payload compat).
+
+**LOW**
+- **F4 Missing CSP + HSTS (CWE-693 / OWASP A05)** — `next.config.ts` now sets `Strict-Transport-Security: max-age=63072000` and a conservative `Content-Security-Policy` (`default-src 'self'`; `script-src 'self' 'unsafe-inline'` — required by Next for static pages, no nonces possible on SSG; `connect-src 'self' https://*.supabase.co`; `object-src 'none'`; `frame-ancestors 'none'`; `base-uri 'self'`; `form-action 'self'`). Verified live: headers present on all routes, blog/quiz pages hydrate with no CSP violations.
+- **F5 Supabase error leakage (CWE-209 / OWASP A05)** — the three POST routes now log the real Supabase error server-side (`console.error`) and return a generic `"Failed to save progress"` to the client instead of `error.message`.
+- **F6 No CSRF defense-in-depth (CWE-352 / OWASP A01)** — all three POST routes reject requests whose `Origin` header is present but not `https://adroit.io` / `www.adroit.io` / `adroit-blog.vercel.app` / `http://localhost:3000` (403). SameSite=Lax + JSON content-type remain the primary mitigation.
+- **F7 Weak password/signup hygiene (CWE-521 / OWASP A07)** — `supabase/config.toml`: `minimum_password_length` 6 → 8, `password_requirements` `""` → `lower_upper_letters_digits`, and `http://localhost:3000` removed from `additional_redirect_urls` (prod config keeps prod-only redirects).
+
+**Not in scope (per audit F8)** — MDX rendered without `rehype-sanitize`; content is trusted in-repo. Add sanitization before any user-authored content path.
+
+### Known Issues
+- CSP `script-src 'unsafe-inline'` is required because every page is statically prerendered — nonce-based strict CSP would force dynamic rendering on all pages (kills SSG/CDN caching). Acceptable for a static content site with no user-generated HTML; revisit if the app moves to dynamic pages.
+- In-memory rate limiter resets on server restart (not persisted) — fine for a blog; swap for a shared store if the app scales horizontally.
+- Quiz sync is fire-and-forget per ADR-004; with the new unique constraint, re-answering a question updates the same row (latest attempt wins) rather than appending.
+
+
 ### A11y/SEO Fixes — Progress UI + Quiz (t_08b3706e)
 
 Fixes all HIGH/MEDIUM/LOW findings from lara's a11y audit of the progress-tracking feature (parent t_c9c0a24f).

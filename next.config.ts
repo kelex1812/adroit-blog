@@ -47,6 +47,31 @@ const nextConfig: NextConfig = {
             key: "Referrer-Policy",
             value: "strict-origin-when-cross-origin",
           },
+          {
+            key: "Strict-Transport-Security",
+            value: "max-age=63072000",
+          },
+          {
+            key: "Content-Security-Policy",
+            // Conservative, static-content site (SSG — no nonces possible:
+            // nonce-based CSP forces dynamic rendering on every page).
+            // Next.js injects inline bootstrap scripts on static pages, so
+            // 'unsafe-inline' is required for script-src per the Next docs;
+            // remote script injection is still blocked. JSON-LD and MDX are
+            // rendered from trusted in-repo content.
+            value: [
+              "default-src 'self'",
+              "img-src 'self' data: blob:",
+              "style-src 'self' 'unsafe-inline'",
+              "font-src 'self' data:",
+              "script-src 'self' 'unsafe-inline'",
+              "connect-src 'self' https://*.supabase.co",
+              "object-src 'none'",
+              "frame-ancestors 'none'",
+              "base-uri 'self'",
+              "form-action 'self'",
+            ].join("; "),
+          },
         ],
       },
     ];
