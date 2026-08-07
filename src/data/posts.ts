@@ -2,6 +2,45 @@ import { BlogPost } from "./types";
 
 export const posts: BlogPost[] = [
   {
+    "slug": "ai-agents-salesforce",
+    "title": "AI Agents Transforming Salesforce: Agentforce in Practice",
+    "excerpt": "How autonomous AI agents are reshaping Salesforce implementation and day-to-day operations.",
+    "category": "AI & Consulting",
+    "categoryColor": "ai",
+    "categoryGradient": "from-amber to-amber-dark",
+    "date": "August 07, 2026",
+    "author": "Adroit Consulting",
+    "authorInitials": "AC",
+    "readTime": "8 min read",
+    "featured": false,
+    "tags": [
+      "AI Agents",
+      "Salesforce",
+      "Agentforce",
+      "Automation"
+    ],
+    "bannerImage": "/banners/ai-agents-salesforce.png"
+  },
+  {
+    "slug": "ai-strategy-2026",
+    "title": "Why Every Business Needs an AI Strategy in 2026",
+    "excerpt": "AI is no longer optional. Here's how to build a practical AI strategy that drives real business outcomes.",
+    "category": "AI & Consulting",
+    "categoryColor": "ai",
+    "categoryGradient": "from-amber to-amber-dark",
+    "date": "August 07, 2026",
+    "author": "Adroit Consulting",
+    "authorInitials": "AC",
+    "readTime": "8 min read",
+    "featured": true,
+    "tags": [
+      "AI Strategy",
+      "Digital Transformation",
+      "Business Growth"
+    ],
+    "bannerImage": "/banners/ai-strategy-2026.png"
+  },
+  {
     "slug": "digital-transformation-2026",
     "title": "Digital Transformation in 2026: What's Actually Changing — and How to Do It",
     "excerpt": "A practical deep-dive into the three forces reshaping enterprise transformation in 2026 — AI-first process design, composable architecture, and data democratization — with the data, real examples, and action steps to make them work.",
@@ -21,6 +60,65 @@ export const posts: BlogPost[] = [
       "Enterprise"
     ],
     "bannerImage": "/banners/digital-transformation-2026.png"
+  },
+  {
+    "slug": "salesforce-flow-patterns",
+    "title": "5 Salesforce Flow Design Patterns for Complex Automation",
+    "excerpt": "Master these five flow patterns to build scalable, maintainable automation across your org.",
+    "category": "Salesforce",
+    "categoryColor": "sf",
+    "categoryGradient": "from-sky to-sky-dark",
+    "date": "August 07, 2026",
+    "author": "Adroit Consulting",
+    "authorInitials": "AC",
+    "readTime": "8 min read",
+    "featured": false,
+    "tags": [
+      "Salesforce",
+      "Flow Automation",
+      "Apex"
+    ],
+    "bannerImage": "/banners/salesforce-flow-patterns.png"
+  },
+  {
+    "slug": "salesforce-flow-vs-apex-when-to-use-which",
+    "title": "Salesforce Flow vs Apex: When to Use Which",
+    "excerpt": "Every Salesforce team faces this decision. Here is a practical framework for choosing the right automation tool.",
+    "category": "Salesforce",
+    "categoryColor": "sf",
+    "categoryGradient": "from-sky to-sky-dark",
+    "date": "August 07, 2026",
+    "author": "Adroit Consulting",
+    "authorInitials": "AC",
+    "readTime": "8 min read",
+    "featured": false,
+    "tags": [
+      "Salesforce",
+      "Flow",
+      "Apex",
+      "Automation"
+    ],
+    "bannerImage": "/banners/salesforce-flow-vs-apex-when-to-use-which.png"
+  },
+  {
+    "slug": "scalable-react-2026",
+    "title": "Building Scalable React Apps: Architecture Patterns for 2026",
+    "excerpt": "Server components, edge rendering, and modern state management — what actually works now.",
+    "category": "React & Web Dev",
+    "categoryColor": "react",
+    "categoryGradient": "from-emerald to-emerald-dark",
+    "date": "August 07, 2026",
+    "author": "Adroit Consulting",
+    "authorInitials": "AC",
+    "readTime": "8 min read",
+    "featured": false,
+    "tags": [
+      "React",
+      "Next.js",
+      "Architecture",
+      "Performance"
+    ],
+    "bannerImage": "/banners/scalable-react-2026.png"
   },
   {
     "slug": "state-of-the-stack-august-2026",
@@ -229,103 +327,5 @@ export const posts: BlogPost[] = [
       "Agentforce"
     ],
     "bannerImage": "/banners/category-sf.png"
-  },
-  {
-    "slug": "salesforce-flow-vs-apex-when-to-use-which",
-    "title": "Salesforce Flow vs Apex: When to Use Which",
-    "excerpt": "Every Salesforce team faces this decision. Here is a practical framework for choosing the right automation tool.",
-    "category": "Salesforce",
-    "categoryColor": "sf",
-    "categoryGradient": "from-sky to-sky-dark",
-    "date": "July 22, 2026",
-    "author": "Adroit Consulting",
-    "authorInitials": "AC",
-    "readTime": "5 min read",
-    "featured": false,
-    "tags": [
-      "Salesforce",
-      "Flow",
-      "Apex",
-      "Automation"
-    ],
-    "bannerImage": "/banners/category-sf.png"
-  },
-  {
-    "slug": "ai-strategy-2026",
-    "title": "Why Every Business Needs an AI Strategy in 2026",
-    "excerpt": "AI is no longer optional. Here's how to build a practical AI strategy that drives real business outcomes.",
-    "category": "AI & Consulting",
-    "categoryColor": "ai",
-    "categoryGradient": "from-amber to-amber-dark",
-    "date": "June 1, 2026",
-    "author": "Adroit Consulting",
-    "authorInitials": "AC",
-    "readTime": "5 min read",
-    "featured": true,
-    "tags": [
-      "AI Strategy",
-      "Digital Transformation",
-      "Business Growth"
-    ],
-    "bannerImage": "/banners/category-ai.png"
-  },
-  {
-    "slug": "salesforce-flow-patterns",
-    "title": "5 Salesforce Flow Design Patterns for Complex Automation",
-    "excerpt": "Master these five flow patterns to build scalable maintainable automation across your org.",
-    "category": "Salesforce",
-    "categoryColor": "sf",
-    "categoryGradient": "from-sky to-sky-dark",
-    "date": "May 15, 2026",
-    "author": "Adroit Consulting",
-    "authorInitials": "AC",
-    "readTime": "5 min read",
-    "featured": false,
-    "tags": [
-      "Salesforce",
-      "Flow Automation",
-      "Apex"
-    ],
-    "bannerImage": "/banners/category-sf.png"
-  },
-  {
-    "slug": "scalable-react-2026",
-    "title": "Building Scalable React Apps: Architecture Patterns for 2026",
-    "excerpt": "Server components edge rendering and modern state management what actually works now.",
-    "category": "React & Web Dev",
-    "categoryColor": "react",
-    "categoryGradient": "from-emerald to-emerald-dark",
-    "date": "May 8, 2026",
-    "author": "Adroit Consulting",
-    "authorInitials": "AC",
-    "readTime": "5 min read",
-    "featured": false,
-    "tags": [
-      "React",
-      "Next.js",
-      "Architecture",
-      "Performance"
-    ],
-    "bannerImage": "/banners/category-react.png"
-  },
-  {
-    "slug": "ai-agents-salesforce",
-    "title": "AI Agents Transforming Salesforce: Agentforce in Practice",
-    "excerpt": "How autonomous AI agents are reshaping Salesforce implementation and day-to-day operations.",
-    "category": "AI & Consulting",
-    "categoryColor": "ai",
-    "categoryGradient": "from-amber to-amber-dark",
-    "date": "April 28, 2026",
-    "author": "Adroit Consulting",
-    "authorInitials": "AC",
-    "readTime": "5 min read",
-    "featured": false,
-    "tags": [
-      "AI Agents",
-      "Salesforce",
-      "Agentforce",
-      "Automation"
-    ],
-    "bannerImage": "/banners/category-ai.png"
   }
 ];

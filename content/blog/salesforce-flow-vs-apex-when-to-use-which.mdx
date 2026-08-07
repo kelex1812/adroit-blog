@@ -5,114 +5,150 @@ excerpt: "Every Salesforce team faces this decision. Here is a practical framewo
 category: "Salesforce"
 categoryColor: sf
 categoryGradient: "from-sky to-sky-dark"
-date: "July 22, 2026"
+date: "August 07, 2026"
+author: "Adroit Consulting"
+authorInitials: "AC"
+readTime: "8 min read"
 tags: ["Salesforce", "Flow", "Apex", "Automation"]
-bannerImage: /banners/category-sf.png
+bannerImage: "/banners/salesforce-flow-vs-apex-when-to-use-which.png"
 ---
 
-## The Great Debate: Flow or Apex?
+## The Decision That Keeps Coming Up
 
-Every Salesforce implementation team eventually faces this question: should this automation be built in Flow or in Apex? The answer isn't always obvious, and choosing the wrong tool can lead to technical debt, performance issues, or a maintenance nightmare.
+Every Salesforce team hits the Flow vs Apex question within the first year of building. For a long time, the official guidance was simple: declarative builders used Flow, developers used Apex [Source: salesforce.com](https://www.salesforce.com/blog/record-triggered-automation-apex-or-flow/). It served teams fine until orgs grew. The updated Record-Triggered Automation decision guide shifts the decision away from who builds the automation and onto what the object actually carries during a save operation, which Salesforce now calls automation density [Source: architect.salesforce.com](https://architect.salesforce.com/docs/architect/decision-guides/guide/record-triggered).
 
-At Adroit, we've built dozens of Salesforce solutions and developed a clear framework for making this decision. Here's what we've learned.
+This article gives you the practical version: a decision process, the limits that constrain both tools, and the hybrid pattern most teams end up using anyway.
 
-## Understanding the Tools
+## The Tools, Briefly
 
-**Salesforce Flow** is the low-code automation platform that lets you build processes visually — drag-and-drop screens, decisions, and actions. It's built into the platform, requires no compilation, and can be maintained by administrators without developer support.
+Salesforce Flow is the point-and-click automation platform. In Flow Builder you assemble screens, decisions, and record operations visually, with no compiler or deployment pipeline. Flow splits into types that match the job: screen flows for user interaction, triggered flows for record and scheduled events [Source: architect.salesforce.com](https://architect.salesforce.com/docs/architect/decision-guides/guide/record-triggered).
 
-**Apex** is Salesforce's proprietary programming language, similar to Java. It gives you full programmatic control — complex data structures, custom logic, and the ability to integrate with external systems. It requires a developer, compilation, and test coverage.
+Apex is Salesforce's object-oriented programming language, similar to Java. You reach for it when declarative tools run out of room: custom business logic, complex data structures, integrations that go beyond what clicks can express [Source: architect.salesforce.com](https://architect.salesforce.com/docs/architect/decision-guides/guide/record-triggered).
 
-Both tools run on the same platform and share the same governor limits. The question is really about maintainability, team skills, and long-term cost.
+Both run inside the same multitenant transaction and burn the same governor limits, so the question is never whether something can be done, but who keeps it alive for five years.
 
-## When to Choose Flow
+## When Flow Wins
 
-### Simple, Linear Processes
+Start with the density signal. Record-Triggered Flow is the standard for low-density objects: fewer than 15 automations firing per DML event, user-driven UI edits or small API loads of 1-200 records, and self-contained logic with zero or one downstream DML operation [Source: architect.salesforce.com](https://architect.salesforce.com/docs/architect/decision-guides/guide/record-triggered). Most business automation lives here.
 
-If your automation follows a straightforward sequence — "when a record is created, update a field, send an email, notify a user" — Flow is the clear winner. It's faster to build, easier to read, and can be modified in the org without deploying code.
+Within that band, Flow has four concrete strengths.
 
-### Admin-Maintained Solutions
+**Same-record updates before save.** A before-save record-triggered flow is the most performant declarative option for updating the triggering record before the initial DML commit. It executes before the record hits the database, so it consumes no extra DML and doesn't re-trigger the save order [Source: architect.salesforce.com](https://architect.salesforce.com/docs/architect/decision-guides/guide/record-triggered). If the work is "when status changes to Approved, stamp the approved date," this is where it belongs.
 
-If the person who will maintain this automation after launch is an administrator, not a developer, Flow is your only sensible choice. Admins can troubleshoot, adjust, and extend flows without needing a deployment pipeline or code review process.
+**Scheduled paths with automatic cancellation.** Flows can schedule a path for a future, record-specific moment ("fire 3 days before close date") and automatically cancel or reschedule it if the record changes. An Apex trigger can't do this natively; scheduled Apex runs on a clock, not per-record [Source: architect.salesforce.com](https://architect.salesforce.com/docs/architect/decision-guides/guide/record-triggered).
 
-### Rapid Prototyping
+**Admin maintainability.** The visual builder lets admins create and modify automation faster than writing, testing, and deploying Apex, reducing dependency on developer resources for simple tasks [Source: architect.salesforce.com](https://architect.salesforce.com/docs/architect/decision-guides/guide/record-triggered). If the person who will maintain this after launch is an admin, that is a deciding factor on its own.
 
-When you need to validate a business process before committing to a full development effort, build it in Flow first. If the process proves valuable and grows complex, you can always refactor to Apex later.
+**Built-in safeguards.** Flows auto-bulkify queries and DML and offer automatic retries out of the box. In Apex those safeguards must be coded by hand, and forgetting them breaks triggers at scale [Source: architect.salesforce.com](https://architect.salesforce.com/docs/architect/decision-guides/guide/record-triggered).
 
-> "Flow is not a lesser version of Apex. It's a different tool optimized for a different audience."
+Know the ceiling. Flows share the per-transaction limits: 100 SOQL queries, 150 DML statements, 50,000 records retrieved by SOQL, and 10,000 records processed by DML, where each Get Records element costs one query and each Create, Update, or Delete Records element costs one DML statement [Source: trailhead.salesforce.com](https://trailhead.salesforce.com/content/learn/modules/flow-implementation-1/avoid-flow-limits). Flow also has no native Map or Set, so complex data processing turns cumbersome fast [Source: architect.salesforce.com](https://architect.salesforce.com/docs/architect/decision-guides/guide/record-triggered). When you find yourself joining record sets in your head, think about code.
 
-## When to Choose Apex
+## When Apex Wins
 
-### Complex Business Logic
+Apex is the standard at the top of the density matrix: more than 30 automations on an object, bulk API loads of 2,000 to 10,000+ records per transaction, and dependency graphs where one save cascades into five or more downstream DML operations [Source: architect.salesforce.com](https://architect.salesforce.com/docs/architect/decision-guides/guide/record-triggered). Four specific kinds of work push you there.
 
-If your automation requires nested conditionals, recursive operations, or algorithms that would produce an unreadable spaghetti-flow diagram, Apex is the right choice. Code is more maintainable when the logic is too complex for visual tools.
+**Bulk operations at real scale.** Batch Apex exists for long-running jobs over large data volumes, and it can query more records than a regular transaction allows. Only five batch jobs run at a time in an org, with up to 100 more waiting in the flex queue [Source: developer.salesforce.com](https://developer.salesforce.com/docs/atlas.en-us.apexcode.meta/apexcode/apex_async_overview.htm). For jobs that need an ID, complex argument types, or chaining, Queueable Apex is the tool, and Salesforce recommends it over future methods [Source: developer.salesforce.com](https://developer.salesforce.com/docs/atlas.en-us.apexcode.meta/apexcode/apex_queueing_jobs.htm). A synchronous transaction can enqueue up to 50 queueable jobs; an asynchronous one can enqueue just one, and missing that distinction causes LimitException errors during data loads [Source: developer.salesforce.com](https://developer.salesforce.com/docs/atlas.en-us.apexcode.meta/apexcode/apex_queueing_jobs.htm).
 
-### Bulk Data Operations
+**Complex algorithms and data structures.** Apex gives you Map, Set, and programmatic loops for bulk-safe manipulation, plus a standard library Flow doesn't have [Source: architect.salesforce.com](https://architect.salesforce.com/docs/architect/decision-guides/guide/record-triggered). If your logic reads naturally as an algorithm, a scoring model or capacity calculation, write it in Apex.
 
-While Flow can process records in bulk, Apex gives you precise control over batch sizes, DML statements, and governor limit management. For operations processing millions of records, Apex with Batchable interfaces is significantly more reliable.
+**Serious external integrations.** Apex has the full HTTP class, custom authentication, and granular error handling, bounded by 100 callouts per transaction and a 120-second cumulative callout timeout [Source: developer.salesforce.com](https://developer.salesforce.com/docs/atlas.en-us.apexcode.meta/apexcode/apex_gov_limits.htm). Flow has come a long way: you can register an HTTP callout action in Flow Builder, and the resulting invocable action can be reused across flows and from Apex [Source: help.salesforce.com](https://help.salesforce.com/s/articleView?id=platform.flow_http_callout_manage.htm&type=5). That is fine for a single simple endpoint. Signed payloads, OAuth flows, retries, and nested response parsing are Apex territory.
 
-### External Integrations
+**Version control and CI/CD.** Source-driven development with scratch orgs, disposable deployments of metadata you spin up, test against, and discard, makes version control the source of truth instead of a shared sandbox [Source: developer.salesforce.com](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_intro.htm). Apex changes ride that pipeline with automated tests and review gates [Source: developer.salesforce.com](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_scratch_orgs.htm). Flows are metadata too and belong in the same repository; the decision guide recommends Git for Salesforce projects regardless of tool, with Salesforce Code Analyzer in the pipeline to catch SOQL in for loops and Get Records elements in flow loops [Source: architect.salesforce.com](https://architect.salesforce.com/docs/architect/decision-guides/guide/record-triggered).
 
-When you need to call external APIs, parse complex JSON responses, or implement custom authentication flows, Apex provides the flexibility and error handling you need. Flow's HTTP callout actions are limited and harder to debug.
+## The Limits Both Share
 
-### Testability and Version Control
+Neither tool escapes the governor limits, since both run in the same transaction. The numbers that matter most:
 
-Apex integrates with version control systems, CI/CD pipelines, and automated testing frameworks. If your organization demands code review, automated testing, and deployment tracking, Apex is the better fit.
+| Resource (per transaction) | Synchronous | Asynchronous |
+|---|---|---|
+| SOQL queries | 100 | 200 |
+| DML statements | 150 | 150 |
+| Records retrieved by SOQL | 50,000 | 50,000 |
+| Records processed by DML | 10,000 | 10,000 |
+| CPU time | 10,000 ms | 60,000 ms |
+| Heap size | 6 MB | 12 MB |
+| Callouts / cumulative timeout | 100 / 120 s | 100 / 120 s |
 
-## The Hybrid Approach
+[Source: developer.salesforce.com](https://developer.salesforce.com/docs/atlas.en-us.apexcode.meta/apexcode/apex_gov_limits.htm)
 
-Here's what most teams get wrong: they think they have to choose one or the other. In practice, the best solutions combine both tools.
+Two takeaways fall out of this table. The CPU gap between synchronous and asynchronous contexts, 10 seconds versus 60, is why heavy work should migrate to an asynchronous path: the Run Asynchronously path in flows, Queueable or Batch Apex in code [Source: architect.salesforce.com](https://architect.salesforce.com/docs/architect/decision-guides/guide/record-triggered). And a limit failure in a synchronous trigger rolls back the user's entire save, so sloppy automation is paid for by whoever clicks Save [Source: architect.salesforce.com](https://architect.salesforce.com/docs/architect/decision-guides/guide/record-triggered).
 
-Use Flow as the entry point — it handles the trigger logic, screen interactions, and simple record updates. Then call Apex from Flow when you need complex processing. This gives you the best of both worlds: Flow's accessibility and Apex's power.
+## The Hybrid: Flow Orchestrates, Apex Computes
 
-We've found that the most maintainable architectures use Flow for orchestration and Apex for computation. The flow handles "what happens next" and the Apex handles "how to compute the result."
+The most useful pattern in production is a blend. For medium-density objects, 15-30 automations with coupled parent/child updates and 2-4 downstream DML operations, the decision guide's standard is the hybrid: Record-Triggered Flow as the orchestration layer, with complex operations encapsulated in Invocable Apex [Source: architect.salesforce.com](https://architect.salesforce.com/docs/architect/decision-guides/guide/record-triggered).
+
+Mechanically it is simple: write a class with a static method annotated `@InvocableMethod` and it shows up in Flow Builder as a callable action [Source: developer.salesforce.com](https://developer.salesforce.com/docs/atlas.en-us.apexcode.meta/apexcode/apex_classes_annotation_InvocableMethod.htm). The flow keeps entry conditions, decision logic, and routing, so the process topology stays visible in Flow Trigger Explorer. The Apex does the heavy lifting.
+
+The guide's canonical example is SLA calculation on Case records. BusinessHours is not natively accessible in Flow, so a `ServiceLevelAgreementCalculator` class with an `@InvocableMethod` computes elapsed business hours and returns "Within Target" or "Breached," and the record-triggered flow calls it [Source: architect.salesforce.com](https://architect.salesforce.com/docs/architect/decision-guides/guide/record-triggered). That separation buys modularity, reuse across flows, and an orchestration layer an admin can still read.
+
+The pattern has three limitations. Invocable actions only run after save, so they can't handle same-record field updates; keep that work in a before-save flow or before-context Apex. Record-triggered flows don't support the after-undelete context, so restore-from-recycle-bin logic requires an Apex trigger. And the Flow-to-Apex handoff carries a small runtime cost, negligible at medium density but real at extreme scale [Source: architect.salesforce.com](https://architect.salesforce.com/docs/architect/decision-guides/guide/record-triggered).
 
 ## Decision Framework
 
-When evaluating Flow vs Apex for a specific requirement, walk through these questions:
+Start by sizing the object, not the tool. The density matrix is the first filter:
+
+| Density | Automations per DML event | Data volume | Dependency sprawl | Standard |
+|---|---|---|---|---|
+| Low | < 15 | User edits or small API loads (1-200 records) | 0-1 downstream DML | Record-Triggered Flow |
+| Medium | 15-30 | Standard batch processing | 2-4 downstream DML, recursion risk | Flow + Invocable Apex |
+| High | > 30 | Bulk API loads (2,000-10,000+ records) | 5+ downstream DML, deep recursion risk | Apex trigger framework |
+
+[Source: architect.salesforce.com](https://architect.salesforce.com/docs/architect/decision-guides/guide/record-triggered)
+
+Then walk the requirement through the practical questions:
 
 | Question | Leans Toward |
 |---|---|
 | Can an admin maintain this? | Flow |
+| Simple sequence, or likely to change often? | Flow |
 | Does it need unit tests and CI/CD? | Apex |
-| Is the logic a simple sequence? | Flow |
-| Does it involve complex algorithms? | Apex |
-| Will it process fewer than 10,000 records? | Flow |
-| Does it integrate with external APIs? | Apex |
-| Is the business process likely to change? | Flow |
-| Does it need version control history? | Apex |
+| Bulk loads of thousands of records? | Apex |
+| Maps, sets, or algorithmic logic? | Apex |
+| Custom auth, signatures, retries, nested JSON? | Apex |
+| Simple single-endpoint API call? | Flow (HTTP callout action) |
 
-If more questions lean toward one side, that's your answer.
+If the answers split evenly, default to Flow plus Invocable Apex for whatever computation the flow can't express cleanly.
 
 ## Common Pitfalls
 
-### Over-Engineering with Apex
+**Building Apex for everything.** A trigger and handler class cost real money to maintain: deployment, tests, code review, and a developer on call. If a flow solves it in an afternoon on a low-density object, build the flow.
 
-Don't build an Apex trigger for a problem that Flow solves in 15 minutes. The maintenance cost of Apex (deployment, testing, code review) is real and ongoing.
+**Building Flow for everything.** The mega-flow anti-pattern is real: one enormous flow doing many unrelated things. Even a single very big flow on an object is a complexity signal, and the guidance is to break it into subflows or convert to Apex [Source: salesforce.com](https://www.salesforce.com/blog/record-triggered-automation-apex-or-flow/). Related trap: running flows and Apex triggers as entry points on the same object. The decision guide is explicit that an object should have one entry mechanism; fragmented automation is a governance and debugging nightmare [Source: architect.salesforce.com](https://architect.salesforce.com/docs/architect/decision-guides/guide/record-triggered).
 
-### Under-Engineering with Flow
+**Ignoring the shared limits.** A Get Records element inside a flow loop burns the 100-query budget exactly like SOQL in a for loop. Always test with realistic data volumes, and run Code Analyzer in the pipeline to catch both patterns [Source: architect.salesforce.com](https://architect.salesforce.com/docs/architect/decision-guides/guide/record-triggered).
 
-Don't build a Flow that calls 50 other Flows in a chain. This creates an invisible spaghetti architecture that no one can trace. If your Flow triggers more than three subflows, it's time to refactor to Apex.
+**Burning the async budget.** The daily asynchronous execution limit is shared org-wide, typically 250,000 executions or 200 times your user licenses, whichever is greater [Source: architect.salesforce.com](https://architect.salesforce.com/docs/architect/decision-guides/guide/record-triggered). A bulk load of 20,000 records fires a trigger 100 times; if each invocation enqueues an async job, one data load can starve every other async process in the org [Source: architect.salesforce.com](https://architect.salesforce.com/docs/architect/decision-guides/guide/record-triggered).
 
-### Ignoring Governor Limits
+## Real-World Example: Lead Routing
 
-Both Flow and Apex share governor limits. A Flow that makes too many DML statements or queries will fail just like Apex would. Always test with realistic data volumes.
+Consider lead routing: a new lead needs an owner chosen by territory, current capacity, and skill match. Lead is a busy object too, with dedupe, enrichment, scoring, and notification flows already firing on it.
 
-## Real-World Example
+Flow-only works at UI scale: validate the lead, look up the territory, assign round-robin. But capacity balancing across a team is a computation, and doing it without maps or sets in a flow gets clumsy. A 5,000-lead import hits the transaction limits and the whole save rolls back.
 
-Consider lead routing: when a new lead arrives, assign it based on territory, capacity, and skill matching.
+Apex-only gives full control and great bulk behavior. But every routing tweak runs through the dev pipeline, and the object's automations split across two entry points, which the guide warns against.
 
-**Flow approach:** Query existing leads, check territory rules, assign manually. Simple but doesn't handle capacity balancing well.
-
-**Apex approach:** Calculate capacity scores across the team, apply skill matching algorithms, handle conflicts with priority rules. More complex but produces better results at scale.
-
-**Hybrid approach:** Use Flow to validate the lead and collect territory data, then call Apex to calculate the optimal assignment. This gives you validation and routing in one solution.
+The hybrid fits the density: a record-triggered flow owns the entry conditions and routing decisions, excluding non-routable leads and applying the territory filter. It then calls a `LeadRouter` invocable Apex class that scores capacity and skill match and returns the recommended owner, and the flow applies the assignment. Historical leads needing reassignment go through a scheduled Batch Apex job. Validation and orchestration stay visible in Flow; the algorithm lives where algorithms belong.
 
 ## Key Takeaways
 
-- Flow is faster, cheaper, and more accessible — use it when it fits
-- Apex is more powerful and testable — use it when Flow can't handle the complexity
-- The hybrid approach (Flow orchestrating Apex) is the most common pattern in production
-- Always consider who will maintain the solution, not just who will build it
-- Start simple in Flow; refactor to Apex only when the complexity demands it
+- Size the object first with the density matrix, then pick the tool
+- Flow is the standard for low-density automation, before-save updates, scheduled paths, and admin-owned processes
+- Apex is the standard for high density, bulk processing, complex algorithms, and serious integrations
+- Both share the same governor limits, so test with realistic volumes no matter which you choose
+- The hybrid pattern, Flow orchestrating Invocable Apex, is the medium-density standard and the most common architecture in production
 
-The best Salesforce architects don't ask "Flow or Apex?" They ask "what combination serves this business need best?"
+The best architects don't argue Flow versus Apex. They measure the object, pick the entry point, and let each tool do what it does best.
+
+## Sources
+
+- Record-Triggered Automation Platform Decision Guide — [architect.salesforce.com](https://architect.salesforce.com/docs/architect/decision-guides/guide/record-triggered)
+- Salesforce Record-Triggered Automation: Apex or Flow? — [salesforce.com](https://www.salesforce.com/blog/record-triggered-automation-apex-or-flow/)
+- Execution Governors and Limits (Apex Developer Guide) — [developer.salesforce.com](https://developer.salesforce.com/docs/atlas.en-us.apexcode.meta/apexcode/apex_gov_limits.htm)
+- Avoid Flow Limits (Trailhead) — [trailhead.salesforce.com](https://trailhead.salesforce.com/content/learn/modules/flow-implementation-1/avoid-flow-limits)
+- Asynchronous Apex Overview (Apex Developer Guide) — [developer.salesforce.com](https://developer.salesforce.com/docs/atlas.en-us.apexcode.meta/apexcode/apex_async_overview.htm)
+- Queueable Apex (Apex Developer Guide) — [developer.salesforce.com](https://developer.salesforce.com/docs/atlas.en-us.apexcode.meta/apexcode/apex_queueing_jobs.htm)
+- InvocableMethod Annotation (Apex Developer Guide) — [developer.salesforce.com](https://developer.salesforce.com/docs/atlas.en-us.apexcode.meta/apexcode/apex_classes_annotation_InvocableMethod.htm)
+- Manage HTTP Callout Actions (Salesforce Help) — [help.salesforce.com](https://help.salesforce.com/s/articleView?id=platform.flow_http_callout_manage.htm&type=5)
+- Salesforce DX Developer Guide — [developer.salesforce.com](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_intro.htm)
+- Scratch Orgs (Salesforce DX Developer Guide) — [developer.salesforce.com](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_scratch_orgs.htm)
+- What Is Low-Code? — [salesforce.com](https://www.salesforce.com/platform/low-code-development-platform/what-is-low-code/)
