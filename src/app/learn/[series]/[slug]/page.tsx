@@ -177,13 +177,15 @@ export default async function LessonPage({ params }: Props) {
  * http(s) URLs so citations render as clickable links.
  */
 async function MDXArticle({ mdx }: { mdx: string }) {
-  const [{ MDXRemote }, remarkGfm] = await Promise.all([
+  const [{ MDXRemote }, remarkGfm, Figure] = await Promise.all([
     import("next-mdx-remote/rsc"),
     import("remark-gfm"),
+    import("@/components/BlogPost/Figure"),
   ]);
   return (
     <MDXRemote
       source={mdx}
+      components={{ img: Figure.default }}
       options={{ mdxOptions: { remarkPlugins: [remarkGfm.default] } }}
     />
   );

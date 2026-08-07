@@ -31,6 +31,8 @@ Picture a product listing page. The page is a server component that queries the 
 
 Applying this means treating the directive as a review gate. Keep client components shallow and toward the leaves of the tree. When a client component needs server-rendered content around it, pass it as children; it stays in the server tree. Mark server-only modules with the `server-only` package so an accidental client import fails at build time instead of leaking a secret. [Source: nextjs.org](https://nextjs.org/docs/app/getting-started/server-and-client-components)
 
+![Client boundary: server components render above the line with zero shipped JavaScript; only the "use client" leaves ship to the browser](</diagrams/scalable-react-2026/1-client-boundary.png>)
+
 The pitfall that bites hardest is boundary creep: mark a file "use client" and its entire module graph joins the bundle, so one directive at the top of a shared component drags charts, date pickers, and utility code into every route. The second is environment poisoning: importing a module that reads `process.env` from a client file, where non-NEXT_PUBLIC variables silently become empty strings. Both stay invisible until you profile. [Source: nextjs.org](https://nextjs.org/docs/app/getting-started/server-and-client-components)
 
 ## Rendering strategy is per route, not per app
@@ -66,6 +68,8 @@ URL state is the most underrated piece. Filters, tabs, pagination, and onboardin
 Stores still earn their keep in a narrow band: genuinely shared client state with high write frequency across unrelated components, like canvas tools, realtime collaboration cursors, and offline queues. Zustand 5.x is the light default for that slice, and it stays on the client. The maintainers are blunt that a store inside server components is an anti-pattern, because there is no shared client state on the server. [Source: github.com](https://github.com/pmndrs/zustand/discussions/2200) Redux Toolkit stays justified where you want mature devtools and a disciplined action history across a large client-heavy surface.
 
 Apply it in this order: URL state first, then local state, then context for cross-cutting values like theme and session, then a store only for the residue. [Source: developerway.com](https://www.developerway.com/posts/react-state-management-2025) The pitfall is cargo-culting the old default: server data in a client store, URL state duplicated into memory, or a store bolted onto a codebase whose only shared state is one theme toggle.
+
+![State management hierarchy: URL state first, data layer second, then local state, context, and only the residue needs a store](</diagrams/scalable-react-2026/2-state-hierarchy.png>)
 
 ## Route-level performance and the compiler
 

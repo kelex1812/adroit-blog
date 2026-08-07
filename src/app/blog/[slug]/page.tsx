@@ -164,13 +164,15 @@ export default async function BlogPostPage({ params }: Props) {
  * `[Source: https://...]` citations render as clickable links.
  */
 async function MDXArticle({ mdx }: { mdx: string }) {
-  const [{ MDXRemote }, remarkGfm] = await Promise.all([
+  const [{ MDXRemote }, remarkGfm, Figure] = await Promise.all([
     import("next-mdx-remote/rsc"),
     import("remark-gfm"),
+    import("@/components/BlogPost/Figure"),
   ]);
   return (
     <MDXRemote
       source={mdx}
+      components={{ img: Figure.default }}
       options={{ mdxOptions: { remarkPlugins: [remarkGfm.default] } }}
     />
   );
