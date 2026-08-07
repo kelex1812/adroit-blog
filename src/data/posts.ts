@@ -2,6 +2,28 @@ import { BlogPost } from "./types";
 
 export const posts: BlogPost[] = [
   {
+    "slug": "state-of-the-stack-august-2026",
+    "title": "State of the Stack, August 2026: Every Layer Is Now Built for Agents",
+    "excerpt": "One month, four pillars: Next.js 16.3 makes frameworks agent-ready, Salesforce Summer '26 ships multi-agent orchestration and Tableau MCP, frontier models got cheaper and more open, and MCP went stateless so production systems can host agents at scale. Here's what changed and what Adroit clients should do about it.",
+    "category": "AI & Consulting",
+    "categoryColor": "ai",
+    "categoryGradient": "from-amber to-amber-dark",
+    "date": "August 07, 2026",
+    "author": "Adroit Consulting",
+    "authorInitials": "AC",
+    "readTime": "9 min read",
+    "featured": false,
+    "tags": [
+      "State of the Stack",
+      "AI Agents",
+      "Next.js",
+      "Salesforce",
+      "MCP",
+      "DevOps"
+    ],
+    "bannerImage": "/banners/state-of-the-stack-august-2026.png"
+  },
+  {
     "slug": "ai-agent-identity-2026",
     "title": "Who Is Your AI Agent? The 2026 Push to Give Agents Real Identities",
     "excerpt": "NIST, the IETF, and Microsoft all moved on agent identity in 2026, and MCP now mandates OAuth 2.1 for remote servers. Here's what giving agents their own credentials looks like — from the standards to a 10-agent pipeline that runs on isolated identities.",
