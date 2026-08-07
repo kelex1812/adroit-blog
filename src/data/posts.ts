@@ -62,6 +62,26 @@ export const posts: BlogPost[] = [
     "bannerImage": "/banners/digital-transformation-2026.png"
   },
   {
+    "slug": "flow-orchestrates-agentforce",
+    "title": "Flow Calls the Agent: Orchestrating Agentforce from Salesforce Flow",
+    "excerpt": "The covered story is agents calling Flows. The one that turns Flow into your agentic control plane is Flow calling the agent: the AI Agent action, structured outputs, and the constraints that bite in production.",
+    "category": "Salesforce",
+    "categoryColor": "sf",
+    "categoryGradient": "from-sky to-sky-dark",
+    "date": "August 07, 2026",
+    "author": "Adroit Consulting",
+    "authorInitials": "AC",
+    "readTime": "9 min read",
+    "featured": false,
+    "tags": [
+      "Salesforce",
+      "Agentforce",
+      "Flow Orchestration",
+      "Automation"
+    ],
+    "bannerImage": "/banners/flow-orchestrates-agentforce.png"
+  },
+  {
     "slug": "salesforce-flow-patterns",
     "title": "5 Salesforce Flow Design Patterns for Complex Automation",
     "excerpt": "Master these five flow patterns to build scalable, maintainable automation across your org.",
