@@ -23,11 +23,15 @@ That incident is the reason GitHub published its **Actions 2026 security roadmap
 
 Today, Actions resolves dependencies at runtime. A workflow that says `uses: actions/checkout@v4` or `@main` executes whatever that ref points to *at the moment of the run*, not what a reviewer approved. There is no lockfile, no deterministic resolver, and no committed record of which commits actually executed [Source: github.com](https://github.com/orgs/community/discussions/194494). Composite actions make it worse: they embed nested `uses:` steps that only surface after the runner downloads them, so transitive dependencies are effectively invisible to the workflow author [Source: github.com](https://github.com/orgs/community/discussions/194494).
 
+![The gap that makes review insufficient: the PR shows the workflow file, but what actually runs is whatever each ref resolves to at the moment of the run — exploited by mutable tag hijacks like tj-actions/changed-files (CVE-2025-30066), hidden transitive dependencies in composite actions, and poisoned pull_request_target triggers](</diagrams/github-actions-supply-chain-security-2026/2-review-vs-runs-gap.png>)
+
 GitHub's own framing is honest: npm, Cargo, Go modules, Bundler, and NuGet all have a manifest + lockfile + deterministic resolver. Actions has none of them [Source: github.com](https://github.com/orgs/community/discussions/194494). The roadmap fixes that gap, then keeps going.
 
 ## The three layers of the roadmap
 
 GitHub organizes the work into three layers: the **ecosystem** (deterministic dependencies, safer publishing), the **attack surface** (policies, secure defaults, scoped credentials), and the **infrastructure** (observability and network control for runners) [Source: github.blog](https://github.blog/news-insights/product-news/whats-coming-to-our-github-actions-2026-security-roadmap/). Three capabilities matter most for teams running real pipelines.
+
+![GitHub's 2026 Actions security roadmap has three layers — workflow dependency locking (technical preview since late June 2026), policy-driven execution (public preview since June 18, 2026), and scoped secrets with the native egress firewall (early access in audit mode via the ubuntu-24.04-firewall runner label)](</diagrams/github-actions-supply-chain-security-2026/1-roadmap-three-layers.png>)
 
 ### 1. Workflow dependency locking — the lockfile
 

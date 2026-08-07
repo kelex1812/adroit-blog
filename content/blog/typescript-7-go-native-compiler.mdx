@@ -41,6 +41,8 @@ Anders Hejlsberg, TypeScript's creator, framed the rewrite as getting "10x, half
 
 The team picked Go over C# and Rust for practical reasons: Go's syntax is structurally similar to JavaScript's (making the line-by-line port and future maintenance tractable), it compiles to native code on all platforms, and it handles graph traversal — walking the syntax trees the compiler lives on — exceptionally well. Go's garbage collector can even be effectively disabled for most compilations. [Source: https://www.theregister.com/devops/2026/07/09/speedier-type-checks-in-typescript-70-as-first-stable-go-release-ships/5268828] [Source: https://github.com/microsoft/typescript-go/discussions/411]
 
+![TypeScript 7's Go-native compiler architecture: TypeScript source flows through a Go-native compiler whose frontend (parsing + type checking) and backend (codegen/emitting) are parallelized by default, producing JavaScript output — native code plus shared-memory concurrency makes full builds 8x–12x faster than TypeScript 6.0, with memory down 6–26%.](</diagrams/typescript-7-go-native-compiler/1-go-native-architecture.png>)
+
 ## What's actually new (beyond speed)
 
 - **Parallelism you can tune.** TypeScript 7 parallelizes parsing, type-checking, and emitting by default. The new experimental `--checkers` flag controls type-checker workers (default 4); bumping to `--checkers 8` pushed VS Code to a 16.7x speedup. `--builders` parallelizes project-reference builds in monorepos, and `--singleThreaded` disables parallelism entirely for debugging or constrained CI runners. [Source: https://devblogs.microsoft.com/typescript/announcing-typescript-7-0/]
@@ -50,6 +52,8 @@ The team picked Go over C# and Rust for practical reasons: Go's syntax is struct
 ## What breaks — read this before upgrading
 
 TypeScript 7.0 is deliberately compatible: code that compiles cleanly with TypeScript 6.0 (with `stableTypeOrdering` on and no `ignoreDeprecations` flag) should compile identically. 7.0 adopts 6.0's defaults and raises hard errors for flags and constructs deprecated in 6.0. [Source: https://devblogs.microsoft.com/typescript/announcing-typescript-7-0/]
+
+![What breaks when upgrading to TypeScript 7.0: no stable programmatic API (typescript-eslint stays on 6.0 until 7.1), side-by-side installs via @typescript/native and the @typescript/typescript6 alias, types now defaulting to [] with no automatic @types loading, and hard errors for flags and constructs deprecated in 6.0 — with what to do instead for each.](</diagrams/typescript-7-go-native-compiler/2-what-breaks-upgrade.png>)
 
 The real gotcha is **tooling, not your code**:
 

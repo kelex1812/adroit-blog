@@ -23,6 +23,8 @@ That answer stopped being acceptable in 2026. The identity layer — the part of
 
 The problem isn't that agents lack credentials. It's that the credentials they have are almost always the wrong ones. The default pattern in 2024–2025 was to hand an agent a shared service account or a personal API key and let it run. That creates two failure modes we now see constantly in enterprise reviews:
 
+![Before and after the 2026 identity shift: an agent borrowing a shared service account or personal API key has no per-agent identity or audit trail — key rotation is an emergency and least-privilege is impossible to enforce — while an agent issued its own client ID and scoped credentials acts as a first-class identity subject: scoped permissions, an own audit trail, and tokens revocable without touching anyone's account](</diagrams/ai-agent-identity-2026/1-identity-gap.png>)
+
 **The confused deputy.** An agent with broad credentials can be tricked into using them for something the original user never authorized. The WorkOS developer's guide on agent authentication calls this out with a vivid example: a variable rename that flips `STRIPE_SECRET_KEY` from a test key to a live one — and the agent, holding both, silently reaches for the production secret [Source: workos.com](https://workos.com/blog/developers-guide-to-ai-agent-authentication-and-authorization). OAuth vendors have known this trap for years; it's called the confused deputy problem, and agents are the most confused deputies we've ever built, because they act on instructions rather than intent.
 
 **The shared-credential audit black hole.** When ten agents and forty humans all authenticate as "svc-ai-bot", the audit log tells you *what* happened but never *who*. Post-incident forensics degrade into guesswork, and least-privilege becomes impossible to enforce because the shared identity carries everyone's permissions at once.
@@ -44,6 +46,8 @@ Three months of 2026 alone produced more agent-identity infrastructure than all 
 ## Adroit on the Ground: identity isolation in a 10-agent pipeline
 
 We didn't wait for the standards to finish — we've been running a 10-agent delivery pipeline (BA → architect → designer → developer → security → QA → deploy) daily inside the Fortress of Solitude, and identity is the discipline that keeps it safe. Three practices survived contact with production:
+
+![The Fortress of Solitude 10-agent delivery pipeline (BA → architect → designer → developer → security → QA → deploy) with identity isolation: the orchestrator routes tasks to kanban workers in isolated subprocesses that never inherit its credentials, and every agent holds its own client ID with credentials stored in Bitwarden Secrets Manager and injected at runtime](</diagrams/ai-agent-identity-2026/2-pipeline-identity-isolation.png>)
 
 **1. Workers don't inherit the orchestrator's credentials.** Our kanban workers execute in isolated subprocesses that deliberately do *not* inherit the orchestrator's environment or credentials. Each task runs with only the secrets that task needs. This is the practical version of ASI03: an agent can't leak a credential it never possessed [Source: Fortress of Solitude worker-credential-isolation skill — internal].
 

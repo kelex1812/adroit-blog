@@ -17,6 +17,8 @@ bannerImage: /banners/category-react.png
 
 For years, Supabase Realtime Broadcast sent one kind of payload: JSON. That was fine for chat messages, cursor positions, and custom notifications — the low-frequency events that most real-time apps actually move. But for high-frequency, numeric, or densely packed data, JSON's textual encoding is pure overhead. A temperature reading that takes 20-30 characters as JSON text fits in a few bytes as fixed-width binary.
 
+![JSON broadcast vs binary broadcast: JSON sends serialized text, so a temperature reading takes 20-30 characters on the wire and suits low-frequency events like chat messages and cursor positions; binary broadcast sends a compact ArrayBuffer or Uint8Array payload (a few bytes as fixed-width binary) for high-frequency, numeric, or already-binary data like sensor/telemetry streams and screenshot streaming.](</diagrams/supabase-realtime-binary-payloads/1-json-vs-binary.png>)
+
 In June 2026, Supabase closed that gap: **Realtime Broadcast now sends and receives binary payloads in addition to JSON**, across every path a Broadcast message can travel — the client libraries over WebSocket, the REST API, and directly from your database. [Source: https://supabase.com/changelog/46834-realtime-broadcast-now-supports-binary-payloads]
 
 It's a small changelog entry with an outsized effect on what you can build with Supabase as your real-time layer. Here's what changed, when to use it, and the version check you need before you rely on it.
@@ -34,6 +36,8 @@ The general rule: **if your data is numeric, high-frequency, or already binary, 
 ## How it works
 
 Binary payloads work across all three ways you can send a Broadcast message. [Source: https://supabase.com/changelog/46834-realtime-broadcast-now-supports-binary-payloads]
+
+![How binary broadcast works: Client A subscribes to a channel and sends a binary ArrayBuffer payload over WebSocket, the Realtime server's broadcast channel delivers the bytes to subscribers, and Client B receives the same bytes with no JSON serialization; the same channel also accepts binary via HTTP and from Postgres.](</diagrams/supabase-realtime-binary-payloads/2-binary-broadcast-flow.png>)
 
 **Client libraries (WebSocket).** Pass an `ArrayBuffer` or `ArrayBufferView` (like `Uint8Array`) as the payload:
 

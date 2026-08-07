@@ -44,6 +44,8 @@ Two practical heuristics from the research:
 
 We run a two-tier model architecture: cloud models for kanban agent workers (tool-calling, structured completion gates), and a local llama.cpp server — Qwen 35B-A3B MoE, Q4_K_M, port 8080 — for background subsystems: context compression, title generation, triage, monitoring. That division wasn't theoretical. It's the result of four real failures.
 
+![Adroit's hybrid inference stack: requests from kanban agent workers and background subsystems hit a router that picks tiers by latency, cost, and data sensitivity — sending tool-calling and structured completion gates to cloud models, and free-text background work (context compression, title generation, triage, monitoring) to a local llama.cpp server running Qwen 35B-A3B MoE.](</diagrams/local-llm-infrastructure-2026/1-hybrid-stack.png>)
+
 **Lesson 1: Memory is the budget you never plan for.** A 22 GB model on a 64 GB Mac doesn't leave 42 GB of headroom — on macOS, `-ngl 99` pins model weights as *wired* GPU memory that the OS can never page out. We've documented two distinct failure modes: a Jetsam kill (memory-pressure killer terminates the model process; wired memory at ~49 GB, only ~41 MB free at the moment of kill) and a full kernel panic (swap files past 10, memory compressor at 100% — forced reboot). The deeper root cause turned out to be a macOS GPU-driver bug (IOGPUFamily 130.15.2, July 13, 2026) that leaks wired memory over hours of inference — both oMLX and llama.cpp hit it. Our mitigation is a wired-memory watchdog that restarts the server when wired usage crosses 35 GB, flushing accumulated Metal allocations. [Source: Fortress of Solitude infrastructure runbook — local-llm-hosting skill, JetsamEvent 2026-07-22]
 
 **Lesson 2: KV cache math is unforgiving.** For a 35B model, the KV cache runs roughly 1.3 MB per token. A 98K context window means a worst-case ~128 GB of KV cache per request — on a 64 GB machine that *always* swaps. The fix was boring and effective: cap the context window (32K), cap concurrency to 1, quantize the KV cache to 8-bit. If you self-host, compute this before you buy hardware, not after you start crashing. [Source: Fortress of Solitude infrastructure runbook — oMLX/llama.cpp KV cache analysis]
@@ -55,6 +57,8 @@ We run a two-tier model architecture: cloud models for kanban agent workers (too
 ## A decision framework for clients
 
 Putting it together, here's how we'd advise a team asking "should we self-host?" in 2026:
+
+![Adroit's 2026 self-hosting decision framework: under 500K tokens/day with no compliance constraint stays on cloud APIs, 1–10M tokens/day models the numbers with hosted open-weight likely winning on cost, and over 10M tokens/day or PII/regulated data takes local seriously via hybrid routing — with validation layers for agent tool-call workloads, and llama.cpp or mlx-lm on Apple Silicon dev nodes versus vLLM on GPU servers for production.](</diagrams/local-llm-infrastructure-2026/2-decision-framework.png>)
 
 | Your situation | Recommendation |
 |---|---|

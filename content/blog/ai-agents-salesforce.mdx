@@ -33,6 +33,8 @@ The most common implementation mistake is treating Agentforce as a Flow replacem
 
 Simple test: is the input structured, is every outcome predictable, and does the process need judgment? An SLA timer that fires on case creation is a Flow, full stop. A customer typing "why is my invoice wrong?" into a chat widget is agent territory. Note that Agentforce is unsuitable for high-volume synchronous record processing where latency is the primary constraint [Source: architect.salesforce.com](https://architect.salesforce.com/docs/architect/decision-guides/guide/determining-agentic-vs-traditional-workflow-automation).
 
+![Decision tree: structured, predictable tasks stay in record-triggered Flow, while unstructured natural language that needs reasoning goes to Agentforce](</diagrams/ai-agents-salesforce/1-agentforce-vs-flow-decision-tree.png>)
+
 The practical pattern is hybrid: keep deterministic logic in Flows and Apex, then expose those flows as actions the agent can call. Agentforce 360's hybrid reasoning and Agent Script let you define hard rails for tool selection while the LLM handles the judgment parts [Source: salesforce.com](https://www.salesforce.com/news/press-releases/2025/10/13/agentic-enterprise-announcement/). Audit what you already run in Flow before building anything; most agents orchestrate existing automations rather than replacing them.
 
 Don't agent-wash everything. Flow Orchestration already covers multi-step deterministic processes, and every agent action carries a metered cost; a Flow that can do the job is cheaper and faster.
@@ -48,6 +50,8 @@ The pattern that works, in order:
 3. Test in the Agentforce Testing Center (GA December 2024), which generates AI test cases and runs batch CSV suites in sandboxes at 16 Flex Credits per action versus 20 in production [Source: myaskai.com](https://myaskai.com/blog/salesforce-agentforce-complete-guide-2026).
 4. Set guardrails: topics bound what the agent will discuss, Agent Script binds what it can do, and confidence thresholds decide when it escalates to a human with full context.
 5. Launch with human review for the first weeks, then scale autonomy as the numbers hold.
+
+![Five-step deployment pattern: scope one topic and channel, ground in knowledge sources, test in the Agentforce Testing Center, set guardrails, then launch with human review](</diagrams/ai-agents-salesforce/2-deployment-pattern-flow.png>)
 
 OpenTable is the reference: its restaurant agent resolved 70% of inquiries autonomously within weeks of launch [Source: salesforce.com](https://www.salesforce.com/news/press-releases/2025/10/13/agentic-enterprise-announcement/). Vendor-reported, but the pattern holds: narrow scope, real grounding, fast iteration.
 

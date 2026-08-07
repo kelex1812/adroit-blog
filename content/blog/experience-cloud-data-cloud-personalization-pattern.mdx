@@ -48,6 +48,8 @@ The upgrade path: in Experience Builder, go to **Settings → Updates → Upgrad
 
 Once the site is enhanced LWR, the connection is declarative:
 
+![Setup pattern data flow: CRM tables and Web SDK interaction events feed Data Cloud (Data 360), which unifies them into an Individual profile and evaluates segments, so personalization components on the enhanced LWR Experience Cloud site show each visitor personalized content.](</diagrams/experience-cloud-data-cloud-personalization-pattern/1-setup-data-flow.png>)
+
 1. Setup → **Digital Experiences → All Sites** → open the site in **Builder**
 2. **Settings → Integrations** → on the Data Cloud card, select **Add to Site**
 3. Click **Share site data with Data Cloud**
@@ -67,6 +69,8 @@ Two structural constraints to know before you start:
 ## What the data does once it flows
 
 After connection, interaction events — clicks, scrolls, product interactions — are auto-mapped to Data Cloud. The Web SDK fires identity and behavior events; Data Cloud unifies the visitor against an existing Individual profile (matched on email, anonymous ID, or auth identity for logged-in users); segments and Calculated Insights evaluate in near-real-time.
+
+![Before and after personalization: a generic portal shows every visitor the same dashboard, knowledge articles, and hero banner, while a Data 360-driven personalized portal evaluates segments in near-real-time to show targeted hero banners, next-best-action cards for logged-in users, and guest article reordering by anonymous browse history.](</diagrams/experience-cloud-data-cloud-personalization-pattern/2-before-after-personalization.png>)
 
 [Source: Salesforce Dictionary — "Salesforce Experience Cloud: The Complete 2026 Guide"](https://salesforcedictionary.com/blogs/salesforce-experience-cloud-complete-2026-guide)
 

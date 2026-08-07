@@ -79,6 +79,8 @@ The most useful pattern in production is a blend. For medium-density objects, 15
 
 Mechanically it is simple: write a class with a static method annotated `@InvocableMethod` and it shows up in Flow Builder as a callable action [Source: developer.salesforce.com](https://developer.salesforce.com/docs/atlas.en-us.apexcode.meta/apexcode/apex_classes_annotation_InvocableMethod.htm). The flow keeps entry conditions, decision logic, and routing, so the process topology stays visible in Flow Trigger Explorer. The Apex does the heavy lifting.
 
+![The hybrid pattern on Case records: a record-triggered flow handles entry conditions and routing, calls the ServiceLevelAgreementCalculator invocable Apex class to compute elapsed business hours, and applies the returned Within Target or Breached result](</diagrams/salesforce-flow-vs-apex-when-to-use-which/2-hybrid-pattern.png>)
+
 The guide's canonical example is SLA calculation on Case records. BusinessHours is not natively accessible in Flow, so a `ServiceLevelAgreementCalculator` class with an `@InvocableMethod` computes elapsed business hours and returns "Within Target" or "Breached," and the record-triggered flow calls it [Source: architect.salesforce.com](https://architect.salesforce.com/docs/architect/decision-guides/guide/record-triggered). That separation buys modularity, reuse across flows, and an orchestration layer an admin can still read.
 
 The pattern has three limitations. Invocable actions only run after save, so they can't handle same-record field updates; keep that work in a before-save flow or before-context Apex. Record-triggered flows don't support the after-undelete context, so restore-from-recycle-bin logic requires an Apex trigger. And the Flow-to-Apex handoff carries a small runtime cost, negligible at medium density but real at extreme scale [Source: architect.salesforce.com](https://architect.salesforce.com/docs/architect/decision-guides/guide/record-triggered).
@@ -86,6 +88,8 @@ The pattern has three limitations. Invocable actions only run after save, so the
 ## Decision Framework
 
 Start by sizing the object, not the tool. The density matrix is the first filter:
+
+![Automation density matrix: fewer than 15 automations per DML event points to Record-Triggered Flow, 15-30 to Flow plus Invocable Apex, and more than 30 to an Apex trigger framework](</diagrams/salesforce-flow-vs-apex-when-to-use-which/1-density-matrix.png>)
 
 | Density | Automations per DML event | Data volume | Dependency sprawl | Standard |
 |---|---|---|---|---|
