@@ -14,6 +14,38 @@ export const learnSeries: LearningSeries[] = [
     "gradient": "from-amber to-yellow-600",
     "lessons": [
       {
+        "slug": "prompting-for-agents-system-prompts-few-shot",
+        "title": "Lesson 4: Prompting for Agents — System Prompts, Few-Shot, and When Prompts Aren't Enough",
+        "series": "agentic-ai",
+        "lesson": 4,
+        "excerpt": "In an agent, the prompt isn't a single message — it's the constitution the loop obeys on every iteration. The anatomy of a production system prompt, how few-shot examples actually work, and the escalation ladder for when words stop being enough.",
+        "date": "August 07, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "10 min read",
+        "tags": [
+          "Learn",
+          "AI",
+          "Agentic",
+          "Prompting"
+        ]
+      },
+      {
+        "slug": "the-agent-loop-perceive-reason-act-observe",
+        "title": "Lesson 3: The Agent Loop — Perceive, Reason, Act, Observe, and Where Your Code Lives",
+        "series": "agentic-ai",
+        "lesson": 3,
+        "excerpt": "The one while loop that turns a language model into an agent: the five stages of the loop, the pseudocode that runs underneath every framework, and exactly which parts of it are your code versus the runtime's.",
+        "date": "August 06, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "9 min read",
+        "tags": [
+          "Learn",
+          "AI",
+          "Agentic",
+          "Foundations"
+        ]
+      },
+      {
         "slug": "how-llms-work-tokens-context-inference",
         "title": "Lesson 2: How LLMs Work for Implementers — Tokens, Context, Inference, Temperature",
         "series": "agentic-ai",
@@ -46,7 +78,7 @@ export const learnSeries: LearningSeries[] = [
         ]
       }
     ],
-    "totalLessons": 2
+    "totalLessons": 4
   },
   {
     "slug": "omni-studio-cert",
@@ -55,6 +87,34 @@ export const learnSeries: LearningSeries[] = [
     "group": "Salesforce Certifications",
     "gradient": "from-red to-rose-600",
     "lessons": [
+      {
+        "slug": "day-05-f5-implementation-toolchain-sfcli-vbt-migration",
+        "title": "OmniStudio F-5: Implementation Toolchain: SFCLI, VBT, Migration",
+        "series": "omni-studio-cert",
+        "lesson": 5,
+        "excerpt": "Describe the tools required to complete the end-to-end implementation process (SFCLI, VBT, Migration, etc.). — Day 5 of the 46-requirement OmniStudio Developer exam prep.",
+        "date": "August 07, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "6 min read",
+        "tags": [
+          "OmniStudio",
+          "OmniStudio Fundamentals"
+        ]
+      },
+      {
+        "slug": "day-04-f4-licensing-permission-set-licenses-permission-sets",
+        "title": "OmniStudio F-4: Licensing, Permission Set Licenses & Permission Sets",
+        "series": "omni-studio-cert",
+        "lesson": 4,
+        "excerpt": "Explain OmniStudio license requirements, Permission Set licenses and Permission Sets. — Day 4 of the 46-requirement OmniStudio Developer exam prep.",
+        "date": "August 06, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "6 min read",
+        "tags": [
+          "OmniStudio",
+          "OmniStudio Fundamentals"
+        ]
+      },
       {
         "slug": "day-03-f3-managed-package-vs-standard-runtime-upgrades",
         "title": "OmniStudio F-3: Managed Package vs Standard Runtime; Upgrades",
@@ -98,7 +158,7 @@ export const learnSeries: LearningSeries[] = [
         ]
       }
     ],
-    "totalLessons": 3
+    "totalLessons": 5
   },
   {
     "slug": "salesforce-architect",
@@ -107,6 +167,38 @@ export const learnSeries: LearningSeries[] = [
     "group": "Salesforce Certifications",
     "gradient": "from-sky to-blue-600",
     "lessons": [
+      {
+        "slug": "integration-fundamentals-rest-soap-bulk-apis",
+        "title": "Lesson 4: Integration Fundamentals — REST, SOAP, Bulk APIs, and Picking the Right One",
+        "series": "salesforce-architect",
+        "lesson": 4,
+        "excerpt": "The System Architect's home turf: when to call Salesforce with REST, when to reach for SOAP, when to hand it a CSV via Bulk API 2.0 — and the request limits that make the choice matter.",
+        "date": "August 07, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "9 min read",
+        "tags": [
+          "Learn",
+          "Salesforce",
+          "Architect",
+          "Integration"
+        ]
+      },
+      {
+        "slug": "core-building-blocks-objects-fields-relationships",
+        "title": "Lesson 3: Core Building Blocks — Objects, Fields, Relationships, Record Types, and Formula vs Roll-Up",
+        "series": "salesforce-architect",
+        "lesson": 3,
+        "excerpt": "The architect's canvas: standard and custom objects, field types, lookup vs master-detail relationships, record types for process variation, and when to compute with a formula field vs a roll-up summary.",
+        "date": "August 06, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "8 min read",
+        "tags": [
+          "Learn",
+          "Salesforce",
+          "Architect",
+          "Data Model"
+        ]
+      },
       {
         "slug": "multi-tenant-platform-architecture",
         "title": "Lesson 2: Multi-Tenant Platform Architecture — Orgs, Environments, and the Instance Model",
@@ -140,12 +232,104 @@ export const learnSeries: LearningSeries[] = [
         ]
       }
     ],
-    "totalLessons": 2
+    "totalLessons": 4
   }
 ];
 
 /** Flat list of every lesson, NEWEST FIRST (for sitemap, nav, flat lookups). */
 export const learnLessons: LearnLesson[] = [
+  {
+    "slug": "prompting-for-agents-system-prompts-few-shot",
+    "title": "Lesson 4: Prompting for Agents — System Prompts, Few-Shot, and When Prompts Aren't Enough",
+    "series": "agentic-ai",
+    "lesson": 4,
+    "excerpt": "In an agent, the prompt isn't a single message — it's the constitution the loop obeys on every iteration. The anatomy of a production system prompt, how few-shot examples actually work, and the escalation ladder for when words stop being enough.",
+    "date": "August 07, 2026",
+    "author": "Adroit Consulting",
+    "readTime": "10 min read",
+    "tags": [
+      "Learn",
+      "AI",
+      "Agentic",
+      "Prompting"
+    ]
+  },
+  {
+    "slug": "day-05-f5-implementation-toolchain-sfcli-vbt-migration",
+    "title": "OmniStudio F-5: Implementation Toolchain: SFCLI, VBT, Migration",
+    "series": "omni-studio-cert",
+    "lesson": 5,
+    "excerpt": "Describe the tools required to complete the end-to-end implementation process (SFCLI, VBT, Migration, etc.). — Day 5 of the 46-requirement OmniStudio Developer exam prep.",
+    "date": "August 07, 2026",
+    "author": "Adroit Consulting",
+    "readTime": "6 min read",
+    "tags": [
+      "OmniStudio",
+      "OmniStudio Fundamentals"
+    ]
+  },
+  {
+    "slug": "integration-fundamentals-rest-soap-bulk-apis",
+    "title": "Lesson 4: Integration Fundamentals — REST, SOAP, Bulk APIs, and Picking the Right One",
+    "series": "salesforce-architect",
+    "lesson": 4,
+    "excerpt": "The System Architect's home turf: when to call Salesforce with REST, when to reach for SOAP, when to hand it a CSV via Bulk API 2.0 — and the request limits that make the choice matter.",
+    "date": "August 07, 2026",
+    "author": "Adroit Consulting",
+    "readTime": "9 min read",
+    "tags": [
+      "Learn",
+      "Salesforce",
+      "Architect",
+      "Integration"
+    ]
+  },
+  {
+    "slug": "the-agent-loop-perceive-reason-act-observe",
+    "title": "Lesson 3: The Agent Loop — Perceive, Reason, Act, Observe, and Where Your Code Lives",
+    "series": "agentic-ai",
+    "lesson": 3,
+    "excerpt": "The one while loop that turns a language model into an agent: the five stages of the loop, the pseudocode that runs underneath every framework, and exactly which parts of it are your code versus the runtime's.",
+    "date": "August 06, 2026",
+    "author": "Adroit Consulting",
+    "readTime": "9 min read",
+    "tags": [
+      "Learn",
+      "AI",
+      "Agentic",
+      "Foundations"
+    ]
+  },
+  {
+    "slug": "day-04-f4-licensing-permission-set-licenses-permission-sets",
+    "title": "OmniStudio F-4: Licensing, Permission Set Licenses & Permission Sets",
+    "series": "omni-studio-cert",
+    "lesson": 4,
+    "excerpt": "Explain OmniStudio license requirements, Permission Set licenses and Permission Sets. — Day 4 of the 46-requirement OmniStudio Developer exam prep.",
+    "date": "August 06, 2026",
+    "author": "Adroit Consulting",
+    "readTime": "6 min read",
+    "tags": [
+      "OmniStudio",
+      "OmniStudio Fundamentals"
+    ]
+  },
+  {
+    "slug": "core-building-blocks-objects-fields-relationships",
+    "title": "Lesson 3: Core Building Blocks — Objects, Fields, Relationships, Record Types, and Formula vs Roll-Up",
+    "series": "salesforce-architect",
+    "lesson": 3,
+    "excerpt": "The architect's canvas: standard and custom objects, field types, lookup vs master-detail relationships, record types for process variation, and when to compute with a formula field vs a roll-up summary.",
+    "date": "August 06, 2026",
+    "author": "Adroit Consulting",
+    "readTime": "8 min read",
+    "tags": [
+      "Learn",
+      "Salesforce",
+      "Architect",
+      "Data Model"
+    ]
+  },
   {
     "slug": "how-llms-work-tokens-context-inference",
     "title": "Lesson 2: How LLMs Work for Implementers — Tokens, Context, Inference, Temperature",
