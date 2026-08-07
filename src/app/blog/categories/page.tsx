@@ -63,6 +63,30 @@ const categoryDefs = [
     glow: "hover:shadow-glow-mkt",
     countColor: "text-[#BE185D]",
   },
+  {
+    key: "ux",
+    name: "UI/UX",
+    description:
+      "Design systems, user research, accessibility, and interface patterns that make software people actually want to use.",
+    icon: "◐",
+    image: "/categories/ux.jpg",
+    alt: "UI/UX category",
+    tint: "linear-gradient(135deg, rgba(139,92,246,0.55), rgba(109,40,217,0.55))",
+    glow: "hover:shadow-glow-ux",
+    countColor: "text-[#6D28D9]",
+  },
+  {
+    key: "pm",
+    name: "Project Management",
+    description:
+      "Agile delivery, estimation, stakeholder alignment, and running consulting engagements without the chaos.",
+    icon: "▦",
+    image: "/categories/pm.jpg",
+    alt: "Project Management category",
+    tint: "linear-gradient(135deg, rgba(20,184,166,0.55), rgba(15,118,110,0.55))",
+    glow: "hover:shadow-glow-pm",
+    countColor: "text-[#0F766E]",
+  },
 ];
 
 // Derive post counts from actual data

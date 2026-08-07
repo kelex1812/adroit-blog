@@ -3,7 +3,7 @@ export interface BlogPost {
   title: string;
   excerpt: string;
   category: string;
-  categoryColor: "sf" | "react" | "ai" | "mkt";
+  categoryColor: "sf" | "react" | "ai" | "mkt" | "ux" | "pm";
   categoryGradient: string;
   date: string;
   author: string;

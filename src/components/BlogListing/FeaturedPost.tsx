@@ -13,7 +13,9 @@ export default function FeaturedPost({ post }: FeaturedPostProps) {
     post.categoryColor === "sf" ||
     post.categoryColor === "react" ||
     post.categoryColor === "ai" ||
-    post.categoryColor === "mkt"
+    post.categoryColor === "mkt" ||
+    post.categoryColor === "ux" ||
+    post.categoryColor === "pm"
       ? post.categoryColor
       : GLOW_FALLBACK;
 

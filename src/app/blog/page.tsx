@@ -22,6 +22,8 @@ const categories = [
   { key: "react", label: "React & Web Dev" },
   { key: "ai", label: "AI & Consulting" },
   { key: "mkt", label: "Marketing" },
+  { key: "ux", label: "UI/UX" },
+  { key: "pm", label: "Project Management" },
 ];
 
 function BlogListingContent() {

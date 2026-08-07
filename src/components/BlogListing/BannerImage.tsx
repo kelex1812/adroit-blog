@@ -18,6 +18,8 @@ const gradientMap: Record<string, string> = {
   react: "from-emerald via-emerald to-green-600",
   ai: "from-amber via-amber to-yellow-600",
   mkt: "from-pink via-pink to-rose-600",
+  ux: "from-violet via-violet to-purple-600",
+  pm: "from-teal via-teal to-cyan-600",
 };
 
 /**

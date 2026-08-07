@@ -28,10 +28,12 @@ export default function Footer() {
             </h4>
             <ul className="list-none space-y-2">
               <FooterLink href="/blog">All Posts</FooterLink>
-              <FooterLink href="/blog?category=salesforce">Salesforce</FooterLink>
+              <FooterLink href="/blog?category=sf">Salesforce</FooterLink>
               <FooterLink href="/blog?category=react">React & Web Dev</FooterLink>
               <FooterLink href="/blog?category=ai">AI & Consulting</FooterLink>
-              <FooterLink href="/blog?category=marketing">Marketing</FooterLink>
+              <FooterLink href="/blog?category=mkt">Marketing</FooterLink>
+              <FooterLink href="/blog?category=ux">UI/UX</FooterLink>
+              <FooterLink href="/blog?category=pm">Project Management</FooterLink>
             </ul>
           </div>
 
