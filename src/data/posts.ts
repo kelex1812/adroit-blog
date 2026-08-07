@@ -2,6 +2,27 @@ import { BlogPost } from "./types";
 
 export const posts: BlogPost[] = [
   {
+    "slug": "digital-transformation-2026",
+    "title": "Digital Transformation in 2026: What's Actually Changing — and How to Do It",
+    "excerpt": "A practical deep-dive into the three forces reshaping enterprise transformation in 2026 — AI-first process design, composable architecture, and data democratization — with the data, real examples, and action steps to make them work.",
+    "category": "Salesforce",
+    "categoryColor": "sf",
+    "categoryGradient": "from-sky to-sky-dark",
+    "date": "August 07, 2026",
+    "author": "Adroit Consulting",
+    "authorInitials": "AC",
+    "readTime": "8 min read",
+    "featured": false,
+    "tags": [
+      "Digital Transformation",
+      "AI Agents",
+      "Composable Architecture",
+      "Data",
+      "Enterprise"
+    ],
+    "bannerImage": "/banners/digital-transformation-2026.png"
+  },
+  {
     "slug": "state-of-the-stack-august-2026",
     "title": "State of the Stack, August 2026: Every Layer Is Now Built for Agents",
     "excerpt": "One month, four pillars: Next.js 16.3 makes frameworks agent-ready, Salesforce Summer '26 ships multi-agent orchestration and Tableau MCP, frontier models got cheaper and more open, and MCP went stateless so production systems can host agents at scale. Here's what changed and what Adroit clients should do about it.",
@@ -306,24 +327,5 @@ export const posts: BlogPost[] = [
       "Automation"
     ],
     "bannerImage": "/banners/category-ai.png"
-  },
-  {
-    "slug": "digital-transformation-2026",
-    "title": "Digital Transformation Roadmap: What's Changing in 2026",
-    "excerpt": "Key technology trends shaping enterprise digital transformation this year and how to prepare.",
-    "category": "Salesforce",
-    "categoryColor": "sf",
-    "categoryGradient": "from-sky to-sky-dark",
-    "date": "April 15, 2026",
-    "author": "Adroit Consulting",
-    "authorInitials": "AC",
-    "readTime": "5 min read",
-    "featured": false,
-    "tags": [
-      "Digital Transformation",
-      "Salesforce",
-      "Enterprise"
-    ],
-    "bannerImage": "/banners/category-sf.png"
   }
 ];
