@@ -2,6 +2,28 @@ import { BlogPost } from "./types";
 
 export const posts: BlogPost[] = [
   {
+    "slug": "complicated-vs-complex-delivery-diagnostic",
+    "title": "Complicated Is Not Complex: The Delivery Diagnostic Consulting Teams Need",
+    "excerpt": "Most delivery failures start with a category error: treating a complex project like a complicated one and planning it to death. Here's the five-question diagnostic that tells them apart, and what changes in estimation, governance, and stakeholder management once you know which one you're running.",
+    "category": "Project Management",
+    "categoryColor": "pm",
+    "categoryGradient": "from-teal to-teal-dark",
+    "date": "August 08, 2026",
+    "author": "Adroit Consulting",
+    "authorInitials": "AC",
+    "readTime": "8 min read",
+    "featured": false,
+    "tags": [
+      "Project Management",
+      "Complexity",
+      "Agile",
+      "Estimation",
+      "Cynefin",
+      "Delivery"
+    ],
+    "bannerImage": "/banners/complicated-vs-complex-delivery-diagnostic.png"
+  },
+  {
     "slug": "token-first-design-systems-2026",
     "title": "Token-First Design Systems: What the W3C Standard Changes and How to Build One",
     "excerpt": "The W3C Design Tokens Format Module went stable in October 2025, backed by Adobe, Google, Meta, and Figma. Here is how to build a token-first design system with the three-layer taxonomy, Figma-to-code pipeline, and governance that makes it scale.",
