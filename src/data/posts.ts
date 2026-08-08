@@ -3,8 +3,8 @@ import { BlogPost } from "./types";
 export const posts: BlogPost[] = [
   {
     "slug": "complicated-vs-complex-delivery-diagnostic",
-    "title": "Complicated Is Not Complex: The Delivery Diagnostic Consulting Teams Need",
-    "excerpt": "Most delivery failures start with a category error: treating a complex project like a complicated one and planning it to death. Here's the five-question diagnostic that tells them apart, and what changes in estimation, governance, and stakeholder management once you know which one you're running.",
+    "title": "Complicated vs Complex: A Delivery Diagnostic",
+    "excerpt": "Most delivery failures start with a category error: treating complex work as complicated. Here's the five-question diagnostic that tells them apart.",
     "category": "Project Management",
     "categoryColor": "pm",
     "categoryGradient": "from-teal to-teal-dark",
