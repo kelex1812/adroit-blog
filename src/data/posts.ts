@@ -103,6 +103,27 @@ export const posts: BlogPost[] = [
     "bannerImage": "/banners/flow-orchestrates-agentforce.png"
   },
   {
+    "slug": "pmi-pulse-complexity-2026",
+    "title": "Complexity Is the New Baseline: What PMI's 2026 Pulse Says About Delivering Complex Projects",
+    "excerpt": "PMI's Pulse of the Profession 2026 finds 97% of project professionals managed at least one complex project last year, a third of them failed to deliver their intended benefits, and the gap between high and low performers comes down to five specific practices.",
+    "category": "Project Management",
+    "categoryColor": "pm",
+    "categoryGradient": "from-teal to-teal-dark",
+    "date": "August 07, 2026",
+    "author": "Adroit Consulting",
+    "authorInitials": "AC",
+    "readTime": "8 min read",
+    "featured": false,
+    "tags": [
+      "Project Management",
+      "Complexity",
+      "PMI",
+      "Delivery",
+      "Stakeholder Management"
+    ],
+    "bannerImage": "/banners/pmi-pulse-complexity-2026.png"
+  },
+  {
     "slug": "salesforce-flow-patterns",
     "title": "5 Salesforce Flow Design Patterns for Complex Automation",
     "excerpt": "Master these five flow patterns to build scalable, maintainable automation across your org.",
