@@ -2,6 +2,29 @@ import { BlogPost } from "./types";
 
 export const posts: BlogPost[] = [
   {
+    "slug": "token-first-design-systems-2026",
+    "title": "Token-First Design Systems: What the W3C Standard Changes and How to Build One",
+    "excerpt": "The W3C Design Tokens Format Module went stable in October 2025, backed by Adobe, Google, Meta, and Figma. Here is how to build a token-first design system with the three-layer taxonomy, Figma-to-code pipeline, and governance that makes it scale.",
+    "category": "UI/UX",
+    "categoryColor": "ux",
+    "categoryGradient": "from-violet to-violet-dark",
+    "date": "August 08, 2026",
+    "author": "Adroit Consulting",
+    "authorInitials": "AC",
+    "readTime": "14 min read",
+    "featured": false,
+    "tags": [
+      "Design Systems",
+      "Design Tokens",
+      "DTCG",
+      "UI/UX",
+      "Figma",
+      "Accessibility",
+      "W3C"
+    ],
+    "bannerImage": "/banners/token-first-design-systems-2026.png"
+  },
+  {
     "slug": "ai-agents-salesforce",
     "title": "AI Agents Transforming Salesforce: Agentforce in Practice",
     "excerpt": "How autonomous AI agents are reshaping Salesforce implementation and day-to-day operations.",
