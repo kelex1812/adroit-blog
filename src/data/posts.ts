@@ -62,6 +62,27 @@ export const posts: BlogPost[] = [
     "bannerImage": "/banners/digital-transformation-2026.png"
   },
   {
+    "slug": "eaa-2027-accessibility-deadline",
+    "title": "The EAA's Second Deadline: Accessibility Compliance Lands June 28, 2027",
+    "excerpt": "The European Accessibility Act's first deadline was June 2025; the one that catches most companies is the second, June 28, 2027, when pre-2025 service contracts lose their protection. Enforcement is already real, and the fix path runs through your design system.",
+    "category": "UI/UX",
+    "categoryColor": "ux",
+    "categoryGradient": "from-violet to-violet-dark",
+    "date": "August 07, 2026",
+    "author": "Adroit Consulting",
+    "authorInitials": "AC",
+    "readTime": "9 min read",
+    "featured": false,
+    "tags": [
+      "Accessibility",
+      "Design Systems",
+      "EAA",
+      "WCAG",
+      "Compliance"
+    ],
+    "bannerImage": "/banners/eaa-2027-accessibility-deadline.png"
+  },
+  {
     "slug": "flow-orchestrates-agentforce",
     "title": "Flow Calls the Agent: Orchestrating Agentforce from Salesforce Flow",
     "excerpt": "The covered story is agents calling Flows. The one that turns Flow into your agentic control plane is Flow calling the agent: the AI Agent action, structured outputs, and the constraints that bite in production.",
