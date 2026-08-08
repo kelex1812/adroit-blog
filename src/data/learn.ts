@@ -14,6 +14,22 @@ export const learnSeries: LearningSeries[] = [
     "gradient": "from-amber to-yellow-600",
     "lessons": [
       {
+        "slug": "tokens-context-cost-engineering-agents",
+        "title": "Lesson 5: Tokens, Context Windows, and Cost Engineering for Agent Workloads",
+        "series": "agentic-ai",
+        "lesson": 5,
+        "excerpt": "Agents don't just use tokens — they burn them: roughly 4x a chat conversation, 15x for multi-agent. The four levers that control the bill — budgeting, compression, caching, and model routing — with the math worked out on a real 10-agent pipeline.",
+        "date": "August 08, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "9 min read",
+        "tags": [
+          "Learn",
+          "AI",
+          "Agentic",
+          "Cost"
+        ]
+      },
+      {
         "slug": "prompting-for-agents-system-prompts-few-shot",
         "title": "Lesson 4: Prompting for Agents — System Prompts, Few-Shot, and When Prompts Aren't Enough",
         "series": "agentic-ai",
@@ -78,7 +94,7 @@ export const learnSeries: LearningSeries[] = [
         ]
       }
     ],
-    "totalLessons": 4
+    "totalLessons": 5
   },
   {
     "slug": "omni-studio-cert",
@@ -87,6 +103,20 @@ export const learnSeries: LearningSeries[] = [
     "group": "Salesforce Certifications",
     "gradient": "from-red to-rose-600",
     "lessons": [
+      {
+        "slug": "day-06-f-6-testing-versioning-cloning",
+        "title": "OmniStudio F-6: Testing, Versioning & Cloning Components",
+        "series": "omni-studio-cert",
+        "lesson": 6,
+        "excerpt": "Explain testing, versioning, cloning where applicable through OmniStudio components — save vs. publish, cloning workflows, version snapshots for deployment.",
+        "date": "August 8, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "10 min read",
+        "tags": [
+          "OmniStudio",
+          "OmniStudio Fundamentals"
+        ]
+      },
       {
         "slug": "day-05-f5-implementation-toolchain-sfcli-vbt-migration",
         "title": "OmniStudio F-5: Implementation Toolchain: SFCLI, VBT, Migration",
@@ -158,7 +188,7 @@ export const learnSeries: LearningSeries[] = [
         ]
       }
     ],
-    "totalLessons": 5
+    "totalLessons": 6
   },
   {
     "slug": "salesforce-architect",
@@ -167,6 +197,23 @@ export const learnSeries: LearningSeries[] = [
     "group": "Salesforce Certifications",
     "gradient": "from-sky to-blue-600",
     "lessons": [
+      {
+        "slug": "systems-architecture-what-it-means-ai-patterns",
+        "title": "Lesson 5: General Systems Architecture — What 'Architecture' Means and Why AI Systems Reuse the Same Patterns",
+        "series": "salesforce-architect",
+        "lesson": 5,
+        "excerpt": "The foundational concepts of systems architecture — components, interfaces, and design principles — and why every AI agent pattern (sequential, parallel, hierarchical) is a remix of patterns engineers have known for decades.",
+        "date": "August 08, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "9 min read",
+        "tags": [
+          "Learn",
+          "Architect",
+          "Systems Architecture",
+          "AI Patterns",
+          "General"
+        ]
+      },
       {
         "slug": "integration-fundamentals-rest-soap-bulk-apis",
         "title": "Lesson 4: Integration Fundamentals — REST, SOAP, Bulk APIs, and Picking the Right One",
@@ -232,12 +279,59 @@ export const learnSeries: LearningSeries[] = [
         ]
       }
     ],
-    "totalLessons": 4
+    "totalLessons": 5
   }
 ];
 
 /** Flat list of every lesson, NEWEST FIRST (for sitemap, nav, flat lookups). */
 export const learnLessons: LearnLesson[] = [
+  {
+    "slug": "tokens-context-cost-engineering-agents",
+    "title": "Lesson 5: Tokens, Context Windows, and Cost Engineering for Agent Workloads",
+    "series": "agentic-ai",
+    "lesson": 5,
+    "excerpt": "Agents don't just use tokens — they burn them: roughly 4x a chat conversation, 15x for multi-agent. The four levers that control the bill — budgeting, compression, caching, and model routing — with the math worked out on a real 10-agent pipeline.",
+    "date": "August 08, 2026",
+    "author": "Adroit Consulting",
+    "readTime": "9 min read",
+    "tags": [
+      "Learn",
+      "AI",
+      "Agentic",
+      "Cost"
+    ]
+  },
+  {
+    "slug": "day-06-f-6-testing-versioning-cloning",
+    "title": "OmniStudio F-6: Testing, Versioning & Cloning Components",
+    "series": "omni-studio-cert",
+    "lesson": 6,
+    "excerpt": "Explain testing, versioning, cloning where applicable through OmniStudio components — save vs. publish, cloning workflows, version snapshots for deployment.",
+    "date": "August 8, 2026",
+    "author": "Adroit Consulting",
+    "readTime": "10 min read",
+    "tags": [
+      "OmniStudio",
+      "OmniStudio Fundamentals"
+    ]
+  },
+  {
+    "slug": "systems-architecture-what-it-means-ai-patterns",
+    "title": "Lesson 5: General Systems Architecture — What 'Architecture' Means and Why AI Systems Reuse the Same Patterns",
+    "series": "salesforce-architect",
+    "lesson": 5,
+    "excerpt": "The foundational concepts of systems architecture — components, interfaces, and design principles — and why every AI agent pattern (sequential, parallel, hierarchical) is a remix of patterns engineers have known for decades.",
+    "date": "August 08, 2026",
+    "author": "Adroit Consulting",
+    "readTime": "9 min read",
+    "tags": [
+      "Learn",
+      "Architect",
+      "Systems Architecture",
+      "AI Patterns",
+      "General"
+    ]
+  },
   {
     "slug": "prompting-for-agents-system-prompts-few-shot",
     "title": "Lesson 4: Prompting for Agents — System Prompts, Few-Shot, and When Prompts Aren't Enough",
