@@ -2,6 +2,27 @@ import { BlogPost } from "./types";
 
 export const posts: BlogPost[] = [
   {
+    "slug": "nextjs-16-3-instant-navigations",
+    "title": "Instant Navigations in Next.js 16.3: The End of 'Feels Like a Website'",
+    "excerpt": "Server Components made apps ship less JavaScript, but they made navigations feel slow. Next.js 16.3 fixes that with a Stream/Cache/Block model that makes server-rendered apps as responsive as SPAs, no tradeoff required.",
+    "category": "React & Web Dev",
+    "categoryColor": "react",
+    "categoryGradient": "from-emerald to-emerald-dark",
+    "date": "August 09, 2026",
+    "author": "Adroit Consulting",
+    "authorInitials": "AC",
+    "readTime": "12",
+    "featured": false,
+    "tags": [
+      "Next.js",
+      "React",
+      "Server Components",
+      "Performance",
+      "Web Development"
+    ],
+    "bannerImage": "/banners/nextjs-16-3-instant-navigations.png"
+  },
+  {
     "slug": "complicated-vs-complex-delivery-diagnostic",
     "title": "Complicated vs Complex: A Delivery Diagnostic",
     "excerpt": "Most delivery failures start with a category error: treating complex work as complicated. Here's the five-question diagnostic that tells them apart.",
