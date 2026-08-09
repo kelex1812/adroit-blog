@@ -14,7 +14,7 @@ tags: [Learn, AI, Agentic, Models]
 
 Lessons 1–5 built the agent loop, its prompts, and its economics. This lesson answers the question underneath all of them: *which model should run which step?* The default answer — "the best model we can afford, for everything" — is how every expensive, fragile agent system starts. LogRocket describes the pattern precisely: teams launch with a single strong model and scale it across every use case, then discover they're "paying supercomputer prices to solve calculator problems." [Source: https://blog.logrocket.com/llm-routing-right-model-for-requests/]
 
-The fix is hospital triage: nobody sends every patient to the most specialized surgeon — simple cases go to fast, cheap care; complex cases escalate. **Routing** is the decision logic that directs each request to the model that fits it. [Source: https://blog.logrocket.com/llm-routing-right-model-for-requests/]
+The fix is hospital triage: nobody sends every patient to the most specialized surgeon; simple cases go to fast, cheap care and complex cases escalate. **Routing** is the decision logic that directs each request to the model that fits it. [Source: https://blog.logrocket.com/llm-routing-right-model-for-requests/]
 
 ## What a model router actually is
 
@@ -38,20 +38,20 @@ Tiers decouple routing logic from model specifics. When a provider releases a ne
 
 Four dimensions, roughly in priority order [Source: https://blog.logrocket.com/llm-routing-right-model-for-requests/]:
 
-- **Cost and volume.** High-volume, low-value requests (a support bot answering "where's my order?") go to cheap models; low-volume, high-value work (creative output for a $500/month customer) justifies a frontier model.
-- **Latency.** Interactive requests (autocomplete, chat, code completion) need low time-to-first-token; background requests (summarization, overnight processing) can tolerate slow-and-cheap. The same task can route differently depending on whether a user is waiting.
-- **Task complexity.** "Extract an email address" needs pattern matching, not intelligence — a regex with a fallback. Middle-complexity tasks are the hard cases; start with heuristics (input length, keywords like "analyze" vs. "extract"). You don't need perfect prediction — being right 80% of the time still saves most of the money.
-- **Privacy and compliance.** These create hard boundaries that override cost: HIPAA data needs providers with Business Associate Agreements, EU user data may need EU data centers, and routing must enforce this automatically from request metadata and data-classification tags.
+- **Cost and volume.** High-volume, low-value requests (a support bot answering "where's my order?") go to cheap models; low-volume, high-value work justifies a frontier model.
+- **Latency.** Interactive requests (autocomplete, chat, code completion) need low time-to-first-token; background requests (summarization, overnight processing) can tolerate slow-and-cheap.
+- **Task complexity.** "Extract an email address" needs pattern matching, not intelligence — a regex with a fallback. Middle-complexity tasks are the hard cases; start with heuristics (input length, keywords like "analyze" vs. "extract") — you don't need perfect prediction, being right 80% of the time still saves most of the money.
+- **Privacy and compliance.** These create hard boundaries that override cost: HIPAA data needs providers with Business Associate Agreements, EU user data may need EU data centers, and routing must enforce this from request metadata and data-classification tags.
 
 ## The three patterns that matter in production
 
 Most production routing is conditional logic, not ML [Source: https://blog.logrocket.com/llm-routing-right-model-for-requests/]:
 
-1. **Rule-based routing** — if-then rules on input length, user tier, endpoint, region. Five to ten simple rules handle about 80% of routing needs; centralize them in config or decision tables so they stay maintainable.
-2. **Confidence-based routing (escalation)** — send to a fast, cheap model first; if confidence is below a threshold, escalate to a bigger model. For classification/extraction, if 70% of requests are handled confidently by the cheap model, you cut expensive-model usage by 70%.
+1. **Rule-based routing** — if-then rules on input length, user tier, endpoint, region. Five to ten rules handle about 80% of routing needs; centralize them so they stay maintainable.
+2. **Confidence-based routing (escalation)** — send to a fast, cheap model first; if confidence is below a threshold, escalate to a bigger model. If 70% of requests are handled confidently by the cheap model, you cut expensive-model usage by 70%.
 3. **Fallback chains + circuit breakers** — requests cascade through providers until something succeeds. Circuit breakers matter: if a model is timing out on most requests, stop sending traffic to it and test it after a cooling-off period.
 
-Design the *end of the chain* explicitly: when every model in a tier fails, decide in advance whether you route up a tier, serve a cached response, fall to a self-hosted model, or return a clear error. Graceful degradation beats hard failure. [Source: https://www.mindstudio.ai/blog/set-up-ai-model-router-llm-stack-c2610]
+Design the *end of the chain* explicitly: when every model in a tier fails, decide in advance whether to route up a tier, serve a cached response, fall to a self-hosted model, or return a clear error. [Source: https://www.mindstudio.ai/blog/set-up-ai-model-router-llm-stack-c2610]
 
 One warning from the tooling itself: fallbacks handle **provider errors** — not low-quality answers that return successfully. A router can't detect a bad answer unless you add a quality check on top. [Source: https://www.braintrust.dev/articles/best-llm-routers-2026]
 
@@ -63,7 +63,7 @@ You have three honest options:
 - **Managed gateways** — OpenRouter gives one API across many providers, with a per-request `provider` object: `order`, `allow_fallbacks`, `sort` by price/throughput/latency, `max_price`, and `data_collection` privacy controls. Its default strategy load-balances across stable providers weighted by inverse-square of price. [Source: https://openrouter.ai/docs/features/provider-routing]
 - **Self-hosted gateways** — LiteLLM is the open-source standard: a `model_list` of deployments behind a shared `model_name` alias, load balancing across them, cooldowns, retries, weighted failover, and routing strategies. Requests never leave your infrastructure. [Source: https://docs.litellm.ai/docs/routing]
 
-Managed platforms are fastest to start; open-source, self-hostable routers give you data-residency control. The main differentiators: provider breadth, failover mechanics, and whether routing connects to evaluation and tracing. [Source: https://www.braintrust.dev/articles/best-llm-routers-2026]
+Managed platforms are fastest to start; self-hostable routers give you data-residency control. Differentiators: provider breadth, failover mechanics, and whether routing connects to evaluation and tracing. [Source: https://www.braintrust.dev/articles/best-llm-routers-2026]
 
 ## Worked example: the Fortress's two-tier decision
 
@@ -79,13 +79,13 @@ Routing for cost without a **quality bar**. It's the most common failure: aggres
 
 ## Try it
 
-1. **Write a tier map for your own agent.** Define `small` / `medium` / `large` tiers, assign each step of a workflow you already run (from Lesson 3's loop) to a tier, and justify each assignment on one of the four dimensions: cost, latency, complexity, compliance.
+1. **Write a tier map for your own agent.** Define `small` / `medium` / `large` tiers, assign each step of a workflow you already run (Lesson 3's loop) to a tier, and justify each on one of the four dimensions: cost, latency, complexity, compliance.
 2. **Configure a real fallback chain.** Pick a managed or self-hosted gateway — try LiteLLM's `model_list` with two deployments behind one alias, then kill the primary and watch the request fail over. [Source: https://docs.litellm.ai/docs/routing]
 3. **Add routing observability.** Log every routed request with model, matched rule, and request ID. After a week, check: what fraction hit the cheap tier, and did the answers hold up? [Source: https://blog.logrocket.com/llm-routing-right-model-for-requests/]
 
 ## What's next
 
-You can now choose and route models — the next building block is what makes them *agents*: the **augmented LLM** — tools, retrieval, and memory, plus the Model Context Protocol (MCP) that standardizes how agents discover and connect to tools. As Lesson 5 promised, that's the piece that turns a good model into a capable worker.
+You can now choose and route models — the next building block is what makes them *agents*: the **augmented LLM** — tools, retrieval, and memory, plus the Model Context Protocol (MCP) that standardizes how agents connect to tools. As Lesson 5 promised, it's the piece that turns a good model into a capable worker.
 
 ## Sources
 
