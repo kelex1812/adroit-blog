@@ -1,0 +1,104 @@
+---
+title: "Lesson 6: Integration Patterns — Request-Reply, Fire-and-Forget, and Batch (Inbound & Outbound)"
+slug: integration-patterns-request-reply-fire-forget-batch
+series: "salesforce-architect"
+lesson: 6
+excerpt: "The three archetype integration patterns every Salesforce architect must recognize — request-reply, fire-and-forget, and batch data synchronization — plus the selection matrix, the limits that shape each choice, and a worked example that combines all three."
+date: "August 09, 2026"
+author: "Adroit Consulting"
+readTime: "9 min read"
+tags: [Learn, Salesforce, Architect, Integration, Integration Patterns]
+---
+
+# Lesson 6: Integration Patterns — Request-Reply, Fire-and-Forget, and Batch (Inbound & Outbound)
+
+Lesson 4 gave you the mechanisms — REST, SOAP, Bulk API 2.0, Pub/Sub API. This lesson is about the *patterns*: the recurring integration archetypes that Salesforce's own consulting architects use as reference points during architectural reviews. [Source: https://architect.salesforce.com/docs/architect/fundamentals/guide/integration-patterns.html] The pattern is the design decision; the API is just the plumbing. Get the pattern wrong and no amount of clever Apex saves you.
+
+## The three archetypes
+
+The Salesforce Integration Patterns guide frames each pattern with context, problem, forces, and solution. The three patterns for outbound integrations (Salesforce → another system):
+
+| Pattern | What happens | Type | Timing |
+|---|---|---|---|
+| Remote Process Invocation — **Request and Reply** | Salesforce invokes a process on a remote system, waits for completion, then tracks state based on the response | Process / Data | Synchronous |
+| Remote Process Invocation — **Fire and Forget** | Salesforce invokes a process but doesn't wait for completion; the remote system acknowledges and hands control back | Process | Asynchronous |
+| **Batch Data Synchronization** | Data is created or refreshed in bulk, in either direction, on a schedule | Data | Asynchronous |
+
+[Source: https://architect.salesforce.com/docs/architect/fundamentals/guide/integration-patterns.html]
+
+The selection matrix is an exam favorite: **process + synchronous → request-reply; process + asynchronous → fire-and-forget; data + asynchronous → batch data synchronization.** When another system calls *into* Salesforce (inbound), the matrix points to Remote Call-In for process integrations and Batch Data Synchronization for data integrations — a future lesson covers Remote Call-In in depth. [Source: https://architect.salesforce.com/docs/architect/fundamentals/guide/integration-patterns.html]
+
+## Request-reply: "I need the answer now"
+
+In this pattern, Salesforce calls a remote system, blocks until the remote process completes, and uses the response to update state — usually in the same transaction. The canonical example from the guide: a user submits a payment to an external gateway, and the payment result is immediately returned and displayed. [Source: https://architect.salesforce.com/docs/architect/fundamentals/guide/integration-patterns.html]
+
+The guide's solution rankings tell you where to reach first:
+
+- **Best — External Services:** invokes a REST service declaratively from Flow, no code, when an OpenAPI 2.0/3.0 spec exists and request/response types are primitive or arrays. No OpenAPI spec? Fall back to **Apex callouts via Named Credentials** (the "best" for Lightning-initiated, user-facing calls). [Source: https://architect.salesforce.com/docs/architect/fundamentals/guide/integration-patterns.html]
+- **Good — HTTP Callout action in Flow:** synchronous outbound REST without Apex and without full External Services registration. [Source: https://architect.salesforce.com/docs/architect/fundamentals/guide/integration-patterns.html]
+- **Suboptimal — a trigger that makes a callout:** all calls made from within a trigger context must execute asynchronously, so this doesn't fit a synchronous wait-for-answer pattern at all; the guide flags it as better suited to fire-and-forget. [Source: https://architect.salesforce.com/docs/architect/fundamentals/guide/integration-patterns.html]
+
+The limits that shape this pattern (Apex, Summer '26 / API 67.0): **100 callouts per transaction**, **120 seconds maximum cumulative timeout** for all callouts in a transaction, a **10-second default** callout timeout, and **6 MB max request/response for synchronous Apex** (12 MB asynchronous). [Source: https://developer.salesforce.com/docs/atlas.en-us.apexcode.meta/apexcode/apex_gov_limits.htm] Long-running Apex transactions (over 5 seconds) are throttled org-wide: roughly one concurrent long-running transaction per 100 licenses, minimum 10, maximum 50. [Source: https://developer.salesforce.com/docs/atlas.en-us.apexcode.meta/apexcode/apex_gov_limits.htm] The architecture guide's practical advice: set the callout timeout to five seconds, use Lightning continuations for genuinely long operations, and treat this pattern as **small-volume, real-time only** — never for bulk payloads. [Source: https://architect.salesforce.com/docs/architect/fundamentals/guide/integration-patterns.html]
+
+Two design obligations: **idempotency** — the remote operation must be safe to repeat, typically by passing a unique message ID and upserting instead of blind-inserting — and **don't commit until success** — Salesforce changes aren't committed until a successful response arrives, and retries handle failure. [Source: https://architect.salesforce.com/docs/architect/fundamentals/guide/integration-patterns.html]
+
+## Fire-and-forget: "Deliver the message, don't wait"
+
+Here Salesforce hands off work and moves on. The remote system acknowledges receipt, processes asynchronously, and may optionally call back later. The recommended vehicles, per the guide: **Flow-driven platform events** (declarative, triggered by record changes), the **Pub/Sub API** for external consumers (gRPC/HTTP2, Avro-encoded messages), **Change Data Capture (CDC)** for record create/update/delete/undelete streams, and **Event Relay** to stream events natively to Amazon EventBridge. Legacy outbound messaging is explicitly suboptimal — "all new solutions should use Flow with Pub/Sub API." [Source: https://architect.salesforce.com/docs/architect/fundamentals/guide/integration-patterns.html]
+
+Three realities you must design around:
+
+1. **Platform events are not transactional.** They're not processed within database transactions and can't be rolled back. Use **Publish After Commit** when subscribers rely on data the publishing transaction commits; use **Publish Immediately** for logging-style events where publisher and subscriber are independent. The classic bug: an event published *before* the transaction commits, and the subscriber looks for a record that doesn't exist yet. [Source: https://architect.salesforce.com/docs/architect/fundamentals/guide/integration-patterns.html]
+2. **Delivery is not guaranteed at the extremes.** The event bus is a distributed system; Salesforce can't return a synchronous response for a publish, and in rare cases a message isn't persisted and isn't recoverable. Recovery is replay-based: high-volume event messages are stored for **72 hours**, and subscribers replay from a **replay ID** to catch up on missed events. [Source: https://architect.salesforce.com/docs/architect/fundamentals/guide/integration-patterns.html]
+3. **Limits are real.** Default event publishing is **250,000 messages per hour** (Performance/Unlimited and Enterprise/Pro with API add-on; 50,000 in Developer Edition), and publishing via REST/SOAP/Bulk consumes your daily API request allocations while publishing via Pub/Sub API, Apex, Flows, or processes does not. [Source: https://developer.salesforce.com/docs/atlas.en-us.platform_events.meta/platform_events/platform_event_limits.htm] Delivery of notifications to CometD/Pub-Sub clients is metered separately — the included default is 50,000 delivered per 24 hours for Performance/Unlimited and 25,000 for Enterprise (verify against the allocations page; add-ons raise it). [Source: https://developer.salesforce.com/docs/atlas.en-us.platform_events.meta/platform_events/platform_event_limits.htm]
+
+**State management** is where fire-and-forget gets interesting: because the process is asynchronous, storing the remote system's key can't happen in the original transaction — the remote system must **call back** to Salesforce with the created ID (via REST, SOAP, or another event). [Source: https://architect.salesforce.com/docs/architect/fundamentals/guide/integration-patterns.html]
+
+## Batch data synchronization: "Move the mountain at 2 AM"
+
+Batch is for large volumes where timeliness doesn't matter but throughput and safety do. The guide's problem statement is the exam definition: *how do you import data into Salesforce and export data out, considering that imports/exports can interfere with end users during business hours and involve large amounts of data?* [Source: https://architect.salesforce.com/docs/architect/fundamentals/guide/integration-patterns.html]
+
+- **Inbound (external system is master):** the ETL tool (Informatica, MuleSoft — anything that supports the **Bulk API**) runs change data capture against the source, transforms, and loads via Bulk API. Supporting **control tables** track the last run time and enable restart after failure. The guide's resilience rule: treat Salesforce as the spoke and the ETL infrastructure as the hub. [Source: https://architect.salesforce.com/docs/architect/fundamentals/guide/integration-patterns.html]
+- **Outbound (Salesforce is master):** pull changed data via **Bulk API 2.0 query jobs** (from Lesson 4: the >2,000-record threshold and up to 1 TB extracted per day) [Source: https://developer.salesforce.com/docs/atlas.en-us.api_asynch.meta/api_asynch/asynch_api_intro.htm], or stream near-real-time changes using **CDC** — declarative, no code, and clients subscribe via Pub/Sub API or Apex triggers. [Source: https://architect.salesforce.com/docs/architect/fundamentals/guide/integration-patterns.html] CDC's default allocation caps you at **5 entities selected** for change notifications (custom channels can raise this via add-on). [Source: https://developer.salesforce.com/docs/atlas.en-us.change_data_capture.meta/change_data_capture/cdc_allocations.htm]
+- **Watermarking:** the ETL tool stores the last successfully processed timestamp and consumes only changes since then — the standard incremental-sync technique. [Source: https://architect.salesforce.com/docs/architect/fundamentals/guide/integration-patterns.html]
+- **Contention rules:** run batches in a designated window, not during business hours; **group child records by parent key** when importing (un-grouped child imports cause the first record to load and subsequent ones to fail with lock contention); and remember the platform applies standard optimistic locking to API updates. [Source: https://architect.salesforce.com/docs/architect/fundamentals/guide/integration-patterns.html]
+
+**When batch is the wrong answer:** if you need transaction management across Salesforce entities — all-or-nothing updates spanning multiple objects — the guide recommends the Remote Call-In pattern with Apex instead of batch synchronization. [Source: https://architect.salesforce.com/docs/architect/fundamentals/guide/integration-patterns.html]
+
+## Worked example: all three patterns in one architecture
+
+A consumer-goods company runs Salesforce as the front office; the ERP is the order master. The architect's design:
+
+1. **Request-reply — credit check.** A rep clicks "Check credit" on the Account page. A Lightning-initiated Apex callout (Named Credentials, OAuth 2.0) calls the ERP's credit API and returns the limit in under 10 seconds. Small volume, synchronous, user waits; the ERP customer ID is stored on the Account as the integration key. This is the guide's "best" fit: user-facing, low latency, response processed in the same transaction. [Source: https://architect.salesforce.com/docs/architect/fundamentals/guide/integration-patterns.html]
+2. **Fire-and-forget — order handoff.** When an Opportunity closes Won, a record-triggered Flow publishes an `Order_Requested__e` platform event with **Publish After Commit**. The ESB subscribes via Pub/Sub API, creates the order in the ERP, then calls back to Salesforce (REST) to write the order number back to the Opportunity — the callback closes the loop without Salesforce ever waiting. This mirrors the guide's telecom example end-to-end. [Source: https://architect.salesforce.com/docs/architect/fundamentals/guide/integration-patterns.html]
+3. **Batch — nightly sync.** At 2 AM, the warehouse pulls 500,000 changed order records via a Bulk API 2.0 query job (watermarked by last successful timestamp), and the ERP pushes 80,000 invoices through the ETL tool into Bulk API 2.0 ingest. Neither touches business hours; child records are grouped by parent key; failures restart from the control table. [Source: https://architect.salesforce.com/docs/architect/fundamentals/guide/integration-patterns.html]
+
+Same org, three patterns, three different answers — because the questions (does the caller wait? how much data? when?) have different answers.
+
+## The pitfall to avoid
+
+**Choosing a pattern by inertia instead of by the selection matrix.** The recurring failures: a synchronous callout stuffed in a trigger (it can't be synchronous there — the platform forces async, so you've built fire-and-forget by accident); REST in a loop for a bulk problem (burning the API allocation from Lesson 4); assuming platform events behave like transactions (they can't be rolled back, and with Publish Immediately the subscriber can see an event before the data commits); and batch jobs running during business hours, causing lock contention that fails partial loads. Each one is a pattern mismatch, not a coding bug.
+
+## Try it
+
+Classify each integration and name the pattern + primary tool:
+
+1. A portal user submits a quote request; the quote must be created in Salesforce and the saved ID returned instantly. *(Answer: Request-reply — External Services or an Apex callout via Named Credentials, synchronous, small volume.)*
+2. Every Account update must notify the data warehouse within seconds, but the warehouse doesn't need a custom payload. *(Answer: Fire-and-forget — Change Data Capture, declarative, streamed via Pub/Sub API.)*
+3. 250,000 historical orders from a legacy CRM must be imported once, overnight, with restart-on-failure. *(Answer: Batch data synchronization — ETL tool with control tables and watermarking, loading via Bulk API.)*
+4. A rep closes a deal; the ERP must eventually create the order, then write the order number back to Salesforce. *(Answer: Fire-and-forget — platform event with Publish After Commit + callback to update the record.)*
+
+## What's next
+
+You now know the three outbound archetypes. Next lesson turns the direction around: the **Remote Call-In** pattern — how external systems invoke Salesforce securely and reliably — and the event-driven architecture options on the Salesforce event bus.
+
+## Sources
+
+- Integration Patterns — Salesforce Architects (Fundamentals: Data 360 and Integration): https://architect.salesforce.com/docs/architect/fundamentals/guide/integration-patterns.html
+- Execution Governors and Limits — Apex Developer Guide (Summer '26, API version 67.0): https://developer.salesforce.com/docs/atlas.en-us.apexcode.meta/apexcode/apex_gov_limits.htm
+- Platform Event Allocations — Platform Events Developer Guide (Summer '26, API version 67.0): https://developer.salesforce.com/docs/atlas.en-us.platform_events.meta/platform_events/platform_event_limits.htm
+- Change Data Capture Allocations — Change Data Capture Developer Guide: https://developer.salesforce.com/docs/atlas.en-us.change_data_capture.meta/change_data_capture/cdc_allocations.htm
+- Change Data Capture (intro) — Change Data Capture Developer Guide: https://developer.salesforce.com/docs/atlas.en-us.change_data_capture.meta/change_data_capture/cdc_intro.htm
+- Introduction to Bulk API 2.0 and Bulk API — Bulk API 2.0 and Bulk API Developer Guide: https://developer.salesforce.com/docs/atlas.en-us.api_asynch.meta/api_asynch/asynch_api_intro.htm
+
+*Note: Allocations and governor limits change with releases — verify against the linked pages before sizing a client's org. Figures above are per Salesforce docs as of August 2026 (Summer '26, API version 67.0).*
