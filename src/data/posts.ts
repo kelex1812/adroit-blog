@@ -3,8 +3,8 @@ import { BlogPost } from "./types";
 export const posts: BlogPost[] = [
   {
     "slug": "agentforce-production-implementation-patterns",
-    "title": "Agentforce in Production: Implementation Patterns for Agents That Actually Ship",
-    "excerpt": "Most Agentforce pilots stall between demo and deployment. This is the production playbook: pick the right agent pattern, build the shared anatomy, ground it in Data 360, set guardrails, and evaluate with the Testing Center.",
+    "title": "Agentforce in Production: Implementation Patterns That Ship",
+    "excerpt": "Pilots stall between demo and deployment. Playbook: pick the pattern, build the shared anatomy, ground in Data 360, guardrail, evaluate in Testing Center.",
     "category": "Salesforce",
     "categoryColor": "sf",
     "categoryGradient": "from-sky to-sky-dark",
