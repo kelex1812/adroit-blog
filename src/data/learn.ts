@@ -14,6 +14,22 @@ export const learnSeries: LearningSeries[] = [
     "gradient": "from-amber to-yellow-600",
     "lessons": [
       {
+        "slug": "choosing-models-providers-routing-fallbacks",
+        "title": "Lesson 6: Choosing Models & Providers — Capability Tiers, Routing, and Fallbacks",
+        "series": "agentic-ai",
+        "lesson": 6,
+        "excerpt": "The biggest agent-ops mistake is picking one 'best' model and pointing everything at it. This lesson builds the three-tier capability model, the three jobs of a router, and the fallback chains that keep agents alive when providers fail.",
+        "date": "August 09, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "8 min read",
+        "tags": [
+          "Learn",
+          "AI",
+          "Agentic",
+          "Models"
+        ]
+      },
+      {
         "slug": "tokens-context-cost-engineering-agents",
         "title": "Lesson 5: Tokens, Context Windows, and Cost Engineering for Agent Workloads",
         "series": "agentic-ai",
@@ -94,7 +110,7 @@ export const learnSeries: LearningSeries[] = [
         ]
       }
     ],
-    "totalLessons": 5
+    "totalLessons": 6
   },
   {
     "slug": "omni-studio-cert",
@@ -103,6 +119,20 @@ export const learnSeries: LearningSeries[] = [
     "group": "Salesforce Certifications",
     "gradient": "from-red to-rose-600",
     "lessons": [
+      {
+        "slug": "day-07-fc-1-flexcard-data-sources-testing-json",
+        "title": "OmniStudio FC-1: FlexCard Data Sources & Testing JSON",
+        "series": "omni-studio-cert",
+        "lesson": 7,
+        "excerpt": "Configure data sources such as SOQL, Data Mapper, Integration Procedure, Custom, etc. and test resulting JSON structure.",
+        "date": "August 9, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "8 min read",
+        "tags": [
+          "OmniStudio",
+          "FlexCards"
+        ]
+      },
       {
         "slug": "day-06-f-6-testing-versioning-cloning",
         "title": "OmniStudio F-6: Testing, Versioning & Cloning Components",
@@ -188,7 +218,7 @@ export const learnSeries: LearningSeries[] = [
         ]
       }
     ],
-    "totalLessons": 6
+    "totalLessons": 7
   },
   {
     "slug": "salesforce-architect",
@@ -197,6 +227,23 @@ export const learnSeries: LearningSeries[] = [
     "group": "Salesforce Certifications",
     "gradient": "from-sky to-blue-600",
     "lessons": [
+      {
+        "slug": "integration-patterns-request-reply-fire-forget-batch",
+        "title": "Lesson 6: Integration Patterns — Request-Reply, Fire-and-Forget, and Batch (Inbound & Outbound)",
+        "series": "salesforce-architect",
+        "lesson": 6,
+        "excerpt": "The three archetype integration patterns every Salesforce architect must recognize — request-reply, fire-and-forget, and batch data synchronization — plus the selection matrix, the limits that shape each choice, and a worked example that combines all three.",
+        "date": "August 09, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "9 min read",
+        "tags": [
+          "Learn",
+          "Salesforce",
+          "Architect",
+          "Integration",
+          "Integration Patterns"
+        ]
+      },
       {
         "slug": "systems-architecture-what-it-means-ai-patterns",
         "title": "Lesson 5: General Systems Architecture — What 'Architecture' Means and Why AI Systems Reuse the Same Patterns",
@@ -279,12 +326,59 @@ export const learnSeries: LearningSeries[] = [
         ]
       }
     ],
-    "totalLessons": 5
+    "totalLessons": 6
   }
 ];
 
 /** Flat list of every lesson, NEWEST FIRST (for sitemap, nav, flat lookups). */
 export const learnLessons: LearnLesson[] = [
+  {
+    "slug": "choosing-models-providers-routing-fallbacks",
+    "title": "Lesson 6: Choosing Models & Providers — Capability Tiers, Routing, and Fallbacks",
+    "series": "agentic-ai",
+    "lesson": 6,
+    "excerpt": "The biggest agent-ops mistake is picking one 'best' model and pointing everything at it. This lesson builds the three-tier capability model, the three jobs of a router, and the fallback chains that keep agents alive when providers fail.",
+    "date": "August 09, 2026",
+    "author": "Adroit Consulting",
+    "readTime": "8 min read",
+    "tags": [
+      "Learn",
+      "AI",
+      "Agentic",
+      "Models"
+    ]
+  },
+  {
+    "slug": "day-07-fc-1-flexcard-data-sources-testing-json",
+    "title": "OmniStudio FC-1: FlexCard Data Sources & Testing JSON",
+    "series": "omni-studio-cert",
+    "lesson": 7,
+    "excerpt": "Configure data sources such as SOQL, Data Mapper, Integration Procedure, Custom, etc. and test resulting JSON structure.",
+    "date": "August 9, 2026",
+    "author": "Adroit Consulting",
+    "readTime": "8 min read",
+    "tags": [
+      "OmniStudio",
+      "FlexCards"
+    ]
+  },
+  {
+    "slug": "integration-patterns-request-reply-fire-forget-batch",
+    "title": "Lesson 6: Integration Patterns — Request-Reply, Fire-and-Forget, and Batch (Inbound & Outbound)",
+    "series": "salesforce-architect",
+    "lesson": 6,
+    "excerpt": "The three archetype integration patterns every Salesforce architect must recognize — request-reply, fire-and-forget, and batch data synchronization — plus the selection matrix, the limits that shape each choice, and a worked example that combines all three.",
+    "date": "August 09, 2026",
+    "author": "Adroit Consulting",
+    "readTime": "9 min read",
+    "tags": [
+      "Learn",
+      "Salesforce",
+      "Architect",
+      "Integration",
+      "Integration Patterns"
+    ]
+  },
   {
     "slug": "tokens-context-cost-engineering-agents",
     "title": "Lesson 5: Tokens, Context Windows, and Cost Engineering for Agent Workloads",
