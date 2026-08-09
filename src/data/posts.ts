@@ -2,6 +2,27 @@ import { BlogPost } from "./types";
 
 export const posts: BlogPost[] = [
   {
+    "slug": "agentforce-production-implementation-patterns",
+    "title": "Agentforce in Production: Implementation Patterns for Agents That Actually Ship",
+    "excerpt": "Most Agentforce pilots stall between demo and deployment. This is the production playbook: pick the right agent pattern, build the shared anatomy, ground it in Data 360, set guardrails, and evaluate with the Testing Center.",
+    "category": "Salesforce",
+    "categoryColor": "sf",
+    "categoryGradient": "from-sky to-sky-dark",
+    "date": "August 09, 2026",
+    "author": "Adroit Consulting",
+    "authorInitials": "AC",
+    "readTime": "10",
+    "featured": false,
+    "tags": [
+      "Salesforce",
+      "Agentforce",
+      "Data 360",
+      "Testing Center",
+      "AI Agents"
+    ],
+    "bannerImage": "/banners/agentforce-production-implementation-patterns.png"
+  },
+  {
     "slug": "nextjs-16-3-instant-navigations",
     "title": "Next.js 16.3: Instant Navigations Arrive",
     "excerpt": "Next.js 16.3's Stream/Cache/Block model makes server-rendered apps as responsive as SPAs. Here's how to adopt it incrementally.",
