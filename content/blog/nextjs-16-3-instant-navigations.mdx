@@ -1,7 +1,7 @@
 ---
-title: "Instant Navigations in Next.js 16.3: The End of 'Feels Like a Website'"
+title: "Next.js 16.3: Instant Navigations Arrive"
 slug: nextjs-16-3-instant-navigations
-excerpt: "Server Components made apps ship less JavaScript, but they made navigations feel slow. Next.js 16.3 fixes that with a Stream/Cache/Block model that makes server-rendered apps as responsive as SPAs, no tradeoff required."
+excerpt: "Next.js 16.3's Stream/Cache/Block model makes server-rendered apps as responsive as SPAs. Here's how to adopt it incrementally."
 category: "React & Web Dev"
 categoryColor: react
 categoryGradient: "from-emerald to-emerald-dark"
@@ -46,7 +46,7 @@ Three answers are valid.
 
 ### Stream: Wrap slow data in Suspense
 
-The user gets an instant loading shell (reused per route, not per link), and content streams in as the server finishes. This is the SPA feel: click, see a skeleton, watch it fill.
+The user gets an instant loading shell (reused per route, not per link), and content streams in as the server finishes. This is the SPA feel: click, see a skeleton, watch it fill. Deciding which parts of your app belong on the client at all is the harder architectural question, and [Building Scalable React Apps](/blog/scalable-react-2026) covers exactly where that boundary should sit.
 
 Any component that reads uncached data (`cookies()`, `headers()`, a database query without `'use cache'`) belongs inside a Suspense boundary. The Instant Insights panel (more on this below) tells you exactly which component is blocking your route.
 
@@ -178,7 +178,7 @@ The caveat: the Rust compiler only helps if you are off Babel entirely. If you s
 
 [Source: nextjs.org](https://nextjs.org/docs/app/api-reference/config/next-config-js/turbopackRustReactCompiler)
 
-This does not need to ship today (it is experimental), but it signals the direction: React compilation is moving from JavaScript to native code, the same path TypeScript took with its Go-native compiler in v7.0.
+This does not need to ship today (it is experimental), but it signals the direction: React compilation is moving from JavaScript to native code, the same path [TypeScript took with its Go-native compiler in v7.0](/blog/typescript-7-go-native-compiler).
 
 ## Migration: What to Do Today
 
@@ -213,7 +213,7 @@ Next.js provides a codemod to do this across your entire app in one pass:
 npx @next/codemod@canary cache-components-instant-false ./app
 ```
 
-This adds `instant = false` to every page, layout, and default export that does not already declare it. The app keeps building and serving, and you convert routes one at a time.
+This adds `instant = false` to every page, layout, and default export that does not already declare it (pass `./src/app` instead if your project uses a `src/` directory). The app keeps building and serving, and you convert routes one at a time.
 
 [Source: nextjs.org](https://nextjs.org/docs/app/guides/migrating-to-cache-components)
 

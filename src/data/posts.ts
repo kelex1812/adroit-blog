@@ -3,8 +3,8 @@ import { BlogPost } from "./types";
 export const posts: BlogPost[] = [
   {
     "slug": "nextjs-16-3-instant-navigations",
-    "title": "Instant Navigations in Next.js 16.3: The End of 'Feels Like a Website'",
-    "excerpt": "Server Components made apps ship less JavaScript, but they made navigations feel slow. Next.js 16.3 fixes that with a Stream/Cache/Block model that makes server-rendered apps as responsive as SPAs, no tradeoff required.",
+    "title": "Next.js 16.3: Instant Navigations Arrive",
+    "excerpt": "Next.js 16.3's Stream/Cache/Block model makes server-rendered apps as responsive as SPAs. Here's how to adopt it incrementally.",
     "category": "React & Web Dev",
     "categoryColor": "react",
     "categoryGradient": "from-emerald to-emerald-dark",
