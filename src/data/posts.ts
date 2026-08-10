@@ -2,6 +2,28 @@ import { BlogPost } from "./types";
 
 export const posts: BlogPost[] = [
   {
+    "slug": "agent-framework-decision-2026",
+    "title": "The Agent Framework Decision in 2026: Orchestration Moves Performance More Than the Model Does",
+    "excerpt": "The same model scores 64.85% on GAIA in one scaffold and 57.58% in another. Framework choice can swing agent performance by up to 30 points. Here is how to pick one in 2026, and how to evaluate it before you commit.",
+    "category": "AI & Consulting",
+    "categoryColor": "ai",
+    "categoryGradient": "from-amber to-amber-dark",
+    "date": "August 10, 2026",
+    "author": "Adroit Consulting",
+    "authorInitials": "AC",
+    "readTime": "9",
+    "featured": false,
+    "tags": [
+      "AI Agents",
+      "Agent Frameworks",
+      "LangGraph",
+      "CrewAI",
+      "Microsoft Agent Framework",
+      "Orchestration"
+    ],
+    "bannerImage": "/banners/agent-framework-decision-2026.png"
+  },
+  {
     "slug": "agentforce-production-implementation-patterns",
     "title": "Agentforce in Production: Implementation Patterns That Ship",
     "excerpt": "Pilots stall between demo and deployment. Playbook: pick the pattern, build the shared anatomy, ground in Data 360, guardrail, evaluate in Testing Center.",
