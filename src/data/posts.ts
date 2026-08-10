@@ -24,6 +24,28 @@ export const posts: BlogPost[] = [
     "bannerImage": "/banners/agent-framework-decision-2026.png"
   },
   {
+    "slug": "control-planes-infrastructure-delivery-2026",
+    "title": "Control Planes Are Taking Over Infrastructure Delivery: Crossplane 2.0, kro, and the Platform Stack in 2026",
+    "excerpt": "Pipelines execute changes; control planes reconcile state. Crossplane graduated from the CNCF in November 2025, and its 2.x line now manages applications alongside infrastructure, with kro and Kratix rounding out composition and orchestration. Here's the model shift, the stack, and the migration path.",
+    "category": "AI & Consulting",
+    "categoryColor": "ai",
+    "categoryGradient": "from-amber to-amber-dark",
+    "date": "August 10, 2026",
+    "author": "Adroit Consulting",
+    "authorInitials": "AC",
+    "readTime": "9 min read",
+    "featured": false,
+    "tags": [
+      "DevOps",
+      "Platform Engineering",
+      "Crossplane",
+      "Kubernetes",
+      "Control Plane",
+      "Infrastructure as Code"
+    ],
+    "bannerImage": "/banners/control-planes-infrastructure-delivery-2026.png"
+  },
+  {
     "slug": "agentforce-production-implementation-patterns",
     "title": "Agentforce in Production: Implementation Patterns That Ship",
     "excerpt": "Pilots stall between demo and deployment. Playbook: pick the pattern, build the shared anatomy, ground in Data 360, guardrail, evaluate in Testing Center.",
