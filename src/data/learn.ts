@@ -14,6 +14,22 @@ export const learnSeries: LearningSeries[] = [
     "gradient": "from-amber to-yellow-600",
     "lessons": [
       {
+        "slug": "structured-output-json-mode-function-calling-tool-schemas",
+        "title": "Lesson 7: Structured Output — JSON Mode, Function Calling, and Tool Schemas Done Right",
+        "series": "agentic-ai",
+        "lesson": 7,
+        "excerpt": "An agent is only as reliable as its data contracts. This lesson builds the structured-output ladder — JSON mode, Structured Outputs, function calling — and the tool-schema practices that keep tool calls valid, parseable, and safe in production.",
+        "date": "August 10, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "8 min read",
+        "tags": [
+          "Learn",
+          "AI",
+          "Agentic",
+          "Tools"
+        ]
+      },
+      {
         "slug": "choosing-models-providers-routing-fallbacks",
         "title": "Lesson 6: Choosing Models & Providers — Capability Tiers, Routing, and Fallbacks",
         "series": "agentic-ai",
@@ -110,7 +126,7 @@ export const learnSeries: LearningSeries[] = [
         ]
       }
     ],
-    "totalLessons": 6
+    "totalLessons": 7
   },
   {
     "slug": "omni-studio-cert",
@@ -119,6 +135,20 @@ export const learnSeries: LearningSeries[] = [
     "group": "Salesforce Certifications",
     "gradient": "from-red to-rose-600",
     "lessons": [
+      {
+        "slug": "day-08-fc-2-single-multi-level-cards-layouts-repeaters",
+        "title": "OmniStudio FC-2: Single/Multi-Level Cards, Layouts & Repeaters",
+        "series": "omni-studio-cert",
+        "lesson": 8,
+        "excerpt": "Construct single and multi-level FlexCards, organizing data using layouts, and repeaters.",
+        "date": "August 10, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "6 min read",
+        "tags": [
+          "OmniStudio",
+          "FlexCards"
+        ]
+      },
       {
         "slug": "day-07-fc-1-flexcard-data-sources-testing-json",
         "title": "OmniStudio FC-1: FlexCard Data Sources & Testing JSON",
@@ -218,7 +248,7 @@ export const learnSeries: LearningSeries[] = [
         ]
       }
     ],
-    "totalLessons": 7
+    "totalLessons": 8
   },
   {
     "slug": "salesforce-architect",
@@ -227,6 +257,24 @@ export const learnSeries: LearningSeries[] = [
     "group": "Salesforce Certifications",
     "gradient": "from-sky to-blue-600",
     "lessons": [
+      {
+        "slug": "event-driven-integration-platform-events-change-data-capture",
+        "title": "Lesson 7: Event-Driven Integration — Platform Events + Change Data Capture",
+        "series": "salesforce-architect",
+        "lesson": 7,
+        "excerpt": "The Salesforce event bus, Platform Events vs. Change Data Capture — when to publish business intent vs. record state, how to consume on- and off-platform, and the hard truth about ordering, replay, and allocations.",
+        "date": "August 10, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "8 min read",
+        "tags": [
+          "Learn",
+          "Salesforce",
+          "Architect",
+          "Integration",
+          "Platform Events",
+          "Change Data Capture"
+        ]
+      },
       {
         "slug": "integration-patterns-request-reply-fire-forget-batch",
         "title": "Lesson 6: Integration Patterns — Request-Reply, Fire-and-Forget, and Batch (Inbound & Outbound)",
@@ -326,12 +374,60 @@ export const learnSeries: LearningSeries[] = [
         ]
       }
     ],
-    "totalLessons": 6
+    "totalLessons": 7
   }
 ];
 
 /** Flat list of every lesson, NEWEST FIRST (for sitemap, nav, flat lookups). */
 export const learnLessons: LearnLesson[] = [
+  {
+    "slug": "structured-output-json-mode-function-calling-tool-schemas",
+    "title": "Lesson 7: Structured Output — JSON Mode, Function Calling, and Tool Schemas Done Right",
+    "series": "agentic-ai",
+    "lesson": 7,
+    "excerpt": "An agent is only as reliable as its data contracts. This lesson builds the structured-output ladder — JSON mode, Structured Outputs, function calling — and the tool-schema practices that keep tool calls valid, parseable, and safe in production.",
+    "date": "August 10, 2026",
+    "author": "Adroit Consulting",
+    "readTime": "8 min read",
+    "tags": [
+      "Learn",
+      "AI",
+      "Agentic",
+      "Tools"
+    ]
+  },
+  {
+    "slug": "day-08-fc-2-single-multi-level-cards-layouts-repeaters",
+    "title": "OmniStudio FC-2: Single/Multi-Level Cards, Layouts & Repeaters",
+    "series": "omni-studio-cert",
+    "lesson": 8,
+    "excerpt": "Construct single and multi-level FlexCards, organizing data using layouts, and repeaters.",
+    "date": "August 10, 2026",
+    "author": "Adroit Consulting",
+    "readTime": "6 min read",
+    "tags": [
+      "OmniStudio",
+      "FlexCards"
+    ]
+  },
+  {
+    "slug": "event-driven-integration-platform-events-change-data-capture",
+    "title": "Lesson 7: Event-Driven Integration — Platform Events + Change Data Capture",
+    "series": "salesforce-architect",
+    "lesson": 7,
+    "excerpt": "The Salesforce event bus, Platform Events vs. Change Data Capture — when to publish business intent vs. record state, how to consume on- and off-platform, and the hard truth about ordering, replay, and allocations.",
+    "date": "August 10, 2026",
+    "author": "Adroit Consulting",
+    "readTime": "8 min read",
+    "tags": [
+      "Learn",
+      "Salesforce",
+      "Architect",
+      "Integration",
+      "Platform Events",
+      "Change Data Capture"
+    ]
+  },
   {
     "slug": "choosing-models-providers-routing-fallbacks",
     "title": "Lesson 6: Choosing Models & Providers — Capability Tiers, Routing, and Fallbacks",
