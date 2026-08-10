@@ -25,8 +25,8 @@ export const posts: BlogPost[] = [
   },
   {
     "slug": "control-planes-infrastructure-delivery-2026",
-    "title": "Control Planes Are Taking Over Infrastructure Delivery: Crossplane 2.0, kro, and the Platform Stack in 2026",
-    "excerpt": "Pipelines execute changes; control planes reconcile state. Crossplane graduated from the CNCF in November 2025, and its 2.x line now manages applications alongside infrastructure, with kro and Kratix rounding out composition and orchestration. Here's the model shift, the stack, and the migration path.",
+    "title": "Control Planes Are Taking Over Infrastructure Delivery",
+    "excerpt": "Pipelines execute changes; control planes reconcile state. Crossplane graduated CNCF in November 2025; its 2.x line manages apps and infrastructure alike.",
     "category": "AI & Consulting",
     "categoryColor": "ai",
     "categoryGradient": "from-amber to-amber-dark",
