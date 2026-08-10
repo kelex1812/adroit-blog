@@ -1,7 +1,7 @@
 ---
-title: "The Agent Framework Decision in 2026: Orchestration Moves Performance More Than the Model Does"
+title: "Agent Frameworks 2026: Orchestration Beats the Model"
 slug: agent-framework-decision-2026
-excerpt: "The same model scores 64.85% on GAIA in one scaffold and 57.58% in another. Framework choice can swing agent performance by up to 30 points. Here is how to pick one in 2026, and how to evaluate it before you commit."
+excerpt: "The same model scores 64.85% on GAIA in one scaffold and 57.58% in another. Framework choice swings performance by 30 points. How to pick in 2026."
 category: "AI & Consulting"
 categoryColor: ai
 categoryGradient: "from-amber to-amber-dark"
@@ -13,7 +13,7 @@ tags: [AI Agents, Agent Frameworks, LangGraph, CrewAI, "Microsoft Agent Framewor
 bannerImage: "/banners/agent-framework-decision-2026.png"
 ---
 
-# The Agent Framework Decision in 2026: Orchestration Moves Performance More Than the Model Does
+# Agent Frameworks 2026: Orchestration Beats the Model
 
 Here is the most underrated number in agentic AI this year: the same model, run through two different orchestration scaffolds, scores 64.85% on one GAIA run and 57.58% on another. Princeton's Holistic Agent Leaderboard (HAL) shows Claude Opus 4 at 64.85% inside HAL's Generalist Agent and 57.58% inside Hugging Face's Open Deep Research harness, a 7.3-point gap caused entirely by the framework layer [Source: hal.cs.princeton.edu](https://hal.cs.princeton.edu/gaia). Push that comparison to its extreme (bare model versus well-engineered scaffold) and the gap reaches roughly 30 absolute points, larger than the improvement between most frontier model releases [Source: uvik.net](https://uvik.net/blog/agentic-ai-frameworks/).
 
@@ -64,11 +64,11 @@ Three meta-principles sharpen any choice. First, optimize for switching cost: st
 
 The CLEAR finding (a 37% average gap between lab scores and production) is why leaderboard rankings do not survive contact with real workloads [Source: arxiv.org](https://arxiv.org/abs/2511.14136). The fix is cheap: build the same task in your top two candidates and trace both.
 
-1. **Pick one representative task from your actual workload**, not a toy.
-2. **Build it twice.** Most frameworks support OpenTelemetry, so send traces from both prototypes to the same observability backend and compare side by side [Source: langfuse.com](https://langfuse.com/blog/2025-03-19-ai-agent-comparison).
-3. **Measure cost per successful task, not per run.** CLEAR's cost-normalized accuracy exists because failed attempts still burn tokens [Source: arxiv.org](https://arxiv.org/abs/2511.14136). A cheap model with high retry rates can cost more than a reliable, pricier one.
-4. **Run each candidate 8 to 10 times.** Reliability (pass@k behavior) is the dimension that collapses in production and the one leaderboards hide. A 60% single-run agent that drops to 25% on the eighth run is not production-ready at any price [Source: arxiv.org](https://arxiv.org/abs/2511.14136).
-5. **Check the protocol story.** If MCP support is native rather than an adapter, you inherit new protocol capabilities as they ship and keep the option to switch frameworks later [Source: uvik.net](https://uvik.net/blog/agentic-ai-frameworks/).
+1. Pick one representative task from your actual workload, not a toy.
+2. Build it twice. Most frameworks support OpenTelemetry, so send traces from both prototypes to the same observability backend and compare side by side [Source: langfuse.com](https://langfuse.com/blog/2025-03-19-ai-agent-comparison).
+3. Measure cost per successful task, not per run. CLEAR's cost-normalized accuracy exists because failed attempts still burn tokens [Source: arxiv.org](https://arxiv.org/abs/2511.14136). A cheap model with high retry rates can cost more than a reliable, pricier one.
+4. Run each candidate 8 to 10 times. Reliability (pass@k behavior) is the dimension that collapses in production and the one leaderboards hide. A 60% single-run agent that drops to 25% on the eighth run is not production-ready at any price [Source: arxiv.org](https://arxiv.org/abs/2511.14136).
+5. Check the protocol story. If MCP support is native rather than an adapter, you inherit new protocol capabilities as they ship and keep the option to switch frameworks later [Source: uvik.net](https://uvik.net/blog/agentic-ai-frameworks/).
 
 The framework that wins your benchmark on your task distribution is the one you should deploy. The one that wins a public leaderboard is a marketing input, not a decision.
 
@@ -80,7 +80,7 @@ Two lessons transfer directly to framework selection. First, cost discipline has
 
 The honest caveat: MIT research analyzing 300-plus enterprise AI implementations reports that only about 5% of agentic projects successfully move from pilot to production, and the failure mode is almost never the framework itself, it is the absence of observability, human-in-the-loop primitives, and cost discipline built in from the first pull request [Source: uvik.net](https://uvik.net/blog/agentic-ai-frameworks/). A framework cannot fix a missing evaluation layer; it can only give you the primitives to build one.
 
-## The bottom line
+## The framework is the lever, not the model
 
 The 2026 framework decision has a clear shape. The landscape consolidated: AutoGen went to maintenance, Microsoft merged its two SDKs into Agent Framework 1.0, LangGraph became the graph-runtime default, and the vendor SDKs matured [Source: devblogs.microsoft.com](https://devblogs.microsoft.com/agent-framework/microsoft-agent-framework-version-1-0/). The protocols went open, turning framework lock-in into a switching cost [Source: uvik.net](https://uvik.net/blog/agentic-ai-frameworks/). And the data says the framework layer moves agent performance by up to 30 points on identical models, more than most model upgrades [Source: hal.cs.princeton.edu](https://hal.cs.princeton.edu/gaia).
 

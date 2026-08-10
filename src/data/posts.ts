@@ -3,8 +3,8 @@ import { BlogPost } from "./types";
 export const posts: BlogPost[] = [
   {
     "slug": "agent-framework-decision-2026",
-    "title": "The Agent Framework Decision in 2026: Orchestration Moves Performance More Than the Model Does",
-    "excerpt": "The same model scores 64.85% on GAIA in one scaffold and 57.58% in another. Framework choice can swing agent performance by up to 30 points. Here is how to pick one in 2026, and how to evaluate it before you commit.",
+    "title": "Agent Frameworks 2026: Orchestration Beats the Model",
+    "excerpt": "The same model scores 64.85% on GAIA in one scaffold and 57.58% in another. Framework choice swings performance by 30 points. How to pick in 2026.",
     "category": "AI & Consulting",
     "categoryColor": "ai",
     "categoryGradient": "from-amber to-amber-dark",
