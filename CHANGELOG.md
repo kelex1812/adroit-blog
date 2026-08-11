@@ -4,6 +4,74 @@ All notable changes to the Adroit Consulting Blog project will be documented in 
 
 ## [Unreleased]
 
+### Implement: certificate of completion (t_959ca6bf)
+
+Adds the printable certificate of completion at `/learn/[series]/certificate`,
+the final step of the course-progression pattern (all lessons completed + cert
+prep exam ≥72%). No new table — eligibility is derived on demand from existing
+rows (ADR-106); no image generation — a clean designed SVG-seal certificate.
+
+**What**
+
+- **Certificate page** (`src/app/learn/[series]/certificate/page.tsx`, server component,
+  force-dynamic) — session-gated per ADR-104: guests get the `GuestCTA` placeholder with zero
+  certificate/question text in the HTML; authed users get eligibility derived from
+  `lesson_completion` + `quiz_run` rows.
+- **Eligibility rule (course-progression pattern)** — all 46 planned lessons completed AND exam
+  best ≥ 72 (72 flat counts). The lesson count is derived from the generator's planned lesson set
+  (`content/learn/<series>/questions/<slug>.json` — 46 files), NOT the published-MDX count
+  (`s.totalLessons` is 8 today). Knowledge-check pass counting (≥80) is included for the
+  not-eligible checklist display.
+- **`src/lib/certificate.ts`** — pure, unit-tested derivation helpers: `buildCertificateEligibility`
+  (46-lesson + exam-72 rule, MAX best-score per quiz, checks-passed count capped to the check
+  total), `certificateCompletionDate` (earliest passing exam run = the completion moment),
+  `certificateRecipientName` (full_name/name/display_name metadata → email → "Learner"),
+  `certificateCourseName` (copy-deck §7 exact string for omni-studio-cert),
+  `formatCertDate`, `getSeriesLessonSlugs` (planned slug set, strict regex guard).
+- **Printable `Certificate` component** (`src/components/Progress/Certificate.tsx`, client) —
+  matches `design/mockup-certificate.html` pixel-for-pixel: navy double frame on cream paper,
+  recipient name, course name, completion date, exam score, inline SVG Adroit seal (no image
+  file), signature block + issuer, copy-deck §7 strings verbatim. `Print certificate` button
+  calls `window.print()`.
+- **Print CSS** — `@page { margin: 0 }`, `print-color-adjust: exact` (+ `-webkit-`), chrome
+  (header/footer/page-head) hidden via `print:hidden`/`.no-print`. Verified with a real
+  `Page.printToPDF` capture: 0 nav/footer leaks in the PDF.
+- **Not-eligible state** — "Certificate not yet available" checklist per copy deck §7:
+  `All {n} lessons completed` (`x/n`), `Cert prep exam passed (≥ 72%)` (`{best}% · passed/not
+  yet/Not taken`), `Exam unlocked — all 9 knowledge checks ≥ 80%` (`x/9 checks`), with
+  ok/x icons.
+
+**Why**
+
+- Chris's "full completion" rule needs a printable artifact that revalidates at print time
+  (ADR-106); deriving from existing rows keeps the schema unchanged. Server-side validation
+  means guests never see certificate content and users can't fabricate one.
+
+**Verification**
+
+- `npm run build` clean (certificate route registered as ƒ Dynamic), `npm run lint` clean,
+  `tsc --noEmit` 0 errors, `vitest` 66/66 pass (18 new lib tests + 5 component tests).
+- Live (running app, dev server on :3000):
+  - Guest: `/learn/omni-studio-cert/certificate` 200, CTA placeholder, 0 certificate/question
+    text in HTML (grep-verified).
+  - Authed not-eligible (0 progress): checklist renders — `Complete all 46 lessons and pass the
+    exam with 72%+`, `0/46`, `Not taken`, `0/9 checks`; no certificate document.
+  - Authed eligible (46 lesson_completion rows + exam quiz_run 78% seeded, then cleaned up):
+    certificate renders recipient (email fallback), `OmniStudio Developer Certification Prep`,
+    `Aug 10, 2026`, `78%`, navy/red frame + cream paper + SVG seal (computed styles checked);
+    print → `Page.printToPDF` output has the certificate and zero nav/footer text.
+- **Infra unblock (done this task):** live Supabase (`zrggxfdyptiahskogwnn`) was missing
+  migrations 002 (quiz_attempt unique index), 003 (RLS hardening), and 004 (`quiz_run` table) —
+  they had never been pushed since 2026-08-06. `supabase db push` applied all three, which the
+  entire quiz-tier build (exam grading, run tracking, tiers rollup, exam unlock, certificate
+  eligibility) depends on. **Known issue:** the seeded exam `quiz_run` row (score 78, quiz_name
+  `omni-studio-cert:exam`, user kelex1812@gmail.com) could NOT be deleted afterwards —
+  `quiz_run` RLS intentionally has SELECT/INSERT policies only (no DELETE); remove via the
+  Supabase dashboard or accept as test data.
+- Config: `browser.allow_private_urls` enabled in the steel profile so kanban workers can
+  verify localhost apps with the browser tool (reversible via `hermes config set
+  browser.allow_private_urls false`).
+
 ### Content gen: emit quiz JSON tiers from curriculum (t_22855141)
 
 Emits the three-tier quiz content for the OmniStudio cert course from the canonical curriculum
