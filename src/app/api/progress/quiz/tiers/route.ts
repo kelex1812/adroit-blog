@@ -24,6 +24,7 @@ import {
   scoreQuizAttemptsByQuiz,
 } from "@/lib/quiz";
 import { getSeriesBySlug, getLessonsForSeries } from "@/lib/learn";
+import { getSeriesLessonSlugs } from "@/lib/certificate";
 import { validateSlug } from "@/lib/api-security";
 import type { CheckProgress, TierProgress } from "@/shared/contracts";
 
@@ -39,12 +40,26 @@ function emptyChecks(series: string): CheckProgress[] {
   }));
 }
 
+/**
+ * Lessons denominator for the rollup (QA t_1d04b259 F2 — US-006 AC1).
+ * Tier series count against the course's PLANNED lesson set — the
+ * generator's per-lesson question files (getSeriesLessonSlugs, e.g. 46 for
+ * omni-studio-cert) — NOT the published-lesson total (`s.totalLessons` is
+ * only 9 today; build-learn.js tracks published MDX). Non-tier series
+ * (no planned question files) keep s.totalLessons. Mirrors the certificate
+ * page, so the series page and certificate agree on course size.
+ */
+function plannedLessonsTotal(series: string): number {
+  const planned = getSeriesLessonSlugs(series);
+  if (planned.length > 0) return planned.length;
+  return getSeriesBySlug(series)?.totalLessons ?? 0;
+}
+
 /** Guest / no-data tier progress (zeros, never question text). */
 function emptyTierProgress(series: string): TierProgress {
-  const s = getSeriesBySlug(series);
   const checks = emptyChecks(series);
   return {
-    lessons: { completed: 0, total: s?.totalLessons ?? 0 },
+    lessons: { completed: 0, total: plannedLessonsTotal(series) },
     checks,
     exam: { bestScore: 0, attempts: 0, passed: false },
     unlocked: false,
@@ -140,7 +155,9 @@ export async function GET(req: NextRequest) {
     const examStats = scoresByQuiz.get(examQuizName);
     const examBest = examStats?.score ?? 0;
 
-    const totalLessons = getSeriesBySlug(series)?.totalLessons ?? 0;
+    // F2 (QA t_1d04b259): lessons.total = PLANNED lesson set for tier
+    // series (46), not the published total (9). Non-tier keep s.totalLessons.
+    const totalLessons = plannedLessonsTotal(series);
     const allChecksPassed = checks.every((c) => c.passed);
 
     const progress: TierProgress = {

@@ -4,6 +4,43 @@ All notable changes to the Adroit Consulting Blog project will be documented in 
 
 ## [Unreleased]
 
+### Fix: progress rollup lessons total uses planned 46, not published 9 (t_39a3fef7)
+
+Resolves zod's QA finding F2 (MEDIUM) from review t_1d04b259. The tier
+progress rollup (`GET /api/progress/quiz/tiers`) reported
+`lessons.total` from `getSeriesBySlug(series).totalLessons`, which
+build-learn.js computes as the highest *published* lesson number (9
+today). CertReadiness rendered "Lessons X/9" and its 40%-weighted
+lessons term saturated at 9/9 = 100%, while the certificate page
+correctly counted `getSeriesLessonSlugs()` = 46 — the two pages
+disagreed about course size (US-006 AC1 requires "Lessons X/46").
+
+**What**
+
+1. Added `plannedLessonsTotal(series)` in
+   `src/app/api/progress/quiz/tiers/route.ts`: for tier series with
+   generator-sidecar question files it returns the PLANNED lesson count
+   (`getSeriesLessonSlugs().length`, 46 for omni-studio-cert); non-tier
+   series without question files keep `s.totalLessons`.
+2. Both the guest `emptyTierProgress` and the authed rollup now use it,
+   so the denominator is consistent across guest/authed and matches the
+   certificate page.
+3. Added 3 regression tests in
+   `src/app/api/progress/quiz/tiers/route.test.ts` (guest 46, authed 46,
+   non-tier fallback 7).
+
+**Why**
+
+- `s.totalLessons` tracks published MDX; the certificate rule counts the
+  course's PLANNED lesson set (46 sidecar files). The series-page rollup
+  and the certificate must agree on course size so the readiness bar is
+  not misled.
+
+**Known Issues**
+
+- None. `lessons.completed` behavior is unchanged (distinct
+  `lesson_completion` rows).
+
 ### Fix: scrub prose Practice Questions from day-09 lesson MDX — guest question leak (t_9032aa28)
 
 Resolves zod's QA finding F1 (HIGH) from review t_1d04b259. Lesson 9's

@@ -145,4 +145,33 @@ describe("GET /api/progress/quiz/tiers — canonical coverage (t_55105899)", () 
     expect(json.unlocked).toBe(false);
     expect(json.exam.bestScore).toBe(0);
   });
+
+  it("reports lessons.total as the PLANNED lesson set (46), not published (9), for tier series", async () => {
+    // QA t_1d04b259 F2 / US-006 AC1: the rollup denominator is the
+    // generator's planned per-lesson question files (46), matching the
+    // certificate page — not s.totalLessons (9 today, build-learn.js tracks
+    // published MDX). Guest path exercises emptyTierProgress.
+    guest();
+    const res = await get("omni-studio-cert");
+    const json = await res.json();
+    expect(json.lessons.total).toBe(46);
+  });
+
+  it("reports lessons.total as the planned set (46) for authed users with no rows yet", async () => {
+    authedUser();
+    const res = await get("omni-studio-cert");
+    const json = await res.json();
+    expect(json.lessons.total).toBe(46);
+    expect(json.lessons.completed).toBe(0);
+  });
+
+  it("keeps s.totalLessons for non-tier series (no planned question files)", async () => {
+    guest();
+    const res = await get("agentic-ai");
+    const json = await res.json();
+    // agentic-ai has no content/learn/agentic-ai/questions/ → fall back to
+    // the series' totalLessons (7 in src/data/learn.ts).
+    expect(json.lessons.total).toBe(7);
+    expect(json.checks).toEqual([]);
+  });
 });
