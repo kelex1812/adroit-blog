@@ -2,6 +2,29 @@ import { BlogPost } from "./types";
 
 export const posts: BlogPost[] = [
   {
+    "slug": "figma-mcp-design-to-code-2026",
+    "title": "Design-to-Code in 2026: Context Beat Screenshots",
+    "excerpt": "One year in, Figma's MCP server replaced screenshot guessing with structured context. Naive generation still ignores the design system. Here is the layered fix.",
+    "category": "UI/UX",
+    "categoryColor": "ux",
+    "categoryGradient": "from-violet to-violet-dark",
+    "date": "August 11, 2026",
+    "author": "Adroit Consulting",
+    "authorInitials": "AC",
+    "readTime": "11 min read",
+    "featured": false,
+    "tags": [
+      "Figma",
+      "MCP",
+      "Design-to-Code",
+      "Design Systems",
+      "UI/UX",
+      "Design Engineering",
+      "Code Connect"
+    ],
+    "bannerImage": "/banners/figma-mcp-design-to-code-2026.png"
+  },
+  {
     "slug": "agent-framework-decision-2026",
     "title": "Agent Frameworks 2026: Orchestration Beats the Model",
     "excerpt": "The same model scores 64.85% on GAIA in one scaffold and 57.58% in another. Framework choice swings performance by 30 points. How to pick in 2026.",
