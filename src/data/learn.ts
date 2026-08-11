@@ -14,76 +14,12 @@ export const learnSeries: LearningSeries[] = [
     "gradient": "from-amber to-yellow-600",
     "lessons": [
       {
-        "slug": "structured-output-json-mode-function-calling-tool-schemas",
-        "title": "Lesson 7: Structured Output — JSON Mode, Function Calling, and Tool Schemas Done Right",
+        "slug": "what-is-an-agent",
+        "title": "Lesson 1: What an Agent Actually Is — LLMs vs Rules vs Workflows",
         "series": "agentic-ai",
-        "lesson": 7,
-        "excerpt": "An agent is only as reliable as its data contracts. This lesson builds the structured-output ladder — JSON mode, Structured Outputs, function calling — and the tool-schema practices that keep tool calls valid, parseable, and safe in production.",
-        "date": "August 10, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "8 min read",
-        "tags": [
-          "Learn",
-          "AI",
-          "Agentic",
-          "Tools"
-        ]
-      },
-      {
-        "slug": "choosing-models-providers-routing-fallbacks",
-        "title": "Lesson 6: Choosing Models & Providers — Capability Tiers, Routing, and Fallbacks",
-        "series": "agentic-ai",
-        "lesson": 6,
-        "excerpt": "The biggest agent-ops mistake is picking one 'best' model and pointing everything at it. This lesson builds the three-tier capability model, the three jobs of a router, and the fallback chains that keep agents alive when providers fail.",
-        "date": "August 09, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "8 min read",
-        "tags": [
-          "Learn",
-          "AI",
-          "Agentic",
-          "Models"
-        ]
-      },
-      {
-        "slug": "tokens-context-cost-engineering-agents",
-        "title": "Lesson 5: Tokens, Context Windows, and Cost Engineering for Agent Workloads",
-        "series": "agentic-ai",
-        "lesson": 5,
-        "excerpt": "Agents don't just use tokens — they burn them: roughly 4x a chat conversation, 15x for multi-agent. The four levers that control the bill — budgeting, compression, caching, and model routing — with the math worked out on a real 10-agent pipeline.",
-        "date": "August 08, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "9 min read",
-        "tags": [
-          "Learn",
-          "AI",
-          "Agentic",
-          "Cost"
-        ]
-      },
-      {
-        "slug": "prompting-for-agents-system-prompts-few-shot",
-        "title": "Lesson 4: Prompting for Agents — System Prompts, Few-Shot, and When Prompts Aren't Enough",
-        "series": "agentic-ai",
-        "lesson": 4,
-        "excerpt": "In an agent, the prompt isn't a single message — it's the constitution the loop obeys on every iteration. The anatomy of a production system prompt, how few-shot examples actually work, and the escalation ladder for when words stop being enough.",
-        "date": "August 07, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "10 min read",
-        "tags": [
-          "Learn",
-          "AI",
-          "Agentic",
-          "Prompting"
-        ]
-      },
-      {
-        "slug": "the-agent-loop-perceive-reason-act-observe",
-        "title": "Lesson 3: The Agent Loop — Perceive, Reason, Act, Observe, and Where Your Code Lives",
-        "series": "agentic-ai",
-        "lesson": 3,
-        "excerpt": "The one while loop that turns a language model into an agent: the five stages of the loop, the pseudocode that runs underneath every framework, and exactly which parts of it are your code versus the runtime's.",
-        "date": "August 06, 2026",
+        "lesson": 1,
+        "excerpt": "The definitions that matter for the whole 90-lesson track: what separates a rules system, an LLM workflow, and a true agent — and how to tell which one you're actually building.",
+        "date": "August 04, 2026",
         "author": "Adroit Consulting",
         "readTime": "9 min read",
         "tags": [
@@ -110,12 +46,12 @@ export const learnSeries: LearningSeries[] = [
         ]
       },
       {
-        "slug": "what-is-an-agent",
-        "title": "Lesson 1: What an Agent Actually Is — LLMs vs Rules vs Workflows",
+        "slug": "the-agent-loop-perceive-reason-act-observe",
+        "title": "Lesson 3: The Agent Loop — Perceive, Reason, Act, Observe, and Where Your Code Lives",
         "series": "agentic-ai",
-        "lesson": 1,
-        "excerpt": "The definitions that matter for the whole 90-lesson track: what separates a rules system, an LLM workflow, and a true agent — and how to tell which one you're actually building.",
-        "date": "August 04, 2026",
+        "lesson": 3,
+        "excerpt": "The one while loop that turns a language model into an agent: the five stages of the loop, the pseudocode that runs underneath every framework, and exactly which parts of it are your code versus the runtime's.",
+        "date": "August 06, 2026",
         "author": "Adroit Consulting",
         "readTime": "9 min read",
         "tags": [
@@ -123,6 +59,70 @@ export const learnSeries: LearningSeries[] = [
           "AI",
           "Agentic",
           "Foundations"
+        ]
+      },
+      {
+        "slug": "prompting-for-agents-system-prompts-few-shot",
+        "title": "Lesson 4: Prompting for Agents — System Prompts, Few-Shot, and When Prompts Aren't Enough",
+        "series": "agentic-ai",
+        "lesson": 4,
+        "excerpt": "In an agent, the prompt isn't a single message — it's the constitution the loop obeys on every iteration. The anatomy of a production system prompt, how few-shot examples actually work, and the escalation ladder for when words stop being enough.",
+        "date": "August 07, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "10 min read",
+        "tags": [
+          "Learn",
+          "AI",
+          "Agentic",
+          "Prompting"
+        ]
+      },
+      {
+        "slug": "tokens-context-cost-engineering-agents",
+        "title": "Lesson 5: Tokens, Context Windows, and Cost Engineering for Agent Workloads",
+        "series": "agentic-ai",
+        "lesson": 5,
+        "excerpt": "Agents don't just use tokens — they burn them: roughly 4x a chat conversation, 15x for multi-agent. The four levers that control the bill — budgeting, compression, caching, and model routing — with the math worked out on a real 10-agent pipeline.",
+        "date": "August 08, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "9 min read",
+        "tags": [
+          "Learn",
+          "AI",
+          "Agentic",
+          "Cost"
+        ]
+      },
+      {
+        "slug": "choosing-models-providers-routing-fallbacks",
+        "title": "Lesson 6: Choosing Models & Providers — Capability Tiers, Routing, and Fallbacks",
+        "series": "agentic-ai",
+        "lesson": 6,
+        "excerpt": "The biggest agent-ops mistake is picking one 'best' model and pointing everything at it. This lesson builds the three-tier capability model, the three jobs of a router, and the fallback chains that keep agents alive when providers fail.",
+        "date": "August 09, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "8 min read",
+        "tags": [
+          "Learn",
+          "AI",
+          "Agentic",
+          "Models"
+        ]
+      },
+      {
+        "slug": "structured-output-json-mode-function-calling-tool-schemas",
+        "title": "Lesson 7: Structured Output — JSON Mode, Function Calling, and Tool Schemas Done Right",
+        "series": "agentic-ai",
+        "lesson": 7,
+        "excerpt": "An agent is only as reliable as its data contracts. This lesson builds the structured-output ladder — JSON mode, Structured Outputs, function calling — and the tool-schema practices that keep tool calls valid, parseable, and safe in production.",
+        "date": "August 10, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "8 min read",
+        "tags": [
+          "Learn",
+          "AI",
+          "Agentic",
+          "Tools"
         ]
       }
     ],
@@ -136,82 +136,12 @@ export const learnSeries: LearningSeries[] = [
     "gradient": "from-red to-rose-600",
     "lessons": [
       {
-        "slug": "day-08-fc-2-single-multi-level-cards-layouts-repeaters",
-        "title": "OmniStudio FC-2: Single/Multi-Level Cards, Layouts & Repeaters",
+        "slug": "day-01-f1-omnistudio-solution-and-industry-use-cases",
+        "title": "OmniStudio F-1: OmniStudio Solution & Industry Use Cases",
         "series": "omni-studio-cert",
-        "lesson": 8,
-        "excerpt": "Construct single and multi-level FlexCards, organizing data using layouts, and repeaters.",
-        "date": "August 10, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "6 min read",
-        "tags": [
-          "OmniStudio",
-          "FlexCards"
-        ]
-      },
-      {
-        "slug": "day-07-fc-1-flexcard-data-sources-testing-json",
-        "title": "OmniStudio FC-1: FlexCard Data Sources & Testing JSON",
-        "series": "omni-studio-cert",
-        "lesson": 7,
-        "excerpt": "Configure data sources such as SOQL, Data Mapper, Integration Procedure, Custom, etc. and test resulting JSON structure.",
-        "date": "August 9, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "8 min read",
-        "tags": [
-          "OmniStudio",
-          "FlexCards"
-        ]
-      },
-      {
-        "slug": "day-06-f-6-testing-versioning-cloning",
-        "title": "OmniStudio F-6: Testing, Versioning & Cloning Components",
-        "series": "omni-studio-cert",
-        "lesson": 6,
-        "excerpt": "Explain testing, versioning, cloning where applicable through OmniStudio components — save vs. publish, cloning workflows, version snapshots for deployment.",
-        "date": "August 8, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "10 min read",
-        "tags": [
-          "OmniStudio",
-          "OmniStudio Fundamentals"
-        ]
-      },
-      {
-        "slug": "day-05-f5-implementation-toolchain-sfcli-vbt-migration",
-        "title": "OmniStudio F-5: Implementation Toolchain: SFCLI, VBT, Migration",
-        "series": "omni-studio-cert",
-        "lesson": 5,
-        "excerpt": "Describe the tools required to complete the end-to-end implementation process (SFCLI, VBT, Migration, etc.). — Day 5 of the 46-requirement OmniStudio Developer exam prep.",
-        "date": "August 07, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "6 min read",
-        "tags": [
-          "OmniStudio",
-          "OmniStudio Fundamentals"
-        ]
-      },
-      {
-        "slug": "day-04-f4-licensing-permission-set-licenses-permission-sets",
-        "title": "OmniStudio F-4: Licensing, Permission Set Licenses & Permission Sets",
-        "series": "omni-studio-cert",
-        "lesson": 4,
-        "excerpt": "Explain OmniStudio license requirements, Permission Set licenses and Permission Sets. — Day 4 of the 46-requirement OmniStudio Developer exam prep.",
-        "date": "August 06, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "6 min read",
-        "tags": [
-          "OmniStudio",
-          "OmniStudio Fundamentals"
-        ]
-      },
-      {
-        "slug": "day-03-f3-managed-package-vs-standard-runtime-upgrades",
-        "title": "OmniStudio F-3: Managed Package vs Standard Runtime; Upgrades",
-        "series": "omni-studio-cert",
-        "lesson": 3,
-        "excerpt": "Explain Managed Package Runtime vs. Standard Runtime, Automatic Upgrades, and Manual Intervention Upgrade. — Day 3 of the 46-requirement OmniStudio Developer exam prep.",
-        "date": "August 05, 2026",
+        "lesson": 1,
+        "excerpt": "Describe the OmniStudio solution as it applies to common customer use case scenarios in different industries (telco, energy, healthcare, public sector — Day 1 of the 46-requirement OmniStudio Developer exam prep.",
+        "date": "August 03, 2026",
         "author": "Adroit Consulting",
         "readTime": "6 min read",
         "tags": [
@@ -234,17 +164,87 @@ export const learnSeries: LearningSeries[] = [
         ]
       },
       {
-        "slug": "day-01-f1-omnistudio-solution-and-industry-use-cases",
-        "title": "OmniStudio F-1: OmniStudio Solution & Industry Use Cases",
+        "slug": "day-03-f3-managed-package-vs-standard-runtime-upgrades",
+        "title": "OmniStudio F-3: Managed Package vs Standard Runtime; Upgrades",
         "series": "omni-studio-cert",
-        "lesson": 1,
-        "excerpt": "Describe the OmniStudio solution as it applies to common customer use case scenarios in different industries (telco, energy, healthcare, public sector — Day 1 of the 46-requirement OmniStudio Developer exam prep.",
-        "date": "August 03, 2026",
+        "lesson": 3,
+        "excerpt": "Explain Managed Package Runtime vs. Standard Runtime, Automatic Upgrades, and Manual Intervention Upgrade. — Day 3 of the 46-requirement OmniStudio Developer exam prep.",
+        "date": "August 05, 2026",
         "author": "Adroit Consulting",
         "readTime": "6 min read",
         "tags": [
           "OmniStudio",
           "OmniStudio Fundamentals"
+        ]
+      },
+      {
+        "slug": "day-04-f4-licensing-permission-set-licenses-permission-sets",
+        "title": "OmniStudio F-4: Licensing, Permission Set Licenses & Permission Sets",
+        "series": "omni-studio-cert",
+        "lesson": 4,
+        "excerpt": "Explain OmniStudio license requirements, Permission Set licenses and Permission Sets. — Day 4 of the 46-requirement OmniStudio Developer exam prep.",
+        "date": "August 06, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "6 min read",
+        "tags": [
+          "OmniStudio",
+          "OmniStudio Fundamentals"
+        ]
+      },
+      {
+        "slug": "day-05-f5-implementation-toolchain-sfcli-vbt-migration",
+        "title": "OmniStudio F-5: Implementation Toolchain: SFCLI, VBT, Migration",
+        "series": "omni-studio-cert",
+        "lesson": 5,
+        "excerpt": "Describe the tools required to complete the end-to-end implementation process (SFCLI, VBT, Migration, etc.). — Day 5 of the 46-requirement OmniStudio Developer exam prep.",
+        "date": "August 07, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "6 min read",
+        "tags": [
+          "OmniStudio",
+          "OmniStudio Fundamentals"
+        ]
+      },
+      {
+        "slug": "day-06-f-6-testing-versioning-cloning",
+        "title": "OmniStudio F-6: Testing, Versioning & Cloning Components",
+        "series": "omni-studio-cert",
+        "lesson": 6,
+        "excerpt": "Explain testing, versioning, cloning where applicable through OmniStudio components — save vs. publish, cloning workflows, version snapshots for deployment.",
+        "date": "August 8, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "10 min read",
+        "tags": [
+          "OmniStudio",
+          "OmniStudio Fundamentals"
+        ]
+      },
+      {
+        "slug": "day-07-fc-1-flexcard-data-sources-testing-json",
+        "title": "OmniStudio FC-1: FlexCard Data Sources & Testing JSON",
+        "series": "omni-studio-cert",
+        "lesson": 7,
+        "excerpt": "Configure data sources such as SOQL, Data Mapper, Integration Procedure, Custom, etc. and test resulting JSON structure.",
+        "date": "August 9, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "8 min read",
+        "tags": [
+          "OmniStudio",
+          "FlexCards"
+        ]
+      },
+      {
+        "slug": "day-08-fc-2-single-multi-level-cards-layouts-repeaters",
+        "title": "OmniStudio FC-2: Single/Multi-Level Cards, Layouts & Repeaters",
+        "series": "omni-studio-cert",
+        "lesson": 8,
+        "excerpt": "Construct single and multi-level FlexCards, organizing data using layouts, and repeaters.",
+        "date": "August 10, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "6 min read",
+        "tags": [
+          "OmniStudio",
+          "FlexCards"
         ]
       }
     ],
@@ -258,38 +258,67 @@ export const learnSeries: LearningSeries[] = [
     "gradient": "from-sky to-blue-600",
     "lessons": [
       {
-        "slug": "event-driven-integration-platform-events-change-data-capture",
-        "title": "Lesson 7: Event-Driven Integration — Platform Events + Change Data Capture",
+        "slug": "what-salesforce-system-architect-does",
+        "title": "Lesson 1: What a Salesforce System Architect Actually Does — Role, Cert Track, CTA Endgame",
         "series": "salesforce-architect",
-        "lesson": 7,
-        "excerpt": "The Salesforce event bus, Platform Events vs. Change Data Capture — when to publish business intent vs. record state, how to consume on- and off-platform, and the hard truth about ordering, replay, and allocations.",
-        "date": "August 10, 2026",
+        "lesson": 1,
+        "excerpt": "The Salesforce architect arc in one lesson: what System vs Application vs Technical Architects actually do, the certification ladder, and the CTA endgame.",
+        "date": "August 04, 2026",
         "author": "Adroit Consulting",
         "readTime": "8 min read",
         "tags": [
           "Learn",
           "Salesforce",
           "Architect",
-          "Integration",
-          "Platform Events",
-          "Change Data Capture"
+          "Certifications"
         ]
       },
       {
-        "slug": "integration-patterns-request-reply-fire-forget-batch",
-        "title": "Lesson 6: Integration Patterns — Request-Reply, Fire-and-Forget, and Batch (Inbound & Outbound)",
+        "slug": "multi-tenant-platform-architecture",
+        "title": "Lesson 2: Multi-Tenant Platform Architecture — Orgs, Environments, and the Instance Model",
         "series": "salesforce-architect",
-        "lesson": 6,
-        "excerpt": "The three archetype integration patterns every Salesforce architect must recognize — request-reply, fire-and-forget, and batch data synchronization — plus the selection matrix, the limits that shape each choice, and a worked example that combines all three.",
-        "date": "August 09, 2026",
+        "lesson": 2,
+        "excerpt": "Why every Salesforce org rents a slice of a shared platform: multi-tenancy, metadata-driven design, the instance model, and the sandbox environments that keep Dev/QA/UAT/Prod safe.",
+        "date": "August 05, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "8 min read",
+        "tags": [
+          "Learn",
+          "Salesforce",
+          "Architect",
+          "Multi-Tenancy"
+        ]
+      },
+      {
+        "slug": "core-building-blocks-objects-fields-relationships",
+        "title": "Lesson 3: Core Building Blocks — Objects, Fields, Relationships, Record Types, and Formula vs Roll-Up",
+        "series": "salesforce-architect",
+        "lesson": 3,
+        "excerpt": "The architect's canvas: standard and custom objects, field types, lookup vs master-detail relationships, record types for process variation, and when to compute with a formula field vs a roll-up summary.",
+        "date": "August 06, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "8 min read",
+        "tags": [
+          "Learn",
+          "Salesforce",
+          "Architect",
+          "Data Model"
+        ]
+      },
+      {
+        "slug": "integration-fundamentals-rest-soap-bulk-apis",
+        "title": "Lesson 4: Integration Fundamentals — REST, SOAP, Bulk APIs, and Picking the Right One",
+        "series": "salesforce-architect",
+        "lesson": 4,
+        "excerpt": "The System Architect's home turf: when to call Salesforce with REST, when to reach for SOAP, when to hand it a CSV via Bulk API 2.0 — and the request limits that make the choice matter.",
+        "date": "August 07, 2026",
         "author": "Adroit Consulting",
         "readTime": "9 min read",
         "tags": [
           "Learn",
           "Salesforce",
           "Architect",
-          "Integration",
-          "Integration Patterns"
+          "Integration"
         ]
       },
       {
@@ -310,67 +339,38 @@ export const learnSeries: LearningSeries[] = [
         ]
       },
       {
-        "slug": "integration-fundamentals-rest-soap-bulk-apis",
-        "title": "Lesson 4: Integration Fundamentals — REST, SOAP, Bulk APIs, and Picking the Right One",
+        "slug": "integration-patterns-request-reply-fire-forget-batch",
+        "title": "Lesson 6: Integration Patterns — Request-Reply, Fire-and-Forget, and Batch (Inbound & Outbound)",
         "series": "salesforce-architect",
-        "lesson": 4,
-        "excerpt": "The System Architect's home turf: when to call Salesforce with REST, when to reach for SOAP, when to hand it a CSV via Bulk API 2.0 — and the request limits that make the choice matter.",
-        "date": "August 07, 2026",
+        "lesson": 6,
+        "excerpt": "The three archetype integration patterns every Salesforce architect must recognize — request-reply, fire-and-forget, and batch data synchronization — plus the selection matrix, the limits that shape each choice, and a worked example that combines all three.",
+        "date": "August 09, 2026",
         "author": "Adroit Consulting",
         "readTime": "9 min read",
         "tags": [
           "Learn",
           "Salesforce",
           "Architect",
-          "Integration"
+          "Integration",
+          "Integration Patterns"
         ]
       },
       {
-        "slug": "core-building-blocks-objects-fields-relationships",
-        "title": "Lesson 3: Core Building Blocks — Objects, Fields, Relationships, Record Types, and Formula vs Roll-Up",
+        "slug": "event-driven-integration-platform-events-change-data-capture",
+        "title": "Lesson 7: Event-Driven Integration — Platform Events + Change Data Capture",
         "series": "salesforce-architect",
-        "lesson": 3,
-        "excerpt": "The architect's canvas: standard and custom objects, field types, lookup vs master-detail relationships, record types for process variation, and when to compute with a formula field vs a roll-up summary.",
-        "date": "August 06, 2026",
+        "lesson": 7,
+        "excerpt": "The Salesforce event bus, Platform Events vs. Change Data Capture — when to publish business intent vs. record state, how to consume on- and off-platform, and the hard truth about ordering, replay, and allocations.",
+        "date": "August 10, 2026",
         "author": "Adroit Consulting",
         "readTime": "8 min read",
         "tags": [
           "Learn",
           "Salesforce",
           "Architect",
-          "Data Model"
-        ]
-      },
-      {
-        "slug": "multi-tenant-platform-architecture",
-        "title": "Lesson 2: Multi-Tenant Platform Architecture — Orgs, Environments, and the Instance Model",
-        "series": "salesforce-architect",
-        "lesson": 2,
-        "excerpt": "Why every Salesforce org rents a slice of a shared platform: multi-tenancy, metadata-driven design, the instance model, and the sandbox environments that keep Dev/QA/UAT/Prod safe.",
-        "date": "August 05, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "8 min read",
-        "tags": [
-          "Learn",
-          "Salesforce",
-          "Architect",
-          "Multi-Tenancy"
-        ]
-      },
-      {
-        "slug": "what-salesforce-system-architect-does",
-        "title": "Lesson 1: What a Salesforce System Architect Actually Does — Role, Cert Track, CTA Endgame",
-        "series": "salesforce-architect",
-        "lesson": 1,
-        "excerpt": "The Salesforce architect arc in one lesson: what System vs Application vs Technical Architects actually do, the certification ladder, and the CTA endgame.",
-        "date": "August 04, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "8 min read",
-        "tags": [
-          "Learn",
-          "Salesforce",
-          "Architect",
-          "Certifications"
+          "Integration",
+          "Platform Events",
+          "Change Data Capture"
         ]
       }
     ],
