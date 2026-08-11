@@ -4,6 +4,26 @@ All notable changes to the Adroit Consulting Blog project will be documented in 
 
 ## [Unreleased]
 
+### Fix: avatar hue tokens must live in the `--color-*` namespace (t_f75bc52d)
+
+The avatar initials rendered white-on-transparent (invisible against the white
+header) because the avatar palette was declared as bare `--avatar-1..4` theme
+tokens. Tailwind v4 only generates color utilities (`bg-avatar-*`) from the
+`--color-*` namespace, so the classes never existed in the compiled CSS
+(confirmed: `.bg-avatar-1` was absent from `.next/static/chunks/*.css`, and the
+live header avatar had no background-color). Renamed to
+`--color-avatar-1..4` in `globals.css` `@theme inline`; compiled output now
+contains `.bg-avatar-1{background-color:#0b1d3a}` etc., verified in the running
+app (computed background rgb(11,29,58), white text passes WCAG AA on all four
+hues). No component or test changes needed — class names stayed `bg-avatar-*`.
+
+**Why** — a design token that generates no utility is a silent visual bug; the
+unit tests assert class names, not compiled CSS, so this needed build + live
+verification to catch.
+
+**Known Issues** — none. (Pre-existing `src/data/learn.ts` drift from commit
+1cba1d4 remains out of scope; see the feature entry below.)
+
 ### Feature: avatar menu + profile/settings pages (t_f75bc52d)
 
 Replaces the signed-in header corner (raw email + "Sign out" text button)

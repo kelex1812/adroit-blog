@@ -70,10 +70,10 @@
                    0 4px 12px -4px rgba(11, 29, 58, 0.12);
 
   /* Avatar palette — deterministic initials colors (brand-safe; white text passes AA on all) */
-  --avatar-1: #0B1D3A;   /* navy */
-  --avatar-2: #132D54;   /* navy-light */
-  --avatar-3: #C8102E;   /* red */
-  --avatar-4: #A00D24;   /* red-dark */
+  --color-avatar-1: #0B1D3A;   /* navy */
+  --color-avatar-2: #132D54;   /* navy-light */
+  --color-avatar-3: #C8102E;   /* red */
+  --color-avatar-4: #A00D24;   /* red-dark */
 }
 
 /* ─────────────────────────────────────────────
