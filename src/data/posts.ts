@@ -2,6 +2,28 @@ import { BlogPost } from "./types";
 
 export const posts: BlogPost[] = [
   {
+    "slug": "estimation-after-ai-2026",
+    "title": "Estimation After AI: Why Story-Point Velocity Stopped Forecasting Delivery",
+    "excerpt": "AI didn't make your estimates wrong. It split knowledge work into two different economic activities, fast generation and slow validation, and story-point velocity was built to forecast only one of them. Here's what consulting teams measure instead.",
+    "category": "Project Management",
+    "categoryColor": "pm",
+    "categoryGradient": "from-teal to-teal-dark",
+    "date": "August 11, 2026",
+    "author": "Adroit Consulting",
+    "authorInitials": "AC",
+    "readTime": "8 min read",
+    "featured": false,
+    "tags": [
+      "Project Management",
+      "Estimation",
+      "Agile",
+      "AI",
+      "Flow Metrics",
+      "Delivery"
+    ],
+    "bannerImage": "/banners/estimation-after-ai-2026.png"
+  },
+  {
     "slug": "figma-mcp-design-to-code-2026",
     "title": "Design-to-Code in 2026: Context Beat Screenshots",
     "excerpt": "One year in, Figma's MCP server replaced screenshot guessing with structured context. Naive generation still ignores the design system. Here is the layered fix.",
