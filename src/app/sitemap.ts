@@ -1,7 +1,7 @@
 import { type MetadataRoute } from "next";
 import { posts } from "@/data/posts";
 import { learnLessons, learnSeries } from "@/data/learn";
-import { getQuizSeriesSlugs } from "@/lib/quiz";
+import { getCertExam, getKnowledgeChecks } from "@/lib/quiz";
 import { siteConfig } from "@/lib/seo";
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -70,13 +70,24 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }));
 
-  // Quiz pages (one per series with a questions.json)
-  const quizPages: MetadataRoute.Sitemap = getQuizSeriesSlugs().map((slug) => ({
-    url: `${siteConfig.url}/learn/${slug}/quiz`,
-    lastModified: new Date(),
-    changeFrequency: "monthly" as const,
-    priority: 0.6,
-  }));
+  // Tier quiz pages — knowledge checks + cert exam (legacy series quiz removed,
+  // Decision 8). Only series that ship tier files contribute.
+  const checkPages: MetadataRoute.Sitemap = learnSeries.flatMap((s) =>
+    getKnowledgeChecks(s.slug).map((c) => ({
+      url: `${siteConfig.url}/learn/${s.slug}/check/${c.n}`,
+      lastModified: new Date(),
+      changeFrequency: "weekly" as const,
+      priority: 0.6,
+    })),
+  );
+  const examPages: MetadataRoute.Sitemap = learnSeries
+    .filter((s) => getCertExam(s.slug) !== null)
+    .map((s) => ({
+      url: `${siteConfig.url}/learn/${s.slug}/exam`,
+      lastModified: new Date(),
+      changeFrequency: "weekly" as const,
+      priority: 0.6,
+    }));
 
   return [
     ...staticPages,
@@ -84,6 +95,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...tagPages,
     ...learnHubPages,
     ...learnLessonPages,
-    ...quizPages,
+    ...checkPages,
+    ...examPages,
   ];
 }

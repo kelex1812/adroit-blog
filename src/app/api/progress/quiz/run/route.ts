@@ -15,7 +15,7 @@ import {
   getClientIp,
   sanitiseDbError,
   validateIndex,
-  validateSlug,
+  validateQuizName,
 } from "@/lib/api-security";
 
 export async function POST(req: NextRequest) {
@@ -40,7 +40,7 @@ export async function POST(req: NextRequest) {
     if (typeof body.quizName !== "string" || body.quizName.length === 0) {
       return NextResponse.json({ error: "quizName required" }, { status: 400 });
     }
-    const quizErr = validateSlug(body.quizName, "quizName");
+    const quizErr = validateQuizName(body.quizName, "quizName");
     if (quizErr) {
       return NextResponse.json({ error: quizErr }, { status: 400 });
     }
@@ -91,7 +91,7 @@ export async function GET(req: NextRequest) {
     if (!quizName) {
       return NextResponse.json({ error: "quizName required" }, { status: 400 });
     }
-    const quizErr = validateSlug(quizName, "quizName");
+    const quizErr = validateQuizName(quizName, "quizName");
     if (quizErr) {
       return NextResponse.json({ error: quizErr }, { status: 400 });
     }

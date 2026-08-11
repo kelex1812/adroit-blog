@@ -1,14 +1,24 @@
 /**
  * QuizWidget — interactive multiple-choice quiz component.
  *
- * Matches design/mockup-quiz.html: segment progress bar, 4-option MCQ with
- * radio states (selected / correct / wrong / correct-unselected), "Why"
- * explanation panel, and a score-ring results card.
+ * Matches design/mockup-quiz.html + copy-deck-quiz-tiers.md §1/§2: segment
+ * progress bar, 4-option MCQ with radio states (selected / correct / wrong /
+ * correct-unselected), "Why" explanation panel, and a score-ring results card.
  * Uses useQuizProgress hook for localStorage-only state (ADR-004).
+ *
+ * Reused by the lesson quiz embed and the knowledge-check pages. Optional
+ * props adapt it to each tier (copy deck):
+ *   - kicker       "Quiz · Lesson {N}" (lesson) / "Knowledge Check {N} · 15 questions" (check)
+ *   - passThreshold  80 for checks → results show pass/fail verdict pill
+ *                    (emerald ring + "Passed · 80% required"; red + "Keep going");
+ *                    exactly 80.0 shows "Passed — 80 flat counts" (boundary).
+ *   - retakeLabel  "Retake quiz" (lesson) / "Retake check" (check)
+ *   - backHref/backLabel  "Back to lesson" / "Back to series" link in results
  */
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
 import { useQuizProgress } from "@/lib/hooks/useQuizProgress";
 
 export interface QuizQuestion {
@@ -21,15 +31,40 @@ export interface QuizQuestion {
 interface QuizWidgetProps {
   quizName: string;
   questions: QuizQuestion[];
+  /** Card kicker after the red tick (copy deck §1/§2). Defaults to "Quiz". */
+  kicker?: string;
+  /** Pass threshold (0-100). When set, results show a pass/fail verdict pill. */
+  passThreshold?: number;
+  /** Retake button label (default "Retake quiz"). */
+  retakeLabel?: string;
+  /** Optional "Back to …" link shown with the retake button in results. */
+  backHref?: string;
+  /** Back button label (default "Back"). */
+  backLabel?: string;
 }
 
 export default function QuizWidget({
   quizName,
   questions,
+  kicker = "Quiz",
+  passThreshold,
+  retakeLabel = "Retake quiz",
+  backHref,
+  backLabel = "Back",
 }: QuizWidgetProps) {
   const [currentQ, setCurrentQ] = useState(0);
   const [selected, setSelected] = useState<number | null>(null);
   const [showExplanation, setShowExplanation] = useState(false);
+  const [grading, setGrading] = useState(false);
+  // Track the pending "Grading…" timeout so advancing/retaking can clear it —
+  // otherwise the 350ms beat fires after the user has moved on and flips
+  // showExplanation for the WRONG question.
+  const gradingTimeoutRef = useRef<number | null>(null);
+  // True when the LAST question was answered in this session (copy deck §1:
+  // Q3 shows a "See results" button instead of auto-jumping). A returning
+  // user with a completed quiz in storage still sees results directly (QA F-2).
+  // State (not a ref) because it gates the results view during render.
+  const [completedThisSession, setCompletedThisSession] = useState(false);
   // Score ring Moment fill (QA M-2): starts 0 and animates to the final
   // dasharray once the results view mounts — setting the final value at
   // mount meant the CSS transition had no from→to change and never played.
@@ -51,14 +86,19 @@ export default function QuizWidget({
   // Score ring Moment fill (QA M-2): when the results view becomes visible,
   // flip ringFilled on the next animation frame so the CSS transition has a
   // from→to pair (0 → final dasharray) and actually plays. Retake resets it
-  // in the handler so every completion re-animates.
+  // in the handler so every completion re-animates. Same gating as the results
+  // view itself — an in-session last-answer (showing "See results") does not
+  // pre-arm the ring.
   useEffect(() => {
     if (!hydrated) return;
-    if (allAnswered || currentQ >= questions.length) {
+    const showResults =
+      (allAnswered && !completedThisSession) ||
+      currentQ >= questions.length;
+    if (showResults) {
       const raf = requestAnimationFrame(() => setRingFilled(true));
       return () => cancelAnimationFrame(raf);
     }
-  }, [allAnswered, currentQ, questions.length, hydrated]);
+  }, [allAnswered, currentQ, questions.length, hydrated, completedThisSession]);
 
   // Hydration gate (QA F-1): before the stored quiz state has been read
   // after mount, render a placeholder instead of the question/results view.
@@ -71,7 +111,7 @@ export default function QuizWidget({
       <div className="mt-8 max-w-[640px] rounded-[20px] border border-gray-200 bg-white p-7 shadow-sm">
         <div className="flex items-center gap-2 font-mono text-[11px] font-bold text-red uppercase tracking-[0.08em] mb-1.5">
           <span className="w-[3px] h-3 rounded-sm bg-red" />
-          Quiz
+          {kicker}
         </div>
         <div className="h-4 w-1/3 rounded bg-gray-100 animate-pulse mb-4" />
         <div className="h-4 w-full rounded bg-gray-100 animate-pulse mb-2" />
@@ -88,7 +128,7 @@ export default function QuizWidget({
   }
 
   function handleSelect(index: number) {
-    if (isAnswered) return;
+    if (isAnswered || grading) return;
     setSelected(index);
   }
 
@@ -112,13 +152,34 @@ export default function QuizWidget({
     document.getElementById(`quiz-option-${quizName}-${currentQ}-${next}`)?.focus();
   }
 
+  // "Grading…" + spinner (copy deck §1): hold the grading state a beat (API
+  // sync is in flight server-side) before recording the attempt + revealing
+  // the explanation, so the copy-deck affordance is actually visible. The
+  // timeout is cleared on advance/retake so it can't fire for the wrong question.
   function handleSubmit() {
-    if (selected === null || !question) return;
-    submitAnswer(currentQ, selected, question.correct_answer_index);
-    setShowExplanation(true);
+    if (selected === null || !question || grading) return;
+    setGrading(true);
+    if (gradingTimeoutRef.current !== null) {
+      window.clearTimeout(gradingTimeoutRef.current);
+    }
+    gradingTimeoutRef.current = window.setTimeout(() => {
+      const completesNow =
+        !answeredIndexes.has(currentQ) &&
+        answeredIndexes.size + 1 >= questions.length;
+      submitAnswer(currentQ, selected, question.correct_answer_index);
+      if (completesNow) setCompletedThisSession(true);
+      setGrading(false);
+      setShowExplanation(true);
+      gradingTimeoutRef.current = null;
+    }, 350);
   }
 
   function handleNext() {
+    if (gradingTimeoutRef.current !== null) {
+      window.clearTimeout(gradingTimeoutRef.current);
+      gradingTimeoutRef.current = null;
+    }
+    setGrading(false);
     if (currentQ < questions.length - 1) {
       setCurrentQ(currentQ + 1);
       setSelected(null);
@@ -128,8 +189,26 @@ export default function QuizWidget({
     }
   }
 
-  // Results view
-  if (allAnswered || currentQ >= questions.length) {
+  const runScore = progress.total > 0 ? Math.round((progress.correct / progress.total) * 100) : 0;
+  const passed = typeof passThreshold === "number" && runScore >= passThreshold;
+  // Lesson quiz ring: emerald at ≥60% (mockup-lesson-quiz.html JS); check:
+  // emerald on pass (≥ threshold), red otherwise (mockup-check.html).
+  const ringColor =
+    typeof passThreshold === "number"
+      ? passed
+        ? "var(--color-emerald, #10B981)"
+        : "var(--color-red, #C8102E)"
+      : runScore >= 60
+        ? "var(--color-emerald, #10B981)"
+        : "var(--color-red, #C8102E)";
+
+  // Results view — show directly for returning users with a completed quiz in
+  // storage (QA F-2), but NOT when the last answer was just submitted in this
+  // session (copy deck §1: Q3 shows "See results" first, then jumps here).
+  if (
+    (allAnswered && !completedThisSession) ||
+    currentQ >= questions.length
+  ) {
     return (
       <div className="mt-8 max-w-[640px]">
         <div className="rounded-[20px] border border-gray-200 bg-white p-8 text-center shadow-sm">
@@ -155,7 +234,7 @@ export default function QuizWidget({
                 cy="64"
                 r="54"
                 fill="none"
-                stroke="var(--color-red, #C8102E)"
+                stroke={ringColor}
                 strokeWidth="10"
                 strokeLinecap="round"
                 strokeDasharray={`${ringFilled && progress.total > 0 ? (progress.correct / progress.total) * 339.3 : 0} 339.3`}
@@ -166,25 +245,48 @@ export default function QuizWidget({
               {progress.correct}/{progress.total}
             </div>
           </div>
+
+          {/* Pass/fail verdict pill (checks — copy deck §2) */}
+          {typeof passThreshold === "number" && (
+            <div
+              className={`inline-flex items-center gap-2 font-mono text-[12px] font-bold px-4 py-1.5 rounded-full mb-4 ${
+                passed ? "bg-emerald/10 text-emerald-800" : "bg-[#FDE8EB] text-red-dark"
+              }`}
+            >
+              {passed ? (
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" aria-hidden="true">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+              ) : (
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" aria-hidden="true">
+                  <line x1="18" y1="6" x2="6" y2="18" />
+                  <line x1="6" y1="6" x2="18" y2="18" />
+                </svg>
+              )}
+              {runScore === passThreshold
+                ? "Passed — 80 flat counts"
+                : passed
+                  ? `Passed · ${passThreshold}% required`
+                  : `Keep going — ${passThreshold}% required`}
+            </div>
+          )}
+
           <p className="text-[12.5px] text-gray-500 mb-6">
             {progress.total === 0
               ? "No answers yet."
               : progress.correct === progress.total
                 ? "Perfect score — all questions answered correctly."
-                : `${Math.round((progress.correct / progress.total) * 100)}% correct — review the explanations below.`}
+                : `${runScore}% correct — review the explanations below.`}
           </p>
 
-          {/* Preserved score + attempt history (US-005 AC4) */}
+          {/* Preserved score + attempt history (US-005 AC4 / copy deck) */}
           {progress.attemptCount > 0 && (
             <div className="flex items-center justify-center gap-4 mb-5 font-mono text-[10.5px] font-semibold text-gray-500">
               <span className="inline-flex items-center gap-1.5">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald" />
-                Best score {progress.bestScore}%
-              </span>
-              <span className="inline-flex items-center gap-1.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-navy/40" />
-                {progress.attemptCount}{" "}
+                Best score · {progress.attemptCount}{" "}
                 {progress.attemptCount === 1 ? "attempt" : "attempts"}
+                {typeof passThreshold === "number" && !passed ? " · retake to pass" : ""}
               </span>
             </div>
           )}
@@ -204,7 +306,7 @@ export default function QuizWidget({
                     className="w-4 h-4 mt-0.5 shrink-0"
                     viewBox="0 0 24 24"
                     fill="none"
-                    stroke={correct ? "var(--color-red, #C8102E)" : "var(--color-gray-400, #9CA3AF)"}
+                    stroke={correct ? "var(--color-emerald, #10B981)" : "var(--color-gray-400, #9CA3AF)"}
                     strokeWidth="2.5"
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -223,18 +325,34 @@ export default function QuizWidget({
             })}
           </div>
 
-          <button
-            onClick={() => {
-              resetQuiz();
-              setCurrentQ(0);
-              setSelected(null);
-              setShowExplanation(false);
-              setRingFilled(false); // re-arm so the next completion re-animates
-            }}
-            className="w-full h-11 rounded-xl bg-navy text-white text-sm font-bold cursor-pointer hover:bg-navy-light active:scale-[0.98] transition-all duration-150"
-          >
-            Retake quiz
-          </button>
+          <div className="flex gap-2.5">
+            {backHref && (
+              <Link
+                href={backHref}
+                className="flex-1 h-11 rounded-xl border-[1.5px] border-gray-200 bg-white text-gray-600 text-[13.5px] font-bold no-underline flex items-center justify-center cursor-pointer hover:border-navy hover:text-navy active:scale-[0.98] transition-all duration-150"
+              >
+                {backLabel}
+              </Link>
+            )}
+            <button
+              onClick={() => {
+                if (gradingTimeoutRef.current !== null) {
+                  window.clearTimeout(gradingTimeoutRef.current);
+                  gradingTimeoutRef.current = null;
+                }
+                setGrading(false);
+                setCompletedThisSession(false);
+                resetQuiz();
+                setCurrentQ(0);
+                setSelected(null);
+                setShowExplanation(false);
+                setRingFilled(false); // re-arm so the next completion re-animates
+              }}
+              className={`${backHref ? "flex-1" : "w-full"} h-11 rounded-xl bg-navy text-white text-sm font-bold cursor-pointer hover:bg-navy-light active:scale-[0.98] transition-all duration-150`}
+            >
+              {retakeLabel}
+            </button>
+          </div>
         </div>
       </div>
     );
@@ -258,7 +376,7 @@ export default function QuizWidget({
       {/* Kicker */}
       <div className="flex items-center gap-2 font-mono text-[11px] font-bold text-red uppercase tracking-[0.08em] mb-1.5">
         <span className="w-[3px] h-3 rounded-sm bg-red" />
-        Quiz
+        {kicker}
       </div>
 
       {/* Progress label + segment bar */}
@@ -415,16 +533,26 @@ export default function QuizWidget({
           <button
             onClick={handleSubmit}
             disabled={selected === null}
-            className="flex-[2] h-11 rounded-xl bg-navy text-white text-[13.5px] font-bold cursor-pointer hover:bg-navy-light active:scale-[0.98] transition-all duration-150 disabled:opacity-40 disabled:cursor-not-allowed disabled:active:scale-100"
+            className="flex-[2] h-11 rounded-xl bg-navy text-white text-[13.5px] font-bold cursor-pointer hover:bg-navy-light active:scale-[0.98] transition-all duration-150 disabled:opacity-40 disabled:cursor-not-allowed disabled:active:scale-100 inline-flex items-center justify-center gap-2"
           >
-            Check Answer
+            {grading ? (
+              <>
+                <span
+                  aria-hidden="true"
+                  className="w-4 h-4 rounded-full border-2 border-white/40 border-t-white animate-spin"
+                />
+                Grading…
+              </>
+            ) : (
+              "Submit answer"
+            )}
           </button>
         ) : (
           <button
             onClick={handleNext}
             className="flex-[2] h-11 rounded-xl bg-navy text-white text-[13.5px] font-bold cursor-pointer hover:bg-navy-light active:scale-[0.98] transition-all duration-150"
           >
-            {currentQ < questions.length - 1 ? "Next Question" : "View Results"}
+            {currentQ < questions.length - 1 ? "Next question" : "See results"}
           </button>
         )}
       </div>

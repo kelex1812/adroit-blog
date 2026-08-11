@@ -4,10 +4,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import LessonCard from "@/components/Learn/LessonCard";
 import LessonProgress from "@/components/Learn/LessonProgress";
 import EmptyState from "@/components/Learn/EmptyState";
-import SortToggle from "@/components/BlogListing/SortToggle";
+import SeriesSyllabus from "@/components/Learn/SeriesSyllabus";
 import { learnSeries } from "@/data/learn";
 import {
   getLessonsForSeries,
@@ -15,16 +14,16 @@ import {
   getSeriesProgress,
   seriesShortLabel,
 } from "@/lib/learn";
-import { sortPosts } from "@/lib/sort";
 import { buildMetadata, siteConfig } from "@/lib/seo";
-import MarkComplete from "@/components/Progress/MarkComplete";
 import SeriesProgress from "@/components/Progress/SeriesProgress";
 import QuizStats from "@/components/Progress/QuizStats";
-import { getQuizForSeries } from "@/lib/quiz";
+import CertReadiness from "@/components/Progress/CertReadiness";
+import CheckCardList from "@/components/Progress/CheckCardList";
+import ExamCard from "@/components/Progress/ExamCard";
+import { getKnowledgeChecks } from "@/lib/quiz";
 
 interface Props {
   params: Promise<{ series: string }>;
-  searchParams: Promise<{ sort?: string }>;
 }
 
 export async function generateStaticParams() {
@@ -42,18 +41,21 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   });
 }
 
-export default async function SeriesPage({ params, searchParams }: Props) {
+export default async function SeriesPage({ params }: Props) {
   const { series } = await params;
-  const { sort } = await searchParams;
   const s = getSeriesBySlug(series);
   if (!s) notFound();
 
-  // Defensive newest-first (ADR-002) — never trust generated order blindly.
+  // Lesson-number ordering (ADR-105) — the syllabus client re-sorts on
+  // toggle; the server always passes the canonical asc order.
   const baseLessons = getLessonsForSeries(series);
-  const lessons = sortPosts(baseLessons, sort === "oldest" ? "oldest" : "newest");
   const { published, total } = getSeriesProgress(s);
   const upcoming = Math.max(0, total - published);
-  const hasQuiz = getQuizForSeries(series) !== null;
+
+  // Tier presence (ADR-101): omni-studio-cert ships checks + exam; non-tier
+  // series (sfarch, agentic) keep the legacy quiz behaviour.
+  const checksMeta = getKnowledgeChecks(series);
+  const hasTiers = checksMeta.length > 0;
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -63,7 +65,7 @@ export default async function SeriesPage({ params, searchParams }: Props) {
     url: `${siteConfig.url}/learn/${series}`,
     hasPart: {
       "@type": "ItemList",
-      itemListElement: lessons.map((l, i) => ({
+      itemListElement: baseLessons.map((l, i) => ({
         "@type": "ListItem",
         position: i + 1,
         name: `Lesson ${l.lesson}: ${l.title}`,
@@ -106,18 +108,6 @@ export default async function SeriesPage({ params, searchParams }: Props) {
             <p className="relative text-white/80 text-sm max-w-[560px] leading-relaxed mb-5">
               {s.description}
             </p>
-            {hasQuiz && (
-              <Link
-                href={`/learn/${series}/quiz`}
-                className="relative inline-flex items-center gap-2 px-5 py-2 rounded-full bg-white text-navy text-sm font-bold no-underline shadow-md hover:bg-gray-100 transition-colors duration-150"
-              >
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M9 11l3 3L22 4" />
-                  <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
-                </svg>
-                Take the quiz
-              </Link>
-            )}
             {total > 0 && (
               <div className="relative max-w-[420px]">
                 <LessonProgress
@@ -128,12 +118,14 @@ export default async function SeriesPage({ params, searchParams }: Props) {
                 {/* Real user completion progress */}
                 <div className="mt-3">
                   <SeriesProgress
-                    lessonSlugs={lessons.map((l) => l.slug)}
+                    lessonSlugs={baseLessons.map((l) => l.slug)}
                     showPercent
                   />
                 </div>
-                {/* Quiz average + attempt count (design brief §5.3) */}
-                {hasQuiz && (
+                {/* Tier-aware readiness rollup (tier series) or legacy quiz stats */}
+                {hasTiers ? (
+                  <CertReadiness series={series} onGradient />
+                ) : (
                   <div className="mt-2.5">
                     <QuizStats seriesSlug={series} onGradient />
                   </div>
@@ -143,46 +135,29 @@ export default async function SeriesPage({ params, searchParams }: Props) {
           </div>
         </div>
 
-        {/* Syllabus — newest first */}
-        <div className="max-w-[1120px] mx-auto px-6 py-8 pb-24">
-          {lessons.length > 0 ? (
-            <>
-              <div className="flex items-center justify-between px-2 mb-1.5">
-                <h2 className="font-mono text-[13px] font-bold text-gray-400 uppercase tracking-[0.08em]">
-                  {sort === "oldest" ? "Oldest First" : "Newest First"}
-                </h2>
-                <div className="flex items-center gap-3">
-                  <span className="font-mono text-[11.5px] text-gray-400 font-medium">
-                    {published} published · {upcoming} upcoming
-                  </span>
-                  <Suspense fallback={null}>
-                    <SortToggle compact />
-                  </Suspense>
-                </div>
-              </div>
-              <div className="border-t border-gray-200 mt-3">
-                {lessons.map((lesson, i) => (
-                  <div key={lesson.slug} className="relative">
-                    <LessonCard
-                      lesson={lesson}
-                      totalLessons={total}
-                      isNewest={sort !== "oldest" && i === 0}
-                    />
-                    {/* Per-lesson completion tracking */}
-                    <div className="flex items-center justify-between px-3 py-2">
-                      <span className="font-mono text-[10px] font-bold text-gray-400 uppercase tracking-[0.07em]">
-                        Mark complete
-                      </span>
-                      <MarkComplete lessonSlug={lesson.slug} label={`lesson ${lesson.slug}`} />
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </>
+        {/* Syllabus — lesson-number order (ADR-105), client sort + hide-completed */}
+        <div className="max-w-[1120px] mx-auto px-6 py-8 pb-4">
+          {baseLessons.length > 0 ? (
+            <Suspense fallback={null}>
+              <SeriesSyllabus
+                lessons={baseLessons}
+                totalLessons={total}
+                published={published}
+                upcoming={upcoming}
+              />
+            </Suspense>
           ) : (
             <EmptyState />
           )}
         </div>
+
+        {/* Tier sections — checks + exam card (only for tiered courses) */}
+        {hasTiers && (
+          <>
+            <CheckCardList series={series} checksMeta={checksMeta} />
+            <ExamCard series={series} totalChecks={checksMeta.length} />
+          </>
+        )}
 
         <script
           type="application/ld+json"

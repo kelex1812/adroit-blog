@@ -15,6 +15,9 @@ const SLUG_MAX = 200;
 // Kebab/snake-case slugs only — no dots, slashes, or path separators
 // (blocks `../` traversal and any encoded path tricks).
 const SLUG_RE = /^[a-zA-Z0-9_-]+$/;
+// Tier quiz names carry colons: `<series>:lesson:<slug>` / `:check:<n>` /
+// `:exam` (ADR-101). Colon allowed, still no dots/slashes/spaces.
+const QUIZ_NAME_RE = /^[a-zA-Z0-9:_-]+$/;
 // Canonical namespaced content slug, e.g. `blog/<slug>` / `lesson/<slug>`
 // (ADR-002 storage form — localStorage keys, DB content_slug, and the
 // summary merge all use the prefixed form). One fixed namespace + one
@@ -50,6 +53,28 @@ export function validateSlug(
     ? SLUG_RE.test(value) || NAMESPACED_SLUG_RE.test(value)
     : SLUG_RE.test(value);
   if (!ok) {
+    return `${label} contains invalid characters`;
+  }
+  return null;
+}
+
+/**
+ * Validate a tier quiz name (`<series>:lesson:<slug>` / `:check:<n>` /
+ * `:exam`, ADR-101). Colon allowed; dots/slashes/spaces still rejected so the
+ * value can never reach a filesystem join or a path traversal.
+ * Returns a message string on failure, or `null` on pass.
+ */
+export function validateQuizName(
+  value: unknown,
+  label: string,
+): string | null {
+  if (typeof value !== "string" || value.length === 0) {
+    return `${label} is required`;
+  }
+  if (value.length > SLUG_MAX) {
+    return `${label} must be ${SLUG_MAX} characters or fewer`;
+  }
+  if (!QUIZ_NAME_RE.test(value)) {
     return `${label} contains invalid characters`;
   }
   return null;

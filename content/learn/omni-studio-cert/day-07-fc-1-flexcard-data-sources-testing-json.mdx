@@ -35,32 +35,6 @@ tags: [OmniStudio, FlexCards]
 - Forgetting the card loops records — designing a layout for one record when the source returns many.
 - Building bindings before validating the JSON shape.
 
-## Practice Questions
-
-**Q1.** Which FlexCard data source fully supports field-level security?
-- A: SOQL Query
-- B: SOSL Search
-- C: Data Mapper (Extract) **[CORRECT]**
-- D: Custom JSON
-
-> **Correct: C** — Data Mapper Extract respects FLS; SOQL/SOSL do not apply it automatically.
-
-**Q2.** A FlexCard must render one card per Account from a list. What is required?
-- A: A single-record data source
-- B: A data source returning multiple records — the card loops them **[CORRECT]**
-- C: An OmniScript
-- D: A custom LWC
-
-> **Correct: B** — FlexCards iterate over returned records by default — one card per record.
-
-**Q3.** During prototyping you embed sample JSON. What must happen before publishing?
-- A: Nothing — sample JSON is fine
-- B: Replace Custom with a real data source **[CORRECT]**
-- C: Add an Apex trigger
-- D: Enable debug mode permanently
-
-> **Correct: B** — Custom JSON is a placeholder; production cards need a real source.
-
 ## Exam Tip
 
 JSON first, layout second. Preview the payload, then bind to real field paths.

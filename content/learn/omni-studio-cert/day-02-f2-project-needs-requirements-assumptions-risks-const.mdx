@@ -37,43 +37,9 @@ tags: [OmniStudio, OmniStudio Fundamentals]
 - **Trap:** Assuming sandbox equals production (data volumes, connected systems, licenses differ).
 - **Trap:** Choosing a component that works on Lightning but the requirement says Experience Cloud without a license for it.
 
-## Practice Questions
-
-**Q: A requirement needs field-level security enforced on data shown in a FlexCard. Which data source satisfies the constraint?**
-- SOQL Query
-- SOSL Search
-- Data Mapper (Extract)
-- Custom JSON
-
-**Answer: C**
-
-Data Mappers respect FLS; raw SOQL/SOSL data sources do not.
-
-**Q: A customer needs integration with a REST system whose availability is uncertain. What is the correct risk treatment?**
-- Ignore it — it will work
-- Design fallbacks/error handling (Try/Catch, controlled error responses) and confirm SLAs
-- Rewrite the system in Apex
-- Use only synchronous calls
-
-**Answer: B**
-
-Uncertain external dependencies are managed with error handling and validated assumptions, not hope.
-
-**Q: Which output best reflects 'determining a project's needs'?**
-- A solution approach that fits requirements within assumptions, risks, and constraints
-- A fixed architecture chosen up front
-- A list of questions with no decisions
-- A copy of the customer's RFP
-
-**Answer: A**
-
-Needs determination converts requirements + constraints into a feasible approach.
-
-
 ## Exam Tip
 
 Exam scenarios are constraint puzzles. The 'best' answer always respects the stated constraint, even if a fancier option exists.
 
 
 **Related requirements:** Day 1 — OmniStudio & Industries, Day 3 — Runtime & Upgrades, Day 43 — Permissions & Access
-

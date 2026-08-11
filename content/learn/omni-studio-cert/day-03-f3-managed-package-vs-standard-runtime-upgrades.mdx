@@ -35,43 +35,9 @@ tags: [OmniStudio, OmniStudio Fundamentals]
 - **Trap:** Believing manual-intervention upgrades happen without human action.
 - **Trap:** Mixing up 'upgrade' with 'deploy' — upgrades come from the vendor/platform; deploys are your own moves.
 
-## Practice Questions
-
-**Q: Which statement best describes Standard Runtime for OmniStudio components?**
-- Components ship inside a managed package
-- Components are native metadata that ride platform releases and deploy via source format
-- Components cannot be versioned
-- Upgrades always require manual intervention
-
-**Answer: B**
-
-Standard Runtime treats components as native metadata; upgrades ride platform releases automatically.
-
-**Q: An upgrade 'requires manual intervention.' What does that mean?**
-- The org upgrades itself with no action
-- Human review/actions (re-publish, validate) are required before the upgrade completes
-- The org must be rebuilt
-- Only FlexCards are affected
-
-**Answer: B**
-
-Manual-intervention upgrades need human steps before completion; automatic ones don't.
-
-**Q: A developer deploys OmniStudio components with `sf project deploy`. Which runtime does this imply?**
-- Managed Package Runtime
-- Standard Runtime
-- Neither — CLI doesn't apply
-- Legacy Vlocity package
-
-**Answer: B**
-
-Source-format CLI deployment is the Standard Runtime pattern; packages use package installs.
-
-
 ## Exam Tip
 
 One axis: native metadata + automatic upgrades = Standard; package delivery + manual steps = Managed Package Runtime.
 
 
 **Related requirements:** Day 5 — Implementation Tools, Day 6 — Versioning & Cloning, Day 45 — Publishing & Deployment Issues
-

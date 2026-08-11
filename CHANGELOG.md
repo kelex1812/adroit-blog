@@ -46,6 +46,69 @@ idempotent generator, `scripts/generate-omni-quizzes.py`.
   the generator is re-run after the lesson publishes (it reads MDX frontmatter slugs when present).
 - Lesson 46's questions are not pooled into any knowledge check (checks cover lessons 1–45 per spec).
 
+### Implement: lesson quiz + checks + exam + ordering/filter (t_9756b64d)
+
+Builds the interactive three-tier quiz experience on top of the generated JSON tiers:
+per-lesson quizzes, knowledge checks, the timed cert prep exam, lesson-number
+ordering, and a completion filter — all gated behind login (ADR-101/104/105).
+
+**What**
+
+- **Tier data-access (`src/lib/quiz.ts`)** — `getQuizForLesson`, `getKnowledgeChecks`,
+  `getKnowledgeCheck`, `getCertExam`, `parseQuizName` + `resolveQuizByName` with the same
+  fs-read + strict slug guard as the existing series quiz lookup.
+- **Gated lesson quiz** — lesson pages (`/learn/[series]/[slug]`) are session-gated server-side:
+  guests get the sign-up `GuestCTA` placeholder with ZERO question text in the HTML; authed users
+  get the interactive `LessonQuiz` (QuizWidget, 3 questions, best-score tracked).
+- **Knowledge check pages** (`/learn/[series]/check/[n]`, SSG 1..9) — 15-question QuizWidget,
+  pass threshold 80 (80 flat passes), server-rendered pass-status row, guest CTA.
+- **Cert prep exam** (`/learn/[series]/exam` + `ExamWidget`) — locked until all checks ≥80
+  (`ExamLocked` with per-check progress); 60 questions, 105:00 deadline countdown (drift-proof,
+  auto-submits at 0 via interval + visibilitychange), no per-question feedback, results with
+  score ring + pass/fail at ≥72%, unlimited retakes, server-side elapsed bound [0, 6300s].
+- **Batch grading API** (`POST /api/progress/quiz/batch`) — one request grades the whole exam
+  server-side, upserts 60 `quiz_attempt` rows + one `quiz_run` row (MAX best-score semantics),
+  origin/rate-limit/slug/index validation.
+- **Tier rollup API** (`GET /api/progress/quiz/tiers`) — per-check best scores + pass state,
+  exam best, lesson completion, unlock state; guests get safe zeros (never question text).
+- **Series page** — `CertReadiness` rollup (Lessons x/46 · Checks x/9 · Exam best y% + weighted
+  readiness bar), `CheckCardList` milestone rows, `ExamCard` (locked/unlocked + "Take the exam"),
+  legacy "Take the quiz" button removed.
+- **Ordering/filter (ADR-105)** — lesson listings sort by lesson number asc (learn.ts +
+  build-learn.js in sync, `lesson-sort.ts` helper); `LessonSortToggle` re-targeted to
+  lesson-number asc/desc; "Hide completed" filter on the syllabus (hydration-gated).
+- **Legacy quiz removal (Decision 8)** — `/learn/[series]/quiz` route deleted (returns 404),
+  series-root `content/omni-studio-cert/questions.json` retired, sitemap now emits check/exam
+  pages instead of quiz pages.
+- **Prose scrub** — `## Practice Questions` removed from all 8 published lesson MDX files (both
+  `**Q:**` and `**Q1.**` formats); question content lives in the sidecar JSON only.
+
+**Why**
+
+- Guests never see question content (content gating), authed users get tracked, server-graded
+  quizzes; the exam enforces the course-progression pattern (checks ≥80 unlock the timed exam,
+  ≥72% passes); lesson-number ordering matches the authored curriculum sequence.
+
+**Verification**
+
+- `tsc --noEmit` 0 errors, `eslint` 0 errors, `npm run build` clean (route map shows
+  check/exam pages, no quiz page), `npm test` 48/48 pass (9 files).
+- Live (dev server): lesson/check/exam pages return 200 with the guest CTA and zero question
+  text; legacy `/learn/omni-studio-cert/quiz` returns 404; series page renders lesson-number
+  order + "Hide completed" + milestone rows + exam card; `GET /api/progress/quiz/tiers` returns
+  zeroed progress for guests and 400 for a traversal series.
+- Regression test added for the sort toggle wiring (`SeriesSyllabus.test.tsx`): `?sort=desc`
+  re-sorts the syllabus (the toggle previously updated the URL but the list ignored it).
+
+**Known issues**
+
+- Exam `attemptCount` may over-count on a rare double-fire (server tolerates duplicate runs via
+  MAX best-score semantics — documented in the impl plan risks).
+- Unanswered exam questions are simply absent from the submitted answer list (graded as not
+  correct); a future UI could surface "N unanswered" before submit.
+- Authed end-to-end flows (quiz_attempt rows, check pass → exam unlock) require a real Supabase
+  session and were verified via API/route contract + unit tests, not a live login.
+
 ### Fix: motion QA findings — ShareBar hydration, score ring, read-sync (QA t_ea005360)
 
 Resolves all findings from zod's motion review: H-1 HIGH (ShareBar hydration mismatch + broken share URLs on every post page), M-1 MEDIUM (score ring fill never animates), M-2 MEDIUM (useReadProgress sync localStorage read → full hydration failure on post pages with read records), M-3 MEDIUM (Moment posture absent: no check-pop on read badge / MarkComplete, abrupt explanation reveal), L-1 LOW (no automated tests for animation behavior), L-2 LOW (LessonCard hover:pl-4 animates layout property).

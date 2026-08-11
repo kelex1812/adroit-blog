@@ -2,14 +2,20 @@ import fs from "fs";
 import path from "path";
 import { learnLessons, learnSeries } from "@/data/learn";
 import { LearnLesson, LearningSeries } from "@/data/types";
+import { sortLessonsByLessonNumber } from "@/lib/lesson-sort";
 
 /**
- * Learn tab data-access seam (ADR-002).
+ * Learn tab data-access seam (ADR-002, superseded for lesson listings by
+ * ADR-105).
  *
- * Ordering contract: ALL Learn listings render NEWEST FIRST (date desc).
- * build-learn.js enforces this at generation time; every getter below
- * re-sorts defensively so a component can never accidentally render
- * stale order. Invalid dates ("Date unknown") sort last, stable.
+ * Ordering contract:
+ *  - LESSON listings (series syllabus) are ordered by LESSON NUMBER ascending
+ *    (ADR-105, course progression pattern) — NOT date. build-learn.js enforces
+ *    this at generation time; getLessonsForSeries re-sorts defensively so a
+ *    component can never accidentally render stale order. Missing lesson
+ *    numbers (0) sort last, stable.
+ *  - SERIES-level listings (learn hub PathCards) stay activity-based (newest
+ *    lesson date desc) — unchanged.
  */
 
 function dateTime(date: string): number {
@@ -18,22 +24,15 @@ function dateTime(date: string): number {
   return Number.isNaN(t) ? -Infinity : t;
 }
 
-function newestFirst<T extends { date: string }>(items: T[]): T[] {
-  return items
-    .map((item, idx) => ({ item, idx }))
-    .sort((a, b) => {
-      const diff = dateTime(b.item.date) - dateTime(a.item.date);
-      if (diff !== 0) return diff;
-      return a.idx - b.idx;
-    })
-    .map((x) => x.item);
-}
-
 /** All series, newest-activity first (defensive re-sort by newest lesson). */
 export function getAllSeries(): LearningSeries[] {
   return [...learnSeries].sort((a, b) => {
-    const aNewest = a.lessons.length ? dateTime(a.lessons[0].date) : -Infinity;
-    const bNewest = b.lessons.length ? dateTime(b.lessons[0].date) : -Infinity;
+    const aNewest = a.lessons.length
+      ? Math.max(...a.lessons.map((l) => dateTime(l.date)))
+      : -Infinity;
+    const bNewest = b.lessons.length
+      ? Math.max(...b.lessons.map((l) => dateTime(l.date)))
+      : -Infinity;
     if (bNewest !== aNewest) return bNewest - aNewest;
     return a.slug.localeCompare(b.slug);
   });
@@ -43,11 +42,11 @@ export function getSeriesBySlug(slug: string): LearningSeries | undefined {
   return learnSeries.find((s) => s.slug === slug);
 }
 
-/** Lessons for a series, defensively NEWEST FIRST (requirement invariant). */
+/** Lessons for a series, defensively LESSON-NUMBER ASC (ADR-105). */
 export function getLessonsForSeries(slug: string): LearnLesson[] {
   const series = getSeriesBySlug(slug);
   if (!series) return [];
-  return newestFirst(series.lessons);
+  return sortLessonsByLessonNumber(series.lessons);
 }
 
 /** Scoped lookup — no cross-series slug bleed. */

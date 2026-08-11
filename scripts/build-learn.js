@@ -4,9 +4,10 @@
  * src/data/learn.ts with typed LearningSeries[] + flat LearnLesson[].
  *
  * Mirrors scripts/build-posts.js (which must remain untouched).
- * Ordering contract: ALL lesson listings newest-first (date desc);
- * invalid dates sort last, stable. Empty series dirs are emitted with
- * lessons: [] so pages render a graceful "coming soon" state.
+ * Ordering contract (ADR-105): per-series LESSON listings sort by LESSON
+ * NUMBER ascending (not date); SERIES-level hub ordering stays newest-activity
+ * (max lesson date desc). Empty series dirs are emitted with lessons: [] so
+ * pages render a graceful "coming soon" state.
  *
  * Run via package.json prebuild: node scripts/build-posts.js && node scripts/build-learn.js
  */
@@ -74,20 +75,28 @@ function humanize(slug) {
     .join(" ");
 }
 
-/** Sort lessons NEWEST FIRST (date desc). Invalid dates sort last, stable. */
-function sortLessonsNewestFirst(lessons) {
+/** Sort lessons by LESSON NUMBER ASC (ADR-105). Lesson 0 sorts last, stable. */
+function sortLessonsByLessonNumber(lessons) {
   return lessons
     .map((l, idx) => ({ l, idx }))
     .sort((a, b) => {
-      const da = parseDate(a.l.date);
-      const db = parseDate(b.l.date);
-      const ta = da ? da.getTime() : -Infinity;
-      const tb = db ? db.getTime() : -Infinity;
-      if (tb !== ta) return tb - ta;
+      const la = a.l.lesson > 0 ? a.l.lesson : Number.MAX_SAFE_INTEGER;
+      const lb = b.l.lesson > 0 ? b.l.lesson : Number.MAX_SAFE_INTEGER;
+      if (la !== lb) return la - lb;
       // ties → stable (original order)
       return a.idx - b.idx;
     })
     .map((x) => x.l);
+}
+
+/** Newest lesson date in a series (hub ordering), or -Infinity when empty. */
+function newestLessonTime(lessons) {
+  let max = -Infinity;
+  for (const l of lessons) {
+    const t = parseDate(l.date);
+    if (t && t.getTime() > max) max = t.getTime();
+  }
+  return max;
 }
 
 function readSeriesJson(dir) {
@@ -135,7 +144,7 @@ function buildSeries(seriesSlug, dir) {
     });
   }
 
-  const sorted = sortLessonsNewestFirst(lessons);
+  const sorted = sortLessonsByLessonNumber(lessons);
   const totalLessons = sorted.reduce((max, l) => Math.max(max, l.lesson), 0);
 
   return {
@@ -164,12 +173,11 @@ function build() {
 
   const series = dirs.map((slug) => buildSeries(slug, path.join(LEARN_DIR, slug)));
 
-  // Sort series: newest lesson date DESC, ties → slug ASC. Empty series sort last.
+  // Sort series: newest LESSON date DESC (hub PathCards), ties → slug ASC.
+  // Empty series sort last.
   series.sort((a, b) => {
-    const aNewest = a.lessons.length ? parseDate(a.lessons[0].date) : null;
-    const bNewest = b.lessons.length ? parseDate(b.lessons[0].date) : null;
-    const ta = aNewest ? aNewest.getTime() : -Infinity;
-    const tb = bNewest ? bNewest.getTime() : -Infinity;
+    const ta = newestLessonTime(a.lessons);
+    const tb = newestLessonTime(b.lessons);
     if (tb !== ta) return tb - ta;
     return a.slug.localeCompare(b.slug);
   });
@@ -204,3 +212,4 @@ export const learnLessons: LearnLesson[] = ${JSON.stringify(flat, null, 2)};
 }
 
 build();
+

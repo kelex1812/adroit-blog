@@ -24,6 +24,13 @@ interface QuizStatsProps {
    * a link (nested anchors are invalid HTML and trigger React hydration errors).
    */
   as?: "link" | "span";
+  /**
+   * Tier scope (ADR-101). "all" (default) aggregates the legacy series quiz
+   * (bare seriesSlug quizName). "lesson" | "check" | "exam" aggregate a single
+   * tier's quizName (`<series>:<scope>`). Kept for non-tier series that still
+   * use the legacy quiz page; tier series render CertReadiness instead.
+   */
+  scope?: "lesson" | "check" | "exam" | "all";
 }
 
 interface ServerStats {
@@ -35,8 +42,12 @@ export default function QuizStats({
   seriesSlug,
   onGradient = false,
   as = "link",
+  scope = "all",
 }: QuizStatsProps) {
-  const { progress, hydrated } = useQuizProgress(seriesSlug);
+  // Tier-scoped quizName (ADR-101): "all" keeps the legacy bare series name;
+  // a tier scope aggregates `<series>:<scope>` (e.g. "omni-studio-cert:exam").
+  const quizName = scope === "all" ? seriesSlug : `${seriesSlug}:${scope}`;
+  const { progress, hydrated } = useQuizProgress(quizName);
   const { user } = useAuth();
   const [server, setServer] = useState<ServerStats | null>(null);
 
@@ -49,7 +60,7 @@ export default function QuizStats({
     if (!user) return;
     (async () => {
       try {
-        const res = await fetch(`/api/progress/quiz/run?quizName=${encodeURIComponent(seriesSlug)}`, {
+        const res = await fetch(`/api/progress/quiz/run?quizName=${encodeURIComponent(quizName)}`, {
           cache: "no-store",
         });
         if (cancelled) return;
@@ -63,7 +74,7 @@ export default function QuizStats({
     return () => {
       cancelled = true;
     };
-  }, [user, seriesSlug]);
+  }, [user, quizName]);
 
   // Merge: server wins for authed users (cross-device), local as fallback
   const attempts = user ? (server?.attempts ?? localAttempts) : localAttempts;
@@ -111,7 +122,13 @@ export default function QuizStats({
 
   return (
     <Link
-      href={`/learn/${seriesSlug}/quiz`}
+      href={
+        scope === "exam"
+          ? `/learn/${seriesSlug}/exam`
+          : scope !== "all"
+            ? `/learn/${seriesSlug}/check/${scope}`
+            : `/learn/${seriesSlug}/quiz`
+      }
       className={`inline-flex items-center gap-2 font-mono text-[10.5px] font-semibold no-underline transition-colors duration-150 active:scale-[0.98] ${tone} ${
         onGradient ? "hover:text-white" : "hover:text-navy"
       }`}

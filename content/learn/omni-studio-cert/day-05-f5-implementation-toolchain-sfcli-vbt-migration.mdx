@@ -36,38 +36,6 @@ tags: [OmniStudio, OmniStudio Fundamentals]
 - **Trap:** Believing there is one CLI for everything — SFCLI (modern), VBT (legacy package), and migration tooling each have roles. Know which to use when.
 - **Trap:** Skipping version control — the exam expects a lifecycle, not one-off pushes. Develop in sandbox, retrieve to VC, deploy through environments.
 
-## Practice Questions
-
-**Q: Which tools support the end-to-end OmniStudio implementation process?**
-- Data Loader and Workbench
-- Salesforce CLI (SFCLI), VBT, and Migration Tooling
-- Apex Test Runner only
-- Reports and Dashboards
-
-**Answer: B**
-
-The exam guide names SFCLI, VBT, and Migration as implementation tooling.
-
-**Q: How do you move OmniStudio component DEFINITIONS between orgs?**
-- Data Loader export/import
-- Metadata tooling: SF CLI source deploy or VBT package deploy
-- Apex batch jobs
-- Email the JSON
-
-**Answer: B**
-
-Components are metadata — they move with metadata/CLI tooling, not data loaders.
-
-**Q: In a Managed Package Runtime org, which tool is commonly used to pack and deploy OmniStudio components?**
-- VBT (Vlocity Build Tool)
-- Data Loader
-- Workbench
-- Reports
-
-**Answer: A**
-
-VBT handles package-style component bundles in managed-package orgs.
-
 ## Exam Tip
 
 Metadata → SFCLI/VBT. Records → Data Loader / Data Mapper Load. Know which side your artifact lives on.

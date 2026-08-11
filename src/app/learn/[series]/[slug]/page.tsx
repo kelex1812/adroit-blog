@@ -19,10 +19,16 @@ import { linkifySourceCitations } from "@/lib/mdx";
 import { buildMetadata, siteConfig } from "@/lib/seo";
 import MarkComplete from "@/components/Progress/MarkComplete";
 import LessonCompleteProgress from "@/components/Progress/LessonCompleteProgress";
+import LessonQuiz from "@/components/Progress/LessonQuiz";
+import GuestCTA from "@/components/Progress/GuestCTA";
+import { getQuizForLesson } from "@/lib/quiz";
+import { getSupabaseServerClient } from "@/lib/supabase/server";
 
 interface Props {
   params: Promise<{ series: string; slug: string }>;
 }
+
+export const dynamic = "force-dynamic";
 
 export async function generateStaticParams() {
   return learnSeries.flatMap((s) =>
@@ -59,6 +65,14 @@ export default async function LessonPage({ params }: Props) {
   const mdxBody = linkifySourceCitations(stripMDXFrontmatter(mdxContent));
 
   const lessons = getLessonsForSeries(series);
+
+  // Server-side session gate (ADR-104): guests NEVER receive question text —
+  // the quiz JSON is loaded only in the authed branch. Lesson pages become
+  // dynamic-ish (session read) — accepted trade-off per the arch plan.
+  const supabase = await getSupabaseServerClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  const isAuthed = Boolean(user);
+  const lessonQuiz = isAuthed ? getQuizForLesson(series, slug) : null;
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -155,6 +169,20 @@ export default async function LessonPage({ params }: Props) {
         {/* Article Body — rendered from MDX content */}
         <article className="article-body max-w-[720px] mx-auto px-6 pb-16">
           <MDXArticle mdx={mdxBody} />
+
+          {/* Gated Practice Questions section — guests get the CTA placeholder,
+              authed users get the interactive LessonQuiz; authed with no
+              questions file renders nothing (copy deck §1). */}
+          {!isAuthed ? (
+            <GuestCTA tier="lesson" ariaLabel="Practice questions locked" />
+          ) : lessonQuiz ? (
+            <LessonQuiz
+              quizName={lessonQuiz.quizName}
+              lessonNumber={lesson.lesson}
+              questions={lessonQuiz.questions}
+              backHref={`/learn/${series}/${slug}`}
+            />
+          ) : null}
         </article>
 
         {/* Prev/Next within series (authored sequence) */}

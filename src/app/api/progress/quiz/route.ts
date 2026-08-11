@@ -12,14 +12,14 @@
  */
 import { NextRequest, NextResponse } from "next/server";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
-import { getQuizForSeries } from "@/lib/quiz";
+import { resolveQuizByName } from "@/lib/quiz";
 import {
   checkOrigin,
   checkRateLimit,
   getClientIp,
   sanitiseDbError,
   validateIndex,
-  validateSlug,
+  validateQuizName,
 } from "@/lib/api-security";
 
 interface QuizPayload {
@@ -51,14 +51,14 @@ export async function POST(req: NextRequest) {
 
     const { quizName, questionIndex, userAnswerIndex } = body;
 
-    /* --- Slug validation (F2) --- */
-    const quizErr = validateSlug(quizName, "quizName");
+    /* --- Slug validation (F2) — tier quiz names carry colons (ADR-101) --- */
+    const quizErr = validateQuizName(quizName, "quizName");
     if (quizErr) {
       return NextResponse.json({ error: quizErr }, { status: 400 });
     }
 
     /* --- Load canonical quiz and validate indexes (F3) --- */
-    const quiz = getQuizForSeries(quizName);
+    const quiz = resolveQuizByName(quizName);
     if (!quiz) {
       return NextResponse.json({ status: "ok" }); // unknown quiz → client-only
     }
