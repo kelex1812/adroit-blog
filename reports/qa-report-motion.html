@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>QA Report — Motion &amp; Animation (Life &amp; Depth) — Adroit Blog</title>
+<style>
+  body { font-family: -apple-system, 'Inter', system-ui, sans-serif; background: #F7F8FA; color: #1F2937; margin: 0; padding: 32px 16px; line-height: 1.55; }
+  .wrap { max-width: 900px; margin: 0 auto; }
+  h1 { font-size: 1.5rem; margin: 0 0 4px; letter-spacing: -0.02em; }
+  .kicker { font-family: ui-monospace, monospace; font-size: 11px; font-weight: 700; color: #047857; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
+  .sub { color: #6B7280; font-size: 13px; margin-bottom: 24px; }
+  .card { background: #fff; border: 1px solid #E5E7EB; border-radius: 12px; padding: 20px 24px; margin-bottom: 20px; }
+  .card h2 { font-size: 1rem; margin: 0 0 12px; letter-spacing: -0.01em; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid #F3F4F6; vertical-align: top; }
+  th { font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: #6B7280; }
+  .pass { color: #047857; font-weight: 700; }
+  .fail { color: #B91C1C; font-weight: 700; }
+  .warn { color: #B45309; font-weight: 700; }
+  .sev-high { background: #FEF2F2; color: #B91C1C; font-weight: 700; }
+  .sev-med { background: #FFFBEB; color: #B45309; font-weight: 700; }
+  .sev-low { background: #F3F4F6; color: #4B5563; font-weight: 700; }
+  code { font-family: ui-monospace, SF Mono, monospace; font-size: 12px; background: #F3F4F6; padding: 1px 5px; border-radius: 4px; }
+  .verdict { font-size: 1.05rem; font-weight: 800; padding: 14px 18px; border-radius: 10px; }
+  .verdict.approve { background: #ECFDF5; border: 1px solid #6EE7B7; color: #047857; }
+  .verdict.reject { background: #FEF2F2; border: 1px solid #FCA5A5; color: #B91C1C; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 640px) { .grid2 { grid-template-columns: 1fr; } }
+  ul { margin: 6px 0 6px 20px; font-size: 13px; }
+  li { margin-bottom: 5px; }
+  .mono { font-family: ui-monospace, monospace; font-size: 12px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="kicker">Zod · QA Reviewer · t_ea005360 (re-review)</div>
+  <h1>Motion &amp; Animation Review — Life &amp; Depth (Adroit Blog)</h1>
+  <p class="sub">Lane: MOTION (decomposed from t_dfa1c8cd) · Branch: main @ <b>c51caf2</b> (fix task t_588dfe46, steel) · Re-reviewed live on Next.js 16.3.0 dev (Turbopack) after fixes · 2026-08-06</p>
+
+  <div class="card">
+    <div class="verdict approve">VERDICT: APPROVED — 0 open findings (1 HIGH / 3 MEDIUM / 2 LOW from prior run all resolved and verified)</div>
+    <p style="font-size:13px;margin:12px 0 0;">Prior run (HEAD 7ef842c) blocked on 6 findings. Fix commit <code>c51caf2</code> resolves every one: ShareBar hydration + share URLs (H1), score-ring Moment fill (M1), read/lesson hydration-safe hooks (M2), Moment posture check-pop + reveal-up (M3), automated animation tests (L1, 28 tests), and LessonCard transform hover (L2). All re-verified live this run.</p>
+  </div>
+
+  <div class="card">
+    <h2>Acceptance Criteria Checklist</h2>
+    <table>
+      <tr><th>Criterion</th><th>Status</th><th>Evidence</th></tr>
+      <tr><td>Transitions run smoothly, no jank</td><td class="pass">PASS</td><td>All motion is transform/opacity/color on compositor-friendly properties. L2 (hover:pl-4 layout animation) removed → <code>hover:translate-x-1</code> with scoped <code>transition-[background-color,transform]</code>.</td></tr>
+      <tr><td>Hover effects work (lift, zoom, arrow, tint)</td><td class="pass">PASS</td><td>Live verified: card <code>translate 0px→-4px</code>, image <code>scale 1.04</code> (0.5s), arrow slide (0.3s), border tint, PathCard chip slide.</td></tr>
+      <tr><td>Scroll-triggered animations</td><td class="pass">PASS</td><td>ReadingProgress bar: passive listener, <code>width 0.15s</code>, verified 0% → 63.2% on scroll.</td></tr>
+      <tr><td>Entrance animations</td><td class="pass">PASS</td><td>Hero fade-in 0.6s cubic-bezier(0.25,1,0.5,1) <code>fill both</code> on /blog + /learn — no CLS.</td></tr>
+      <tr><td>Carousels</td><td class="pass">N/A</td><td>No carousels exist in the app (none required by design).</td></tr>
+      <tr><td>Motion does not block content interaction</td><td class="pass">PASS</td><td>All hover/entrance effects non-blocking; no fixed overlays; reduced-motion collapses durations.</td></tr>
+      <tr><td>Respects prefers-reduced-motion</td><td class="pass">PASS</td><td>Global block globals.css:349 sets <code>animation-duration/transition-duration 0.01ms !important</code> + <code>transform: none !important</code>. All new motion (check-pop, reveal-up, ring transition) is CSS-driven — nothing bypasses; unit tests assert no inline-style JS animation.</td></tr>
+      <tr><td>No layout shift / accessibility issues from motion</td><td class="pass">PASS</td><td>Hydration failures eliminated (H1/M2 fixed) — no tree regeneration/flash; read badge <code>aria-hidden</code>, explanation panel <code>role="status"</code>.</td></tr>
+      <tr><td>Automated tests around animation behavior</td><td class="pass">PASS</td><td>10 new tests across 4 files; suite 28 pass (was 18): ShareBar SSR/populate, LessonCard transform, useReadProgress hydration, QuizWidget ring/reveal/reduced-motion.</td></tr>
+      <tr><td>Console warnings / motion that fails to complete</td><td class="pass">PASS</td><td>Zero hydration errors on /blog, post detail (with+without read record), /learn, quiz. Score ring animates 0→final with spec spring. Only dev-mode LCP loading warning remains (perf lane).</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2>Resolved Findings (prior run → fix verification)</h2>
+    <table>
+      <tr><th>#</th><th>Severity</th><th>File</th><th>Resolution &amp; Verification</th></tr>
+      <tr>
+        <td>H1</td><td class="sev-high">HIGH</td><td><code>ShareBar.tsx</code></td>
+        <td>Fixed: <code>currentUrl</code> state starts empty; <code>window.location.href</code> captured in post-mount effect; Facebook builder reuses the hydrated URL. Live: all 3 share links carry full encoded URL (no empty <code>?text=/?url=/?u=</code>), console zero hydration errors.</td>
+      </tr>
+      <tr>
+        <td>M1</td><td class="sev-med">MEDIUM</td><td><code>QuizWidget.tsx</code></td>
+        <td>Fixed: <code>ringFilled</code> starts false (dasharray 0), flips via rAF after results mount → real from→to pair; easing upgraded to spring <code>cubic-bezier(0.34,1.56,0.64,1)</code> 450ms; retake re-arms. Live: ring at final <code>339.3 339.3</code> for 100% seed, computed style transition <code>stroke-dasharray 0.45s</code> + spring. Unit test asserts 0→final.</td>
+      </tr>
+      <tr>
+        <td>M2</td><td class="sev-med">MEDIUM</td><td><code>useReadProgress.ts</code>, <code>useLessonProgress.ts</code></td>
+        <td>Fixed: no sync localStorage read in <code>useState</code> initializer; stored record read in post-mount effect (same pattern as useQuizProgress QA F-1). Live: seeded read record → post page hydrates cleanly, shows "Read" (progressbar 1/1), zero hydration errors. SSR test renders unread even when record exists.</td>
+      </tr>
+      <tr>
+        <td>M3</td><td class="sev-med">MEDIUM</td><td><code>PostCard.tsx</code>, <code>MarkComplete.tsx</code>, <code>QuizWidget.tsx</code></td>
+        <td>Fixed: <code>check-pop</code> keyframes (scale 0.6→1.1→1, 450ms spring, backwards fill) on PostCard read badge + MarkComplete toggle; <code>reveal-up</code> (fade + rise 8px, 450ms spring) on explanation panel. Live: read badge carries <code>check-pop</code> with SVG; MarkComplete toggled → <code>check-pop border-green-500</code>; explanation panel class <code>reveal-up</code>.</td>
+      </tr>
+      <tr>
+        <td>L1</td><td class="sev-low">LOW</td><td>tests</td>
+        <td>Fixed: 10 tests added (ShareBar.test.tsx, LessonCard.test.tsx, useReadProgress.test.tsx, QuizWidget.test.tsx extended). <code>npm test</code> → 28 pass / 6 files. Reduced-motion regression guard asserts CSS-driven motion (no inline styles).</td>
+      </tr>
+      <tr>
+        <td>L2</td><td class="sev-low">LOW</td><td><code>LessonCard.tsx</code></td>
+        <td>Fixed: <code>hover:pl-4</code> → <code>hover:translate-x-1</code>, transition scoped to <code>background-color,transform</code> (no <code>transition-all</code>). Live: all 4 lesson links carry transform classes; unit test guards against regression.</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2>Code Quality</h2>
+    <p><b>PASS</b> — <code>tsc --noEmit</code> clean (exit 0), <code>eslint</code> clean (exit 0), verified this run. Fix follows the repo's established hydration-safe pattern (QA F-1) consistently across ShareBar/useReadProgress/useLessonProgress/useQuizProgress. Motion discipline maintained: no JS/WAAPI animation, CSS-only (global reduced-motion covers everything), <code>aria-hidden</code> on decorative badges, <code>role="status"</code> live region for quiz explanation. <code>react-hooks/set-state-in-effect</code> suppression used only for the documented one-time post-mount external-store reads.</p>
+  </div>
+
+  <div class="card">
+    <h2>Test Coverage</h2>
+    <p><b>28 tests pass (6 files)</b> — was 18. Animation-relevant: ShareBar SSR-empty + post-mount populate (2), LessonCard transform-not-layout (1), useReadProgress SSR unread + hydrate + toggle (4), QuizWidget ring 0→final + reveal-up class + reduced-motion structural guard (3 new). Suite run: <code>vitest run</code> → 6 files, 28 passed, 0 failed (929ms).</p>
+  </div>
+
+  <div class="card">
+    <h2>Upstream Deliverables Verified</h2>
+    <table>
+      <tr><th>Deliverable</th><th>Status</th><th>Notes</th></tr>
+      <tr><td>globals.css (Moment keyframes + reduced-motion block)</td><td class="pass">PASS</td><td>check-pop/reveal-up keyframes match design §07 (450ms spring, backwards); global reduce block neutralises them.</td></tr>
+      <tr><td>ShareBar.tsx</td><td class="pass">PASS</td><td>H1 fixed — hydrated URL in all share links, no hydration error.</td></tr>
+      <tr><td>QuizWidget.tsx</td><td class="pass">PASS</td><td>M1 ring animates 0→final with spec spring; M3 reveal-up on explanation.</td></tr>
+      <tr><td>useReadProgress.ts / useLessonProgress.ts</td><td class="pass">PASS</td><td>M2 hydration-safe; live read-record page hydrates cleanly.</td></tr>
+      <tr><td>PostCard.tsx / MarkComplete.tsx</td><td class="pass">PASS</td><td>M3 check-pop verified live on read badge + completed toggle.</td></tr>
+      <tr><td>LessonCard.tsx</td><td class="pass">PASS</td><td>L2 transform hover; zero nested anchors maintained (prior fix 7ef842c).</td></tr>
+      <tr><td>Tests (4 files, 10 cases)</td><td class="pass">PASS</td><td>L1 — 28 total pass, covering the exact regression classes from the findings.</td></tr>
+      <tr><td>CHANGELOG.md</td><td class="pass">PASS</td><td>Updated with full motion-fix entry (H1/M1/M2/M3/L1/L2).</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2>Cross-Lane Notes (not motion findings)</h2>
+    <ul>
+      <li><b>Progress lane:</b> banner QA flagged /api/progress/read POST/DELETE 400s for <code>blog/&lt;slug&gt;</code> contentSlugs (authed read sync) — separate lane, not part of this motion fix.</li>
+      <li><b>Perf lane (sato):</b> Next.js LCP warning on above-the-fold banner images (add <code>loading="eager"</code>) on /blog + post detail — dev overlay shows 2 issues, both this class.</li>
+      <li><b>Quizzes lane:</b> only omni-studio-cert ships a quiz; agentic-ai / salesforce-architect quiz routes 404 by design (content backlog).</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>Final Recommendation</h2>
+    <p><b>APPROVE.</b> All 6 findings from the prior motion review are resolved in <code>c51caf2</code> and re-verified live (ShareBar URLs populate post-mount, zero hydration errors with seeded read records, score ring animates to final with the §07 spring, check-pop/reveal-up classes present, LessonCard transform hover, 28/28 tests). tsc/eslint clean. Hand off to alpha (deploy).</p>
+    <p class="mono" style="color:#6B7280;">Report: reports/qa-report-motion.html · Fix commit: c51caf2 (t_588dfe46, steel) · Reviewed: 2026-08-06 · Evidence screenshots: reports/hover-postcard.png, reports/mobile-motion-blog.png</p>
+  </div>
+</div>
+</body>
+</html>

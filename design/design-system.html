@@ -384,6 +384,144 @@
     </div>
   </section>
 
+  <!-- ═══════════════════════════════════════════════════════════
+      t_0809d7ff EXECUTION — Quiz Tiers + Gating + Certificate
+      ═══════════════════════════════════════════════════════════ -->
+
+  <section style="margin-top:56px; padding-top:24px; border-top:2px solid var(--navy);">
+    <div class="kicker" style="color:var(--red); font-family:var(--font-mono); font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; margin-bottom:6px;">t_0809d7ff · Execution (quiz tiers)</div>
+    <h1 style="font-size:1.5rem; font-weight:800; color:var(--navy); letter-spacing:-0.02em;">Quiz Tiers + Gating + Certificate</h1>
+    <p class="sec-sub" style="margin-top:8px;">"One quiz system, three registers of pressure." Built on the discovery brief (t_e9c5c72d): the lesson quiz is a friendly practice card, the knowledge check is a milestone with a pass badge, and the exam is a navy-timered, no-feedback gauntlet that resolves into a score-ring verdict. The certificate is the quiet, formal reward. Surfaces: Operate (quiz flows), Command/Operate (exam), Monitor (check list + locked state), Decide/Learn (guest CTA + certificate).</p>
+  </section>
+
+  <!-- 13. Tier tokens -->
+  <section>
+    <h2 class="sec"><span class="num">13</span> Quiz Tier Tokens (additive)</h2>
+    <p class="sec-sub">Full draft with usage examples in <b>design/discovery/design-tokens-quiz-tiers.css</b>. One system, three registers: red = practice/motion/current, emerald = done/pass (existing --color-read), navy = exam chrome + gates.</p>
+    <div class="tokens">
+      <div class="token-card">
+        <div class="swatch-row"><div class="swatch" style="background:#0B1D3A;"></div><div><h4>Exam timer / gate</h4><div class="hex">--exam-timer-bg · --lock-panel-bg</div></div></div>
+        <p>Navy chrome for the sticky timer bar and the locked-exam gate panel — signals "gate", distinct from white quiz cards.</p>
+      </div>
+      <div class="token-card">
+        <div class="swatch-row"><div class="swatch" style="background:#10B981;"></div><div><h4>Pass / unlock</h4><div class="hex">--tier-pass · --lock-progress-fill</div></div></div>
+        <p>Emerald for passed checks, unlock progress, and the pass ring (≥72% exam, ≥80% check). Never confused with brand red.</p>
+      </div>
+      <div class="token-card">
+        <div class="swatch-row"><div class="swatch" style="background:#E8354A;"></div><div><h4>Timer warning</h4><div class="hex">--exam-timer-warn #E8354A · warn-strong #FF6B7D</div></div></div>
+        <p>Countdown flips red + soft pulse under 10:00; stronger red + faster pulse under 02:00. Respects prefers-reduced-motion.</p>
+      </div>
+      <div class="token-card">
+        <div class="swatch-row"><div class="swatch" style="background:#FFFDF8; border:1px solid #0B1D3A;"></div><div><h4>Certificate paper</h4><div class="hex">--cert-paper #FFFDF8 · navy double frame</div></div></div>
+        <p>Cream paper, outer 2px navy + inner 1px hairline navy/30, red SVG seal. Print: @page margin 0 + print-color-adjust exact.</p>
+      </div>
+      <div class="token-card">
+        <div class="swatch-row"><div class="swatch" style="background:#ECFDF5; border:1px solid #10B981;"></div><div><h4>Check pass pill</h4><div class="hex">--tier-pass-bg #ECFDF5 · --tier-fail-bg #FDE8EB</div></div></div>
+        <p>Status pills: emerald Passed · 92% / red 73% · retake / neutral Not taken. Quiet one-line Monitor signals.</p>
+      </div>
+      <div class="token-card">
+        <div class="swatch-row"><div class="swatch" style="background:#C8102E;"></div><div><h4>Lesson segment fill</h4><div class="hex">--tier-lesson-kicker --color-red</div></div></div>
+        <p>Lesson + check quiz: red segment fill for answered (motion color), emerald for correct — QuizWidget behavior unchanged.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 14. Component gallery — quiz tiers -->
+  <section>
+    <h2 class="sec"><span class="num">14</span> Component Gallery — Quiz Tiers</h2>
+    <p class="sec-sub">Browser-verified renders of all six new mockups (t_0809d7ff). Live interactions (quiz flow, timer, score ring spring) work in the HTML files.</p>
+    <div class="gallery">
+      <div class="shot">
+        <img src="screenshots/quiz-tier-lesson-quiz.png" alt="Lesson quiz embed mockup" />
+        <div class="shot-cap"><b>Lesson quiz embed</b> — the Practice Questions section inside the article column (Operate inside Decide/Learn). Section rule + mono header, then the QuizWidget card verbatim (red tick, segment bar, radio rows, Why panel, score ring). Component lab shows submitted-correct/wrong, results pass/keep-going, grading, empty.</div>
+      </div>
+      <div class="shot">
+        <img src="screenshots/quiz-tier-check.png" alt="Knowledge check page mockup" />
+        <div class="shot-cap"><b>Knowledge check page + check card list</b> — milestone kicker "Knowledge Check 3 · Lessons 11–15", one-line pass-status row (Monitor), 15-segment bar, results with pass (emerald ring ≥80) / fail (red ring + Keep going) verdicts, 80.0 boundary shown as Passed. Series page list: 9 status rows (K1–K9) with passed/retake/not-taken pills.</div>
+      </div>
+      <div class="shot">
+        <img src="screenshots/quiz-tier-exam.png" alt="Cert prep exam mockup" />
+        <div class="shot-cap"><b>Cert prep exam (Command/Operate)</b> — sticky navy timer bar with JetBrains Mono tabular-nums countdown (105:00 → 00:00), red pulse warning states, inline "Auto-submits at 00:00". No-feedback question flow: 60-segment bar, navy answered fill, Flag for review, Next/Submit exam. Results: score ring (emerald pass ≥72 / red fail), verdict pill, 60-item review list with flagged tags.</div>
+      </div>
+      <div class="shot">
+        <img src="screenshots/quiz-tier-guest-cta.png" alt="Guest CTA placeholder mockup" />
+        <div class="shot-cap"><b>Guest CTA placeholder (gating)</b> — same card silhouette as the quiz (max-w-640, rounded-20, p-7) so pages don't jump. Lock glyph in 48px navy ring, exact headline "Test what you learned and track your progress by creating an account and logging in!", benefit line per tier, Create an account → /login?next= + Log in link. Zero question text in HTML.</div>
+      </div>
+      <div class="shot">
+        <img src="screenshots/quiz-tier-exam-locked.png" alt="Exam locked state mockup" />
+        <div class="shot-cap"><b>Exam locked state (Monitor)</b> — navy gate panel, "Unlock: complete all 9 knowledge checks with 80%+", "Checks passed 5/9" + emerald progress, per-check rows (Passed · 92% / 73% · 80% required / 80% required) as links to fix failed checks. Series-page exam card variants: locked (disabled button) vs unlocked ("Take the exam →").</div>
+      </div>
+      <div class="shot">
+        <img src="screenshots/quiz-tier-certificate.png" alt="Certificate mockup" />
+        <div class="shot-cap"><b>Certificate (ceremonial document — NO image generation)</b> — cream paper #FFFDF8, navy double frame, "CERTIFICATE OF COMPLETION" display, recipient name, mono metadata (course · date · score), red SVG seal (A), signature block. Print CSS hides nav/footer, keeps navy/red exact. Not-eligible state explains the rule + per-condition checklist.</div>
+      </div>
+    </div>
+    <p class="sec-sub" style="margin-top:16px;">Also captured: <b>screenshots/quiz-tier-check-list.png</b> (check card list detail). Copy for every state is in <b>copy-deck-quiz-tiers.md</b>.</p>
+  </section>
+
+  <!-- 15. State matrix — quiz tiers -->
+  <section>
+    <h2 class="sec"><span class="num">15</span> State Matrix — Quiz Tiers</h2>
+    <table>
+      <tr><th>Component</th><th>Default</th><th>Interaction / Selected</th><th>Submitted / Verdict</th><th>Gate / Edge</th></tr>
+      <tr><td><b>Lesson quiz</b></td><td>radio rows, disabled Submit</td><td>selected — navy border + fill, Submit enabled</td><td>correct (emerald) / wrong (red) + Why panel reveal</td><td>guest → CTA; empty file → render nothing</td></tr>
+      <tr><td><b>Check page</b></td><td>milestone kicker + pending pass-row</td><td>same widget flow</td><td>Pass ≥80 (emerald ring + Passed) / fail (red ring + Keep going) / 80.0 flat counts as Passed</td><td>guest → CTA</td></tr>
+      <tr><td><b>Check list row</b></td><td>mono K chip + title</td><td>hover bg + arrow slide</td><td>Passed · 92% (emerald) / 73% · retake (red) / Not taken (neutral)</td><td>guest sees rows, links lead to CTA page</td></tr>
+      <tr><td><b>Exam timer</b></td><td>navy bar, white mono 105:00</td><td>—</td><td>&lt;10:00 red pulse · &lt;02:00 strong red</td><td>auto-submit at 00:00 (inline note); reduced-motion disables pulse</td></tr>
+      <tr><td><b>Exam flow</b></td><td>60-segment bar, gray</td><td>selected option navy; answered segment fills navy (NO correctness color)</td><td>—</td><td>no feedback during run; flag for review; Submit exam on last</td></tr>
+      <tr><td><b>Exam results</b></td><td>—</td><td>—</td><td>Pass ≥72 emerald ring + verdict / fail red ring; review list with flagged tags</td><td>retake unlimited, best score tracked</td></tr>
+      <tr><td><b>Guest CTA</b></td><td>card silhouette = quiz card</td><td>Create an account hover lift + arrow</td><td>—</td><td>kicker per tier; ZERO question text in HTML</td></tr>
+      <tr><td><b>Locked exam</b></td><td>navy panel, headline + progress</td><td>check rows hover + arrow (links)</td><td>Passed · 92% rows emerald</td><td>no disabled Start button — the gate IS the list; summary count matches passed rows</td></tr>
+      <tr><td><b>Certificate</b></td><td>cream paper + navy frame</td><td>Print button</td><td>—</td><td>not-eligible state shows rule + checklist; print hides chrome</td></tr>
+    </table>
+  </section>
+
+  <!-- 16. Handoff — quiz tiers -->
+  <section>
+    <h2 class="sec"><span class="num">16</span> Handoff to Steel — Quiz Tiers</h2>
+    <div class="handoff">
+      <h3>Steel needs to build</h3>
+      <ul>
+        <li><span class="arrow">→</span> Lesson quiz embed: section rule + mono "Practice Questions" header, then <code>&lt;LessonQuiz&gt;</code> reusing <code>QuizWidget</code> + <code>useQuizProgress</code> with <code>quizName = omni-studio-cert:lesson:&lt;slug&gt;</code>; server-side session gate (guest → CTA, no question content in HTML)</li>
+        <li><span class="arrow">→</span> Check pages <code>/learn/[series]/check/[n]</code>: milestone kicker + one-line pass-status row (pending neutral / passed emerald), 15-q QuizWidget; "passed" = best score ≥ 80 (80.0 passes); results verdict pass/fail</li>
+        <li><span class="arrow">→</span> Series page: check card list (9 rows, mono K chips + status pills) + replace "Take the quiz" with exam card (locked/unlocked variants)</li>
+        <li><span class="arrow">→</span> <code>ExamWidget</code> (NEW sibling — not a fork): sticky navy timer bar, 60-segment no-feedback bar, Flag for review, batch submit, results ring + review; timer respects <code>prefers-reduced-motion</code>; auto-submit note inline</li>
+        <li><span class="arrow">→</span> Exam lock: server-side gate (all 9 checks best ≥80 → unlocked); locked panel with per-check rows + "Checks passed X/9" progress; guests → CTA</li>
+        <li><span class="arrow">→</span> Guest CTA component: quiz-card silhouette, lock glyph ring, exact copy from <b>copy-deck-quiz-tiers.md</b>, real links to <code>/login?next=</code></li>
+        <li><span class="arrow">→</span> Certificate: server-validated eligibility (46 lessons + exam best ≥72%), printable document (navy frame, cream paper, red SVG seal), print CSS (hide .no-print, @page margin 0, print-color-adjust exact); not-eligible state</li>
+        <li><span class="arrow">→</span> Lesson ordering by lesson number asc/desc + "Hide completed" filter (SortToggle retarget); hydration-safe filter</li>
+        <li><span class="arrow">→</span> Tokens: apply <code>design/discovery/design-tokens-quiz-tiers.css</code> into Tailwind v4 <code>@theme inline</code></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 17. Files — quiz tiers -->
+  <section>
+    <h2 class="sec"><span class="num">17</span> Deliverable Files (t_0809d7ff)</h2>
+    <div class="files">
+      <a href="discovery/direction-brief-quiz-tiers.md">discovery/direction-brief-quiz-tiers.md</a>
+      <a href="discovery/design-tokens-quiz-tiers.css">discovery/design-tokens-quiz-tiers.css</a>
+      <a href="mockup-lesson-quiz.html">mockup-lesson-quiz.html</a>
+      <a href="mockup-check.html">mockup-check.html</a>
+      <a href="mockup-exam.html">mockup-exam.html</a>
+      <a href="mockup-guest-cta.html">mockup-guest-cta.html</a>
+      <a href="mockup-exam-locked.html">mockup-exam-locked.html</a>
+      <a href="mockup-certificate.html">mockup-certificate.html</a>
+      <a href="copy-deck-quiz-tiers.md">copy-deck-quiz-tiers.md</a>
+      <a href="screenshots/quiz-tier-lesson-quiz.png">screenshot: lesson quiz</a>
+      <a href="screenshots/quiz-tier-check.png">screenshot: check</a>
+      <a href="screenshots/quiz-tier-check-list.png">screenshot: check list</a>
+      <a href="screenshots/quiz-tier-exam.png">screenshot: exam</a>
+      <a href="screenshots/quiz-tier-guest-cta.png">screenshot: guest CTA</a>
+      <a href="screenshots/quiz-tier-exam-locked.png">screenshot: exam locked</a>
+      <a href="screenshots/quiz-tier-certificate.png">screenshot: certificate</a>
+      <a href="assets/quiz-tier-lesson-banner.png">asset: lesson banner (generated)</a>
+      <a href="assets/quiz-tier-exam-texture.png">asset: exam texture (generated)</a>
+      <a href="discovery/moodboards/moodboard-exam.png">moodboard: exam</a>
+      <a href="discovery/moodboards/moodboard-certificate.png">moodboard: certificate</a>
+    </div>
+  </section>
+
 </div>
 </body>
 </html>

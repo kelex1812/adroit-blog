@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QA Report — Life &amp; Depth Blog Quizzes (t_51d10f42) — Re-review #2567</title>
+<style>
+  :root { --navy:#0B1D3A; --red:#C8102E; --emerald:#10B981; --gray:#6B7280; --bg:#F7F7F5; }
+  * { box-sizing:border-box; }
+  body { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; background:var(--bg); color:#111827; margin:0; padding:32px 16px; line-height:1.55; }
+  .wrap { max-width:960px; margin:0 auto; }
+  h1 { font-size:1.6rem; color:var(--navy); margin:0 0 4px; }
+  h2 { font-size:1.15rem; color:var(--navy); margin:32px 0 12px; border-bottom:2px solid #E5E7EB; padding-bottom:6px; }
+  .sub { color:var(--gray); font-size:.9rem; margin-bottom:24px; }
+  .badge { display:inline-block; padding:4px 12px; border-radius:999px; font-weight:700; font-size:.8rem; color:#fff; }
+  .badge.fail { background:var(--red); }
+  .badge.warn { background:#D97706; }
+  .badge.pass { background:var(--emerald); }
+  .card { background:#fff; border:1px solid #E5E7EB; border-radius:12px; padding:20px 24px; margin-bottom:16px; box-shadow:0 1px 2px rgba(0,0,0,.04); }
+  table { width:100%; border-collapse:collapse; font-size:.88rem; }
+  th { text-align:left; background:#F3F4F6; padding:8px 10px; border-bottom:2px solid #E5E7EB; }
+  td { padding:8px 10px; border-bottom:1px solid #F3F4F6; vertical-align:top; }
+  .sev { font-weight:700; }
+  .sev.high { color:var(--red); } .sev.medium { color:#D97706; } .sev.low { color:var(--gray); }
+  .pass { color:var(--emerald); font-weight:700; } .fail { color:var(--red); font-weight:700; }
+  code { background:#F3F4F6; padding:1px 5px; border-radius:4px; font-size:.85em; }
+  .mono { font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:.82rem; background:#F3F4F6; padding:10px 12px; border-radius:8px; overflow-x:auto; white-space:pre-wrap; }
+  ul { margin:6px 0; padding-left:20px; }
+  .kicker { font-family:ui-monospace,monospace; font-size:.75rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--red); margin-bottom:6px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="kicker">Adroit Consulting · QA Review</div>
+  <h1>Life &amp; Depth Blog — Interactive Quiz QA Report (Re-review)</h1>
+  <div class="sub">Task t_51d10f42 (quizzes lane) · Tenant adroit-blog · Reviewed by Zod (QA) · 2026-08-06 · HEAD 2d44ed0 (fix commit 71aa3f0) · Run #2567</div>
+
+  <div class="card">
+    <span class="badge pass">APPROVED</span>
+    <p style="margin:12px 0 0"><strong>Verdict:</strong> All 4 findings from the previous review (F-1 HIGH hydration, F-2 MEDIUM attempt inflation, F-3 MEDIUM no test coverage, F-4 LOW arrow roving) are RESOLVED by fix task t_50e059f1 (commit 71aa3f0). Re-verified independently: source review, 18/18 automated tests, tsc 0 errors, eslint 0 errors, and live browser verification with seeded localStorage on all three quiz pages. No new defects found.</p>
+  </div>
+
+  <h2>Fix Verification — Previous Findings</h2>
+  <div class="card">
+    <table>
+      <tr><th>ID</th><th>Severity</th><th>Finding</th><th>Resolution</th><th>Verification Evidence</th></tr>
+      <tr>
+        <td>F-1</td>
+        <td class="sev high">HIGH</td>
+        <td>Hydration mismatch on all quiz pages for returning users — <code>useQuizProgress</code> read localStorage synchronously in the useState initializer.</td>
+        <td class="pass">FIXED</td>
+        <td><code>useQuizProgress</code> now starts from empty state and reads storage in a post-mount effect with a <code>hydrated</code> flag (<code>src/lib/hooks/useQuizProgress.ts:136-149</code>); <code>QuizWidget</code> renders a pulse placeholder (<code>QuizWidget.tsx:53-72</code>) and <code>QuizStats</code> returns <code>null</code> (<code>QuizStats.tsx:76</code>) until hydrated. Live: seeded completed quiz (attemptCount 2, 5/5 answered) → reload on <code>/learn/omni-studio-cert/quiz</code> renders RESULTS view with <strong>zero hydration errors</strong> (console <code>js_errors: []</code>); same on <code>/learn</code> and <code>/learn/[series]</code> (QuizStats strips render, no hydration error).</td>
+      </tr>
+      <tr>
+        <td>F-2</td>
+        <td class="sev medium">MEDIUM</td>
+        <td>attemptCount inflated +1 per page visit/refresh — remount-resetting <code>completeRun</code> effect re-fired on every reload of a completed quiz.</td>
+        <td class="pass">FIXED</td>
+        <td><code>completeRun</code> effect removed; run completion is now recorded atomically inside <code>submitAnswer</code> when the submitted answer completes the quiz (<code>useQuizProgress.ts:172-180</code>). <code>completeRun</code> is exported but no component calls it. Live: seeded attemptCount 2 → real retake run (5 questions answered) → attemptCount 3 → 3 page reloads → <strong>still 3</strong> (previously 4+). resetQuiz preserves bestScore 100 + attemptCount. No phantom run recording on reload/back-nav.</td>
+      </tr>
+      <tr>
+        <td>F-3</td>
+        <td class="sev medium">MEDIUM</td>
+        <td>Zero automated test coverage (no test script, zero *.test.*).</td>
+        <td class="pass">FIXED</td>
+        <td>Vitest + jsdom + Testing Library added (<code>vitest.config.mts</code>, <code>vitest.setup.ts</code>, <code>"test"</code> script). <strong>18 tests across 3 files</strong> (useQuizProgress 8, QuizWidget 7, QuizStats 3) covering hydration-safe initial state incl. SSR renderToString, reset preservation, completeRun idempotence across remounts, submit-time run completion exactly once, retake, keyboard roving, 390px mobile, strip gating. <code>npm test</code> → 18/18 pass (verified).</td>
+      </tr>
+      <tr>
+        <td>F-4</td>
+        <td class="sev low">LOW</td>
+        <td>Radiogroup lacked arrow-key roving (Tab/Space/Enter only).</td>
+        <td class="pass">FIXED</td>
+        <td><code>handleRadiogroupKeyDown</code> (<code>QuizWidget.tsx:82-97</code>) implements WAI-ARIA roving with wrap-around + automatic activation + focus management. Live: ArrowDown → option 0 checked+focused, ArrowDown → option 1, ArrowUp → option 0. Unit test covers it.</td>
+      </tr>
+    </table>
+  </div>
+
+  <h2>Acceptance Criteria Checklist</h2>
+  <div class="card">
+    <table>
+      <tr><th>#</th><th>Criterion (from task body + BA US-005)</th><th>Status</th><th>Evidence</th></tr>
+      <tr><td>1</td><td>Question rendering (desktop + mobile)</td><td class="pass">PASS</td><td>5/5 questions, 4 options each, radio group; 390px screenshot clean (score ring, review list, Retake visible/tappable)</td></tr>
+      <tr><td>2</td><td>Answer selection</td><td class="pass">PASS</td><td>aria-checked flips true; option highlighted</td></tr>
+      <tr><td>3</td><td>Validation / required answers enforced</td><td class="pass">PASS</td><td>Check Answer disabled until a radio selected</td></tr>
+      <tr><td>4</td><td>Scoring &amp; results display</td><td class="pass">PASS</td><td>0/5 all-incorrect run; 5/5 all-correct run (prior round); live retake run scored correctly (5 answered, results view with score ring)</td></tr>
+      <tr><td>5</td><td>Retakes preserve original score (US-005 AC4)</td><td class="pass">PASS</td><td>Live retake: resetQuiz cleared attempts, preserved bestScore 100 + attemptCount; new run incremented attemptCount exactly once (2→3)</td></tr>
+      <tr><td>6</td><td>Series quiz stats strip (US-005 AC5)</td><td class="pass">PASS</td><td>QuizStats renders "Quiz avg 100% · 2 attempts" on /learn (span) and /learn/[series] (link), no hydration errors; nested-anchor fix 7ef842c intact</td></tr>
+      <tr><td>7</td><td>Persistence of quiz state</td><td class="pass">PASS</td><td>localStorage persists across reloads; hydrated state restored without hydration error (F-1 fixed)</td></tr>
+      <tr><td>8</td><td>Refresh behavior</td><td class="pass">PASS</td><td>reload on completed quiz → results view, zero console errors, attemptCount stable (F-1 + F-2 fixed)</td></tr>
+      <tr><td>9</td><td>Back navigation</td><td class="pass">PASS</td><td>browser back returns to /learn, no crash; in-flight answers retained in localStorage (prior round)</td></tr>
+      <tr><td>10</td><td>Repeated submissions</td><td class="pass">PASS</td><td>rapid clicks on Check Answer → exactly one attempt recorded; submission guarded post-answer (prior round + unit tests)</td></tr>
+      <tr><td>11</td><td>Keyboard operability</td><td class="pass">PASS</td><td>Tab/Space/Enter (prior round) + arrow-key roving with wrap-around (F-4, live-verified)</td></tr>
+      <tr><td>12</td><td>Screen reader basics</td><td class="pass">PASS</td><td>radiogroup + radio + aria-checked, role=status live region, progress role=img with label, WCAG 1.4.1 legend (prior round)</td></tr>
+      <tr><td>13</td><td>Automated test coverage</td><td class="pass">PASS</td><td>18 Vitest tests across 3 files; npm test 18/18 (F-3 fixed)</td></tr>
+    </table>
+  </div>
+
+  <h2>Static &amp; Quality Gates</h2>
+  <div class="card">
+    <table>
+      <tr><th>Gate</th><th>Result</th><th>Notes</th></tr>
+      <tr><td>TypeScript (<code>tsc --noEmit</code>)</td><td class="pass">PASS</td><td>0 errors</td></tr>
+      <tr><td>ESLint (<code>npm run lint</code>)</td><td class="pass">PASS</td><td>0 errors — <code>.vercel/**</code> added to ignores so deploy-lane build output no longer pollutes lint</td></tr>
+      <tr><td>Tests (<code>npm test</code>)</td><td class="pass">PASS</td><td>18/18 pass (3 files)</td></tr>
+      <tr><td>Code quality</td><td class="pass">PASS</td><td>No <code>any</code>, no <code>@ts-ignore</code>, no empty catch in changed files; hydration-gate pattern documented in hook header; eslint-disable comment is scoped to the intentional post-hydration setState</td></tr>
+      <tr><td>CHANGELOG.md</td><td class="pass">PASS</td><td>Fix commit 71aa3f0 documents F-1..F-4 resolution + verification</td></tr>
+    </table>
+  </div>
+
+  <h2>Regression Scope</h2>
+  <div class="card">
+    <p>Fix touched only <code>useQuizProgress.ts</code>, <code>QuizWidget.tsx</code>, <code>QuizStats.tsx</code> + test infra. Prior-round PASS items re-confirmed unaffected: question render, select, validate, scoring (0-5 and 5-5), results, retake, repeated-submission guard, keyboard, screen reader, mobile 390px, back nav, API security (origin/rate/slug/server-side correctness), nested-anchor fix 7ef842c.</p>
+    <p class="mono">Files reviewed: src/lib/hooks/useQuizProgress.ts · src/components/Progress/QuizWidget.tsx · src/components/Progress/QuizStats.tsx · src/lib/hooks/useQuizProgress.test.tsx · src/components/Progress/QuizWidget.test.tsx · src/components/Progress/QuizStats.test.tsx · vitest.config.mts · vitest.setup.ts · eslint.config.mjs · package.json · CHANGELOG.md</p>
+  </div>
+
+  <div class="card">
+    <p><strong>Final recommendation: APPROVE.</strong> Hand off to alpha for deployment. All acceptance criteria met; 18 automated tests green; live browser verification on desktop + 390px mobile shows zero hydration errors and stable attemptCount across reloads.</p>
+  </div>
+
+</div>
+</body>
+</html>

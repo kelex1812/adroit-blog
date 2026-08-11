@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>QA Report — Progress Tracking (Life &amp; Depth Blog) — t_b0f76a83</title>
+<style>
+  :root { --navy:#0b1d3a; --red:#c8102e; --green:#10b981; --gray:#6b7280; --line:#e5e7eb; --bg:#f9fafb; }
+  * { box-sizing:border-box; }
+  body { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif; margin:0; background:var(--bg); color:#111827; line-height:1.55; }
+  .wrap { max-width:960px; margin:0 auto; padding:32px 24px 64px; }
+  header { background:var(--navy); color:#fff; border-radius:14px; padding:28px 32px; margin-bottom:28px; }
+  header h1 { margin:0 0 6px; font-size:1.5rem; }
+  header .meta { color:#cbd5e1; font-size:.85rem; }
+  .badge { display:inline-block; padding:3px 12px; border-radius:999px; font-size:.75rem; font-weight:700; text-transform:uppercase; letter-spacing:.04em; }
+  .badge.reject { background:var(--red); color:#fff; }
+  .badge.pass { background:var(--green); color:#fff; }
+  .badge.warn { background:#f59e0b; color:#fff; }
+  section { background:#fff; border:1px solid var(--line); border-radius:12px; padding:22px 26px; margin-bottom:22px; }
+  h2 { font-size:1.05rem; margin:0 0 14px; color:var(--navy); border-bottom:2px solid var(--line); padding-bottom:8px; }
+  h3 { font-size:.92rem; margin:18px 0 8px; color:#374151; }
+  table { width:100%; border-collapse:collapse; font-size:.85rem; }
+  th, td { text-align:left; padding:8px 10px; border-bottom:1px solid var(--line); vertical-align:top; }
+  th { background:#f3f4f6; font-weight:600; color:#374151; }
+  .sev { font-weight:700; }
+  .sev.high { color:var(--red); } .sev.medium { color:#d97706; } .sev.low { color:#2563eb; }
+  .ok { color:var(--green); font-weight:700; } .fail { color:var(--red); font-weight:700; }
+  code { background:#f3f4f6; border:1px solid var(--line); border-radius:4px; padding:1px 5px; font-size:.82em; }
+  pre { background:#111827; color:#e5e7eb; border-radius:8px; padding:14px 16px; overflow-x:auto; font-size:.8rem; }
+  ul { margin:6px 0; padding-left:20px; } li { margin:3px 0; }
+  .verdict-box { background:#ecfdf5; border:1px solid #a7f3d0; border-left:5px solid var(--green); border-radius:10px; padding:16px 20px; margin-bottom:22px; }
+  .summary-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:12px; }
+  .stat { background:#f9fafb; border:1px solid var(--line); border-radius:10px; padding:12px 14px; }
+  .stat .n { font-size:1.4rem; font-weight:800; color:var(--navy); }
+  .stat .l { font-size:.72rem; color:var(--gray); text-transform:uppercase; letter-spacing:.05em; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>QA Report — Progress Tracking (Life &amp; Depth Blog)</h1>
+  <div class="meta">Task t_b0f76a83 · Tenant adroit-blog · Reviewer: zod · Run #2565 (re-review after fix t_808e5885, commit 5a80992) · HEAD 2d44ed0 · 2026-08-06</div>
+  <div style="margin-top:12px"><span class="badge pass">APPROVED</span></div>
+</header>
+
+<div class="verdict-box">
+  <strong>VERDICT: APPROVED — 0 open findings (1 HIGH + 1 LOW from run #2561 both fixed and verified).</strong>
+  <p style="margin:8px 0 0">Steel's fix (t_808e5885, commit 5a80992) landed on top of the review base and resolves both blocking findings. The HIGH read-sync 400 is gone: POST/DELETE <code>/api/progress/read</code> now accepts the canonical <code>blog/&lt;slug&gt;</code> / <code>lesson/&lt;slug&gt;</code> form via a scoped <code>allowNamespaced</code> option, while path traversal, double-slash, and the strict bare-slug validation on lesson/quiz routes are all preserved. The LOW mobile sort-clip is fixed with <code>flex-wrap</code>. Re-verified live: API contract (16/16 script + DELETE path), browser mark/unmark on listing + post page with zero console 400s, read-state persistence across reload, scroll progress, read filter, and 390px mobile layout. All acceptance criteria pass.</p>
+</div>
+
+<section>
+  <h2>Summary</h2>
+  <div class="summary-grid">
+    <div class="stat"><div class="n">0</div><div class="l">Open high findings</div></div>
+    <div class="stat"><div class="n">0</div><div class="l">Open low findings</div></div>
+    <div class="stat"><div class="n">16</div><div class="l">API contract checks (script)</div></div>
+    <div class="stat"><div class="n">18</div><div class="l">Automated tests passing</div></div>
+    <div class="stat"><div class="n">PASS</div><div class="l">tsc / eslint / build</div></div>
+    <div class="stat"><div class="n">PASS</div><div class="l">Visual (browser) verify</div></div>
+  </div>
+</section>
+
+<section>
+  <h2>Acceptance Criteria Checklist (from task brief)</h2>
+  <table>
+    <tr><th>#</th><th>Criterion</th><th>Status</th><th>Evidence</th></tr>
+    <tr><td>1</td><td>Reading progress indicators</td><td class="ok">PASS</td><td>Read card dimming (opacity 0.6 / gray-400 / emerald badge), "Read"/"Not read yet" bars on post pages</td></tr>
+    <tr><td>2</td><td>Section completion trackers</td><td class="ok">PASS</td><td>Lesson MarkComplete toggles + SeriesProgress "0 of 2 complete" bar, live 0→1→0 verified (run #2561); code unchanged</td></tr>
+    <tr><td>3</td><td>Course/lesson progress</td><td class="ok">PASS</td><td>Per-series completion merges localStorage + Supabase summary; persists across reload</td></tr>
+    <tr><td>4</td><td>Saved state reflects user progress</td><td class="ok">PASS</td><td>Read filter counts (All/Unread/Read) driven by real merged state; 1 of 15 bar at 7% after mark</td></tr>
+    <tr><td>5</td><td>Progress updates accurately as users scroll/complete</td><td class="ok">PASS</td><td>Scroll progress fill 0% → 64.9% at 60% scroll on post page (re-verified at HEAD); toggles update bars/filters immediately</td></tr>
+    <tr><td>6</td><td>Persists across reloads and sessions</td><td class="ok">PASS</td><td>Guest reload keeps read state (localStorage <code>adroit-blog:read:blog/&lt;slug&gt;</code>); re-verified by navigate-away-and-back</td></tr>
+    <tr><td>7</td><td>Storage/API integration</td><td class="ok">PASS</td><td><code>POST/DELETE /api/progress/read</code> with <code>blog/&lt;slug&gt;</code> → 200 (was 400); bare slug → 200; summary → clean shape; authed Supabase upsert/delete path restored</td></tr>
+    <tr><td>8</td><td>Empty/corrupted saved state</td><td class="ok">PASS</td><td>First visit → unread; garbage values → treated unread; storage errors → caught, fallback false</td></tr>
+    <tr><td>9</td><td>Multiple tabs</td><td class="ok">PASS</td><td><code>storage</code> event + <code>PROGRESS_CHANGED_EVENT</code> wiring in hooks</td></tr>
+    <tr><td>10</td><td>Automated test coverage</td><td class="ok">PASS</td><td>Vitest suite: 18 tests / 3 files passing (useQuizProgress, QuizWidget, QuizStats); API contract script <code>verify-security-followup.py</code> 16/16 incl. prefixed-slug + traversal cases; tsc/eslint/build clean</td></tr>
+    <tr><td>11</td><td>Edge: first visit / returning / cleared storage</td><td class="ok">PASS</td><td>Empty storage → unread; returning guest → restored; cleared storage → resets; authed blog sync now writes via API (no more 400)</td></tr>
+    <tr><td>12</td><td>Edge: slow network</td><td class="ok">PASS</td><td>fetch failures caught; localStorage fallback keeps UI functional</td></tr>
+    <tr><td>13</td><td>Edge: mobile viewport</td><td class="ok">PASS</td><td>390px viewport: sort toolbar wraps; "Oldest" right edge 348 &lt; 390 (was x=408, clipped) — screenshot <code>reports/mobile-390px-sort-fixed.png</code></td></tr>
+  </table>
+</section>
+
+<section>
+  <h2>Findings (previous round — now resolved)</h2>
+  <table>
+    <tr><th>Severity</th><th>File:Line</th><th>Description</th><th>Status</th></tr>
+    <tr>
+      <td><span class="sev high">HIGH</span></td>
+      <td><code>src/lib/api-security.ts:23</code><br/><code>src/app/api/progress/read/route.ts:55</code></td>
+      <td><strong>POST/DELETE /api/progress/read 400 on canonical blog/&lt;slug&gt;.</strong> Fixed: <code>validateSlug</code> gains <code>{ allowNamespaced: true }</code> (read route only) accepting <code>^(blog|lesson)/[a-zA-Z0-9_-]+$</code>; traversal (<code>blog/../etc</code>), double-slash (<code>blog/a/b</code>), dots, and extra slashes still rejected; <code>lessonSlug</code>/<code>quizName</code> stay strict bare. Canonical form now consistent across localStorage key, DB <code>content_slug</code>, summary merge (<code>src/lib/progress.ts</code>).</td>
+      <td class="ok">FIXED — live curl POST/DELETE blog/&lt;slug&gt; → 200; traversal/double-slash → 400; script 16/16</td>
+    </tr>
+    <tr>
+      <td><span class="sev low">LOW</span></td>
+      <td><code>src/app/blog/page.tsx:182</code></td>
+      <td><strong>Mobile 390px: "Oldest" sort control clipped</strong> by hero <code>overflow-hidden</code>. Fixed: toolbar row is now <code>ml-auto flex flex-wrap items-center justify-end gap-2</code> — SortToggle wraps to its own right-aligned line on narrow viewports.</td>
+      <td class="ok">FIXED — measured right edge 348 &lt; 390 at 390px; screenshot in reports/</td>
+    </tr>
+  </table>
+</section>
+
+<section>
+  <h2>Passed Verifications (live, this run)</h2>
+  <ul>
+    <li>API contract — <code>verify-security-followup.py</code> 16/16 PASS: prefixed <code>blog/&lt;slug&gt;</code> POST → 200, <code>lesson/&lt;slug&gt;</code> POST → 200, traversal → 400, double-slash → 400, evil Origin → 403, oversized/bad-charset → 400, lesson/quiz traversal → 400, GET traversal → 404</li>
+    <li>DELETE path — <code>DELETE /api/progress/read</code> with <code>blog/&lt;slug&gt;</code> → 200 (was 400); localStorage key flips true↔false on mark/unmark from listing and post page</li>
+    <li>Console — zero 400s across mark/unmark on listing + post page (the HIGH symptom); only dev-mode React eval warning (environment, not app)</li>
+    <li>Read filter — counts updated (Unread 14 / Read 1 after mark); filtered view shows only the read card; progress bar 1 of 15 (7%)</li>
+    <li>Persistence — read state survives reload (navigate away/back, button still "Marked as read", bar still 1)</li>
+    <li>Scroll progress — fill 0% → 64.9% after 60% scroll on post page (current HEAD)</li>
+    <li>Mobile 390px — sort toolbar wraps, "Oldest" fully visible (geometry + vision screenshot); no horizontal clip</li>
+    <li>Gates — <code>tsc --noEmit</code> exit 0; <code>eslint</code> exit 0 (0 errors); <code>npm test</code> 18/18 pass; CHANGELOG.md updated by steel (commit 5a80992)</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Upstream Deliverables Verified</h2>
+  <table>
+    <tr><th>Source</th><th>Deliverable</th><th>Status</th></tr>
+    <tr><td>steel (t_808e5885, 5a80992)</td><td><code>src/lib/api-security.ts</code> (allowNamespaced option), <code>src/app/api/progress/read/route.ts</code> (contentSlug namespaced), <code>src/app/blog/page.tsx</code> (flex-wrap toolbar), <code>scripts/verify-security-followup.py</code> (+4 cases), CHANGELOG.md</td><td class="ok">PASS — diff reviewed, live re-verified</td></tr>
+    <tr><td>steel (t_574d3153, db25389)</td><td>Read dimming, unmark→DELETE hooks+routes, read filter + auth UI, quiz stats, MarkComplete aria</td><td class="ok">PASS (re-verified)</td></tr>
+    <tr><td>steel (t_97f2451c, 7ef842c)</td><td>QuizStats nested-anchor fix</td><td class="ok">PASS</td></tr>
+    <tr><td>banner QA (t_7844148b)</td><td>Routed HIGH: read API 400 on prefixed slug</td><td class="ok">RESOLVED by t_808e5885</td></tr>
+    <tr><td>lara / val-el / sato</td><td>a11y / security / perf audits</td><td class="ok">PASS (no new violations; security posture preserved — traversal blocked)</td></tr>
+  </table>
+</section>
+
+<section>
+  <h2>Code Quality &amp; Test Coverage</h2>
+  <h3>Code Quality — PASS</h3>
+  <ul>
+    <li>TypeScript strict, no <code>any</code> / <code>@ts-ignore</code>; option is scoped (<code>allowNamespaced</code> only on read contentSlug — lesson/quiz stay strict bare)</li>
+    <li>Security posture preserved: no <code>..</code>, dots, extra slashes; origin check, rate limit, sanitised DB errors intact</li>
+    <li>CHANGELOG.md updated with detailed HIGH/LOW entries and verification evidence</li>
+  </ul>
+  <h3>Test Coverage — PASS</h3>
+  <p>Vitest suite (18 tests / 3 files) from the quiz fix is green at this HEAD. The progress API contract is covered by <code>scripts/verify-security-followup.py</code> (16/16, now including the prefixed-slug acceptance + traversal rejection cases that the previous manual-only review missed). Combined with live browser click-through of every toggle/filter and reload persistence, the network path that previously escaped review is now exercised.</p>
+</section>
+
+<section>
+  <h2>Final Recommendation</h2>
+  <p><strong>APPROVE — deploy to alpha.</strong> Both findings from run #2561 are fixed and independently re-verified. The canonical <code>blog/&lt;slug&gt;</code> form is accepted by the read API with traversal still blocked, so authed cross-device read sync (US-003 AC4) works again, and the mobile sort control is no longer clipped at 390px. Hand off to alpha for deployment.</p>
+</section>
+
+</div>
+</body>
+</html>

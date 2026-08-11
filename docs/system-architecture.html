@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>System Architecture — Progress Tracking (t_718bb3ca)</title>
+<title>System Architecture — Interactive Quiz Tiers</title>
 <style>
   :root {
     --primary: #1a1a2e;
@@ -22,134 +22,135 @@
   body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
   .container { max-width: 1100px; margin: 0 auto; padding: 2rem; }
 
+  /* Header */
   header { background: var(--primary); color: white; padding: 3rem 0 2rem; }
   header h1 { font-size: 2rem; font-weight: 700; margin-bottom: 0.5rem; }
   header .meta { color: rgba(255,255,255,0.7); font-size: 0.9rem; }
   header .meta span { margin-right: 1.5rem; }
   .badge { display: inline-block; padding: 0.25rem 0.75rem; border-radius: 999px; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
   .badge-adroit { background: var(--accent); color: white; }
+  .badge-fraimers { background: #6f42c1; color: white; }
 
+  /* Sections */
   section { background: var(--card); border-radius: 12px; padding: 2rem; margin: 1.5rem 0; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
   section h2 { font-size: 1.25rem; font-weight: 600; color: var(--primary); margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--accent); }
   section h3 { font-size: 1.1rem; font-weight: 600; color: var(--accent2); margin: 1.25rem 0 0.5rem; }
   section h4 { font-size: 1rem; font-weight: 600; margin: 1rem 0 0.25rem; }
 
+  /* Content */
+  p { margin-bottom: 0.75rem; }
+  ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+  li { margin-bottom: 0.25rem; }
+
+  /* Cards */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1rem; margin: 1rem 0; }
+  .card { border: 1px solid var(--border); border-radius: 8px; padding: 1.25rem; background: var(--bg); }
+  .card h4 { color: var(--primary); margin-bottom: 0.5rem; }
+
+  /* Status indicators */
+  .status-dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 0.5rem; }
+  .status-pass { background: var(--success); }
+  .status-fail { background: var(--danger); }
+  .status-warn { background: var(--warning); }
+  .status-pending { background: var(--muted); }
+
+  /* Tables */
   table { width: 100%; border-collapse: collapse; margin: 1rem 0; }
   th, td { padding: 0.75rem; text-align: left; border-bottom: 1px solid var(--border); }
   th { background: var(--primary); color: white; font-weight: 600; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px; }
   tr:nth-child(even) { background: var(--bg); }
 
-  pre { background: #1e1e2e; color: #cdd6f4; padding: 1rem; border-radius: 8px; overflow-x: auto; font-size: 0.85rem; margin: 1rem 0; }
-  code { background: #f1f3f5; padding: 0.15rem 0.4rem; border-radius: 4px; font-size: 0.85rem; }
+  /* Tags */
+  .tag { display: inline-block; padding: 0.15rem 0.5rem; border-radius: 4px; font-size: 0.75rem; font-weight: 500; margin: 0.15rem; }
+  .tag-p0 { background: #f8d7da; color: #721c24; }
+  .tag-p1 { background: #fff3cd; color: #856404; }
+  .tag-p2 { background: #d1ecf1; color: #0c5460; }
+  .tag-p3 { background: #e2e3e5; color: #383d41; }
 
-  .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1rem; margin: 1rem 0; }
-  .card { border: 1px solid var(--border); border-radius: 8px; padding: 1.25rem; background: var(--bg); }
-  .card h4 { color: var(--primary); margin-bottom: 0.5rem; }
-  .card p { font-size: 0.9rem; margin-bottom: 0.5rem; }
-
-  .status-dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 0.5rem; }
-  .status-pass { background: var(--success); }
-  .status-warn { background: var(--warning); }
-  .status-pending { background: var(--muted); }
-
+  /* Footer */
   footer { text-align: center; padding: 2rem; color: var(--muted); font-size: 0.85rem; border-top: 1px solid var(--border); margin-top: 2rem; }
-  @media print { header { background: var(--primary) !important; -webkit-print-color-adjust: exact; } }
+  footer img { height: 24px; vertical-align: middle; margin-right: 0.5rem; }
+
+  /* Print */
+  @media print { header { background: var(--primary) !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; } }
 </style>
 </head>
 <body>
 <header>
   <div class="container">
     <div class="badge badge-adroit">Adroit Consulting</div>
-    <h1>System Architecture — Progress Tracking</h1>
+    <h1>System Architecture — Interactive Quiz Tiers</h1>
     <div class="meta">
-      <span>📅 August 06, 2026</span>
-      <span>📋 Adroit Blog</span>
-      <span>👤 Brainiac (Web Architect)</span>
+      <span>📅 August 10, 2026</span>
+      <span>📋 Adroit Blog (adroit-blog)</span>
+      <span>👤 Brainiac</span>
       <span>📄 v1.0</span>
     </div>
   </div>
 </header>
 
 <main class="container">
-
-<h2>System Architecture — Progress Tracking</h2>
-<p><strong>Architect:</strong> brainiac · <strong>Task:</strong> t_718bb3ca · <strong>Date:</strong> 2026-08-06</p>
-<p>Repo: <code>/Users/kelex/Documents/Fortress-of-Solitude/adroit-blog</code> — Next.js App Router blog/learn site. This architecture documents the progress tracking layer: read tracking, lesson completion, and quiz attempt persistence with Supabase backend and localStorage fallback for guests.</p>
-
-<h3>Component Architecture Overview</h3>
-<table border="1" cellpadding="6" cellspacing="0">
-<tr><th>Surface</th><th>Component tree</th><th>Type</th><th>New components</th></tr>
-<tr><td>/blog listing</td><td>BlogListing → Hero, CategoryPills, SortToggle, FeaturedPost, PostCard grid, Pagination, <strong>ReadingProgressBar</strong></td><td>client (Suspense)</td><td>ReadingProgressBar component</td></tr>
-<tr><td>/blog/[slug]</td><td>BlogPostPage → ReadingProgress, <strong>MarkAsRead</strong>, ShareBar, BannerImage, ArticleBody, PostNavigation</td><td>server + client</td><td>MarkAsRead, useReadProgress hook</td></tr>
-<tr><td>/learn</td><td>LearnLanding → grouped sections, PathCard, LessonProgress, <strong>OverallProgressBar</strong></td><td>server</td><td>OverallProgressBar, useLessonProgress hook</td></tr>
-<tr><td>/learn/[series]</td><td>SeriesPage → LessonCard, <strong>LessonProgressBadge</strong>, LessonProgress</td><td>server</td><td>LessonProgressBadge</td></tr>
-<tr><td>/learn/[series]/[slug]</td><td>LessonPage → Banner, <strong>MarkComplete</strong>, ArticleBody, <strong>QuizWidget</strong></td><td>server + client</td><td>MarkComplete, QuizWidget, useQuizProgress</td></tr>
-<tr><td>/quiz/[slug]</td><td>QuizPage → <strong>QuestionCard</strong>, ProgressDots, <strong>ResultSummary</strong></td><td>client</td><td>All new — full quiz surface</td></tr>
-</table>
-
-<h3>Data Flow</h3>
-<pre>
-┌──────────────┐     POST/GET      ┌──────────────────┐     Supabase RPC    ┌──────────────┐
-│  Client hook  │ ───────────────► │  API routes       │ ─────────────────► │  Supabase DB │
-│  useReadProg  │  /api/progress/*  │  POST read        │   upsert/insert     │  read_progress │
-│  useLessonProg│                 │  POST lesson        │                    │  lesson_comp │
-│  useQuizProg  │                 │  POST quiz          │                    │  quiz_attempt  │
-│               │                 │  GET summary        │                    └──────────────┘
-└──────┬───────┘                 └──────────────────────┘
-       │
-       │  localStorage fallback (guests / offline)
-       ▼
-┌──────────────┐
-│  localStorage │  keys: adroit-blog:read:*, adroit-blog:lesson:*, adroit-blog:quiz:*
-└──────────────┘
-</pre>
-
-<h3>Schema Changes</h3>
-<p><strong>3 new Supabase tables (greenfield):</strong></p>
-<table border="1" cellpadding="6" cellspacing="0">
-<tr><th>Table</th><th>Columns</th><th>Constraints</th><th>Purpose</th></tr>
-<tr><td>read_progress</td><td>id uuid, user_id uuid, content_type text, content_slug text, read_at timestamptz</td><td>UNIQUE(user_id, content_slug), CHECK content_type IN ('blog','lesson')</td><td>Track which blog posts / lessons a user has read</td></tr>
-<tr><td>lesson_completion</td><td>id uuid, user_id uuid, lesson_slug text, completed_at timestamptz</td><td>UNIQUE(user_id, lesson_slug)</td><td>Track which lessons a user has completed</td></tr>
-<tr><td>quiz_attempt</td><td>id uuid, user_id uuid, quiz_name text, question_index int, correct_answer_index int, user_answer_index int, is_correct boolean, attempted_at timestamptz</td><td>None beyond PK</td><td>Store individual quiz attempt records per question</td></tr>
-</table>
-
-<h3>Tech Decisions & ADRs</h3>
-<table border="1" cellpadding="6" cellspacing="0">
-<tr><th>ID</th><th>Title</th><th>Decision</th><th>Rationale</th><th>Consequences</th></tr>
-<tr><td>ADR-001</td><td>Supabase for progress persistence</td><td>Supabase (not custom API)</td><td>Already configured in .env.local; SDK in node_modules; minimal infra overhead</td><td>Tables must be created; RLS policies needed for user-specific data</td></tr>
-<tr><td>ADR-002</td><td>localStorage fallback for guests</td><td>localStorage with namespaced keys</td><td>Guests have no auth identity; design mockups confirm localStorage-only for quizzes</td><td>Guest data is device-bound; no sync across devices without auth</td></tr>
-<tr><td>ADR-003</td><td>Optimistic writes with fire-and-forget</td><td>POST to API route, catch errors, fallback to localStorage</td><td>UX must not block on network; design mockups show immediate toggle feedback</td><td>Conflict resolution: localStorage pending writes synced when user authenticates</td></tr>
-<tr><td>ADR-004</td><td>Quiz data stays client-side</td><td>localStorage only for quiz attempts</td><td>Per direction brief §5.4: quiz attempts are ephemeral per session</td><td>No quiz analytics in Supabase; deferred enhancement if needed</td></tr>
-<tr><td>ADR-005</td><td>Single summary API endpoint</td><td>GET /api/progress/summary returns all data</td><td>Reduces page-load round-trips from 3+ to 1</td><td>Endpoint must handle large payloads; pagination if dataset grows</td></tr>
-<tr><td>ADR-006</td><td>Freeze content & data layers</td><td>No changes to content/, src/data/posts.ts, src/lib/sort.ts</td><td>Task constraint: presentation layer only</td><td>All hooks read from existing data shapes; no schema changes to content</td></tr>
-</table>
-
-<h3>Build Decomposition</h3>
-<table border="1" cellpadding="6" cellspacing="0">
-<tr><th>Task</th><th>Assignee</th><th>Produces</th><th>Depends on</th></tr>
-<tr><td>Supabase schema migration</td><td>steel</td><td>SQL migration + verified tables</td><td>none</td></tr>
-<tr><td>Supabase client library module</td><td>steel</td><td>src/lib/supabase/client.ts + server.ts</td><td>schema migration</td></tr>
-<tr><td>Read tracking hook & API</td><td>steel</td><td>useReadProgress hook + POST/GET routes</td><td>client library</td></tr>
-<tr><td>Lesson completion & quiz hooks</td><td>steel</td><td>useLessonProgress + useQuizProgress hooks</td><td>client library</td></tr>
-<tr><td>UI components & page integration</td><td>steel</td><td>MarkAsRead, ProgressIndicator, QuizWidget + page diffs</td><td>read tracking, lesson/quiz hooks</td></tr>
-<tr><td>Build + QA gate</td><td>steel → zod</td><td>passing build + acceptance criteria</td><td>all implementation</td></tr>
-</table>
-
-<h3>Handoff Guide (Kara / Steel)</h3>
+<h2>Interactive Quiz Tiers — System Architecture</h2><p><strong>Task:</strong> t_cf2e9661 · <strong>Tenant:</strong> adroit-blog · <strong>Repo:</strong> adroit-blog · <strong>Author:</strong> brainiac (web architect)</p><h3>Architecture Overview</h3><p>Three quiz tiers (lesson / knowledge check / cert exam) plus a certificate, all reusing the
+existing live quiz stack (QuizWidget, useQuizProgress, server-side grading, quiz_attempt /
+quiz_run tables, Supabase auth). Question content is generated from the canonical curriculum
+bank into per-tier JSON; the site renders those JSONs. One genuinely new build: the timed
+exam mode (ExamWidget). Learn lesson ordering switches from date (ADR-002) to lesson number.</p><p><strong>Stack:</strong> Next.js App Router (server components + SSG where safe), MDX, Supabase (auth +
+quiz_attempt / quiz_run / lesson_completion), TypeScript, existing design tokens + kara's
+mockups. No schema changes.</p><h3>Component Tree</h3><p><code>`</code>
+src/app/learn/[series]/page.tsx            (server; lesson-number order, syllabus, tiers cards)
+  └─ SeriesSyllabus (client)               ← owns sort + hide-completed
+  └─ CertReadiness (client)                ← lessons/checks/exam + readiness bar (GET /tiers)
+  └─ CheckCardList (client|server)         ← 9 check rows w/ pass state (GET /tiers)
+  └─ ExamCard (client)                     ← locked/unlocked + "Take the exam"</p><p>src/app/learn/[series]/[slug]/page.tsx     (server; session gate)
+  └─ GuestCTA | LessonQuiz (client)        ← LessonQuiz wraps QuizWidget w/ lesson copy</p><p>src/app/learn/[series]/check/[n]/page.tsx  (server; SSG params 1..9, session gate)
+  └─ GuestCTA | QuizWidget (15 q)</p><p>src/app/learn/[series]/exam/page.tsx       (server; unlock gate)
+  └─ GuestCTA | ExamLocked | ExamWidget (client)</p><p>src/app/learn/[series]/certificate/page.tsx (server; eligibility)
+  └─ GuestCTA | Certificate (client print) | NotEligible</p><p>src/components/Progress/
+  GuestCTA.tsx  ExamWidget.tsx  ExamLocked.tsx  CertReadiness.tsx  CheckCardList.tsx
+  Certificate.tsx  (QuizWidget/QuizStats extended, not rewritten)
+<code>`</code></p><h3>Data Flow</h3><ol>
+<li>Generator (<code>scripts/generate-omni-quizzes.py</code>, steel) reads <code>~/.hermes/scripts/omni-studio-curriculum.py</code> → emits <code>content/learn/omni-studio-cert/questions/<slug>.json</code> (46×3q), <code>checks/check-<1..9>.json</code> (9×15q), <code>exam.json</code> (60q domain-weighted).</li>
+<li>Page render: server component resolves session (getSupabaseServerClient). Authed → load tier JSON via <code>src/lib/quiz.ts</code> lookups → pass questions to client widget. Guest → render GuestCTA, never load question JSON.</li>
+<li>Answer flow (lesson/check): client <code>useQuizProgress</code> → per-question POST /api/progress/quiz → server recomputes correctness from canonical JSON (F3) → upserts quiz_attempt. Run completion → POST /api/progress/quiz/run (quiz_run row, best score).</li>
+<li>Exam flow: client ExamWidget accumulates answers → single POST /api/progress/quiz/batch (60 answers + elapsedSeconds) → server grades all 60 from exam.json → upserts 60 quiz_attempt rows + 1 quiz_run row → returns score + per-question results for the review screen.</li>
+<li>Rollup: series page <code>CertReadiness</code> → GET /api/progress/quiz/tiers?series=… → lessons completed + per-check best (MAX score per quiz_name) + exam best + unlocked flag.</li>
+<li>Certificate: <code>/learn/[series]/certificate</code> server component derives eligibility from lesson_completion + quiz_run rows at render time (no table).</li>
+</ol>
+<h3>API Contracts</h3><p>| Route | Method | Purpose |
+|---|---|---|
+| /api/progress/quiz | POST | per-question grading (lesson/check) — switch to resolveQuizByName |
+| /api/progress/quiz/run | POST/GET | run stats per quizName (bestScore, attempts) |
+| /api/progress/quiz/batch | POST | NEW — 60-question exam submit, server-graded, returns results |
+| /api/progress/quiz/tiers | GET | NEW — tier rollup for series page (checks, exam, lessons, unlocked) |
+| /api/auth/session | GET | session state for gating |</p><p>quizName scheme: <code>omni-studio-cert:lesson:<slug></code> · <code>:check:<n></code> · <code>:exam</code>.
+New <code>validateQuizName</code> (colon-safe) + <code>resolveQuizByName</code> in lib — the existing
+<code>validateSlug</code> regex rejects colons and the grading route loads by series slug, so this
+resolver change is required before any tier attempt works.</p><h3>ADR Table</h3><p>| ID | Title | Decision | Consequences |
+|---|---|---|---|
+| ADR-101 | Tier quiz-name scheme | <code>series:lesson:<slug></code> / <code>:check:<n></code> / <code>:exam</code> | requires validateQuizName + resolveQuizByName; no schema change |
+| ADR-102 | Batch exam grading route | new POST /api/progress/quiz/batch; existing route unchanged | one request per exam; server recomputes all correctness |
+| ADR-103 | Exam timer trust model | client countdown + server elapsed bound [0, 105:60+60s] | bounds tampering; not proctored — flagged for val-el |
+| ADR-104 | Server-side gating | session check in server components; questions only when authed | lesson pages become dynamic-ish |
+| ADR-105 | Lesson-number ordering | lessons sort by lesson number asc; SortToggle + build-learn.js synced | ADR-002 superseded for learn listings |
+| ADR-106 | Certificate derived on demand | derive from lesson_completion + quiz_run at render | revalidated at print; no table |
+| ADR-107 | Readiness weighting | lessons 40% / checks 30% / exam best 30% | display-only metric |</p><h3>Schema Changes</h3><p>None. Reuses <code>quiz_attempt</code> (user_id, quiz_name, question_index, correct_answer_index,
+user_answer_index, is_correct, attempted_at), <code>quiz_run</code> (best score per quiz_name),
+<code>lesson_completion</code> (user_id, lesson_slug, completed_at). Content files are generated JSON.</p><h3>Handoff Guide for Kara (designer)</h3><p>Design phase is complete (mockups + copy deck live in <code>design/</code>). Downstream consumers:
 <ul>
-<li><strong>Implementation spec:</strong> <code>docs/implementation-plan-progress.md</code> — the delta list is the contract.</li>
-<li><strong>Design reference:</strong> <code>design/mockup-quiz.html</code>, <code>design/mockup-progress-blog.html</code>, <code>design/mockup-progress-post-detail.html</code>, <code>design/mockup-progress-learn-hub.html</code>, <code>design/mockup-progress-series-lessons.html</code></li>
-<li><strong>Design tokens:</strong> <code>design/discovery/design-tokens-draft.css</code> — use existing CSS custom properties.</li>
-<li><strong>Pipeline:</strong> brainiac (done) → steel implements → zod QA checks 9 acceptance criteria. Orchestrator commits/pushes after QA.</li>
-<li><strong>Risk radar:</strong> Supabase RLS policies are the biggest unknown — Kara should confirm auth strategy before Steel starts Task 1.</li>
-</ul>
-
+<ol>
+<li>Steel implements from <code>docs/implementation-plan-quiz-tiers.md</code> + <code>src/shared/contracts.ts</code> (contracts are read-only).</li>
+<li>Lara audits a11y/SEO: exam timer reduced-motion, radiogroup/focus, guest CTA semantics, no question leakage, ordering/filter a11y.</li>
+<li>Val-el reviews security: server-side grading, slug/elapsed validation, certificate integrity.</li>
+<li>Zod verifies acceptance criteria from <code>docs/requirements-quiz-tiers.md</code>; alpha deploys.</li>
+</ol></ul>
+Exact copy strings: <code>design/copy-deck-quiz-tiers.md</code> — steel uses verbatim.
+</p>
 </main>
 
 <footer>
   <div class="container">
     <p><strong>Fortress of Solitude Consulting</strong> — a division of Adroit Consulting Group</p>
-    <p>Confidential — prepared for Adroit Consulting</p>
+    <p>Confidential — prepared for Client</p>
   </div>
 </footer>
 </body>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QA Report — day-09 guest question leak scrub (t_dcdbe8bc) — Approved</title>
+<style>
+  :root { --navy:#0B1D3A; --red:#C8102E; --green:#10B981; --gray:#6B7280; --light:#F4F6FA; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; color: #1F2937; background: var(--light); line-height: 1.6; }
+  .wrap { max-width: 960px; margin: 0 auto; padding: 32px 24px 64px; }
+  header { background: var(--navy); color: #fff; border-radius: 12px; padding: 28px 32px; margin-bottom: 28px; }
+  header h1 { font-size: 1.5rem; margin-bottom: 6px; }
+  header .meta { font-size: 0.85rem; color: #B8C4D8; }
+  .verdict { display: inline-block; margin-top: 12px; padding: 6px 14px; border-radius: 999px; font-weight: 700; font-size: 0.85rem; }
+  .verdict.approved { background: var(--green); color: #fff; }
+  section { background: #fff; border-radius: 12px; padding: 24px 28px; margin-bottom: 20px; box-shadow: 0 1px 3px rgba(11,29,58,0.06); }
+  h2 { font-size: 1.1rem; color: var(--navy); margin-bottom: 14px; padding-bottom: 8px; border-bottom: 2px solid var(--light); }
+  h3 { font-size: 0.95rem; color: var(--navy); margin: 16px 0 8px; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+  th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid #E5E7EB; vertical-align: top; }
+  th { background: var(--light); color: var(--navy); font-weight: 700; }
+  .pass { color: var(--green); font-weight: 700; }
+  .fail { color: var(--red); font-weight: 700; }
+  .ok { color: var(--green); font-weight: 700; }
+  code { background: #F3F4F6; padding: 1px 6px; border-radius: 4px; font-size: 0.85em; }
+  .file { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.82em; }
+  ul { margin: 6px 0 6px 20px; }
+  li { margin: 4px 0; }
+  .badge { display:inline-block; padding: 2px 10px; border-radius: 999px; font-size: 0.75rem; font-weight: 700; }
+  .badge.high { background:#FEE2E2; color:#B91C1C; }
+  .badge.med { background:#FEF3C7; color:#B45309; }
+  .badge.low { background:#E0E7FF; color:#4338CA; }
+  .badge.ok { background:#D1FAE5; color:#065F46; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>QA Report — Scrub day-09 prose Practice Questions (guest question leak)</h1>
+  <div class="meta">Task t_dcdbe8bc · Adroit Consulting · Reviewer: Zod (QA) · Review date: 2026-08-11 · Upstream: Steel (t_9032aa28) · Commit: 3072936</div>
+  <span class="verdict approved">APPROVED</span>
+</header>
+
+<section>
+  <h2>Review Summary</h2>
+  <table>
+    <tr><th>Verdict</th><td><span class="pass">APPROVED</span></td></tr>
+    <tr><th>Acceptance criteria</th><td>3 / 3 met</td></tr>
+    <tr><th>Tests verified</th><td>118 / 118 pass (18 files, vitest)</td></tr>
+    <tr><th>Issues found</th><td>0</td></tr>
+    <tr><th>Visual / guest-page verification</th><td>Passed — live guest GET of lesson page</td></tr>
+    <tr><th>Scope</th><td>1 MDX scrub (29 lines removed) + CHANGELOG entry</td></tr>
+  </table>
+</section>
+
+<section>
+  <h2>Acceptance Criteria Checklist</h2>
+  <table>
+    <tr><th>#</th><th>Criterion</th><th>Status</th><th>Evidence</th></tr>
+    <tr>
+      <td>AC1</td>
+      <td><code>grep -c "Practice Questions" content/learn/omni-studio-cert/day-09-*.mdx</code> → 0</td>
+      <td><span class="pass">PASS</span></td>
+      <td>grep returned 0; additionally <code>Q1./Q2./Q3./CORRECT/Answer:</code> = 0 occurrences in the lesson MDX</td>
+    </tr>
+    <tr>
+      <td>AC2</td>
+      <td>Guest curl of the lesson page: zero question text in HTML</td>
+      <td><span class="pass">PASS</span></td>
+      <td>HTTP 200 on <span class="file">/learn/omni-studio-cert/day-09-fc-3-binding-components-configuring-properties</span>; 0 occurrences of "Practice Questions"/"First suspect"/"CORRECT"/"Answer:"/"Q1."/"Q2."/"Q3."; GuestCTA ("Practice questions locked") present; lesson body sections render (Exam Traps, Exam Tip, Related Requirements, References)</td>
+    </tr>
+    <tr>
+      <td>AC3</td>
+      <td><code>npm run build</code> + <code>npm run lint</code> clean; tests still pass</td>
+      <td><span class="pass">PASS</span></td>
+      <td>Build exit 0 (next build + prebuild scripts); eslint exit 0; vitest 118/118 pass</td>
+    </tr>
+  </table>
+</section>
+
+<section>
+  <h2>Findings</h2>
+  <p><span class="ok">No findings.</span> Previous HIGH finding F1 (guest question leak) is resolved.</p>
+</section>
+
+<section>
+  <h2>Code Quality</h2>
+  <p><span class="pass">PASS</span></p>
+  <ul>
+    <li>Change is minimal and surgical: the 29-line "## Practice Questions" section removed from <span class="file">content/learn/omni-studio-cert/day-09-fc-3-binding-components-configuring-properties.mdx</span>; all other lesson sections (Deep Dive, Configuration Walkthrough, Exam Traps, Exam Tip, Related Requirements, References) untouched — confirmed via <code>git show 3072936</code> stat (1 file, −29 lines).</li>
+    <li>No code changes — MDX content scrub only; no new TypeScript, no <code>any</code>, no stubs, no mock fallthrough introduced.</li>
+    <li>CHANGELOG.md entry (t_9032aa28) documents What/Why, references ADR-104 session gate, and notes the sidecar JSON as the source of truth for the interactive quiz.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Test Coverage</h2>
+  <p><span class="pass">PASS</span> — 118/118 tests pass across 18 files (vitest). No test regressions. Quiz engine coverage unaffected; sidecar quiz JSON intact and readable by LessonQuiz for authed users.</p>
+</section>
+
+<section>
+  <h2>Upstream Deliverables Verified</h2>
+  <table>
+    <tr><th>Source</th><th>File</th><th>Status</th></tr>
+    <tr><td>steel</td><td class="file">content/learn/omni-studio-cert/day-09-fc-3-binding-components-configuring-properties.mdx</td><td><span class="pass">PASSED</span> — Practice Questions section removed, body intact</td></tr>
+    <tr><td>steel</td><td class="file">content/learn/omni-studio-cert/questions/day-09-fc-3-binding-components-configuring-properties.json</td><td><span class="pass">PASSED</span> — intact (3 questions, options, answer index, explanations); no content loss</td></tr>
+    <tr><td>steel</td><td class="file">CHANGELOG.md</td><td><span class="pass">PASSED</span> — entry t_9032aa28 present with What/Why</td></tr>
+    <tr><td>lara (a11y)</td><td>— (no a11y impact; content removal)</td><td><span class="pass">PASSED</span> — guest page remains readable, CTA present</td></tr>
+    <tr><td>val-el (security)</td><td>— (leak fix is the security-relevant change)</td><td><span class="pass">PASSED</span> — leak eliminated at source</td></tr>
+    <tr><td>sato (perf)</td><td>— (no perf impact)</td><td><span class="pass">PASSED</span> — build clean</td></tr>
+  </table>
+</section>
+
+<section>
+  <h2>Final Recommendation</h2>
+  <p><span class="pass">APPROVE</span> — hand off to alpha for deployment. All acceptance criteria met, guest leak eliminated at the source, no content loss (interactive quiz preserved in sidecar JSON), full build/lint/test green.</p>
+</section>
+
+</div>
+</body>
+</html>

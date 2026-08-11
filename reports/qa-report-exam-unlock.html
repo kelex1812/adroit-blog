@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>QA Report — Server-side exam unlock + certificate eligibility (t_2998fcaf)</title>
+<style>
+  :root{--ok:#0a7d33;--fail:#b00020;--warn:#8a6d00;--ink:#1f2328;--muted:#5b6570;--line:#e3e6ea;--bg:#fafbfc;}
+  *{box-sizing:border-box}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:var(--ink);margin:0;background:var(--bg);line-height:1.55}
+  .wrap{max-width:960px;margin:0 auto;padding:32px 24px 64px}
+  header{border-bottom:3px solid var(--ok);padding-bottom:16px;margin-bottom:24px}
+  h1{font-size:24px;margin:0 0 4px}
+  .sub{color:var(--muted);font-size:14px}
+  .verdict{display:inline-block;background:var(--ok);color:#fff;font-weight:700;padding:4px 14px;border-radius:999px;font-size:13px;letter-spacing:.3px;margin-top:8px}
+  h2{font-size:18px;margin:32px 0 12px;padding-bottom:6px;border-bottom:1px solid var(--line)}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}
+  .card{background:#fff;border:1px solid var(--line);border-radius:8px;padding:14px 16px}
+  .card .k{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.4px}
+  .card .v{font-size:20px;font-weight:700;margin-top:2px}
+  .card .v.ok{color:var(--ok)}
+  table{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+  th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);font-size:14px;vertical-align:top}
+  th{background:#f0f2f4;font-size:12px;text-transform:uppercase;letter-spacing:.4px;color:var(--muted)}
+  tr:last-child td{border-bottom:none}
+  .pass{color:var(--ok);font-weight:700}
+  .fail{color:var(--fail);font-weight:700}
+  .n/a{color:var(--muted)}
+  code{background:#f0f2f4;border-radius:4px;padding:1px 5px;font-size:12.5px}
+  .note{background:#fff8e6;border:1px solid #eed9a0;border-radius:8px;padding:12px 14px;font-size:13.5px;margin:12px 0}
+  .foot{margin-top:40px;color:var(--muted);font-size:12px;border-top:1px solid var(--line);padding-top:14px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>QA Review — Server-side exam unlock + certificate eligibility</h1>
+    <div class="sub">Task t_2998fcaf &middot; QA reviewer: zod &middot; Reviewed commit <code>019500e</code> (branch main) &middot; Adroit Consulting</div>
+    <span class="verdict">APPROVED</span>
+  </header>
+
+  <div class="cards">
+    <div class="card"><div class="k">Status</div><div class="v ok">Approved</div></div>
+    <div class="card"><div class="k">Tests</div><div class="v ok">91 / 91</div></div>
+    <div class="card"><div class="k">Issues</div><div class="v">0</div></div>
+    <div class="card"><div class="k">TypeScript</div><div class="v ok">0 err</div></div>
+    <div class="card"><div class="k">Build</div><div class="v ok">Clean</div></div>
+  </div>
+
+  <h2>Summary</h2>
+  <p>Reviewed Steel's fix for security audit <code>t_05fad9a9</code> (OWASP A01 / CWE-285): server-side enforcement of the exam-unlock rule in <code>POST /api/progress/quiz/batch</code>, plus defense-in-depth on certificate eligibility. The gate closes the reported authorization hole at the write boundary, and the certificate rule no longer trusts &ldquo;exam unlocked &rArr; checks passed&rdquo;. Independent verification: <strong>91/91 tests pass (15 files)</strong>, <code>tsc --noEmit</code> clean, ESLint clean on touched files, <code>npm run build</code> clean. All three acceptance criteria met. No issues found.</p>
+
+  <h2>Acceptance Criteria</h2>
+  <table>
+    <thead><tr><th style="width:44px">Status</th><th>Criterion</th><th>Evidence</th></tr></thead>
+    <tbody>
+      <tr><td class="pass">PASS</td><td>Direct POST <code>/api/progress/quiz/batch</code> with <code>quizName=omni-studio-cert:exam</code> and no prior check runs returns <strong>403</strong>.</td><td>Gate at <code>route.ts:159-189</code> queries <code>quiz_run</code> for check names from <code>getKnowledgeChecks</code>; zero runs &rArr; <code>areAllChecksPassed</code> false &rArr; <code>403 {status:"unlock-required"}</code> before any write. Test: <code>route.test.ts:108-118</code> asserts 403 + <code>writeSink</code> empty.</td></tr>
+      <tr><td class="pass">PASS</td><td>Passing an exam after legitimately passing all checks succeeds.</td><td>All 9 checks best &ge; 80 &rArr; gate passes &rArr; attempts upserted + <code>quiz_run</code> inserted &rArr; 200. Test: <code>route.test.ts:135-160</code> (incl. retake-best-wins: a 60 after a 100 does not lock).</td></tr>
+      <tr><td class="pass">PASS</td><td>Existing tests pass (91 total; +11 new).</td><td><code>npx vitest run</code> &rArr; <strong>91 passed (15 files)</strong>. <code>tsc --noEmit</code> 0 errors. ESLint clean. <code>npm run build</code> exit 0.</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Findings</h2>
+  <table>
+    <thead><tr><th>File</th><th>Line</th><th>Severity</th><th>Description</th></tr></thead>
+    <tbody><tr><td colspan="4" class="pass">None — 0 findings.</td></tr></tbody>
+  </table>
+
+  <h2>Upstream Deliverables Verified</h2>
+  <table>
+    <thead><tr><th>File</th><th>Status</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td><code>src/app/api/progress/quiz/batch/route.ts</code></td><td class="pass">passed</td><td>Unlock gate after auth, before any write; series with no checks stay unlocked; <code>sanitiseDbError</code> used on error paths; 401 precedes gate query.</td></tr>
+      <tr><td><code>src/lib/certificate.ts</code></td><td class="pass">passed</td><td>New pure <code>areAllChecksPassed</code> (best-score MAX, empty list = unlocked) shared by gate + certificate; <code>buildCertificateEligibility</code> now requires all checks &ge; 80 (defense-in-depth).</td></tr>
+      <tr><td><code>src/lib/certificate.test.ts</code></td><td class="pass">passed</td><td>Coverage incl. defense-in-depth (passing exam + all lessons but incomplete checks &rArr; ineligible), boundary 72/80, cross-series ignored, retake-best-wins, empty list.</td></tr>
+      <tr><td><code>src/app/api/progress/quiz/batch/route.test.ts</code></td><td class="pass">passed</td><td>4 gate integration cases via mocked supabase: 401, 403-no-checks, 403-one-below-80, 200-all-passed (retake best wins).</td></tr>
+      <tr><td><code>CHANGELOG.md</code></td><td class="pass">passed</td><td>Entry t_c6333dd3 documents the fix, why, and affected files.</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Code Quality</h2>
+  <p class="pass">PASS</p>
+  <ul>
+    <li>Single source of truth for the unlock predicate — <code>areAllChecksPassed</code> is shared by the gate and the certificate rule (no drift risk between page/API/cert).</li>
+    <li>Exam-page parity confirmed: page <code>CHECK_PASS_PCT = 80</code> and <code>checks.every(...)</code> (<code>exam/page.tsx:49,111,113</code>) matches gate threshold <code>CERT_CHECK_PASS_PCT = 80</code> and empty-list semantics.</li>
+    <li>Naming consistent repo-wide: <code>&lt;series&gt;:check:&lt;n&gt;</code> used identically in the gate, tiers route, exam page, and certificate page — the gate queries names the check-submit path actually writes.</li>
+    <li>Defense-in-depth is wired, not dead code — <code>certificate/page.tsx:146-156</code> fetches <code>checkRuns</code> and passes <code>checkQuizNames</code> into <code>buildCertificateEligibility</code>.</li>
+    <li>No <code>any</code>/<code>@ts-ignore</code>; typed row shapes; error states return proper status codes.</li>
+  </ul>
+
+  <h2>Test Coverage Report</h2>
+  <table>
+    <thead><tr><th>Suite</th><th>Result</th><th>Verified</th></tr></thead>
+    <tbody>
+      <tr><td>Full vitest suite (15 files)</td><td class="pass">91 / 91 pass</td><td>Re-run by reviewer (8.99s).</td></tr>
+      <tr><td>Route gate integration cases</td><td class="pass">4 new</td><td>401, 403-no-checks, 403-one-below-80, 200-all-passed.</td></tr>
+      <tr><td>certificate.ts unit cases</td><td class="pass">7 new</td><td><code>areAllChecksPassed</code> (3) + eligibility incl. defense-in-depth (7 within build suite).</td></tr>
+      <tr><td>TypeScript (<code>tsc --noEmit</code>)</td><td class="pass">0 errors</td><td>Strict, no casts.</td></tr>
+      <tr><td>ESLint (touched files)</td><td class="pass">clean</td><td>route.ts, route.test.ts, certificate.ts, certificate.test.ts.</td></tr>
+      <tr><td>Production build (<code>npm run build</code>)</td><td class="pass">exit 0</td><td>Full SSG/SSR route map emitted.</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Edge Cases &amp; UX States Reviewed</h2>
+  <table>
+    <thead><tr><th>Case</th><th>Handled</th></tr></thead>
+    <tbody>
+      <tr><td>No check runs at all (direct API caller)</td><td class="pass">403 unlock-required, no rows written.</td></tr>
+      <tr><td>One check below 80 (boundary 79)</td><td class="pass">403; best 79 never crosses bar.</td></tr>
+      <tr><td>Retake where best wins (60 then 100)</td><td class="pass">200 — best-score MAX semantics.</td></tr>
+      <tr><td>Series with no checks (e.g. agentic-ai)</td><td class="pass">Gate skipped — stays unlocked (matches page empty-list <code>every</code>).</td></tr>
+      <tr><td>Cross-series check runs</td><td class="pass">Ignored — gate queries only <code>checkQuizNames</code>.</td></tr>
+      <tr><td>Unauthenticated request</td><td class="pass">401 returned before the gate query.</td></tr>
+      <tr><td>Certificate with passing exam + all lessons but incomplete checks</td><td class="pass">Ineligible — defense-in-depth enforced.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="note"><strong>Note (report file naming):</strong> The shared <code>reports/qa-report.html</code> carried an unrelated in-progress delta from another lane at review time, so this report is written to the repo's per-feature convention <code>reports/qa-report-exam-unlock.html</code> to avoid clobbering cross-lane work. Contents identical in structure to the standard QA report.</div>
+
+  <h2>Recommendation</h2>
+  <p class="pass" style="font-size:16px"><strong>APPROVE</strong> — commit <code>019500e</code>. All acceptance criteria met; authorization hole closed at the write boundary; defense-in-depth verified wired into the certificate page. Handing off to <strong>alpha</strong> (deploy).</p>
+
+  <div class="foot">Generated by zod (QA Reviewer) · Fortress of Solitude Consulting · 2026-08-11</div>
+</div>
+</body>
+</html>
