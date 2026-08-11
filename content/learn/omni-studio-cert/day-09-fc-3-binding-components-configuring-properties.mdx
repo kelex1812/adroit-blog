@@ -36,35 +36,6 @@ tags: [OmniStudio, FlexCards]
 - Binding to a nested path without the repeater context — the path must be relative to the item.
 - Using expressions where the data layer could compute the value more cleanly.
 
-## Practice Questions
-
-**Q1.** A FlexCard text element shows blank even though data exists. First suspect?
-
-- A. The binding path doesn't match the JSON key (case/nesting) — **CORRECT**
-- B. The theme is broken
-- C. The license expired
-- D. The card is too small
-
-**Answer:** A — Binding paths must match JSON keys exactly — mismatches render blank.
-
-**Q2.** Which element types can a FlexCard display?
-
-- A. Text, number, currency, date, image, link, button, containers — **CORRECT**
-- B. Only text
-- C. Only images
-- D. Only buttons
-
-**Answer:** A — FlexCards support a rich set of display elements bound to data.
-
-**Q3.** How do you show a formatted currency value in a card?
-
-- A. Bind a field and set its format property to currency — **CORRECT**
-- B. Hardcode the value
-- C. Use an image
-- D. Add a repeater
-
-**Answer:** A — Element properties include format masks (currency, date, number).
-
 ## Exam Tip
 
 Binding = JSON path. If it's blank, the path is wrong — check case, nesting, and repeater context.

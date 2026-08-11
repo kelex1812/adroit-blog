@@ -4,6 +4,36 @@ All notable changes to the Adroit Consulting Blog project will be documented in 
 
 ## [Unreleased]
 
+### Fix: scrub prose Practice Questions from day-09 lesson MDX — guest question leak (t_9032aa28)
+
+Resolves zod's QA finding F1 (HIGH) from review t_1d04b259. Lesson 9's
+MDX still contained the prose "## Practice Questions" section (Q1–Q3 with
+options, **CORRECT** markers, and **Answer:** keys) even though lessons
+1–8 were scrubbed. The lesson page renders the full MDX body to everyone
+and gates only the interactive `LessonQuiz`, so a logged-out visitor saw
+both the GuestCTA placeholder AND the complete question set with answers.
+
+**What**
+
+1. **Removed the "## Practice Questions" section** (Q1–Q3, options,
+   CORRECT markers, and Answer keys) from
+   `content/learn/omni-studio-cert/day-09-fc-3-binding-components-configuring-properties.mdx`.
+   The remaining lesson body (Deep Dive, Configuration Walkthrough, Exam
+   Traps, Exam Tip, Related Requirements, References) is untouched.
+
+**Why**
+
+- The interactive quiz lives in the sidecar JSON
+  (`content/learn/omni-studio-cert/questions/day-09-*.json`) which loads
+  only for authed users (ADR-104 session gate) — the prose section was a
+  duplicate that leaked to guests. Removing it loses no content.
+- Restores US-002 AC2/AC3 and the course pattern "guest pages leak no
+  question text".
+
+**Known Issues**
+
+- None.
+
 ### Fix: canonical question-count coverage in quiz score consumers (t_55105899)
 
 Resolves zod's QA finding (review t_121cbcce of fix t_fb1663ec) — HIGH,
