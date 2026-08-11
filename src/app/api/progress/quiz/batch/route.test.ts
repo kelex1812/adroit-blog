@@ -158,4 +158,40 @@ describe("POST /api/progress/quiz/batch — exam unlock gate", () => {
       quiz_name: EXAM_QUIZ_NAME,
     });
   });
+
+  it("accounts for a partial answer set — writes unanswered questions as incorrect (t_55105899)", async () => {
+    authedUser();
+    // Submit only 1 of the 60 canonical exam questions. The route must NOT
+    // leave quiz_attempt with a 1-row set (which F2 consumers would misread
+    // as 1/1 = 100%): it writes all 60 rows, unanswered → user_answer_index
+    // -1 sentinel, is_correct false.
+    const checkRows = Array.from({ length: 9 }, (_, i) => ({
+      quiz_name: `omni-studio-cert:check:${i + 1}`,
+      score: 90,
+    }));
+    mocks.from.mockImplementation((table: string) => makeFrom(table, table === "quiz_run" ? checkRows : []));
+
+    const res = await post(examBody());
+    expect(res.status).toBe(200);
+    const json = await res.json();
+    // Canonical denominator: 1 correct / 60 total.
+    expect(json.total).toBe(60);
+    expect(json.correct).toBe(1);
+    expect(json.score).toBe(2);
+    expect(json.results).toHaveLength(60);
+
+    // Full-coverage quiz_attempt upsert: 60 rows, question 0 submitted,
+    // questions 1..59 unanswered sentinel (user_answer_index -1, incorrect).
+    expect(writeSink.quizAttemptUpserts).toHaveLength(1);
+    const rows = writeSink.quizAttemptUpserts[0] as Array<{
+      question_index: number;
+      user_answer_index: number;
+      is_correct: boolean;
+    }>;
+    expect(rows).toHaveLength(60);
+    const q0 = rows.find((r) => r.question_index === 0);
+    expect(q0).toMatchObject({ user_answer_index: 1, is_correct: true });
+    const q59 = rows.find((r) => r.question_index === 59);
+    expect(q59).toMatchObject({ user_answer_index: -1, is_correct: false });
+  });
 });

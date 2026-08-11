@@ -17,7 +17,12 @@
  */
 import { NextRequest, NextResponse } from "next/server";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
-import { getKnowledgeChecks, scoreQuizAttemptsByQuiz } from "@/lib/quiz";
+import {
+  getCertExam,
+  getKnowledgeCheck,
+  getKnowledgeChecks,
+  scoreQuizAttemptsByQuiz,
+} from "@/lib/quiz";
 import { getSeriesBySlug, getLessonsForSeries } from "@/lib/learn";
 import { validateSlug } from "@/lib/api-security";
 import type { CheckProgress, TierProgress } from "@/shared/contracts";
@@ -95,12 +100,24 @@ export async function GET(req: NextRequest) {
     );
 
     // Score per quiz from graded attempts (F2).
+    // Canonical coverage (t_55105899): build quizName → canonical question
+    // count so scoreQuizAttemptsByQuiz rejects partial attempt sets — a
+    // client that answers 8 of 15 check questions must NOT derive 100%.
+    const canonicalTotals = new Map<string, number>();
+    for (const c of checkMetas) {
+      const quiz = getKnowledgeCheck(series, c.n);
+      if (quiz) canonicalTotals.set(`${series}:check:${c.n}`, quiz.questions.length);
+    }
+    const exam = getCertExam(series);
+    if (exam) canonicalTotals.set(examQuizName, exam.questions.length);
+
     const scoresByQuiz = scoreQuizAttemptsByQuiz(
       (attemptRes.data ?? []) as {
         quiz_name: string;
         question_index: number;
         is_correct: boolean;
       }[],
+      canonicalTotals,
     );
 
     // Display-only run counts (F1: quiz_run rows are server-derived).

@@ -99,15 +99,7 @@ export async function POST(req: NextRequest) {
     /* --- Validate every answer + recompute correctness (F3) --- */
     const seenIndexes = new Set<number>();
     const results: ExamResultItem[] = [];
-    const attemptRows: {
-      user_id: string;
-      quiz_name: string;
-      question_index: number;
-      correct_answer_index: number;
-      user_answer_index: number;
-      is_correct: boolean;
-      attempted_at: string;
-    }[] = [];
+    const submittedByIndex = new Map<number, ExamAnswer>();
     let correctCount = 0;
 
     for (const answer of body.answers as ExamAnswer[]) {
@@ -140,14 +132,17 @@ export async function POST(req: NextRequest) {
         return NextResponse.json({ error: aIdxErr }, { status: 400 });
       }
 
-      const isCorrect = answer.userAnswerIndex === question.correct_answer_index;
-      if (isCorrect) correctCount += 1;
-      results.push({
-        questionIndex: answer.questionIndex,
-        isCorrect,
-        correctAnswerIndex: question.correct_answer_index,
-      });
+      submittedByIndex.set(answer.questionIndex, answer);
     }
+
+    // Partial answer sets are ACCOUNTED FOR (t_55105899 F2 coverage): a
+    // client may submit fewer than `questionCount` answers (timed exam, or a
+    // forged partial POST). Missing questions are written as unanswered
+    // (user_answer_index: -1 sentinel, is_correct: false) so quiz_attempt
+    // always covers the canonical question count. This mirrors the scoring
+    // rule in run/route.ts:90 and the canonical-denominator score below —
+    // a partial set can never derive as 40/40 = 100% in F2 consumers
+    // (tiers / exam unlock / certificate).
 
     /* --- Auth --- */
     const supabase = await getSupabaseServerClient();
@@ -189,15 +184,37 @@ export async function POST(req: NextRequest) {
     }
 
     const now = new Date().toISOString();
-    for (const answer of body.answers as ExamAnswer[]) {
-      const question = quiz.questions[answer.questionIndex]!;
-      const isCorrect = answer.userAnswerIndex === question.correct_answer_index;
+    // Build rows for ALL canonical questions: submitted answers are graded
+    // against the canonical key; missing questions are written as unanswered
+    // (user_answer_index: -1 sentinel, is_correct: false) so quiz_attempt
+    // always has full coverage. Scoring below divides by questionCount, so
+    // an unanswered question is treated as incorrect (t_55105899).
+    const attemptRows: {
+      user_id: string;
+      quiz_name: string;
+      question_index: number;
+      correct_answer_index: number;
+      user_answer_index: number;
+      is_correct: boolean;
+      attempted_at: string;
+    }[] = [];
+    for (let qi = 0; qi < questionCount; qi += 1) {
+      const question = quiz.questions[qi]!;
+      const submitted = submittedByIndex.get(qi);
+      const isCorrect =
+        submitted !== undefined && submitted.userAnswerIndex === question.correct_answer_index;
+      if (isCorrect) correctCount += 1;
+      results.push({
+        questionIndex: qi,
+        isCorrect,
+        correctAnswerIndex: question.correct_answer_index,
+      });
       attemptRows.push({
         user_id: user.id,
         quiz_name: body.quizName,
-        question_index: answer.questionIndex,
+        question_index: qi,
         correct_answer_index: question.correct_answer_index,
-        user_answer_index: answer.userAnswerIndex,
+        user_answer_index: submitted?.userAnswerIndex ?? -1,
         is_correct: isCorrect,
         attempted_at: now,
       });

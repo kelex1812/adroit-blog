@@ -23,7 +23,12 @@ import Footer from "@/components/Footer";
 import Certificate from "@/components/Progress/Certificate";
 import GuestCTA from "@/components/Progress/GuestCTA";
 import { learnSeries } from "@/data/learn";
-import { getCertExam, getKnowledgeChecks, scoreQuizAttemptRows } from "@/lib/quiz";
+import {
+  getCertExam,
+  getKnowledgeCheck,
+  getKnowledgeChecks,
+  scoreQuizAttemptRows,
+} from "@/lib/quiz";
 import { getSeriesBySlug } from "@/lib/learn";
 import { buildMetadata } from "@/lib/seo";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
@@ -149,8 +154,12 @@ export default async function CertificatePage({ params }: Props) {
 
   // Exam: score from the graded attempt set; completion date = the latest
   // graded exam answer (quiz_attempt has no run boundaries).
+  // Canonical coverage (t_55105899): a partial exam answer set (e.g. 40 of
+  // 60 questions, all correct) must NOT derive as 40/40 = 100% and grant a
+  // certificate — only a full-coverage set is a valid exam score.
+  const examCanonical = getCertExam(series)?.questions.length;
   const examAttempts = attemptRows.filter((r) => r.quiz_name === examQuizName);
-  const examScore = scoreQuizAttemptRows(examAttempts);
+  const examScore = scoreQuizAttemptRows(examAttempts, examCanonical);
   const examRuns = examScore
     ? [
         {
@@ -164,10 +173,15 @@ export default async function CertificatePage({ params }: Props) {
       ]
     : [];
 
-  // Checks: one derived score per check quizName (latest graded answer set).
+  // Checks: one derived score per check quizName (latest graded answer set),
+  // each validated against its canonical question count (t_55105899).
   const checkRuns = checkQuizNames
-    .map((quizName) => {
-      const s = scoreQuizAttemptRows(attemptRows.filter((r) => r.quiz_name === quizName));
+    .map((quizName, i) => {
+      const canonical = checkMetas[i] ? getKnowledgeCheck(series, checkMetas[i]!.n)?.questions.length : undefined;
+      const s = scoreQuizAttemptRows(
+        attemptRows.filter((r) => r.quiz_name === quizName),
+        canonical,
+      );
       return s ? { quizName, score: s.score } : null;
     })
     .filter((r): r is { quizName: string; score: number } => r !== null);

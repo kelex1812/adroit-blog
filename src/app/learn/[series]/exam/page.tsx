@@ -16,7 +16,12 @@ import ExamWidget from "@/components/Progress/ExamWidget";
 import ExamLocked from "@/components/Progress/ExamLocked";
 import GuestCTA from "@/components/Progress/GuestCTA";
 import { learnSeries } from "@/data/learn";
-import { getCertExam, getKnowledgeChecks, scoreQuizAttemptsByQuiz } from "@/lib/quiz";
+import {
+  getCertExam,
+  getKnowledgeCheck,
+  getKnowledgeChecks,
+  scoreQuizAttemptsByQuiz,
+} from "@/lib/quiz";
 import { getSeriesBySlug } from "@/lib/learn";
 import { buildMetadata } from "@/lib/seo";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
@@ -102,12 +107,21 @@ export default async function ExamPage({ params }: Props) {
     .eq("user_id", user!.id)
     .in("quiz_name", quizNames);
 
+  // Canonical coverage (t_55105899): a check with only 8 of 15 questions
+  // answered (all correct) must NOT derive as 8/8 = 100% and unlock the
+  // exam. Only full-coverage attempt sets produce a score.
+  const canonicalTotals = new Map<string, number>();
+  for (const c of checkMetas) {
+    const quiz = getKnowledgeCheck(series, c.n);
+    if (quiz) canonicalTotals.set(`${series}:check:${c.n}`, quiz.questions.length);
+  }
   const scoresByQuiz = scoreQuizAttemptsByQuiz(
     (data ?? []) as {
       quiz_name: string;
       question_index: number;
       is_correct: boolean;
     }[],
+    canonicalTotals,
   );
 
   const checks: CheckProgress[] = checkMetas.map((c) => {

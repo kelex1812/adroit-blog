@@ -162,3 +162,75 @@ describe("scoreQuizAttemptRows / scoreQuizAttemptsByQuiz (F1/F2 source of truth)
     expect(scoreQuizAttemptsByQuiz([]).size).toBe(0);
   });
 });
+
+describe("scoreQuizAttemptRows / scoreQuizAttemptsByQuiz canonical coverage (t_55105899 F2)", () => {
+  it("rejects a partial attempt set when the canonical question count is known", () => {
+    // 8 of a canonical 15 check questions, ALL correct — must NOT derive as
+    // 8/8 = 100% (that was the exam-unlock forgery).
+    const s = scoreQuizAttemptRows(
+      Array.from({ length: 8 }, (_, i) => ({ question_index: i, is_correct: true })),
+      15,
+    );
+    expect(s).toBeNull();
+  });
+
+  it("scores a full-coverage attempt set against the canonical count", () => {
+    // 15 of 15 graded (14 correct) → 93%.
+    const rows = Array.from({ length: 15 }, (_, i) => ({
+      question_index: i,
+      is_correct: i !== 14,
+    }));
+    expect(scoreQuizAttemptRows(rows, 15)).toEqual({ correct: 14, total: 15, score: 93 });
+  });
+
+  it("rejects a partial EXAM set (40 of 60, all correct) — certificate forgery", () => {
+    // The certificate exploit: submit 40 known-correct exam answers; without
+    // canonical coverage this derived as 40/40 = 100% ≥ 72. With coverage it
+    // is null (not a valid score).
+    const rows = Array.from({ length: 40 }, (_, i) => ({
+      question_index: i,
+      is_correct: true,
+    }));
+    expect(scoreQuizAttemptRows(rows, 60)).toBeNull();
+  });
+
+  it("scores a full exam set against 60 (40 correct → 67%, below pass)", () => {
+    const rows = Array.from({ length: 60 }, (_, i) => ({
+      question_index: i,
+      is_correct: i < 40,
+    }));
+    expect(scoreQuizAttemptRows(rows, 60)).toEqual({ correct: 40, total: 60, score: 67 });
+  });
+
+  it("grouped scoring skips quizzes missing from the canonical map and partial sets", () => {
+    const byQuiz = scoreQuizAttemptsByQuiz(
+      [
+        // check:1 — 8 of canonical 15 → partial → omitted (cannot grant).
+        { quiz_name: "s:check:1", question_index: 0, is_correct: true },
+        { quiz_name: "s:check:1", question_index: 1, is_correct: true },
+        // check:2 — full 2-of-2 (canonical 2) → scored 100.
+        { quiz_name: "s:check:2", question_index: 0, is_correct: true },
+        { quiz_name: "s:check:2", question_index: 1, is_correct: true },
+        // unknown quiz absent from the map → omitted.
+        { quiz_name: "s:mystery", question_index: 0, is_correct: true },
+      ],
+      new Map([
+        ["s:check:1", 15],
+        ["s:check:2", 2],
+      ]),
+    );
+    expect(byQuiz.has("s:check:1")).toBe(false);
+    expect(byQuiz.has("s:mystery")).toBe(false);
+    expect(byQuiz.get("s:check:2")).toEqual({ correct: 2, total: 2, score: 100 });
+  });
+
+  it("keeps legacy behavior when no canonical totals are supplied", () => {
+    // Backward compat: callers without canonical knowledge (e.g. run route's
+    // own explicit guard) still get the answered-count score.
+    const s = scoreQuizAttemptRows([
+      { question_index: 0, is_correct: true },
+      { question_index: 1, is_correct: true },
+    ]);
+    expect(s).toEqual({ correct: 2, total: 2, score: 100 });
+  });
+});

@@ -4,6 +4,53 @@ All notable changes to the Adroit Consulting Blog project will be documented in 
 
 ## [Unreleased]
 
+### Fix: canonical question-count coverage in quiz score consumers (t_55105899)
+
+Resolves zod's QA finding (review t_121cbcce of fix t_fb1663ec) — HIGH,
+CWE-345. The F1 run route already refused to record a run when the graded
+attempt set didn't cover the canonical question count, but the F2
+consumers (tiers, exam unlock, certificate eligibility) scored whatever
+rows existed — so a client that answered only the questions it knew
+derived `8/8 = 100%` (exam unlock) or `40/40 = 100%` (certificate) from a
+partial `quiz_attempt` set.
+
+**What**
+
+1. **`scoreQuizAttemptRows` / `scoreQuizAttemptsByQuiz` now take a
+   canonical question count** (`src/lib/quiz.ts`). When the canonical count
+   is known, a partial attempt set returns `null` (no score, can grant
+   nothing) and a full set is scored against the canonical denominator with
+   unanswered treated as incorrect. When no canonical total is supplied the
+   legacy answered-count behaviour is preserved (backward compatible).
+2. **Every F2 consumer passes canonical totals** — `tiers/route.ts`,
+   `exam/page.tsx` (per-check canonical counts via `getKnowledgeCheck`),
+   and `certificate/page.tsx` (exam = `getCertExam().questions.length`,
+   checks = per-check canonical counts). A partial set can no longer derive
+   a passing score anywhere.
+3. **Exam batch route accounts for partial answer sets**
+   (`src/app/api/progress/quiz/batch/route.ts`). Missing questions are
+   written to `quiz_attempt` as unanswered (`user_answer_index: -1`,
+   `is_correct: false`), so the attempt set always covers the canonical
+   question count and the `quiz_run` score divides by the canonical
+   denominator (40/60 stays 67%, never 100%).
+
+**Why**
+
+- F1 guarded the run-recording boundary but not the read-side consumers;
+  both exploits went through partial `quiz_attempt` sets that were scored
+  against an inflated (self-selected) denominator. Enforcing canonical
+  coverage at the scoring primitive closes the class for every current and
+  future consumer.
+
+**Known Issues**
+
+- `scoreQuizAttemptsByQuiz` now skips quizzes absent from the canonical
+  map when a map is supplied — callers without canonical knowledge should
+  keep omitting the argument rather than passing an incomplete map.
+- The certificate page's per-check canonical lookup assumes `checkMetas`
+  indexes align with `checkQuizNames`; both derive from
+  `getKnowledgeChecks(series)`, so they are order-stable.
+
 ### Security: server-side source of truth for grading, unlock, and certificates (t_7469e31d)
 
 Resolves val-el's security audit (t_7469e31d) — 5 findings, all confirmed

@@ -230,12 +230,18 @@ export interface QuizAttemptScore {
  * user_id,quiz_name,question_index), so the derived score reflects the
  * user's current answer set. Returns null when there are no rows.
  *
- * Security (t_7469e31d F1/F2): quiz_run stats, the exam unlock gate, and
- * certificate eligibility all derive from these server-graded rows — never
- * from client-reported `correct`/`total`.
+ * Security (t_7469e31d F1/F2 + t_55105899 F2 coverage): quiz_run stats, the
+ * exam unlock gate, and certificate eligibility all derive from these
+ * server-graded rows — never from client-reported `correct`/`total`. When a
+ * canonical question count is known (`canonicalTotal`), a partial attempt
+ * set (fewer graded questions than the quiz has) returns null: a client that
+ * answers only the questions it knows must not be scored as 100% of an
+ * inflated denominator. This mirrors run/route.ts:90's full-coverage guard
+ * and applies it to every F2 consumer (tiers, exam unlock, certificate).
  */
 export function scoreQuizAttemptRows(
   rows: Pick<QuizAttemptRow, "question_index" | "is_correct">[],
+  canonicalTotal?: number,
 ): QuizAttemptScore | null {
   // Latest answer per question wins (defensive against stray duplicates).
   const byQuestion = new Map<number, boolean>();
@@ -249,16 +255,33 @@ export function scoreQuizAttemptRows(
   }
   const total = byQuestion.size;
   if (total === 0) return null;
+  // F2 coverage guard (t_55105899 / CWE-345): only a full-coverage attempt
+  // set is a valid score for pass/unlock/eligibility. A partial set (e.g. 8
+  // of 15 check questions, all correct) must NOT derive as 100%.
+  if (canonicalTotal !== undefined && total !== canonicalTotal) {
+    return null;
+  }
   let correct = 0;
   for (const ok of byQuestion.values()) {
     if (ok) correct += 1;
   }
-  return { correct, total, score: Math.round((correct / total) * 100) };
+  return {
+    correct,
+    total: canonicalTotal ?? total,
+    score: Math.round((correct / (canonicalTotal ?? total)) * 100),
+  };
 }
 
-/** Group server-graded attempt rows by quiz_name and score each quiz. */
+/**
+ * Group server-graded attempt rows by quiz_name and score each quiz.
+ * When `canonicalTotals` is provided (quizName → canonical question count),
+ * quizzes missing from the map are never scored and partial attempt sets
+ * return no score (see scoreQuizAttemptRows) — a caller can only derive
+ * pass/unlock/eligibility for quizzes it can validate against canonical JSON.
+ */
 export function scoreQuizAttemptsByQuiz(
   rows: QuizAttemptRow[],
+  canonicalTotals?: ReadonlyMap<string, number>,
 ): Map<string, QuizAttemptScore> {
   const byQuiz = new Map<string, QuizAttemptRow[]>();
   for (const row of rows) {
@@ -268,7 +291,10 @@ export function scoreQuizAttemptsByQuiz(
   }
   const scores = new Map<string, QuizAttemptScore>();
   for (const [quizName, quizRows] of byQuiz) {
-    const s = scoreQuizAttemptRows(quizRows);
+    // Defensive: a quiz with no known canonical count cannot be validated —
+    // it must never grant anything.
+    if (canonicalTotals && !canonicalTotals.has(quizName)) continue;
+    const s = scoreQuizAttemptRows(quizRows, canonicalTotals?.get(quizName));
     if (s) scores.set(quizName, s);
   }
   return scores;
