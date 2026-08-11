@@ -3,8 +3,8 @@ import { BlogPost } from "./types";
 export const posts: BlogPost[] = [
   {
     "slug": "estimation-after-ai-2026",
-    "title": "Estimation After AI: Why Story-Point Velocity Stopped Forecasting Delivery",
-    "excerpt": "AI didn't make your estimates wrong. It split knowledge work into two different economic activities, fast generation and slow validation, and story-point velocity was built to forecast only one of them. Here's what consulting teams measure instead.",
+    "title": "Estimation After AI: Velocity Stopped Forecasting",
+    "excerpt": "AI split knowledge work into fast generation and slow validation, breaking the complexity-to-effort assumption that story-point velocity was built on.",
     "category": "Project Management",
     "categoryColor": "pm",
     "categoryGradient": "from-teal to-teal-dark",
