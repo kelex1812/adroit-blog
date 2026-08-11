@@ -4,6 +4,48 @@ All notable changes to the Adroit Consulting Blog project will be documented in 
 
 ## [Unreleased]
 
+### Content gen: emit quiz JSON tiers from curriculum (t_22855141)
+
+Emits the three-tier quiz content for the OmniStudio cert course from the canonical curriculum
+(`~/.hermes/scripts/omni-studio-curriculum.py`, 46 requirements × 3 questions = 138) via a new
+idempotent generator, `scripts/generate-omni-quizzes.py`.
+
+**What**
+
+- New generator `scripts/generate-omni-quizzes.py` reads the curriculum module and emits:
+  - `content/learn/omni-studio-cert/questions/<slug>.json` — 46 per-lesson files, 3 questions each,
+    `quizName = omni-studio-cert:lesson:<slug>`. Slugs for published lessons (1–8) are taken from
+    the MDX frontmatter; unpublished lessons use the cron's `day-NN-<id>-<title-slug>` pattern.
+  - `content/learn/omni-studio-cert/checks/check-<1..9>.json` — 9 knowledge checks, 15 questions
+    each, pooled from lessons 5n−4..5n (check-9 = lessons 41–45), `quizName = omni-studio-cert:check:<n>`.
+  - `content/learn/omni-studio-cert/exam.json` — 60-question exam stratified to the official
+    blueprint domain weights (Fundamentals 18% / FlexCards 15% / OmniScripts 20% / IP 15% /
+    Data Mappers 17% / Troubleshooting 15% → 11/9/12/9/10/9), `quizName = omni-studio-cert:exam`.
+- Same JSON shape as the existing series quiz file (`quizName, title, description, questions[]`
+  with `correct_answer_index`; answer letter → 0-based index), matching `src/shared/contracts.ts`
+  (`QuizData` / `QuizQuestion`).
+
+**Why**
+
+- The three-tier lesson → knowledge check → cert exam progression (course-progression pattern)
+  needs machine-emitted, deterministic question content keyed to lesson slugs; hand-curated
+  content doesn't scale to 46 lessons and would drift from the curriculum.
+
+**Verification**
+
+- 46 lesson files (3 q each), 9 check files (15 q each), exam.json (60 q) — all counts verified.
+- Exam domain weights are 11/9/12/9/10/9 (within ±1 of blueprint % for all six domains).
+- `python3 -m json.tool` parses all 56 emitted JSON files.
+- Rerun-safe: fixed seed (20260810) + deterministic ordering + generator-owned dirs cleared first —
+  two consecutive runs produce byte-identical output (sha256 diff clean).
+
+**Known issues**
+
+- Unpublished lessons 9–46 use a deterministic slug guess (`day-NN-<id.lower()>-<title-slugify>`).
+  If the daily cron writes a lesson MDX with a different title slug, the sidecar won't match until
+  the generator is re-run after the lesson publishes (it reads MDX frontmatter slugs when present).
+- Lesson 46's questions are not pooled into any knowledge check (checks cover lessons 1–45 per spec).
+
 ### Fix: motion QA findings — ShareBar hydration, score ring, read-sync (QA t_ea005360)
 
 Resolves all findings from zod's motion review: H-1 HIGH (ShareBar hydration mismatch + broken share URLs on every post page), M-1 MEDIUM (score ring fill never animates), M-2 MEDIUM (useReadProgress sync localStorage read → full hydration failure on post pages with read records), M-3 MEDIUM (Moment posture absent: no check-pop on read badge / MarkComplete, abrupt explanation reveal), L-1 LOW (no automated tests for animation behavior), L-2 LOW (LessonCard hover:pl-4 animates layout property).
