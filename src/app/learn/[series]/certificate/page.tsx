@@ -185,7 +185,7 @@ export default async function CertificatePage({ params }: Props) {
             {pageHead}
 
             <div className="max-w-[640px] bg-white border border-gray-200 rounded-2xl p-7 shadow-sm">
-              <div className="flex items-center gap-2 font-mono text-[11px] font-bold text-gray-400 uppercase tracking-[0.09em] mb-2">
+              <div className="flex items-center gap-2 font-mono text-[11px] font-bold text-gray-500 uppercase tracking-[0.09em] mb-2">
                 <span className="w-[3px] h-3 rounded-sm bg-gray-400" />
                 Certificate not yet available
               </div>
@@ -202,7 +202,7 @@ export default async function CertificatePage({ params }: Props) {
                     className={`w-5 h-5 rounded-full flex-shrink-0 flex items-center justify-center ${
                       lessonsDone
                         ? "bg-emerald/[0.12] text-emerald"
-                        : "bg-gray-100 text-gray-400"
+                        : "bg-gray-100 text-gray-500"
                     }`}
                   >
                     {lessonsDone ? OkIcon : NoIcon}
@@ -210,7 +210,7 @@ export default async function CertificatePage({ params }: Props) {
                   <span>
                     All {eligibility.lessonsTotal} lessons completed
                   </span>
-                  <span className="font-mono text-[11px] text-gray-400 ml-auto">
+                  <span className="font-mono text-[11px] text-gray-500 ml-auto">
                     {eligibility.lessonsCompleted}/{eligibility.lessonsTotal}
                   </span>
                 </div>
@@ -219,18 +219,18 @@ export default async function CertificatePage({ params }: Props) {
                     className={`w-5 h-5 rounded-full flex-shrink-0 flex items-center justify-center ${
                       eligibility.examPassed
                         ? "bg-emerald/[0.12] text-emerald"
-                        : "bg-gray-100 text-gray-400"
+                        : "bg-gray-100 text-gray-500"
                     }`}
                   >
                     {eligibility.examPassed ? OkIcon : NoIcon}
                   </span>
                   <span>Cert prep exam passed (≥ 72%)</span>
-                  <span className="font-mono text-[11px] text-gray-400 ml-auto">{examStatus}</span>
+                  <span className="font-mono text-[11px] text-gray-500 ml-auto">{examStatus}</span>
                 </div>
                 <div className="flex items-center gap-2.5 text-[13px] text-gray-600">
                   <span
                     className={`w-5 h-5 rounded-full flex-shrink-0 flex items-center justify-center ${
-                      checksDone ? "bg-emerald/[0.12] text-emerald" : "bg-gray-100 text-gray-400"
+                      checksDone ? "bg-emerald/[0.12] text-emerald" : "bg-gray-100 text-gray-500"
                     }`}
                   >
                     {checksDone ? OkIcon : NoIcon}
@@ -239,7 +239,7 @@ export default async function CertificatePage({ params }: Props) {
                     <b className="text-gray-800">Exam unlocked</b> — all {eligibility.checksTotal}{" "}
                     knowledge checks ≥ 80%
                   </span>
-                  <span className="font-mono text-[11px] text-gray-400 ml-auto">
+                  <span className="font-mono text-[11px] text-gray-500 ml-auto">
                     {eligibility.checksPassed}/{eligibility.checksTotal} checks
                   </span>
                 </div>

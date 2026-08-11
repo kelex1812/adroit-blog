@@ -75,6 +75,21 @@ export default function ExamWidget({
   const answeredCount = Object.keys(answers).length;
   const resultById = useResultMap(result?.results);
 
+  // a11y (audit finding 1): the results view gets a real heading and focus
+  // moves to it on render/submit/auto-submit so AT users hear the outcome.
+  const resultsHeadingRef = useRef<HTMLHeadingElement | null>(null);
+  useEffect(() => {
+    if (phase === "results" && result) {
+      resultsHeadingRef.current?.focus();
+    }
+  }, [phase, result]);
+
+  // a11y (audit finding 2): polite live region announces the countdown at
+  // meaningful thresholds (10/5/1 min) and the auto-submit — NOT every
+  // second (that would be noise). Thresholds are announced once per run.
+  const [timerAnnouncement, setTimerAnnouncement] = useState<string | null>(null);
+  const announcedThresholdsRef = useRef<Set<number>>(new Set());
+
   const submit = useCallback(async () => {
     if (submittedRef.current) return;
     submittedRef.current = true;
@@ -120,7 +135,27 @@ export default function ExamWidget({
     const tick = () => {
       const remaining = Math.max(0, Math.round((deadline - Date.now()) / 1000));
       setTimeLeft(remaining);
+
+      // a11y (finding 2): announce once at each threshold (10/5/1 min) and on
+      // auto-submit. Thresholds announce one time per run (ref set), so the
+      // live region doesn't chatter every second.
+      if (remaining > 0) {
+        const announceAt = [
+          { at: 10 * 60, msg: "10 minutes remaining" },
+          { at: 5 * 60, msg: "5 minutes remaining" },
+          { at: 60, msg: "1 minute remaining" },
+        ].find((t) => remaining <= t.at && !announcedThresholdsRef.current.has(t.at));
+        if (announceAt) {
+          announcedThresholdsRef.current.add(announceAt.at);
+          setTimerAnnouncement(announceAt.msg);
+        }
+      }
+
       if (remaining <= 0) {
+        if (!announcedThresholdsRef.current.has(0)) {
+          announcedThresholdsRef.current.add(0);
+          setTimerAnnouncement("Time's up — your exam was submitted automatically.");
+        }
         submit();
       }
     };
@@ -157,6 +192,28 @@ export default function ExamWidget({
     });
   }
 
+  // a11y (finding 5): WAI-ARIA radiogroup arrow-key roving — ArrowDown/Right
+  // move to the next option, ArrowUp/Left to the previous, wrapping around.
+  // The focused option becomes the selection (automatic-activation pattern),
+  // matching QuizWidget's handleRadiogroupKeyDown.
+  function handleRadiogroupKeyDown(event: React.KeyboardEvent<HTMLDivElement>) {
+    const dir =
+      event.key === "ArrowDown" || event.key === "ArrowRight"
+        ? 1
+        : event.key === "ArrowUp" || event.key === "ArrowLeft"
+          ? -1
+          : 0;
+    if (dir === 0) return;
+    event.preventDefault();
+    const optionCount = questions[currentQ]!.options.length;
+    const start = answers[currentQ] === undefined ? -1 : answers[currentQ]!;
+    const next = (start + dir + optionCount) % optionCount;
+    selectOption(next);
+    document
+      .getElementById(`exam-option-${quizName}-${currentQ}-${next}`)
+      ?.focus();
+  }
+
   function handleNext() {
     if (phase !== "run") return;
     if (currentQ < total - 1) setCurrentQ(currentQ + 1);
@@ -172,6 +229,8 @@ export default function ExamWidget({
     submittedRef.current = false;
     startedAtRef.current = null;
     setTimeLeft(EXAM_SECONDS);
+    announcedThresholdsRef.current = new Set();
+    setTimerAnnouncement(null);
     setPhase("run");
   }
 
@@ -180,6 +239,8 @@ export default function ExamWidget({
     const pass = result.passed;
     return (
       <div className="max-w-[720px] mx-auto px-6 pt-8 pb-24">
+        {/* a11y (finding 1): heading + focus target for the results view */}
+        <h2 ref={resultsHeadingRef} tabIndex={-1} className="sr-only">Exam results</h2>
         <div className="rounded-[20px] border border-gray-200 bg-white p-8 text-center shadow-sm">
           <div className="font-mono text-[11px] font-bold text-navy uppercase tracking-[0.09em] mb-4">
             Cert Prep Exam · Results
@@ -201,7 +262,7 @@ export default function ExamWidget({
               <span className="font-mono text-[2.15rem] font-extrabold text-navy leading-none tabular-nums">
                 {result.score}%
               </span>
-              <span className="text-[11px] text-gray-400 font-bold uppercase tracking-[0.08em] mt-1">
+              <span className="text-[11px] text-gray-500 font-bold uppercase tracking-[0.08em] mt-1">
                 {result.correct}/{result.total}
               </span>
             </div>
@@ -232,7 +293,7 @@ export default function ExamWidget({
 
           {/* Answer review */}
           <div className="text-left">
-            <div className="flex items-center justify-between font-mono text-[10.5px] font-bold text-gray-400 uppercase tracking-[0.09em] py-2 border-t border-gray-100">
+            <div className="flex items-center justify-between font-mono text-[10.5px] font-bold text-gray-500 uppercase tracking-[0.09em] py-2 border-t border-gray-100">
               <span>Answer review</span>
               <span>{result.total} items</span>
             </div>
@@ -298,20 +359,28 @@ export default function ExamWidget({
   // ------------------------- Sticky timer bar -------------------------
   return (
     <>
+      {/* a11y (finding 2): polite live region for threshold announcements.
+          The visible countdown carries role="timer" with aria-live="off"
+          (per-second ticks are not announced; thresholds are, once each). */}
+      <span className="sr-only" role="status" aria-live="polite">
+        {timerAnnouncement}
+      </span>
       <div className="sticky top-0 z-30 bg-navy text-white shadow-lg">
         <div className="max-w-[760px] mx-auto px-6 py-3 flex items-center justify-between gap-4">
           <div className="flex items-center gap-2 min-w-0">
             <span aria-hidden="true" className="w-2 h-2 rounded-full bg-red-light" />
             <span className="font-mono text-[12px] font-bold tracking-[0.04em] truncate">
               Cert Prep Exam
-              <span className="text-white/60"> · {total} questions</span>
+              <span className="text-white/70"> · {total} questions</span>
             </span>
           </div>
           <div className="flex items-center gap-2 shrink-0">
-            <span className="font-mono text-[10px] uppercase tracking-[0.1em] text-white/55 hidden sm:inline">
+            <span className="font-mono text-[10px] uppercase tracking-[0.1em] text-white/70 hidden sm:inline">
               Time remaining
             </span>
             <span
+              role="timer"
+              aria-live="off"
               className={`font-mono text-[1.3rem] font-bold tabular-nums ${
                 timeUrgent ? "text-red-light" : timeWarn ? "text-[#FF6B7D]" : ""
               } ${timeUrgent || timeWarn ? "animate-pulse" : ""}`}
@@ -321,8 +390,8 @@ export default function ExamWidget({
           </div>
         </div>
         <div className="max-w-[760px] mx-auto px-6 pb-2.5 flex items-center justify-between">
-          <span className="font-mono text-[10px] text-white/45">Auto-submits at 00:00</span>
-          <span className="font-mono text-[10px] text-white/45">
+          <span className="font-mono text-[10px] text-white/70">Auto-submits at 00:00</span>
+          <span className="font-mono text-[10px] text-white/70">
             {formatTime(timeLeft)} remaining · answered {answeredCount}/{total}
           </span>
         </div>
@@ -340,7 +409,7 @@ export default function ExamWidget({
               Certification Prep Exam
             </h1>
           </div>
-          <div className="font-mono text-[11px] text-gray-400 text-right">
+          <div className="font-mono text-[11px] text-gray-500 text-right">
             <b className="text-navy">{total} questions</b>
             <br />
             105 minutes · no feedback
@@ -350,7 +419,7 @@ export default function ExamWidget({
         </div>
 
         {/* Progress label + 60 segments (no correctness color) */}
-        <div className="flex items-center justify-between font-mono text-[11.5px] text-gray-400 mb-2">
+        <div className="flex items-center justify-between font-mono text-[11.5px] text-gray-500 mb-2">
           <span>Question {currentQ + 1} of {total}</span>
           <span className="text-navy font-bold">{answeredCount} answered</span>
         </div>
@@ -367,19 +436,20 @@ export default function ExamWidget({
 
         {/* Exam card */}
         <div className="rounded-[20px] border border-gray-200 bg-white p-7 shadow-sm">
-          <div className="font-mono text-[10.5px] font-bold text-gray-400 uppercase tracking-[0.09em] mb-2">
+          <div className="font-mono text-[10.5px] font-bold text-gray-500 uppercase tracking-[0.09em] mb-2">
             Question {currentQ + 1} of {total}
           </div>
           <p className="text-[1.05rem] font-bold text-navy leading-[1.45] mb-5">
             {questions[currentQ]!.question}
           </p>
 
-          <div className="flex flex-col gap-2.5 mb-6" role="radiogroup" aria-label="Answer options">
+          <div className="flex flex-col gap-2.5 mb-6" role="radiogroup" aria-label="Answer options" onKeyDown={handleRadiogroupKeyDown}>
             {questions[currentQ]!.options.map((option, i) => {
               const isSelected = answers[currentQ] === i;
               return (
                 <button
                   key={i}
+                  id={`exam-option-${quizName}-${currentQ}-${i}`}
                   role="radio"
                   aria-checked={isSelected}
                   onClick={() => selectOption(i)}
@@ -431,7 +501,7 @@ export default function ExamWidget({
             </button>
           </div>
 
-          <div className="flex items-center gap-2 font-mono text-[10.5px] text-gray-400 mt-4">
+          <div className="flex items-center gap-2 font-mono text-[10.5px] text-gray-500 mt-4">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" strokeWidth="2" aria-hidden="true">
               <circle cx="12" cy="12" r="10" />
               <line x1="12" y1="16" x2="12" y2="12" />

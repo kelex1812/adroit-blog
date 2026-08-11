@@ -4,6 +4,82 @@ All notable changes to the Adroit Consulting Blog project will be documented in 
 
 ## [Unreleased]
 
+### Fix: a11y findings — quiz tiers + exam + certificate (t_5664453e)
+
+Resolves lara's audit (t_5ed4bb0f) — 4 medium + 4 low WCAG 2.2 AA findings
+in the quiz-tier components. SEO verdict was PASS; no metadata/sitemap/
+structured-data touched. No shared contracts or curriculum data modified.
+
+**What** (finding → change)
+
+1. **[MED] Exam results heading + focus** (`ExamWidget.tsx`) — results view now
+   exposes an sr-only `h2` "Exam results" (`tabIndex={-1}`) and focus moves to it
+   on manual submit AND auto-submit at 00:00 (WCAG 1.3.1/2.4.6/2.4.3), so AT
+   users hear the outcome instead of dropping to `<body>`.
+2. **[MED] Exam timer announcements** (`ExamWidget.tsx`) — countdown span has
+   `role="timer"` + `aria-live="off"` (per-second ticks don't announce), plus a
+   polite `role="status"` live region announcing thresholds once per run
+   (10 min / 5 min / 1 min remaining) and the auto-submit ("Time's up — your
+   exam was submitted automatically"). Announcements reset on retake.
+   `prefers-reduced-motion` was already covered by the global reduced-motion
+   block (audit PASS); no new motion added.
+3. **[MED] Certificate single h1** (`Certificate.tsx`) — the certificate
+   document title (`cert-title`) is now the page's single `<h1>` ("Certificate
+   of Completion"), so the printable view has a proper heading structure; the
+   on-screen "Your certificate" page chrome was demoted to a styled `<p>` (was
+   a second h1). Exactly one h1 in both screen and print output.
+4. **[MED] gray-400 contrast** — every `text-gray-400` carrying body/required
+   text in the quiz-tier components bumped to `text-gray-500` (#6B7280, 4.74:1
+   on white): ExamWidget (score fraction, Answer review, exam header meta,
+   Question X of Y ×2, exam-mode note), ExamLocked (80% required per check,
+   not-taken pill, footer note), CheckCardList (checks passed count),
+   SeriesSyllabus (All Lessons heading, published/upcoming, Mark complete,
+   empty state), LessonQuiz (3 QUESTIONS · ~2 MIN), certificate page checklist
+   (kicker + x/n counts + icons), and Certificate.tsx scoped CSS
+   (#9CA3AF → #6B7280 for cert-kicker, recipient-label, issuer). Timer-bar
+   white-on-navy labels bumped white/45–60 → white/70. Decorative/aria-hidden
+   icons and the disabled ExamCard button left as-is (exempt).
+5. **[LOW] Exam radiogroup arrow keys** (`ExamWidget.tsx`) — ported
+   QuizWidget's WAI-ARIA roving: ArrowDown/Right/Up/Left move selection +
+   focus between options (automatic-activation), wrapping at the edges.
+6. **[LOW] Switch target size** (`SeriesSyllabus.tsx`) — hide-completed switch
+   is now a 44×44 hit target (`w-11 h-11`) with the visual 32×18 track centered
+   inside (WCAG 2.5.8); the wrapping label remains the adjacent text.
+7. **[LOW] Sort control labels** (`LessonSortToggle.tsx`) — buttons got
+   `aria-label="Sort by lesson number ascending/descending"`; the glyph text
+   ("1 → 9") no longer leaks as the accessible name. `aria-pressed` kept.
+8. **[LOW] GuestCTA role semantics** (`GuestCTA.tsx`) — dropped `role="note"`
+   + duplicate `aria-label` on the card; the `<section aria-label>` is the
+   named region. Content remains visible (no display:none tricks, no question
+   text).
+
+**Why**
+
+- The exam results transition dropped SR users to `<body>` (no landmark), the
+  countdown was silent to AT (deadline is the exam's core constraint), and the
+  printed certificate had no heading. Small mono labels at gray-400 (~2.5:1)
+  failed AA; the quiz-tier components were the systemic source. The rest are
+  keyboard/target-name/semantics gaps in the new tier UI.
+
+**Verification**
+
+- `npm run test` 83/83 pass (was 71; +12: ExamWidget a11y suite 5, Certificate
+  h1/contrast 2, LessonSortToggle 2, GuestCTA 2, SeriesSyllabus switch 1).
+- `tsc --noEmit` 0 errors; `npm run build` clean (quiz/cert routes registered);
+  `eslint` clean on all touched files.
+- Live (dev server :3000): series page — switch 44×44 + toggles aria-checked,
+  sort buttons carry the new labels and `?sort=desc` re-sorts the list; exam
+  locked page renders (no layout regressions); certificate page checklist shows
+  gray-500 counts; CDP trusted ArrowDown on a check quiz roves selection +
+  focus (pattern shared with the exam).
+
+**Known Issues**
+
+- The exam's results h2 is `sr-only` (consistent with QuizWidget) — visible
+  heading could be added later if design wants it.
+- `text-gray-400` remains in non-quiz-tier pages (blog/header/tags) and on
+  decorative/aria-hidden icons — out of scope for this audit, unchanged.
+
 ### Implement: certificate of completion (t_959ca6bf)
 
 Adds the printable certificate of completion at `/learn/[series]/certificate`,

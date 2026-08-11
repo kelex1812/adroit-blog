@@ -144,7 +144,26 @@ describe("SeriesSyllabus", () => {
       />,
     );
     expect(screen.getByRole("switch", { name: "Hide completed lessons" })).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "1 → 9" })).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "9 → 1" })).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: "Sort by lesson number ascending" }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: "Sort by lesson number descending" }),
+    ).toBeInTheDocument();
+  });
+
+  it("keeps the hide-completed switch at a ≥44px hit target (a11y finding 6)", () => {
+    render(
+      <SeriesSyllabus
+        lessons={LESSONS}
+        totalLessons={3}
+        published={3}
+        upcoming={0}
+      />,
+    );
+    const sw = screen.getByRole("switch", { name: "Hide completed lessons" });
+    // w-11 = 44px, h-11 = 44px (WCAG 2.5.8 target size minimum).
+    expect(sw.className).toContain("w-11");
+    expect(sw.className).toContain("h-11");
   });
 });

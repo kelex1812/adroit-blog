@@ -55,31 +55,40 @@ export default function SeriesSyllabus({
   return (
     <>
       <div className="flex items-center justify-between px-2 mb-1.5">
-        <h2 className="font-mono text-[13px] font-bold text-gray-400 uppercase tracking-[0.08em]">
+        <h2 className="font-mono text-[13px] font-bold text-gray-500 uppercase tracking-[0.08em]">
           {hideCompleted ? "In Progress" : "All Lessons"}
         </h2>
         <div className="flex items-center gap-3">
-          <span className="font-mono text-[11.5px] text-gray-400 font-medium">
+          <span className="font-mono text-[11.5px] text-gray-500 font-medium">
             {published} published · {upcoming} upcoming
           </span>
           <label className="inline-flex items-center gap-1.5 cursor-pointer select-none">
             <span className="font-mono text-[10.5px] font-semibold text-gray-500">
               Hide completed
             </span>
+            {/* a11y (finding 6): 44x44 hit target — the visual track stays
+                32x18 but the button is w-11 h-11 with the track centered. */}
             <button
               role="switch"
               aria-checked={hideCompleted}
               aria-label="Hide completed lessons"
               onClick={() => setHideCompleted((v) => !v)}
-              className={`relative w-8 h-[18px] rounded-full transition-colors duration-200 cursor-pointer ${
-                hideCompleted ? "bg-navy" : "bg-gray-300"
+              className={`relative w-11 h-11 rounded-full flex items-center justify-center transition-colors duration-200 cursor-pointer ${
+                hideCompleted ? "bg-navy/[0.06]" : "bg-transparent"
               }`}
             >
               <span
-                className={`absolute top-[2px] left-[2px] w-[14px] h-[14px] rounded-full bg-white shadow transition-transform duration-200 ${
-                  hideCompleted ? "translate-x-[14px]" : ""
+                aria-hidden="true"
+                className={`relative w-8 h-[18px] rounded-full transition-colors duration-200 ${
+                  hideCompleted ? "bg-navy" : "bg-gray-300"
                 }`}
-              />
+              >
+                <span
+                  className={`absolute top-[2px] left-[2px] w-[14px] h-[14px] rounded-full bg-white shadow transition-transform duration-200 ${
+                    hideCompleted ? "translate-x-[14px]" : ""
+                  }`}
+                />
+              </span>
             </button>
           </label>
           <LessonSortToggle compact />
@@ -93,7 +102,7 @@ export default function SeriesSyllabus({
               <LessonCard lesson={lesson} totalLessons={totalLessons} />
               {/* Per-lesson completion tracking */}
               <div className="flex items-center justify-between px-3 py-2">
-                <span className="font-mono text-[10px] font-bold text-gray-400 uppercase tracking-[0.07em]">
+                <span className="font-mono text-[10px] font-bold text-gray-500 uppercase tracking-[0.07em]">
                   Mark complete
                 </span>
                 <MarkComplete lessonSlug={lesson.slug} label={`lesson ${lesson.slug}`} />
@@ -101,7 +110,7 @@ export default function SeriesSyllabus({
             </div>
           ))
         ) : (
-          <p className="text-[13px] text-gray-400 py-6 text-center font-mono">
+          <p className="text-[13px] text-gray-500 py-6 text-center font-mono">
             {hideCompleted ? "All lessons completed — nice work." : "No lessons yet."}
           </p>
         )}

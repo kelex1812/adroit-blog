@@ -36,6 +36,7 @@ export default function LessonSortToggle({ compact = false }: LessonSortTogglePr
       <button
         onClick={() => setSort("asc")}
         aria-pressed={sort === "asc"}
+        aria-label="Sort by lesson number ascending"
         className={`px-3 py-1 rounded-full cursor-pointer transition-all duration-150 active:scale-[0.98] ${
           sort === "asc"
             ? "bg-navy text-white"
@@ -47,6 +48,7 @@ export default function LessonSortToggle({ compact = false }: LessonSortTogglePr
       <button
         onClick={() => setSort("desc")}
         aria-pressed={sort === "desc"}
+        aria-label="Sort by lesson number descending"
         className={`px-3 py-1 rounded-full cursor-pointer transition-all duration-150 active:scale-[0.98] ${
           sort === "desc"
             ? "bg-navy text-white"

@@ -41,9 +41,12 @@ export default function Certificate({
             <span className="w-[3px] h-3 rounded-sm bg-red" />
             Certificate of Completion
           </div>
-          <h1 className="text-[clamp(1.7rem,4vw,2.25rem)] font-extrabold text-navy tracking-[-0.02em] leading-tight mt-1.5">
+          {/* a11y (finding 3): page chrome is NOT a heading — the certificate
+              document's cert-title below is the single h1 of this page, so the
+              printable view carries a proper h1 heading structure. */}
+          <p className="text-[clamp(1.7rem,4vw,2.25rem)] font-extrabold text-navy tracking-[-0.02em] leading-tight mt-1.5">
             Your certificate
-          </h1>
+          </p>
           <p className="text-[14px] text-gray-500 max-w-[640px] mt-2 leading-relaxed">
             Issued by Adroit Consulting when all {totalLessons} lessons are completed and the
             cert prep exam is passed at 72% or higher.
@@ -76,7 +79,7 @@ export default function Certificate({
         <div className="cert-frame">
           <div className="cert-frame-inner">
             <div className="cert-kicker">Adroit Consulting · Certified Training</div>
-            <div className="cert-title">Certificate of Completion</div>
+            <h1 className="cert-title">Certificate of Completion</h1>
             <div className="cert-rule" />
             <div className="cert-recipient-label">This certifies that</div>
             <div className="cert-recipient">{recipientName}</div>
@@ -164,7 +167,7 @@ export default function Certificate({
           font-weight: 700;
           letter-spacing: 0.18em;
           text-transform: uppercase;
-          color: #9CA3AF;
+          color: #6B7280;
           margin-bottom: 18px;
         }
         .cert-title {
@@ -188,7 +191,7 @@ export default function Certificate({
           font-weight: 700;
           letter-spacing: 0.14em;
           text-transform: uppercase;
-          color: #9CA3AF;
+          color: #6B7280;
           margin-bottom: 10px;
         }
         .cert-recipient {
@@ -279,7 +282,7 @@ export default function Certificate({
           font-family: var(--font-mono, ui-monospace, monospace);
           font-size: 10px;
           letter-spacing: 0.06em;
-          color: #9CA3AF;
+          color: #6B7280;
           text-align: right;
         }
         @media (max-width: 720px) {

@@ -71,4 +71,23 @@ describe("Certificate", () => {
     const head = container.querySelector(".print\\:hidden");
     expect(head).toBeTruthy();
   });
+
+  it("exposes exactly one h1 — the certificate document title (a11y finding 3)", () => {
+    const { container } = render(<Certificate {...PROPS} />);
+    const h1s = container.querySelectorAll("h1");
+    expect(h1s.length).toBe(1);
+    expect(h1s[0]?.textContent).toContain("Certificate of Completion");
+    // The on-screen page chrome ("Your certificate") must NOT be a heading —
+    // the printable certificate is the single h1 so the printed view has a
+    // proper heading structure.
+    const h1 = h1s[0];
+    expect(h1?.className).toContain("cert-title");
+  });
+
+  it("uses AA-passing gray-500 for cert chrome instead of gray-400 (a11y finding 4)", () => {
+    const { container } = render(<Certificate {...PROPS} />);
+    const style = container.querySelector("style");
+    expect(style?.textContent).not.toContain("#9CA3AF");
+    expect(style?.textContent).toContain("#6B7280");
+  });
 });

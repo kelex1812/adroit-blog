@@ -45,7 +45,7 @@ export default function ExamLocked({ series, checks, seriesName }: ExamLockedPro
             <span className="font-mono text-[12px] font-bold text-navy">
               Checks passed {passedCount}/{total}
             </span>
-            <span className="font-mono text-[10.5px] text-gray-400">
+            <span className="font-mono text-[10.5px] text-gray-500">
               80% required per check
             </span>
           </div>
@@ -88,7 +88,7 @@ export default function ExamLocked({ series, checks, seriesName }: ExamLockedPro
                   {check.bestScore}% · 80% required
                 </span>
               ) : (
-                <span className="font-mono text-[10.5px] font-bold text-gray-400 bg-gray-100 px-2.5 py-1 rounded-full">
+                <span className="font-mono text-[10.5px] font-bold text-gray-500 bg-gray-100 px-2.5 py-1 rounded-full">
                   80% required
                 </span>
               )}
@@ -100,7 +100,7 @@ export default function ExamLocked({ series, checks, seriesName }: ExamLockedPro
         </div>
       </div>
 
-      <p className="font-mono text-[10.5px] text-gray-400 mt-4">
+      <p className="font-mono text-[10.5px] text-gray-500 mt-4">
         {seriesName} · The gate is the list itself — pass each check to unlock the exam.
       </p>
     </div>

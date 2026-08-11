@@ -62,11 +62,9 @@ export default function GuestCTA({ tier, ariaLabel }: GuestCTAProps) {
 
   return (
     <section aria-label={ariaLabel ?? copy.ariaLabel}>
-      <div
-        role="note"
-        aria-label={copy.ariaLabel}
-        className="max-w-[640px] rounded-[20px] border border-gray-200 bg-white p-7 shadow-sm"
-      >
+      {/* a11y (finding 8): no role="note" — the section aria-label already
+          names the region; the card is plain content, not a note. */}
+      <div className="max-w-[640px] rounded-[20px] border border-gray-200 bg-white p-7 shadow-sm">
         <div className="flex items-start gap-4">
           {/* Lock glyph */}
           <div

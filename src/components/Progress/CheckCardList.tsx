@@ -48,7 +48,7 @@ export default function CheckCardList({ series, checksMeta }: CheckCardListProps
     <section aria-label="Knowledge checks on the series page" className="max-w-[760px] mx-auto px-6 pt-2 pb-8">
       <div className="flex items-center gap-2 font-mono text-[11px] font-bold text-emerald-800 uppercase tracking-[0.09em] mb-1.5">
         <span className="w-[3px] h-3 rounded-sm bg-emerald" />
-        Knowledge Checks <span className="text-gray-400">· {passedCount}/{checks.length} passed</span>
+        Knowledge Checks <span className="text-gray-500">· {passedCount}/{checks.length} passed</span>
       </div>
       <h2 className="text-[1.35rem] font-extrabold text-navy tracking-[-0.02em] mb-1.5">
         Milestone checks

@@ -37,7 +37,7 @@ export default function LessonQuiz({
           <span className="w-[3px] h-3 rounded-sm bg-red" />
           Practice Questions
         </div>
-        <div className="font-mono text-[10.5px] text-gray-400 tracking-[0.04em] mb-2">
+        <div className="font-mono text-[10.5px] text-gray-500 tracking-[0.04em] mb-2">
           3 QUESTIONS · ~2 MIN
         </div>
         <h2 className="text-[1.35rem] font-extrabold text-navy tracking-[-0.02em] mb-1.5">
