@@ -4,6 +4,49 @@ All notable changes to the Adroit Consulting Blog project will be documented in 
 
 ## [Unreleased]
 
+### Fix: enforce exam unlock server-side + certificate eligibility checks (t_c6333dd3)
+
+Resolves val-el's security audit (t_05fad9a9) — MEDIUM, OWASP A01 (Broken
+Access Control) / CWE-285 (Improper Authorization). The exam-unlock rule was
+only enforced in the page render, so a direct API call could record a passing
+exam score (and, compounding, a certificate) without completing the 9
+knowledge checks.
+
+**What**
+
+1. **POST /api/progress/quiz/batch now re-verifies the exam unlock server-side**
+   (`src/app/api/progress/quiz/batch/route.ts`). After auth and before any row
+   is written, it queries `quiz_run` for the series' check quizNames
+   (`<series>:check:1..9` from `getKnowledgeChecks`) and requires every check's
+   best score >= 80 (`areAllChecksPassed`). Failure returns
+   `403 { status: "unlock-required" }` — no `quiz_attempt`/`quiz_run` write.
+   A series with no checks stays unlocked (same semantics as `exam/page.tsx`).
+2. **Certificate eligibility no longer trusts "exam unlocked ⇒ checks passed"**
+   (`src/lib/certificate.ts`). New exported pure helper `areAllChecksPassed`
+   (best-score MAX per check, all >= 80) is the single unlock predicate;
+   `buildCertificateEligibility` now requires
+   `lessonsCompleted >= totalLessons && examPassed && all checks passed`.
+   Defense-in-depth: even if an exam run were recorded around the gate, a
+   certificate still cannot be earned without all 9 checks.
+
+**Why**
+
+- The page gate is cosmetic against a motivated client: `ExamWidget` posts to
+  the same endpoint the page uses, and nothing stopped a caller from firing it
+  with zero check runs. Server-side re-verification closes the hole at the
+  write boundary (CWE-285: enforce authorization on every access path).
+- The certificate rule depended on an assumption about how exam runs come to
+  exist; making the checks an explicit term of `eligible` keeps the invariant
+  even if the gate is ever bypassed or the flow changes.
+
+**Known Issues**
+
+- The unlock check adds one indexed `quiz_run` query per exam submit
+  (`user_id` + `quiz_name` IN 9) — negligible at blog scale, and the gate
+  short-circuits before the batch upsert on failure.
+- `areAllChecksPassed` treats an empty check list as unlocked; there is no
+  series today with an exam but zero checks (all tier exams have check files).
+
 ### Fix: a11y findings — quiz tiers + exam + certificate (t_5664453e)
 
 Resolves lara's audit (t_5ed4bb0f) — 4 medium + 4 low WCAG 2.2 AA findings

@@ -33,6 +33,26 @@ interface CheckRunLike {
   score: number;
 }
 
+/**
+ * True when every check quiz for the series has a best score >= 80.
+ * Best score per quiz = MAX over runs; an empty check list counts as passed
+ * (mirrors exam/page.tsx, where a series with no checks renders the exam
+ * unlocked). This is the exam-unlock predicate shared by the server-side
+ * exam submit gate (OWASP A01 / CWE-285) and the certificate rule.
+ */
+export function areAllChecksPassed(
+  checkQuizNames: string[],
+  checkRuns: CheckRunLike[],
+): boolean {
+  const bestByCheck = new Map<string, number>();
+  for (const run of checkRuns) {
+    bestByCheck.set(run.quizName, Math.max(bestByCheck.get(run.quizName) ?? 0, run.score));
+  }
+  return checkQuizNames.every(
+    (name) => (bestByCheck.get(name) ?? 0) >= CERT_CHECK_PASS_PCT,
+  );
+}
+
 export interface CertificateEligibilityInput {
   /** Distinct lesson slugs with a lesson_completion row for this user. */
   completedLessonSlugs: string[];
@@ -49,7 +69,11 @@ export interface CertificateEligibilityInput {
 /**
  * Derive certificate eligibility from completion + exam rows.
  * Best score per quiz = MAX over runs; check passed = best >= 80;
- * eligible = all lessons completed AND exam best >= 72.
+ * eligible = all lessons completed AND exam best >= 72 AND every check
+ * passed (>= 80). Requiring the checks explicitly (not just trusting that
+ * "exam unlocked implies checks passed") is defense-in-depth: even if an
+ * exam run is recorded without the unlock gate, a certificate still cannot
+ * be earned without completing all 9 knowledge checks (OWASP A01 / CWE-285).
  */
 export function buildCertificateEligibility(
   input: CertificateEligibilityInput,
@@ -71,7 +95,10 @@ export function buildCertificateEligibility(
     checkQuizNames.length,
   );
 
-  const eligible = lessonsCompleted >= totalLessons && examPassed;
+  const eligible =
+    lessonsCompleted >= totalLessons &&
+    examPassed &&
+    areAllChecksPassed(checkQuizNames, checkRuns);
 
   return {
     eligible,

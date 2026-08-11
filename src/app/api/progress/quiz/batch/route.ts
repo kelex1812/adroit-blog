@@ -21,7 +21,8 @@
  */
 import { NextRequest, NextResponse } from "next/server";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
-import { parseQuizName, resolveQuizByName } from "@/lib/quiz";
+import { getKnowledgeChecks, parseQuizName, resolveQuizByName } from "@/lib/quiz";
+import { areAllChecksPassed } from "@/lib/certificate";
 import {
   checkOrigin,
   checkRateLimit,
@@ -153,6 +154,38 @@ export async function POST(req: NextRequest) {
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) {
       return NextResponse.json({ status: "unauthenticated" }, { status: 401 });
+    }
+
+    /* --- Exam-unlock re-verification (OWASP A01 / CWE-285) ---
+     * The page gates the exam until every knowledge check best >= 80
+     * (ADR-104/Decision 9), but a direct API caller could otherwise submit
+     * the exam with zero check runs. Enforce the same rule server-side:
+     * reject with 403 before any row is written. Mirrors exam/page.tsx's
+     * best-score derivation; a series with no checks stays unlocked (same
+     * semantics as the page's `checks.every(...)` over an empty list). */
+    const checkMetas = getKnowledgeChecks(parsed.series);
+    const checkQuizNames = checkMetas.map((c) => `${parsed.series}:check:${c.n}`);
+    if (checkQuizNames.length > 0) {
+      const { data: checkRows, error: checkErr } = await supabase
+        .from("quiz_run")
+        .select("quiz_name, score")
+        .eq("user_id", user.id)
+        .in("quiz_name", checkQuizNames);
+      if (checkErr) {
+        return NextResponse.json({ status: "error", error: sanitiseDbError(checkErr) }, { status: 500 });
+      }
+      const checkRuns = ((checkRows ?? []) as { quiz_name: string; score: number }[]).map(
+        (r) => ({ quizName: r.quiz_name, score: r.score }),
+      );
+      if (!areAllChecksPassed(checkQuizNames, checkRuns)) {
+        return NextResponse.json(
+          {
+            status: "unlock-required",
+            error: "Exam is locked until every knowledge check is passed (≥80%).",
+          },
+          { status: 403 },
+        );
+      }
     }
 
     const now = new Date().toISOString();

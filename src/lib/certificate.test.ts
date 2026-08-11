@@ -7,6 +7,7 @@
  */
 import { describe, it, expect } from "vitest";
 import {
+  areAllChecksPassed,
   buildCertificateEligibility,
   certificateCompletionDate,
   certificateCourseName,
@@ -81,11 +82,31 @@ describe("buildCertificateEligibility", () => {
       completedLessonSlugs: lessonSlugs(46),
       totalLessons: 46,
       examRuns: [{ score: 72, completedAt: "2026-08-02T10:00:00Z" }],
-      checkRuns: [],
+      checkRuns: CHECK_NAMES.map((quizName) => ({ quizName, score: 80 })),
       checkQuizNames: CHECK_NAMES,
     });
     expect(eligibility.examPassed).toBe(true);
     expect(eligibility.eligible).toBe(true);
+  });
+
+  it("is NOT eligible when checks are incomplete even with all lessons + a passing exam", () => {
+    // Defense-in-depth (OWASP A01 / CWE-285): the certificate rule no longer
+    // trusts "exam unlocked implies checks passed" — checks are required
+    // explicitly, so a bypassed exam submission can't yield a certificate.
+    const eligibility = buildCertificateEligibility({
+      completedLessonSlugs: lessonSlugs(46),
+      totalLessons: 46,
+      examRuns: [{ score: 90, completedAt: "2026-08-02T10:00:00Z" }],
+      checkRuns: [
+        { quizName: "omni-studio-cert:check:1", score: 95 },
+        { quizName: "omni-studio-cert:check:2", score: 79 }, // below 80
+      ],
+      checkQuizNames: CHECK_NAMES,
+    });
+    expect(eligibility.examPassed).toBe(true);
+    expect(eligibility.checksPassed).toBe(1);
+    expect(eligibility.checksTotal).toBe(9);
+    expect(eligibility.eligible).toBe(false);
   });
 
   it("counts only checks with best >= 80 and never exceeds the check total", () => {
@@ -116,6 +137,45 @@ describe("buildCertificateEligibility", () => {
     expect(eligibility.examBest).toBe(0);
     expect(eligibility.examPassed).toBe(false);
     expect(eligibility.eligible).toBe(false);
+  });
+});
+
+describe("areAllChecksPassed", () => {
+  it("is true when every check has a best score >= 80", () => {
+    expect(
+      areAllChecksPassed(
+        CHECK_NAMES,
+        CHECK_NAMES.map((quizName, i) => ({ quizName, score: 80 + i })),
+      ),
+    ).toBe(true);
+  });
+
+  it("is false when any check is missing or below 80", () => {
+    // check:2 never attempted → best 0 → locked.
+    expect(
+      areAllChecksPassed(
+        ["omni-studio-cert:check:1", "omni-studio-cert:check:2"],
+        [{ quizName: "omni-studio-cert:check:1", score: 95 }],
+      ),
+    ).toBe(false);
+    // Retake semantics: best wins — a 79 then a 90 passes.
+    expect(
+      areAllChecksPassed(["omni-studio-cert:check:1"], [
+        { quizName: "omni-studio-cert:check:1", score: 79 },
+        { quizName: "omni-studio-cert:check:1", score: 90 },
+      ]),
+    ).toBe(true);
+    // Best 79 never crosses the bar → locked.
+    expect(
+      areAllChecksPassed(["omni-studio-cert:check:1"], [
+        { quizName: "omni-studio-cert:check:1", score: 79 },
+      ]),
+    ).toBe(false);
+  });
+
+  it("is true for an empty check list (no checks → unlocked)", () => {
+    expect(areAllChecksPassed([], [])).toBe(true);
+    expect(areAllChecksPassed([], [{ quizName: "other:check:1", score: 10 }])).toBe(true);
   });
 });
 
