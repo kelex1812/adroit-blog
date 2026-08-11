@@ -4,6 +4,8 @@ import { useState, useTransition } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useAuth, notifyAuthChanged } from "@/lib/hooks/useAuth";
+import AvatarMenu from "@/components/AvatarMenu";
+import { avatarHueClass, initialsFromEmail } from "@/lib/avatar";
 
 const navLinks = [
   { href: "/blog", label: "Posts" },
@@ -33,21 +35,7 @@ export default function Header() {
   }
 
   const authControl = isLoading ? null : user ? (
-    <div className="flex items-center gap-2">
-      <span
-        className="hidden lg:inline-block max-w-[140px] truncate font-mono text-[10.5px] font-semibold text-gray-400 uppercase tracking-wide"
-        title={user.email}
-      >
-        {user.email}
-      </span>
-      <button
-        onClick={handleSignOut}
-        disabled={isSigningOut}
-        className="text-gray-500 text-sm font-medium hover:text-navy transition-colors duration-150 cursor-pointer bg-none border-none disabled:opacity-50"
-      >
-        {isSigningOut ? "…" : "Sign out"}
-      </button>
-    </div>
+    <AvatarMenu user={user} onSignOut={handleSignOut} isSigningOut={isSigningOut} />
   ) : (
     <Link
       href={`/login${pathname && pathname !== "/login" ? `?next=${encodeURIComponent(pathname)}` : ""}`}
@@ -106,19 +94,18 @@ export default function Header() {
             ),
           )}
           <div className="flex items-center gap-4 pl-2 border-l border-gray-100">
-            {authControl}
             <Link
               href="https://adroit.io/contact"
               className="bg-navy text-white px-[18px] py-2 rounded-sm text-[0.8rem] font-semibold hover:bg-navy-light hover:-translate-y-px active:scale-[0.98] transition-all duration-150 no-underline"
             >
               Contact Us
             </Link>
+            {authControl}
           </div>
         </nav>
 
         {/* Mobile Hamburger */}
         <div className="flex items-center gap-3 md:hidden">
-          {authControl}
           <button
             className="bg-none border-none cursor-pointer p-1"
             onClick={() => setMobileOpen(!mobileOpen)}
@@ -175,15 +162,44 @@ export default function Header() {
             </Link>
           )}
           {!isLoading && user && (
-            <button
-              onClick={() => {
-                handleSignOut();
-                setMobileOpen(false);
-              }}
-              className="text-left text-gray-700 text-sm font-medium py-2 border-b border-gray-100 no-underline cursor-pointer bg-none border-none"
-            >
-              Sign out ({user.email})
-            </button>
+            <>
+              <div className="flex items-center gap-3 py-3 border-b border-gray-100">
+                <span
+                  className={`flex h-10 w-10 items-center justify-center rounded-[10px] text-[15px] font-bold text-white ${avatarHueClass(user.email)}`}
+                >
+                  {initialsFromEmail(user.email)}
+                </span>
+                <div className="min-w-0">
+                  <div className="truncate text-[13.5px] font-semibold text-navy">{user.email}</div>
+                  <div className="font-mono text-[9px] font-bold uppercase tracking-[0.1em] text-gray-400">
+                    Signed in as
+                  </div>
+                </div>
+              </div>
+              <Link
+                href="/profile"
+                className="text-gray-700 text-sm font-medium py-2 border-b border-gray-100 no-underline"
+                onClick={() => setMobileOpen(false)}
+              >
+                Profile
+              </Link>
+              <Link
+                href="/settings"
+                className="text-gray-700 text-sm font-medium py-2 border-b border-gray-100 no-underline"
+                onClick={() => setMobileOpen(false)}
+              >
+                Settings
+              </Link>
+              <button
+                onClick={() => {
+                  handleSignOut();
+                  setMobileOpen(false);
+                }}
+                className="text-left text-red text-sm font-medium py-2 border-b border-gray-100 no-underline cursor-pointer bg-none border-none"
+              >
+                Sign out
+              </button>
+            </>
           )}
           <Link
             href="https://adroit.io/contact"

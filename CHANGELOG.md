@@ -4,6 +4,59 @@ All notable changes to the Adroit Consulting Blog project will be documented in 
 
 ## [Unreleased]
 
+### Feature: avatar menu + profile/settings pages (t_f75bc52d)
+
+Replaces the signed-in header corner (raw email + "Sign out" text button)
+with a 32px initials avatar + keyboard-first dropdown, and adds two minimal
+account pages. Follows brainiac's implementation plan (docs/implementation-plan-avatar-profile.md)
+and kara's design mockups (design/mockup-avatar-menu.html, mockup-profile.html,
+mockup-settings.html).
+
+**What**
+
+1. New design tokens in `globals.css` `@theme inline`: `--shadow-menu`,
+   `--shadow-dialog`, `--avatar-1..4` (navy-tinted elevation + deterministic
+   brand-safe avatar hues); `menu-pop` 150ms fade/rise keyframe for the panel.
+2. New pure lib `src/lib/avatar.ts` — `initialsFromEmail()` + deterministic
+   `avatarHueClass()` (no `Math.random()`, no flicker on re-render), with
+   12 unit tests covering brief edge cases + hue determinism/coverage.
+3. New `src/components/AvatarMenu.tsx` (client, self-contained): WAI-ARIA
+   menu-button pattern — `aria-haspopup`/`aria-expanded` trigger, `role="menu"`
+   panel, roving focus with Arrow/Home/End + wrap-around, Escape closes and
+   returns focus to the trigger, outside-click (mousedown/touchstart) close,
+   popstate close for back/forward. Focus lands on the first item on open.
+   12 component tests cover the full keyboard/ARIA contract.
+4. `Header.tsx` integration: desktop right cluster is now
+   `divider | Contact Us | avatar` (per design §4.3); mobile drawer shows a
+   "Signed in as" block (avatar + email) + Profile/Settings/Sign out rows
+   instead of the old "Sign out (email)" button. Guest header unchanged.
+5. New server pages `/profile` and `/settings` (`force-dynamic`): SSR session
+   gate via `getSupabaseServerClient().auth.getUser()`; guests get a 307 to
+   `/login?next=<path>`. Profile = identity card (avatar, email, sign-in
+   method, Change password COMING SOON stub). Settings = two sectioned cards
+   (Clear reading history, Email me new posts) — every control is a static
+   honest stub with a visible COMING SOON badge; no fake-functional controls,
+   no save bar.
+
+**Why**
+
+- The header email + inline sign-out was cramped and had no room for account
+  surfaces; the dropdown matches the design system and frees the corner.
+- Server-side gating avoids a client auth flash + duplicate `/api/auth/session`
+  fetch (same ADR-104 pattern as the exam/certificate pages).
+- Stubs are visibly marked so nothing appears functional before its API
+  (`/api/auth/reset`, `/api/progress/clear`, subscribe table) exists.
+
+**Known Issues**
+
+- `npm run build` regenerates `src/data/learn.ts` via `prebuild` (build-learn.js)
+  and picks up lesson 8 (`tool-design-schemas-error-handling-retries.mdx`) for
+  agentic-ai (7 → 8), which breaks `tiers/route.test.ts` ("keeps s.totalLessons
+  for non-tier series" expects 7). Pre-existing content/learn.ts drift from
+  commit 1cba1d4 (Add lesson 8) — out of scope for this task; learn.ts is
+  restored to HEAD after verification. No changes to `content/`, sort logic,
+  or build scripts per plan AC 8.
+
 ### Fix: progress rollup lessons total uses planned 46, not published 9 (t_39a3fef7)
 
 Resolves zod's QA finding F2 (MEDIUM) from review t_1d04b259. The tier

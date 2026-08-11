@@ -62,6 +62,18 @@
   --shadow-glow-mkt: 0 0 0 1px rgba(236, 72, 153, 0.12), 0 20px 40px -16px rgba(236, 72, 153, 0.25);
   --shadow-glow-ux: 0 0 0 1px rgba(139, 92, 246, 0.12), 0 20px 40px -16px rgba(139, 92, 246, 0.25);
   --shadow-glow-pm: 0 0 0 1px rgba(20, 184, 166, 0.12), 0 20px 40px -16px rgba(20, 184, 166, 0.25);
+
+  /* Account surfaces — elevation for menu + dialog (navy-tinted, matches shadow-card family) */
+  --shadow-menu: 0 4px 6px -1px rgba(11, 29, 58, 0.06),
+                 0 16px 32px -12px rgba(11, 29, 58, 0.20);
+  --shadow-dialog: 0 24px 48px -12px rgba(11, 29, 58, 0.28),
+                   0 4px 12px -4px rgba(11, 29, 58, 0.12);
+
+  /* Avatar palette — deterministic initials colors (brand-safe; white text passes AA on all) */
+  --avatar-1: #0B1D3A;   /* navy */
+  --avatar-2: #132D54;   /* navy-light */
+  --avatar-3: #C8102E;   /* red */
+  --avatar-4: #A00D24;   /* red-dark */
 }
 
 /* ─────────────────────────────────────────────
@@ -342,6 +354,27 @@ button:focus-visible {
 
 .reveal-up {
   animation: reveal-up 450ms cubic-bezier(0.34, 1.56, 0.64, 1) backwards;
+}
+
+/* ─────────────────────────────────────────────
+   MOTION — avatar dropdown panel
+   150ms ease-out fade + 4px rise; neutralised
+   by the reduced-motion block below.
+   ───────────────────────────────────────────── */
+
+@keyframes menu-pop {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.menu-pop {
+  animation: menu-pop 150ms ease-out both;
 }
 
 /* ─────────────────────────────────────────────
