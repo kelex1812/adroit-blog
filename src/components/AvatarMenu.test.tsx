@@ -5,9 +5,10 @@
  * click, focus to first item, Arrow/Home/End roving focus, Escape closes
  * + focus returns to trigger, outside-click closes, Sign out callback.
  */
-import { describe, it, expect, vi } from "vitest";
+import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import AvatarMenu from "./AvatarMenu";
+import { ThemeProvider } from "@/components/Theme/ThemeProvider";
 
 vi.mock("next/link", () => ({
   default: ({
@@ -24,11 +25,31 @@ vi.mock("next/link", () => ({
   ),
 }));
 
+// AvatarMenu now loads the display name via GET /api/profile and renders a
+// ThemeToggle (which needs ThemeProvider context). Stub the fetch + wrap.
+beforeEach(() => {
+  vi.stubGlobal(
+    "fetch",
+    vi.fn().mockResolvedValue({
+      ok: true,
+      json: async () => ({ user: { id: "u1", email: "jane.doe@adroit.io" }, profile: { displayName: null } }),
+    }),
+  );
+});
+
+afterEach(() => {
+  vi.unstubAllGlobals();
+});
+
 const user = { id: "u1", email: "jane.doe@adroit.io" };
 
 function renderMenu(props: { isSigningOut?: boolean } = {}) {
   const onSignOut = vi.fn();
-  const utils = render(<AvatarMenu user={user} onSignOut={onSignOut} {...props} />);
+  const utils = render(
+    <ThemeProvider>
+      <AvatarMenu user={user} onSignOut={onSignOut} {...props} />
+    </ThemeProvider>,
+  );
   return { onSignOut, ...utils };
 }
 
@@ -85,6 +106,10 @@ describe("AvatarMenu keyboard navigation", () => {
 
     fireEvent.keyDown(screen.getByRole("menu"), { key: "ArrowDown" });
     expect(screen.getByRole("menuitem", { name: "Settings" })).toHaveFocus();
+
+    // Theme quick-toggle row sits between Settings and Sign out.
+    fireEvent.keyDown(screen.getByRole("menu"), { key: "ArrowDown" });
+    expect(screen.getByRole("menuitem", { name: /Theme:/ })).toHaveFocus();
 
     fireEvent.keyDown(screen.getByRole("menu"), { key: "ArrowDown" });
     expect(screen.getByRole("menuitem", { name: "Sign out" })).toHaveFocus();

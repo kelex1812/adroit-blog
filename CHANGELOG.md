@@ -4,6 +4,74 @@ All notable changes to the Adroit Consulting Blog project will be documented in 
 
 ## [Unreleased]
 
+### Feature: Round 3 — account & Learn experience (t_e0362113)
+
+Full Round 3 implementation per Brainiac's architecture
+(`docs/system-architecture-account-round3.md`, arch task t_cde0e74a) and Kara's
+mockups (`design/round3/`). Six workstreams:
+
+**WS-2/WS-5 Profile identity + per-account data**
+- `supabase/migrations/005_user_profiles.sql` — `user_profiles` table
+  (user_id PK/FK → auth.users, display_name, username, theme_pref) + RLS
+  policies (users only touch their own row). Lazily upserted on first read.
+- `GET/PATCH /api/profile` — server-side HttpOnly-cookie session checks, lazy
+  upsert, themePref + username-charset validation (no client RLS reliance).
+- `/profile` rework: identity card (avatar initials derived from display name),
+  editable display-name/username form (`Profile/ProfileForm.tsx`), and
+  "My certificates" (`Profile/CertificateSection.tsx`) derived on demand from
+  lesson_completion + quiz_attempt rows (ADR-106, same source of truth as the
+  certificate page).
+
+**WS-2 Dark mode (auto + manual override)**
+- Semantic token layer in `globals.css` (`--surface-*`, `--ink-*`,
+  `--border-*`, `--accent`, spacing scale) with a full `html.dark` remap.
+  Class-based dark variant (`@custom-variant dark`) so `dark:` follows the
+  `dark` class on `<html>`, not the OS media query.
+- `Theme/ThemeProvider.tsx` + `lib/hooks/useTheme.ts` — resolves
+  system/light/dark, applies the class, persists to localStorage, adopts the
+  account's `theme_pref` server-side. FOUC-guard inline script in the root
+  layout applies the persisted preference before hydration.
+- `Theme/ThemeToggle.tsx` — segmented System/Light/Dark control in Settings and
+  a compact quick-toggle row in the avatar menu; both persist per-account via
+  PATCH /api/profile. Dark styling covers blog posts/MDX (article-body),
+  header, account pages, and all new components.
+
+**WS-3 Learn hub reorganization + guest gating**
+- `subgroup` optional field on `LearningSeries` (content metadata only —
+  `series.json` → `build-learn.js` → `src/data/learn.ts`; omni-studio-cert →
+  Developer, salesforce-architect → Architect).
+- `Learn/LearnHub.tsx` + `LearnFilters.tsx` — All/Certifications/General bucket
+  chips with counts, subgroup chips, top-level + subgroup section headers.
+- `PathCard` guest gating: guests see name + description + non-clickable card
+  with "Sign in to access courses" CTA (SEO-safe, server-rendered); signed-in
+  users get a clickable card with real per-series completion progress on the
+  card body.
+
+**WS-4 Continue learning**
+- `GET /api/continue-learning` — in-progress series (≥1 distinct completed
+  lesson, < total), most-recent-first, resume link to the lowest-numbered
+  uncompleted lesson; guests get `[]`.
+- `Learn/ContinueLearning.tsx` — resume card at the top of the Learn hub.
+
+**WS-1 Spacing tokens** — spacing scale + semantic aliases from Kara's audit
+(`--space-*`, `--radius-panel`, `--elev-lift`) added to globals.css; new
+components use the tokenized values.
+
+**Avatar menu** — shows display name (fallback email), initials derive from the
+display name, and a theme quick-toggle row; refreshes on profile save via the
+`adroit-blog:profile-changed` event.
+
+**Why** — Round 3 turns the blog's account + Learn surfaces from stubs into a
+real, personal, gated learning experience: per-account identity and theme
+preferences, a filterable/grouped Learn hub, guest-vs-signed-in gating that
+preserves SEO, and a resume flow for in-progress courses.
+
+**Known Issues** — none. (Pre-existing `src/data/learn.ts` drift noted in the
+t_f75bc52d entry was resolved here by regenerating learn.ts with subgroup;
+the stale agentic-ai totalLessons assertion in
+`src/app/api/progress/quiz/tiers/route.test.ts` was corrected 7 → 8 to match
+current content.)
+
 ### Fix: avatar hue tokens must live in the `--color-*` namespace (t_f75bc52d)
 
 The avatar initials rendered white-on-transparent (invisible against the white

@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+/* Class-based dark mode: the ThemeProvider toggles `dark` on <html>, so the
+   `dark:` Tailwind variant must follow the class, not the OS media query. */
+@custom-variant dark (&:where(.dark, .dark *));
+
 /* ─────────────────────────────────────────────
    ADROIT CONSULTING — Design Tokens
    ───────────────────────────────────────────── */
@@ -390,4 +394,140 @@ button:focus-visible {
     transition-duration: 0.01ms !important;
     transform: none !important;
   }
+}
+
+/* ─────────────────────────────────────────────
+   ROUND 3 — WS-1 spacing scale + WS-2 semantic tokens
+   (kara t_f1f7696b → steel). Components reference the semantic
+   tokens below; html.dark remaps them for dark mode.
+   ───────────────────────────────────────────── */
+
+:root {
+  /* Spacing scale (4px base) + semantic aliases */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-7: 28px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-14: 56px;
+  --space-24: 96px;
+
+  --space-gutter-page: var(--space-6);
+  --space-card-pad: 22px;
+  --space-row-sm: var(--space-3);
+  --space-row-md: var(--space-4);
+  --space-heading-after: var(--space-5);
+  --space-hero-block: var(--space-14);
+  --space-hero-block-tight: var(--space-10);
+  --space-section-bottom: var(--space-24);
+  --space-progress-block: var(--space-5);
+  --space-progress-inset: var(--space-3);
+  --elev-lift: 4px;
+  --radius-panel: 20px;
+
+  /* Semantic surface/ink/border (LIGHT) */
+  --surface-page: var(--color-off-white);
+  --surface-card: #ffffff;
+  --surface-card-soft: var(--color-gray-50);
+  --surface-sunken: var(--color-gray-100);
+  --surface-inverse: var(--color-navy);
+  --surface-inverse-hover: var(--color-navy-light);
+
+  --ink-strong: var(--color-gray-900);
+  --ink-primary: var(--color-navy);
+  --ink-body: var(--color-gray-800);
+  --ink-muted: var(--color-gray-600);
+  --ink-faint: var(--color-gray-400);
+  --ink-on-inverse: #ffffff;
+
+  --border-default: var(--color-gray-200);
+  --border-subtle: var(--color-gray-100);
+  --border-strong: var(--color-gray-300);
+
+  --accent: var(--color-red);
+  --accent-hover: var(--color-red-dark);
+  --accent-on-accent: #ffffff;
+  --signal-done: var(--color-emerald);
+  --signal-done-bg: #d1fae5;
+  --signal-warn: var(--color-amber);
+  --signal-warn-bg: #fef3c7;
+
+  --shadow-card-light: var(--shadow-card);
+  --shadow-card-hover-light: var(--shadow-card-hover);
+  --shadow-menu-light: var(--shadow-menu);
+}
+
+/* Dark-mode remap — html.dark flips the same semantic tokens */
+html.dark {
+  --surface-page: #0a0e1a;
+  --surface-card: #121a2e;
+  --surface-card-soft: #0e1526;
+  --surface-sunken: #0c1322;
+  --surface-inverse: #1e293b;
+  --surface-inverse-hover: #334155;
+
+  --ink-strong: #f1f5f9;
+  --ink-primary: #e2e8f0;
+  --ink-body: #cbd5e1;
+  --ink-muted: #94a3b8;
+  --ink-faint: #64748b;
+  --ink-on-inverse: #f8fafc;
+
+  --border-default: #1e293b;
+  --border-subtle: #182136;
+  --border-strong: #334155;
+
+  --accent: var(--color-red-light);
+  --accent-hover: var(--color-red);
+  --accent-on-accent: #ffffff;
+  --signal-done: #34d399;
+  --signal-done-bg: rgba(16, 185, 129, 0.14);
+  --signal-warn: #fbbf24;
+  --signal-warn-bg: rgba(245, 158, 11, 0.14);
+
+  --shadow-card-light: 0 1px 0 rgba(255, 255, 255, 0.03), 0 4px 16px -6px rgba(0, 0, 0, 0.5);
+  --shadow-card-hover-light: 0 2px 0 rgba(255, 255, 255, 0.04), 0 18px 36px -12px rgba(0, 0, 0, 0.6);
+  --shadow-menu-light: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 16px 32px -12px rgba(0, 0, 0, 0.55);
+}
+
+/* Page + article body in dark (propagates through MDX + blog prose) */
+html.dark body {
+  background: var(--surface-page);
+  color: var(--ink-body);
+}
+
+html.dark .article-body {
+  color: var(--ink-body);
+}
+html.dark .article-body h2,
+html.dark .article-body h3,
+html.dark .article-body strong {
+  color: var(--ink-strong);
+}
+html.dark .article-body a {
+  color: var(--ink-primary);
+}
+html.dark .article-body blockquote {
+  background: var(--surface-card-soft);
+  color: var(--ink-muted);
+}
+html.dark .article-body code {
+  background: var(--surface-sunken);
+  color: var(--accent);
+  border-color: var(--border-default);
+}
+html.dark .article-body pre {
+  background: #070b14;
+  border-color: var(--border-default);
+  color: #e2e8f0;
+}
+html.dark .article-body hr {
+  background: linear-gradient(90deg, transparent, var(--border-strong), transparent);
+}
+html.dark .reading-progress {
+  background: var(--surface-sunken);
 }

@@ -39,21 +39,21 @@ export default function Header() {
   ) : (
     <Link
       href={`/login${pathname && pathname !== "/login" ? `?next=${encodeURIComponent(pathname)}` : ""}`}
-      className="text-gray-500 text-sm font-medium hover:text-navy transition-colors duration-150 no-underline"
+      className="text-[var(--ink-muted)] text-sm font-medium hover:text-[var(--ink-primary)] transition-colors duration-150 no-underline"
     >
       Sign in
     </Link>
   );
 
   return (
-    <header className="sticky top-0 z-50 bg-white/95 backdrop-blur border-b border-gray-200 shadow-[0_1px_0_rgba(11,29,58,0.03)]">
+    <header className="sticky top-0 z-50 bg-[var(--surface-card)]/95 backdrop-blur border-b border-[var(--border-default)] shadow-[0_1px_0_rgba(11,29,58,0.03)]">
       <div className="max-w-[1120px] mx-auto px-6 h-16 flex items-center justify-between">
-        <Link href="/blog" className="flex items-center gap-2.5 no-underline text-navy group">
-          <div className="w-8 h-8 bg-navy rounded-sm flex items-center justify-center text-white font-extrabold text-sm transition-transform duration-150 group-hover:scale-105">
+        <Link href="/blog" className="flex items-center gap-2.5 no-underline text-[var(--ink-primary)] group">
+          <div className="w-8 h-8 bg-[var(--surface-inverse)] rounded-sm flex items-center justify-center text-[var(--ink-on-inverse)] font-extrabold text-sm transition-transform duration-150 group-hover:scale-105">
             A
           </div>
           <span className="font-bold text-lg tracking-tight">Adroit</span>
-          <span className="bg-red text-white text-[0.6rem] font-bold px-1.5 py-0.5 rounded-[3px] tracking-wider uppercase">
+          <span className="bg-[var(--accent)] text-[var(--accent-on-accent)] text-[0.6rem] font-bold px-1.5 py-0.5 rounded-[3px] tracking-wider uppercase">
             BLOG
           </span>
         </Link>
@@ -67,7 +67,7 @@ export default function Header() {
                 href={link.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="relative text-gray-500 text-sm font-medium hover:text-navy transition-colors duration-150 no-underline"
+                className="relative text-[var(--ink-muted)] text-sm font-medium hover:text-[var(--ink-primary)] transition-colors duration-150 no-underline"
               >
                 {link.label}
               </a>
@@ -78,12 +78,12 @@ export default function Header() {
                 aria-current={
                   link.href === "/learn" && isLearnActive ? "page" : undefined
                 }
-                className="relative text-gray-500 text-sm font-medium hover:text-navy transition-colors duration-150 no-underline aria-[current=page]:text-navy aria-[current=page]:font-semibold"
+                className="relative text-[var(--ink-muted)] text-sm font-medium hover:text-[var(--ink-primary)] transition-colors duration-150 no-underline aria-[current=page]:text-[var(--ink-primary)] aria-[current=page]:font-semibold"
               >
                 {link.label}
                 <span
                   aria-hidden
-                  className={`absolute -bottom-[18px] left-0 right-0 h-[2px] rounded-full bg-red transition-opacity duration-150 ${
+                  className={`absolute -bottom-[18px] left-0 right-0 h-[2px] rounded-full bg-[var(--accent)] transition-opacity duration-150 ${
                     (link.href === "/learn" && isLearnActive) ||
                     pathname === link.href
                       ? "opacity-100"
@@ -93,10 +93,10 @@ export default function Header() {
               </Link>
             ),
           )}
-          <div className="flex items-center gap-4 pl-2 border-l border-gray-100">
+          <div className="flex items-center gap-4 pl-2 border-l border-[var(--border-subtle)]">
             <Link
               href="https://adroit.io/contact"
-              className="bg-navy text-white px-[18px] py-2 rounded-sm text-[0.8rem] font-semibold hover:bg-navy-light hover:-translate-y-px active:scale-[0.98] transition-all duration-150 no-underline"
+              className="bg-[var(--surface-inverse)] text-[var(--ink-on-inverse)] px-[18px] py-2 rounded-sm text-[0.8rem] font-semibold hover:bg-[var(--surface-inverse-hover)] hover:-translate-y-px active:scale-[0.98] transition-all duration-150 no-underline"
             >
               Contact Us
             </Link>
@@ -113,9 +113,9 @@ export default function Header() {
             aria-expanded={mobileOpen}
             aria-controls="mobile-nav"
           >
-            <span className="block w-5 h-[2px] bg-navy my-[3px] rounded-[1px] transition-all duration-150" />
-            <span className="block w-5 h-[2px] bg-navy my-[3px] rounded-[1px] transition-all duration-150" />
-            <span className="block w-5 h-[2px] bg-navy my-[3px] rounded-[1px] transition-all duration-150" />
+            <span className="block w-5 h-[2px] bg-[var(--ink-primary)] my-[3px] rounded-[1px] transition-all duration-150" />
+            <span className="block w-5 h-[2px] bg-[var(--ink-primary)] my-[3px] rounded-[1px] transition-all duration-150" />
+            <span className="block w-5 h-[2px] bg-[var(--ink-primary)] my-[3px] rounded-[1px] transition-all duration-150" />
           </button>
         </div>
       </div>
@@ -125,7 +125,7 @@ export default function Header() {
         <nav
           id="mobile-nav"
           aria-label="Mobile"
-          className="md:hidden flex flex-col px-5 py-4 gap-4 border-t border-gray-200 bg-white"
+          className="md:hidden flex flex-col px-5 py-4 gap-4 border-t border-[var(--border-default)] bg-[var(--surface-card)]"
         >
           {navLinks.map((link) =>
             link.external ? (
@@ -134,7 +134,7 @@ export default function Header() {
                 href={link.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-gray-700 text-sm font-medium py-2 border-b border-gray-100 no-underline"
+                className="text-[var(--ink-body)] text-sm font-medium py-2 border-b border-[var(--border-subtle)] no-underline"
               >
                 {link.label}
               </a>
@@ -145,7 +145,7 @@ export default function Header() {
                 aria-current={
                   link.href === "/learn" && isLearnActive ? "page" : undefined
                 }
-                className="text-gray-700 text-sm font-medium py-2 border-b border-gray-100 no-underline aria-[current=page]:text-navy aria-[current=page]:font-semibold"
+                className="text-[var(--ink-body)] text-sm font-medium py-2 border-b border-[var(--border-subtle)] no-underline aria-[current=page]:text-[var(--ink-primary)] aria-[current=page]:font-semibold"
                 onClick={() => setMobileOpen(false)}
               >
                 {link.label}
@@ -155,7 +155,7 @@ export default function Header() {
           {!isLoading && !user && (
             <Link
               href={`/login${pathname && pathname !== "/login" ? `?next=${encodeURIComponent(pathname)}` : ""}`}
-              className="text-gray-700 text-sm font-medium py-2 border-b border-gray-100 no-underline"
+              className="text-[var(--ink-body)] text-sm font-medium py-2 border-b border-[var(--border-subtle)] no-underline"
               onClick={() => setMobileOpen(false)}
             >
               Sign in
@@ -163,29 +163,29 @@ export default function Header() {
           )}
           {!isLoading && user && (
             <>
-              <div className="flex items-center gap-3 py-3 border-b border-gray-100">
+              <div className="flex items-center gap-3 py-3 border-b border-[var(--border-subtle)]">
                 <span
                   className={`flex h-10 w-10 items-center justify-center rounded-[10px] text-[15px] font-bold text-white ${avatarHueClass(user.email)}`}
                 >
                   {initialsFromEmail(user.email)}
                 </span>
                 <div className="min-w-0">
-                  <div className="truncate text-[13.5px] font-semibold text-navy">{user.email}</div>
-                  <div className="font-mono text-[9px] font-bold uppercase tracking-[0.1em] text-gray-400">
+                  <div className="truncate text-[13.5px] font-semibold text-[var(--ink-primary)]">{user.email}</div>
+                  <div className="font-mono text-[9px] font-bold uppercase tracking-[0.1em] text-[var(--ink-faint)]">
                     Signed in as
                   </div>
                 </div>
               </div>
               <Link
                 href="/profile"
-                className="text-gray-700 text-sm font-medium py-2 border-b border-gray-100 no-underline"
+                className="text-[var(--ink-body)] text-sm font-medium py-2 border-b border-[var(--border-subtle)] no-underline"
                 onClick={() => setMobileOpen(false)}
               >
                 Profile
               </Link>
               <Link
                 href="/settings"
-                className="text-gray-700 text-sm font-medium py-2 border-b border-gray-100 no-underline"
+                className="text-[var(--ink-body)] text-sm font-medium py-2 border-b border-[var(--border-subtle)] no-underline"
                 onClick={() => setMobileOpen(false)}
               >
                 Settings
@@ -195,7 +195,7 @@ export default function Header() {
                   handleSignOut();
                   setMobileOpen(false);
                 }}
-                className="text-left text-red text-sm font-medium py-2 border-b border-gray-100 no-underline cursor-pointer bg-none border-none"
+                className="text-left text-[var(--accent)] text-sm font-medium py-2 border-b border-[var(--border-subtle)] no-underline cursor-pointer bg-none border-none"
               >
                 Sign out
               </button>
@@ -203,7 +203,7 @@ export default function Header() {
           )}
           <Link
             href="https://adroit.io/contact"
-            className="bg-navy text-white text-center px-[18px] py-2 rounded-sm text-sm font-semibold hover:bg-navy-light no-underline"
+            className="bg-[var(--surface-inverse)] text-[var(--ink-on-inverse)] text-center px-[18px] py-2 rounded-sm text-sm font-semibold hover:bg-[var(--surface-inverse-hover)] no-underline"
             onClick={() => setMobileOpen(false)}
           >
             Contact Us

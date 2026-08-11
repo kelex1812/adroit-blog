@@ -152,6 +152,7 @@ function buildSeries(seriesSlug, dir) {
     name: cfg.name || known.name || humanize(seriesSlug),
     description: cfg.description ?? known.description ?? "",
     group: cfg.group || undefined,
+    subgroup: cfg.subgroup || undefined,
     gradient: cfg.gradient || known.gradient || FALLBACK_GRADIENT,
     lessons: sorted,
     totalLessons,

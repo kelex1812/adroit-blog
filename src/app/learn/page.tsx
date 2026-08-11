@@ -1,23 +1,31 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import PathCard from "@/components/Learn/PathCard";
+import LearnHub from "@/components/Learn/LearnHub";
 import { getAllSeries } from "@/lib/learn";
+import { getSupabaseServerClient } from "@/lib/supabase/server";
 import { siteConfig } from "@/lib/seo";
-import SeriesProgress from "@/components/Progress/SeriesProgress";
+import type { CardGateState } from "@/shared/contracts-account";
 
 /**
- * /learn hub — one PathCard per learning path with progress
- * (or a "coming soon" badge for empty series).
+ * /learn hub — group/subgroup filters, Continue Learning (signed-in), and one
+ * PathCard per learning path. Guests see non-clickable cards with a sign-in
+ * CTA (name + description stay server-rendered for SEO); signed-in users get
+ * clickable cards with real per-series progress on the card body.
  */
-export default function LearnLandingPage() {
+export default async function LearnLandingPage() {
   const series = getAllSeries();
 
-  // Group by series.group (undefined → "Learning Paths")
-  const groups = new Map<string, typeof series>();
-  for (const s of series) {
-    const g = s.group || "Learning Paths";
-    if (!groups.has(g)) groups.set(g, []);
-    groups.get(g)!.push(s);
+  // Auth state (guest vs signed-in) resolved server-side from the HttpOnly
+  // cookie — the same source as every other gated surface.
+  let gate: CardGateState = "guest-locked";
+  try {
+    const supabase = await getSupabaseServerClient();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+    if (user) gate = "signed-in";
+  } catch {
+    // default to guest on session errors
   }
 
   const jsonLd = {
@@ -49,53 +57,25 @@ export default function LearnLandingPage() {
                 "radial-gradient(55% 110% at 85% -15%, rgba(200,16,46,0.06) 0%, transparent 60%), radial-gradient(45% 90% at 10% -20%, rgba(11,29,58,0.07) 0%, transparent 55%)",
             }}
           />
-          <div className="max-w-[1120px] mx-auto px-6 pt-14 pb-2 relative hero-fade-in">
-            <div className="inline-flex items-center gap-2 font-mono text-[11px] font-semibold text-red uppercase tracking-[0.08em] mb-[18px]">
-              <span className="w-1.5 h-1.5 rounded-full bg-red" />
+          <div className="max-w-[1120px] mx-auto px-6 pt-14 pb-24 relative hero-fade-in">
+            <div className="inline-flex items-center gap-2 font-mono text-[11px] font-semibold text-[var(--accent)] uppercase tracking-[0.08em] mb-[18px]">
+              <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent)]" />
               Adroit Academy
             </div>
-            <h1 className="text-[clamp(2.5rem,5vw,3.25rem)] font-extrabold tracking-[-0.03em] leading-[1.05] text-navy mb-4 bg-gradient-to-r from-navy to-navy-light bg-clip-text text-transparent">
+            <h1 className="text-[clamp(2.5rem,5vw,3.25rem)] font-extrabold tracking-[-0.03em] leading-[1.05] text-[var(--ink-primary)] mb-4 bg-gradient-to-r from-[var(--ink-primary)] to-[var(--surface-inverse-hover)] bg-clip-text text-transparent">
               Learn
             </h1>
-            <p className="text-[17px] text-gray-500 max-w-[560px] leading-relaxed">
+            <p className="text-[17px] text-[var(--ink-muted)] max-w-[560px] leading-relaxed">
               Structured, sequence-aware learning paths on Salesforce
               architecture, certification prep, and agentic AI implementation —
               published daily, read in order.
             </p>
-          </div>
-        </section>
 
-        {/* Track grid, grouped */}
-        <section className="max-w-[1120px] mx-auto px-6 py-10 pb-24">
-          {Array.from(groups.entries()).map(([group, items]) => (
-            <div key={group} className="mb-14 last:mb-0">
-              <div className="flex items-center gap-3 mb-5">
-                <span className="w-6 h-6 rounded-md bg-navy text-white flex items-center justify-center font-mono text-[11px] font-bold">
-                  {items.length}
-                </span>
-                <h2 className="font-mono text-[12px] font-bold text-gray-400 uppercase tracking-[0.1em]">
-                  {group}
-                </h2>
-                <span className="h-px flex-1 bg-gradient-to-r from-gray-200 to-transparent" />
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                {items.map((s) => (
-                  <div key={s.slug} className="relative">
-                    <PathCard series={s} />
-                    {/* Real per-series completion progress (localStorage + Supabase) */}
-                    {s.lessons.length > 0 && (
-                      <div className="mt-3 px-1">
-                        <SeriesProgress
-                          lessonSlugs={s.lessons.map((l) => l.slug)}
-                          showPercent
-                        />
-                      </div>
-                    )}
-                  </div>
-                ))}
-              </div>
+            {/* Filters + continue-learning + card grid (client orchestrator) */}
+            <div className="mt-8">
+              <LearnHub series={series} gate={gate} />
             </div>
-          ))}
+          </div>
         </section>
 
         <script

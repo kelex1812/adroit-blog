@@ -20,6 +20,8 @@ import { useCallback, useEffect, useRef, useState, type KeyboardEvent } from "re
 import Link from "next/link";
 import type { AuthUser } from "@/lib/hooks/useAuth";
 import { avatarHueClass, initialsFromEmail } from "@/lib/avatar";
+import ThemeToggle from "@/components/Theme/ThemeToggle";
+import { PROFILE_CHANGED_EVENT } from "@/components/Profile/ProfileForm";
 
 interface AvatarMenuProps {
   user: AuthUser; // non-null — AvatarMenu only renders when signed in
@@ -101,14 +103,38 @@ function IconChevron({ className }: { className?: string }) {
 
 const itemBase =
   "flex w-full items-center gap-2.5 rounded-md px-3 py-2 text-left text-[13px] font-medium transition-colors duration-150 cursor-pointer bg-none border-none no-underline";
-const itemNormal = "text-gray-700 hover:bg-gray-50 hover:text-navy";
-const itemDanger = "text-red hover:bg-red/[0.06] hover:text-red-dark";
+const itemNormal = "text-[var(--ink-body)] hover:bg-[var(--surface-card-soft)] hover:text-[var(--ink-primary)]";
+const itemDanger = "text-[var(--accent)] hover:bg-[var(--accent)]/[0.06] hover:text-[var(--accent-hover)]";
 
 export default function AvatarMenu({ user, onSignOut, isSigningOut = false }: AvatarMenuProps) {
   const [open, setOpen] = useState(false);
+  const [displayName, setDisplayName] = useState<string | null>(null);
   const rootRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
+
+  // Load the display name once + refresh whenever a profile save broadcasts.
+  const loadDisplayName = useCallback(() => {
+    (async () => {
+      try {
+        const res = await fetch("/api/profile", { cache: "no-store" });
+        if (!res.ok) return;
+        const data = (await res.json()) as {
+          user: { id: string; email: string } | null;
+          profile?: { displayName: string | null };
+        };
+        if (data.user) setDisplayName(data.profile?.displayName ?? null);
+      } catch {
+        // fall back to email
+      }
+    })();
+  }, []);
+
+  useEffect(() => {
+    loadDisplayName();
+    window.addEventListener(PROFILE_CHANGED_EVENT, loadDisplayName);
+    return () => window.removeEventListener(PROFILE_CHANGED_EVENT, loadDisplayName);
+  }, [loadDisplayName]);
 
   function getItems(): HTMLElement[] {
     return Array.from(menuRef.current?.querySelectorAll<HTMLElement>('[role="menuitem"]') ?? []);
@@ -188,7 +214,10 @@ export default function AvatarMenu({ user, onSignOut, isSigningOut = false }: Av
   }
 
   const hue = avatarHueClass(user.email);
-  const initials = initialsFromEmail(user.email);
+  const initials = displayName
+    ? (displayName.trim().split(/\s+/).filter(Boolean).slice(0, 2).map((w) => w[0]).join("").toUpperCase() || initialsFromEmail(user.email))
+    : initialsFromEmail(user.email);
+  const label = displayName || user.email;
 
   return (
     <div ref={rootRef} className="relative">
@@ -197,17 +226,17 @@ export default function AvatarMenu({ user, onSignOut, isSigningOut = false }: Av
         type="button"
         aria-haspopup="menu"
         aria-expanded={open}
-        aria-label={`Account menu for ${user.email}`}
+        aria-label={`Account menu for ${label}`}
         onClick={() => setOpen((v) => !v)}
         onKeyDown={handleTriggerKeyDown}
-        className="flex items-center gap-1.5 rounded-lg p-2 bg-none border-none cursor-pointer transition-colors duration-150 hover:bg-gray-50"
+        className="flex items-center gap-1.5 rounded-lg p-2 bg-none border-none cursor-pointer transition-colors duration-150 hover:bg-[var(--surface-card-soft)]"
       >
         <span
           className={`flex h-8 w-8 items-center justify-center rounded-lg text-[12.5px] font-bold text-white ${hue}`}
         >
           {initials}
         </span>
-        <IconChevron className={`h-3.5 w-3.5 text-gray-400 transition-transform duration-150 ${open ? "rotate-180" : ""}`} />
+        <IconChevron className={`h-3.5 w-3.5 text-[var(--ink-faint)] transition-transform duration-150 ${open ? "rotate-180" : ""}`} />
       </button>
 
       {open && (
@@ -217,7 +246,7 @@ export default function AvatarMenu({ user, onSignOut, isSigningOut = false }: Av
           aria-label="Account"
           aria-orientation="vertical"
           onKeyDown={handleMenuKeyDown}
-          className="menu-pop absolute right-0 top-[calc(100%+8px)] z-50 w-[240px] rounded-xl border border-gray-200 bg-white p-1.5 shadow-menu"
+          className="menu-pop absolute right-0 top-[calc(100%+8px)] z-50 w-[240px] rounded-xl border border-[var(--border-default)] bg-[var(--surface-card)] p-1.5 shadow-menu"
         >
           {/* identity header */}
           <div className="flex items-center gap-2.5 px-2.5 py-2.5 pb-3">
@@ -227,13 +256,13 @@ export default function AvatarMenu({ user, onSignOut, isSigningOut = false }: Av
               {initials}
             </span>
             <div className="min-w-0">
-              <div className="truncate text-[13px] font-semibold text-gray-800">{user.email}</div>
-              <div className="font-mono text-[9px] font-bold uppercase tracking-[0.1em] text-gray-400">
+              <div className="truncate text-[13px] font-semibold text-[var(--ink-body)]">{label}</div>
+              <div className="font-mono text-[9px] font-bold uppercase tracking-[0.1em] text-[var(--ink-faint)]">
                 Signed in as
               </div>
             </div>
           </div>
-          <hr className="mx-1.5 border-t border-gray-100" />
+          <hr className="mx-1.5 border-t border-[var(--border-subtle)]" />
 
           <Link
             href="/profile"
@@ -242,7 +271,7 @@ export default function AvatarMenu({ user, onSignOut, isSigningOut = false }: Av
             onClick={() => setOpen(false)}
             className={`${itemBase} ${itemNormal}`}
           >
-            <IconUser className="h-4 w-4 text-gray-400" />
+            <IconUser className="h-4 w-4 text-[var(--ink-faint)]" />
             Profile
           </Link>
           <Link
@@ -252,11 +281,23 @@ export default function AvatarMenu({ user, onSignOut, isSigningOut = false }: Av
             onClick={() => setOpen(false)}
             className={`${itemBase} ${itemNormal}`}
           >
-            <IconSettings className="h-4 w-4 text-gray-400" />
+            <IconSettings className="h-4 w-4 text-[var(--ink-faint)]" />
             Settings
           </Link>
 
-          <hr className="mx-1.5 border-t border-gray-100" />
+          <hr className="mx-1.5 border-t border-[var(--border-subtle)]" />
+
+          {/* Theme quick-toggle row (persists per-account) */}
+          <div
+            role="menuitem"
+            tabIndex={-1}
+            onClick={() => setOpen(false)}
+            className="cursor-pointer"
+          >
+            <ThemeToggle authed compact />
+          </div>
+
+          <hr className="mx-1.5 border-t border-[var(--border-subtle)]" />
 
           <button
             type="button"

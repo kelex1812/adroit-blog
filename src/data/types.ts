@@ -47,6 +47,8 @@ export interface LearningSeries {
   description: string;
   /** Optional grouping label for the Learn hub (e.g. "Salesforce Certifications") */
   group?: string;
+  /** Optional subgroup under a group (content metadata only, e.g. "Developer"); no DB. */
+  subgroup?: string;
   /** Tailwind gradient classes for card headers, e.g. "from-sky to-blue-600"; fallback: "from-navy to-navy-light" */
   gradient: string;
   /** Lessons sorted NEWEST FIRST (date desc) — enforced by build-learn.js AND lib/learn.ts */
