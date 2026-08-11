@@ -8,6 +8,7 @@
  */
 import { NextRequest, NextResponse } from "next/server";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
+import { getAllCanonicalLessonSlugs } from "@/lib/learn";
 import {
   checkOrigin,
   checkRateLimit,
@@ -66,6 +67,17 @@ export async function POST(req: NextRequest) {
 
     if (!user) {
       return NextResponse.json({ status: "unauthenticated" });
+    }
+
+    // F5 (CWE-345): only canonical lesson slugs may be marked complete. The
+    // client syncs lessons it renders, but a forged POST must not be able to
+    // fabricate completion for non-existent/foreign lessons (which could
+    // otherwise satisfy the certificate's "all lessons completed" rule).
+    if (!getAllCanonicalLessonSlugs().has(parsed.lessonSlug)) {
+      return NextResponse.json(
+        { error: "Unknown lesson slug" },
+        { status: 400 },
+      );
     }
 
     const { error } = await supabase.from("lesson_completion").upsert(

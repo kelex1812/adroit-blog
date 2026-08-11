@@ -3,12 +3,14 @@
  *
  * ADR-104 gating + ADR-106 on-demand derivation:
  *  - Guest → GuestCTA placeholder (zero question/cert text in HTML).
- *  - Authed → derive eligibility from lesson_completion + quiz_run rows
- *    (NO certificates table). Eligible → printable Certificate; not eligible
- *    → checklist state showing exactly what's missing.
+ *  - Authed → derive eligibility from lesson_completion + server-graded
+ *    quiz_attempt rows (NO certificates table; security t_7469e31d F2 — the
+ *    pass decision never reads the client-writable quiz_run history).
+ *    Eligible → printable Certificate; not eligible → checklist state
+ *    showing exactly what's missing.
  *
  * Rule (course-progression pattern): all {totalLessons} lessons completed AND
- * exam best >= 72%. The slug set counted against "all lessons" is the
+ * exam score >= 72%. The slug set counted against "all lessons" is the
  * generator's planned lesson set (content/learn/<series>/questions/<slug>.json),
  * so unpublished lessons with sidecar JSONs still count toward completion.
  */
@@ -21,7 +23,7 @@ import Footer from "@/components/Footer";
 import Certificate from "@/components/Progress/Certificate";
 import GuestCTA from "@/components/Progress/GuestCTA";
 import { learnSeries } from "@/data/learn";
-import { getCertExam, getKnowledgeChecks } from "@/lib/quiz";
+import { getCertExam, getKnowledgeChecks, scoreQuizAttemptRows } from "@/lib/quiz";
 import { getSeriesBySlug } from "@/lib/learn";
 import { buildMetadata } from "@/lib/seo";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
@@ -112,12 +114,14 @@ export default async function CertificatePage({ params }: Props) {
     );
   }
 
-  // Authed — derive eligibility from existing rows (ADR-106).
+  // Authed — derive eligibility from server-graded quiz_attempt rows (ADR-106;
+  // security t_7469e31d F2: quiz_run is client-writable history and must not
+  // grant a certificate, so the pass decision never reads it).
   const checkMetas = getKnowledgeChecks(series);
   const checkQuizNames = checkMetas.map((c) => `${series}:check:${c.n}`);
   const examQuizName = `${series}:exam`;
 
-  const [lessonRes, runRes] = await Promise.all([
+  const [lessonRes, attemptRes] = await Promise.all([
     lessonSlugs.length > 0
       ? supabase
           .from("lesson_completion")
@@ -126,8 +130,8 @@ export default async function CertificatePage({ params }: Props) {
           .in("lesson_slug", lessonSlugs)
       : Promise.resolve({ data: [] as { lesson_slug: string }[], error: null }),
     supabase
-      .from("quiz_run")
-      .select("quiz_name, score, completed_at")
+      .from("quiz_attempt")
+      .select("quiz_name, question_index, is_correct, attempted_at")
       .eq("user_id", user!.id)
       .in("quiz_name", [...checkQuizNames, examQuizName]),
   ]);
@@ -135,17 +139,38 @@ export default async function CertificatePage({ params }: Props) {
   const completedLessonSlugs = ((lessonRes.data ?? []) as { lesson_slug: string }[]).map(
     (r) => r.lesson_slug,
   );
-  const runs = (runRes.data ?? []) as {
+
+  const attemptRows = (attemptRes.data ?? []) as {
     quiz_name: string;
-    score: number;
-    completed_at?: string | null;
+    question_index: number;
+    is_correct: boolean;
+    attempted_at?: string | null;
   }[];
-  const examRuns = runs
-    .filter((r) => r.quiz_name === examQuizName)
-    .map((r) => ({ score: r.score, completedAt: r.completed_at }));
-  const checkRuns = runs
-    .filter((r) => checkQuizNames.includes(r.quiz_name))
-    .map((r) => ({ quizName: r.quiz_name, score: r.score }));
+
+  // Exam: score from the graded attempt set; completion date = the latest
+  // graded exam answer (quiz_attempt has no run boundaries).
+  const examAttempts = attemptRows.filter((r) => r.quiz_name === examQuizName);
+  const examScore = scoreQuizAttemptRows(examAttempts);
+  const examRuns = examScore
+    ? [
+        {
+          score: examScore.score,
+          completedAt:
+            examAttempts.reduce<string | null>(
+              (max, r) => (r.attempted_at && r.attempted_at > (max ?? "") ? r.attempted_at : max),
+              null,
+            ) ?? null,
+        },
+      ]
+    : [];
+
+  // Checks: one derived score per check quizName (latest graded answer set).
+  const checkRuns = checkQuizNames
+    .map((quizName) => {
+      const s = scoreQuizAttemptRows(attemptRows.filter((r) => r.quiz_name === quizName));
+      return s ? { quizName, score: s.score } : null;
+    })
+    .filter((r): r is { quizName: string; score: number } => r !== null);
 
   const eligibility = buildCertificateEligibility({
     completedLessonSlugs,

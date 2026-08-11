@@ -57,6 +57,41 @@ export function getLesson(
   return learnLessons.find((l) => l.series === series && l.slug === slug);
 }
 
+/**
+ * All canonical lesson slugs across EVERY series: the union of published
+ * lesson data (learnLessons) and the generator's planned per-lesson question
+ * files (content/learn/<series>/questions/<slug>.json — the same planned set
+ * the certificate rule counts against). The lesson-completion API rejects
+ * slugs outside this set so completion cannot be marked for non-existent or
+ * foreign lessons (security t_7469e31d F5). Falls back to published data
+ * when content files are absent (e.g. tests/build without content checkout).
+ */
+export function getAllCanonicalLessonSlugs(): Set<string> {
+  const slugs = new Set<string>();
+  for (const lesson of learnLessons) slugs.add(lesson.slug);
+
+  const learnRoot = path.join(process.cwd(), "content", "learn");
+  let seriesDirs: fs.Dirent[] = [];
+  try {
+    seriesDirs = fs.readdirSync(learnRoot, { withFileTypes: true });
+  } catch {
+    return slugs;
+  }
+  for (const dir of seriesDirs) {
+    if (!dir.isDirectory()) continue;
+    let files: string[];
+    try {
+      files = fs.readdirSync(path.join(learnRoot, dir.name, "questions"));
+    } catch {
+      continue; // no per-lesson questions for this series
+    }
+    for (const f of files) {
+      if (f.endsWith(".json")) slugs.add(f.replace(/\.json$/, ""));
+    }
+  }
+  return slugs;
+}
+
 /** Read the raw MDX content for a learn lesson (mirrors lib/mdx.ts). */
 export function getLearnMDXContent(
   series: string,

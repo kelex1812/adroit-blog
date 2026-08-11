@@ -192,6 +192,11 @@ export function resolveQuizByName(quizName: string): QuizData | null {
     case "lesson":
       return getQuizForLesson(parsed.series, parsed.id);
     case "check": {
+      // Strict digits only — `check:3abc` must NOT silently parse to 3
+      // (security t_7469e31d F4). parseQuizName allows alphanumerics in
+      // the id segment, so the strict regex is the last gate before the
+      // filesystem join inside getKnowledgeCheck.
+      if (!/^[0-9]+$/.test(parsed.id)) return null;
       const n = parseInt(parsed.id, 10);
       return getKnowledgeCheck(parsed.series, n);
     }
@@ -200,4 +205,71 @@ export function resolveQuizByName(quizName: string): QuizData | null {
     default:
       return null;
   }
+}
+
+/* ------------------------------------------------------------------ */
+/*  Server-graded attempt scoring (source of truth: quiz_attempt)      */
+/* ------------------------------------------------------------------ */
+
+/** A server-graded quiz_attempt row (only fields scoring needs). */
+export interface QuizAttemptRow {
+  quiz_name: string;
+  question_index: number;
+  is_correct: boolean;
+}
+
+export interface QuizAttemptScore {
+  correct: number;
+  total: number;
+  score: number;
+}
+
+/**
+ * Score a set of server-graded quiz_attempt rows for ONE quiz. quiz_attempt
+ * stores the latest graded answer per question (upsert on
+ * user_id,quiz_name,question_index), so the derived score reflects the
+ * user's current answer set. Returns null when there are no rows.
+ *
+ * Security (t_7469e31d F1/F2): quiz_run stats, the exam unlock gate, and
+ * certificate eligibility all derive from these server-graded rows — never
+ * from client-reported `correct`/`total`.
+ */
+export function scoreQuizAttemptRows(
+  rows: Pick<QuizAttemptRow, "question_index" | "is_correct">[],
+): QuizAttemptScore | null {
+  // Latest answer per question wins (defensive against stray duplicates).
+  const byQuestion = new Map<number, boolean>();
+  for (const row of rows) {
+    if (
+      typeof row?.question_index === "number" &&
+      typeof row?.is_correct === "boolean"
+    ) {
+      byQuestion.set(row.question_index, row.is_correct);
+    }
+  }
+  const total = byQuestion.size;
+  if (total === 0) return null;
+  let correct = 0;
+  for (const ok of byQuestion.values()) {
+    if (ok) correct += 1;
+  }
+  return { correct, total, score: Math.round((correct / total) * 100) };
+}
+
+/** Group server-graded attempt rows by quiz_name and score each quiz. */
+export function scoreQuizAttemptsByQuiz(
+  rows: QuizAttemptRow[],
+): Map<string, QuizAttemptScore> {
+  const byQuiz = new Map<string, QuizAttemptRow[]>();
+  for (const row of rows) {
+    const list = byQuiz.get(row.quiz_name);
+    if (list) list.push(row);
+    else byQuiz.set(row.quiz_name, [row]);
+  }
+  const scores = new Map<string, QuizAttemptScore>();
+  for (const [quizName, quizRows] of byQuiz) {
+    const s = scoreQuizAttemptRows(quizRows);
+    if (s) scores.set(quizName, s);
+  }
+  return scores;
 }

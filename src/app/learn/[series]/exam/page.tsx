@@ -16,7 +16,7 @@ import ExamWidget from "@/components/Progress/ExamWidget";
 import ExamLocked from "@/components/Progress/ExamLocked";
 import GuestCTA from "@/components/Progress/GuestCTA";
 import { learnSeries } from "@/data/learn";
-import { getCertExam, getKnowledgeChecks } from "@/lib/quiz";
+import { getCertExam, getKnowledgeChecks, scoreQuizAttemptsByQuiz } from "@/lib/quiz";
 import { getSeriesBySlug } from "@/lib/learn";
 import { buildMetadata } from "@/lib/seo";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
@@ -91,23 +91,27 @@ export default async function ExamPage({ params }: Props) {
     );
   }
 
-  // Authed — derive per-check best scores from quiz_run rows.
+  // Authed — derive per-check scores from server-graded quiz_attempt rows
+  // (security t_7469e31d F2: quiz_run is client-writable history, so the
+  // unlock decision must never depend on it).
   const checkMetas = getKnowledgeChecks(series);
   const quizNames = checkMetas.map((c) => `${series}:check:${c.n}`);
   const { data } = await supabase
-    .from("quiz_run")
-    .select("quiz_name, score")
+    .from("quiz_attempt")
+    .select("quiz_name, question_index, is_correct")
     .eq("user_id", user!.id)
     .in("quiz_name", quizNames);
 
-  const bestByQuiz = new Map<string, number>();
-  for (const row of (data ?? []) as { quiz_name: string; score: number }[]) {
-    const cur = bestByQuiz.get(row.quiz_name) ?? -1;
-    bestByQuiz.set(row.quiz_name, Math.max(cur, row.score));
-  }
+  const scoresByQuiz = scoreQuizAttemptsByQuiz(
+    (data ?? []) as {
+      quiz_name: string;
+      question_index: number;
+      is_correct: boolean;
+    }[],
+  );
 
   const checks: CheckProgress[] = checkMetas.map((c) => {
-    const bestScore = bestByQuiz.get(`${series}:check:${c.n}`) ?? 0;
+    const bestScore = scoresByQuiz.get(`${series}:check:${c.n}`)?.score ?? 0;
     return { n: c.n, bestScore, attempts: 0, passed: bestScore >= CHECK_PASS_PCT };
   });
   const allPassed = checks.every((c) => c.passed);
@@ -119,7 +123,13 @@ export default async function ExamPage({ params }: Props) {
         {allPassed ? (
           <ExamWidget
             quizName={exam.quizName}
-            questions={exam.questions}
+            // F3 (CWE-200): strip the answer key server-side — the client
+            // bundle must never contain correct_answer_index/explanation.
+            // Grading happens server-side in POST /api/progress/quiz/batch.
+            questions={exam.questions.map(({ question, options }) => ({
+              question,
+              options,
+            }))}
             seriesSlug={series}
             seriesName={s.name}
           />

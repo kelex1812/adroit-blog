@@ -28,9 +28,17 @@ import type {
 const EXAM_MINUTES = 105;
 const EXAM_SECONDS = EXAM_MINUTES * 60;
 
+/**
+ * Question shape shipped to the client — deliberately stripped of the answer
+ * key (correct_answer_index, explanation) server-side (security t_7469e31d
+ * F3 / CWE-200). The widget only needs the prompt and options; grading and
+ * per-question results come from POST /api/progress/quiz/batch.
+ */
+export type ExamClientQuestion = Pick<QuizQuestion, "question" | "options">;
+
 interface ExamWidgetProps {
   quizName: string;
-  questions: QuizQuestion[];
+  questions: ExamClientQuestion[];
   /** Series slug — back link target. */
   seriesSlug: string;
   /** Series display name (for the header sub). */

@@ -6,15 +6,23 @@
  * header (design brief §5.3, US-005 AC5). LocalStorage is the client's
  * authoritative copy; this route backs cross-device display for authed
  * users. Guests get stats purely from localStorage (QuizStats component).
+ *
+ * Security (t_7469e31d F1): the POST body's client-reported `correct`/`total`
+ * are IGNORED. correct/total/score are recomputed server-side from the
+ * server-graded `quiz_attempt` rows (each answer was graded against the
+ * canonical quiz JSON in POST /api/progress/quiz). A run is only recorded
+ * when the graded attempt set covers the canonical question count, so a
+ * forged POST can neither fabricate an 80%+ check score (exam unlock) nor a
+ * 100% exam (certificate).
  */
 import { NextRequest, NextResponse } from "next/server";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
+import { resolveQuizByName, scoreQuizAttemptRows } from "@/lib/quiz";
 import {
   checkOrigin,
   checkRateLimit,
   getClientIp,
   sanitiseDbError,
-  validateIndex,
   validateQuizName,
 } from "@/lib/api-security";
 
@@ -33,8 +41,9 @@ export async function POST(req: NextRequest) {
 
     const body = (await req.json()) as {
       quizName?: unknown;
-      correct?: unknown;
-      total?: unknown;
+      // `correct` / `total` are accepted for backward compatibility with the
+      // client hook but deliberately NOT read — they are client-writable and
+      // forgeable (F1). Score comes from quiz_attempt rows below.
     };
 
     if (typeof body.quizName !== "string" || body.quizName.length === 0) {
@@ -45,17 +54,6 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: quizErr }, { status: 400 });
     }
 
-    if (typeof body.correct !== "number" || typeof body.total !== "number") {
-      return NextResponse.json({ error: "correct and total required" }, { status: 400 });
-    }
-    const totalErr = validateIndex(body.total, "total", 1000);
-    if (totalErr) {
-      return NextResponse.json({ error: totalErr }, { status: 400 });
-    }
-    if (body.correct < 0 || body.correct > body.total) {
-      return NextResponse.json({ error: "correct must be between 0 and total" }, { status: 400 });
-    }
-
     const supabase = await getSupabaseServerClient();
     const { data: { user } } = await supabase.auth.getUser();
 
@@ -63,19 +61,47 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ status: "unauthenticated" });
     }
 
-    const score = Math.round((body.correct / body.total) * 100);
-
-    const { error } = await supabase.from("quiz_run").insert({
-      user_id: user.id,
-      quiz_name: body.quizName,
-      correct: body.correct,
-      total: body.total,
-      score,
-      completed_at: new Date().toISOString(),
-    });
+    /* --- Derive score from server-graded quiz_attempt rows (F1) --- */
+    const quiz = resolveQuizByName(body.quizName); // canonical question count
+    const { data, error } = await supabase
+      .from("quiz_attempt")
+      .select("question_index, is_correct")
+      .eq("user_id", user.id)
+      .eq("quiz_name", body.quizName);
 
     if (error) {
       return NextResponse.json({ status: "error", error: sanitiseDbError(error) }, { status: 500 });
+    }
+
+    const attempts = scoreQuizAttemptRows(
+      (data ?? []) as { question_index: number; is_correct: boolean }[],
+    );
+
+    // No graded attempts → nothing to record (unknown quiz names are
+    // client-only, mirroring POST /api/progress/quiz).
+    if (!attempts) {
+      return NextResponse.json({ status: "ok" });
+    }
+
+    // F1: validate the derived total against the canonical question count.
+    // If the graded attempt set does not cover the whole quiz (e.g. attempt
+    // syncs still in flight, or a tampered quiz_name), do not record a
+    // misleading run — the stats strip stays at the last complete run.
+    if (quiz && attempts.total !== quiz.questions.length) {
+      return NextResponse.json({ status: "ok" });
+    }
+
+    const { error: runErr } = await supabase.from("quiz_run").insert({
+      user_id: user.id,
+      quiz_name: body.quizName,
+      correct: attempts.correct,
+      total: attempts.total,
+      score: attempts.score,
+      completed_at: new Date().toISOString(),
+    });
+
+    if (runErr) {
+      return NextResponse.json({ status: "error", error: sanitiseDbError(runErr) }, { status: 500 });
     }
 
     return NextResponse.json({ status: "ok" });

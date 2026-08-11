@@ -9,6 +9,8 @@ import {
   getQuizForLesson,
   parseQuizName,
   resolveQuizByName,
+  scoreQuizAttemptRows,
+  scoreQuizAttemptsByQuiz,
 } from "./quiz";
 
 describe("parseQuizName", () => {
@@ -112,5 +114,51 @@ describe("resolveQuizByName", () => {
     // bare-name fallback now returns null for omni-studio-cert.
     expect(resolveQuizByName("omni-studio-cert")).toBeNull();
     expect(resolveQuizByName("no-such-series")).toBeNull();
+  });
+
+  it("strictly rejects non-digit check ids (security F4 — check:3abc must not parse to 3)", () => {
+    expect(resolveQuizByName("omni-studio-cert:check:3abc")).toBeNull();
+    expect(resolveQuizByName("omni-studio-cert:check:3.0")).toBeNull();
+    expect(resolveQuizByName("omni-studio-cert:check:-1")).toBeNull();
+    // canonical digit-only id still resolves
+    expect(resolveQuizByName("omni-studio-cert:check:1")?.quizName).toBe(
+      "omni-studio-cert:check:1",
+    );
+  });
+});
+
+describe("scoreQuizAttemptRows / scoreQuizAttemptsByQuiz (F1/F2 source of truth)", () => {
+  it("scores a set of graded rows (latest answer per question wins)", () => {
+    const s = scoreQuizAttemptRows([
+      { question_index: 0, is_correct: true },
+      { question_index: 1, is_correct: true },
+      { question_index: 1, is_correct: false }, // duplicate: latest wins → false
+      { question_index: 2, is_correct: true },
+    ]);
+    expect(s).toEqual({ correct: 2, total: 3, score: 67 }); // 2/3 = 66.7 → 67
+  });
+
+  it("returns null for an empty row set (no graded answers)", () => {
+    expect(scoreQuizAttemptRows([])).toBeNull();
+  });
+
+  it("ignores malformed rows", () => {
+    expect(scoreQuizAttemptRows([{ question_index: 0, is_correct: true }, null as never])).toEqual(
+      { correct: 1, total: 1, score: 100 },
+    );
+  });
+
+  it("groups rows by quiz_name and scores each quiz independently", () => {
+    const byQuiz = scoreQuizAttemptsByQuiz([
+      { quiz_name: "s:check:1", question_index: 0, is_correct: true },
+      { quiz_name: "s:check:1", question_index: 1, is_correct: true },
+      { quiz_name: "s:exam", question_index: 0, is_correct: false },
+    ]);
+    expect(byQuiz.get("s:check:1")).toEqual({ correct: 2, total: 2, score: 100 });
+    expect(byQuiz.get("s:exam")).toEqual({ correct: 0, total: 1, score: 0 });
+  });
+
+  it("omits quizzes with no rows from the grouped result", () => {
+    expect(scoreQuizAttemptsByQuiz([]).size).toBe(0);
   });
 });

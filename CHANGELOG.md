@@ -4,6 +4,62 @@ All notable changes to the Adroit Consulting Blog project will be documented in 
 
 ## [Unreleased]
 
+### Security: server-side source of truth for grading, unlock, and certificates (t_7469e31d)
+
+Resolves val-el's security audit (t_7469e31d) — 5 findings, all confirmed
+still present on re-audit and now fixed. The common thread: quiz_run
+(client-writable history) was trusted for pass/unlock/certificate decisions,
+and the exam answer key shipped in the client bundle.
+
+**What**
+
+1. **F1 (HIGH, CWE-345) — `quiz_run` never trusts client scores.**
+   `POST /api/progress/quiz/run` ignores client `correct`/`total` entirely
+   (`src/app/api/progress/quiz/run/route.ts`). correct/total/score are
+   recomputed server-side from the server-graded `quiz_attempt` rows
+   (`scoreQuizAttemptRows`), and a run is only recorded when the graded
+   attempt set covers the canonical question count — so 9 forged POSTs can
+   neither fabricate an 80%+ check (exam unlock) nor a 100% exam
+   (certificate).
+2. **F2 (HIGH, CWE-345) — unlock + certificate eligibility read `quiz_attempt`.**
+   `src/app/learn/[series]/exam/page.tsx`, `src/app/learn/[series]/certificate/page.tsx`,
+   and `src/app/api/progress/quiz/tiers/route.ts` all switched their
+   source-of-truth for bestScore/passed/unlocked from client-writable
+   `quiz_run` to server-graded `quiz_attempt` rows
+   (`scoreQuizAttemptRows` / `scoreQuizAttemptsByQuiz`). `quiz_run` is now
+   read only for display-only attempt counts and cannot grant anything.
+3. **F3 (MEDIUM, CWE-200) — answer key stripped from client bundle.**
+   `src/app/learn/[series]/exam/page.tsx` strips `correct_answer_index` and
+   `explanation` server-side before passing questions to `ExamWidget`
+   (which only needs `question`/`options`). Grading stays server-side in
+   `POST /api/progress/quiz/batch`.
+4. **F4 (LOW, CWE-20) — strict digit gate on check ids.**
+   `src/lib/quiz.ts` `resolveQuizByName` rejects non-`/^[0-9]+$/` check ids
+   (`check:3abc` no longer silently parses to 3) before the filesystem join.
+5. **F5 (LOW, CWE-345) — lesson completion accepts only canonical slugs.**
+   `POST /api/progress/lesson` rejects slugs not in
+   `getAllCanonicalLessonSlugs()` (union of published lessons + the
+   generator's planned per-lesson question files), so completion can't be
+   forged for non-existent/foreign lessons.
+
+**Why**
+
+- Server-side grading already existed in both grading routes; the hole was
+  that downstream decisions trusted client-writable `quiz_run` rows and the
+  client body. Deriving every pass/unlock/certificate decision from the
+  server-graded `quiz_attempt` rows closes the forgery class (CWE-345) and
+  keeps the exam "no-feedback" property honest (CWE-200).
+- Server-side grading, origin/CSRF, rate limiting, session gating, RLS, and
+  parameterised queries were verified sound and left untouched.
+
+**Known Issues**
+
+- `src/lib/certificate.ts` doc comments still say "quiz_run" but the pure
+  helper is now fed `quiz_attempt`-derived runs by the page; function is
+  unchanged and semantics identical.
+- Certificate completion date derives from the latest graded exam answer
+  (`quiz_attempt.attempted_at`) since that table has no run boundaries.
+
 ### Fix: enforce exam unlock server-side + certificate eligibility checks (t_c6333dd3)
 
 Resolves val-el's security audit (t_05fad9a9) — MEDIUM, OWASP A01 (Broken

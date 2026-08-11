@@ -4,15 +4,20 @@
  * Series page rollup + check/exam cards need per-check best scores without 10
  * round-trips. Returns, for the authed user:
  *   lessons  { completed, total }                 from lesson_completion
- *   checks   [{ n, bestScore, attempts, passed }] MAX(score) per check quizName
- *   exam     { bestScore, attempts, passed }      MAX(score) for <series>:exam
+ *   checks   [{ n, bestScore, attempts, passed }] score per check quizName
+ *   exam     { bestScore, attempts, passed }      score for <series>:exam
  *   unlocked true when every check passed >= 80   (ADR-101/Decision 9)
+ *
+ * Security (t_7469e31d F2): bestScore/passed/unlocked derive from
+ * SERVER-GRADED `quiz_attempt` rows (scoreQuizAttemptsByQuiz) — never from
+ * client-writable `quiz_run`. `quiz_run` is read only for the display-only
+ * attempt count; it cannot grant anything.
  *
  * Guests: all zeros / empty (client renders CTA-safe zeros — never question text).
  */
 import { NextRequest, NextResponse } from "next/server";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
-import { getKnowledgeChecks } from "@/lib/quiz";
+import { getKnowledgeChecks, scoreQuizAttemptsByQuiz } from "@/lib/quiz";
 import { getSeriesBySlug, getLessonsForSeries } from "@/lib/learn";
 import { validateSlug } from "@/lib/api-security";
 import type { CheckProgress, TierProgress } from "@/shared/contracts";
@@ -60,8 +65,9 @@ export async function GET(req: NextRequest) {
     const examQuizName = `${series}:exam`;
 
     const lessonSlugs = getLessonsForSeries(series).map((l) => l.slug);
+    const tierQuizNames = [...checkQuizNames, examQuizName];
 
-    const [lessonRes, runRes] = await Promise.all([
+    const [lessonRes, attemptRes, runCountRes] = await Promise.all([
       lessonSlugs.length > 0
         ? supabase
             .from("lesson_completion")
@@ -69,40 +75,53 @@ export async function GET(req: NextRequest) {
             .eq("user_id", user.id)
             .in("lesson_slug", lessonSlugs)
         : Promise.resolve({ data: [] as { lesson_slug: string }[], error: null }),
+      // Source of truth for scores (F2): server-graded quiz_attempt rows.
+      supabase
+        .from("quiz_attempt")
+        .select("quiz_name, question_index, is_correct")
+        .eq("user_id", user.id)
+        .in("quiz_name", tierQuizNames),
+      // Display-only attempt counts — quiz_run rows are server-derived
+      // (F1) and never influence pass/unlock decisions.
       supabase
         .from("quiz_run")
-        .select("quiz_name, score")
+        .select("quiz_name")
         .eq("user_id", user.id)
-        .in("quiz_name", [...checkQuizNames, examQuizName]),
+        .in("quiz_name", tierQuizNames),
     ]);
 
     const completedLessons = new Set(
       ((lessonRes.data ?? []) as { lesson_slug: string }[]).map((r) => r.lesson_slug),
     );
 
-    // Group MAX(score) + attempt count per quiz_name.
-    const scoresByQuiz = new Map<string, { best: number; attempts: number }>();
-    for (const row of (runRes.data ?? []) as { quiz_name: string; score: number }[]) {
-      const cur = scoresByQuiz.get(row.quiz_name) ?? { best: -1, attempts: 0 };
-      scoresByQuiz.set(row.quiz_name, {
-        best: Math.max(cur.best, row.score),
-        attempts: cur.attempts + 1,
-      });
+    // Score per quiz from graded attempts (F2).
+    const scoresByQuiz = scoreQuizAttemptsByQuiz(
+      (attemptRes.data ?? []) as {
+        quiz_name: string;
+        question_index: number;
+        is_correct: boolean;
+      }[],
+    );
+
+    // Display-only run counts (F1: quiz_run rows are server-derived).
+    const runCounts = new Map<string, number>();
+    for (const row of (runCountRes.data ?? []) as { quiz_name: string }[]) {
+      runCounts.set(row.quiz_name, (runCounts.get(row.quiz_name) ?? 0) + 1);
     }
 
     const checks: CheckProgress[] = checkMetas.map((c) => {
       const stats = scoresByQuiz.get(`${series}:check:${c.n}`);
-      const bestScore = stats?.best ?? 0;
+      const bestScore = stats?.score ?? 0;
       return {
         n: c.n,
         bestScore,
-        attempts: stats?.attempts ?? 0,
+        attempts: runCounts.get(`${series}:check:${c.n}`) ?? 0,
         passed: bestScore >= CHECK_PASS_PCT,
       };
     });
 
     const examStats = scoresByQuiz.get(examQuizName);
-    const examBest = examStats?.best ?? 0;
+    const examBest = examStats?.score ?? 0;
 
     const totalLessons = getSeriesBySlug(series)?.totalLessons ?? 0;
     const allChecksPassed = checks.every((c) => c.passed);
@@ -112,7 +131,7 @@ export async function GET(req: NextRequest) {
       checks,
       exam: {
         bestScore: examBest,
-        attempts: examStats?.attempts ?? 0,
+        attempts: runCounts.get(examQuizName) ?? 0,
         passed: examBest >= EXAM_PASS_PCT,
       },
       unlocked: allChecksPassed,
