@@ -4,6 +4,37 @@ All notable changes to the Adroit Consulting Blog project will be documented in 
 
 ## [Unreleased]
 
+### Security: slim guest /learn payload to card-render data (t_3dbf4826)
+
+Closes Val-El's payload-hygiene follow-up from the guest-gating audit
+(t_3a16005f, Finding 1 LOW/CWE-200): the `/learn` hub client previously
+received the FULL `LearningSeries[]` — every lesson's slug/title/excerpt/
+date/author/readTime/tags — serialized into the RSC payload for every
+visitor, guests included, even though the guest PathCard renders only name +
+description + lesson count.
+
+- `src/data/types.ts` — new `LearnCardSeries` slim projection (slug, name,
+  description, group, subgroup, gradient, lessonCount, totalLessons,
+  lessonSlugs). No per-lesson metadata.
+- `src/lib/learn.ts` — new `toLearnCardSeries(s, { includeLessonSlugs })`
+  mapper, applied at the server boundary. Guests get card-render fields only
+  and `lessonSlugs: []`; signed-in cards additionally carry lesson slugs for
+  `SeriesProgress`.
+- `src/app/learn/page.tsx` — resolves `gate` first, then maps `series` →
+  `cardSeries` via `toLearnCardSeries` before passing to `LearnHub`.
+- `src/components/Learn/LearnHub.tsx` / `LearnFilters.tsx` / `PathCard.tsx` —
+  typed on `LearnCardSeries`; PathCard now reads `lessonCount` / `lessonSlugs`
+  instead of `series.lessons.*`.
+- `src/lib/learn-card.test.ts` (new) — 4 tests: guest projection strips
+  per-lesson metadata and keeps card fields; signed-in carries slugs only;
+  `lessonCount` survives slug-stripping; empty-lesson "Coming soon" series.
+
+**Verification**: `tsc --noEmit` clean; `npm run build` clean; full suite
+180→184 (4 new). Live dev-server check of guest HTML: series name + count
+badge + sign-in CTA render, while lesson titles/excerpts/slugs appear **0**
+times in the guest payload. Guest card remains non-clickable; syllabus
+readability intentionally unchanged.
+
 ### Security: harden user_profiles RLS to migration-003 standard (t_ecf3b702)
 
 Closes Val-El's audit findings (t_6cd3026f — fresh user_profiles re-audit:

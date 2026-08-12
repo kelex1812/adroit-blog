@@ -1,7 +1,7 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import LearnHub from "@/components/Learn/LearnHub";
-import { getAllSeries } from "@/lib/learn";
+import { getAllSeries, toLearnCardSeries } from "@/lib/learn";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
 import { siteConfig } from "@/lib/seo";
 import type { CardGateState } from "@/shared/contracts-account";
@@ -11,6 +11,12 @@ import type { CardGateState } from "@/shared/contracts-account";
  * PathCard per learning path. Guests see non-clickable cards with a sign-in
  * CTA (name + description stay server-rendered for SEO); signed-in users get
  * clickable cards with real per-series progress on the card body.
+ *
+ * Guest hardening (t_3dbf4826): the client receives a slimmed LearnCardSeries
+ * projection — only what the PathCard/filters render. Per-lesson metadata
+ * (title/excerpt/date/author/readTime/tags) is mapped away server-side and
+ * never ships in the guest bundle. Signed-in cards additionally carry lesson
+ * slugs for SeriesProgress.
  */
 export default async function LearnLandingPage() {
   const series = getAllSeries();
@@ -27,6 +33,11 @@ export default async function LearnLandingPage() {
   } catch {
     // default to guest on session errors
   }
+
+  // Slim the payload at the server boundary: guests get card-render fields only.
+  const cardSeries = series.map((s) =>
+    toLearnCardSeries(s, { includeLessonSlugs: gate === "signed-in" }),
+  );
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -73,7 +84,7 @@ export default async function LearnLandingPage() {
 
             {/* Filters + continue-learning + card grid (client orchestrator) */}
             <div className="mt-8">
-              <LearnHub series={series} gate={gate} />
+              <LearnHub series={cardSeries} gate={gate} />
             </div>
           </div>
         </section>

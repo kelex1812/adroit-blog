@@ -12,11 +12,11 @@ import { useMemo, useState } from "react";
 import PathCard from "./PathCard";
 import LearnFilters, { bucketOf } from "./LearnFilters";
 import ContinueLearning from "./ContinueLearning";
-import type { LearningSeries } from "@/data/types";
+import type { LearnCardSeries } from "@/data/types";
 import type { CardGateState } from "@/shared/contracts-account";
 
 interface LearnHubProps {
-  series: LearningSeries[];
+  series: LearnCardSeries[];
   gate: CardGateState;
 }
 
@@ -38,7 +38,7 @@ export default function LearnHub({ series, gate }: LearnHubProps) {
 
   // Order: group asc, then subgroup asc, then series as provided.
   const sections = useMemo(() => {
-    const byGroup = new Map<string, { bySubgroup: Map<string, LearningSeries[]> }>();
+    const byGroup = new Map<string, { bySubgroup: Map<string, LearnCardSeries[]> }>();
     for (const s of visible) {
       const g = s.group || "Learning Paths";
       if (!byGroup.has(g)) byGroup.set(g, { bySubgroup: new Map() });

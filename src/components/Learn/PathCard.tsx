@@ -1,12 +1,12 @@
 import Link from "next/link";
-import { LearningSeries } from "@/data/types";
+import { LearnCardSeries } from "@/data/types";
 import { seriesShortLabel } from "@/lib/learn-client";
 import SeriesProgress from "@/components/Progress/SeriesProgress";
 import QuizStats from "@/components/Progress/QuizStats";
 import type { CardGateState } from "@/shared/contracts-account";
 
 interface PathCardProps {
-  series: LearningSeries;
+  series: LearnCardSeries;
   /** guest-locked → non-clickable card + sign-in CTA; signed-in → clickable Link. */
   gate: CardGateState;
   /** next query for the guest CTA (defaults to the series syllabus). */
@@ -15,7 +15,7 @@ interface PathCardProps {
 
 /** Landing-page card per learning path (mockup: mockup-learn-hub-round3.html). */
 export default function PathCard({ series, gate, loginNext }: PathCardProps) {
-  const empty = series.lessons.length === 0;
+  const empty = series.lessonCount === 0;
   const isGuest = gate === "guest-locked";
   const loginHref = `/login?next=${encodeURIComponent(loginNext ?? `/learn/${series.slug}`)}`;
 
@@ -49,7 +49,7 @@ export default function PathCard({ series, gate, loginNext }: PathCardProps) {
           </span>
         )}
         <span className="absolute top-3.5 right-4 bg-black/55 backdrop-blur-sm px-2.5 py-1 rounded-full text-[10.5px] font-bold text-white font-mono z-10">
-          {series.lessons.length} / {series.totalLessons} lessons
+          {series.lessonCount} / {series.totalLessons} lessons
         </span>
       </div>
 
@@ -95,7 +95,7 @@ export default function PathCard({ series, gate, loginNext }: PathCardProps) {
           <div className="mt-4 pt-3 border-t border-[var(--border-subtle)]">
             {/* Real per-series completion for signed-in users (client island). */}
             <SeriesProgress
-              lessonSlugs={series.lessons.map((l) => l.slug)}
+              lessonSlugs={series.lessonSlugs}
               showPercent
             />
             {/* Quiz average + attempt count — informational only; the whole card

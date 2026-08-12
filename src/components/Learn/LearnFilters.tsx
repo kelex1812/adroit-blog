@@ -11,7 +11,7 @@
 
 "use client";
 
-import type { LearningSeries } from "@/data/types";
+import type { LearnCardSeries } from "@/data/types";
 
 /** "Salesforce Certifications" → "Certifications"; everything else → "General". */
 export function bucketOf(group: string): string {
@@ -21,7 +21,7 @@ export function bucketOf(group: string): string {
 export const BUCKETS = ["Certifications", "General"] as const;
 
 interface LearnFiltersProps {
-  series: LearningSeries[];
+  series: LearnCardSeries[];
   bucket: string | null; // null = "All"
   subgroup: string | null;
   onBucketChange: (bucket: string | null) => void;

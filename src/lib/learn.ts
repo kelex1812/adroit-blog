@@ -1,7 +1,7 @@
 import fs from "fs";
 import path from "path";
 import { learnLessons, learnSeries } from "@/data/learn";
-import { LearnLesson, LearningSeries } from "@/data/types";
+import { LearnLesson, LearnCardSeries, LearningSeries } from "@/data/types";
 import { sortLessonsByLessonNumber } from "@/lib/lesson-sort";
 
 /**
@@ -36,6 +36,32 @@ export function getAllSeries(): LearningSeries[] {
     if (bNewest !== aNewest) return bNewest - aNewest;
     return a.slug.localeCompare(b.slug);
   });
+}
+
+/**
+ * Slim the full LearningSeries to the card-level LearnCardSeries projection
+ * for the /learn hub (guest hardening t_3dbf4826). Per-lesson metadata
+ * (slug/title/excerpt/date/author/readTime/tags) never crosses into the client
+ * bundle — guests receive only what the PathCard renders. `includeLessonSlugs`
+ * opts into the lesson-slug list for signed-in cards (SeriesProgress) only.
+ */
+export function toLearnCardSeries(
+  s: LearningSeries,
+  opts: { includeLessonSlugs?: boolean } = {},
+): LearnCardSeries {
+  return {
+    slug: s.slug,
+    name: s.name,
+    description: s.description,
+    group: s.group,
+    subgroup: s.subgroup,
+    gradient: s.gradient,
+    lessonCount: s.lessons.length,
+    totalLessons: s.totalLessons,
+    lessonSlugs: opts.includeLessonSlugs
+      ? s.lessons.map((l) => l.slug)
+      : [],
+  };
 }
 
 export function getSeriesBySlug(slug: string): LearningSeries | undefined {

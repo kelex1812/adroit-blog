@@ -56,3 +56,31 @@ export interface LearningSeries {
   /** Highest lesson number present (BA decision: NOT hardcoded "90") */
   totalLessons: number;
 }
+
+/**
+ * Slim series projection for the /learn hub card grid (guest hardening
+ * t_3dbf4826). Carries ONLY what the PathCard + filters render — the per-lesson
+ * metadata (slug/title/excerpt/date/author/readTime/tags) is never shipped to
+ * the client. `lessonSlugs` is populated for signed-in cards (SeriesProgress)
+ * and always empty for guests.
+ */
+export interface LearnCardSeries {
+  /** Series slug — link target + card label. */
+  slug: string;
+  /** Display name from series.json. */
+  name: string;
+  /** One-line description from series.json. */
+  description: string;
+  /** Optional grouping label for the Learn hub (e.g. "Salesforce Certifications"). */
+  group?: string;
+  /** Optional subgroup under a group (content metadata only, e.g. "Developer"). */
+  subgroup?: string;
+  /** Tailwind gradient classes for card headers. */
+  gradient: string;
+  /** Published lesson count — "{n} / {total} lessons" badge. */
+  lessonCount: number;
+  /** Total (incl. unpublished) lesson count from series.json. */
+  totalLessons: number;
+  /** Lesson slugs — signed-in only (SeriesProgress); empty for guests. */
+  lessonSlugs: string[];
+}
