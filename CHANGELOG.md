@@ -4,6 +4,53 @@ All notable changes to the Adroit Consulting Blog project will be documented in 
 
 ## [Unreleased]
 
+### Fix: dark-mode contrast — --ink-faint / --accent pass WCAG AA (t_8a679ec4)
+
+Closes mandatory a11y finding (t_30f64725, HIGH): `--ink-faint` failed
+contrast in BOTH themes and `--accent`/`--accent-hover` failed as text in
+dark mode. Preserves design intent — faint stays lighter than muted in
+light, dimmer than muted in dark; "subdued mono labels, just legible".
+
+- `src/app/globals.css`
+  - **Light `--ink-faint`** `#9CA3AF` → `#646d7c` (new `--color-gray-450`).
+    Passes 4.5:1 on every surface: page 4.92, card 5.22, card-soft 5.00,
+    sunken 4.75 (was 2.31–2.54).
+  - **Dark `--ink-faint`** `#64748b` → `#7f8ca3`. Passes 4.5:1 on all:
+    page 5.67, card 5.10, card-soft 5.36, sunken 5.46 (was 3.64–4.05).
+  - **Dark `--accent` (text)** `#E8354A` → `#f05066`. Passes 4.5:1:
+    page 5.54, card 4.98, card-soft 5.24, sunken 5.34 (was 4.15–4.62).
+  - **Dark `--accent-hover` (text)** `#C8102E` → `#f47385`. Passes 4.5:1:
+    page 7.0, card 6.3, card-soft 6.62, sunken 6.75 (was 2.94–3.27).
+  - **New `--accent-bg` token** for *filled* accent surfaces (chip/badge):
+    `#C8102E` in both themes. Decouples the text accent (light red needed
+    for text-on-surface contrast) from the filled-background accent (dark
+    red needed so white text on it stays ≥4.5). Light accent is unchanged
+    (`--accent-bg: var(--color-red)`).
+- `src/components/Learn/LearnFilters.tsx` — active subgroup chip now uses
+  `--accent-bg` (`bg`/`border`) so dark-mode white-on-red = 5.88:1 (was
+  4.17 on `#E8354A`).
+- `src/components/Header.tsx` — "BLOG" badge uses `--accent-bg` for the
+  same white-on-accent guarantee.
+- `src/components/Footer.tsx` — literal `white/xx` muted text on navy
+  (named in the finding) bumped to pass AA: "Stay Updated" blurb
+  `white/40`→`white/50` (5.30), email placeholder `white/35`→`white/50`,
+  bottom-bar `white/30`→`white/50` (5.30), social-icon glyphs
+  `white/40`→`white/50` (4.98 on the `white/8` tile). Footer does not use
+  the `--ink-faint` token (it hard-codes navy) — fixed in place.
+
+**Before/after ratios (WCAG 2.x, worst surface per theme):**
+- Light `--ink-faint`: 2.31:1 → 4.75:1 (sunken)
+- Dark `--ink-faint`: 3.64:1 → 5.10:1 (card)
+- Dark `--accent` text: 4.15:1 → 4.98:1 (card)
+- Dark `--accent-hover` text: 2.94:1 → 6.30:1 (card)
+- Dark filled chip white-on-accent: 4.17:1 → 5.88:1
+
+**Known issues:** none. Verified `tsc --noEmit` + `next build` clean, and
+ran the app live in both themes — computed tokens confirm the new values,
+rendered pages legible, active subgroup chip `#C8102E`/white. Audit's
+remaining HIGH findings (`--signal-done` light, Learn h1 gradient tail)
+are tracked under their own fix tasks, not this one.
+
 ### Security: profile PATCH now applies Origin check + IP rate limit (t_3b046f56)
 
 Closes audit finding #3 (t_4ce798cb, CWE-352 / CWE-799): `PATCH /api/profile`

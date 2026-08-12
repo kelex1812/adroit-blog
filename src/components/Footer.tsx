@@ -56,7 +56,7 @@ export default function Footer() {
             <h4 className="text-white text-xs font-semibold uppercase tracking-[0.06em] mb-3.5">
               Stay Updated
             </h4>
-            <p className="text-xs text-white/40 mb-2.5">
+            <p className="text-xs text-white/50 mb-2.5">
               Get new posts delivered to your inbox. No spam, just insights.
             </p>
             <div className="flex gap-1.5">
@@ -64,7 +64,7 @@ export default function Footer() {
                 type="email"
                 placeholder="your@email.com"
                 aria-label="Email for newsletter"
-                className="flex-1 px-2.5 py-2 rounded-md border border-white/15 bg-white/8 text-white text-xs font-sans outline-none focus:border-red transition-colors duration-150 placeholder:text-white/35"
+                className="flex-1 px-2.5 py-2 rounded-md border border-white/15 bg-white/8 text-white text-xs font-sans outline-none focus:border-red transition-colors duration-150 placeholder:text-white/50"
               />
               <button className="px-3.5 py-2 bg-red text-white border-none rounded-md text-xs font-semibold font-sans cursor-pointer hover:bg-red-light hover:-translate-y-px transition-all duration-150 whitespace-nowrap">
                 Subscribe
@@ -74,7 +74,7 @@ export default function Footer() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="border-t border-white/8 py-5 flex items-center justify-between text-xs text-white/30">
+        <div className="border-t border-white/8 py-5 flex items-center justify-between text-xs text-white/50">
           <span>&copy; 2026 Adroit Consulting. All rights reserved.</span>
           <div className="flex gap-3">
             <SocialIcon title="LinkedIn">in</SocialIcon>
@@ -104,7 +104,7 @@ function SocialIcon({ title, children }: { title: string; children: React.ReactN
   return (
     <span
       title={title}
-      className="w-7 h-7 rounded-full bg-white/8 flex items-center justify-center text-white/40 text-[0.65rem] select-none cursor-pointer hover:bg-white/20 hover:text-white transition-colors duration-150"
+      className="w-7 h-7 rounded-full bg-white/8 flex items-center justify-center text-white/50 text-[0.65rem] select-none cursor-pointer hover:bg-white/20 hover:text-white transition-colors duration-150"
     >
       {children}
     </span>

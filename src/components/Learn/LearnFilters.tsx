@@ -94,7 +94,7 @@ export default function LearnFilters({
             aria-pressed={subgroup === null}
             className={`font-mono text-[11px] font-bold px-[14px] py-1.5 rounded-full border cursor-pointer uppercase tracking-[0.05em] transition-all duration-150 ${
               subgroup === null
-                ? "bg-[var(--accent)] text-white border-[var(--accent)]"
+                ? "bg-[var(--accent-bg)] text-white border-[var(--accent-bg)]"
                 : "bg-[var(--surface-card-soft)] text-[var(--ink-faint)] border-dashed border-[var(--border-strong)] hover:border-[var(--accent)] hover:text-[var(--accent)]"
             }`}
           >
@@ -108,7 +108,7 @@ export default function LearnFilters({
               aria-pressed={subgroup === sg}
               className={`font-mono text-[11px] font-bold px-[14px] py-1.5 rounded-full border cursor-pointer uppercase tracking-[0.05em] transition-all duration-150 ${
                 subgroup === sg
-                  ? "bg-[var(--accent)] text-white border-[var(--accent)]"
+                  ? "bg-[var(--accent-bg)] text-white border-[var(--accent-bg)]"
                   : "bg-[var(--surface-card-soft)] text-[var(--ink-faint)] border-dashed border-[var(--border-strong)] hover:border-[var(--accent)] hover:text-[var(--accent)]"
               }`}
             >

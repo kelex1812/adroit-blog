@@ -53,7 +53,7 @@ export default function Header() {
             A
           </div>
           <span className="font-bold text-lg tracking-tight">Adroit</span>
-          <span className="bg-[var(--accent)] text-[var(--accent-on-accent)] text-[0.6rem] font-bold px-1.5 py-0.5 rounded-[3px] tracking-wider uppercase">
+          <span className="bg-[var(--accent-bg)] text-[var(--accent-on-accent)] text-[0.6rem] font-bold px-1.5 py-0.5 rounded-[3px] tracking-wider uppercase">
             BLOG
           </span>
         </Link>
