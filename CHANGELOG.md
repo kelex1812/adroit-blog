@@ -4,6 +4,15 @@ All notable changes to the Adroit Consulting Blog project will be documented in 
 
 ## [Unreleased]
 
+### Verification: quiz-tier a11y fixes (t_0e84aaef)
+
+Auto-decomposed fix task confirmed redundant — the quiz-tier a11y findings
+(4: gray-400 contrast, 6: switch target size, 7: sort labels, 8: GuestCTA
+semantics) from the deploy-gate checklist were already resolved in commit
+`e4958c7` (parent build t_5664453e) and independently re-verified here:
+source fixes present, `npx vitest run` 164/164 pass, `tsc --noEmit` clean,
+`npm run build` passes. No new code changes required.
+
 ### Security: batch exam response no longer leaks the answer key for unanswered questions (t_c0c452f5)
 
 Closes the exam-key disclosure regression (CWE-200) introduced alongside the
