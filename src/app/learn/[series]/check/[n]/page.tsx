@@ -43,7 +43,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const s = getSeriesBySlug(series);
   if (!check || !s) return {};
   return buildMetadata({
-    title: `${check.title} — Adroit Learn`,
+    title: `${check.title} | Adroit Learn`,
     description: check.description ?? `Knowledge check for ${s.name}.`,
     path: `/learn/${series}/check/${n}`,
   });

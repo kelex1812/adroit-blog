@@ -42,7 +42,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!lesson) return {};
   const s = getSeriesBySlug(series);
   return buildMetadata({
-    title: `Lesson ${lesson.lesson}: ${lesson.title} — ${s?.name ?? series} — Adroit`,
+    title: `Lesson ${lesson.lesson}: ${lesson.title} | ${s?.name ?? series} | Adroit`,
     description: lesson.excerpt,
     path: `/learn/${series}/${slug}`,
     publishedTime: lesson.date,

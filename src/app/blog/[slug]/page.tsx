@@ -31,7 +31,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!post) return {};
 
   return buildMetadata({
-    title: `${post.title} — Adroit Consulting Blog`,
+    title: `${post.title} | Adroit Consulting Blog`,
     description: post.excerpt,
     path: `/blog/${slug}`,
     publishedTime: post.date,

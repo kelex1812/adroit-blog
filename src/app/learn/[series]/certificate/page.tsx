@@ -58,7 +58,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const s = getSeriesBySlug(series);
   if (!s || getCertExam(series) === null) return {};
   return buildMetadata({
-    title: `Certificate of Completion — ${s.name} — Adroit Learn`,
+    title: `Certificate of Completion | ${s.name} | Adroit Learn`,
     description: `Printable certificate of completion for the ${s.name} course: all lessons completed and the cert prep exam passed at 72% or higher.`,
     path: `/learn/${series}/certificate`,
   });
