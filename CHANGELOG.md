@@ -42,6 +42,27 @@ and auto-activates, and no `gray-400` remains in the exam components.
 suite 164/164, `tsc --noEmit` clean, `npm run build` passes. No new code
 changes required.
 
+### Verification + fix: certificate-view a11y (t_08878885)
+
+Auto-decomposed fix task verified the certificate findings from the
+deploy-gate checklist (3: single h1; 4: gray-500 contrast; seal alt text;
+ARIA labeling; print focus) were already resolved in commit `e4958c7`
+(parent build t_5664453e). Independently re-verified in source: `Certificate.tsx`
+renders a single `h1` (`cert-title`, page chrome demoted to styled `<p>`),
+scoped CSS uses `#6B7280` (gray-500) not `#9CA3AF`, the seal exposes
+`role="img" aria-label="Adroit seal"`, and the print button is a real
+interactive control with visible text.
+
+One residual heading-hierarchy issue was fixed in the certificate page's
+**not-eligible** branch (flagged as a pre-existing low in the a11y audit
+t_93ab2fe6): the progress card's "Complete all N lessons and pass the exam"
+heading was an `h3` appearing directly under the page's `h1`, skipping `h2`.
+Demoted to `h2` so the heading sequence is `h1` → `h2` (WCAG 1.3.1 /
+2.4.6). Change is server-rendered JSX only — no logic touched.
+
+Verification: `npx vitest run` 166/166 pass (`Certificate.test.tsx` 7/7),
+`tsc --noEmit` clean, `npm run build` passes.
+
 ### Verification: quiz-tier a11y fixes (t_0e84aaef)
 
 Auto-decomposed fix task confirmed redundant — the quiz-tier a11y findings

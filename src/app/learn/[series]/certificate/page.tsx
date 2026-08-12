@@ -228,9 +228,9 @@ export default async function CertificatePage({ params }: Props) {
                 <span className="w-[3px] h-3 rounded-sm bg-gray-400" />
                 Certificate not yet available
               </div>
-              <h3 className="text-[1.2rem] font-extrabold text-navy tracking-[-0.02em] mb-2">
+              <h2 className="text-[1.2rem] font-extrabold text-navy tracking-[-0.02em] mb-2">
                 Complete all {eligibility.lessonsTotal} lessons and pass the exam with 72%+
-              </h3>
+              </h2>
               <p className="text-[13.5px] text-gray-600 leading-relaxed mb-[18px]">
                 Your certificate unlocks once both conditions are met. Here&apos;s where you
                 stand:
