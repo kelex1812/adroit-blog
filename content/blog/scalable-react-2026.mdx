@@ -1,7 +1,7 @@
 ---
 title: "Building Scalable React Apps: Architecture Patterns for 2026"
 slug: scalable-react-2026
-excerpt: "Server components, edge rendering, and modern state management — what actually works now."
+excerpt: "Server components, edge rendering, and modern state management: what actually works now."
 category: "React & Web Dev"
 categoryColor: react
 categoryGradient: "from-emerald to-emerald-dark"
@@ -89,17 +89,17 @@ Each has a cheap guard. Review every "use client" file at the same bar as an API
 
 The architecture that scales in 2026 is not exotic. Server components carry rendering and data access. Each route picks static, dynamic, or ISR on its own terms, with caching made explicit. State lives in the URL and the data layer first, and stores serve the narrow slice of genuinely shared client state. The compiler handles memoization, and the bundle has a budget. None of this is new. The platform finally defaults to it, and the frameworks stopped pretending otherwise.
 
-[^1]: react@19.2.8, next@16.3.0, zustand@5.0.14 (npm registry version checks, August 7, 2026) — [registry.npmjs.org](https://registry.npmjs.org/react/latest)
-[^2]: Next.js 16.3 — [nextjs.org](https://nextjs.org/blog/next-16-3)
-[^3]: Server and Client Components — Next.js Docs — [nextjs.org](https://nextjs.org/docs/app/getting-started/server-and-client-components)
-[^4]: Page Weight — The 2025 Web Almanac, HTTP Archive — [almanac.httparchive.org](https://almanac.httparchive.org/en/2025/page-weight)
-[^5]: Caching — Next.js Docs — [nextjs.org](https://nextjs.org/docs/app/getting-started/caching)
-[^6]: SSG vs SSR: Which Approach Will Dominate Web Development in 2026? — BCMS — [thebcms.com](https://www.thebcms.com/blog/static-site-generation-vs-server-side-rendering/)
-[^7]: use — React Reference — [react.dev](https://react.dev/reference/react/use)
-[^8]: React Server Components in Production: Benefits, Pitfalls and Best Practices for 2026 — Growin — [growin.com](https://www.growin.com/blog/react-server-components/)
-[^9]: React 19 use() Hook: Data Fetching Patterns That Actually Work — SitePoint — [sitepoint.com](https://www.sitepoint.com/react-19-use-hook-data-fetching-patterns-that-actually-work/)
-[^10]: React State Management in 2025: What You Actually Need — Developer Way — [developerway.com](https://www.developerway.com/posts/react-state-management-2025)
-[^11]: React State Management 2026: Zustand vs Redux vs Jotai — nextfuture.io — [nextfuture.io.vn](https://nextfuture.io.vn/blog/ultimate-guide-react-state-management-2026)
-[^12]: Using Zustand in React Server Components — pmndrs/zustand Discussions — [github.com](https://github.com/pmndrs/zustand/discussions/2200)
-[^13]: nextjs.org — [nextjs.org](https://nextjs.org/blog)
-[^14]: Meta's React Compiler 1.0 Brings Automatic Memoization to Production — InfoQ — [infoq.com](https://www.infoq.com/news/2025/12/react-compiler-meta/)
+[^1]: react@19.2.8, next@16.3.0, zustand@5.0.14 (npm registry version checks, August 7, 2026). [registry.npmjs.org](https://registry.npmjs.org/react/latest)
+[^2]: Next.js 16.3. [nextjs.org](https://nextjs.org/blog/next-16-3)
+[^3]: Server and Client Components: Next.js Docs. [nextjs.org](https://nextjs.org/docs/app/getting-started/server-and-client-components)
+[^4]: Page Weight: The 2025 Web Almanac, HTTP Archive. [almanac.httparchive.org](https://almanac.httparchive.org/en/2025/page-weight)
+[^5]: Caching: Next.js Docs. [nextjs.org](https://nextjs.org/docs/app/getting-started/caching)
+[^6]: SSG vs SSR: Which Approach Will Dominate Web Development in 2026?: BCMS. [thebcms.com](https://www.thebcms.com/blog/static-site-generation-vs-server-side-rendering/)
+[^7]: use: React Reference. [react.dev](https://react.dev/reference/react/use)
+[^8]: React Server Components in Production: Benefits, Pitfalls and Best Practices for 2026: Growin. [growin.com](https://www.growin.com/blog/react-server-components/)
+[^9]: React 19 use() Hook: Data Fetching Patterns That Actually Work: SitePoint. [sitepoint.com](https://www.sitepoint.com/react-19-use-hook-data-fetching-patterns-that-actually-work/)
+[^10]: React State Management in 2025: What You Actually Need: Developer Way. [developerway.com](https://www.developerway.com/posts/react-state-management-2025)
+[^11]: React State Management 2026: Zustand vs Redux vs Jotai: nextfuture.io. [nextfuture.io.vn](https://nextfuture.io.vn/blog/ultimate-guide-react-state-management-2026)
+[^12]: Using Zustand in React Server Components: pmndrs/zustand Discussions. [github.com](https://github.com/pmndrs/zustand/discussions/2200)
+[^13]: nextjs.org. [nextjs.org](https://nextjs.org/blog)
+[^14]: Meta's React Compiler 1.0 Brings Automatic Memoization to Production: InfoQ. [infoq.com](https://www.infoq.com/news/2025/12/react-compiler-meta/)

@@ -19,25 +19,25 @@ bannerImage: /banners/category-sf.png
 **Date:** July 30, 2026  
 **Reading time:** 6 minutes
 
-The Summer '26 release started rolling out to production orgs on June 15, 2026. If your sandbox preview hasn't arrived yet—check your instance on [Salesforce Trust](https://status.salesforce.com/products/all/maintenances)—you've still got time to test. But the clock is ticking.
+The Summer '26 release started rolling out to production orgs on June 15, 2026. If your sandbox preview hasn't arrived yet, check your instance on [Salesforce Trust](https://status.salesforce.com/products/all/maintenances). You've still got time to test, but the clock is ticking.
 
 What follows isn't a laundry list of every new feature (there are hundreds). These are the three things that actually matter for teams managing multiple orgs, balancing client work, and trying to keep automation healthy at scale.
 
 ---
 
-## 1. SOAP `login()` Is Retiring — Start Your OAuth Migration Now
+## 1. SOAP `login()` Is Retiring: Start Your OAuth Migration Now
 
-Here's the one that's easy to skip until it breaks: **SOAP `login()` authentication is being retired.** Any integration that authenticates with a username and password over the SOAP API needs to move to OAuth 2.0 — specifically, external client apps with JWT bearer tokens or the OAuth 2.0 client credentials flow.
+Here's the one that's easy to skip until it breaks: **SOAP `login()` authentication is being retired.** Any integration that authenticates with a username and password over the SOAP API needs to move to OAuth 2.0, specifically external client apps with JWT bearer tokens or the OAuth 2.0 client credentials flow.
 
 [^1]
 
-A new **Any API Auth** user permission lets you control who can authenticate via SOAP `login()`, and it's enforced by default in newly created orgs. For existing orgs, you'll want to audit all connected apps and third-party integrations—especially legacy middleware, ETL tools, or homegrown scripts that authenticate the old way.
+A new **Any API Auth** user permission lets you control who can authenticate via SOAP `login()`, and it's enforced by default in newly created orgs. For existing orgs, you'll want to audit all connected apps and third-party integrations, especially legacy middleware, ETL tools, or homegrown scripts that authenticate the old way.
 
 **What to do this week:** Check your list of authenticated integrations. If any use SOAP login with stored credentials, document the migration path. The retirement timeline hasn't locked in a hard cutoff date yet, but the Any API Auth permission going GA in Summer '26 is the signal to move.
 
 ---
 
-## 2. Flow Builder Just Got a Lot Stronger — And Your Old Flows Need an Audit
+## 2. Flow Builder Just Got a Lot Stronger: Your Old Flows Need an Audit
 
 Summer '26 shipped a half-dozen Flow enhancements that directly replace patterns your team probably built years ago. The argument for auditing your automation portfolio just got stronger.
 
@@ -49,7 +49,7 @@ Decision elements now support native date operators: "Is Today", "Is Tomorrow", 
 
 ### Data Tables Finally Link to Records
 
-The Data Table screen component can now show Lookup field record names as clickable links. This replaces the old hack of building custom URL formulas and navigation elements inside a Screen Flow. It was originally in the Spring '26 preview before being pulled late—Summer '26 ships it for real.
+The Data Table screen component can now show Lookup field record names as clickable links. This replaces the old hack of building custom URL formulas and navigation elements inside a Screen Flow. It was originally in the Spring '26 preview before being pulled late. Summer '26 ships it for real.
 
 [^2]
 
@@ -61,7 +61,7 @@ If you're still looping through collections to map fields and then doing a DML o
 
 ### Collapse Fault Paths, Update Flows With Natural Language
 
-Two quality-of-life wins: you can now collapse Fault Paths visually on the canvas (less clutter when debugging happy-path logic), and Agentforce can update Screen Flows with natural language prompts—same capability that previously existed only for record-triggered and scheduled flows.
+Two quality-of-life wins: you can now collapse Fault Paths visually on the canvas (less clutter when debugging happy-path logic), and Agentforce can update Screen Flows with natural language prompts, the same capability that previously existed only for record-triggered and scheduled flows.
 
 [^2]
 
@@ -71,7 +71,7 @@ Radio Button Group is a new component that replaces ugly browser-native radio bu
 
 [^2]
 
-**The actionable takeaway:** If your org has flows that predate the Transform and Collection Filter elements, schedule a Summer '26 audit. Salesforce Ben's Tim Combridge published a guide just last week on exactly which hacks to replace with native features. The performance gains—especially from Transform over Loop patterns—are real enough that they pay back the audit time.
+**The actionable takeaway:** If your org has flows that predate the Transform and Collection Filter elements, schedule a Summer '26 audit. Salesforce Ben's Tim Combridge published a guide just last week on exactly which hacks to replace with native features. The performance gains, especially from Transform over Loop patterns, are real enough that they pay back the audit time.
 
 ---
 
@@ -81,7 +81,7 @@ Legacy agents can now be upgraded to the new Agentforce Builder with a few click
 
 [^4]
 
-After migration, run the built-in optimization tool—it reviews natural language instructions and adds deterministic controls to boost reliability. For teams that have been experimenting with agents but haven't committed to the new builder yet, this removes the rebuild-cost objection.
+After migration, run the built-in optimization tool. It reviews natural language instructions and adds deterministic controls to boost reliability. For teams that have been experimenting with agents but haven't committed to the new builder yet, this removes the rebuild-cost objection.
 
 ### Multi-Agent Orchestration Is Here (Beta)
 
@@ -91,11 +91,11 @@ Setup goes through Agent Builder: Explorer panel → `+` → "Connect Agent as S
 
 [^4]
 
-For agencies building multi-tenant or white-labeled Salesforce solutions, this is worth a proof-of-concept in sandbox now. The pattern—one orchestration agent + specialized subagents—maps directly onto the split between a platform hub and per-client configurations.
+For agencies building multi-tenant or white-labeled Salesforce solutions, this is worth a proof-of-concept in sandbox now. The pattern, one orchestration agent plus specialized subagents, maps directly onto the split between a platform hub and per-client configurations.
 
 ### Setup With Agentforce Is Now GA
 
-Setup with Agentforce, the AI-native setup assistant that answers questions and performs configuration tasks, went GA in Summer '26. All setup actions remain non-billable for now (no Agentforce credit consumption), though Data 360 credits are consumed for the Help and Navigation action—Salesforce plans to move this off Data 360 credits around Dreamforce 2026.
+Setup with Agentforce, the AI-native setup assistant that answers questions and performs configuration tasks, went GA in Summer '26. All setup actions remain non-billable for now (no Agentforce credit consumption), though Data 360 credits are consumed for the Help and Navigation action. Salesforce plans to move this off Data 360 credits around Dreamforce 2026.
 
 [^4]
 
@@ -105,16 +105,16 @@ Setup with Agentforce, the AI-native setup assistant that answers questions and 
 
 We manage client orgs across multiple instances, which means Summer '26 hits different sandboxes on different dates. Our approach:
 
-1. **Instance check first** — confirm the rollout date on Salesforce Trust, not the calendar
-2. **SOAP audit** — flag every integration that uses basic auth. If it doesn't support OAuth 2.0, that's a client conversation
-3. **Flow regression** — run the Transform Element benchmark on at least one high-volume automation to validate performance claims in our clients' data shapes
-4. **Agent upgrade path** — for orgs already piloting agents, run the legacy upgrade and optimization tool; for orgs that aren't, document the Multi-Agent Orchestration beta as a Q3 2026 opportunity
+1. **Instance check first**: confirm the rollout date on Salesforce Trust, not the calendar
+2. **SOAP audit**: flag every integration that uses basic auth. If it doesn't support OAuth 2.0, that's a client conversation
+3. **Flow regression**: run the Transform Element benchmark on at least one high-volume automation to validate performance claims in our clients' data shapes
+4. **Agent upgrade path**: for orgs already piloting agents, run the legacy upgrade and optimization tool; for orgs that aren't, document the Multi-Agent Orchestration beta as a Q3 2026 opportunity
 
 This isn't a release where you can skip testing. The SOAP retirement, Flow performance changes, and Agentforce builder migration all have teeth. Test them in sandbox before August.
 
 ---
 
-[^1]: developer.salesforce.com — [developer.salesforce.com](https://developer.salesforce.com/blogs/2026/06/the-salesforce-developers-guide-to-the-summer-26-release)
-[^2]: salesforceben.com — [salesforceben.com](https://www.salesforceben.com/10-new-salesforce-flow-features-in-summer-26/)
-[^3]: salesforceben.com — [salesforceben.com](https://www.salesforceben.com/outdated-salesforce-flow-hacks-to-replace-with-native-features/)
-[^4]: admin.salesforce.com — [admin.salesforce.com](https://admin.salesforce.com/blog/2026/jens-top-summer-26-release-features-for-admins)
+[^1]: developer.salesforce.com. [developer.salesforce.com](https://developer.salesforce.com/blogs/2026/06/the-salesforce-developers-guide-to-the-summer-26-release)
+[^2]: salesforceben.com. [salesforceben.com](https://www.salesforceben.com/10-new-salesforce-flow-features-in-summer-26/)
+[^3]: salesforceben.com. [salesforceben.com](https://www.salesforceben.com/outdated-salesforce-flow-hacks-to-replace-with-native-features/)
+[^4]: admin.salesforce.com. [admin.salesforce.com](https://admin.salesforce.com/blog/2026/jens-top-summer-26-release-features-for-admins)

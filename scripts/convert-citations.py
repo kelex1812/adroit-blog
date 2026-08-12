@@ -87,11 +87,13 @@ def convert(path, dry_run):
 
     new_prose = combined.sub(repl, prose)
 
-    # Build footnote definitions in number order
+    # Build footnote definitions in number order (period title/link separator
+    # and colon subtitle separator — NO em-dashes, per Chris's rule)
     defs = []
     for u in sorted(num, key=num.get):
         title = title_map.get(u) or domain_of(u)
-        defs.append(f"[^{num[u]}]: {title} — [{domain_of(u)}]({u})")
+        title = re.sub(r"\s*—\s*", ": ", title)
+        defs.append(f"[^{num[u]}]: {title}. [{domain_of(u)}]({u})")
 
     # Handle listed-but-never-cited context sources: keep as unnumbered
     # "Further reading" bullets (remark-gfm drops unused footnote defs).
