@@ -15,11 +15,14 @@ import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { notifyAuthChanged } from "@/lib/hooks/useAuth";
+import { sanitizeRedirectPath } from "@/lib/redirect";
 
 function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const next = searchParams.get("next") || "/blog";
+  // Only allow internal relative paths — reject external / protocol-relative
+  // `next` values to prevent open-redirect (CWE-601).
+  const next = sanitizeRedirectPath(searchParams.get("next"));
 
   const [mode, setMode] = useState<"signin" | "signup">("signin");
   const [email, setEmail] = useState("");

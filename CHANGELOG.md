@@ -4,6 +4,26 @@ All notable changes to the Adroit Consulting Blog project will be documented in 
 
 ## [Unreleased]
 
+### Security: validate login `next` param — CWE-601 open redirect (t_6c96683f)
+
+Closes Val-El's audit finding (t_d8a9dae6 — guest gating audit; the only open
+item, LOW/CWE-601).
+
+- `src/app/login/page.tsx` — `next` is now sanitized through
+  `sanitizeRedirectPath()` before `router.push(next)`. Previously
+  `/login?next=https://evil.com` would client-side-redirect the browser to the
+  external origin after sign-in (phishing / credential-harvesting).
+- `src/lib/redirect.ts` (new) — pure `sanitizeRedirectPath(path, fallback)`
+  helper. Only single-leading-slash internal paths pass; external schemes
+  (`https://…`), protocol-relative (`//host`), backslash escapes (`/\host`),
+  multi-slash (`///host`), `javascript:`, and empty/null values all fall back
+  to `/blog`.
+
+**Tests**: `src/lib/redirect.test.ts` +8 covering every Val-El-specified bypass
+(`https://evil.com`, `//evil.com`, `/\evil.com` → `/blog`) and the legit
+pass-through (`/learn/omni-studio-cert`). Full suite 180 pass; `tsc --noEmit`
+clean; eslint clean.
+
 ### Security: harden profile API rate limiting (t_947d67fc)
 
 Closes Val-El's audit findings (t_ea087e3e, OWASP A04 — rate limiting gaps).
