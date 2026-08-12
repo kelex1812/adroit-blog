@@ -4,6 +4,21 @@ All notable changes to the Adroit Consulting Blog project will be documented in 
 
 ## [Unreleased]
 
+### Verification: exam-flow a11y fixes (t_77103142)
+
+Auto-decomposed fix task confirmed redundant — the exam-flow a11y findings
+(1: results heading + focus, 2: timer live-region announcements, 4: gray-400
+contrast in ExamWidget/ExamLocked, 5: radiogroup arrow-key roving) from the
+deploy-gate checklist were already resolved in commit `e4958c7` (parent build
+t_5664453e) and independently re-verified here: `ExamWidget.tsx` carries the
+sr-only "Exam results" h2 with focus moved on submit AND auto-submit, the
+`role="status"` polite region announces 10/5/1-min thresholds + auto-submit,
+countdown uses `role="timer"` with `aria-live="off"`, arrow-key roving wraps
+and auto-activates, and no `gray-400` remains in the exam components.
+`npx vitest run src/components/Progress/ExamWidget.test.tsx` 5/5 pass, full
+suite 164/164, `tsc --noEmit` clean, `npm run build` passes. No new code
+changes required.
+
 ### Verification: quiz-tier a11y fixes (t_0e84aaef)
 
 Auto-decomposed fix task confirmed redundant — the quiz-tier a11y findings
