@@ -160,8 +160,12 @@ export default async function BlogPostPage({ params }: Props) {
 
 /**
  * MDX Article Renderer — uses next-mdx-remote/rsc for server-side MDX rendering.
- * remark-gfm autolinks bare http(s) URLs (GFM autolink literals), so
- * `[Source: https://...]` citations render as clickable links.
+ * Editorial citations use GFM endnotes: `[^n]` inline markers (rendered as
+ * superscripts) map to an auto-generated numbered source list at the end of
+ * the article, labelled "Sources". remark-gfm renders the superscript +
+ * numbered-section natively (no raw HTML, no extra plugins); the footnote
+ * section's sr-only <h2> label defaults to "Footnotes", so a rehype plugin
+ * renames it to "Sources" (the CSS reveals it as the visible heading).
  */
 async function MDXArticle({ mdx }: { mdx: string }) {
   const [{ MDXRemote }, remarkGfm, Figure] = await Promise.all([
@@ -169,11 +173,41 @@ async function MDXArticle({ mdx }: { mdx: string }) {
     import("remark-gfm"),
     import("@/components/BlogPost/Figure"),
   ]);
+
+  // Rename the auto-generated footnote section heading from "Footnotes" to
+  // "Sources" (remark-gfm's footnoteLabel option is dropped in v4; this is
+  // the reliable way to set the visible label). Walk the whole hast tree —
+  // the <h2 id="footnote-label"> sits inside the footnote <section>.
+  function renameFootnoteHeading() {
+    return (tree: any) => {
+      const walk = (node: any) => {
+        if (!node || typeof node !== "object") return;
+        if (
+          node.type === "element" &&
+          node.tagName === "h2" &&
+          node.properties?.id === "footnote-label"
+        ) {
+          node.children = [{ type: "text", value: "Sources" }];
+        }
+        if (Array.isArray(node.children)) {
+          node.children.forEach(walk);
+        }
+      };
+      walk(tree);
+      return tree;
+    };
+  }
+
   return (
     <MDXRemote
       source={mdx}
       components={{ img: Figure.default }}
-      options={{ mdxOptions: { remarkPlugins: [remarkGfm.default] } }}
+      options={{
+        mdxOptions: {
+          remarkPlugins: [remarkGfm.default],
+          rehypePlugins: [renameFootnoteHeading],
+        },
+      }}
     />
   );
 }

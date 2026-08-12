@@ -29,7 +29,7 @@ What follows isn't a laundry list of every new feature (there are hundreds). The
 
 Here's the one that's easy to skip until it breaks: **SOAP `login()` authentication is being retired.** Any integration that authenticates with a username and password over the SOAP API needs to move to OAuth 2.0 — specifically, external client apps with JWT bearer tokens or the OAuth 2.0 client credentials flow.
 
-[Source: Salesforce Developers Blog — "The Salesforce Developer's Guide to the Summer '26 Release", June 8, 2026](https://developer.salesforce.com/blogs/2026/06/the-salesforce-developers-guide-to-the-summer-26-release)
+[^1]
 
 A new **Any API Auth** user permission lets you control who can authenticate via SOAP `login()`, and it's enforced by default in newly created orgs. For existing orgs, you'll want to audit all connected apps and third-party integrations—especially legacy middleware, ETL tools, or homegrown scripts that authenticate the old way.
 
@@ -45,31 +45,31 @@ Summer '26 shipped a half-dozen Flow enhancements that directly replace patterns
 
 Decision elements now support native date operators: "Is Today", "Is Tomorrow", "Is On", and even anniversary comparisons. No more DATEVALUE(CreatedDate) gymnastics for birthday reminders or renewal triggers. One note: this doesn't extend to DateTime fields yet.
 
-[Source: Salesforce Ben — "10 New Salesforce Flow Features in Summer '26", April 29, 2026](https://www.salesforceben.com/10-new-salesforce-flow-features-in-summer-26/)
+[^2]
 
 ### Data Tables Finally Link to Records
 
 The Data Table screen component can now show Lookup field record names as clickable links. This replaces the old hack of building custom URL formulas and navigation elements inside a Screen Flow. It was originally in the Spring '26 preview before being pulled late—Summer '26 ships it for real.
 
-[Source: Salesforce Ben — same article](https://www.salesforceben.com/10-new-salesforce-flow-features-in-summer-26/)
+[^2]
 
 ### Transform Element Makes Loops 10× Faster
 
 If you're still looping through collections to map fields and then doing a DML outside the loop, the Transform Element is your upgrade. According to Salesforce (and confirmed by Trailhead benchmarks), Transform performs up to 10× faster than the Loop + Assignment + DML pattern.
 
-[Source: Salesforce Ben — "5 Outdated Salesforce Flow Hacks to Replace With Native Features", July 24, 2026](https://www.salesforceben.com/outdated-salesforce-flow-hacks-to-replace-with-native-features/)
+[^3]
 
 ### Collapse Fault Paths, Update Flows With Natural Language
 
 Two quality-of-life wins: you can now collapse Fault Paths visually on the canvas (less clutter when debugging happy-path logic), and Agentforce can update Screen Flows with natural language prompts—same capability that previously existed only for record-triggered and scheduled flows.
 
-[Source: Salesforce Ben — same article](https://www.salesforceben.com/10-new-salesforce-flow-features-in-summer-26/)
+[^2]
 
 ### Radio Button Groups and Redesigned Validation Panel
 
 Radio Button Group is a new component that replaces ugly browser-native radio buttons with a compact visual picker (think Visual Picker for radio buttons). The Validation Panel also got a redesign in Summer '26, surfacing errors and warnings more clearly on the canvas.
 
-[Source: Salesforce Ben — same article](https://www.salesforceben.com/10-new-salesforce-flow-features-in-summer-26/)
+[^2]
 
 **The actionable takeaway:** If your org has flows that predate the Transform and Collection Filter elements, schedule a Summer '26 audit. Salesforce Ben's Tim Combridge published a guide just last week on exactly which hacks to replace with native features. The performance gains—especially from Transform over Loop patterns—are real enough that they pay back the audit time.
 
@@ -79,7 +79,7 @@ Radio Button Group is a new component that replaces ugly browser-native radio bu
 
 Legacy agents can now be upgraded to the new Agentforce Builder with a few clicks. The migration preserves subagents, actions, system messages, and connections, automatically converting them to Agent Script. Your original agent stays untouched in the legacy builder as a fallback.
 
-[Source: Salesforce Admins Blog — "Jen's Top Summer '26 Release Features For Admins", June 8, 2026](https://admin.salesforce.com/blog/2026/jens-top-summer-26-release-features-for-admins)
+[^4]
 
 After migration, run the built-in optimization tool—it reviews natural language instructions and adds deterministic controls to boost reliability. For teams that have been experimenting with agents but haven't committed to the new builder yet, this removes the rebuild-cost objection.
 
@@ -89,7 +89,7 @@ The bigger story under this umbrella: Multi-Agent Orchestration, now in beta. Yo
 
 Setup goes through Agent Builder: Explorer panel → `+` → "Connect Agent as Subagent (Beta)". Orchestrator agents using Agent Router route via `@`-referenced subagents defined in your Instructions.
 
-[Source: Salesforce Admins Blog — same article](https://admin.salesforce.com/blog/2026/jens-top-summer-26-release-features-for-admins)
+[^4]
 
 For agencies building multi-tenant or white-labeled Salesforce solutions, this is worth a proof-of-concept in sandbox now. The pattern—one orchestration agent + specialized subagents—maps directly onto the split between a platform hub and per-client configurations.
 
@@ -97,7 +97,7 @@ For agencies building multi-tenant or white-labeled Salesforce solutions, this i
 
 Setup with Agentforce, the AI-native setup assistant that answers questions and performs configuration tasks, went GA in Summer '26. All setup actions remain non-billable for now (no Agentforce credit consumption), though Data 360 credits are consumed for the Help and Navigation action—Salesforce plans to move this off Data 360 credits around Dreamforce 2026.
 
-[Source: Salesforce Admins Blog — same article](https://admin.salesforce.com/blog/2026/jens-top-summer-26-release-features-for-admins)
+[^4]
 
 ---
 
@@ -114,11 +114,7 @@ This isn't a release where you can skip testing. The SOAP retirement, Flow perfo
 
 ---
 
-## Sources
-
-1. [Salesforce Developers Blog — "The Salesforce Developer's Guide to the Summer '26 Release"](https://developer.salesforce.com/blogs/2026/06/the-salesforce-developers-guide-to-the-summer-26-release) (June 8, 2026)
-2. [Salesforce Ben — "10 New Salesforce Flow Features in Summer '26"](https://www.salesforceben.com/10-new-salesforce-flow-features-in-summer-26/) (April 29, 2026)
-3. [Salesforce Ben — "5 Outdated Salesforce Flow Hacks to Replace With Native Features"](https://www.salesforceben.com/outdated-salesforce-flow-hacks-to-replace-with-native-features/) (July 24, 2026)
-4. [Salesforce Admins Blog — "Jen's Top Summer '26 Release Features For Admins"](https://admin.salesforce.com/blog/2026/jens-top-summer-26-release-features-for-admins) (June 8, 2026)
-5. [Salesforce News — "Salesforce Summer 2026 Product Release Announcement"](https://www.salesforce.com/news/stories/summer-2026-product-release-announcement/) (June 15, 2026)
-6. [Fionta — "Salesforce Summer 2026 Release Updates"](https://fionta.com/insights/salesforce-summer-2026-release-updates/) (May 2026)
+[^1]: developer.salesforce.com — [developer.salesforce.com](https://developer.salesforce.com/blogs/2026/06/the-salesforce-developers-guide-to-the-summer-26-release)
+[^2]: salesforceben.com — [salesforceben.com](https://www.salesforceben.com/10-new-salesforce-flow-features-in-summer-26/)
+[^3]: salesforceben.com — [salesforceben.com](https://www.salesforceben.com/outdated-salesforce-flow-hacks-to-replace-with-native-features/)
+[^4]: admin.salesforce.com — [admin.salesforce.com](https://admin.salesforce.com/blog/2026/jens-top-summer-26-release-features-for-admins)

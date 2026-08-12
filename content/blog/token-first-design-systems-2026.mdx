@@ -34,7 +34,7 @@ The DTCG spec directly addresses the problems that kept tokens from traveling:
 - **Rich token relationships** — inheritance, aliases, and composite values are modeled natively rather than as team conventions.
 - **Cross-platform code generation** — the standard output targets iOS, Android, web CSS, and Flutter from one source.
 
-[Source: Digital Applied — Design Systems in 2026](https://www.digitalapplied.com/blog/design-systems-2026-scale-ui-without-chaos-methodology)
+[^1]
 
 The honest read on the 84% number: it measures teams that *report using tokens in some form*, not teams running a clean, governed, three-layer system end to end. Plenty of those teams have tokens in Figma and a different set of variables in code. The opportunity in 2026 is not to start using tokens — most teams already do — it is to make the token graph the single source of truth so the design and code sides cannot drift.
 
@@ -83,7 +83,7 @@ Component tokens are owned by component or product engineers. When a designer wa
 
 **The alias chain reads:** `blue-500 → action-color → button-bg-primary`. Every arrow is a relationship the DTCG spec models natively, not a documentation convention.
 
-[Source: Contentful — Design tokens explained](https://www.contentful.com/blog/design-token-system/)
+[^2]
 
 ## The Figma-to-Code Pipeline
 
@@ -107,13 +107,13 @@ The [Tokens Studio](https://tokens.studio/) plugin serializes Figma variables to
 
 CI/CD ships the transformed tokens to every platform automatically on every change. A designer re-points a semantic token in Figma, the export regenerates, Style Dictionary recompiles, and the platforms pick up the new values on the next build. No engineer hand-copies hex codes. No designer files a ticket asking why the button is still the old blue.
 
-[Source: DTCG v2025.10 spec via Digital Applied](https://www.digitalapplied.com/blog/design-systems-2026-scale-ui-without-chaos-methodology)
+[^1]
 
 ### The Payoff
 
 Grammarly ran an internal survey and found that their design system saved design and development teams 25% of their work week. Freshworks credited its design system with a 28% reduction in customer service costs and improved time-to-resolution on support tickets. SAP collects over a million data points from users via in-app surveys to feed back into the system, making it a board-level KPI tracked via OKRs.
 
-[Source: Figma Blog — The new business case for design systems](https://www.figma.com/blog/the-new-business-case-for-design-systems/)
+[^3]
 
 ## Build vs. Adopt: The Middle Path
 
@@ -123,7 +123,7 @@ The build-versus-adopt question has historically been framed as a binary: either
 
 [shadcn/ui](https://ui.shadcn.com/) (115,000+ GitHub stars as of March 2026, named the #1 most popular JavaScript project of 2024 by the [JavaScript Rising Stars report](https://risingstars.js.org/)) popularized a different model: components you copy into your codebase rather than install as a dependency. There is no npm package to version-manage — you run `npx shadcn@latest add button`, a `button.tsx` file lands in your `/components/ui` folder, and from that point it is yours. Edit it, delete lines, add variants. No workarounds, no fighting library defaults.
 
-[Source: ShadcnDeck — The Rise of shadcn/ui](https://www.shadcndeck.com/blog/rise-of-shadcn-ui-2026)
+[^4]
 
 ### Why This Matters for Token Systems
 
@@ -151,7 +151,7 @@ The result: you get production-ready, accessible components without building fro
 
 For most teams building one to five products, the copy-in model is the right default. Build from scratch only if your interface *is* the product (like Linear, whose design system enables its focus on craft and quality). Adopt a managed library only if speed to prototype is your sole constraint and you accept the theming ceiling.
 
-[Source: Vercel — shadcn vs Radix UI](https://vercel.com/i/shadcn-vs-radix)
+[^5]
 
 ## Governance: Keeping the System Alive Past Year One
 
@@ -178,9 +178,9 @@ WCAG 2.2 became the required standard for the European Accessibility Act as of J
 - **Touch targets:** WCAG 2.2 AA sets a 24×24 CSS pixel minimum. Apple recommends 44×44 points. Google Material Design recommends 48×48 dp. Bake the larger, friendlier target into your button component so no product team has to remember the rule.
 - **Focus indicators:** Encode focus ring width, offset, and color in component tokens — never rely on browser defaults, which fail contrast requirements.
 
-[Source: WebAIM Million 2025](https://webaim.org/projects/million/)
+[^6]
 
-[Source: Digital Applied — Design Systems in 2026](https://www.digitalapplied.com/blog/design-systems-2026-scale-ui-without-chaos-methodology)
+[^1]
 
 ### Automation and Regression
 
@@ -197,9 +197,9 @@ The business case for design systems has matured past "it reduces rework." The F
 3. **Internal velocity** — Grammarly's 25% work-week recovery. IBM research indicates teams with mature systems ship features 2.6× faster than teams without.
 4. **Revenue impact** — Forrester Research found companies investing in design systems see an average 8.2% improvement in conversion rates within 18 months. Case studies show 300–600% annual ROI with payback periods of 2–4 months once adoption crosses ~60%.
 
-[Source: Figma — The new business case for design systems](https://www.figma.com/blog/the-new-business-case-for-design-systems/)
+[^3]
 
-[Source: Saasfactor — Reducing Design & Tech Debt](https://www.saasfactor.co/blogs/reducing-design-tech-debt-the-real-roi-of-a-design-system)
+[^7]
 
 ## Getting Started: A 90-Day Playbook
 
@@ -232,19 +232,18 @@ The forward signal is in the 10% number. Only about one in ten design system tea
 
 Token-first systems are inherently AI-compatible because they separate structure from presentation. An AI tool reading your token graph can answer: what is the primary action color? What spacing scale does this card use? Generate a new button variant that respects the system. This is why v0.dev, Cursor, and Claude Code all generate shadcn/ui by default — the token-driven CSS variable architecture means the generated output is guaranteed to be on-brand.
 
-[Source: Figma — Design systems and AI: Why MCP servers are the unlock](https://www.figma.com/blog/design-systems-ai-mcp/)
+[^8]
 
 The teams that pair a well-layered token graph with AI-assisted documentation, accessibility annotation, and story generation will compound faster than teams still treating the design system as a static asset. The infrastructure is finally standardized. The differentiator has moved up the stack to method and culture.
 
-## Sources
-
+[^1]: Design Systems in 2026: Scale UI Without the Chaos — [digitalapplied.com](https://www.digitalapplied.com/blog/design-systems-2026-scale-ui-without-chaos-methodology)
+[^2]: Design tokens explained (Contentful) — [contentful.com](https://www.contentful.com/blog/design-token-system/)
+[^3]: The new business case for design systems (Figma/DXC) — [figma.com](https://www.figma.com/blog/the-new-business-case-for-design-systems/)
+[^4]: The Rise of shadcn/ui (2026) — [shadcndeck.com](https://www.shadcndeck.com/blog/rise-of-shadcn-ui-2026)
+[^5]: shadcn/ui vs Radix UI — [vercel.com](https://vercel.com/i/shadcn-vs-radix)
+[^6]: WebAIM Million 2025 — [webaim.org](https://webaim.org/projects/million/)
+[^7]: Reducing Design & Tech Debt: The Real ROI of a Design System — [saasfactor.co](https://www.saasfactor.co/blogs/reducing-design-tech-debt-the-real-roi-of-a-design-system)
+[^8]: Design systems and AI: Why MCP servers are the unlock (Figma) — [figma.com](https://www.figma.com/blog/design-systems-ai-mcp/)
+**Further reading:**
+- DTCG Design Tokens Format Module v2025.10 — [w3.org](https://www.w3.org/community/design-tokens/)
 - zeroheight Design Systems Report 2025 — [zeroheight.com](https://zeroheight.com/how-we-document/)
-- Design Systems in 2026: Scale UI Without the Chaos — [digitalapplied.com](https://www.digitalapplied.com/blog/design-systems-2026-scale-ui-without-chaos-methodology)
-- The new business case for design systems (Figma/DXC) — [figma.com](https://www.figma.com/blog/the-new-business-case-for-design-systems/)
-- The Rise of shadcn/ui (2026) — [shadcndeck.com](https://www.shadcndeck.com/blog/rise-of-shadcn-ui-2026)
-- shadcn/ui vs Radix UI — [vercel.com](https://vercel.com/i/shadcn-vs-radix)
-- Reducing Design & Tech Debt: The Real ROI of a Design System — [saasfactor.co](https://www.saasfactor.co/blogs/reducing-design-tech-debt-the-real-roi-of-a-design-system)
-- Design tokens explained (Contentful) — [contentful.com](https://www.contentful.com/blog/design-token-system/)
-- Design systems and AI: Why MCP servers are the unlock (Figma) — [figma.com](https://www.figma.com/blog/design-systems-ai-mcp/)
-- WebAIM Million 2025 — [webaim.org](https://webaim.org/projects/million/)
-- DTCG Design Tokens Format Module v2025.10 — [w3c.github.io](https://www.w3.org/community/design-tokens/)

@@ -21,7 +21,7 @@ Next.js 16.3, shipping stable on August 3, 2026, is the framework's biggest chan
 
 And it will become the default in a future major version. This is not an optional feature you can ignore. It is the direction of the framework.
 
-[Source: nextjs.org](https://nextjs.org/blog/next-16-3)
+[^1]
 
 ## The Problem: Server-Driven Navigations Have a Gap
 
@@ -36,7 +36,7 @@ Steps 2 and 3 are the gap. On a fast connection with a warm server, that is mayb
 
 The previous fix was `loading.tsx`, a static shell per route segment. It worked when you remembered to write one, but it was opt-in and fragile. A refactor that moved a Suspense boundary or added a `cookies()` call to a shared header could silently de-opt a route from instant to blocking, and nobody would notice until a user complained.
 
-[Source: nextjs.org](https://nextjs.org/blog/next-16-3-instant-navigations)
+[^2]
 
 ## The Fix: Stream, Cache, or Block
 
@@ -69,7 +69,7 @@ Next.js caches the rendered output of this component and includes it in the stat
 
 There is also `'use cache: private'` for personalized content (a username, a cart count). It caches in the visitor's browser only, never on the shared server cache, and pairs with Runtime Prefetching to keep it instant.
 
-[Source: nextjs.org](https://nextjs.org/docs/app/guides/instant-navigation)
+[^3]
 
 ### Block: export const instant = false
 
@@ -88,7 +88,7 @@ This tells Next.js: this route is intentionally server-bound. The Instant Insigh
 
 The old prefetch model had a problem that even the Next.js team admitted was bad: every Link in the viewport fired its own prefetch request. A sidebar with twenty chat room links meant twenty requests, all for the same dynamic route.
 
-[Source: nextjs.org](https://nextjs.org/blog/next-16-3-instant-navigations)
+[^2]
 
 16.3's Partial Prefetching fixes this with a smarter approach. Next.js generates one reusable App Shell per route. The shell is the minimal UI that can render before data arrives: typically layout chrome plus Suspense fallbacks. It is prefetched *once* and cached for the session.
 
@@ -108,7 +108,7 @@ const nextConfig: NextConfig = {
 };
 ```
 
-[Source: nextjs.org](https://nextjs.org/docs/app/guides/adopting-partial-prefetching)
+[^4]
 
 ## Instant Insights: Slow Navigations Become Development Errors
 
@@ -116,13 +116,13 @@ This is the feature that changes team behavior. With `cacheComponents: true` ena
 
 It does not just tell you *that* a route is slow. It tells you *which component* is blocking and offers a fix prompt you can delegate to a coding agent.
 
-[Source: nextjs.org](https://nextjs.org/blog/next-16-3)
+[^1]
 
 The team at Roboto Studio, who ran the 16.3 preview in production for weeks, described the effect:
 
 > "Slow navigations stop being something users find in production and become something the framework flags at dev time."
 
-[Source: robotostudio.com](https://robotostudio.com/blog/nextjs-16-3-for-dummies)
+[^5]
 
 For teams shipping changes daily, this is the most valuable part. A refactor that moves a `cookies()` call into a shared layout, silently de-optimizing a route that used to be instant, gets caught on `next dev` before the PR is even submitted.
 
@@ -149,7 +149,7 @@ test('product title is available immediately', async ({ page }) => {
 
 Assertions inside the `instant()` block must pass without any network roundtrip. If a refactor makes the heading wait for data that used to be in the shell, the test fails. This catches regressions at CI time instead of production.
 
-[Source: nextjs.org](https://nextjs.org/blog/next-16-3)
+[^1]
 
 ## The Rust React Compiler: Experimental but Worth Knowing
 
@@ -172,11 +172,11 @@ The performance numbers, tested against v0.app, are significant:
 - **Cold build:** 34% faster `next dev` to a ready page
 - **Warm build:** 46% faster
 
-[Source: nextjs.org](https://nextjs.org/blog/next-16-3)
+[^1]
 
 The caveat: the Rust compiler only helps if you are off Babel entirely. If you still run Babel for other transforms (styled-components, Emotion, custom plugins), the gain is smaller because Babel remains a bottleneck. For projects already on Turbopack-only builds, this is a free speedup. This option requires `reactCompiler` to be enabled; it selects which implementation runs rather than turning the compiler on by itself.
 
-[Source: nextjs.org](https://nextjs.org/docs/app/api-reference/config/next-config-js/turbopackRustReactCompiler)
+[^6]
 
 This does not need to ship today (it is experimental), but it signals the direction: React compilation is moving from JavaScript to native code, the same path [TypeScript took with its Go-native compiler in v7.0](/blog/typescript-7-go-native-compiler).
 
@@ -215,7 +215,7 @@ npx @next/codemod@canary cache-components-instant-false ./app
 
 This adds `instant = false` to every page, layout, and default export that does not already declare it (pass `./src/app` instead if your project uses a `src/` directory). The app keeps building and serving, and you convert routes one at a time.
 
-[Source: nextjs.org](https://nextjs.org/docs/app/guides/migrating-to-cache-components)
+[^7]
 
 ### Step 3: Convert one route at a time
 
@@ -235,12 +235,10 @@ If you maintain a Next.js app, upgrade to 16.3 today. Enable the flags in develo
 
 The days of "it's a server-rendered framework, it's supposed to feel like a website" are ending. With 16.3, that excuse no longer holds.
 
-## Sources
-
-- Next.js 16.3 Announcement — [nextjs.org](https://nextjs.org/blog/next-16-3)
-- Next.js 16.3: Instant Navigations — [nextjs.org](https://nextjs.org/blog/next-16-3-instant-navigations)
-- Instant Navigation Guide — [nextjs.org](https://nextjs.org/docs/app/guides/instant-navigation)
-- Migrating to Cache Components Guide — [nextjs.org](https://nextjs.org/docs/app/guides/migrating-to-cache-components)
-- Next.js 16.3 for Dummies (Roboto Studio) — [robotostudio.com](https://robotostudio.com/blog/nextjs-16-3-for-dummies)
-- Rust React Compiler Config — [nextjs.org](https://nextjs.org/docs/app/api-reference/config/next-config-js/turbopackRustReactCompiler)
-- Partial Prefetching Guide — [nextjs.org](https://nextjs.org/docs/app/guides/adopting-partial-prefetching)
+[^1]: Next.js 16.3 Announcement — [nextjs.org](https://nextjs.org/blog/next-16-3)
+[^2]: Next.js 16.3: Instant Navigations — [nextjs.org](https://nextjs.org/blog/next-16-3-instant-navigations)
+[^3]: Instant Navigation Guide — [nextjs.org](https://nextjs.org/docs/app/guides/instant-navigation)
+[^4]: Partial Prefetching Guide — [nextjs.org](https://nextjs.org/docs/app/guides/adopting-partial-prefetching)
+[^5]: Next.js 16.3 for Dummies (Roboto Studio) — [robotostudio.com](https://robotostudio.com/blog/nextjs-16-3-for-dummies)
+[^6]: Rust React Compiler Config — [nextjs.org](https://nextjs.org/docs/app/api-reference/config/next-config-js/turbopackRustReactCompiler)
+[^7]: Migrating to Cache Components Guide — [nextjs.org](https://nextjs.org/docs/app/guides/migrating-to-cache-components)

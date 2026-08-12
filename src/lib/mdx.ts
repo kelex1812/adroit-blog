@@ -37,6 +37,12 @@ export function stripMDXFrontmatter(raw: string): string {
  * Convert `[Source: https://...]` citation literals into proper markdown
  * links with a clean anchor (`[Source: domain.com](url)`) so article bodies
  * stop showing raw URL text. Used by the blog + learn MDX renderers.
+ *
+ * NOTE: The editorial citation style is now GFM endnotes — `[^n]` inline
+ * markers with an auto-generated numbered source list (see footnoteLabel in
+ * the MDXArticle renderer). This legacy transform is retained as a safety
+ * net for any pre-conversion article that still contains `[Source: ...]`
+ * literals; new articles should not emit them.
  */
 export function linkifySourceCitations(raw: string): string {
   return raw.replace(
