@@ -4,6 +4,18 @@ All notable changes to the Adroit Consulting Blog project will be documented in 
 
 ## [Unreleased]
 
+### Fix: text-gray-400 contrast on lesson surfaces — WCAG 1.4.3 AA (t_f5c7f22c)
+
+Closes out-of-scope a11y findings (Lara, t_5c11d157): `text-gray-400`
+(#9CA3AF) measured ~2.54:1 < 4.5:1 AA on meaningful lesson text. Swapped
+to `text-gray-500` (#6B7280, 4.83:1 on white) per Lara's verification.
+
+- `src/app/learn/[series]/[slug]/page.tsx` — author row date/read-time (12px)
+- `src/components/Learn/LessonNavigation.tsx` — prev/next eyebrows (10.5px uppercase)
+- `src/components/Learn/EmptyState.tsx` — empty-series helper body (12.5px)
+
+Exempt per Lara: ExamCard.tsx disabled-button inactive UI. `tsc --noEmit` clean.
+
 ### Fix: dark-mode contrast — --ink-faint / --accent pass WCAG AA (t_8a679ec4)
 
 Closes mandatory a11y finding (t_30f64725, HIGH): `--ink-faint` failed

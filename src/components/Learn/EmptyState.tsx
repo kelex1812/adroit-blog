@@ -23,7 +23,7 @@ export default function EmptyState({
         00 / 00
       </div>
       <div className="text-[15px] font-bold text-gray-600 mb-1.5">{title}</div>
-      <p className="text-[12.5px] text-gray-400 leading-relaxed max-w-[240px] mx-auto mb-[18px]">
+      <p className="text-[12.5px] text-gray-500 leading-relaxed max-w-[240px] mx-auto mb-[18px]">
         {body}
       </p>
       <Link

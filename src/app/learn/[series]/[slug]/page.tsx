@@ -133,7 +133,7 @@ export default async function LessonPage({ params }: Props) {
               <span className="text-sm font-semibold text-gray-800">
                 {lesson.author}
               </span>
-              <div className="flex items-center text-xs text-gray-400">
+              <div className="flex items-center text-xs text-gray-500">
                 <span>{lesson.date}</span>
                 <span className="mx-3 h-3 w-px bg-gray-200" />
                 <span>{lesson.readTime}</span>
