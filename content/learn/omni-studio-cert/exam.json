@@ -1,12 +1,12 @@
 {
   "quizName": "omni-studio-cert:exam",
-  "title": "OmniStudio Developer Certification — Practice Exam",
+  "title": "OmniStudio Developer Certification: Practice Exam",
   "description": "60-question timed practice exam mirroring the official blueprint domain weights. 105 minutes, pass with 72% or higher.",
   "questions": [
     {
       "question": "A customer needs integration with a REST system whose availability is uncertain. What is the correct risk treatment?",
       "options": [
-        "Ignore it — it will work",
+        "Ignore it. It will work",
         "Design fallbacks/error handling (Try/Catch, controlled error responses) and confirm SLAs",
         "Rewrite the system in Apex",
         "Use only synchronous calls"
@@ -19,7 +19,7 @@
       "options": [
         "Managed Package Runtime",
         "Standard Runtime",
-        "Neither — CLI doesn't apply",
+        "Neither. CLI doesn't apply",
         "Legacy Vlocity package"
       ],
       "correct_answer_index": 1,
@@ -67,7 +67,7 @@
         "Email the JSON"
       ],
       "correct_answer_index": 1,
-      "explanation": "Components are metadata — they move with metadata/CLI tooling, not data loaders."
+      "explanation": "Components are metadata. They move with metadata/CLI tooling, not data loaders."
     },
     {
       "question": "A requirement needs field-level security enforced on data shown in a FlexCard. Which data source satisfies the constraint?",
@@ -139,12 +139,12 @@
       "question": "A FlexCard must render one card per Account from a list. What is required?",
       "options": [
         "A single-record data source",
-        "A data source returning multiple records — the card loops them",
+        "A data source returning multiple records. The card loops them",
         "An OmniScript",
         "A custom LWC"
       ],
       "correct_answer_index": 1,
-      "explanation": "FlexCards iterate over returned records by default — one card per record."
+      "explanation": "FlexCards iterate over returned records by default. One card per record."
     },
     {
       "question": "Which advanced integration lets you nest one card inside another?",
@@ -166,7 +166,7 @@
         "A formula"
       ],
       "correct_answer_index": 0,
-      "explanation": "IPs consolidate orchestration into one server call — the recommended pattern for complex data."
+      "explanation": "IPs consolidate orchestration into one server call. The recommended pattern for complex data."
     },
     {
       "question": "What does a FlexCard auto-generate for App Builder / Experience Builder embedding?",
@@ -182,7 +182,7 @@
     {
       "question": "During prototyping you embed sample JSON. What must happen before publishing?",
       "options": [
-        "Nothing — sample JSON is fine",
+        "Nothing. Sample JSON is fine",
         "Replace Custom with a real data source",
         "Add an Apex trigger",
         "Enable debug mode permanently"
@@ -194,7 +194,7 @@
       "question": "When does a Data Mapper data source beat SOQL in a FlexCard?",
       "options": [
         "When field-level security or transformation is needed",
-        "Always — SOQL never works",
+        "Always. SOQL never works",
         "Never",
         "Only on mobile"
       ],
@@ -298,7 +298,7 @@
         "They are cosmetic"
       ],
       "correct_answer_index": 1,
-      "explanation": "Element names map to JSON keys — they affect formulas, actions, and downstream data."
+      "explanation": "Element names map to JSON keys. They affect formulas, actions, and downstream data."
     },
     {
       "question": "Which tool inspects an OmniScript's data JSON during development?",
@@ -386,7 +386,7 @@
         "The browser"
       ],
       "correct_answer_index": 0,
-      "explanation": "Stale data is the classic caching symptom — tune TTL or invalidate."
+      "explanation": "Stale data is the classic caching symptom. Tune TTL or invalidate."
     },
     {
       "question": "What is an Integration Procedure?",
@@ -441,7 +441,7 @@
         "Delete data"
       ],
       "correct_answer_index": 0,
-      "explanation": "Catch blocks log and return predictable errors — never silent failures."
+      "explanation": "Catch blocks log and return predictable errors. Never silent failures."
     },
     {
       "question": "Which action returns data from an IP to its caller?",
@@ -567,7 +567,7 @@
     {
       "question": "A binding references 'account.Name' but the JSON key is 'Account_Name'. What's wrong?",
       "options": [
-        "Path typo/mismatch — paths must match JSON keys exactly",
+        "Path typo/mismatch. Paths must match JSON keys exactly",
         "The data source is broken",
         "The license",
         "The browser"
@@ -584,7 +584,7 @@
         "Disable security"
       ],
       "correct_answer_index": 0,
-      "explanation": "Start with the data JSON — wrong shape/missing fields cause blanks."
+      "explanation": "Start with the data JSON. Wrong shape/missing fields cause blanks."
     },
     {
       "question": "A deploy fails because a referenced component is missing. What's the issue?",
@@ -600,13 +600,13 @@
     {
       "question": "An action's output is blank and the log shows a malformed payload. What's the problem?",
       "options": [
-        "Broken JSON — syntax/escaping issues in the payload",
+        "Broken JSON. Syntax/escaping issues in the payload",
         "The theme",
         "The license",
         "The channel"
       ],
       "correct_answer_index": 0,
-      "explanation": "Malformed payloads appear as missing/blank output — validate the raw JSON."
+      "explanation": "Malformed payloads appear as missing/blank output. Validate the raw JSON."
     },
     {
       "question": "A user can run OmniScripts but not build them. What's missing?",
@@ -633,7 +633,7 @@
     {
       "question": "Users can't see data in a SOQL-backed FlexCard, but admins can. Likely cause?",
       "options": [
-        "FLS — SOQL data sources don't apply it; use a Data Mapper or grant FLS",
+        "FLS. SOQL data sources don't apply it; use a Data Mapper or grant FLS",
         "The theme is broken",
         "The org is in maintenance",
         "The card is too wide"

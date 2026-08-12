@@ -14,11 +14,11 @@ tags: [OmniStudio, FlexCards]
 
 **FlexCard elements:** text, number, currency, date/time, image, icon, link, button, and containers. Each displays a value or triggers an action.
 
-**Binding** connects an element to a field in the data JSON: direct binding to a field path (e.g., `Name`) or an expression that computes a value. The binding path must match the JSON key EXACTLY — case and nesting matter.
+**Binding** connects an element to a field in the data JSON: direct binding to a field path (e.g., `Name`) or an expression that computes a value. The binding path must match the JSON key EXACTLY. Case and nesting matter.
 
 **Element properties:** label, format (date/currency masks), visibility, value source, alignment, styling. Buttons additionally bind to card actions.
 
-**Expressions** enable computed display values (concatenation, conditionals) without code — but keep them simple; complex logic belongs in the data layer (Data Mapper formulas).
+**Expressions** enable computed display values (concatenation, conditionals) without code. Keep them simple; complex logic belongs in the data layer (Data Mapper formulas).
 
 **Test bindings** against the previewed JSON: a blank value is almost always a path mismatch or a null field.
 
@@ -28,23 +28,23 @@ tags: [OmniStudio, FlexCards]
 2. Bind each element to its JSON field path.
 3. Configure properties: label, format, visibility, styling.
 4. Add buttons/links and bind them to card actions.
-5. Verify against preview JSON — fix any blank paths.
+5. Verify against preview JSON. Fix any blank paths.
 
 ## Exam Traps
 
 - Typo/case mismatch in binding paths (JSON keys are case-sensitive).
-- Binding to a nested path without the repeater context — the path must be relative to the item.
+- Binding to a nested path without the repeater context. The path must be relative to the item.
 - Using expressions where the data layer could compute the value more cleanly.
 
 ## Exam Tip
 
-Binding = JSON path. If it's blank, the path is wrong — check case, nesting, and repeater context.
+Binding = JSON path. If it's blank, the path is wrong. Check case, nesting, and repeater context.
 
 ## Related Requirements
 
-- Day 7 — Data Sources
-- Day 8 — Layouts & Repeaters
-- Day 10 — Card Actions
+- Day 7, Data Sources
+- Day 8, Layouts & Repeaters
+- Day 10, Card Actions
 
 ## References
 

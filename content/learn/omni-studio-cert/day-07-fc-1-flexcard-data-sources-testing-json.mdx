@@ -14,13 +14,13 @@ tags: [OmniStudio, FlexCards]
 
 **Data source options:** SOQL Query (simple, fast, but does *not* apply field-level security), SOSL Search (text search against the index), Data Mapper Extract (FLS-aware, transforms, parameterized), Integration Procedure (complex orchestrated data in one call), Apex Remote (Apex class implementing `VlocityOpenInterface`), Apex REST, REST (Named Credential or plain web endpoint), Streaming/Platform Event/PushTopic (event-driven data), and Custom (embedded sample JSON for prototyping).
 
-**Cards loop records:** FlexCards loop over the records their data source returns — each record renders as one card. A single-record source yields one card; a list yields many.
+**Cards loop records:** FlexCards loop over the records their data source returns. Each record renders as one card. A single-record source yields one card; a list yields many.
 
 **Test JSON before layout:** preview the data source output, verify field names and nesting, then bind elements to those exact paths. Wrong JSON shape is the #1 cause of blank cards.
 
-**Security judgment:** when field-level security matters (low-privilege users), choose Data Mapper over SOQL — Data Mappers fully support FLS.
+**Security judgment:** when field-level security matters (low-privilege users), choose Data Mapper over SOQL. Data Mappers fully support FLS.
 
-**Custom JSON is a placeholder:** sample JSON is for prototyping — replace it with a real source before publishing to production.
+**Custom JSON is a placeholder:** sample JSON is for prototyping. Replace it with a real source before publishing to production.
 
 ## Configuration Walkthrough
 
@@ -31,8 +31,8 @@ tags: [OmniStudio, FlexCards]
 
 ## Exam Traps
 
-- Choosing SOQL when FLS is required — SOQL data sources bypass field-level security.
-- Forgetting the card loops records — designing a layout for one record when the source returns many.
+- Choosing SOQL when FLS is required. SOQL data sources bypass field-level security.
+- Forgetting the card loops records. Designing a layout for one record when the source returns many.
 - Building bindings before validating the JSON shape.
 
 ## Exam Tip
@@ -41,9 +41,9 @@ JSON first, layout second. Preview the payload, then bind to real field paths.
 
 ## Related Requirements
 
-- [Day 8 — Layouts & Repeaters](/learn/omni-studio-cert/day-08-fc-2-layouts-repeaters) *(forthcoming)*
-- [Day 31 — Data Mapper Extract](/learn/omni-studio-cert/day-31-dm-2-data-mapper-extract) *(forthcoming)*
-- [Day 38 — FlexCard Display Issues](/learn/omni-studio-cert/day-38-t-1-flexcard-display-issues) *(forthcoming)*
+- [Day 8, Layouts & Repeaters](/learn/omni-studio-cert/day-08-fc-2-layouts-repeaters) *(forthcoming)*
+- [Day 31, Data Mapper Extract](/learn/omni-studio-cert/day-31-dm-2-data-mapper-extract) *(forthcoming)*
+- [Day 38, FlexCard Display Issues](/learn/omni-studio-cert/day-38-t-1-flexcard-display-issues) *(forthcoming)*
 
 ## References
 

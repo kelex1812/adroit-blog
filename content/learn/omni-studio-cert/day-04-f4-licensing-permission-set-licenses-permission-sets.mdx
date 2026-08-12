@@ -3,7 +3,7 @@ title: "OmniStudio F-4: Licensing, Permission Set Licenses & Permission Sets"
 slug: day-04-f4-licensing-permission-set-licenses-permission-sets
 series: omni-studio-cert
 lesson: 4
-excerpt: "Explain OmniStudio license requirements, Permission Set licenses and Permission Sets. — Day 4 of the 46-requirement OmniStudio Developer exam prep."
+excerpt: "Explain OmniStudio license requirements, Permission Set licenses and Permission Sets. Day 4 of the 46-requirement OmniStudio Developer exam prep."
 date: "August 06, 2026"
 author: "Adroit Consulting"
 readTime: "6 min read"
@@ -17,7 +17,7 @@ tags: [OmniStudio, OmniStudio Fundamentals]
 
 ## Deep Dive
 
-- OmniStudio is an add-on feature license on top of the base Salesforce license — the org must hold it to use the tools at all. No license, no components, regardless of profile.
+- OmniStudio is an add-on feature license on top of the base Salesforce license. The org must hold it to use the tools at all. No license, no components, regardless of profile.
 - Permission Set Licenses (PSLs) enable the OmniStudio feature set for users. Without the PSL assigned, a user cannot access the feature even with a permission set that references it.
 - Permission Sets then grant granular access: builder/admin permission sets (create, edit, publish components, open the OmniStudio admin tools) vs user-level permission sets (run components, see data).
 - The layering matters for troubleshooting: License (org-level) → PSL (feature enabled for user) → Permission Set (what they can do) → object CRUD/FLS (what data they see). Failure at any layer blocks the component.
@@ -32,7 +32,7 @@ tags: [OmniStudio, OmniStudio Fundamentals]
 
 ## Exam Traps
 
-- **Trap:** Assuming a System Administrator profile alone grants OmniStudio access — license + PSL are still required.
+- **Trap:** Assuming a System Administrator profile alone grants OmniStudio access. License + PSL are still required.
 - **Trap:** Confusing PSL (enables feature) with Permission Set (granular grants).
 - **Trap:** Diagnosing 'can't see data' as a component bug when it's a permission-layer issue.
 
@@ -41,4 +41,4 @@ tags: [OmniStudio, OmniStudio Fundamentals]
 Access chain: License → PSL → Permission Set → CRUD/FLS. Diagnose from the top down.
 
 
-**Related requirements:** Day 2 — Project Needs & Constraints, Day 43 — Permissions & Access Issues, Day 46 — Debug Console
+**Related requirements:** Day 2, Project Needs & Constraints; Day 43, Permissions & Access Issues; Day 46, Debug Console

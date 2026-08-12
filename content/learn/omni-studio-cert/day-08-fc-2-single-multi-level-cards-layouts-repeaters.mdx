@@ -14,7 +14,7 @@ tags: [OmniStudio, FlexCards]
 
 **Single-level card:** one record per card, flat fields (name, account number, status) laid out in the card body.
 
-**Multi-level card:** nested data structures — e.g., an Account card that also shows related Cases or line items. Nesting comes from the data source (related records) and is rendered with repeaters.
+**Multi-level card:** nested data structures (e.g., an Account card that also shows related Cases or line items). Nesting comes from the data source (related records) and is rendered with repeaters.
 
 **Repeaters** iterate over an `ARRAY` inside a record's JSON (e.g., `Cases` array) and render repeated elements for each item. They are the mechanism for lists-within-cards.
 
@@ -31,9 +31,9 @@ tags: [OmniStudio, FlexCards]
 
 ## Exam Traps
 
-- Binding a repeater to an object instead of an array — it won't iterate.
-- Forgetting widths on mobile — cramped single-column layouts.
-- Treating multi-level as 'two cards' — it's nesting within one card via repeaters.
+- Binding a repeater to an object instead of an array. It won't iterate.
+- Forgetting widths on mobile. That leaves cramped single-column layouts.
+- Treating multi-level as 'two cards'. It's nesting within one card via repeaters.
 
 ## Exam Tip
 
@@ -41,9 +41,9 @@ Array inside the JSON → repeater. Repeaters are how multi-level cards happen.
 
 ## Related Requirements
 
-- Day 7 — Data Sources
-- Day 9 — Binding & Properties
-- Day 36 — Mapping Structures
+- Day 7, Data Sources
+- Day 9, Binding & Properties
+- Day 36, Mapping Structures
 
 ## References
 
