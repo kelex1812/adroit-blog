@@ -199,6 +199,16 @@ describe("POST /api/progress/quiz/batch — exam unlock gate", () => {
     expect(json.score).toBe(2);
     expect(json.results).toHaveLength(60);
 
+    // t_c0c452f5 (CWE-200): the review array must NOT leak the correct answer
+    // key for unanswered questions. Only question 0 was submitted, so only its
+    // result item carries correctAnswerIndex; the other 59 must omit it.
+    const answered = json.results.find((r: { questionIndex: number }) => r.questionIndex === 0);
+    const unanswered = json.results.find((r: { questionIndex: number }) => r.questionIndex === 1);
+    expect(answered).toMatchObject({ isCorrect: true, correctAnswerIndex: 1 });
+    expect(unanswered).toMatchObject({ isCorrect: false });
+    expect(unanswered).not.toHaveProperty("correctAnswerIndex");
+    expect(json.results.filter((r: { correctAnswerIndex?: number }) => "correctAnswerIndex" in r)).toHaveLength(1);
+
     // Full-coverage quiz_attempt upsert: 60 rows, question 0 submitted,
     // questions 1..59 unanswered sentinel (user_answer_index -1, incorrect).
     expect(writeSink.quizAttemptUpserts).toHaveLength(1);

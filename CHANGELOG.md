@@ -4,6 +4,23 @@ All notable changes to the Adroit Consulting Blog project will be documented in 
 
 ## [Unreleased]
 
+### Security: batch exam response no longer leaks the answer key for unanswered questions (t_c0c452f5)
+
+Closes the exam-key disclosure regression (CWE-200) introduced alongside the
+canonical question-count coverage fix (t_55105899). The batch grading route
+returned `correctAnswerIndex` for *every* canonical question, so a forged
+`answers: []` POST disclosed the full 60-question exam key in a single request —
+re-opening the certificate-forgery path the coverage fix was meant to close.
+
+- `src/app/api/progress/quiz/batch/route.ts` — the per-question review item now
+  omits `correctAnswerIndex` unless that question was actually answered. The
+  review screen only needs `isCorrect`, so nothing is lost for a legitimate,
+  full-coverage exam; a partial/empty set exposes no correct answers.
+- `src/shared/contracts.ts` — `ExamResultItem.correctAnswerIndex` is now
+  optional (`?: number`), documented as omitted for unanswered questions.
+- Tests — `batch/route.test.ts` regression assertion: on a 1/60 answer set only
+  the answered item carries `correctAnswerIndex`; the other 59 omit it.
+
 ### Security: quiz_run / quiz_attempt are now server-write-only (t_bb6ed113)
 
 Closes the RLS client-forge path (CWE-807) that let an authenticated client

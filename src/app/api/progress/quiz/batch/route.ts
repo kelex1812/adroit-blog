@@ -208,7 +208,12 @@ export async function POST(req: NextRequest) {
       results.push({
         questionIndex: qi,
         isCorrect,
-        correctAnswerIndex: question.correct_answer_index,
+        // t_c0c452f5 (CWE-200): only leak the correct answer for questions the
+        // user actually answered. An empty/partial answers POST must not
+        // disclose the full exam key — the review screen only needs isCorrect.
+        ...(submitted !== undefined
+          ? { correctAnswerIndex: question.correct_answer_index }
+          : {}),
       });
       attemptRows.push({
         user_id: user.id,

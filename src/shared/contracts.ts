@@ -89,7 +89,12 @@ export interface ExamSubmitRequest {
 export interface ExamResultItem {
   questionIndex: number;
   isCorrect: boolean;
-  correctAnswerIndex: number;
+  /**
+   * Correct answer index — OMITTED for unanswered questions (server-side
+   * security fix t_c0c452f5, CWE-200): a partial/empty answer set must never
+   * leak the exam key. Only present when the question was actually answered.
+   */
+  correctAnswerIndex?: number;
 }
 
 export interface ExamSubmitResult {
