@@ -24,8 +24,13 @@ vi.mock("@/lib/supabase/server", () => ({
 
 import { GET, PATCH } from "./route";
 
-function get(): Promise<Response> {
-  return GET();
+function get(headers: Record<string, string> = {}): Promise<Response> {
+  return GET(
+    new NextRequest("http://localhost:3000/api/profile", {
+      method: "GET",
+      headers,
+    }),
+  );
 }
 
 function patch(
@@ -101,6 +106,19 @@ describe("GET /api/profile", () => {
     expect(res.status).toBe(200);
     expect(mocks.from).toHaveBeenCalledTimes(2);
     expect((await res.json()).profile.displayName).toBe("Jane Doe");
+  });
+
+  it("429s when the per-IP rate limit is exceeded (protects lazy upsert)", async () => {
+    mocks.getUser.mockResolvedValue(AUTHED);
+    const ip = { "x-forwarded-for": "10.1.1.1" }; // dedicated bucket
+    // First 30 GETs pass the limiter; the 31st is rejected with 429.
+    for (let i = 0; i < 30; i++) {
+      const res = await get(ip);
+      expect([200, 401]).toContain(res.status);
+    }
+    const blocked = await get(ip);
+    expect(blocked.status).toBe(429);
+    expect(await blocked.json()).toEqual({ error: "Too many requests" });
   });
 });
 

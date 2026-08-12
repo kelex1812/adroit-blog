@@ -108,7 +108,15 @@ export function validateIndex(
 /**
  * Simple sliding-window rate limiter keyed by IP.
  * Resets its own map on every call; GC-friendly for moderate traffic.
- * Not persisted — restarts with the process (acceptable for a blog).
+ * Not persisted — restarts with the process.
+ *
+ * LIMITATION (accepted, low risk): this is in-memory and per-process. On a
+ * single instance it is a hard guarantee, but on Vercel's distributed
+ * serverless runtime it is per-instance — the effective limit scales with the
+ * number of warm instances and resets on cold start, so it is NOT a hard
+ * cross-instance cap. For a hard guarantee in high-traffic production, replace
+ * this with a shared store (e.g. Upstash Redis) keyed by the same client IP.
+ * Per-instance limiting is sufficient for this blog's current traffic.
  */
 const WINDOW_MS = 60_000; // 1 minute
 const MAX_REQUESTS = 30;  // per minute per IP
@@ -137,11 +145,34 @@ export function checkRateLimit(ip: string): boolean {
   return true;
 }
 
-/** Extract client IP from a NextRequest. */
+/**
+ * Extract a client IP to key the rate limiter by.
+ *
+ * Only the connection-proxy's view is trusted — never a client-controlled
+ * value. Order:
+ *  1. `x-real-ip` — set by a trusted reverse proxy that overwrites it, so it
+ *     cannot be spoofed by the client. Preferred when present.
+ *  2. `x-forwarded-for` — a hop chain where the client controls the LEFT edge
+ *     and each trusted proxy APPENDS its client's IP to the RIGHT. Take the
+ *     RIGHTMOST non-empty entry (the most-recently-appended, trusted-hop
+ *     value); the leftmost is attacker-spoofable. On Vercel this header is
+ *     set by Vercel's own proxy, so the rightmost value is reliable.
+ *  3. Loopback — local dev with no proxy headers.
+ */
 export function getClientIp(req: NextRequest): string {
+  const realIp = req.headers.get("x-real-ip");
+  if (realIp) return realIp.trim();
+
   const forwarded = req.headers.get("x-forwarded-for");
-  if (forwarded) return forwarded.split(",")[0]!.trim();
-  return req.headers.get("x-real-ip") ?? "127.0.0.1";
+  if (forwarded) {
+    const parts = forwarded
+      .split(",")
+      .map((s) => s.trim())
+      .filter((s) => s.length > 0);
+    if (parts.length > 0) return parts[parts.length - 1]!;
+  }
+
+  return "127.0.0.1";
 }
 
 /* ------------------------------------------------------------------ */

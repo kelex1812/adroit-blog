@@ -1,8 +1,45 @@
 /**
- * api-security — validateQuizName tests (ADR-101 colon tier names).
+ * api-security — validateQuizName + getClientIp tests.
  */
 import { describe, it, expect } from "vitest";
-import { validateQuizName } from "./api-security";
+import { NextRequest } from "next/server";
+import { validateQuizName, getClientIp } from "./api-security";
+
+describe("getClientIp", () => {
+  function req(headers: Record<string, string>): NextRequest {
+    return new NextRequest("http://localhost:3000/api/profile", { headers });
+  }
+
+  it("prefers x-real-ip (trusted proxy) over the spoofable x-forwarded-for header", () => {
+    expect(
+      getClientIp(req({ "x-real-ip": "203.0.113.7", "x-forwarded-for": "1.2.3.4" })),
+    ).toBe("203.0.113.7");
+  });
+
+  it("takes the RIGHTMOST x-forwarded-for entry, not the attacker-controlled first", () => {
+    // Client spoofs a fake leftmost value; the trusted proxy appends the real IP.
+    expect(getClientIp(req({ "x-forwarded-for": "6.6.6.6, 198.51.100.9" }))).toBe(
+      "198.51.100.9",
+    );
+    expect(
+      getClientIp(req({ "x-forwarded-for": "6.6.6.6, 203.0.113.7, 198.51.100.9" })),
+    ).toBe("198.51.100.9");
+  });
+
+  it("returns a single x-forwarded-for value when present alone", () => {
+    expect(getClientIp(req({ "x-forwarded-for": "10.9.9.9" }))).toBe("10.9.9.9");
+  });
+
+  it("ignores empty entries in the x-forwarded-for chain", () => {
+    expect(getClientIp(req({ "x-forwarded-for": " ,  , 198.51.100.9" }))).toBe(
+      "198.51.100.9",
+    );
+  });
+
+  it("falls back to loopback when no proxy headers are present (local dev)", () => {
+    expect(getClientIp(req({}))).toBe("127.0.0.1");
+  });
+});
 
 describe("validateQuizName", () => {
   it("accepts tier quiz names with colons (ADR-101)", () => {

@@ -4,6 +4,30 @@ All notable changes to the Adroit Consulting Blog project will be documented in 
 
 ## [Unreleased]
 
+### Security: harden profile API rate limiting (t_947d67fc)
+
+Closes Val-El's audit findings (t_ea087e3e, OWASP A04 — rate limiting gaps).
+
+- `src/app/api/profile/route.ts` — **GET is now rate-limited** by IP
+  (`checkRateLimit(getClientIp(req))`, 30/min) mirroring PATCH. The read path
+  performs a lazy upsert (a DB write) on first read, so an authed client could
+  previously issue unbounded read+write traffic — now capped per IP.
+- `src/lib/api-security.ts`
+  - **`getClientIp` hardened against XFF spoofing**: prefers the trusted
+    `x-real-ip` header, then takes the RIGHTMOST `x-forwarded-for` entry
+    (the value a trusted proxy appended) instead of the attacker-controllable
+    leftmost value, falling back to loopback for local dev. On Vercel the
+    header is set by Vercel's proxy, so the rightmost value is reliable.
+  - **Documented the in-memory limiter** (accepted, low risk): it is
+    per-process/per-instance on Vercel's distributed serverless runtime, so
+    the effective limit scales with warm instances and resets on cold start —
+    not a hard cross-instance cap. Note recommends a shared store (Upstash)
+    if a hard guarantee is ever required.
+
+**Tests**: `route.test.ts` +1 (GET 429s when the per-IP limit is exceeded),
+`api-security.test.ts` +5 (`getClientIp` trusted-source ordering). 172 total
+pass; `tsc --noEmit` clean; eslint clean.
+
 ### Fix: LearnHub group-count badge contrast — WCAG 1.4.3 AA (t_8b9ee30a)
 
 Closes a11y finding: the group-header count badge rendered

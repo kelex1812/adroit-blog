@@ -3,6 +3,8 @@
  *
  * GET  → upsert a user_profiles row on first read (lazy creation), then return
  *        `{ user, profile }`. 401 → `{ user: null }` (mirrors /api/auth/session).
+ *        Rate-limited by IP (F2) — the lazy upsert is a DB write on first read,
+ *        so the read path is gated just like PATCH to block write amplification.
  * PATCH → update displayName / username / themePref. Server-side session check
  *        (HttpOnly cookie) — writes are enforced server-side only, never via
  *        client RLS. Gated on `checkOrigin` (CSRF) + `checkRateLimit` (IP),
@@ -42,8 +44,13 @@ function toProfile(row: ProfileRow): UserProfile {
   };
 }
 
-export async function GET() {
+export async function GET(req: NextRequest) {
   try {
+    /* --- Rate limit (F2) — protects the lazy-upsert DB write on first read --- */
+    if (!checkRateLimit(getClientIp(req))) {
+      return NextResponse.json({ error: "Too many requests" }, { status: 429 });
+    }
+
     const supabase = await getSupabaseServerClient();
     const {
       data: { user },
