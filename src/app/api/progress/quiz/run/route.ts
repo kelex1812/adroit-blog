@@ -17,6 +17,7 @@
  */
 import { NextRequest, NextResponse } from "next/server";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
+import { getSupabaseServiceClient } from "@/lib/supabase/service";
 import { resolveQuizByName, scoreQuizAttemptRows } from "@/lib/quiz";
 import {
   checkOrigin,
@@ -91,14 +92,20 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ status: "ok" });
     }
 
-    const { error: runErr } = await supabase.from("quiz_run").insert({
-      user_id: user.id,
-      quiz_name: body.quizName,
-      correct: attempts.correct,
-      total: attempts.total,
-      score: attempts.score,
-      completed_at: new Date().toISOString(),
-    });
+    // Server-write-only (t_bb6ed113): quiz_run is RLS read-only for clients
+    // (migration 006) — a direct anon-key + JWT insert is now denied. The
+    // privileged service-role client records the run; correct/total/score
+    // were derived above from the server-graded quiz_attempt rows (F1).
+    const { error: runErr } = await getSupabaseServiceClient()
+      .from("quiz_run")
+      .insert({
+        user_id: user.id,
+        quiz_name: body.quizName,
+        correct: attempts.correct,
+        total: attempts.total,
+        score: attempts.score,
+        completed_at: new Date().toISOString(),
+      });
 
     if (runErr) {
       return NextResponse.json({ status: "error", error: sanitiseDbError(runErr) }, { status: 500 });

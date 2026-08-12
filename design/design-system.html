@@ -522,6 +522,114 @@
     </div>
   </section>
 
+  <!-- 18. Update banner — avatar menu + profile/settings (t_5c3740a7 execution) -->
+  <section style="margin-bottom: 28px;">
+    <div style="background:#fff; border:1px solid var(--gray-200); border-left:4px solid var(--red); border-radius:12px; padding:16px 20px;">
+      <div style="font-family:var(--font-mono); font-size:11px; font-weight:700; color:var(--red); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:6px;">Update — t_5c3740a7 (execution) · Account corner</div>
+      <p style="font-size:13px; color:var(--gray-600); line-height:1.6;">Adds the signed-in <b>account corner</b>: initials avatar (deterministic hue from email), keyboard-first avatar dropdown (Profile / Settings / Sign out), and the <b>Profile</b> (Command/Inspect) + <b>Settings</b> (Configure) pages. Built from discovery brief t_d53651d3. Surface commitments: dropdown = <b>Operate</b> (precise action menu, Linear-style), Profile = <b>Command/Inspect</b> (one focused identity card), Settings = <b>Configure</b> (sectioned cards, honest stubs). New tokens (shadow-menu, shadow-dialog, avatar hues) are additive — sections 1&ndash;17 above are unchanged.</p>
+    </div>
+  </section>
+
+  <!-- 19. New tokens — account surfaces -->
+  <section>
+    <h2 class="sec"><span class="num">19</span> New Tokens — Account Surfaces</h2>
+    <p class="sec-sub">Drop into the Tailwind v4 <code>@theme inline</code> block in globals.css. Navy-tinted elevation matches the existing shadow-card family; avatar hues are brand-safe with white text passing WCAG AA on every value.</p>
+    <div class="tokens">
+      <div class="token-card">
+        <div class="swatch-row"><div class="swatch" style="background:#fff;border:1px solid #E5E7EB;box-shadow:0 4px 6px -1px rgba(11,29,58,0.06), 0 16px 32px -12px rgba(11,29,58,0.20);"></div><div><h4>shadow-menu</h4><div class="hex">0 4px 6px -1px / 0 16px 32px -12px (navy)</div></div></div>
+        <p>Avatar dropdown panel elevation — tighter than dialog, distinctly floating over header content.</p>
+      </div>
+      <div class="token-card">
+        <div class="swatch-row"><div class="swatch" style="background:#fff;border:1px solid #E5E7EB;box-shadow:0 24px 48px -12px rgba(11,29,58,0.28);"></div><div><h4>shadow-dialog</h4><div class="hex">0 24px 48px -12px / 0 4px 12px -4px (navy)</div></div></div>
+        <p>Confirm-dialog elevation — deepest account surface, used only for destructive confirmations.</p>
+      </div>
+      <div class="token-card">
+        <div class="swatch-row"><div class="swatch" style="background:#0B1D3A;"></div><div><h4>avatar-1</h4><div class="hex">#0B1D3A · navy</div></div></div>
+        <p>Deterministic initials hue (email hash → one of four). White initials, AA-safe.</p>
+      </div>
+      <div class="token-card">
+        <div class="swatch-row"><div class="swatch" style="background:#132D54;"></div><div><h4>avatar-2</h4><div class="hex">#132D54 · navy-light</div></div></div>
+        <p>Deterministic initials hue.</p>
+      </div>
+      <div class="token-card">
+        <div class="swatch-row"><div class="swatch" style="background:#C8102E;"></div><div><h4>avatar-3</h4><div class="hex">#C8102E · red</div></div></div>
+        <p>Deterministic initials hue.</p>
+      </div>
+      <div class="token-card">
+        <div class="swatch-row"><div class="swatch" style="background:#A00D24;"></div><div><h4>avatar-4</h4><div class="hex">#A00D24 · red-dark</div></div></div>
+        <p>Deterministic initials hue.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 20. Component gallery — account corner -->
+  <section>
+    <h2 class="sec"><span class="num">20</span> Component Gallery — Avatar Menu + Profile/Settings</h2>
+    <p class="sec-sub">Browser-verified renders of the three new mockups (t_5c3740a7). Dropdown open/close, mobile drawer, and confirm dialog are live in the HTML files.</p>
+    <div class="gallery">
+      <div class="shot">
+        <img src="screenshots/avatar-menu.png" alt="Avatar menu mockup" />
+        <div class="shot-cap"><b>Avatar menu (Operate)</b> — header auth corner replaced: 32px square avatar (initials "JD" from jane.doe@adroit.io, avatar-1 navy), red ring on hover/open, chevron flips when open. Right-aligned 240px white panel: identity header (36px avatar + email truncate + mono "SIGNED IN AS" kicker), Profile / Settings rows, hairline divider, red Sign out row. Keyboard: Enter open, Arrows/Home/End, Esc close + focus return. Mobile drawer swaps the email+sign-out row for a "Signed in as" block + Profile/Settings/Sign out rows.</div>
+      </div>
+      <div class="shot">
+        <img src="screenshots/profile.png" alt="Profile page mockup" />
+        <div class="shot-cap"><b>Profile (Command/Inspect)</b> — narrow 560px column, kicker "ADROIT ACADEMY — ACCOUNT", h1 "Your profile". One identity card: 64px avatar (red ring on hover) + mono email + "SIGN-IN METHOD — EMAIL &amp; PASSWORD". Minimal Security row: Change password link marked COMING SOON (stub, needs /api/auth/reset). Loading state = avatar + line skeletons with 1.5s shimmer. Signed-out → redirect /login?next=/profile.</div>
+      </div>
+      <div class="shot">
+        <img src="screenshots/settings.png" alt="Settings page mockup" />
+        <div class="shot-cap"><b>Settings (Configure)</b> — narrow 560px column, kicker "ADROIT ACADEMY — SETTINGS", h1 "Settings". Two restrained sectioned cards. Reading progress: destructive "Clear reading history" row (wipes read/unread + quiz stats) → navy-backdrop confirm dialog (Cancel ghost + red Clear). Email updates: custom toggle (gray→navy track, white knob, red focus ring) + mono COMING SOON badge (stub — no subscribe table yet). Save bar bottom-right: navy Save (disabled until dirty) + ghost Discard. No control pretends to work without its API.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 21. State matrix — account corner -->
+  <section>
+    <h2 class="sec"><span class="num">21</span> State Matrix — Account Corner</h2>
+    <table>
+      <tr><th>Component</th><th>Default</th><th>Interaction / Hover</th><th>Open / Selected</th><th>Edge</th></tr>
+      <tr><td><b>Avatar trigger</b></td><td>32px square rounded-lg, transparent ring</td><td>red ring + gray-50 bg</td><td>red ring persists, chevron rotates 180°</td><td>hit area ≥40px (a11y); focus red ring</td></tr>
+      <tr><td><b>Dropdown</b></td><td>hidden</td><td>—</td><td>opacity 0→1 + translateY(-4px)→0, 150ms ease-out</td><td>Esc/click-outside close, focus returns to trigger; overflow-visible on header, z-50</td></tr>
+      <tr><td><b>Menu items</b></td><td>gray-700, gray-400 icon</td><td>bg-gray-50 + text-navy</td><td>active = bg-gray-50 + text-navy</td><td>Sign out = red, hover bg-red/[0.06]; keyboard arrows/home/end</td></tr>
+      <tr><td><b>Profile identity</b></td><td>64px avatar + mono email + method</td><td>red ring on avatar</td><td>—</td><td>loading shimmer skeleton; signed-out redirect</td></tr>
+      <tr><td><b>Settings destructive</b></td><td>red Clear text + gray caption</td><td>red-dark</td><td>confirm dialog opens</td><td>stub (needs /api/progress/clear); dialog Esc/cancel closes, focus into dialog</td></tr>
+      <tr><td><b>Toggle</b></td><td>gray-200 track off</td><td>red focus ring</td><td>navy track on, knob translate-x</td><td>COMING SOON badge — no subscribe backend; save disabled until dirty</td></tr>
+      <tr><td><b>Save bar</b></td><td>Save disabled + ghost Discard</td><td>primary hover lift / ghost border shift</td><td>Save enabled when dirty</td><td>reduced-motion disables all transitions</td></tr>
+    </table>
+  </section>
+
+  <!-- 22. Handoff — account corner -->
+  <section>
+    <h2 class="sec"><span class="num">22</span> Handoff to Steel — Account Corner</h2>
+    <div class="handoff">
+      <h3>Steel needs to build</h3>
+      <ul>
+        <li><span class="arrow">→</span> AvatarMenu component: 32px square avatar (initials from email via <code>initialsFromEmail</code>, deterministic hue via <code>avatarHue</code> hash — brief §3.2/3.3, no <code>Math.random</code>), red ring on hover/open, right-aligned 240px dropdown</li>
+        <li><span class="arrow">→</span> Dropdown a11y: <code>role=menu</code>/<code>menuitem</code>, <code>aria-haspopup/expanded</code>, Arrow/Home/End navigation, Esc + click-outside close, focus returns to trigger; header container <code>overflow-visible</code>, panel <code>z-50</code></li>
+        <li><span class="arrow">→</span> Replace <code>authControl</code> in Header.tsx (desktop + mobile drawer): desktop → avatar; mobile → "Signed in as" block (avatar + email) + Profile/Settings/Sign out rows; logged-out "Sign in" unchanged</li>
+        <li><span class="arrow">→</span> Profile page <code>/profile</code>: narrow 560px shell, kicker + h1, identity card (64px avatar + mono email + sign-in method), minimal Security row; signed-out → <code>/login?next=/profile</code>; loading skeleton</li>
+        <li><span class="arrow">→</span> Settings page <code>/settings</code>: sectioned cards, label-above inputs, red focus rings, navy save button, destructive confirm dialog; every stub (Change password, Clear history, Email me new posts) carries a visible COMING SOON badge — nothing fake-functional</li>
+        <li><span class="arrow">→</span> Confirm dialog: centered card, navy-dark/40 backdrop (no blur — unearned blur rule), Esc/cancel closes, focus into dialog on open</li>
+        <li><span class="arrow">→</span> Tokens: apply <code>design/discovery/design-tokens-avatar-profile-settings.css</code> (shadow-menu, shadow-dialog, --avatar-1..4) into Tailwind v4 <code>@theme inline</code></li>
+        <li><span class="arrow">→</span> Do NOT change <code>useAuth.ts</code> interface, nav links, content/, sort logic; build must pass</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 23. Files — account corner -->
+  <section>
+    <h2 class="sec"><span class="num">23</span> Deliverable Files (t_5c3740a7)</h2>
+    <div class="files">
+      <a href="discovery/direction-brief-avatar-profile-settings.md">discovery/direction-brief-avatar-profile-settings.md</a>
+      <a href="discovery/design-tokens-avatar-profile-settings.css">discovery/design-tokens-avatar-profile-settings.css</a>
+      <a href="mockup-avatar-menu.html">mockup-avatar-menu.html</a>
+      <a href="mockup-profile.html">mockup-profile.html</a>
+      <a href="mockup-settings.html">mockup-settings.html</a>
+      <a href="screenshots/avatar-menu.png">screenshot: avatar menu</a>
+      <a href="screenshots/profile.png">screenshot: profile</a>
+      <a href="screenshots/settings.png">screenshot: settings</a>
+    </div>
+  </section>
+
 </div>
 </body>
 </html>

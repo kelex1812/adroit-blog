@@ -21,6 +21,7 @@
  */
 import { NextRequest, NextResponse } from "next/server";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
+import { getSupabaseServiceClient } from "@/lib/supabase/service";
 import { getKnowledgeChecks, parseQuizName, resolveQuizByName } from "@/lib/quiz";
 import { areAllChecksPassed } from "@/lib/certificate";
 import {
@@ -220,9 +221,12 @@ export async function POST(req: NextRequest) {
       });
     }
 
-    /* --- Batch upsert attempts (one request, onConflict upsert) --- */
+    /* --- Batch upsert attempts (one request, onConflict upsert) ---
+     * Server-write-only (t_bb6ed113): quiz_attempt is RLS read-only for
+     * clients (migration 006), so this graded write uses the privileged
+     * service-role client. */
     if (attemptRows.length > 0) {
-      const { error } = await supabase
+      const { error } = await getSupabaseServiceClient()
         .from("quiz_attempt")
         .upsert(attemptRows, { onConflict: "user_id,quiz_name,question_index" });
       if (error) {
@@ -230,16 +234,19 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    /* --- Insert one quiz_run row (best-score MAX semantics) --- */
+    /* --- Insert one quiz_run row (best-score MAX semantics) ---
+     * quiz_run is also server-write-only; the service-role client writes it. */
     const score = Math.round((correctCount / questionCount) * 100);
-    const { error: runErr } = await supabase.from("quiz_run").insert({
-      user_id: user.id,
-      quiz_name: body.quizName,
-      correct: correctCount,
-      total: questionCount,
-      score,
-      completed_at: now,
-    });
+    const { error: runErr } = await getSupabaseServiceClient()
+      .from("quiz_run")
+      .insert({
+        user_id: user.id,
+        quiz_name: body.quizName,
+        correct: correctCount,
+        total: questionCount,
+        score,
+        completed_at: now,
+      });
     if (runErr) {
       return NextResponse.json({ status: "error", error: sanitiseDbError(runErr) }, { status: 500 });
     }

@@ -12,6 +12,7 @@
  */
 import { NextRequest, NextResponse } from "next/server";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
+import { getSupabaseServiceClient } from "@/lib/supabase/service";
 import { resolveQuizByName } from "@/lib/quiz";
 import {
   checkOrigin,
@@ -85,18 +86,24 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ status: "unauthenticated" });
     }
 
-    const { error } = await supabase.from("quiz_attempt").upsert(
-      {
-        user_id: user.id,
-        quiz_name: quizName,
-        question_index: questionIndex,
-        correct_answer_index: correctAnswerIndex,
-        user_answer_index: userAnswerIndex,
-        is_correct: isCorrect,
-        attempted_at: new Date().toISOString(),
-      },
-      { onConflict: "user_id,quiz_name,question_index" },
-    );
+    // Server-write-only (t_bb6ed113): quiz_attempt is RLS read-only for
+    // clients (migration 006) — a direct anon-key + JWT write is now denied.
+    // The privileged service-role client performs the write; correctness was
+    // recomputed above from the canonical quiz JSON, never the client payload.
+    const { error } = await getSupabaseServiceClient()
+      .from("quiz_attempt")
+      .upsert(
+        {
+          user_id: user.id,
+          quiz_name: quizName,
+          question_index: questionIndex,
+          correct_answer_index: correctAnswerIndex,
+          user_answer_index: userAnswerIndex,
+          is_correct: isCorrect,
+          attempted_at: new Date().toISOString(),
+        },
+        { onConflict: "user_id,quiz_name,question_index" },
+      );
 
     if (error) {
       return NextResponse.json({ status: "error", error: sanitiseDbError(error) }, { status: 500 });

@@ -13,10 +13,12 @@ import { NextRequest } from "next/server";
 
 const { mocks } = vi.hoisted(() => {
   const getSupabaseServerClient = vi.fn();
+  const getSupabaseServiceClient = vi.fn();
   const getUser = vi.fn();
   const from = vi.fn();
+  const serviceFrom = vi.fn();
   return {
-    mocks: { getSupabaseServerClient, getUser, from },
+    mocks: { getSupabaseServerClient, getSupabaseServiceClient, getUser, from, serviceFrom },
   };
 });
 
@@ -25,6 +27,12 @@ vi.mock("@/lib/supabase/server", () => ({
     auth: { getUser: mocks.getUser },
     from: mocks.from,
   }),
+}));
+
+// Server-write-only (t_bb6ed113): quiz_run writes MUST go through the
+// service-role client, never the RLS-bound (anon/cookie) server client.
+vi.mock("@/lib/supabase/service", () => ({
+  getSupabaseServiceClient: () => ({ from: mocks.serviceFrom }),
 }));
 
 import { POST } from "./route";
@@ -43,7 +51,7 @@ function post(body: Record<string, unknown>): Promise<Response> {
 
 const writeSink = { quizRunInserts: [] as unknown[] };
 
-/** Chainable fake: quiz_attempt select().eq().eq() → attemptRows; quiz_run insert → sink. */
+/** Chainable fake: quiz_attempt select().eq().eq() → attemptRows (read only). */
 function makeFrom(table: string, attemptRows: unknown) {
   if (table === "quiz_attempt") {
     return {
@@ -54,6 +62,11 @@ function makeFrom(table: string, attemptRows: unknown) {
       }),
     };
   }
+  return {};
+}
+
+/** Service-role client: quiz_run insert → sink (the ONLY quiz_run write). */
+function makeServiceFrom(table: string) {
   if (table === "quiz_run") {
     return {
       insert: async (row: unknown) => {
@@ -73,6 +86,7 @@ beforeEach(() => {
   vi.clearAllMocks();
   writeSink.quizRunInserts.length = 0;
   mocks.from.mockImplementation((table: string) => makeFrom(table, []));
+  mocks.serviceFrom.mockImplementation((table: string) => makeServiceFrom(table));
 });
 
 describe("POST /api/progress/quiz/run — server-side scoring (F1)", () => {
@@ -135,5 +149,30 @@ describe("POST /api/progress/quiz/run — server-side scoring (F1)", () => {
     const res = await post({ quizName: "no-such-series:check:1", correct: 5, total: 5 });
     expect(res.status).toBe(200);
     expect(writeSink.quizRunInserts).toHaveLength(0);
+  });
+
+  it("writes the run through the SERVICE client, never the RLS/anonymous server client (server-write-only, t_bb6ed113)", async () => {
+    authedUser();
+    const rows = Array.from({ length: 15 }, (_, i) => ({
+      question_index: i,
+      is_correct: i !== 14, // 14/15 correct → 93%
+    }));
+    mocks.from.mockImplementation((table: string) => makeFrom(table, rows));
+
+    const res = await post({ quizName: CHECK_QUIZ, correct: 15, total: 15 });
+    expect(res.status).toBe(200);
+
+    // The graded-read is on the RLS server client; the run WRITE is on the
+    // service-role client — so an anon-key + JWT caller cannot forge it.
+    expect(mocks.serviceFrom).toHaveBeenCalledWith("quiz_run");
+    expect(writeSink.quizRunInserts).toHaveLength(1);
+
+    // The RLS/anonymous server client must never be used to write quiz_run.
+    const rlsCalls = mocks.from.mock.calls.map((c) => c[0] as string);
+    expect(rlsCalls).not.toContain("quiz_run");
+    const rlsQuizRunResult = mocks.from.mock.results.find(
+      (r) => r.value && typeof r.value === "object",
+    );
+    expect(rlsQuizRunResult?.value?.insert).toBeUndefined();
   });
 });

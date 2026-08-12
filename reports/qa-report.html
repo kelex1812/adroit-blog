@@ -1,139 +1,113 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>QA Report — Blog Life & Depth (t_dfa1c8cd) — Final Approval</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>QA Report — a11y fixes: quiz tiers + exam + certificate (t_ba66e2f4)</title>
 <style>
-  :root { --navy:#0B1D3A; --red:#C8102E; --green:#10B981; --gray:#6B7280; --light:#F4F6FA; }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; color: #1F2937; background: var(--light); line-height: 1.6; }
-  .wrap { max-width: 960px; margin: 0 auto; padding: 32px 24px 64px; }
-  header { background: var(--navy); color: #fff; border-radius: 12px; padding: 28px 32px; margin-bottom: 28px; }
-  header h1 { font-size: 1.5rem; margin-bottom: 6px; }
-  header .meta { font-size: 0.85rem; color: #B8C4D8; }
-  .verdict { display: inline-block; margin-top: 12px; padding: 6px 14px; border-radius: 999px; font-weight: 700; font-size: 0.85rem; }
-  .verdict.approved { background: var(--green); color: #fff; }
-  section { background: #fff; border-radius: 12px; padding: 24px 28px; margin-bottom: 20px; box-shadow: 0 1px 3px rgba(11,29,58,0.06); }
-  h2 { font-size: 1.1rem; color: var(--navy); margin-bottom: 14px; padding-bottom: 8px; border-bottom: 2px solid var(--light); }
-  h3 { font-size: 0.95rem; color: var(--navy); margin: 16px 0 8px; }
-  table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
-  th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid #E5E7EB; vertical-align: top; }
-  th { background: var(--light); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--gray); }
-  .pass { color: var(--green); font-weight: 700; }
-  .fail { color: var(--red); font-weight: 700; }
-  .med { color: #B45309; font-weight: 700; }
-  code { background: var(--light); padding: 1px 5px; border-radius: 4px; font-size: 0.8em; }
-  .score { display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; border-radius: 8px; font-weight: 700; font-size: 0.9rem; }
-  .score.pass { background: #D1FAE5; color: #065F46; }
-  ul { margin-left: 20px; }
-  li { margin-bottom: 4px; }
-  .note { background: #FFFBEB; border: 1px solid #FDE68A; border-radius: 8px; padding: 12px 16px; font-size: 0.85rem; margin-top: 12px; }
+  :root{--navy:#0b2545;--navy-l:#1d3a6b;--ink:#1a202c;--muted:#6b7280;--ok:#0e9f6e;--fail:#d14343;--warn:#b7791f;--bg:#f8fafc;--card:#fff;--line:#e2e8f0;}
+  *{box-sizing:border-box}
+  body{margin:0;font:15px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:var(--ink);background:var(--bg)}
+  header{background:linear-gradient(135deg,var(--navy),var(--navy-l));color:#fff;padding:28px 40px}
+  header h1{margin:0 0 6px;font-size:22px}
+  header p{margin:2px 0;opacity:.85;font-size:13.5px}
+  .badge{display:inline-block;padding:3px 12px;border-radius:999px;font-weight:700;font-size:12px;margin-top:10px;background:var(--ok);color:#fff}
+  main{max-width:960px;margin:28px auto;padding:0 24px}
+  section{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:22px 26px;margin-bottom:22px}
+  h2{font-size:17px;margin:0 0 14px;color:var(--navy);border-bottom:1px solid var(--line);padding-bottom:8px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+  .stat{background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:12px 14px}
+  .stat .v{font-size:22px;font-weight:800;color:var(--navy)}
+  .stat .l{font-size:12px;color:var(--muted)}
+  table{width:100%;border-collapse:collapse;font-size:13.5px}
+  th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{background:var(--bg);font-size:12px;text-transform:uppercase;letter-spacing:.03em;color:var(--muted)}
+  .pass{color:var(--ok);font-weight:700}
+  .fail{color:var(--fail);font-weight:700}
+  code{background:#f1f5f9;border:1px solid var(--line);border-radius:4px;padding:1px 5px;font-size:12px}
+  .note{font-size:12.5px;color:var(--muted)}
+  ul{margin:6px 0 0 0;padding-left:20px}
+  li{margin:4px 0}
 </style>
 </head>
 <body>
-<div class="wrap">
-
 <header>
-  <h1>QA Report — Blog Life &amp; Depth (banners, motion, progress tracking, quizzes)</h1>
-  <div class="meta">
-    Task: t_dfa1c8cd &nbsp;·&nbsp; Reviewer: Zod (qa-review) &nbsp;·&nbsp; Run: #2569 &nbsp;·&nbsp; Date: 2026-08-06<br>
-    Developer handoff: Steel (t_574d3153, t_97f2451c, t_808e5885, t_50e059f1, t_588dfe46) &nbsp;·&nbsp; HEAD: <code>c51caf2</code> (fix branch fix-blog-life-depth-qa-t_dfa1c8cd merged/descendant of main)<br>
-    Repo: /Users/kelex/Documents/Fortress-of-Solitude/adroit-blog
-  </div>
-  <div class="verdict approved">APPROVED — 0 open findings (10/10 criteria PASS)</div>
+  <h1>QA Report — WCAG 2.2 AA fixes: quiz tiers + exam + certificate</h1>
+  <p>Tenant: adroit-blog · Review task <code>t_ba66e2f4</code> · Source commit <code>e4958c7</code> (steel, t_5664453e)</p>
+  <p>Upstream audit: <code>t_5ed4bb0f</code> (lara, A11y/SEO) · Reviewer: Zod (QA) · 2026-08-11</p>
+  <span class="badge">APPROVED</span>
 </header>
+<main>
 
-<section>
-  <h2>Review Summary</h2>
-  <p>Final root-level re-review after all four decomposed QA lanes completed and all fix commits landed. Run #2557's single remaining MEDIUM finding (nested <code>&lt;a&gt;</code> in QuizStats inside PathCard) was fixed by Steel in commit <code>7ef842c</code> (task t_97f2451c) and is verified fixed in source AND live in the browser. All 9 original findings from runs #2551/#2552 remain verified fixed.</p>
-  <ul>
-    <li><span class="pass">FIXED</span> <strong>[MEDIUM, run #2557] Nested anchor</strong> — QuizStats now accepts <code>as="link" | "span"</code>. PathCard renders the strip as a non-interactive <code>&lt;span&gt;</code> (<code>src/components/Learn/PathCard.tsx:65</code> → <code>src/components/Progress/QuizStats.tsx:104-110</code>); the series header keeps the interactive <code>&lt;Link&gt;</code> (<code>src/app/learn/[series]/page.tsx:138</code>). Live-verified: /learn with seeded quiz attempts → 22 anchors, 0 nested; QuizStats renders as <code>&lt;span&gt;</code> "Quiz avg 100% · 2 attempts"; zero hydration errors in browser console; series-header link href = /learn/omni-studio-cert/quiz.</li>
-    <li><span class="pass">FIXED</span> <strong>[HIGH, progress lane]</strong> Read API 400 on blog contentSlug — validateSlug now accepts canonical <code>blog/&lt;slug&gt;</code> form (commit <code>5a80992</code>, t_808e5885). Progress lane re-verified 16/16 API contract checks + live mark/unmark with zero console 400s.</li>
-    <li><span class="pass">FIXED</span> <strong>[HIGH, quiz lane]</strong> Hydration mismatch on quiz pages for returning users — localStorage read moved behind hydration gate; attempt-count inflation fixed (commit <code>71aa3f0</code>, t_50e059f1). 18/18 tests, zero hydration errors across 3 pages.</li>
-    <li><span class="pass">FIXED</span> <strong>[HIGH, motion lane]</strong> ShareBar hydration mismatch + broken share URLs; score-ring animation; read/lesson hook hydration safety; check-pop motion; reduced-motion respected (commit <code>c51caf2</code>, t_588dfe46). 28/28 tests.</li>
-    <li><span class="pass">FIXED</span> <strong>All 9 original findings</strong> (read dimming, unmark→DELETE sync, read filter + auth UI, retake preserves bestScore, series quiz stats, MarkComplete aria-label, press feedback, hero fade-in, 13/13 banner backfill) — see run #2557 report for per-finding evidence; re-confirmed present in current tree.</li>
-  </ul>
-  <div class="note"><strong>Build gates (run #2569):</strong> tsc --noEmit PASS · eslint PASS · vitest 28/28 PASS (6 test files) · npm run build PASS (91/91 static pages, exit 0). Browser: /learn, /learn/[series], /learn/[series]/quiz all clean — 0 JS errors, 0 hydration warnings, 0 nested anchors.</div>
-</section>
+  <section>
+    <h2>Review Summary</h2>
+    <div class="grid">
+      <div class="stat"><div class="v">APPROVED</div><div class="l">Verdict</div></div>
+      <div class="stat"><div class="v">8 / 8</div><div class="l">Findings fixed</div></div>
+      <div class="stat"><div class="v">0</div><div class="l">Issues found</div></div>
+      <div class="stat"><div class="v">144/145</div><div class="l">Full suite (see note)</div></div>
+      <div class="stat"><div class="v">20/20</div><div class="l">a11y test files</div></div>
+      <div class="stat"><div class="v">0</div><div class="l">tsc errors</div></div>
+    </div>
+    <p class="note">Independent review confirmed all 8 upstream a11y findings (4 medium, 4 low) are resolved in commit <code>e4958c7</code>. TypeScript strict, lint, and production build all clean. No security, architecture, or code-quality concerns raised.</p>
+  </section>
 
-<section>
-  <h2>Findings</h2>
-  <p><strong>0 open findings.</strong> The only finding on the root task (run #2557 MEDIUM: nested anchor) is resolved and re-verified. Per-lane findings are closed in the lane reports (banners / motion / progress / quiz), all APPROVED.</p>
-  <table>
-    <tr><th>Severity</th><th>Finding</th><th>Resolution</th></tr>
-    <tr>
-      <td class="med">MEDIUM (closed)</td>
-      <td><code>src/components/Progress/QuizStats.tsx</code> rendered <code>&lt;Link&gt;</code> inside PathCard's <code>&lt;Link&gt;</code> → invalid HTML + React hydration error on /learn</td>
-      <td class="pass">FIXED — <code>7ef842c</code>: <code>as="span"</code> mode; PathCard renders non-interactive span; series header keeps interactive Link. Live DOM check: 0 nested anchors.</td>
-    </tr>
-  </table>
-</section>
+  <section>
+    <h2>Acceptance Criteria Checklist</h2>
+    <table>
+      <tr><th>#</th><th>Finding (lara audit t_5ed4bb0f)</th><th>Status</th><th>Evidence</th></tr>
+      <tr><td>1</td><td>[MED] Exam results heading + focus management</td><td class="pass">PASS</td><td><code>ExamWidget.tsx</code> — sr-only h2 "Exam results", focus moved on manual submit AND auto-submit (tabIndex=-1, ref).</td></tr>
+      <tr><td>2</td><td>[MED] Exam timer announcements / reduced motion</td><td class="pass">PASS</td><td><code>ExamWidget.tsx</code> — role="timer", polite status live region announces 10/5/1 min once per run + auto-submit; resets on retake. Reduced-motion global in globals.css.</td></tr>
+      <tr><td>3</td><td>[MED] Certificate page single h1</td><td class="pass">PASS</td><td><code>Certificate.tsx</code> cert-title now the single h1; "Your certificate" chrome demoted to styled &lt;p&gt;. Each render path has exactly one h1.</td></tr>
+      <tr><td>4</td><td>[MED] gray-400 contrast</td><td class="pass">PASS</td><td>gray-400→gray-500 (#6B7280, 4.74:1) across quiz-tier components + Certificate scoped CSS. Remaining gray-400 are decorative aria-hidden icons / disabled control (WCAG-exempt).</td></tr>
+      <tr><td>5</td><td>[LOW] Radiogroup arrow-key nav</td><td class="pass">PASS</td><td><code>ExamWidget.tsx</code> — WAI-ARIA roving (ArrowUp/Down, wrap, automatic activation).</td></tr>
+      <tr><td>6</td><td>[LOW] Switch target size ≥44px</td><td class="pass">PASS</td><td><code>SeriesSyllabus.tsx</code> — hide-completed switch is now w-11 h-11 (44×44) hit target.</td></tr>
+      <tr><td>7</td><td>[LOW] Sort control accessible labels</td><td class="pass">PASS</td><td><code>LessonSortToggle.tsx</code> — aria-label "Sort by lesson number ascending/descending".</td></tr>
+      <tr><td>8</td><td>[LOW] GuestCTA role semantics</td><td class="pass">PASS</td><td><code>GuestCTA.tsx</code> — removed role="note" + duplicate aria-label; named region retained.</td></tr>
+      <tr><td>9</td><td>SEO unchanged (audit SEO PASS)</td><td class="pass">PASS</td><td>No metadata/sitemap/structured-data changes. Commit touches only component + scoped CSS + CHANGELOG.</td></tr>
+    </table>
+  </section>
 
-<section>
-  <h2>Acceptance Criteria Checklist (BA t_8f4504ca)</h2>
-  <table>
-    <tr><th>Criterion</th><th>Status</th><th>Evidence</th></tr>
-    <tr><td>US-003 AC1 — Read cards visually distinct (dimmed + badge)</td><td class="pass">PASS</td><td>Computed styles opacity 0.6 / gray-400 / emerald badge; live toggle</td></tr>
-    <tr><td>US-003 AC3 — Read filter (All/Unread/Read)</td><td class="pass">PASS</td><td>Live counts; ?read= URL param filter</td></tr>
-    <tr><td>US-003 AC3/AC4 + US-004 AC4 — Auth UI, per-user sync reachable</td><td class="pass">PASS</td><td>/login, Header sign-in, guest prompt, auth API 401 verified</td></tr>
-    <tr><td>US-004 AC3 — Unmark/uncomplete persists (Supabase delete)</td><td class="pass">PASS</td><td>DELETE routes + hooks; read API accepts blog/&lt;slug&gt; (5a80992)</td></tr>
-    <tr><td>US-005 AC4 — Retake preserves original score</td><td class="pass">PASS</td><td>bestScore preserved; attemptCount increments correctly (71aa3f0)</td></tr>
-    <tr><td>US-005 AC5 — Series quiz stats shown</td><td class="pass">PASS</td><td>QuizStats on PathCard (span) + series header (link)</td></tr>
-    <tr><td>MarkComplete aria-label (Unmark/Mark)</td><td class="pass">PASS</td><td>Live label flip verified</td></tr>
-    <tr><td>US-002 AC3 — Button press feedback</td><td class="pass">PASS</td><td>active:scale on primary controls</td></tr>
-    <tr><td>US-002 AC5 — Hero fade-in</td><td class="pass">PASS</td><td>hero-fade-in keyframes, reduced-motion safe</td></tr>
-    <tr><td>Epic A — Banner backfill 13/13 + HTML validity of interactive components</td><td class="pass">PASS</td><td>13/13 banners; 0 nested anchors / 0 hydration errors live</td></tr>
-  </table>
-</section>
+  <section>
+    <h2>Findings</h2>
+    <p class="note">No defects attributed to this commit. One pre-existing / out-of-scope test failure documented below.</p>
+    <table>
+      <tr><th>File</th><th>Severity</th><th>Status</th><th>Description</th></tr>
+      <tr><td><code>src/app/api/progress/quiz/tiers/route.test.ts:174</code></td><td class="fail">n/a</td><td>NOT A REGRESSION</td><td>Test expects agentic-ai totalLessons=7; fails in working tree because of an <b>uncommitted concurrent-lane change</b> to <code>src/data/learn.ts</code> (adds an 8th lesson). Verified: at the reviewed commit e4958c7, agentic-ai has 7 lessons and totalLessons=7, so this test passes. The a11y commit did not touch learn.ts or this test. Unrelated to reviewed work.</td></tr>
+    </table>
+  </section>
 
-<section>
-  <h2>Code Quality</h2>
-  <div class="score pass">PASS</div>
-  <ul>
-    <li>TypeScript strict clean — no <code>any</code>, no <code>@ts-ignore</code> in changed files (tsc exit 0).</li>
-    <li>API routes consistent with security posture: origin checks, rate limits, slug validation (now accepts canonical blog/&lt;slug&gt;), sanitised errors, row-scoped deletes.</li>
-    <li>Hooks cleanly separated (useAuth, useReadProgress, useLessonProgress, useQuizProgress) with fire-and-forget API sync + localStorage fallback; no silent mock fallthrough.</li>
-    <li>Nested-anchor fix well-typed: explicit <code>as="link" | "span"</code> prop with documented contract; server and client markup now match (no hydration mismatch).</li>
-    <li>Migration 004 well-formed: quiz_run table, indexes, RLS policies.</li>
-    <li>No client-side secret leakage; auth session resolved server-side via SSR cookie.</li>
-  </ul>
-</section>
+  <section>
+    <h2>Code Quality &amp; Tooling</h2>
+    <table>
+      <tr><th>Check</th><th>Result</th></tr>
+      <tr><td>TypeScript (<code>tsc --noEmit</code>)</td><td class="pass">PASS — 0 errors</td></tr>
+      <tr><td>Lint (<code>eslint</code> on all touched files)</td><td class="pass">PASS — clean</td></tr>
+      <tr><td>Production build (<code>npm run build</code>)</td><td class="pass">PASS — quiz/cert routes registered</td></tr>
+      <tr><td>No <code>any</code> / <code>@ts-ignore</code></td><td class="pass">PASS — none in changed files</td></tr>
+      <tr><td>Stub handlers / silent mock fallthrough</td><td class="pass">PASS — none found</td></tr>
+      <tr><td>CHANGELOG updated</td><td class="pass">PASS — 76 lines added in commit</td></tr>
+      <tr><td>Shared contracts / curriculum data untouched</td><td class="pass">PASS — not in commit</td></tr>
+      <tr><td>New a11y tests</td><td class="pass">PASS — 12 added, all green (20/20 across the 5 touched test files)</td></tr>
+    </table>
+    <p class="note">Code quality score: <b>PASS</b>. Changes are minimal, well-commented with audit-finding references, and follow existing component patterns.</p>
+  </section>
 
-<section>
-  <h2>Test Coverage / Verification</h2>
-  <table>
-    <tr><th>Gate</th><th>Result</th></tr>
-    <tr><td>tsc --noEmit</td><td class="pass">PASS (exit 0)</td></tr>
-    <tr><td>eslint (npm run lint)</td><td class="pass">PASS (exit 0)</td></tr>
-    <tr><td>npm run build (SSG)</td><td class="pass">PASS (91/91 static pages + API routes, exit 0)</td></tr>
-    <tr><td>Unit tests (vitest)</td><td class="pass">PASS — 28/28 across 6 files (QuizWidget 10, useQuizProgress 8, useReadProgress 4, QuizStats 3, ShareBar 2, LessonCard 1)</td></tr>
-    <tr><td>Browser verification (run #2569)</td><td class="pass">PASS — /learn with seeded quiz attempts: QuizStats as &lt;span&gt;, 0 nested anchors; series header link to /learn/omni-studio-cert/quiz; quiz page renders results view; no JS errors</td></tr>
-    <tr><td>Browser console errors</td><td class="pass">PASS — 0 JS errors, 0 hydration warnings on /learn, /learn/[series], /learn/[series]/quiz (only benign dev-mode CSP eval notice)</td></tr>
-  </table>
-</section>
+  <section>
+    <h2>Upstream Deliverables Verified</h2>
+    <table>
+      <tr><th>Source</th><th>Status</th><th>Notes</th></tr>
+      <tr><td>steel — build t_5664453e, commit <code>e4958c7</code> (15 files)</td><td class="pass">passed</td><td>All 8 findings fixed; handoff metadata consistent with actual diff.</td></tr>
+      <tr><td>lara — audit t_5ed4bb0f</td><td class="pass">passed</td><td>Original 8 findings; SEO PASS. Re-verify confirms fixes land.</td></tr>
+      <tr><td>val-el / sato</td><td class="pass">passed</td><td>No security or performance findings against this fix (no new data paths / bundles introduced).</td></tr>
+    </table>
+  </section>
 
-<section>
-  <h2>Upstream Deliverables Verified</h2>
-  <table>
-    <tr><th>Source</th><th>Deliverable</th><th>Status</th></tr>
-    <tr><td>steel (t_574d3153, db25389)</td><td>Read dimming, unmark sync, auth UI, quiz stats, retake preservation, aria labels, motion, banners — full changed_files list</td><td class="pass">PASS — 9/9 findings fixed</td></tr>
-    <tr><td>steel (t_97f2451c, 7ef842c)</td><td>QuizStats <code>as="link"|"span"</code>; PathCard span render; series-header link kept</td><td class="pass">PASS — verified live: 0 nested anchors, 0 hydration errors</td></tr>
-    <tr><td>steel (t_808e5885, 5a80992)</td><td>validateSlug accepts canonical blog/&lt;slug&gt; — read API 400 resolved</td><td class="pass">PASS — 16/16 API contract checks (progress lane)</td></tr>
-    <tr><td>steel (t_50e059f1, 71aa3f0)</td><td>Quiz hydration gate + attempt-count inflation fix</td><td class="pass">PASS — 18/18 quiz tests (quiz lane)</td></tr>
-    <tr><td>steel (t_588dfe46, c51caf2)</td><td>ShareBar hydration, score ring, read-sync posture, check-pop motion</td><td class="pass">PASS — 28/28 tests (motion lane)</td></tr>
-    <tr><td>QA lanes (zod)</td><td>reports/qa-report-banners.html · qa-report-motion.html · qa-report-progress.html · qa-report-quiz.html</td><td class="pass">PASS — all four lanes APPROVED</td></tr>
-    <tr><td>sato (perf, t_c5e9474d)</td><td>Perf audit verdict</td><td class="pass">PASS — 3 low-severity notes non-blocking</td></tr>
-    <tr><td>lara / val-el (upstream audits)</td><td>a11y + security fixes preserved</td><td class="pass">PASS — intact in changed code</td></tr>
-  </table>
-</section>
+  <section>
+    <h2>Recommendation</h2>
+    <p><b class="pass">APPROVE</b> — All 8 acceptance criteria met. TypeScript, lint, and build are clean. The single test failure in the working tree is a pre-existing artifact of a concurrent uncommitted curriculum-data change and is not attributable to this commit. Proceed to deployment (alpha).</p>
+  </section>
 
-<section>
-  <h2>Final Recommendation</h2>
-  <p><strong>APPROVE.</strong> All acceptance criteria met (10/10). 0 open findings. All four decomposed QA lanes approved. Build/type/lint/test gates green (91 pages, 28 tests, tsc/eslint clean). The nested-anchor defect from run #2557 is resolved and verified live. Ready for handoff to Alpha (deployment).</p>
-  <p style="margin-top:8px; font-size:0.85rem; color:#6B7280;">Report generated by Zod (qa-review) · run #2569 · 2026-08-06</p>
-</section>
-
-</div>
+</main>
 </body>
 </html>

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Requirements: Interactive Quiz Tiers + Gating — OmniStudio Cert Course</title>
+<title>Adroit Blog — Account & Learn Round 3: Feature Requirements</title>
 <style>
   :root {
     --primary: #1a1a2e;
@@ -17,311 +17,141 @@
     --success: #28a745;
     --warning: #ffc107;
     --danger: #dc3545;
-    --navy: #1B2A4A;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
   .container { max-width: 1100px; margin: 0 auto; padding: 2rem; }
 
+  /* Header */
   header { background: var(--primary); color: white; padding: 3rem 0 2rem; }
   header h1 { font-size: 2rem; font-weight: 700; margin-bottom: 0.5rem; }
-  header .subtitle { font-size: 1.1rem; color: rgba(255,255,255,0.8); margin-bottom: 0.5rem; }
-  header .meta { color: rgba(255,255,255,0.6); font-size: 0.85rem; }
+  header .meta { color: rgba(255,255,255,0.7); font-size: 0.9rem; }
   header .meta span { margin-right: 1.5rem; }
   .badge { display: inline-block; padding: 0.25rem 0.75rem; border-radius: 999px; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
   .badge-adroit { background: var(--accent); color: white; }
+  .badge-fraimers { background: #6f42c1; color: white; }
 
+  /* Sections */
   section { background: var(--card); border-radius: 12px; padding: 2rem; margin: 1.5rem 0; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
   section h2 { font-size: 1.25rem; font-weight: 600; color: var(--primary); margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--accent); }
   section h3 { font-size: 1.1rem; font-weight: 600; color: var(--accent2); margin: 1.25rem 0 0.5rem; }
   section h4 { font-size: 1rem; font-weight: 600; margin: 1rem 0 0.25rem; }
+
+  /* Content */
   p { margin-bottom: 0.75rem; }
   ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
   li { margin-bottom: 0.25rem; }
 
+  /* Cards */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1rem; margin: 1rem 0; }
+  .card { border: 1px solid var(--border); border-radius: 8px; padding: 1.25rem; background: var(--bg); }
+  .card h4 { color: var(--primary); margin-bottom: 0.5rem; }
+
+  /* Status indicators */
+  .status-dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 0.5rem; }
+  .status-pass { background: var(--success); }
+  .status-fail { background: var(--danger); }
+  .status-warn { background: var(--warning); }
+  .status-pending { background: var(--muted); }
+
+  /* Tables */
   table { width: 100%; border-collapse: collapse; margin: 1rem 0; }
   th, td { padding: 0.75rem; text-align: left; border-bottom: 1px solid var(--border); }
   th { background: var(--primary); color: white; font-weight: 600; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px; }
   tr:nth-child(even) { background: var(--bg); }
 
-  .story-card { border: 1px solid var(--border); border-radius: 8px; padding: 1.25rem; margin: 1rem 0; background: var(--bg); }
-  .story-card h4 { color: var(--primary); margin-bottom: 0.5rem; }
-  .story-card .story-text { font-style: italic; color: var(--accent2); margin-bottom: 0.75rem; }
-  .story-card .acceptance { list-style: none; margin-left: 0; }
-  .story-card .acceptance li { padding: 0.25rem 0 0.25rem 1.25rem; position: relative; }
-  .story-card .acceptance li::before { content: "✓"; position: absolute; left: 0; color: var(--success); font-weight: bold; }
-
+  /* Tags */
   .tag { display: inline-block; padding: 0.15rem 0.5rem; border-radius: 4px; font-size: 0.75rem; font-weight: 500; margin: 0.15rem; }
-  .tag-in { background: #d4edda; color: #155724; }
-  .tag-out { background: #f8d7da; color: #721c24; }
-  .tag-open { background: #fff3cd; color: #856404; }
+  .tag-p0 { background: #f8d7da; color: #721c24; }
+  .tag-p1 { background: #fff3cd; color: #856404; }
+  .tag-p2 { background: #d1ecf1; color: #0c5460; }
+  .tag-p3 { background: #e2e3e5; color: #383d41; }
 
-  .status-dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 0.5rem; }
-  .status-pass { background: var(--success); }
-  .status-warn { background: var(--warning); }
-
-  .decision { border-left: 3px solid var(--accent); padding-left: 1rem; margin: 0.5rem 0; }
-
+  /* Footer */
   footer { text-align: center; padding: 2rem; color: var(--muted); font-size: 0.85rem; border-top: 1px solid var(--border); margin-top: 2rem; }
+  footer img { height: 24px; vertical-align: middle; margin-right: 0.5rem; }
 
-  @media print {
-    header { background: var(--primary) !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-    section { break-inside: avoid; }
-  }
+  /* Print */
+  @media print { header { background: var(--primary) !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; } }
 </style>
 </head>
 <body>
 <header>
   <div class="container">
-    <div class="badge badge-adroit">Adroit Consulting</div>
-    <h1>Requirements: Interactive Quiz Tiers + Gating</h1>
-    <div class="subtitle">OmniStudio Developer Certification Course — adroit-blog</div>
+    <div class="badge badge-{{ brand|lower }}">Adroit Consulting</div>
+    <h1>Adroit Blog — Account & Learn Round 3: Feature Requirements</h1>
     <div class="meta">
-      <span>Date: August 10, 2026</span>
-      <span>Author: Lois Lane (BA)</span>
-      <span>Governing spec: docs/course-progression-pattern.md</span>
-      <span>v1.0</span>
+      <span>📅 August 11, 2026</span>
+      <span>📋 Adroit Blog</span>
+      <span>👤 Lois Lane, Business Analyst</span>
+      <span>📄 v1.0</span>
     </div>
   </div>
 </header>
 
 <main class="container">
-
-<!-- Executive Summary -->
-<section>
-  <h2>Executive Summary</h2>
-  <p>The OmniStudio Developer Certification course currently has 8 published lessons (of 46 planned), each carrying 3 prose practice questions rendered as static text in the MDX. The goal is to replace this flat structure with a three-tier quiz system: per-lesson quizzes embedded in lesson pages, knowledge checks every 5 lessons, and a timed certification prep exam.</p>
-  <p>All quiz content is gated behind authentication - guests see a sign-up CTA, not the questions. A certificate of completion is awarded when the user finishes all 46 lessons and passes the exam.</p>
-  <p>The existing quiz stack (QuizWidget, useQuizProgress, POST /api/progress/quiz, quiz_attempt table, Supabase auth) is live and fully reusable. <strong>No database schema changes are needed.</strong></p>
-</section>
-
-<!-- User Stories Table -->
-<section>
-  <h2>User Stories</h2>
-  <table>
-    <thead>
-      <tr><th style="width:80px">ID</th><th>Story</th><th style="width:100px">Stories</th></tr>
-    </thead>
-    <tbody>
-      <tr><td><strong>US-001</strong></td><td>Per-lesson quiz (authed users)</td><td>5</td></tr>
-      <tr><td><strong>US-002</strong></td><td>Per-lesson quiz (guest users - CTA gating)</td><td>3</td></tr>
-      <tr><td><strong>US-003</strong></td><td>Knowledge checks (15-question, every 5 lessons)</td><td>5</td></tr>
-      <tr><td><strong>US-004</strong></td><td>Knowledge check list on series page</td><td>3</td></tr>
-      <tr><td><strong>US-005</strong></td><td>Certification prep exam (60q, timed, gated)</td><td>8</td></tr>
-      <tr><td><strong>US-006</strong></td><td>Overall progress rollup on series page</td><td>4</td></tr>
-      <tr><td><strong>US-007</strong></td><td>Lesson ordering by number + "Hide completed" filter</td><td>5</td></tr>
-      <tr><td><strong>US-008</strong></td><td>Certificate of completion</td><td>4</td></tr>
-      <tr><td><strong>US-009</strong></td><td>Legacy quiz removal</td><td>3</td></tr>
-    </tbody>
-  </table>
-  <p><strong>Total: 9 user stories, 40 acceptance criteria</strong></p>
-</section>
-
-<!-- Detailed Stories -->
-<section>
-  <h2>Acceptance Criteria by Story</h2>
-
-  <div class="story-card">
-    <h4>US-001: Per-lesson quiz (authed)</h4>
-    <p class="story-text">As a logged-in learner, I want to answer 3 interactive practice questions at the end of each lesson, so that I can test my understanding and track my progress.</p>
-    <ul class="acceptance">
-      <li>Given I am logged in and viewing a lesson page, when the page loads, then I see an interactive quiz with 3 questions from that lesson's requirement.</li>
-      <li>Given I am answering a question, when I select an option and click "Check Answer", then I see whether I was correct and an explanation panel.</li>
-      <li>Given I have answered all 3 questions, when I view results, then I see a score ring showing correct/total, a percentage, and a "Retake quiz" button.</li>
-      <li>Given I retake the quiz, when I submit answers, then my best score and attempt count are preserved from the previous run.</li>
-      <li>Given I submit an answer, when the request completes, then my attempt is recorded in the quiz_attempt table (for authed users) and persisted in localStorage.</li>
-    </ul>
-  </div>
-
-  <div class="story-card">
-    <h4>US-002: Per-lesson quiz (guest)</h4>
-    <p class="story-text">As a guest visitor who is not logged in, I want to see a sign-up prompt instead of quiz content, so that I understand I need an account to practice.</p>
-    <ul class="acceptance">
-      <li>Given I am not logged in and viewing a lesson page, when the page loads, then I see a sign-up CTA placeholder ("Test what you learned and track your progress by creating an account and logging in!").</li>
-      <li>Given I am a guest, when I inspect the page source, then no question text is present in the HTML.</li>
-      <li>Given I am a guest, when I view the lesson page, then the prose Practice Questions section from the MDX is not rendered.</li>
-    </ul>
-  </div>
-
-  <div class="story-card">
-    <h4>US-003: Knowledge checks</h4>
-    <p class="story-text">As a logged-in learner, I want to take 15-question knowledge checks every 5 lessons, so that I can assess my understanding of related topics before the final exam.</p>
-    <ul class="acceptance">
-      <li>Given I am logged in, when I navigate to /learn/omni-studio-cert/check/&lt;n&gt; (n=1..9), then I see a 15-question quiz pooled from the preceding 5 lessons.</li>
-      <li>Given I complete a knowledge check, when my score is calculated, then "passed" means best score >= 80% (80 flat passes).</li>
-      <li>Given I have passed a knowledge check, when I view the series page, then the check card shows passed state.</li>
-      <li>Given I am a guest, when I visit a knowledge check page, then I see the sign-up CTA placeholder with no question text in HTML.</li>
-      <li>Given I retake a knowledge check, when I complete it, then my best score is updated (max of all attempts) and attempt count increments.</li>
-    </ul>
-  </div>
-
-  <div class="story-card">
-    <h4>US-004: Knowledge check list on series page</h4>
-    <p class="story-text">As a logged-in learner, I want to see all 9 knowledge checks listed on the series page, so that I can track which checks I have completed and at what score.</p>
-    <ul class="acceptance">
-      <li>Given I am logged in and viewing the series page, when I scroll to the checks section, then I see 9 knowledge check cards labeled "Knowledge Check 1 - Lessons 1-5" through "Knowledge Check 9 - Lessons 41-45".</li>
-      <li>Given I have completed some checks, when I view the list, then each card shows my best score and pass/fail state.</li>
-      <li>Given I am a guest, when I view the series page, then knowledge check cards are shown but link to pages that display the CTA placeholder.</li>
-    </ul>
-  </div>
-
-  <div class="story-card">
-    <h4>US-005: Certification prep exam</h4>
-    <p class="story-text">As a logged-in learner who has passed all knowledge checks, I want to take a 60-question, timed certification prep exam, so that I can prepare for the real Salesforce OmniStudio Developer certification.</p>
-    <ul class="acceptance">
-      <li>Given all 9 knowledge checks have best scores >= 80%, when I navigate to /learn/omni-studio-cert/exam, then the exam is unlocked and I can begin.</li>
-      <li>Given any knowledge check has a best score &lt; 80% or is incomplete, when I navigate to the exam page, then I see a locked screen showing per-check progress and cannot start the exam.</li>
-      <li>Given I start the exam, when the timer begins, then a 105:00 countdown is visible and counts down.</li>
-      <li>Given the timer reaches 00:00, when I have not submitted, then my exam is auto-submitted with whatever answers I have provided.</li>
-      <li>Given I complete the exam, when results are shown, then I see my score, pass/fail status at the 72% threshold, and a summary of my answers.</li>
-      <li>Given I am taking the exam, when I answer questions, then per-question feedback is NOT shown (exam mode).</li>
-      <li>Given I complete the exam, when I retake it, then a new attempt is recorded and my best score is updated (max of all attempts).</li>
-      <li>Given I am a guest, when I visit the exam page, then I see the sign-up CTA placeholder.</li>
-    </ul>
-  </div>
-
-  <div class="story-card">
-    <h4>US-006: Overall progress rollup</h4>
-    <p class="story-text">As a logged-in learner, I want to see my overall progress across lessons, checks, and exam on the series page, so that I can gauge how close I am to certification.</p>
-    <ul class="acceptance">
-      <li>Given I am logged in and viewing the series page, when I see the progress section, then it shows "Lessons X/46 - Checks X/9 - Exam best Y%".</li>
-      <li>Given I have progress in multiple tiers, when I view the series page, then a "Certification readiness" bar shows a weighted percentage (lessons 40% / checks 30% / exam best 30%).</li>
-      <li>Given the exam is locked, when I view the series page, then the exam card shows lock state + unlock progress ("Checks passed X/9 - 80% required").</li>
-      <li>Given the legacy "Take the quiz" button existed, when I view the series page, then it has been replaced with "Take the exam" linking to the exam page.</li>
-    </ul>
-  </div>
-
-  <div class="story-card">
-    <h4>US-007: Lesson ordering and filtering</h4>
-    <p class="story-text">As a learner, I want lessons to be ordered by lesson number with the ability to hide completed ones, so that I can follow the course in sequence.</p>
-    <ul class="acceptance">
-      <li>Given I view the series page, when lessons are listed, then they are ordered by lesson number ascending (not by publish date).</li>
-      <li>Given I toggle the sort control, when the page updates, then lessons switch between ascending and descending lesson number order.</li>
-      <li>Given I activate the "Hide completed" filter, when the lesson list updates, then only lessons I have not marked complete are shown.</li>
-      <li>Given I deactivate the "Hide completed" filter, when the lesson list updates, then all lessons are shown again.</li>
-      <li>Given the filter state changes, when the page hydrates, then the filter persists correctly without hydration mismatch.</li>
-    </ul>
-  </div>
-
-  <div class="story-card">
-    <h4>US-008: Certificate of completion</h4>
-    <p class="story-text">As a learner who has completed all lessons and passed the exam, I want to receive a printable certificate, so that I have proof of completing the certification preparation course.</p>
-    <ul class="acceptance">
-      <li>Given I have completed all 46 lessons AND my exam best score is >= 72%, when I navigate to the certificate page, then I see a printable certificate with my name, the series name, the date, and my exam score.</li>
-      <li>Given I have not met both conditions, when I navigate to the certificate page, then I see a message explaining what I need to complete.</li>
-      <li>Given I am a guest, when I navigate to the certificate page, then I see the sign-up CTA placeholder.</li>
-      <li>Given I print the certificate, when the print dialog opens, then the certificate renders cleanly for printing.</li>
-    </ul>
-  </div>
-
-  <div class="story-card">
-    <h4>US-009: Legacy quiz removal</h4>
-    <p class="story-text">As a learner, I want the old 5-question series quiz to be removed for the OmniStudio course, so that the quiz tiers replace it cleanly.</p>
-    <ul class="acceptance">
-      <li>Given the legacy /learn/omni-studio-cert/quiz route existed, when I navigate to it after the change, then the route returns 404.</li>
-      <li>Given the series page previously showed "Take the quiz", when I view the page, then it shows "Take the exam" linking to /learn/omni-studio-cert/exam.</li>
-      <li>Given the existing QuizStats component tracked the old series quiz scope, when I view the series page, then it reflects the new tier-based tracking.</li>
-    </ul>
-  </div>
-</section>
-
-<!-- Scope Boundaries -->
-<section>
-  <h2>Scope Boundaries</h2>
-  <h3>In scope</h3>
-  <ul>
-    <li>Three quiz tiers: per-lesson (3q), knowledge checks (15q, 9 total), cert prep exam (60q, timed)</li>
-    <li>Auth gating: hide-all-for-guests with CTA placeholder</li>
-    <li>Exam unlock logic: all 9 checks >= 80%</li>
-    <li>Exam timer: 105 min countdown with auto-submit at zero</li>
-    <li>Unlimited retakes with best score tracking</li>
-    <li>Overall progress rollup on series page</li>
-    <li>Lesson ordering by lesson number + "Hide completed" filter</li>
-    <li>Certificate of completion (all 46 lessons + exam >= 72%)</li>
-    <li>Legacy quiz removal for omni-studio-cert</li>
-    <li>Content generator: emit JSON tiers from curriculum source</li>
-    <li>Legacy prose question removal from published lessons 1-8</li>
-  </ul>
-  <h3>Out of scope</h3>
-  <ul>
-    <li>User profile page with badges (post-v1 backlog)</li>
-    <li>Paid-tier gating for knowledge checks (future)</li>
-    <li>Other learn series (sfarch, agentic) adopting the pattern - they follow the checklist later</li>
-    <li>Jimmy contract patch (orchestrator task, post-deploy)</li>
-  </ul>
-</section>
-
-<!-- Decision Log -->
-<section>
-  <h2>Decision Log (Chris, 2026-08-10)</h2>
-  <div class="decision"><strong>1.</strong> Exam timer: strict 105-minute countdown, auto-submit at zero. Unlimited retakes.</div>
-  <div class="decision"><strong>2.</strong> Knowledge check unlock: NOT gated by lesson completion - all checks visible. Keep the unlock idea for a future paid tier.</div>
-  <div class="decision"><strong>3.</strong> Retakes: unlimited. Score/progress tracking with best score per quiz and overall certification readiness rollup.</div>
-  <div class="decision"><strong>4.</strong> Gating: hide quizzes entirely if not logged in. Guests see a sign-up CTA - NOT the plain-text questions.</div>
-  <div class="decision"><strong>5.</strong> Learn ordering: lessons ordered by lesson number, not date. Sort control + "Hide completed" filter.</div>
-  <div class="decision"><strong>6.</strong> Certificate of completion: on full completion of the lesson plan (all 46 lessons + exam).</div>
-  <div class="decision"><strong>7.</strong> Post-v1 (NOT this build): user profile page with badges.</div>
-  <div class="decision"><strong>8.</strong> Legacy quiz folded in: the existing /learn/[series]/quiz 5-question page is REMOVED for omni-studio-cert. The series-page "Take the quiz" button becomes the exam entry point.</div>
-  <div class="decision"><strong>9.</strong> Exam unlock rule (CANONICAL): the cert exam is locked until every knowledge check passes at >= 80% (80 flat passes). Exam card shows lock state + progress.</div>
-</section>
-
-<!-- Data Model -->
-<section>
-  <h2>Data Entities</h2>
-  <h3>Existing tables (no schema changes)</h3>
-  <table>
-    <thead><tr><th>Table</th><th>Key columns</th><th>Notes</th></tr></thead>
-    <tbody>
-      <tr><td>quiz_attempt</td><td>user_id, quiz_name, question_index, correct_answer_index, user_answer_index, is_correct, attempted_at</td><td>Reused as-is. Arbitrary quiz_name strings. Per-user RLS.</td></tr>
-      <tr><td>lesson_completion</td><td>user_id, lesson_slug, completed_at</td><td>Reused for lesson tracking and certificate eligibility.</td></tr>
-    </tbody>
-  </table>
-  <h3>Derived metrics (no new table)</h3>
-  <table>
-    <thead><tr><th>Metric</th><th>Derivation</th></tr></thead>
-    <tbody>
-      <tr><td>Best score per quiz</td><td>MAX score over completed runs for a given quiz_name per user</td></tr>
-      <tr><td>Check pass status</td><td>Best score >= 80% for any omni-studio-cert:check:&lt;n&gt;</td></tr>
-      <tr><td>Exam unlock state</td><td>ALL 9 checks have best score >= 80%</td></tr>
-      <tr><td>Certificate eligibility</td><td>ALL 46 lesson_completion rows + exam best >= 72%</td></tr>
-      <tr><td>Certification readiness</td><td>Weighted: lessons 40% / checks 30% / exam best 30%</td></tr>
-    </tbody>
-  </table>
-</section>
-
-<!-- Open Questions -->
-<section>
-  <h2>Open Questions for Chris</h2>
-  <ol>
-    <li><strong>Certificate completion rule:</strong> The plan says "all 46 lessons + exam >= 72%". Since the exam requires all checks >= 80% to unlock, passing the exam at >= 72% implicitly means all checks were passed. Confirm: is the certificate rule simply "all 46 lessons completed + exam best >= 72%"?</li>
-    <li><strong>Certification readiness bar formula:</strong> The plan suggests lessons 40% / checks 30% / exam best 30%. Is this weighting approved, or should the architect propose an alternative?</li>
-    <li><strong>Exam timer trust model:</strong> Should the timer be client-side only, or should server-side elapsed time be checked on submit to prevent clock tampering? This affects API design.</li>
-    <li><strong>Certificate design:</strong> Kara will handle the visual design. Confirm: the certificate should include the user's name, course name, completion date, and exam score. Any additional fields?</li>
-  </ol>
-</section>
-
-<!-- Handoff Note -->
-<section>
-  <h2>Handoff Note for Architect (brainiac)</h2>
-  <p>This requirements document covers the full scope of the quiz tiers + gating build. The existing quiz stack (QuizWidget, useQuizProgress, POST /api/progress/quiz, quiz_attempt table, Supabase auth) is live and fully reusable. No database schema changes are needed.</p>
-  <p>Key architectural decisions needed:</p>
-  <ul>
-    <li><strong>Batch exam submission:</strong> The current /api/progress/quiz route handles one question at a time. A batch submit route is needed for the 60-question exam to avoid 60 sequential POSTs. Rate limits may need exam-scoped relaxation.</li>
-    <li><strong>Auth gating pattern:</strong> Server-side session check on lesson pages, check pages, exam page, and certificate page. Prefer server-side gate so guest HTML never contains questions.</li>
-    <li><strong>Lesson page becomes dynamic:</strong> Session check in a currently-static page introduces a minor performance cost. Confirm SSG + client-side gate vs server session read.</li>
-    <li><strong>Certificate validation:</strong> Server-side route to derive certificate eligibility from lesson_completion + quiz_attempt rows. No new table needed initially.</li>
-    <li><strong>Sorting contract change:</strong> learn.ts's "newest first" ADR-002 must be updated to the new lesson-number contract.</li>
-  </ul>
-  <p>Full markdown requirements: <code>docs/requirements-quiz-tiers.md</code></p>
-  <p>Governing spec: <code>docs/course-progression-pattern.md</code></p>
-</section>
-
+<h2>Adroit Blog — Account & Learn Round 3: Feature Requirements</h2><p><strong>Date:</strong> August 11, 2026
+<strong>Author:</strong> Lois Lane, Business Analyst
+<strong>Project:</strong> Adroit Blog
+<strong>Version:</strong> v1.0</p><h3>Executive Summary</h3><p>Round 3 of the Adroit Blog covers six workstreams focused on account identity, the Learn experience, and site-wide design consistency. The round introduces a <code>user_profiles</code> table for per-account data (display name, username, theme preference), reorganizes the Learn hub with hierarchical course taxonomy and guest gating, adds a "Continue learning" section for in-progress courses, and includes a whole-site spacing/formatting audit. Dark mode support (auto + manual toggle) is the largest lift, touching every component and MDX content.</p><h3>User Stories</h3><h4>WS-1: Site-wide Spacing/Formatting Audit</h4><p>| ID | As a | I want | So that | Acceptance Criteria |
+|----|------|--------|---------|-------------------|
+| US-WS1-001 | design reviewer | a documented audit of spacing/formatting inconsistencies across all routes | I have a prioritized list of what to fix | Given every route is audited, When I read findings, Then each inconsistency is cataloged with severity |
+| US-WS1-002 | designer | corrected spacing design tokens | the developer has consistent vertical rhythm to implement | Given the audit is complete, When I review tokens, Then values for rhythm, padding, and spacing are consistent |
+| US-WS1-003 | developer | to implement the spacing token pass site-wide | all routes have consistent visual rhythm | Given corrected tokens exist, When applied, Then no inconsistencies remain |</p><h4>WS-2: Account Defaults (Avatar Menu + Settings)</h4><p>| ID | As a | I want | So that | Acceptance Criteria |
+|----|------|--------|---------|-------------------|
+| US-WS2-001 | registered user | my avatar menu to show my display name instead of email | my account feels personal | Given I have a display name, When I open avatar menu, Then it shows my name (email as fallback) |
+| US-WS2-002 | registered user | to set my display name and username in Settings | my identity is visible across the site | Given I submit the form, When the API succeeds, Then name/username are saved to user_profiles |
+| US-WS2-003 | registered user | dark mode to follow my OS preference by default | the site matches my system settings | Given my OS prefers dark, When I visit, Then the site renders in dark theme |
+| US-WS2-004 | registered user | to manually override dark mode from Settings and the avatar menu | I can choose my preferred theme regardless of OS | Given I toggle theme, When saved, Then the preference persists in user_profiles.theme_pref |
+| US-WS2-005 | developer | a user_profiles table with RLS policies | per-account data is stored securely | Given the migration runs, When I query, Then the table has user_id, display_name, username, theme_pref with RLS |</p><h4>WS-3: Learn Tab Reorganization + Guest Gating</h4><p>| ID | As a | I want | So that | Acceptance Criteria |
+|----|------|--------|---------|-------------------|
+| US-WS3-001 | learner | filter chips at the top of the Learn hub (All, General, Certifications) | I can quickly narrow courses by track | Given I click a filter, When the view updates, Then only matching courses show |
+| US-WS3-002 | learner | courses grouped under subgroup section headers | related courses are visually organized | Given courses have subgroups, When I view the hub, Then they appear under labeled headers |
+| US-WS3-003 | guest user | to see course names and descriptions but not click into them | I understand what is available before signing in | Given I am logged out, When I try to click a card, Then it shows a sign-in CTA |
+| US-WS3-004 | logged-in user | my per-series progress bar on the course card body | I can see progress without opening the series | Given I am logged in, When I view the hub, Then each card shows my progress |
+| US-WS3-005 | content editor | to add an optional subgroup field to series.json | courses can be organized under sub-categories without a DB migration | Given I add subgroup, When I build, Then learn.ts includes it |</p><h4>WS-4: Continue Learning</h4><p>| ID | As a | I want | So that | Acceptance Criteria |
+|----|------|--------|---------|-------------------|
+| US-WS4-001 | logged-in user | a "Continue learning" section at the top of the Learn hub | I can quickly pick up where I left off | Given I have in-progress courses, When I visit, Then the section appears above filters |
+| US-WS4-002 | logged-in user | courses sorted by most recent activity | the course I was working on last appears first | Given multiple in-progress courses, When I view, Then they are ordered by recency |
+| US-WS4-003 | logged-in user | a resume link on each in-progress course | I can continue from my last lesson | Given I click resume, When navigated, Then I land on the next uncompleted lesson |</p><h4>WS-5: Profile Identity + Certificates</h4><p>| ID | As a | I want | So that | Acceptance Criteria |
+|----|------|--------|---------|-------------------|
+| US-WS5-001 | registered user | to see and edit my name and username on the Profile page | my identity is visible and editable | Given I update fields, When I save, Then changes persist and reflect in avatar menu |
+| US-WS5-002 | registered user | a "My certificates" section on my Profile | I can see all certificates I have earned | Given I have certificates, When I visit Profile, Then they are listed |</p><h4>WS-6: Settings Cleanup</h4><p>| ID | As a | I want | So that | Acceptance Criteria |
+|----|------|--------|---------|-------------------|
+| US-WS6-001 | registered user | the "Email updates" teaser to remain in Settings | I am reminded this feature is planned | Given I visit Settings, When I see Email updates, Then it shows COMING SOON with a non-functional toggle |</p><h3>Scope Boundaries</h3><p><strong>In scope:</strong>
+<ul>
+<ol>
+<li>Whole-site spacing audit and token pass (WS-1)</li>
+<li>user_profiles table + profile API + display name/avatar (WS-2)</li>
+<li>Dark mode: auto + manual toggle, persisted per-account (WS-2)</li>
+<li>Learn hub: taxonomy filters, subgroup headers, guest gating, progress on cards (WS-3)</li>
+<li>Continue learning section (WS-4)</li>
+<li>Profile identity fields + My certificates section (WS-5)</li>
+<li>Settings: keep Email updates teaser (WS-6)</li>
+</ol></ul>
+<strong>Out of scope:</strong>
+<ul>
+<ol>
+<li>Email updates subscription functionality</li>
+<li>Password reset / change-password API</li>
+<li>Community/social features</li>
+<li>New course content</li>
+</ol></ul>
+<h3>Open Questions</h3><ol>
+<li><strong>Username uniqueness:</strong> Should usernames be unique across users? What is the error message when taken?</li>
+<li><strong>Certificate display format:</strong> What should earned certificates look like in "My certificates"? (badge, PDF, shareable link?)</li>
+<li><strong>Continue learning data source:</strong> Should "most recent activity" use lesson_completion.completed_at, read_progress.read_at, or both?</li>
+<li><strong>Dark mode transition:</strong> Should theme changes animate (crossfade) or switch instantly?</li>
+<li><strong>Guest card CTA behavior:</strong> When a guest clicks a non-clickable card, should it navigate to /login?next=/learn/<series> or open a sign-in modal?</li>
+</ol>
+<h3>Handoff Note</h3><p>This requirements document is ready for architectural design. Hand off to <strong>Brainiac</strong> (web/architect) for implementation planning, API contracts, and component design. The shared conventions document (<code>requirements/shared-conventions.md</code>) should be read alongside this file.
+</p>
 </main>
 
 <footer>
   <div class="container">
-    <p><strong>Fortress of Solitude Consulting</strong> - a division of Adroit Consulting Group</p>
-    <p>Confidential - prepared for adroit-blog project</p>
+    <p><strong>Fortress of Solitude Consulting</strong> — a division of Adroit Consulting Group</p>
+    <p>Confidential — prepared for Adroit Blog</p>
   </div>
 </footer>
 </body>

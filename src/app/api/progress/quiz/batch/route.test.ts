@@ -12,10 +12,12 @@ import { NextRequest } from "next/server";
 
 const { mocks } = vi.hoisted(() => {
   const getSupabaseServerClient = vi.fn();
+  const getSupabaseServiceClient = vi.fn();
   const getUser = vi.fn();
   const from = vi.fn();
+  const serviceFrom = vi.fn();
   return {
-    mocks: { getSupabaseServerClient, getUser, from },
+    mocks: { getSupabaseServerClient, getSupabaseServiceClient, getUser, from, serviceFrom },
   };
 });
 
@@ -24,6 +26,12 @@ vi.mock("@/lib/supabase/server", () => ({
     auth: { getUser: mocks.getUser },
     from: mocks.from,
   }),
+}));
+
+// Server-write-only (t_bb6ed113): quiz_attempt/quiz_run writes MUST go
+// through the service-role client, never the RLS-bound (anon/cookie) client.
+vi.mock("@/lib/supabase/service", () => ({
+  getSupabaseServiceClient: () => ({ from: mocks.serviceFrom }),
 }));
 
 import { POST } from "./route";
@@ -50,12 +58,13 @@ function post(body: Record<string, unknown>): Promise<Response> {
   );
 }
 
-/** Chainable fake for the write calls the route makes after the gate. */
+/** Capture buffers for the graded writes (service client). */
 const writeSink = {
   quizAttemptUpserts: [] as unknown[],
   quizRunInserts: [] as unknown[],
 };
 
+/** RLS/anonymous server client — reads only (gate check) — quiz_run SELECT. */
 function makeFrom(table: string, checkRows: unknown) {
   if (table === "quiz_run") {
     return {
@@ -64,6 +73,15 @@ function makeFrom(table: string, checkRows: unknown) {
           in: async () => ({ data: checkRows, error: null }),
         }),
       }),
+    };
+  }
+  return {};
+}
+
+/** Service-role client — quiz_attempt upsert + quiz_run insert (the ONLY writes). */
+function makeServiceFrom(table: string) {
+  if (table === "quiz_run") {
+    return {
       insert: async (row: unknown) => {
         writeSink.quizRunInserts.push(row);
         return { error: null };
@@ -94,6 +112,9 @@ beforeEach(() => {
   writeSink.quizAttemptUpserts.length = 0;
   writeSink.quizRunInserts.length = 0;
   mocks.from.mockImplementation((table: string) => makeFrom(table, []));
+  mocks.serviceFrom.mockImplementation((table: string) =>
+    makeServiceFrom(table, []),
+  );
 });
 
 describe("POST /api/progress/quiz/batch — exam unlock gate", () => {
@@ -193,5 +214,34 @@ describe("POST /api/progress/quiz/batch — exam unlock gate", () => {
     expect(q0).toMatchObject({ user_answer_index: 1, is_correct: true });
     const q59 = rows.find((r) => r.question_index === 59);
     expect(q59).toMatchObject({ user_answer_index: -1, is_correct: false });
+  });
+
+  it("writes attempts + run through the SERVICE client, never the RLS server client (server-write-only, t_bb6ed113)", async () => {
+    authedUser();
+    const checkRows = Array.from({ length: 9 }, (_, i) => ({
+      quiz_name: `omni-studio-cert:check:${i + 1}`,
+      score: 90,
+    }));
+    mocks.from.mockImplementation((table: string) => makeFrom(table, checkRows));
+
+    const res = await post(examBody());
+    expect(res.status).toBe(200);
+
+    // Graded writes are on the service-role client only.
+    expect(mocks.serviceFrom).toHaveBeenCalledWith("quiz_attempt");
+    expect(mocks.serviceFrom).toHaveBeenCalledWith("quiz_run");
+    expect(writeSink.quizAttemptUpserts).toHaveLength(1);
+    expect(writeSink.quizRunInserts).toHaveLength(1);
+
+    // The RLS/anonymous server client performs ONLY reads (the gate SELECT);
+    // it must never be used for quiz_attempt/quiz_run writes.
+    const rlsQuizRun = mocks.from.mock.results.find(
+      (r) => (r.value as { insert?: unknown } | undefined)?.insert !== undefined,
+    );
+    expect(rlsQuizRun).toBeUndefined();
+    const rlsQuizAttempt = mocks.from.mock.results.find(
+      (r) => (r.value as { upsert?: unknown } | undefined)?.upsert !== undefined,
+    );
+    expect(rlsQuizAttempt).toBeUndefined();
   });
 });
