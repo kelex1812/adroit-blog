@@ -25,7 +25,7 @@ export default function PostReadProgress({
 
   if (isLoading) {
     return (
-      <div className="w-full h-1.5 rounded-full bg-gray-100 animate-pulse" />
+      <div className="w-full h-1.5 rounded-full bg-gray-100 dark:bg-[var(--surface-sunken)] animate-pulse" />
     );
   }
 

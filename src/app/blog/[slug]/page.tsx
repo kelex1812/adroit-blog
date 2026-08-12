@@ -68,16 +68,16 @@ export default async function BlogPostPage({ params }: Props) {
 
           {/* Author row */}
           <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-navy to-navy-light ring-2 ring-white shadow-sm flex items-center justify-center text-white font-bold text-xs transition-all duration-150 hover:ring-red">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-navy to-navy-light ring-2 ring-white dark:ring-[var(--surface-card)] shadow-sm flex items-center justify-center text-white font-bold text-xs transition-all duration-150 hover:ring-red">
               {post.authorInitials}
             </div>
             <div className="flex flex-col">
-              <span className="text-sm font-semibold text-gray-800">
+              <span className="text-sm font-semibold text-gray-800 dark:text-[var(--ink-primary)]">
                 {post.author}
               </span>
-              <div className="flex items-center text-xs text-gray-400">
+              <div className="flex items-center text-xs text-gray-500 dark:text-[var(--ink-muted)]">
                 <span>{post.date}</span>
-                <span className="mx-3 h-3 w-px bg-gray-200" />
+                <span className="mx-3 h-3 w-px bg-gray-200 dark:bg-[var(--border-default)]" />
                 <span>{post.readTime}</span>
               </div>
             </div>
@@ -86,14 +86,14 @@ export default async function BlogPostPage({ params }: Props) {
           <div className="flex items-center gap-2 mb-1">
             <Tag label={post.category} color={post.categoryColor} />
             {post.featured && (
-              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-red/10 text-red text-[0.6rem] font-bold uppercase tracking-wider">
+              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-red/10 text-red dark:bg-red/15 dark:text-[var(--accent)] text-[0.6rem] font-bold uppercase tracking-wider">
                 <span className="w-1 h-1 rounded-full bg-red animate-pulse" />
                 Featured
               </span>
             )}
           </div>
 
-          <h1 className="text-[clamp(1.875rem,4.5vw,2.625rem)] font-extrabold text-navy tracking-[-0.025em] leading-[1.12] mt-4 mb-4">
+          <h1 className="text-[clamp(1.875rem,4.5vw,2.625rem)] font-extrabold text-navy dark:text-[var(--ink-strong)] tracking-[-0.025em] leading-[1.12] mt-4 mb-4">
             {post.title}
           </h1>
 
@@ -103,7 +103,7 @@ export default async function BlogPostPage({ params }: Props) {
               {post.tags.map((tag) => (
                 <span
                   key={tag}
-                  className="px-2.5 py-0.5 rounded-full bg-gray-100 text-gray-500 text-[11px] font-medium hover:bg-gray-200 hover:text-navy transition-colors duration-150"
+                  className="px-2.5 py-0.5 rounded-full bg-gray-100 text-gray-600 text-[11px] font-medium hover:bg-gray-200 hover:text-navy dark:bg-[var(--surface-sunken)] dark:text-[var(--ink-muted)] dark:hover:bg-[var(--surface-card-soft)] dark:hover:text-[var(--ink-primary)] transition-colors duration-150"
                 >
                   {tag}
                 </span>
@@ -114,7 +114,7 @@ export default async function BlogPostPage({ params }: Props) {
           <ShareBar />
 
           {/* Read progress */}
-          <div className="mt-4 pt-4 border-t border-gray-100">
+          <div className="mt-4 pt-4 border-t border-gray-100 dark:border-[var(--border-subtle)]">
             <PostReadProgress slug={`blog/${post.slug}`} contentType="blog" unreadLabel="Not read yet" />
             <div className="mt-3">
               <MarkAsRead slug={`blog/${post.slug}`} contentType="blog" />
@@ -125,7 +125,7 @@ export default async function BlogPostPage({ params }: Props) {
         {/* Post Banner — real image when present, gradient fallback */}
         {post.bannerImage && (
           <div className="max-w-[920px] mx-auto px-6 py-6">
-            <div className="relative rounded-2xl overflow-hidden shadow-lg shadow-navy/10 ring-1 ring-gray-200">
+            <div className="relative rounded-2xl overflow-hidden shadow-lg shadow-navy/10 ring-1 ring-gray-200 dark:ring-[var(--border-default)]">
               <BannerImage
                 post={post}
                 className="h-[220px] md:h-[380px]"
@@ -178,10 +178,16 @@ async function MDXArticle({ mdx }: { mdx: string }) {
   // "Sources" (remark-gfm's footnoteLabel option is dropped in v4; this is
   // the reliable way to set the visible label). Walk the whole hast tree —
   // the <h2 id="footnote-label"> sits inside the footnote <section>.
+  type FootnoteNode = {
+    type: string;
+    tagName?: string;
+    properties?: { id?: unknown };
+    children?: FootnoteNode[];
+    value?: string;
+  };
   function renameFootnoteHeading() {
-    return (tree: any) => {
-      const walk = (node: any) => {
-        if (!node || typeof node !== "object") return;
+    return (tree: FootnoteNode) => {
+      const walk = (node: FootnoteNode) => {
         if (
           node.type === "element" &&
           node.tagName === "h2" &&
@@ -189,9 +195,7 @@ async function MDXArticle({ mdx }: { mdx: string }) {
         ) {
           node.children = [{ type: "text", value: "Sources" }];
         }
-        if (Array.isArray(node.children)) {
-          node.children.forEach(walk);
-        }
+        node.children?.forEach(walk);
       };
       walk(tree);
       return tree;

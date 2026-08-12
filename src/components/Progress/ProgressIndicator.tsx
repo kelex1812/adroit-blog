@@ -23,11 +23,11 @@ export default function ProgressIndicator({
   return (
     <div className="w-full">
       <div className="flex items-center justify-between mb-1.5">
-        <span className="font-mono text-[11px] font-semibold text-gray-500">
+        <span className="font-mono text-[11px] font-semibold text-gray-500 dark:text-[var(--ink-muted)]">
           {label || `Progress`}
         </span>
         {showPercent && (
-          <span className="font-mono text-[11px] font-bold text-navy tabular-nums">
+          <span className="font-mono text-[11px] font-bold text-navy dark:text-[var(--ink-primary)] tabular-nums">
             {pct}%
           </span>
         )}
@@ -39,7 +39,7 @@ export default function ProgressIndicator({
         aria-valuenow={Math.min(current, total)}
         aria-valuetext={pct > 0 ? `${pct}%` : `${current} of ${total}`}
         aria-label={label || "Progress"}
-        className="h-1.5 rounded-full overflow-hidden bg-gray-200"
+        className="h-1.5 rounded-full overflow-hidden bg-gray-200 dark:bg-[var(--surface-sunken)]"
       >
         <div
           className="h-full rounded-full bg-red transition-[width] duration-300"

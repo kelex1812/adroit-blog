@@ -4,6 +4,53 @@ All notable changes to the Adroit Consulting Blog project will be documented in 
 
 ## [Unreleased]
 
+### Dark mode: blog post page token refresh + AA contrast fixes (t_1addcce3)
+
+Implements kara's dark-mode refresh spec (`deliverables/dark-mode-token-spec.md`,
+design task t_04d6d884). Fixes Chris's reported dark-mode readability problems:
+headline dark-navy-on-dark-navy, share icons and dividers with no dark variant,
+faint tag pills. Light mode is unchanged (verified); company navy/red identity
+preserved.
+
+- `src/app/globals.css` — `html.dark` block: `--border-default` `#1e293b →
+  #26324a`, `--border-subtle` `#182136 → #1c2438` (visibility-tuned decorative
+  separators, WCAG 1.4.11-exempt), `--border-strong` `#334155 → #64748b`
+  (slate-500, genuinely passes 3:1 for interactive boundaries). New
+  `html.dark :focus-visible { outline-color: var(--accent) }` rule (5.54:1).
+- `src/app/blog/[slug]/page.tsx` — dark: variants for h1 headline
+  (`--ink-strong`), avatar ring, author name, meta row + divider, featured
+  badge, tag pills (sunken bg / muted text / card-soft hover), read-progress
+  divider, banner ring. Light bonus: meta `text-gray-400 → text-gray-500`
+  (2.39 → 4.55:1), tag pills `text-gray-500 → text-gray-600` (4.39 → 6.87:1).
+- `src/components/BlogPost/ShareBar.tsx` — dark: container border, "Share"
+  label, icon buttons + copy-idle (card bg / muted glyph / border-default).
+  Copied state light `bg-emerald → bg-emerald-700` (5.48:1) + dark
+  `dark:bg-emerald-600` (3.77:1). Light bonus: label `text-gray-400 →
+  text-gray-500`.
+- `src/components/BlogPost/PostNavigation.tsx` — dark: card borders, prev/next
+  labels, titles (ink-primary / accent on hover).
+- `src/components/BackLink.tsx` — dark: muted link → ink-primary hover.
+- `src/components/Progress/ProgressIndicator.tsx` — dark: label, percent, track.
+- `src/components/Progress/MarkAsRead.tsx` — dark: idle (card bg / muted) and
+  read (emerald-950/60 bg / emerald-300 text) states.
+- `src/components/Progress/PostReadProgress.tsx` — dark: loading skeleton.
+
+**Verification**: `tsc --noEmit` clean; `npm run build` clean; full suite 184
+passing (unchanged — theme-only work, no logic). Contrast: kara's
+`deliverables/contrast-proof.py` + `contrast-final.py` both exit 0 — all
+foreground/background pairs pass WCAG 2.1 AA (4.5:1 body, 3:1 UI/interactive).
+Live dev-server browser check (computed styles + screenshots in
+`deliverables/screenshots/`): dark mode h1 `#f1f5f9`, author `#e2e8f0`, meta
+`#94a3b8`, share icons `#121a2e` bg / `#26324a` border, tag pills `#0c1322` bg
+/ `#94a3b8` text, article body `#cbd5e1` — all visible, no dark-on-dark.
+Light mode: navy h1 `#0B1D3A`, white share circles, gray tag pills — unchanged.
+
+**Known issues**: none within scope. The blog *listing* page family
+(`blog/page.tsx`, `PostCard.tsx`, `FeaturedPost.tsx`, etc.) still has zero
+dark: variants — flagged as follow-up in the spec (§6), not part of this task.
+Category Tag pills (colored pastel chips) keep their light styling by design
+spec decision.
+
 ### Security: slim guest /learn payload to card-render data (t_3dbf4826)
 
 Closes Val-El's payload-hygiene follow-up from the guest-gating audit

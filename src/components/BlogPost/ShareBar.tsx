@@ -62,8 +62,8 @@ export default function ShareBar() {
   };
 
   return (
-    <div className="flex items-center gap-2 py-4 border-t border-b border-gray-200 my-6">
-      <span className="text-xs text-gray-400 font-medium mr-1 uppercase tracking-wider font-mono">
+    <div className="flex items-center gap-2 py-4 border-t border-b border-gray-200 dark:border-[var(--border-default)] my-6">
+      <span className="text-xs text-gray-500 dark:text-[var(--ink-muted)] font-medium mr-1 uppercase tracking-wider font-mono">
         Share
       </span>
       {shareButtons.map((btn) => (
@@ -73,7 +73,7 @@ export default function ShareBar() {
           target="_blank"
           rel="noopener noreferrer"
           title={btn.label}
-          className="w-9 h-9 rounded-full border border-gray-200 bg-white flex items-center justify-center text-gray-600 cursor-pointer hover:bg-navy hover:text-white hover:border-navy hover:-translate-y-0.5 transition-all duration-150 no-underline"
+          className="w-9 h-9 rounded-full border border-gray-200 bg-white flex items-center justify-center text-gray-600 dark:border-[var(--border-default)] dark:bg-[var(--surface-card)] dark:text-[var(--ink-muted)] cursor-pointer hover:bg-navy hover:text-white hover:border-navy hover:-translate-y-0.5 transition-all duration-150 no-underline"
         >
           {btn.icon}
         </a>
@@ -83,8 +83,8 @@ export default function ShareBar() {
         title="Copy link"
         className={`w-9 h-9 rounded-full border flex items-center justify-center cursor-pointer transition-all duration-150 ${
           copied
-            ? "bg-emerald text-white border-emerald"
-            : "border-gray-200 bg-white text-gray-500 hover:bg-navy hover:text-white hover:border-navy hover:-translate-y-0.5"
+            ? "bg-emerald-700 text-white border-emerald-700 dark:bg-emerald-600 dark:border-emerald-600"
+            : "border-gray-200 bg-white text-gray-500 dark:border-[var(--border-default)] dark:bg-[var(--surface-card)] dark:text-[var(--ink-muted)] hover:bg-navy hover:text-white hover:border-navy hover:-translate-y-0.5"
         }`}
       >
         {copied ? (

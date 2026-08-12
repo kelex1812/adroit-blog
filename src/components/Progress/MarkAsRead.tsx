@@ -42,8 +42,8 @@ export default function MarkAsRead({
         showLabel ? "px-4 min-h-11" : "px-3 min-h-9"
       } ${
         isRead
-          ? "bg-green-100 text-green-700 hover:bg-green-200"
-          : "bg-gray-100 text-gray-600 hover:bg-navy hover:text-white"
+          ? "bg-green-100 text-green-700 hover:bg-green-200 dark:bg-emerald-950/60 dark:text-emerald-300 dark:hover:bg-emerald-900/50"
+          : "bg-gray-100 text-gray-600 hover:bg-navy hover:text-white dark:bg-[var(--surface-card)] dark:text-[var(--ink-muted)]"
       } ${isLoading ? "opacity-50 cursor-wait" : "cursor-pointer"}`}
     >
       <svg

@@ -555,9 +555,9 @@ html.dark {
   --ink-faint: #7f8ca3;
   --ink-on-inverse: #f8fafc;
 
-  --border-default: #1e293b;
-  --border-subtle: #182136;
-  --border-strong: #334155;
+  --border-default: #26324a;
+  --border-subtle: #1c2438;
+  --border-strong: #64748b;
 
   --accent: #f05066;
   --accent-hover: #f47385;
@@ -572,6 +572,12 @@ html.dark {
   --shadow-card-light: 0 1px 0 rgba(255, 255, 255, 0.03), 0 4px 16px -6px rgba(0, 0, 0, 0.5);
   --shadow-card-hover-light: 0 2px 0 rgba(255, 255, 255, 0.04), 0 18px 36px -12px rgba(0, 0, 0, 0.6);
   --shadow-menu-light: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 16px 32px -12px rgba(0, 0, 0, 0.55);
+}
+
+/* Dark focus ring — accent #f05066 clears 5.54:1 on the dark page surface
+   (brand red #C8102E = 3.27:1 also passes; accent is just clearer). */
+html.dark :focus-visible {
+  outline-color: var(--accent);
 }
 
 /* Page + article body in dark (propagates through MDX + blog prose) */
