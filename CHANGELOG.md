@@ -23,11 +23,13 @@ F1 LOW/CWE-732, F2 LOW/CWE-285).
     (migration 005, line 8) — no FK change required.
 
 **Verification**: migration 007 applied cleanly to a scratch Postgres carrying
-the 005 schema; `pg_policies` confirms all three policies target
-`authenticated` with the correct qual/with_check expressions. Functional RLS
-test under the `authenticated` role: own-row select/update/insert pass;
-cross-user read returns 0 rows; cross-user UPDATE affects 0 rows; and a
-`user_id` reassignment attempt is blocked by the new WITH CHECK.
+the 005 schema (re-apply is idempotent — `DROP POLICY IF EXISTS`);
+`pg_policies` confirms all three policies target `authenticated` with the
+correct qual/with_check expressions. Functional RLS test under the
+`authenticated` role: own-row select/update/insert pass; cross-user read
+returns 0 rows; cross-user UPDATE affects 0 rows; and a `user_id`
+reassignment attempt is blocked by the new WITH CHECK. `npm run lint` and
+`npm run build` both pass (SQL-only change; suite is a regression guard).
 
 ### Security: validate login `next` param — CWE-601 open redirect (t_6c96683f)
 
