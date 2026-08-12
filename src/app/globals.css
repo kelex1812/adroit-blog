@@ -22,6 +22,7 @@
   --color-gray-200: #E5E7EB;
   --color-gray-300: #D1D5DB;
   --color-gray-400: #9CA3AF;
+  --color-gray-450: #646d7c;
   --color-gray-500: #6B7280;
   --color-gray-600: #4B5563;
   --color-gray-700: #374151;
@@ -441,7 +442,7 @@ button:focus-visible {
   --ink-primary: var(--color-navy);
   --ink-body: var(--color-gray-800);
   --ink-muted: var(--color-gray-600);
-  --ink-faint: var(--color-gray-400);
+  --ink-faint: var(--color-gray-450);
   --ink-on-inverse: #ffffff;
 
   --border-default: var(--color-gray-200);
@@ -450,7 +451,11 @@ button:focus-visible {
 
   --accent: var(--color-red);
   --accent-hover: var(--color-red-dark);
+  --accent-bg: var(--color-red);
   --accent-on-accent: #ffffff;
+  /* Foreground for accent-tinted surfaces (e.g. 8% accent chips) — dark red
+     clears 4.5:1 on the tint in light; remapped lighter in dark mode. */
+  --accent-on-tint: var(--color-red-dark);
   --signal-done: var(--color-emerald);
   --signal-done-bg: #d1fae5;
   --signal-warn: var(--color-amber);
@@ -474,16 +479,18 @@ html.dark {
   --ink-primary: #e2e8f0;
   --ink-body: #cbd5e1;
   --ink-muted: #94a3b8;
-  --ink-faint: #64748b;
+  --ink-faint: #7f8ca3;
   --ink-on-inverse: #f8fafc;
 
   --border-default: #1e293b;
   --border-subtle: #182136;
   --border-strong: #334155;
 
-  --accent: var(--color-red-light);
-  --accent-hover: var(--color-red);
+  --accent: #f05066;
+  --accent-hover: #f47385;
+  --accent-bg: #C8102E;
   --accent-on-accent: #ffffff;
+  --accent-on-tint: var(--accent-hover);
   --signal-done: #34d399;
   --signal-done-bg: rgba(16, 185, 129, 0.14);
   --signal-warn: #fbbf24;

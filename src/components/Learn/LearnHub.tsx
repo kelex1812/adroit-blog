@@ -83,7 +83,7 @@ export default function LearnHub({ series, gate }: LearnHubProps) {
               <h2 className="font-mono text-[12px] font-bold text-[var(--ink-faint)] uppercase tracking-[0.1em]">
                 {group}
               </h2>
-              <span className="font-mono text-[10.5px] font-bold text-[var(--accent)] bg-[var(--accent)]/[0.08] px-2 py-0.5 rounded-full">
+              <span className="font-mono text-[10.5px] font-bold text-[var(--accent-on-tint)] bg-[var(--accent)]/[0.08] px-2 py-0.5 rounded-full">
                 {groupCount} {groupCount === 1 ? "path" : "paths"}
               </span>
               <span className="h-px flex-1 bg-gradient-to-r from-[var(--border-default)] to-transparent" aria-hidden />

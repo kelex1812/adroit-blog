@@ -16,6 +16,7 @@ TOKENS = {
     '--ink-faint':   ('#646d7c', '#7f8ca3', 'both'),
     '--accent':      ('#C8102E', '#f05066', 'dark-text'),
     '--accent-hover':('#A00D24', '#f47385', 'dark-text'),
+    '--accent-on-tint': ('#A00D24', '#f47385', 'on-tint'),
 }
 
 def lum(h):
@@ -37,14 +38,32 @@ BEFORE = {
     ('--accent-hover', 'dark'):{'page': 3.27, 'card': 2.94, 'card-soft': 3.09, 'sunken': 3.15},
 }
 
+def blend(fg, bg, pct):
+    fr, fgc, fb = (int(fg[i:i+2], 16) for i in (1, 3, 5))
+    br, bgc, bb = (int(bg[i:i+2], 16) for i in (1, 3, 5))
+    return '#%02X%02X%02X' % tuple(
+        round(f * pct + b * (1 - pct)) for f, b in zip((fr, fgc, fb), (br, bgc, bb)))
+
 failures = []
-print(f"{'token':<14}{'theme':<7}{'surface':<10}{'before':<8}{'after':<7}{'status'}")
-print('-' * 60)
+print(f"{'token':<16}{'theme':<7}{'surface':<10}{'before':<8}{'after':<7}{'status'}")
+print('-' * 64)
 for tok, (light_v, dark_v, scope) in TOKENS.items():
     for theme, surfaces, value in (('light', LIGHT_SURFACES, light_v),
                                    ('dark', DARK_SURFACES, dark_v)):
         # --accent / --accent-hover only enforced in dark (light already passes)
         if scope == 'dark-text' and theme == 'light':
+            continue
+        if scope == 'on-tint':
+            # Text on an 8% accent-tint chip; bg = tint over the surface.
+            tint = blend('#C8102E' if theme == 'light' else '#f05066',
+                         surfaces['card'], 0.08)
+            r = ratio(value, tint)
+            before = BEFORE.get((tok, theme), {}).get('card', None)
+            ok = r >= 4.5
+            if not ok:
+                failures.append(f"{tok} {theme}/card-tint: {r:.2f}:1")
+            bs = f"{before:.2f}" if before else '  -  '
+            print(f"{tok:<16}{theme:<7}{'card-tint':<10}{bs:<8}{r:<7.2f}{'PASS' if ok else 'FAIL'}")
             continue
         for name, bg in surfaces.items():
             r = ratio(value, bg)

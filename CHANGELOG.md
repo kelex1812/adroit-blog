@@ -4,6 +4,28 @@ All notable changes to the Adroit Consulting Blog project will be documented in 
 
 ## [Unreleased]
 
+### Fix: LearnHub group-count badge contrast — WCAG 1.4.3 AA (t_8b9ee30a)
+
+Closes a11y finding: the group-header count badge rendered
+`text-[var(--accent)]` on an `bg-[var(--accent)]/[0.08]` accent-tint chip.
+On the pre-remap accent values this failed AA (~2.81–3.16:1 < 4.5:1 for the
+10.5px bold count). The R3 token remap already lifted the raw numbers past
+AA, but dark-card was borderline (4.63:1) with no margin. Introduced an
+explicit on-tint foreground token so the badge clears AA with comfortable
+headroom in both themes.
+
+- `src/app/globals.css`
+  - **New `--accent-on-tint`** semantic token: `--color-red-dark` `#A00D24`
+    in light, `var(--accent-hover)` `#f47385` in dark. Dedicated foreground
+    for text sitting on an accent-tint (8%) chip, separate from the plain
+    text-accent.
+- `src/components/Learn/LearnHub.tsx` — group count badge uses
+  `text-[var(--accent-on-tint)]` instead of `text-[var(--accent)]`.
+- `scripts/verify_contrast.py` — asserts `--accent-on-tint` on the 8%
+  card-tint in both themes (light 7.11:1, dark 5.84:1 — both PASS ≥4.5).
+
+`tsc --noEmit` clean; `scripts/verify_contrast.py` all PASS.
+
 ### Fix: text-gray-400 contrast on lesson surfaces — WCAG 1.4.3 AA (t_f5c7f22c)
 
 Closes out-of-scope a11y findings (Lara, t_5c11d157): `text-gray-400`
