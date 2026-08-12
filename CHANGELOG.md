@@ -4,6 +4,31 @@ All notable changes to the Adroit Consulting Blog project will be documented in 
 
 ## [Unreleased]
 
+### Security: harden user_profiles RLS to migration-003 standard (t_ecf3b702)
+
+Closes Val-El's audit findings (t_6cd3026f — fresh user_profiles re-audit:
+F1 LOW/CWE-732, F2 LOW/CWE-285).
+
+- `supabase/migrations/007_user_profiles_hardening.sql` (new) — layered on top
+  of migration 005 (already applied; 005 is not edited). Recreates the three
+  `user_profiles` policies to match the migration-003 hardening standard:
+  - **SELECT** (`users select own profile`) — now `TO authenticated`.
+  - **INSERT** (`users upsert own profile`) — now `TO authenticated`
+    (already had `WITH CHECK (auth.uid() = user_id)`).
+  - **UPDATE** (`users update own profile`) — now `TO authenticated` with an
+    explicit `WITH CHECK (auth.uid() = user_id)` alongside `USING`. PG
+    previously fell back to USING for the new-row check; the explicit guard
+    prevents silent widening if USING is ever loosened.
+  - `user_id` FK already `REFERENCES auth.users(id) ON DELETE CASCADE`
+    (migration 005, line 8) — no FK change required.
+
+**Verification**: migration 007 applied cleanly to a scratch Postgres carrying
+the 005 schema; `pg_policies` confirms all three policies target
+`authenticated` with the correct qual/with_check expressions. Functional RLS
+test under the `authenticated` role: own-row select/update/insert pass;
+cross-user read returns 0 rows; cross-user UPDATE affects 0 rows; and a
+`user_id` reassignment attempt is blocked by the new WITH CHECK.
+
 ### Security: validate login `next` param — CWE-601 open redirect (t_6c96683f)
 
 Closes Val-El's audit finding (t_d8a9dae6 — guest gating audit; the only open
