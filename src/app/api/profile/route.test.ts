@@ -28,11 +28,14 @@ function get(): Promise<Response> {
   return GET();
 }
 
-function patch(body: unknown): Promise<Response> {
+function patch(
+  body: unknown,
+  headers: Record<string, string> = {},
+): Promise<Response> {
   return PATCH(
     new NextRequest("http://localhost:3000/api/profile", {
       method: "PATCH",
-      headers: { "content-type": "application/json" },
+      headers: { "content-type": "application/json", ...headers },
       body: JSON.stringify(body),
     }),
   );
@@ -105,6 +108,31 @@ describe("PATCH /api/profile", () => {
   it("401s without a session", async () => {
     const res = await patch({ displayName: "Jane" });
     expect(res.status).toBe(401);
+  });
+
+  it("403s a disallowed Origin (CSRF check, F6)", async () => {
+    const res = await patch(
+      { displayName: "Jane" },
+      { origin: "https://evil.example.com" },
+    );
+    expect(res.status).toBe(403);
+    expect(await res.json()).toEqual({ error: "Forbidden origin" });
+  });
+
+  it("429s when the per-IP rate limit is exceeded", async () => {
+    mocks.getUser.mockResolvedValue(AUTHED);
+    const q = profileQuery({ row: PROFILE_ROW });
+    mocks.from.mockImplementation(() => q);
+    const ip = { "x-forwarded-for": "10.9.9.9" }; // dedicated bucket
+    // First 30 PATCHes pass the limiter (they hit auth/validation);
+    // the 31st is rejected with 429.
+    for (let i = 0; i < 30; i++) {
+      const res = await patch({ themePref: "dark" }, ip);
+      expect([200, 400, 401]).toContain(res.status);
+    }
+    const blocked = await patch({ themePref: "dark" }, ip);
+    expect(blocked.status).toBe(429);
+    expect(await blocked.json()).toEqual({ error: "Too many requests" });
   });
 
   it("rejects an empty body (no fields to update)", async () => {

@@ -5,12 +5,18 @@
  *        `{ user, profile }`. 401 → `{ user: null }` (mirrors /api/auth/session).
  * PATCH → update displayName / username / themePref. Server-side session check
  *        (HttpOnly cookie) — writes are enforced server-side only, never via
- *        client RLS. 401 on no session.
+ *        client RLS. Gated on `checkOrigin` (CSRF) + `checkRateLimit` (IP),
+ *        matching sibling progress/account routes. 401 on no session.
  *
  * Contract: src/shared/contracts-account.ts (brainiac, t_cde0e74a).
  */
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
+import {
+  checkOrigin,
+  checkRateLimit,
+  getClientIp,
+} from "@/lib/api-security";
 import type {
   ProfilePatchRequest,
   UserProfile,
@@ -75,8 +81,19 @@ export async function GET() {
   }
 }
 
-export async function PATCH(req: Request) {
+export async function PATCH(req: NextRequest) {
   try {
+    /* --- Origin / CSRF check (F6) — matches sibling account/progress routes --- */
+    const originErr = checkOrigin(req);
+    if (originErr) {
+      return NextResponse.json({ error: originErr }, { status: 403 });
+    }
+
+    /* --- Rate limit (F2) --- */
+    if (!checkRateLimit(getClientIp(req))) {
+      return NextResponse.json({ error: "Too many requests" }, { status: 429 });
+    }
+
     const supabase = await getSupabaseServerClient();
     const {
       data: { user },

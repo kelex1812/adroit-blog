@@ -4,6 +4,29 @@ All notable changes to the Adroit Consulting Blog project will be documented in 
 
 ## [Unreleased]
 
+### Security: profile PATCH now applies Origin check + IP rate limit (t_3b046f56)
+
+Closes audit finding #3 (t_4ce798cb, CWE-352 / CWE-799): `PATCH /api/profile`
+was the one state-changing account route that skipped the
+`checkOrigin` + `checkRateLimit` gate every sibling progress route applies.
+
+- `src/app/api/profile/route.ts` — PATCH now runs `checkOrigin(req)` (403 on
+  a disallowed Origin) and `checkRateLimit(getClientIp(req))` (429 on
+  exceeding 30 req/min/IP) before any session lookup or write, matching the
+  pattern in `/api/progress/*` and `/api/progress/read`. Handler signature is
+  now `NextRequest` to match the shared helpers.
+- Tests — `route.test.ts` gains 2 regressions: disallowed Origin → 403
+  `Forbidden origin`, and a dedicated-IP burst where the 31st PATCH → 429
+  `Too many requests`.
+
+**Known issues / note:** the rate limiter is the shared in-memory
+sliding-window (`src/lib/api-security.ts`, 30 req/min/IP, not persisted) — a
+process restart resets all buckets, acceptable for this blog tier. CSRF was
+already partially mitigated (HttpOnly + SameSite=Lax session cookie); this
+brings profile writes to the same defense-in-depth standard as sibling
+routes. Verified live: evil-origin PATCH → 403, allowed-origin guest PATCH →
+401, 31st rapid PATCH from one IP → 429.
+
 ### Verification: exam-flow a11y fixes (t_77103142)
 
 Auto-decomposed fix task confirmed redundant — the exam-flow a11y findings
