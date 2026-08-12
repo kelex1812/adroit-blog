@@ -3,8 +3,8 @@ import { BlogPost } from "./types";
 export const posts: BlogPost[] = [
   {
     "slug": "supabase-pipelines-cdc-bigquery",
-    "title": "Supabase Pipelines Is in Public Alpha: The Managed CDC Path From Postgres to BigQuery",
-    "excerpt": "Supabase moved its managed change-data-capture service to public alpha. Here's how it reads your write-ahead log, what it costs, the schema changes it replicates, and the traps that will cost you a full resync.",
+    "title": "Supabase Pipelines: Managed CDC to BigQuery",
+    "excerpt": "Supabase Pipelines hit public alpha. Here is how its managed CDC reads your WAL, what it costs, and the traps that trigger a full resync.",
     "category": "React & Web Dev",
     "categoryColor": "react",
     "categoryGradient": "from-emerald to-emerald-dark",

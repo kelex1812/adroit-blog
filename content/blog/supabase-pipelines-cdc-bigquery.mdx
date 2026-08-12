@@ -1,7 +1,7 @@
 ---
-title: "Supabase Pipelines Is in Public Alpha: The Managed CDC Path From Postgres to BigQuery"
+title: "Supabase Pipelines: Managed CDC to BigQuery"
 slug: supabase-pipelines-cdc-bigquery
-excerpt: "Supabase moved its managed change-data-capture service to public alpha. Here's how it reads your write-ahead log, what it costs, the schema changes it replicates, and the traps that will cost you a full resync."
+excerpt: "Supabase Pipelines hit public alpha. Here is how its managed CDC reads your WAL, what it costs, and the traps that trigger a full resync."
 category: "React & Web Dev"
 categoryColor: react
 categoryGradient: "from-emerald to-emerald-dark"
@@ -39,7 +39,7 @@ The value is clearest when you stack it against what teams were doing. A cron th
 
 Pipelines sits above all of those as a managed version. You pick tables in the Dashboard, choose BigQuery, and Supabase runs and monitors the pipeline that keeps it in sync. [^1]
 
-There is a deliberate line here worth naming. This is not the same thing as Supabase Realtime, which we covered here when binary payloads landed in June. Realtime is for live user experiences over WebSocket: chat, cursors, presence. Pipelines is for reliable data movement into analytical systems. If your front end needs live updates, that is Realtime. If your data warehouse needs a current copy of your operational tables, that is Pipelines. [^1]
+There is a deliberate line here worth naming. This is not the same thing as [Supabase Realtime](/blog/supabase-realtime-binary-payloads), which we covered here when binary payloads landed in June. Realtime is for live user experiences over WebSocket: chat, cursors, presence. Pipelines is for reliable data movement into analytical systems. If your front end needs live updates, that is Realtime. If your data warehouse needs a current copy of your operational tables, that is Pipelines. [^1]
 
 ## The numbers that matter: pricing and operations
 
@@ -73,21 +73,33 @@ The practical read: Pipelines keeps your destination schema aligned for the comm
 
 This is the section to read twice, because every item here leads to either a stopped pipeline or a billable full re-copy.
 
-**Tables need a primary key, and it must be in the publication.** BigQuery requires each source table to have a primary key and requires the publication to include its columns. Without one, inserts may replicate but updates and deletes fail. For wide tables, the FAQ recommends `REPLICA IDENTITY FULL` so enough old-row identity is sent for updates and deletes to resolve. Fix the setting before you generate more changes; if the failing update is already in WAL, you may need to recreate the pipeline or restart that table's initial sync. [^3]
+### Tables need a primary key, and it must be in the publication
+
+BigQuery requires each source table to have a primary key and requires the publication to include its columns. Without one, inserts may replicate but updates and deletes fail. For wide tables, the FAQ recommends `REPLICA IDENTITY FULL` so enough old-row identity is sent for updates and deletes to resolve. Fix the setting before you generate more changes; if the failing update is already in WAL, you may need to recreate the pipeline or restart that table's initial sync. [^3]
 
 ```sql
 alter table public.your_table replica identity full;
 ```
 
-**Generated columns are silently skipped**, and **custom data types replicate as strings**. Neither errors, both change the shape of your destination data if you did not expect them. [^3]
+### Generated columns are silently skipped
 
-**Partitioned tables land as separate destination tables unless the publication uses `publish_via_partition_root = true`.** Publications created from the Dashboard replication flow set this, but a publication you built manually may not, and you will get one destination table per leaf partition instead of one per root. [^3]
+Custom data types replicate as strings. Neither errors, both change the shape of your destination data if you did not expect them. [^3]
 
-**A `Lost` slot means a full, re-billed resync.** When the pipeline falls far enough behind that Postgres has already removed the WAL files its replication slot needed, the slot is lost and the pipeline cannot continue from it. Recovery is destructive: recreate the pipeline (or set invalidated slot behavior to Recreate), which resets saved table state, creates a new slot, and re-copies every table, billed again at the initial sync rate. Lag is the thing to watch, and the Dashboard surfaces it as WAL retention remaining and slot status. [^3]
+### Partitioned tables land as separate destination tables
 
-**Do not delete tables you did not manage.** If you manually delete or modify a Pipelines-managed table at the destination, replication can stop and Pipelines does not guarantee it will repair it. Recovering can mean a new, billable initial sync. To permanently remove a table, remove it from the Postgres publication first, restart the pipeline, then delete it at the destination. [^3]
+Unless the publication uses `publish_via_partition_root = true`. Publications created from the Dashboard replication flow set this, but a publication you built manually may not, and you will get one destination table per leaf partition instead of one per root. [^3]
 
-**A plan downgrade deletes your pipelines.** Dropping to the free plan removes every Pipelines destination created for that project. And if a project goes inactive, running pipelines stop and do not auto-resume; you restart each one manually. [^3]
+### A `Lost` slot means a full, re-billed resync
+
+When the pipeline falls far enough behind that Postgres has already removed the WAL files its replication slot needed, the slot is lost and the pipeline cannot continue from it. Recovery is destructive: recreate the pipeline (or set invalidated slot behavior to Recreate), which resets saved table state, creates a new slot, and re-copies every table, billed again at the initial sync rate. Lag is the thing to watch, and the Dashboard surfaces it as WAL retention remaining and slot status. [^3]
+
+### Do not delete tables you did not manage
+
+If you manually delete or modify a Pipelines-managed table at the destination, replication can stop and Pipelines does not guarantee it will repair it. Recovering can mean a new, billable initial sync. To permanently remove a table, remove it from the Postgres publication first, restart the pipeline, then delete it at the destination. [^3]
+
+### A plan downgrade deletes your pipelines
+
+Dropping to the free plan removes every Pipelines destination created for that project. And if a project goes inactive, running pipelines stop and do not auto-resume; you restart each one manually. [^3]
 
 ## The decision rule: Realtime or Pipelines
 
