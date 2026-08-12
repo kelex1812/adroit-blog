@@ -112,9 +112,7 @@ beforeEach(() => {
   writeSink.quizAttemptUpserts.length = 0;
   writeSink.quizRunInserts.length = 0;
   mocks.from.mockImplementation((table: string) => makeFrom(table, []));
-  mocks.serviceFrom.mockImplementation((table: string) =>
-    makeServiceFrom(table, []),
-  );
+  mocks.serviceFrom.mockImplementation((table: string) => makeServiceFrom(table));
 });
 
 describe("POST /api/progress/quiz/batch — exam unlock gate", () => {

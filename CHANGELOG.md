@@ -4,6 +4,41 @@ All notable changes to the Adroit Consulting Blog project will be documented in 
 
 ## [Unreleased]
 
+### Security: quiz_run / quiz_attempt are now server-write-only (t_bb6ed113)
+
+Closes the RLS client-forge path (CWE-807) that let an authenticated client
+hit PostgREST directly with the anon key + user JWT and INSERT/UPDATE/DELETE
+forged `quiz_attempt.is_correct` / `quiz_run.score` rows — bypassing the
+Next.js API routes that recompute correctness server-side — to unlock the
+timed exam or grant a certificate without earning them.
+
+- `supabase/migrations/006_quiz_server_write_only.sql` — revokes the
+  `authenticated` INSERT/UPDATE/DELETE policies on `quiz_attempt` and the
+  INSERT policy on `quiz_run`, replacing them with explicit deny guards.
+  `SELECT` stays so users still read their own stats/progress/eligibility.
+  Server writes now use the `service_role` key (Postgres `BYPASSRLS`), so
+  they are unaffected by the revocation.
+- `src/lib/supabase/service.ts` — new privileged, server-only service-role
+  client (`getSupabaseServiceClient()`). Fails closed: throws if
+  `SUPABASE_SERVICE_ROLE_KEY` is absent. Never used to resolve "who is the
+  current user"; reads stay on the cookie/RLS client (`server.ts`).
+- `POST /api/progress/quiz`, `POST /api/progress/quiz/run`,
+  `POST /api/progress/quiz/batch` — the graded `quiz_attempt`/`quiz_run`
+  writes now go through the service-role client; all reads (attempt lookup,
+  exam-unlock gate) stay on the RLS-bound client.
+- Tests — `route.test.ts` (new, single-attempt route) plus updated
+  `run/route.test.ts` and `batch/route.test.ts` assert the writes are
+  service-client-only and that the RLS/anonymous client is never used for a
+  write.
+
+**Known issues / deploy note (coordinated step):** this is a two-part
+change — the migration AND the runtime secret must land together or quiz
+writes fail. Before applying migration 006, set `SUPABASE_SERVICE_ROLE_KEY`
+(server-only, never `NEXT_PUBLIC_*`, never a tracked file) in the Vercel
+production env and local `.env.local`; then push 006. Until the migration is
+applied the code is inert; until the key is set, server writes return 500
+(fail closed — never a silent forgeable fallback). Ops: alpha.
+
 ### Feature: Round 3 — account & Learn experience (t_e0362113)
 
 Full Round 3 implementation per Brainiac's architecture
