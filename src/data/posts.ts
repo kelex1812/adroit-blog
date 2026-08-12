@@ -2,6 +2,28 @@ import { BlogPost } from "./types";
 
 export const posts: BlogPost[] = [
   {
+    "slug": "supabase-pipelines-cdc-bigquery",
+    "title": "Supabase Pipelines Is in Public Alpha: The Managed CDC Path From Postgres to BigQuery",
+    "excerpt": "Supabase moved its managed change-data-capture service to public alpha. Here's how it reads your write-ahead log, what it costs, the schema changes it replicates, and the traps that will cost you a full resync.",
+    "category": "React & Web Dev",
+    "categoryColor": "react",
+    "categoryGradient": "from-emerald to-emerald-dark",
+    "date": "August 12, 2026",
+    "author": "Adroit Consulting",
+    "authorInitials": "AC",
+    "readTime": "8 min read",
+    "featured": false,
+    "tags": [
+      "Supabase",
+      "BigQuery",
+      "Web Development",
+      "TypeScript",
+      "Real-time",
+      "CDC"
+    ],
+    "bannerImage": "/banners/supabase-pipelines-cdc-bigquery.png"
+  },
+  {
     "slug": "estimation-after-ai-2026",
     "title": "Estimation After AI: Velocity Stopped Forecasting",
     "excerpt": "AI split knowledge work into fast generation and slow validation, breaking the complexity-to-effort assumption that story-point velocity was built on.",
