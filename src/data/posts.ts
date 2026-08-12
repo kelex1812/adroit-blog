@@ -2,6 +2,27 @@ import { BlogPost } from "./types";
 
 export const posts: BlogPost[] = [
   {
+    "slug": "data-360-implementation-patterns",
+    "title": "Data 360 Implementation Patterns That Actually Ship",
+    "excerpt": "Data 360 projects fail on sequence, not connectors. Outcomes first, narrow ingestion, conservative identity rules, then activation that reaches a real workflow.",
+    "category": "Salesforce",
+    "categoryColor": "sf",
+    "categoryGradient": "from-sky to-sky-dark",
+    "date": "August 12, 2026",
+    "author": "Adroit Consulting",
+    "authorInitials": "AC",
+    "readTime": "9 min read",
+    "featured": false,
+    "tags": [
+      "Salesforce",
+      "Data 360",
+      "Data Cloud",
+      "Identity Resolution",
+      "CDP"
+    ],
+    "bannerImage": "/banners/data-360-implementation-patterns.png"
+  },
+  {
     "slug": "supabase-pipelines-cdc-bigquery",
     "title": "Supabase Pipelines: Managed CDC to BigQuery",
     "excerpt": "Supabase Pipelines hit public alpha. Here is how its managed CDC reads your WAL, what it costs, and the traps that trigger a full resync.",
