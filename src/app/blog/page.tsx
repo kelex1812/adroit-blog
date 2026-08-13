@@ -207,7 +207,7 @@ function BlogListingContent() {
 
         {/* Sign-in prompt — per-user cross-device sync (design brief §4.3) */}
         {!authLoading && !user && (
-          <div className="max-w-[1120px] mx-auto px-6 pt-4">
+          <div className="max-w-[1120px] mx-auto px-6 mb-6">
             <div className="flex items-center justify-between gap-3 rounded-xl border border-gray-200 bg-white px-4 py-3">
               <p className="text-[12.5px] text-gray-500 leading-relaxed">
                 Progress is saved on this device.{" "}

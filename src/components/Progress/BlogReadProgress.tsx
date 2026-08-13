@@ -35,14 +35,14 @@ export default function BlogReadProgress({ postSlugs }: BlogReadProgressProps) {
 
   if (isLoading && readCount === 0) {
     return (
-      <div className="max-w-[1120px] mx-auto px-6 pt-5">
+      <div className="max-w-[1120px] mx-auto px-6 pt-5 mb-6">
         <div className="h-1.5 rounded-full bg-gray-100 animate-pulse" />
       </div>
     );
   }
 
   return (
-    <div className="max-w-[1120px] mx-auto px-6 pt-5">
+    <div className="max-w-[1120px] mx-auto px-6 pt-5 mb-6">
       <ProgressIndicator
         current={readCount}
         total={postSlugs.length}
