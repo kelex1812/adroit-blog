@@ -6,7 +6,7 @@
 
 "use client";
 
-import { useEffect, useTransition } from "react";
+import { useEffect, useRef, useTransition } from "react";
 import { useThemeContext } from "./ThemeProvider";
 import type { ThemeMode } from "@/lib/hooks/useTheme";
 
@@ -35,6 +35,9 @@ export default function ThemeToggle({
 }: ThemeToggleProps) {
   const { mode, setMode, resolvedDark } = useThemeContext();
   const [isPending, startTransition] = useTransition();
+  // Roving-tabindex radio group (segmented variant). Declared unconditionally
+  // so the hook order is stable across the compact/iconOnly early returns.
+  const groupRef = useRef<HTMLDivElement>(null);
 
   // Adopt the account's persisted theme once, so a signed-in user's saved
   // preference wins over guest localStorage on first render.
@@ -124,10 +127,31 @@ export default function ThemeToggle({
     );
   }
 
+  // ARIA APG radio-group pattern: Left/Right (and Up/Down) move + select,
+  // Home/End jump, roving tabindex keeps a single tab stop.
+  function handleGroupKeyDown(e: React.KeyboardEvent<HTMLDivElement>) {
+    const radios = Array.from(
+      groupRef.current?.querySelectorAll<HTMLButtonElement>('[role="radio"]') ?? [],
+    );
+    if (radios.length === 0) return;
+    const current = radios.indexOf(document.activeElement as HTMLButtonElement);
+    let next = current;
+    if (e.key === "ArrowRight" || e.key === "ArrowDown") next = (current + 1) % radios.length;
+    else if (e.key === "ArrowLeft" || e.key === "ArrowUp") next = (current - 1 + radios.length) % radios.length;
+    else if (e.key === "Home") next = 0;
+    else if (e.key === "End") next = radios.length - 1;
+    if (next === current) return;
+    e.preventDefault();
+    radios[next].focus();
+    handleChange(OPTIONS[next].value);
+  }
+
   return (
     <div
-      role="group"
+      ref={groupRef}
+      role="radiogroup"
       aria-label="Theme"
+      onKeyDown={handleGroupKeyDown}
       className="grid grid-cols-3 gap-1 rounded-[10px] border border-[var(--border-default)] bg-[var(--surface-sunken)] p-1"
     >
       {OPTIONS.map((opt) => {
@@ -136,8 +160,10 @@ export default function ThemeToggle({
           <button
             key={opt.value}
             type="button"
+            role="radio"
+            aria-checked={active}
+            tabIndex={active ? 0 : -1}
             onClick={() => handleChange(opt.value)}
-            aria-pressed={active}
             disabled={isPending}
             className={`flex items-center justify-center gap-1.5 rounded-[7px] px-3 py-2 text-[13px] font-semibold transition-all duration-150 cursor-pointer border-none ${
               active

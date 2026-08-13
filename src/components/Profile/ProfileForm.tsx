@@ -95,7 +95,7 @@ export default function ProfileForm() {
             }}
             placeholder="How you appear on the site"
             disabled={!loaded || isPending}
-            className="w-full px-3.5 py-2.5 rounded-lg border border-[var(--border-default)] bg-[var(--surface-card)] text-[14px] text-[var(--ink-body)] focus:outline-none focus:border-[var(--accent)] focus:ring-[3px] focus:ring-[var(--accent)]/[0.08] disabled:opacity-50 placeholder:text-[var(--ink-faint)]"
+            className="w-full px-3.5 py-2.5 rounded-lg border border-[var(--border-default)] bg-[var(--surface-card)] text-[14px] text-[var(--ink-body)] focus:outline-none focus:border-[var(--accent)] focus:ring-[3px] focus:ring-[var(--accent)]/[0.25] disabled:opacity-50 placeholder:text-[var(--ink-faint)]"
           />
           <div className="text-[11.5px] text-[var(--ink-faint)] mt-1">
             Shown in the avatar menu and on your profile.
@@ -115,7 +115,7 @@ export default function ProfileForm() {
             }}
             placeholder="janedoe"
             disabled={!loaded || isPending}
-            className="w-full px-3.5 py-2.5 rounded-lg border border-[var(--border-default)] bg-[var(--surface-card)] text-[14px] text-[var(--ink-body)] focus:outline-none focus:border-[var(--accent)] focus:ring-[3px] focus:ring-[var(--accent)]/[0.08] disabled:opacity-50 placeholder:text-[var(--ink-faint)]"
+            className="w-full px-3.5 py-2.5 rounded-lg border border-[var(--border-default)] bg-[var(--surface-card)] text-[14px] text-[var(--ink-body)] focus:outline-none focus:border-[var(--accent)] focus:ring-[3px] focus:ring-[var(--accent)]/[0.25] disabled:opacity-50 placeholder:text-[var(--ink-faint)]"
           />
           <div className="text-[11.5px] text-[var(--ink-faint)] mt-1">
             <span className="font-mono text-[10.5px]">@{username || "username"}</span>

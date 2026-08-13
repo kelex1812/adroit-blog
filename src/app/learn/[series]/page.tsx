@@ -80,7 +80,7 @@ export default async function SeriesPage({ params }: Props) {
 
       <main id="main" className="flex-1">
         {/* Series header strip */}
-        <div className="max-w-[1120px] mx-auto px-6 pt-9">
+        <div className="max-w-[1120px] mx-auto px-6 pt-14">
           <Link
             href="/learn"
             className="inline-flex items-center gap-1.5 text-gray-500 text-xs font-medium no-underline mb-6 hover:text-navy transition-colors duration-150"

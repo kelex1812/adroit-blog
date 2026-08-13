@@ -55,9 +55,9 @@ export default function ContinueLearning() {
                 <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent)] animate-pulse" aria-hidden />
                 Continue learning
               </div>
-              <div className="text-[19px] font-extrabold tracking-[-0.01em] leading-snug mb-0.5">
+              <h2 className="text-[19px] font-extrabold tracking-[-0.01em] leading-snug mb-0.5">
                 {item.seriesName}
-              </div>
+              </h2>
               <div className="text-[12.5px] text-white/70">
                 {item.nextLessonTitle
                   ? `${item.completedCount} of ${item.totalLessons} lessons complete · next: ${item.nextLessonTitle}`

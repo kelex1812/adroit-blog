@@ -24,7 +24,7 @@ export default function ExamLocked({ series, checks, seriesName }: ExamLockedPro
     <div className="max-w-[720px] mx-auto px-6 pt-10 pb-24">
       <div className="rounded-[20px] border border-gray-200 bg-white p-8 shadow-sm">
         {/* Lock kicker */}
-        <div className="flex items-center gap-2 font-mono text-[11px] font-bold text-red-light uppercase tracking-[0.09em] mb-3">
+        <div className="flex items-center gap-2 font-mono text-[11px] font-bold text-red-dark uppercase tracking-[0.09em] mb-3">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" aria-hidden="true">
             <rect x="5" y="11" width="14" height="9" rx="2" />
             <path d="M8 11V7a4 4 0 0 1 8 0v4" />

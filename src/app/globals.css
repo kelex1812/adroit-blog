@@ -100,7 +100,7 @@ body {
 
 a:focus-visible,
 button:focus-visible {
-  outline: 2px solid var(--color-red);
+  outline: 2px solid var(--focus-ring);
   outline-offset: 2px;
   border-radius: 4px;
 }
@@ -126,7 +126,7 @@ button:focus-visible {
 .skip-link:focus {
   left: 0;
   position: fixed;
-  outline: 2px solid var(--color-red);
+  outline: 2px solid var(--focus-ring);
   outline-offset: 2px;
 }
 
@@ -530,10 +530,15 @@ button:focus-visible {
   /* Foreground for accent-tinted surfaces (e.g. 8% accent chips) — dark red
      clears 4.5:1 on the tint in light; remapped lighter in dark mode. */
   --accent-on-tint: var(--color-red-dark);
-  --signal-done: var(--color-emerald);
+  --signal-done: #047857;
   --signal-done-bg: #d1fae5;
   --signal-warn: var(--color-amber);
   --signal-warn-bg: #fef3c7;
+
+  /* Focus ring — light red-light #E8354A clears 4.03:1 on the navy header
+     (brand red #C8102E = 2.91:1 fails 3:1) and 4.17:1 on white cards.
+     html.dark remaps to the dark accent (4.98:1 on cards). */
+  --focus-ring: var(--color-red-light);
 
   /* Draft preview aliases (additive — design-tokens-draft-preview.css t_417a1026).
      Draft = "pending/not final" = the amber the site already uses for "Coming soon". */
@@ -576,6 +581,8 @@ html.dark {
   --signal-warn: #fbbf24;
   --signal-warn-bg: rgba(245, 158, 11, 0.14);
 
+  --focus-ring: var(--accent-hover);
+
   /* Draft preview aliases — dark remap (design-tokens-draft-preview.css) */
   --signal-draft-bg: rgba(245, 158, 11, 0.14);
   --signal-draft-text: var(--accent-hover);
@@ -586,10 +593,11 @@ html.dark {
   --shadow-menu-light: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 16px 32px -12px rgba(0, 0, 0, 0.55);
 }
 
-/* Dark focus ring — accent #f05066 clears 5.54:1 on the dark page surface
-   (brand red #C8102E = 3.27:1 also passes; accent is just clearer). */
+/* Dark focus ring — accent-hover #f47385 clears 6.3:1 on the dark page surface
+   and 5.1:1 on dark cards (brand red #C8102E = 3.27:1 also passes; accent-hover
+   is just clearer). */
 html.dark :focus-visible {
-  outline-color: var(--accent);
+  outline-color: var(--focus-ring);
 }
 
 /* Page + article body in dark (propagates through MDX + blog prose) */

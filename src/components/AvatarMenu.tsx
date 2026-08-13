@@ -240,15 +240,9 @@ export default function AvatarMenu({ user, onSignOut, isSigningOut = false }: Av
       </button>
 
       {open && (
-        <div
-          ref={menuRef}
-          role="menu"
-          aria-label="Account"
-          aria-orientation="vertical"
-          onKeyDown={handleMenuKeyDown}
-          className="menu-pop absolute right-0 top-[calc(100%+8px)] z-50 w-[240px] rounded-xl border border-[var(--border-default)] bg-[var(--surface-card)] p-1.5 shadow-menu"
-        >
-          {/* identity header */}
+        <div className="menu-pop absolute right-0 top-[calc(100%+8px)] z-50 w-[240px] rounded-xl border border-[var(--border-default)] bg-[var(--surface-card)] p-1.5 shadow-menu">
+          {/* identity header — OUTSIDE the menu (APG: role=menu contains
+              menuitems/separators only, not plain content blocks) */}
           <div className="flex items-center gap-2.5 px-2.5 py-2.5 pb-3">
             <span
               className={`flex h-9 w-9 items-center justify-center rounded-[10px] text-[13px] font-bold text-white ${hue}`}
@@ -264,55 +258,71 @@ export default function AvatarMenu({ user, onSignOut, isSigningOut = false }: Av
           </div>
           <hr className="mx-1.5 border-t border-[var(--border-subtle)]" />
 
-          <Link
-            href="/profile"
-            role="menuitem"
-            tabIndex={-1}
-            onClick={() => setOpen(false)}
-            className={`${itemBase} ${itemNormal}`}
-          >
-            <IconUser className="h-4 w-4 text-[var(--ink-faint)]" />
-            Profile
-          </Link>
-          <Link
-            href="/settings"
-            role="menuitem"
-            tabIndex={-1}
-            onClick={() => setOpen(false)}
-            className={`${itemBase} ${itemNormal}`}
-          >
-            <IconSettings className="h-4 w-4 text-[var(--ink-faint)]" />
-            Settings
-          </Link>
-
-          <hr className="mx-1.5 border-t border-[var(--border-subtle)]" />
-
-          {/* Theme quick-toggle row (persists per-account) */}
           <div
-            role="menuitem"
-            tabIndex={-1}
-            onClick={() => setOpen(false)}
-            className="cursor-pointer"
+            ref={menuRef}
+            role="menu"
+            aria-label="Account"
+            aria-orientation="vertical"
+            onKeyDown={handleMenuKeyDown}
           >
-            <ThemeToggle authed compact />
+            <Link
+              href="/profile"
+              role="menuitem"
+              tabIndex={-1}
+              onClick={() => setOpen(false)}
+              className={`${itemBase} ${itemNormal}`}
+            >
+              <IconUser className="h-4 w-4 text-[var(--ink-faint)]" />
+              Profile
+            </Link>
+            <Link
+              href="/settings"
+              role="menuitem"
+              tabIndex={-1}
+              onClick={() => setOpen(false)}
+              className={`${itemBase} ${itemNormal}`}
+            >
+              <IconSettings className="h-4 w-4 text-[var(--ink-faint)]" />
+              Settings
+            </Link>
+
+            <hr className="mx-1.5 border-t border-[var(--border-subtle)]" />
+
+            {/* Theme quick-toggle row. The row itself is the roving-focus target;
+                Enter/Space forward to the real button so the toggle stays keyboard
+                operable (WCAG 2.1.1). */}
+            <div
+              role="menuitem"
+              tabIndex={-1}
+              onClick={() => setOpen(false)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  e.preventDefault();
+                  (e.currentTarget.querySelector("button") as HTMLButtonElement | null)?.click();
+                }
+              }}
+              className="cursor-pointer"
+            >
+              <ThemeToggle authed compact />
+            </div>
+
+            <hr className="mx-1.5 border-t border-[var(--border-subtle)]" />
+
+            <button
+              type="button"
+              role="menuitem"
+              tabIndex={-1}
+              disabled={isSigningOut}
+              onClick={() => {
+                setOpen(false);
+                onSignOut();
+              }}
+              className={`${itemBase} ${itemDanger} disabled:opacity-50`}
+            >
+              <IconLogout className="h-4 w-4 text-current" />
+              {isSigningOut ? "…" : "Sign out"}
+            </button>
           </div>
-
-          <hr className="mx-1.5 border-t border-[var(--border-subtle)]" />
-
-          <button
-            type="button"
-            role="menuitem"
-            tabIndex={-1}
-            disabled={isSigningOut}
-            onClick={() => {
-              setOpen(false);
-              onSignOut();
-            }}
-            className={`${itemBase} ${itemDanger} disabled:opacity-50`}
-          >
-            <IconLogout className="h-4 w-4 text-current" />
-            {isSigningOut ? "…" : "Sign out"}
-          </button>
         </div>
       )}
     </div>

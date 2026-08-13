@@ -225,7 +225,7 @@ export default async function CertificatePage({ params }: Props) {
 
             <div className="max-w-[640px] bg-white border border-gray-200 rounded-2xl p-7 shadow-sm">
               <div className="flex items-center gap-2 font-mono text-[11px] font-bold text-gray-500 uppercase tracking-[0.09em] mb-2">
-                <span className="w-[3px] h-3 rounded-sm bg-gray-400" />
+                <span className="w-[3px] h-3 rounded-sm bg-gray-500" />
                 Certificate not yet available
               </div>
               <h2 className="text-[1.2rem] font-extrabold text-navy tracking-[-0.02em] mb-2">

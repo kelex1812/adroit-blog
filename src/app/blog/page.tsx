@@ -118,7 +118,7 @@ function BlogListingContent() {
                 "radial-gradient(60% 120% at 12% -10%, rgba(200,16,46,0.07) 0%, transparent 60%), radial-gradient(50% 100% at 88% -20%, rgba(11,29,58,0.08) 0%, transparent 55%)",
             }}
           />
-          <div className="max-w-[1120px] mx-auto px-6 pt-12 pb-0 relative hero-fade-in">
+          <div className="max-w-[1120px] mx-auto px-6 pt-14 pb-0 relative hero-fade-in">
             <div className="inline-flex items-center gap-2 font-mono text-[11px] font-semibold text-red uppercase tracking-[0.08em] mb-[14px]">
               <span className="w-1.5 h-1.5 rounded-full bg-red" />
               Adroit Consulting &mdash; Field Notes
@@ -132,11 +132,11 @@ function BlogListingContent() {
             </p>
             <a
               href="/feed.xml"
-              className="inline-flex items-center gap-2 text-xs text-gray-400 mt-3 hover:text-navy transition-colors duration-150 no-underline group"
+              className="inline-flex items-center gap-2 text-xs text-gray-500 mt-3 hover:text-navy transition-colors duration-150 no-underline group"
               target="_blank"
               rel="noopener noreferrer"
             >
-              <span className="w-6 h-6 rounded-md border border-gray-200 bg-white flex items-center justify-center text-[0.65rem] text-gray-400 group-hover:border-red group-hover:text-red transition-colors duration-150">
+              <span className="w-6 h-6 rounded-md border border-gray-200 bg-white flex items-center justify-center text-[0.65rem] text-gray-500 group-hover:border-red group-hover:text-red transition-colors duration-150">
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
                   <circle cx="4" cy="20" r="3" />
                   <path d="M4 11a9 9 0 0 1 9 9h3a12 12 0 0 0-12-12v3z" />
@@ -172,7 +172,7 @@ function BlogListingContent() {
                         className={`inline-flex items-center justify-center min-w-[20px] h-5 px-1.5 rounded-full font-mono text-[10.5px] font-bold tabular-nums transition-colors duration-150 ${
                           active
                             ? "bg-white/15 text-white"
-                            : "bg-gray-100 text-gray-400 group-hover:bg-gray-200 group-hover:text-gray-500"
+                            : "bg-gray-100 text-gray-600 group-hover:bg-gray-200 group-hover:text-gray-700"
                         }`}
                       >
                         {count}
@@ -234,7 +234,7 @@ function BlogListingContent() {
                     ? "No read posts in this category yet."
                     : "No posts in this category yet."}
               </p>
-              <p className="text-[12.5px] text-gray-400 mt-1.5">
+              <p className="text-[12.5px] text-gray-500 mt-1.5">
                 {readFilter !== "all" ? (
                   <>
                     Try the{" "}
@@ -317,7 +317,7 @@ function BlogListingContent() {
 
 export default function BlogListing() {
   return (
-    <Suspense fallback={<div className="min-h-screen flex flex-col"><Header /><main id="main" className="flex-1 flex items-center justify-center"><div className="text-gray-400 text-sm">Loading posts...</div></main><Footer /></div>}>
+    <Suspense fallback={<div className="min-h-screen flex flex-col"><Header /><main id="main" className="flex-1 flex items-center justify-center"><div className="text-gray-500 text-sm">Loading posts...</div></main><Footer /></div>}>
       <BlogListingContent />
     </Suspense>
   );

@@ -76,14 +76,18 @@ function LoginForm() {
               <span className="w-1.5 h-1.5 rounded-full bg-red" />
               Adroit Academy
             </div>
-            <h1 className="text-[1.6rem] font-extrabold text-navy tracking-[-0.02em] mb-1.5">
-              {mode === "signin" ? "Sign in" : "Create account"}
-            </h1>
-            <p className="text-[13px] text-gray-500 leading-relaxed mb-6">
-              {mode === "signin"
-                ? "Sign in to sync your reading progress, completions, and quiz scores across devices."
-                : "Create an account to save your progress and pick up where you left off on any device."}
-            </p>
+            {/* aria-live: the h1/subtitle/field semantics swap when the mode
+                toggles — announce the change (WCAG 4.1.3) */}
+            <div aria-live="polite">
+              <h1 className="text-[1.6rem] font-extrabold text-navy tracking-[-0.02em] mb-1.5">
+                {mode === "signin" ? "Sign in" : "Create account"}
+              </h1>
+              <p className="text-[13px] text-gray-500 leading-relaxed mb-6">
+                {mode === "signin"
+                  ? "Sign in to sync your reading progress, completions, and quiz scores across devices."
+                  : "Create an account to save your progress and pick up where you left off on any device."}
+              </p>
+            </div>
 
             {error && (
               <div
@@ -202,7 +206,7 @@ export default function LoginPage() {
         <div className="min-h-screen flex flex-col">
           <Header />
           <main id="main" className="flex-1 flex items-center justify-center">
-            <div className="text-gray-400 text-sm">Loading…</div>
+            <div className="text-gray-500 text-sm">Loading…</div>
           </main>
           <Footer />
         </div>

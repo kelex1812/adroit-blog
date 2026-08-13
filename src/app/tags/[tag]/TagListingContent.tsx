@@ -24,7 +24,7 @@ function TagPageContent({ tagInfo }: { tagInfo: TagInfo }) {
       <Header />
 
       <main id="main" className="flex-1">
-        <div className="max-w-[1120px] mx-auto px-6 pt-12 pb-0">
+        <div className="max-w-[1120px] mx-auto px-6 pt-14 pb-0">
           <Link
             href="/tags"
             className="inline-flex items-center gap-1.5 text-gray-500 text-xs font-medium no-underline mb-6 hover:text-navy transition-colors duration-150"
@@ -76,7 +76,7 @@ export default function TagListingContent({ tagInfo }: { tagInfo: TagInfo }) {
         <div className="min-h-screen flex flex-col">
           <Header />
           <main id="main" className="flex-1 flex items-center justify-center">
-            <div className="text-gray-400 text-sm">Loading posts...</div>
+            <div className="text-gray-500 text-sm">Loading posts...</div>
           </main>
           <Footer />
         </div>

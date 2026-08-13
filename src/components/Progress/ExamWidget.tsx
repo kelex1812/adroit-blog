@@ -260,7 +260,7 @@ export default function ExamWidget({
               <circle cx="84" cy="84" r="72" fill="none" stroke="var(--color-gray-200, #E5E7EB)" strokeWidth="12" />
               <circle
                 cx="84" cy="84" r="72" fill="none"
-                stroke={pass ? "var(--color-emerald, #10B981)" : "var(--color-red, #C8102E)"}
+                stroke={pass ? "var(--signal-done)" : "var(--color-red, #C8102E)"}
                 strokeWidth="12" strokeLinecap="round"
                 strokeDasharray={`${(result.score / 100) * 452.4} 452.4`}
                 className="transition-[stroke-dasharray] duration-[450ms] ease-[cubic-bezier(0.34,1.56,0.64,1)]"
@@ -317,7 +317,7 @@ export default function ExamWidget({
                       className="w-4 h-4 mt-0.5 shrink-0"
                       viewBox="0 0 24 24"
                       fill="none"
-                      stroke={isCorrect ? "var(--color-emerald, #10B981)" : "var(--color-red, #C8102E)"}
+                      stroke={isCorrect ? "var(--signal-done)" : "var(--color-red, #C8102E)"}
                       strokeWidth="3"
                       strokeLinecap="round"
                       strokeLinejoin="round"

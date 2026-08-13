@@ -35,7 +35,7 @@ export default function TagsPage() {
       <Header />
 
       <main id="main" className="flex-1">
-        <div className="max-w-[1120px] mx-auto px-6 pt-12 pb-0">
+        <div className="max-w-[1120px] mx-auto px-6 pt-14 pb-0">
           <div className="inline-flex items-center gap-2 font-mono text-[11px] font-semibold text-red uppercase tracking-[0.08em] mb-[14px]">
             <span className="w-1.5 h-1.5 rounded-full bg-red" />
             Topic Index
@@ -58,7 +58,7 @@ export default function TagsPage() {
                 className={`group inline-flex items-center gap-2 rounded-full border border-gray-200 bg-white shadow-card text-gray-700 no-underline hover:bg-navy hover:text-white hover:border-navy hover:-translate-y-0.5 hover:shadow-card-hover transition-all duration-150 ${sizeStyles[tag.sizeClass]}`}
               >
                 {tag.tag}
-                <span className="inline-flex items-center justify-center min-w-[18px] h-[18px] px-1 rounded-full bg-gray-100 text-[0.65rem] font-mono font-bold text-gray-400 transition-colors duration-150 group-hover:bg-white/15 group-hover:text-white/80">
+                <span className="inline-flex items-center justify-center min-w-[18px] h-[18px] px-1 rounded-full bg-gray-100 text-[0.65rem] font-mono font-bold text-gray-600 transition-colors duration-150 group-hover:bg-white/15 group-hover:text-white/80">
                   {tag.count}
                 </span>
               </Link>

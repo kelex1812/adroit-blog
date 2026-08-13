@@ -4,6 +4,66 @@ All notable changes to the Adroit Consulting Blog project will be documented in 
 
 ## [Unreleased]
 
+### Fix: Round 3 a11y/SEO findings — contrast, APG menu, headings, login metadata, spacing (t_cea9bcf8)
+
+Closes the Round-3 lara audit findings (WS1-6) that remained open at HEAD.
+All 10 items verified against the CURRENT repo state first — items already
+fixed by earlier commits (A1 gray-400 labels in profile/settings/AvatarMenu/
+Header/login, A5 LearnHub group-count badge) were left untouched.
+
+**What**
+- `src/app/globals.css` — light `--signal-done` #10B981 → #047857 (2.54:1 →
+  5.49:1 on white; dark #34d399 unchanged). New `--focus-ring` token: light
+  #E8354A (4.03:1 on navy header vs 2.91:1 for the old brand-red ring), dark
+  #f47385; base `a/button:focus-visible` + `.skip-link:focus` now use it.
+- `src/app/learn/page.tsx` — Learn h1 gradient tail in dark now ends at
+  #94A3B8 (`dark:to-[#94A3B8]`) instead of #334155 (1.86:1 on page → 7.5:1).
+- `src/components/Progress/ExamLocked.tsx` — locked kicker `text-red-light`
+  → `text-red-dark` (#E8354A 4.17:1 → #A00D24 8.2:1 on white).
+- `src/components/Progress/ExamWidget.tsx` — emerald strokes use
+  `var(--signal-done)` (score ring + answer icons) so light mode inherits the
+  fixed token instead of raw #10B981.
+- `src/components/AvatarMenu.tsx` — identity header (avatar + "Signed in as")
+  moved OUTSIDE `role="menu"` (APG: menus contain menuitems/separators only);
+  the theme quick-toggle row now forwards Enter/Space to its real button so
+  the compact toggle is keyboard operable.
+- `src/components/Theme/ThemeToggle.tsx` — segmented System/Light/Dark is now
+  an ARIA APG radio-group: `role="radiogroup"`, options `role="radio"
+  aria-checked`, roving tabindex, arrow/Home/End key handling (was a 3-tab-stop
+  `aria-pressed` button group).
+- `src/components/Learn/ContinueLearning.tsx` — series title is now an `<h2>`
+  (was a bare div; M2 heading-structure finding).
+- `src/components/Learn/LearnHub.tsx` — subgroup sub-header is now an `<h3>`
+  (was a span; M3 heading-structure finding).
+- `src/app/login/page.tsx` — heading/subtitle wrapped in `aria-live="polite"`
+  so the signin/signup mode swap is announced (WCAG 4.1.3).
+- `src/app/login/layout.tsx` — NEW server layout exporting page metadata
+  (title "Sign in — Adroit Academy", self-canonical /login, noindex) — the
+  client page cannot export metadata and previously inherited the homepage
+  title/canonical.
+- `src/components/Profile/ProfileForm.tsx` — input focus ring opacity 0.08 →
+  0.25 (visible on dark cards; border indicator was already compliant).
+- Spacing (acceptance 6.2): series hero `pt-9` → `pt-14`
+  (`src/app/learn/[series]/page.tsx`); /blog, /tags, /tags/[tag] heroes
+  `pt-12` → `pt-14` (blog/page.tsx, tags/page.tsx, TagListingContent.tsx).
+- Remaining gray-400 label text in the named audit files → gray-500/600
+  (blog/page.tsx RSS link + icon + count badge + empty state + loading,
+  tags/page.tsx + TagListingContent.tsx count badges/loading,
+  certificate/page.tsx accent bar, login/page.tsx loading).
+
+**Why** — the six lara Round-3 audits (contrast, APG, aria-live, metadata,
+gating, keyboard, spacing) ran against a stale workspace copy; this batch
+applies only the findings still genuinely open at HEAD, with contrast math
+re-verified against the current tokens.
+
+**Known issues** — none introduced. FeaturedPost "Read article"
+`text-red-light` on navy (#E8354A, 4.03:1) sits just under 4.5:1 for 12px
+semibold and was NOT part of the audited A4 scope (audit named ExamLocked +
+ExamWidget only) — flagged for a future sweep. Loading fallbacks in
+PostCard/ReadFilter/ExamCard/QuizWidget still use raw gray-400 (out of the
+audit's named files).
+
+
 ### Fix: Salesforce System Architect Primer now under Learning Paths (t_9697ca50)
 
 The "Salesforce System Architect Primer" course rendered under a "Salesforce

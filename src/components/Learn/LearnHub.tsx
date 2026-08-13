@@ -94,9 +94,9 @@ export default function LearnHub({ series, gate }: LearnHubProps) {
                 {/* Subgroup sub-header (skip for the ungrouped "__none__" bucket) */}
                 {sub !== "__none__" && (
                   <div className="flex items-center gap-2.5 mb-4">
-                    <span className="text-[13px] font-bold text-[var(--ink-primary)] tracking-[-0.01em]">
+                    <h3 className="text-[13px] font-bold text-[var(--ink-primary)] tracking-[-0.01em]">
                       {sub}
-                    </span>
+                    </h3>
                     <span className="h-px flex-1 bg-[var(--border-subtle)]" aria-hidden />
                   </div>
                 )}
