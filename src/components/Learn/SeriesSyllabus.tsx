@@ -54,12 +54,12 @@ export default function SeriesSyllabus({
 
   return (
     <>
-      <div className="flex items-center justify-between px-2 mb-1.5">
+      <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-2 px-2 mb-1.5">
         <h2 className="font-mono text-[13px] font-bold text-gray-500 uppercase tracking-[0.08em]">
           {hideCompleted ? "In Progress" : "All Lessons"}
         </h2>
-        <div className="flex items-center gap-3">
-          <span className="font-mono text-[11.5px] text-gray-500 font-medium">
+        <div className="flex flex-wrap items-center gap-2">
+          <span className="font-mono text-[11.5px] text-gray-500 font-medium hidden min-[430px]:inline">
             {published} published · {upcoming} upcoming
           </span>
           <label className="inline-flex items-center gap-1.5 cursor-pointer select-none">

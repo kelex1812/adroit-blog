@@ -117,7 +117,7 @@ function LoginForm() {
                   autoComplete="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="h-11 rounded-xl border border-gray-200 bg-white px-4 text-[14px] text-gray-800 placeholder:text-gray-300 focus:outline-none focus:border-navy focus:ring-2 focus:ring-red/30 transition-colors duration-150"
+                  className="h-11 rounded-xl border border-gray-200 bg-white px-4 text-[14px] text-gray-800 placeholder:text-gray-500 focus:outline-none focus:border-navy focus:ring-2 focus:ring-red/30 transition-colors duration-150"
                   placeholder="you@company.com"
                 />
               </label>
@@ -133,7 +133,7 @@ function LoginForm() {
                   autoComplete={mode === "signin" ? "current-password" : "new-password"}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="h-11 rounded-xl border border-gray-200 bg-white px-4 text-[14px] text-gray-800 placeholder:text-gray-300 focus:outline-none focus:border-navy focus:ring-2 focus:ring-red/30 transition-colors duration-150"
+                  className="h-11 rounded-xl border border-gray-200 bg-white px-4 text-[14px] text-gray-800 placeholder:text-gray-500 focus:outline-none focus:border-navy focus:ring-2 focus:ring-red/30 transition-colors duration-150"
                   placeholder="••••••••"
                 />
               </label>

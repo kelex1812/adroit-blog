@@ -4,6 +4,71 @@ All notable changes to the Adroit Consulting Blog project will be documented in 
 
 ## [Unreleased]
 
+### Fix: Round 3 remaining a11y findings — dark-mode contrast, learn-flow, spacing (t_47b7ed5e)
+
+Consolidated fix for the three Round-3 audits still blocked on re-verified
+failures: dark-mode contrast (t_926221f7), learn-flow (t_1e963ece), and the
+spacing regression (t_03c00c41). Every item verified against the CURRENT repo
+state first — items already fixed by the t_cea9bcf8 pass (ContinueLearning h2,
+LearnHub subgroup h3, learn `text-gray-400` → token migration) were left
+untouched and are reported SKIPPED-ALREADY-FIXED.
+
+**What**
+
+Dark-mode contrast (WCAG 2.1 AA):
+- `src/components/Progress/QuizWidget.tsx` — emerald ring + review-icons
+  strokes `#10B981` → `var(--signal-done)` (2.54:1 → 5.48:1 light on white;
+  matches ExamWidget treatment). Test updated to assert the token.
+- `src/components/BlogListing/PostCard.tsx` — read badge stroke `#10B981` →
+  `var(--signal-done)`; read-state title/excerpt/meta `text-gray-400` →
+  `text-gray-500` (2.54:1 → 4.83:1 light; hover gray-600).
+- `src/components/BlogListing/FeaturedPost.tsx` — "Read article" `text-red-light`
+  → `text-[#ff6b7a]` (4.03:1 light / 3.51:1 dark → 6.1:1 / 5.32:1, passes 4.5);
+  meta row `text-white/40` → `text-white/60` (3.72:1 → 6.75:1).
+- `src/app/learn/[series]/certificate/page.tsx` — OkIcon `bg-emerald/[0.12]
+  text-emerald` → `bg-[var(--signal-done-bg)] text-[var(--signal-done)]`
+  (2.26:1 → 4.84:1 light).
+- `src/components/BlogListing/ReadFilter.tsx` — count chip `text-gray-400` →
+  `text-gray-600` (2.31:1 light / 3.09:1 dark → 6.87:1 / 5.46:1).
+- `src/components/Footer.tsx` — Subscribe hover `bg-red-light` → `bg-red-dark`
+  (white 4.17:1 → 8.15:1).
+- `src/app/login/page.tsx` — placeholders `placeholder:text-gray-300` →
+  `placeholder:text-gray-500` (1.47:1 → 4.83:1).
+
+Learn-flow a11y:
+- M2 Continue-learning title → h2, M3 LearnHub subgroup → h3: SKIPPED —
+  already fixed in t_cea9bcf8.
+- M1 `text-gray-400` (2.54:1): SKIPPED — learn components fully migrated to
+  the `--ink-faint` token in the earlier pass; zero remaining instances.
+- M4 dark-mode reach: left as a human judgment call per audit; not auto-fixed.
+
+Spacing:
+- `src/components/Learn/SeriesSyllabus.tsx` — syllabus control row now
+  `flex-wrap` with reduced gap and the "N published · M upcoming" count hidden
+  below 430px; eliminates the ~2px horizontal overflow at 360px (both themes).
+- `src/components/Header.tsx` — "Contact Us" CTA `py-2` → `h-9` (35.19px →
+  36px compact).
+- `src/app/blog/page.tsx`, `src/app/tags/page.tsx` — listing section bottom
+  `pb-10` → `pb-24` (40px → 96px, `--space-section-bottom`).
+- `src/components/Learn/PathCard.tsx` — guest progress row `mt-[13px]
+  pt-[13px]` → `mt-3 pt-3` (12px, `--space-row-sm`); guest CTA `py-2.5` →
+  `h-11` (38.75px → 44px touch target).
+
+**Why**
+
+Unblock the Round-3 audit chain (synthesizer → deploy gate) by closing the
+remaining re-verified contrast/spacing failures that downstream QA would
+catch. Brings every audited surface to WCAG 2.1 AA (4.5:1 text, 3:1 UI) in
+both themes and restores the intended spacing token values.
+
+**Known issues**
+
+- None. `--signal-done` dark (#34d399) on the dark card clears 9.01:1.
+
+Verified: `tsc --noEmit` clean, `eslint` clean on all touched files, vitest
+212/212, `next build` clean, live-browser checks at 360px (no syllabus
+overflow; guest CTA 44px) and dark mode (featured link/meta contrast).
+
 ### Fix: Round 3 a11y/SEO findings — contrast, APG menu, headings, login metadata, spacing (t_cea9bcf8)
 
 Closes the Round-3 lara audit findings (WS1-6) that remained open at HEAD.

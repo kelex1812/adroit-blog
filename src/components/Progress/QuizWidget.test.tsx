@@ -213,7 +213,7 @@ describe("QuizWidget", () => {
       "/learn/series",
     );
     const ring = document.querySelector("svg circle:nth-of-type(2)");
-    expect(ring?.getAttribute("stroke")).toContain("10B981");
+    expect(ring?.getAttribute("stroke")).toBe("var(--signal-done)");
   });
 
   it("check mode: exactly 80 flat shows the boundary note (80 flat counts)", async () => {

@@ -69,7 +69,7 @@ export default function PathCard({ series, gate, loginNext }: PathCardProps) {
           </span>
         ) : isGuest ? (
           /* Guest-locked state: name + description visible, non-clickable, CTA */
-          <div className="mt-[13px] pt-[13px] border-t border-[var(--border-subtle)]">
+          <div className="mt-3 pt-3 border-t border-[var(--border-subtle)]">
             <div className="flex items-center gap-2 text-xs text-[var(--ink-muted)] mb-[11px]">
               <svg
                 viewBox="0 0 24 24"
@@ -86,7 +86,7 @@ export default function PathCard({ series, gate, loginNext }: PathCardProps) {
             </div>
             <Link
               href={loginHref}
-              className="inline-flex items-center gap-2 bg-[var(--surface-inverse)] text-[var(--ink-on-inverse)] text-[12.5px] font-bold px-[18px] py-2.5 rounded-full no-underline hover:bg-[var(--surface-inverse-hover)] hover:-translate-y-px active:scale-[0.98] transition-all duration-150"
+              className="inline-flex items-center gap-2 bg-[var(--surface-inverse)] text-[var(--ink-on-inverse)] text-[12.5px] font-bold px-[18px] h-11 rounded-full no-underline hover:bg-[var(--surface-inverse-hover)] hover:-translate-y-px active:scale-[0.98] transition-all duration-150"
             >
               Sign in to access courses <span aria-hidden>&rarr;</span>
             </Link>

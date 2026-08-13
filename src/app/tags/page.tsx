@@ -49,7 +49,7 @@ export default function TagsPage() {
           </p>
         </div>
 
-        <div className="max-w-[1120px] mx-auto px-6 pb-10">
+        <div className="max-w-[1120px] mx-auto px-6 pb-24">
           <div className="flex flex-wrap gap-3">
             {tagsWithSize.map((tag) => (
               <Link

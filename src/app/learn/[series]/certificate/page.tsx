@@ -257,7 +257,7 @@ export default async function CertificatePage({ params }: Props) {
                   <span
                     className={`w-5 h-5 rounded-full flex-shrink-0 flex items-center justify-center ${
                       eligibility.examPassed
-                        ? "bg-emerald/[0.12] text-emerald"
+                        ? "bg-[var(--signal-done-bg)] text-[var(--signal-done)]"
                         : "bg-gray-100 text-gray-500"
                     }`}
                   >
@@ -269,7 +269,7 @@ export default async function CertificatePage({ params }: Props) {
                 <div className="flex items-center gap-2.5 text-[13px] text-gray-600">
                   <span
                     className={`w-5 h-5 rounded-full flex-shrink-0 flex items-center justify-center ${
-                      checksDone ? "bg-emerald/[0.12] text-emerald" : "bg-gray-100 text-gray-500"
+                      checksDone ? "bg-[var(--signal-done-bg)] text-[var(--signal-done)]" : "bg-gray-100 text-gray-500"
                     }`}
                   >
                     {checksDone ? OkIcon : NoIcon}

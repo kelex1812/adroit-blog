@@ -98,7 +98,7 @@ export default function Header() {
             <ThemeToggle authed={!!user} iconOnly />
             <Link
               href="https://adroit.io/contact"
-              className="bg-[var(--surface-inverse)] text-[var(--ink-on-inverse)] px-[18px] py-2 rounded-sm text-[0.8rem] font-semibold hover:bg-[var(--surface-inverse-hover)] hover:-translate-y-px active:scale-[0.98] transition-all duration-150 no-underline"
+              className="inline-flex items-center bg-[var(--surface-inverse)] text-[var(--ink-on-inverse)] px-[18px] h-9 rounded-sm text-[0.8rem] font-semibold hover:bg-[var(--surface-inverse-hover)] hover:-translate-y-px active:scale-[0.98] transition-all duration-150 no-underline"
             >
               Contact Us
             </Link>

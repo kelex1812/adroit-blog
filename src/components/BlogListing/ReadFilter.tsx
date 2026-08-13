@@ -62,7 +62,7 @@ export default function ReadFilter({ readKeys, value, onChange }: ReadFilterProp
               className={`inline-flex items-center justify-center min-w-[18px] h-[18px] px-1 rounded-full font-mono text-[10px] font-bold tabular-nums transition-colors duration-150 ${
                 active
                   ? "bg-white/15 text-white"
-                  : "bg-gray-100 text-gray-400"
+                  : "bg-gray-100 text-gray-600"
               }`}
             >
               {counts[opt.value]}

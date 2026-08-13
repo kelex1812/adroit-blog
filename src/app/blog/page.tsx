@@ -224,7 +224,7 @@ function BlogListingContent() {
         )}
 
         {/* Post Cards Grid */}
-        <div className="max-w-[1120px] mx-auto px-6 pb-10">
+        <div className="max-w-[1120px] mx-auto px-6 pb-24">
           {paginatedPosts.length === 0 ? (
             <div className="mt-6 rounded-2xl border border-dashed border-gray-300 bg-white/60 px-6 py-12 text-center">
               <p className="text-[14.5px] font-semibold text-gray-700">

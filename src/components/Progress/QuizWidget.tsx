@@ -296,10 +296,10 @@ export default function QuizWidget({
   const ringColor =
     typeof passThreshold === "number"
       ? passed
-        ? "var(--color-emerald, #10B981)"
+        ? "var(--signal-done)"
         : "var(--color-red, #C8102E)"
       : runScore >= 60
-        ? "var(--color-emerald, #10B981)"
+        ? "var(--signal-done)"
         : "var(--color-red, #C8102E)";
 
   // Results view — show directly for returning users with a completed quiz in
@@ -406,7 +406,7 @@ export default function QuizWidget({
                     className="w-4 h-4 mt-0.5 shrink-0"
                     viewBox="0 0 24 24"
                     fill="none"
-                    stroke={correct ? "var(--color-emerald, #10B981)" : "var(--color-gray-400, #9CA3AF)"}
+                    stroke={correct ? "var(--signal-done)" : "var(--color-gray-400, #9CA3AF)"}
                     strokeWidth="2.5"
                     strokeLinecap="round"
                     strokeLinejoin="round"

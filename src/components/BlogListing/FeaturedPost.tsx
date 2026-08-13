@@ -62,7 +62,7 @@ export default function FeaturedPost({ post }: FeaturedPostProps) {
           <p className="relative text-white/60 text-sm leading-relaxed mb-5">
             {post.excerpt}
           </p>
-          <div className="relative flex items-center gap-3 text-xs text-white/40 mb-5">
+          <div className="relative flex items-center gap-3 text-xs text-white/60 mb-5">
             <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-white/10 font-bold text-[0.6rem] text-white/70">
               {post.authorInitials}
             </span>
@@ -72,7 +72,7 @@ export default function FeaturedPost({ post }: FeaturedPostProps) {
             <span className="w-[3px] h-[3px] bg-white/30 rounded-full" />
             <span>{post.readTime}</span>
           </div>
-          <span className="relative inline-flex items-center gap-1.5 text-red-light text-xs font-semibold">
+          <span className="relative inline-flex items-center gap-1.5 text-[#ff6b7a] text-xs font-semibold hover:text-white">
             Read article
             <span className="transition-transform duration-300 group-hover:translate-x-1">
               &rarr;

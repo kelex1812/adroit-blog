@@ -43,7 +43,7 @@ export default function PostCard({ post, read = false }: PostCardProps) {
               height="13"
               viewBox="0 0 24 24"
               fill="none"
-              stroke="#10B981"
+              stroke="var(--signal-done)"
               strokeWidth="3.5"
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -65,20 +65,16 @@ export default function PostCard({ post, read = false }: PostCardProps) {
         <h3
           className={`text-lg font-bold mt-2.5 mb-1.5 leading-snug tracking-tight transition-colors duration-200 ${
             read
-              ? "text-gray-400 group-hover:text-gray-500"
+              ? "text-gray-500 group-hover:text-gray-600"
               : "text-gray-900 group-hover:text-red"
           }`}
         >
           {post.title}
         </h3>
-        <p
-          className={`text-xs leading-relaxed mb-3 line-clamp-2 ${
-            read ? "text-gray-400" : "text-gray-500"
-          }`}
-        >
+        <p className="text-xs leading-relaxed mb-3 line-clamp-2 text-gray-500">
           {post.excerpt}
         </p>
-        <div className="flex items-center justify-between text-xs text-gray-400">
+        <div className="flex items-center justify-between text-xs text-gray-500">
           <span className="font-mono text-[0.7rem]">{post.date}</span>
           <span className="inline-flex items-center gap-1 text-red font-semibold">
             {read ? "Read again" : "Read more"}
