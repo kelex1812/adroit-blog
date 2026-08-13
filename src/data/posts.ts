@@ -2,6 +2,29 @@ import { BlogPost } from "./types";
 
 export const posts: BlogPost[] = [
   {
+    "slug": "kubernetes-llm-serving-2026",
+    "title": "Serving LLMs on Kubernetes in 2026: The Inference Stack That Finally Fits",
+    "excerpt": "Kubernetes was built for stateless web workloads, and inference breaks that model. In 2026 the pieces landed: inference-aware routing went GA, GPU scheduling got DRA, and llm-d brought disaggregation into the CNCF.",
+    "category": "AI & Consulting",
+    "categoryColor": "ai",
+    "categoryGradient": "from-amber to-amber-dark",
+    "date": "August 13, 2026",
+    "author": "Adroit Consulting",
+    "authorInitials": "AC",
+    "readTime": "10 min read",
+    "featured": false,
+    "tags": [
+      "DevOps",
+      "Kubernetes",
+      "LLM Serving",
+      "Inference",
+      "Gateway API",
+      "vLLM",
+      "SGLang"
+    ],
+    "bannerImage": "/banners/kubernetes-llm-serving-2026.png"
+  },
+  {
     "slug": "mcp-stateless-2026-07-28-production-agents",
     "title": "MCP Goes Stateless: The 2026-07-28 Spec in Practice",
     "excerpt": "MCP went stateless in the 2026-07-28 spec. That unlocks scaling, but the reliability and security data say the real work is still in how you run it.",
