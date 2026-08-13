@@ -14,6 +14,8 @@ const eslintConfig = defineConfig([
     ".vercel/**",
     "next-env.d.ts",
     "scripts/**",
+    // Disposable designer scratch tooling — not part of the app bundle.
+    "design/.scratch/**",
   ]),
 ]);
 
