@@ -21,6 +21,53 @@ export function getMDXContent(slug: string): string | null {
 }
 
 /**
+ * Parse the `---` frontmatter block from raw MDX.
+ * Returns [frontmatter, body] — frontmatter values are strings (or booleans /
+ * string arrays for the simple YAML shapes the editorial content uses).
+ * Returns [null, raw] when no frontmatter block is present.
+ *
+ * Shared by the preview routes (which need `status` at request time) and kept
+ * consistent with the build-script parser in scripts/build-posts.js.
+ */
+export function parseMDXFrontmatter(
+  raw: string,
+): [Record<string, unknown> | null, string] {
+  const lines = raw.split("\n");
+  if (lines[0]?.trim() !== "---") return [null, raw];
+  const end = lines.findIndex((l, i) => i > 0 && l.trim() === "---");
+  if (end === -1) return [null, raw];
+  const fm: Record<string, unknown> = {};
+  for (const line of lines.slice(1, end)) {
+    const ci = line.indexOf(":");
+    if (ci === -1) continue;
+    const k = line.slice(0, ci).trim();
+    let v: string | boolean | string[] = line.slice(ci + 1).trim();
+    if (v === "true") v = true;
+    else if (v === "false") v = false;
+    else if (v.startsWith("[")) {
+      v = v
+        .slice(1, -1)
+        .split(",")
+        .map((s) => s.trim().replace(/^["']|["']$/g, ""))
+        .filter(Boolean);
+    } else v = v.replace(/^["']|["']$/g, "");
+    fm[k] = v;
+  }
+  return [fm, lines.slice(end + 1).join("\n")];
+}
+
+/**
+ * Read the `status` field from a raw MDX file's frontmatter.
+ * Absent → "published" (backward compat). Drafts render via the gated
+ * preview routes only; the public build already excludes them.
+ */
+export function getMDXStatus(raw: string): "draft" | "published" {
+  const [fm] = parseMDXFrontmatter(raw);
+  if (fm && fm.status === "draft") return "draft";
+  return "published";
+}
+
+/**
  * Strip the `---` frontmatter block from raw MDX before rendering.
  * Mirrors the Learn renderer fix (lib/learn.ts) — without this the
  * frontmatter YAML blob renders as a stray heading inside the article.

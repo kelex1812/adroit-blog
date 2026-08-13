@@ -1,6 +1,15 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  // The /preview/* routes read content/*.mdx at request time, but Vercel
+  // serverless functions only bundle files traced at build time. Without
+  // these includes the preview functions deploy but return empty content —
+  // the single most likely silent-failure point (draft-state t_e1c8239e).
+  outputFileTracingIncludes: {
+    "/preview/blog/[slug]": ["./content/blog/**/*.mdx"],
+    "/preview/learn/[series]/[slug]": ["./content/learn/**/*.mdx"],
+  },
+
   async redirects() {
     return [
       // kelexconsulting.com → adroit.io (path-preserving 301)

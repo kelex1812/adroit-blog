@@ -13,6 +13,8 @@ export interface BlogPost {
   tags: string[];
   /** Optional banner image path (public/) — gradient fallback when absent. */
   bannerImage?: string;
+  /** Optional draft flag: "draft" is excluded from public build data. Default "published". */
+  status?: "draft" | "published";
 }
 
 /** A single lesson MDX file under content/learn/<series>/<slug>.mdx */
@@ -35,6 +37,8 @@ export interface LearnLesson {
   readTime: string;
   /** Frontmatter tags */
   tags: string[];
+  /** Optional draft flag: "draft" is excluded from public build data. Default "published". */
+  status?: "draft" | "published";
 }
 
 /** A learning track — one directory under content/learn/ */

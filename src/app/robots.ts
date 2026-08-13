@@ -5,7 +5,8 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: '*',
       allow: '/',
-      disallow: ['/api/'],
+      // /preview/ holds auth-gated drafts — never indexable (draft-state).
+      disallow: ['/api/', '/preview/'],
     },
     sitemap: 'https://adroit.io/sitemap.xml',
   };

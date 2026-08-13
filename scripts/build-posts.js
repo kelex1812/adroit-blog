@@ -41,6 +41,11 @@ for (const file of files) {
     console.warn(`Warning: ${file} has no frontmatter, skipping`);
     continue;
   }
+  const status = fm.status === "draft" ? "draft" : "published";
+  if (status === "draft") {
+    console.log(`Skipping draft: ${file}`);
+    continue;
+  }
   posts.push({
     slug: fm.slug || slug,
     title: fm.title || "",
@@ -55,6 +60,7 @@ for (const file of files) {
     featured: fm.featured || false,
     tags: fm.tags || [],
     bannerImage: fm.bannerImage || undefined,
+    status,
   });
 }
 

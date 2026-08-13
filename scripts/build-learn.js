@@ -131,6 +131,11 @@ function buildSeries(seriesSlug, dir) {
     const dateRaw = fm.date || "";
     const date = parseDate(dateRaw) ? dateRaw : "Date unknown";
     const lesson = Number.isNaN(parseInt(fm.lesson, 10)) ? 0 : parseInt(fm.lesson, 10);
+    const status = fm.status === "draft" ? "draft" : "published";
+    if (status === "draft") {
+      console.log(`Skipping draft lesson: ${seriesSlug}/${file}`);
+      continue;
+    }
     lessons.push({
       slug: fm.slug || slug,
       title: fm.title || "",
@@ -141,6 +146,7 @@ function buildSeries(seriesSlug, dir) {
       author: fm.author || "Adroit Consulting",
       readTime: fm.readTime || "5 min read",
       tags: fm.tags || [],
+      status,
     });
   }
 

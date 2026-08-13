@@ -72,7 +72,7 @@ describe("GET /api/continue-learning", () => {
 
   it("excludes fully-completed series (completedCount === total)", async () => {
     mocks.getUser.mockResolvedValue(AUTHED);
-    // agentic-ai has 9 published lessons; mark ALL complete.
+    // agentic-ai has 10 published lessons; mark ALL complete.
     const slugs = [
       "what-is-an-agent",
       "how-llms-work-tokens-context-inference",
@@ -83,6 +83,7 @@ describe("GET /api/continue-learning", () => {
       "structured-output-json-mode-function-calling-tool-schemas",
       "tool-design-schemas-error-handling-retries",
       "function-calling-parity-across-providers",
+      "rag-fundamentals-chunking-embeddings-retrieval",
     ];
     const completed = slugs.map((slug) => ({
       lesson_slug: slug,

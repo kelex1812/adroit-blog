@@ -4,6 +4,67 @@ All notable changes to the Adroit Consulting Blog project will be documented in 
 
 ## [Unreleased]
 
+### Draft-state plumbing: status field + build filters + preview routes + auth gate (t_e1c8239e)
+
+Implements brainiac's draft-state architecture (`docs/draft-state-architecture.md`,
+task t_65f88d8f) + kara's design spec (`design/design-system-draft-preview.html`,
+t_417a1026) per the BA requirements (`requirements/draft-state.md`). Chris's
+editorial workflow: Jimmy pushes draft MDX (frontmatter `status: draft`), the
+public build excludes it entirely, and allowlisted editors review it via an
+auth-gated `/preview/*` route. Flipping `status: draft` → `published` + push
+publishes on the next Vercel deploy (no runtime toggle).
+
+**Status field (Task A)**
+- `src/data/types.ts` — optional `status?: "draft" | "published"` on `BlogPost`
+  + `LearnLesson`; absent = `published` (backward compat — 31 posts / 31 lessons
+  unchanged).
+- `scripts/build-posts.js` — skip `status: draft` files, emit `status` on rows.
+- `scripts/build-learn.js` — skip `status: draft` lessons (per-lesson), emit
+  `status`; series with all-draft lessons still emit (graceful empty state).
+- Verified: no draft leaks on /blog, /learn, categories, tags, featured,
+  sitemap.xml, feed.xml (build filters are the single source of truth — all
+  consumers read generated `posts`/`learnSeries`/`learnLessons`).
+- Bonus correctness fix: generated `learn.ts` was stale by one lesson
+  (`rag-fundamentals-chunking-embeddings-retrieval` was committed to content in
+  56bf4a6 but never regenerated). Rebuild syncs it (agentic-ai 9 → 10).
+
+**Preview routes + auth (Task B)**
+- `src/components/MDX/MDXArticle.tsx` — shared MDX renderer extracted from the
+  two public detail pages (blog keeps the footnote→Sources rename; learn keeps
+  remark-gfm default). Public pages now import it — output-identical, verified
+  by build + browser render.
+- `src/components/Preview/DraftBadge.tsx`, `PreviewStrip.tsx`, `DraftLocked.tsx`
+  — kara's design: amber draft pill (`role="status"`), full-width strip
+  (`role="region"`, NOT inside the article), locked card at HTTP 200 with real
+  `<a>` CTAs (`/login?next=` / `mailto:`).
+- `src/app/preview/blog/[slug]/page.tsx` + `src/app/preview/learn/[series]/[slug]/page.tsx`
+  — `force-dynamic`, read `content/*.mdx` at request time via the existing MDX
+  pipeline, render with the shared MDXArticle. Guests/not-allowlisted never
+  receive MDX bytes (server-side gate; metadata title is gated too).
+- `src/lib/preview-auth.ts` — `isPreviewEmailAllowed()` reads
+  `PREVIEW_ALLOWED_EMAILS` env var (comma-separated, case/whitespace-normalized);
+  server-constant fallback (chris@adroit.io, perry@adroit.io) when unset.
+- `src/app/globals.css` — 3 additive draft tokens (`--signal-draft-bg`,
+  `--signal-draft-text`, `--border-draft`) + component styles, light/dark.
+- `next.config.ts` — `outputFileTracingIncludes` for both preview routes
+  (critical for Vercel serverless — without it the function bundles no MDX and
+  previews render empty; must be verified on a real deploy).
+- `src/app/robots.ts` — disallow `/preview/` (drafts never indexable); preview
+  routes also set `robots: noindex` metadata; sitemap/feed untouched (never
+  referenced /preview).
+
+**Verification**: `tsc --noEmit` clean; `npm run build` clean (194 static
+pages, preview routes dynamic); 200 tests pass (184 pre-existing + 16 new).
+Draft fixture tests: `status: draft` post/lesson 404 on public URLs, excluded
+from posts.ts/learn.ts/sitemap/feed, and `/preview/*` renders the locked card
+at 200 with zero MDX bytes in HTML for guests.
+
+**Known issues / not in scope**: `/drafts` index page (BA open Q3, future
+additive); series-with-all-drafts renders as "coming soon" (accepted);
+`PREVIEW_ALLOWED_EMAILS` must be set in Vercel env (or the constant fallback
+used) before editors can preview in prod; Vercel `outputFileTracingIncludes`
+needs a real-deploy check (criterion 7).
+
 ### Dark mode: blog post page token refresh + AA contrast fixes (t_1addcce3)
 
 Implements kara's dark-mode refresh spec (`deliverables/dark-mode-token-spec.md`,

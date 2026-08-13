@@ -8,6 +8,185 @@ import { LearnLesson, LearningSeries } from "./types";
 /** All series, sorted by newest lesson date DESC (ties → slug asc). Empty dirs included with lessons: []. */
 export const learnSeries: LearningSeries[] = [
   {
+    "slug": "agentic-ai",
+    "name": "Agentic AI Implementation Path",
+    "description": "From single-agent prototypes to multi-agent orchestration, a practitioner's curriculum for shipping agentic systems.",
+    "gradient": "from-amber to-yellow-600",
+    "lessons": [
+      {
+        "slug": "what-is-an-agent",
+        "title": "Lesson 1: What an Agent Actually Is (LLMs vs Rules vs Workflows)",
+        "series": "agentic-ai",
+        "lesson": 1,
+        "excerpt": "The definitions that matter for the whole 90-lesson track: what separates a rules system, an LLM workflow, and a true agent, plus how to tell which one you're actually building.",
+        "date": "August 04, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "9 min read",
+        "tags": [
+          "Learn",
+          "AI",
+          "Agentic",
+          "Foundations"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "how-llms-work-tokens-context-inference",
+        "title": "Lesson 2: How LLMs Work for Implementers: Tokens, Context, Inference, Temperature",
+        "series": "agentic-ai",
+        "lesson": 2,
+        "excerpt": "The four knobs that decide every LLM bill, latency budget, and reliability call: what tokens actually are, how the context window constrains agents, how inference really runs, and what temperature does and doesn't do.",
+        "date": "August 05, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "9 min read",
+        "tags": [
+          "Learn",
+          "AI",
+          "Agentic",
+          "Foundations"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "the-agent-loop-perceive-reason-act-observe",
+        "title": "Lesson 3: The Agent Loop: Perceive, Reason, Act, Observe, and Where Your Code Lives",
+        "series": "agentic-ai",
+        "lesson": 3,
+        "excerpt": "The one while loop that turns a language model into an agent: the five stages of the loop, the pseudocode that runs underneath every framework, and exactly which parts of it are your code versus the runtime's.",
+        "date": "August 06, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "9 min read",
+        "tags": [
+          "Learn",
+          "AI",
+          "Agentic",
+          "Foundations"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "prompting-for-agents-system-prompts-few-shot",
+        "title": "Lesson 4: Prompting for Agents: System Prompts, Few-Shot, and When Prompts Aren't Enough",
+        "series": "agentic-ai",
+        "lesson": 4,
+        "excerpt": "In an agent, the prompt isn't a single message; it's the constitution the loop obeys on every iteration. The anatomy of a production system prompt, how few-shot examples actually work, and the escalation ladder for when words stop being enough.",
+        "date": "August 07, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "10 min read",
+        "tags": [
+          "Learn",
+          "AI",
+          "Agentic",
+          "Prompting"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "tokens-context-cost-engineering-agents",
+        "title": "Lesson 5: Tokens, Context Windows, and Cost Engineering for Agent Workloads",
+        "series": "agentic-ai",
+        "lesson": 5,
+        "excerpt": "Agents don't just use tokens; they burn them: roughly 4x a chat conversation, 15x for multi-agent. The four levers that control the bill (budgeting, compression, caching, and model routing), with the math worked out on a real 10-agent pipeline.",
+        "date": "August 08, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "9 min read",
+        "tags": [
+          "Learn",
+          "AI",
+          "Agentic",
+          "Cost"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "choosing-models-providers-routing-fallbacks",
+        "title": "Lesson 6: Choosing Models & Providers: Capability Tiers, Routing, and Fallbacks",
+        "series": "agentic-ai",
+        "lesson": 6,
+        "excerpt": "The biggest agent-ops mistake is picking one 'best' model and pointing everything at it. This lesson builds the three-tier capability model, the three jobs of a router, and the fallback chains that keep agents alive when providers fail.",
+        "date": "August 09, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "8 min read",
+        "tags": [
+          "Learn",
+          "AI",
+          "Agentic",
+          "Models"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "structured-output-json-mode-function-calling-tool-schemas",
+        "title": "Lesson 7: Structured Output: JSON Mode, Function Calling, and Tool Schemas Done Right",
+        "series": "agentic-ai",
+        "lesson": 7,
+        "excerpt": "An agent is only as reliable as its data contracts. This lesson builds the structured-output ladder (JSON mode, Structured Outputs, function calling) and the tool-schema practices that keep tool calls valid, parseable, and safe in production.",
+        "date": "August 10, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "8 min read",
+        "tags": [
+          "Learn",
+          "AI",
+          "Agentic",
+          "Tools"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "tool-design-schemas-error-handling-retries",
+        "title": "Lesson 8: Designing Tools That Fail Well: Schemas, Error Handling, and Retries",
+        "series": "agentic-ai",
+        "lesson": 8,
+        "excerpt": "A tool is an operational contract, not an API wrapper. This lesson covers the five-part anatomy of a production tool, structured error schemas the model can act on, and retry discipline (backoff with jitter, idempotency keys, and retry budgets), so agents survive failures without corrupting state.",
+        "date": "August 11, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "9 min read",
+        "tags": [
+          "Learn",
+          "AI",
+          "Agentic",
+          "Tools"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "function-calling-parity-across-providers",
+        "title": "Lesson 9: Function-Calling Parity Across OpenAI, Azure, Anthropic, Gemini, and Local Models",
+        "series": "agentic-ai",
+        "lesson": 9,
+        "excerpt": "Every frontier provider exposes function calling, but none uses the same wire format. This lesson maps the request and response shapes across OpenAI, Azure, Anthropic, and Gemini, then shows why local models (llama.cpp) are the parity wildcard and how one internal schema plus thin per-provider adapters keeps an agent portable.",
+        "date": "August 12, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "9 min read",
+        "tags": [
+          "Learn",
+          "AI",
+          "Agentic",
+          "Tools"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "rag-fundamentals-chunking-embeddings-retrieval",
+        "title": "Lesson 10: RAG Fundamentals: Chunking, Embeddings, Retrieval, and Why RAG Is the First Enterprise Pattern",
+        "series": "agentic-ai",
+        "lesson": 10,
+        "excerpt": "The pattern that grounds LLMs in your own knowledge: what RAG is and where it came from, why you chunk documents instead of feeding them whole, what embeddings actually are, how retrieval ranks chunks, and why RAG became the first pattern enterprises shipped.",
+        "date": "August 13, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "10 min read",
+        "tags": [
+          "Learn",
+          "AI",
+          "Agentic",
+          "RAG"
+        ],
+        "status": "published"
+      }
+    ],
+    "totalLessons": 10
+  },
+  {
     "slug": "omni-studio-cert",
     "name": "OmniStudio Developer Certification",
     "description": "A 46-requirement deep dive for the Salesforce Certified OmniStudio Developer exam. One official exam-guide requirement per day, with config walkthroughs, exam traps, and practice questions.",
@@ -27,7 +206,8 @@ export const learnSeries: LearningSeries[] = [
         "tags": [
           "OmniStudio",
           "OmniStudio Fundamentals"
-        ]
+        ],
+        "status": "published"
       },
       {
         "slug": "day-02-f2-project-needs-requirements-assumptions-risks-const",
@@ -41,7 +221,8 @@ export const learnSeries: LearningSeries[] = [
         "tags": [
           "OmniStudio",
           "OmniStudio Fundamentals"
-        ]
+        ],
+        "status": "published"
       },
       {
         "slug": "day-03-f3-managed-package-vs-standard-runtime-upgrades",
@@ -55,7 +236,8 @@ export const learnSeries: LearningSeries[] = [
         "tags": [
           "OmniStudio",
           "OmniStudio Fundamentals"
-        ]
+        ],
+        "status": "published"
       },
       {
         "slug": "day-04-f4-licensing-permission-set-licenses-permission-sets",
@@ -69,7 +251,8 @@ export const learnSeries: LearningSeries[] = [
         "tags": [
           "OmniStudio",
           "OmniStudio Fundamentals"
-        ]
+        ],
+        "status": "published"
       },
       {
         "slug": "day-05-f5-implementation-toolchain-sfcli-vbt-migration",
@@ -83,7 +266,8 @@ export const learnSeries: LearningSeries[] = [
         "tags": [
           "OmniStudio",
           "OmniStudio Fundamentals"
-        ]
+        ],
+        "status": "published"
       },
       {
         "slug": "day-06-f-6-testing-versioning-cloning",
@@ -97,7 +281,8 @@ export const learnSeries: LearningSeries[] = [
         "tags": [
           "OmniStudio",
           "OmniStudio Fundamentals"
-        ]
+        ],
+        "status": "published"
       },
       {
         "slug": "day-07-fc-1-flexcard-data-sources-testing-json",
@@ -111,7 +296,8 @@ export const learnSeries: LearningSeries[] = [
         "tags": [
           "OmniStudio",
           "FlexCards"
-        ]
+        ],
+        "status": "published"
       },
       {
         "slug": "day-08-fc-2-single-multi-level-cards-layouts-repeaters",
@@ -125,7 +311,8 @@ export const learnSeries: LearningSeries[] = [
         "tags": [
           "OmniStudio",
           "FlexCards"
-        ]
+        ],
+        "status": "published"
       },
       {
         "slug": "day-09-fc-3-binding-components-configuring-properties",
@@ -139,7 +326,8 @@ export const learnSeries: LearningSeries[] = [
         "tags": [
           "OmniStudio",
           "FlexCards"
-        ]
+        ],
+        "status": "published"
       },
       {
         "slug": "day-10-fc-4-complex-card-actions-launch-fire-update",
@@ -153,7 +341,8 @@ export const learnSeries: LearningSeries[] = [
         "tags": [
           "OmniStudio",
           "FlexCards"
-        ]
+        ],
+        "status": "published"
       },
       {
         "slug": "day-11-fc-5-advanced-flexcard-properties",
@@ -167,7 +356,8 @@ export const learnSeries: LearningSeries[] = [
         "tags": [
           "OmniStudio",
           "FlexCards"
-        ]
+        ],
+        "status": "published"
       }
     ],
     "totalLessons": 11
@@ -194,7 +384,8 @@ export const learnSeries: LearningSeries[] = [
           "Salesforce",
           "Architect",
           "Certifications"
-        ]
+        ],
+        "status": "published"
       },
       {
         "slug": "multi-tenant-platform-architecture",
@@ -210,7 +401,8 @@ export const learnSeries: LearningSeries[] = [
           "Salesforce",
           "Architect",
           "Multi-Tenancy"
-        ]
+        ],
+        "status": "published"
       },
       {
         "slug": "core-building-blocks-objects-fields-relationships",
@@ -226,7 +418,8 @@ export const learnSeries: LearningSeries[] = [
           "Salesforce",
           "Architect",
           "Data Model"
-        ]
+        ],
+        "status": "published"
       },
       {
         "slug": "integration-fundamentals-rest-soap-bulk-apis",
@@ -242,7 +435,8 @@ export const learnSeries: LearningSeries[] = [
           "Salesforce",
           "Architect",
           "Integration"
-        ]
+        ],
+        "status": "published"
       },
       {
         "slug": "systems-architecture-what-it-means-ai-patterns",
@@ -259,7 +453,8 @@ export const learnSeries: LearningSeries[] = [
           "Systems Architecture",
           "AI Patterns",
           "General"
-        ]
+        ],
+        "status": "published"
       },
       {
         "slug": "integration-patterns-request-reply-fire-forget-batch",
@@ -276,7 +471,8 @@ export const learnSeries: LearningSeries[] = [
           "Architect",
           "Integration",
           "Integration Patterns"
-        ]
+        ],
+        "status": "published"
       },
       {
         "slug": "event-driven-integration-platform-events-change-data-capture",
@@ -294,7 +490,8 @@ export const learnSeries: LearningSeries[] = [
           "Integration",
           "Platform Events",
           "Change Data Capture"
-        ]
+        ],
+        "status": "published"
       },
       {
         "slug": "middleware-tradeoffs-mulesoft-boomi-custom-salesforce-hub",
@@ -311,7 +508,8 @@ export const learnSeries: LearningSeries[] = [
           "Architect",
           "Integration",
           "Middleware"
-        ]
+        ],
+        "status": "published"
       },
       {
         "slug": "integration-reliability-idempotency-retries-error-handling-dead-letter-design",
@@ -329,7 +527,8 @@ export const learnSeries: LearningSeries[] = [
           "Integration",
           "Reliability",
           "Error Handling"
-        ]
+        ],
+        "status": "published"
       },
       {
         "slug": "sync-async-queues-eventual-consistency-agent-pipelines",
@@ -348,168 +547,33 @@ export const learnSeries: LearningSeries[] = [
           "Queues",
           "Eventual Consistency",
           "AI"
-        ]
+        ],
+        "status": "published"
       }
     ],
     "totalLessons": 10
-  },
-  {
-    "slug": "agentic-ai",
-    "name": "Agentic AI Implementation Path",
-    "description": "From single-agent prototypes to multi-agent orchestration, a practitioner's curriculum for shipping agentic systems.",
-    "gradient": "from-amber to-yellow-600",
-    "lessons": [
-      {
-        "slug": "what-is-an-agent",
-        "title": "Lesson 1: What an Agent Actually Is (LLMs vs Rules vs Workflows)",
-        "series": "agentic-ai",
-        "lesson": 1,
-        "excerpt": "The definitions that matter for the whole 90-lesson track: what separates a rules system, an LLM workflow, and a true agent, plus how to tell which one you're actually building.",
-        "date": "August 04, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "9 min read",
-        "tags": [
-          "Learn",
-          "AI",
-          "Agentic",
-          "Foundations"
-        ]
-      },
-      {
-        "slug": "how-llms-work-tokens-context-inference",
-        "title": "Lesson 2: How LLMs Work for Implementers: Tokens, Context, Inference, Temperature",
-        "series": "agentic-ai",
-        "lesson": 2,
-        "excerpt": "The four knobs that decide every LLM bill, latency budget, and reliability call: what tokens actually are, how the context window constrains agents, how inference really runs, and what temperature does and doesn't do.",
-        "date": "August 05, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "9 min read",
-        "tags": [
-          "Learn",
-          "AI",
-          "Agentic",
-          "Foundations"
-        ]
-      },
-      {
-        "slug": "the-agent-loop-perceive-reason-act-observe",
-        "title": "Lesson 3: The Agent Loop: Perceive, Reason, Act, Observe, and Where Your Code Lives",
-        "series": "agentic-ai",
-        "lesson": 3,
-        "excerpt": "The one while loop that turns a language model into an agent: the five stages of the loop, the pseudocode that runs underneath every framework, and exactly which parts of it are your code versus the runtime's.",
-        "date": "August 06, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "9 min read",
-        "tags": [
-          "Learn",
-          "AI",
-          "Agentic",
-          "Foundations"
-        ]
-      },
-      {
-        "slug": "prompting-for-agents-system-prompts-few-shot",
-        "title": "Lesson 4: Prompting for Agents: System Prompts, Few-Shot, and When Prompts Aren't Enough",
-        "series": "agentic-ai",
-        "lesson": 4,
-        "excerpt": "In an agent, the prompt isn't a single message; it's the constitution the loop obeys on every iteration. The anatomy of a production system prompt, how few-shot examples actually work, and the escalation ladder for when words stop being enough.",
-        "date": "August 07, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "10 min read",
-        "tags": [
-          "Learn",
-          "AI",
-          "Agentic",
-          "Prompting"
-        ]
-      },
-      {
-        "slug": "tokens-context-cost-engineering-agents",
-        "title": "Lesson 5: Tokens, Context Windows, and Cost Engineering for Agent Workloads",
-        "series": "agentic-ai",
-        "lesson": 5,
-        "excerpt": "Agents don't just use tokens; they burn them: roughly 4x a chat conversation, 15x for multi-agent. The four levers that control the bill (budgeting, compression, caching, and model routing), with the math worked out on a real 10-agent pipeline.",
-        "date": "August 08, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "9 min read",
-        "tags": [
-          "Learn",
-          "AI",
-          "Agentic",
-          "Cost"
-        ]
-      },
-      {
-        "slug": "choosing-models-providers-routing-fallbacks",
-        "title": "Lesson 6: Choosing Models & Providers: Capability Tiers, Routing, and Fallbacks",
-        "series": "agentic-ai",
-        "lesson": 6,
-        "excerpt": "The biggest agent-ops mistake is picking one 'best' model and pointing everything at it. This lesson builds the three-tier capability model, the three jobs of a router, and the fallback chains that keep agents alive when providers fail.",
-        "date": "August 09, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "8 min read",
-        "tags": [
-          "Learn",
-          "AI",
-          "Agentic",
-          "Models"
-        ]
-      },
-      {
-        "slug": "structured-output-json-mode-function-calling-tool-schemas",
-        "title": "Lesson 7: Structured Output: JSON Mode, Function Calling, and Tool Schemas Done Right",
-        "series": "agentic-ai",
-        "lesson": 7,
-        "excerpt": "An agent is only as reliable as its data contracts. This lesson builds the structured-output ladder (JSON mode, Structured Outputs, function calling) and the tool-schema practices that keep tool calls valid, parseable, and safe in production.",
-        "date": "August 10, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "8 min read",
-        "tags": [
-          "Learn",
-          "AI",
-          "Agentic",
-          "Tools"
-        ]
-      },
-      {
-        "slug": "tool-design-schemas-error-handling-retries",
-        "title": "Lesson 8: Designing Tools That Fail Well: Schemas, Error Handling, and Retries",
-        "series": "agentic-ai",
-        "lesson": 8,
-        "excerpt": "A tool is an operational contract, not an API wrapper. This lesson covers the five-part anatomy of a production tool, structured error schemas the model can act on, and retry discipline (backoff with jitter, idempotency keys, and retry budgets), so agents survive failures without corrupting state.",
-        "date": "August 11, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "9 min read",
-        "tags": [
-          "Learn",
-          "AI",
-          "Agentic",
-          "Tools"
-        ]
-      },
-      {
-        "slug": "function-calling-parity-across-providers",
-        "title": "Lesson 9: Function-Calling Parity Across OpenAI, Azure, Anthropic, Gemini, and Local Models",
-        "series": "agentic-ai",
-        "lesson": 9,
-        "excerpt": "Every frontier provider exposes function calling, but none uses the same wire format. This lesson maps the request and response shapes across OpenAI, Azure, Anthropic, and Gemini, then shows why local models (llama.cpp) are the parity wildcard and how one internal schema plus thin per-provider adapters keeps an agent portable.",
-        "date": "August 12, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "9 min read",
-        "tags": [
-          "Learn",
-          "AI",
-          "Agentic",
-          "Tools"
-        ]
-      }
-    ],
-    "totalLessons": 9
   }
 ];
 
 /** Flat list of every lesson, NEWEST FIRST (for sitemap, nav, flat lookups). */
 export const learnLessons: LearnLesson[] = [
+  {
+    "slug": "rag-fundamentals-chunking-embeddings-retrieval",
+    "title": "Lesson 10: RAG Fundamentals: Chunking, Embeddings, Retrieval, and Why RAG Is the First Enterprise Pattern",
+    "series": "agentic-ai",
+    "lesson": 10,
+    "excerpt": "The pattern that grounds LLMs in your own knowledge: what RAG is and where it came from, why you chunk documents instead of feeding them whole, what embeddings actually are, how retrieval ranks chunks, and why RAG became the first pattern enterprises shipped.",
+    "date": "August 13, 2026",
+    "author": "Adroit Consulting",
+    "readTime": "10 min read",
+    "tags": [
+      "Learn",
+      "AI",
+      "Agentic",
+      "RAG"
+    ],
+    "status": "published"
+  },
   {
     "slug": "day-11-fc-5-advanced-flexcard-properties",
     "title": "OmniStudio FC-5: Advanced FlexCard Properties",
@@ -522,7 +586,8 @@ export const learnLessons: LearnLesson[] = [
     "tags": [
       "OmniStudio",
       "FlexCards"
-    ]
+    ],
+    "status": "published"
   },
   {
     "slug": "sync-async-queues-eventual-consistency-agent-pipelines",
@@ -541,7 +606,8 @@ export const learnLessons: LearnLesson[] = [
       "Queues",
       "Eventual Consistency",
       "AI"
-    ]
+    ],
+    "status": "published"
   },
   {
     "slug": "function-calling-parity-across-providers",
@@ -557,7 +623,8 @@ export const learnLessons: LearnLesson[] = [
       "AI",
       "Agentic",
       "Tools"
-    ]
+    ],
+    "status": "published"
   },
   {
     "slug": "day-10-fc-4-complex-card-actions-launch-fire-update",
@@ -571,7 +638,8 @@ export const learnLessons: LearnLesson[] = [
     "tags": [
       "OmniStudio",
       "FlexCards"
-    ]
+    ],
+    "status": "published"
   },
   {
     "slug": "integration-reliability-idempotency-retries-error-handling-dead-letter-design",
@@ -589,7 +657,8 @@ export const learnLessons: LearnLesson[] = [
       "Integration",
       "Reliability",
       "Error Handling"
-    ]
+    ],
+    "status": "published"
   },
   {
     "slug": "tool-design-schemas-error-handling-retries",
@@ -605,7 +674,8 @@ export const learnLessons: LearnLesson[] = [
       "AI",
       "Agentic",
       "Tools"
-    ]
+    ],
+    "status": "published"
   },
   {
     "slug": "day-09-fc-3-binding-components-configuring-properties",
@@ -619,7 +689,8 @@ export const learnLessons: LearnLesson[] = [
     "tags": [
       "OmniStudio",
       "FlexCards"
-    ]
+    ],
+    "status": "published"
   },
   {
     "slug": "middleware-tradeoffs-mulesoft-boomi-custom-salesforce-hub",
@@ -636,7 +707,8 @@ export const learnLessons: LearnLesson[] = [
       "Architect",
       "Integration",
       "Middleware"
-    ]
+    ],
+    "status": "published"
   },
   {
     "slug": "structured-output-json-mode-function-calling-tool-schemas",
@@ -652,7 +724,8 @@ export const learnLessons: LearnLesson[] = [
       "AI",
       "Agentic",
       "Tools"
-    ]
+    ],
+    "status": "published"
   },
   {
     "slug": "day-08-fc-2-single-multi-level-cards-layouts-repeaters",
@@ -666,7 +739,8 @@ export const learnLessons: LearnLesson[] = [
     "tags": [
       "OmniStudio",
       "FlexCards"
-    ]
+    ],
+    "status": "published"
   },
   {
     "slug": "event-driven-integration-platform-events-change-data-capture",
@@ -684,7 +758,8 @@ export const learnLessons: LearnLesson[] = [
       "Integration",
       "Platform Events",
       "Change Data Capture"
-    ]
+    ],
+    "status": "published"
   },
   {
     "slug": "choosing-models-providers-routing-fallbacks",
@@ -700,7 +775,8 @@ export const learnLessons: LearnLesson[] = [
       "AI",
       "Agentic",
       "Models"
-    ]
+    ],
+    "status": "published"
   },
   {
     "slug": "day-07-fc-1-flexcard-data-sources-testing-json",
@@ -714,7 +790,8 @@ export const learnLessons: LearnLesson[] = [
     "tags": [
       "OmniStudio",
       "FlexCards"
-    ]
+    ],
+    "status": "published"
   },
   {
     "slug": "integration-patterns-request-reply-fire-forget-batch",
@@ -731,7 +808,8 @@ export const learnLessons: LearnLesson[] = [
       "Architect",
       "Integration",
       "Integration Patterns"
-    ]
+    ],
+    "status": "published"
   },
   {
     "slug": "tokens-context-cost-engineering-agents",
@@ -747,7 +825,8 @@ export const learnLessons: LearnLesson[] = [
       "AI",
       "Agentic",
       "Cost"
-    ]
+    ],
+    "status": "published"
   },
   {
     "slug": "day-06-f-6-testing-versioning-cloning",
@@ -761,7 +840,8 @@ export const learnLessons: LearnLesson[] = [
     "tags": [
       "OmniStudio",
       "OmniStudio Fundamentals"
-    ]
+    ],
+    "status": "published"
   },
   {
     "slug": "systems-architecture-what-it-means-ai-patterns",
@@ -778,7 +858,8 @@ export const learnLessons: LearnLesson[] = [
       "Systems Architecture",
       "AI Patterns",
       "General"
-    ]
+    ],
+    "status": "published"
   },
   {
     "slug": "prompting-for-agents-system-prompts-few-shot",
@@ -794,7 +875,8 @@ export const learnLessons: LearnLesson[] = [
       "AI",
       "Agentic",
       "Prompting"
-    ]
+    ],
+    "status": "published"
   },
   {
     "slug": "day-05-f5-implementation-toolchain-sfcli-vbt-migration",
@@ -808,7 +890,8 @@ export const learnLessons: LearnLesson[] = [
     "tags": [
       "OmniStudio",
       "OmniStudio Fundamentals"
-    ]
+    ],
+    "status": "published"
   },
   {
     "slug": "integration-fundamentals-rest-soap-bulk-apis",
@@ -824,7 +907,8 @@ export const learnLessons: LearnLesson[] = [
       "Salesforce",
       "Architect",
       "Integration"
-    ]
+    ],
+    "status": "published"
   },
   {
     "slug": "the-agent-loop-perceive-reason-act-observe",
@@ -840,7 +924,8 @@ export const learnLessons: LearnLesson[] = [
       "AI",
       "Agentic",
       "Foundations"
-    ]
+    ],
+    "status": "published"
   },
   {
     "slug": "day-04-f4-licensing-permission-set-licenses-permission-sets",
@@ -854,7 +939,8 @@ export const learnLessons: LearnLesson[] = [
     "tags": [
       "OmniStudio",
       "OmniStudio Fundamentals"
-    ]
+    ],
+    "status": "published"
   },
   {
     "slug": "core-building-blocks-objects-fields-relationships",
@@ -870,7 +956,8 @@ export const learnLessons: LearnLesson[] = [
       "Salesforce",
       "Architect",
       "Data Model"
-    ]
+    ],
+    "status": "published"
   },
   {
     "slug": "how-llms-work-tokens-context-inference",
@@ -886,7 +973,8 @@ export const learnLessons: LearnLesson[] = [
       "AI",
       "Agentic",
       "Foundations"
-    ]
+    ],
+    "status": "published"
   },
   {
     "slug": "day-03-f3-managed-package-vs-standard-runtime-upgrades",
@@ -900,7 +988,8 @@ export const learnLessons: LearnLesson[] = [
     "tags": [
       "OmniStudio",
       "OmniStudio Fundamentals"
-    ]
+    ],
+    "status": "published"
   },
   {
     "slug": "multi-tenant-platform-architecture",
@@ -916,7 +1005,8 @@ export const learnLessons: LearnLesson[] = [
       "Salesforce",
       "Architect",
       "Multi-Tenancy"
-    ]
+    ],
+    "status": "published"
   },
   {
     "slug": "what-is-an-agent",
@@ -932,7 +1022,8 @@ export const learnLessons: LearnLesson[] = [
       "AI",
       "Agentic",
       "Foundations"
-    ]
+    ],
+    "status": "published"
   },
   {
     "slug": "day-02-f2-project-needs-requirements-assumptions-risks-const",
@@ -946,7 +1037,8 @@ export const learnLessons: LearnLesson[] = [
     "tags": [
       "OmniStudio",
       "OmniStudio Fundamentals"
-    ]
+    ],
+    "status": "published"
   },
   {
     "slug": "what-salesforce-system-architect-does",
@@ -962,7 +1054,8 @@ export const learnLessons: LearnLesson[] = [
       "Salesforce",
       "Architect",
       "Certifications"
-    ]
+    ],
+    "status": "published"
   },
   {
     "slug": "day-01-f1-omnistudio-solution-and-industry-use-cases",
@@ -976,6 +1069,7 @@ export const learnLessons: LearnLesson[] = [
     "tags": [
       "OmniStudio",
       "OmniStudio Fundamentals"
-    ]
+    ],
+    "status": "published"
   }
 ];

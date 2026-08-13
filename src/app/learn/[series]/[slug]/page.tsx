@@ -23,6 +23,7 @@ import LessonQuiz from "@/components/Progress/LessonQuiz";
 import GuestCTA from "@/components/Progress/GuestCTA";
 import { getQuizForLesson } from "@/lib/quiz";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
+import MDXArticle from "@/components/MDX/MDXArticle";
 
 interface Props {
   params: Promise<{ series: string; slug: string }>;
@@ -168,7 +169,7 @@ export default async function LessonPage({ params }: Props) {
 
         {/* Article Body — rendered from MDX content */}
         <article className="article-body max-w-[720px] mx-auto px-6 pb-16">
-          <MDXArticle mdx={mdxBody} />
+          <MDXArticle mdx={mdxBody} kind="learn" />
 
           {/* Gated Practice Questions section — guests get the CTA placeholder,
               authed users get the interactive LessonQuiz; authed with no
@@ -196,25 +197,5 @@ export default async function LessonPage({ params }: Props) {
 
       <Footer />
     </div>
-  );
-}
-
-/**
- * MDX Article Renderer — uses next-mdx-remote/rsc for server-side MDX rendering
- * (same pattern as src/app/blog/[slug]/page.tsx). remark-gfm autolinks bare
- * http(s) URLs so citations render as clickable links.
- */
-async function MDXArticle({ mdx }: { mdx: string }) {
-  const [{ MDXRemote }, remarkGfm, Figure] = await Promise.all([
-    import("next-mdx-remote/rsc"),
-    import("remark-gfm"),
-    import("@/components/BlogPost/Figure"),
-  ]);
-  return (
-    <MDXRemote
-      source={mdx}
-      components={{ img: Figure.default }}
-      options={{ mdxOptions: { remarkPlugins: [remarkGfm.default] } }}
-    />
   );
 }
