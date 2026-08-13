@@ -150,16 +150,16 @@ for score, i in reversed(scores):
 Running this against the document above produces a real ranking:
 
 ```text
-0.434  chunk 2
-0.198  chunk 3
-0.107  chunk 1
-0.065  chunk 5
+0.210  chunk 2
+0.207  chunk 1
+0.085  chunk 3
+0.083  chunk 5
 0.000  chunk 7
 0.000  chunk 6
 0.000  chunk 4
 ```
 
-The query mentions chunk size, and chunk 2 is the one that talks about chunk size controlling the tradeoff between context and precision. The term-frequency vectors are crude, but the shape of the system is exactly what a production RAG does: chunk, embed, compare, rank, and hand the top chunks to the model. Swap the term vectors for a real embedding model, swap the linear scan for HNSW, and you have the production pattern.
+The query mentions chunk size, and chunk 2 ranks top because it contains the sentence about chunk size controlling the tradeoff between context and precision. Chunk 1 is a close second at 0.207: it also uses the word chunk heavily while it describes the pipeline, and the term-frequency model cannot tell that chunk 1 talks about the mechanism while chunk 2 talks about the tuning knob. The vectors are crude, but the shape of the system is exactly what a production RAG does: chunk, embed, compare, rank, and hand the top chunks to the model. Swap the term vectors for a real embedding model, swap the linear scan for HNSW, and you have the production pattern.
 
 ## Why RAG is the first enterprise pattern
 
