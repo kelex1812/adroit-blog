@@ -366,8 +366,6 @@ export const learnSeries: LearningSeries[] = [
     "slug": "salesforce-architect",
     "name": "Salesforce System Architect Primer",
     "description": "A 90-lesson deep dive into Flow design, Apex patterns, and platform architecture for teams scaling on Salesforce.",
-    "group": "Salesforce Certifications",
-    "subgroup": "Architect",
     "gradient": "from-sky to-blue-600",
     "lessons": [
       {

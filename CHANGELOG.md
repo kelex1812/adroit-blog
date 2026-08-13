@@ -4,6 +4,28 @@ All notable changes to the Adroit Consulting Blog project will be documented in 
 
 ## [Unreleased]
 
+### Fix: Salesforce System Architect Primer now under Learning Paths (t_9697ca50)
+
+The "Salesforce System Architect Primer" course rendered under a "Salesforce
+Certifications" header with an "Architect" sub-heading on /learn, but it is a
+general learning path — not a certification-prep track. Only OmniStudio
+Developer Certification belongs in the cert bucket.
+
+**What**
+- `content/learn/salesforce-architect/series.json` — removed `group:
+  "Salesforce Certifications"` and `subgroup: "Architect"`. LearnHub falls back
+  to `group = "Learning Paths"` when the key is absent, matching how
+  `content/learn/agentic-ai/series.json` is modeled (no group/subgroup keys).
+- `src/data/learn.ts` — regenerated via `node scripts/build-learn.js` (no
+  hand-edits) so the series now carries no group/subgroup.
+
+**Why** — the Architect primer is a 90-lesson deep dive into Flow/Apex/platform
+architecture, not an exam-prep bucket; it belongs alongside the Agentic AI
+Implementation Path in the General/Learning Paths bucket.
+
+**Known issues** — none. Filter counts verified in the running app: All 3,
+Certifications 1 (OmniStudio only), General 2 (Agentic AI + Architect).
+
 ### Fix: allow live deployed origin on profile PATCH (t_34f01164)
 
 Profile save (PATCH /api/profile) returned 403 {"error":"Forbidden origin"} on
