@@ -2,6 +2,28 @@ import { BlogPost } from "./types";
 
 export const posts: BlogPost[] = [
   {
+    "slug": "mcp-stateless-2026-07-28-production-agents",
+    "title": "MCP Just Went Stateless: What the 2026-07-28 Spec Means for Production Agents",
+    "excerpt": "MCP dropped its session layer and became a request/response protocol in the 2026-07-28 spec. That unlocks real scaling, but the reliability and security data says the hard work is still in how you run it.",
+    "category": "AI & Consulting",
+    "categoryColor": "ai",
+    "categoryGradient": "from-amber to-amber-dark",
+    "date": "August 13, 2026",
+    "author": "Adroit Consulting",
+    "authorInitials": "AC",
+    "readTime": "8 min read",
+    "featured": false,
+    "tags": [
+      "MCP",
+      "Model Context Protocol",
+      "AI Agents",
+      "Agentic AI",
+      "LLM Tool Integration",
+      "Production Patterns"
+    ],
+    "bannerImage": "/banners/mcp-stateless-2026-07-28-production-agents.png"
+  },
+  {
     "slug": "data-360-implementation-patterns",
     "title": "Data 360 Implementation Patterns That Actually Ship",
     "excerpt": "Data 360 projects fail on sequence, not connectors. Outcomes first, narrow ingestion, conservative identity rules, then activation that reaches a real workflow.",
