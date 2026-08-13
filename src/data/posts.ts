@@ -3,8 +3,8 @@ import { BlogPost } from "./types";
 export const posts: BlogPost[] = [
   {
     "slug": "mcp-stateless-2026-07-28-production-agents",
-    "title": "MCP Just Went Stateless: What the 2026-07-28 Spec Means for Production Agents",
-    "excerpt": "MCP dropped its session layer and became a request/response protocol in the 2026-07-28 spec. That unlocks real scaling, but the reliability and security data says the hard work is still in how you run it.",
+    "title": "MCP Goes Stateless: The 2026-07-28 Spec in Practice",
+    "excerpt": "MCP went stateless in the 2026-07-28 spec. That unlocks scaling, but the reliability and security data say the real work is still in how you run it.",
     "category": "AI & Consulting",
     "categoryColor": "ai",
     "categoryGradient": "from-amber to-amber-dark",
