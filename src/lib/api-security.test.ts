@@ -3,7 +3,7 @@
  */
 import { describe, it, expect } from "vitest";
 import { NextRequest } from "next/server";
-import { validateQuizName, getClientIp } from "./api-security";
+import { validateQuizName, getClientIp, checkOrigin } from "./api-security";
 
 describe("getClientIp", () => {
   function req(headers: Record<string, string>): NextRequest {
@@ -61,5 +61,36 @@ describe("validateQuizName", () => {
 
   it("rejects over-long names", () => {
     expect(validateQuizName("a".repeat(201), "quizName")).toContain("characters or fewer");
+  });
+});
+
+describe("checkOrigin (CSRF / F6)", () => {
+  function req(origin?: string): NextRequest {
+    return new NextRequest("http://localhost:3000/api/profile", {
+      headers: origin ? { origin } : {},
+    });
+  }
+
+  it("returns null when no Origin header is present (direct browser navigation)", () => {
+    expect(checkOrigin(req())).toBeNull();
+  });
+
+  it("allows the live deployed blog origin (adroit-blog-two.vercel.app)", () => {
+    // Regression for t_34f01164 — profile PATCH 403 "Forbidden origin" on the
+    // live site because the "-two" deploy origin was missing from the allowlist.
+    expect(checkOrigin(req("https://adroit-blog-two.vercel.app"))).toBeNull();
+  });
+
+  it("allows other known first-party origins", () => {
+    expect(checkOrigin(req("https://adroit.io"))).toBeNull();
+    expect(checkOrigin(req("https://www.adroit.io"))).toBeNull();
+    expect(checkOrigin(req("http://localhost:3000"))).toBeNull();
+  });
+
+  it("still 403s a disallowed origin", () => {
+    expect(checkOrigin(req("https://evil.example.com"))).toBe("Forbidden origin");
+    expect(checkOrigin(req("https://adroit-blog-two.vercel.app.evil.io"))).toBe(
+      "Forbidden origin",
+    );
   });
 });

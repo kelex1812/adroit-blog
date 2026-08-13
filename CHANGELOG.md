@@ -4,6 +4,31 @@ All notable changes to the Adroit Consulting Blog project will be documented in 
 
 ## [Unreleased]
 
+### Fix: allow live deployed origin on profile PATCH (t_34f01164)
+
+Profile save (PATCH /api/profile) returned 403 {"error":"Forbidden origin"} on
+the live site: the CSRF origin allowlist in `src/lib/api-security.ts` listed
+`https://adroit-blog.vercel.app` (which does not resolve to a live deploy),
+but the REAL deployed origin is `https://adroit-blog-two.vercel.app` — so the
+browser's `Origin` header for a save was rejected.
+
+**What**
+- `src/lib/api-security.ts` — added `https://adroit-blog-two.vercel.app` to
+  `ALLOWED_ORIGINS`. Kept the stale `adroit-blog.vercel.app` entry (harmless;
+  covers legacy first-party links). `adroit.io` / `www.adroit.io` 404 the blog,
+  so they remain listed but are not the deployed origin.
+- `src/lib/api-security.test.ts` — new `checkOrigin` block: the live "-two"
+  origin passes; a suffix-spoofed origin (`adroit-blog-two.vercel.app.evil.io`)
+  still rejects.
+- `src/app/api/profile/route.test.ts` — route-level regression: a PATCH with
+  `Origin: https://adroit-blog-two.vercel.app` passes CSRF and reaches the
+  session check (guest → 401), not 403.
+
+**Why** — a signed-in user editing their profile was hard-blocked from saving
+on the deployed site.
+
+**Known issues** — none. The fix is additive to the allowlist only.
+
 ### Security: strip knowledge-check answer key from client bundle (t_79a92b83, CWE-200)
 
 Val-el's audit finding 2 (t_77dd715a): the check page shipped the FULL

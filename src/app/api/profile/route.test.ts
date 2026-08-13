@@ -137,6 +137,16 @@ describe("PATCH /api/profile", () => {
     expect(await res.json()).toEqual({ error: "Forbidden origin" });
   });
 
+  it("does NOT reject the live deployed origin (t_34f01164 regression)", async () => {
+    // Origin: https://adroit-blog-two.vercel.app must pass the CSRF check and
+    // proceed to the session check (guest → 401, not 403 Forbidden origin).
+    const res = await patch(
+      { displayName: "Jane" },
+      { origin: "https://adroit-blog-two.vercel.app" },
+    );
+    expect(res.status).toBe(401);
+  });
+
   it("429s when the per-IP rate limit is exceeded", async () => {
     mocks.getUser.mockResolvedValue(AUTHED);
     const q = profileQuery({ row: PROFILE_ROW });
