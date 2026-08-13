@@ -123,7 +123,7 @@ function BlogListingContent() {
               <span className="w-1.5 h-1.5 rounded-full bg-red" />
               Adroit Consulting &mdash; Field Notes
             </div>
-            <h1 className="text-[clamp(2.25rem,5vw,3rem)] font-extrabold text-navy tracking-[-0.03em] leading-[1.05] mb-3 bg-gradient-to-r from-navy to-navy-light bg-clip-text text-transparent">
+            <h1 className="text-[clamp(2.25rem,5vw,3rem)] font-extrabold text-navy tracking-[-0.03em] leading-[1.05] mb-3 bg-gradient-to-r from-navy to-navy-light dark:from-slate-100 dark:to-slate-300 bg-clip-text text-transparent">
               Adroit Consulting Blog
             </h1>
             <p className="text-[1.0625rem] text-gray-500 max-w-[560px] leading-relaxed">
@@ -208,7 +208,7 @@ function BlogListingContent() {
         {/* Sign-in prompt — per-user cross-device sync (design brief §4.3) */}
         {!authLoading && !user && (
           <div className="max-w-[1120px] mx-auto px-6 mb-6">
-            <div className="flex items-center justify-between gap-3 rounded-xl border border-gray-200 bg-white px-4 py-3">
+            <div className="flex items-center justify-between gap-3 rounded-xl border border-[var(--border-default)] bg-[var(--surface-card)] px-4 py-3">
               <p className="text-[12.5px] text-gray-500 leading-relaxed">
                 Progress is saved on this device.{" "}
                 <span className="hidden sm:inline">Sign in to sync across devices.</span>

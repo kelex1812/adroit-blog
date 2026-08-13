@@ -113,7 +113,7 @@ export default function CategoriesPage() {
             <span className="w-1.5 h-1.5 rounded-full bg-red" />
             Browse by Topic
           </div>
-          <h1 className="text-[clamp(2rem,4.5vw,2.75rem)] font-extrabold text-navy tracking-[-0.03em] leading-[1.05] mb-3 bg-gradient-to-r from-navy to-navy-light bg-clip-text text-transparent">
+          <h1 className="text-[clamp(2rem,4.5vw,2.75rem)] font-extrabold text-navy tracking-[-0.03em] leading-[1.05] mb-3 bg-gradient-to-r from-navy to-navy-light dark:from-slate-100 dark:to-slate-300 bg-clip-text text-transparent">
             Blog Categories
           </h1>
           <p className="text-base text-gray-500 max-w-[520px] leading-relaxed">

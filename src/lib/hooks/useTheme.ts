@@ -20,17 +20,20 @@ export type ThemeMode = "system" | "light" | "dark";
 const STORAGE_KEY = "adroit-theme";
 
 export function readStoredMode(): ThemeMode {
-  if (typeof window === "undefined") return "system";
+  if (typeof window === "undefined") return "light";
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) return "system";
-    const parsed = JSON.parse(raw) as { mode?: ThemeMode };
+    if (!raw) return "light";
+    const parsed = JSON.parse(raw) as { mode?: ThemeMode; v?: number };
+    // v<2 payloads predate the light-default change (mode 'system' was
+    // auto-written on every visit): treat them as no preference -> light.
+    if (parsed.v !== 2) return "light";
     if (parsed.mode === "light" || parsed.mode === "dark" || parsed.mode === "system") {
       return parsed.mode;
     }
-    return "system";
+    return "light";
   } catch {
-    return "system";
+    return "light";
   }
 }
 
@@ -51,7 +54,7 @@ export function applyDarkClass(dark: boolean): void {
 export function persistStoredMode(mode: ThemeMode): void {
   if (typeof window === "undefined") return;
   try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify({ mode }));
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({ mode, v: 2 }));
   } catch {
     // non-fatal — theme still applies for this session
   }

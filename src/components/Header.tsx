@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useAuth, notifyAuthChanged } from "@/lib/hooks/useAuth";
 import AvatarMenu from "@/components/AvatarMenu";
+import ThemeToggle from "@/components/Theme/ThemeToggle";
 import { avatarHueClass, initialsFromEmail } from "@/lib/avatar";
 
 const navLinks = [
@@ -94,6 +95,7 @@ export default function Header() {
             ),
           )}
           <div className="flex items-center gap-4 pl-2 border-l border-[var(--border-subtle)]">
+            <ThemeToggle authed={!!user} iconOnly />
             <Link
               href="https://adroit.io/contact"
               className="bg-[var(--surface-inverse)] text-[var(--ink-on-inverse)] px-[18px] py-2 rounded-sm text-[0.8rem] font-semibold hover:bg-[var(--surface-inverse-hover)] hover:-translate-y-px active:scale-[0.98] transition-all duration-150 no-underline"
@@ -152,6 +154,9 @@ export default function Header() {
               </Link>
             ),
           )}
+          <div className="py-2 border-b border-[var(--border-subtle)]">
+            <ThemeToggle authed={!!user} compact />
+          </div>
           {!isLoading && !user && (
             <Link
               href={`/login${pathname && pathname !== "/login" ? `?next=${encodeURIComponent(pathname)}` : ""}`}

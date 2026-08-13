@@ -40,7 +40,7 @@ export default function TagsPage() {
             <span className="w-1.5 h-1.5 rounded-full bg-red" />
             Topic Index
           </div>
-          <h1 className="text-[clamp(2rem,4.5vw,2.75rem)] font-extrabold text-navy tracking-[-0.03em] leading-[1.05] mb-3 bg-gradient-to-r from-navy to-navy-light bg-clip-text text-transparent">
+          <h1 className="text-[clamp(2rem,4.5vw,2.75rem)] font-extrabold text-navy tracking-[-0.03em] leading-[1.05] mb-3 bg-gradient-to-r from-navy to-navy-light dark:from-slate-100 dark:to-slate-300 bg-clip-text text-transparent">
             Tags
           </h1>
           <p className="text-[1.0625rem] text-gray-500 max-w-[560px] leading-relaxed mb-8">

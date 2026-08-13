@@ -617,3 +617,28 @@ html.dark .article-body hr {
 html.dark .reading-progress {
   background: var(--surface-sunken);
 }
+
+/* Legacy raw color utilities → semantic tokens in dark (2026-08-13 pass).
+   Pre-token components (blog listing, learn, progress surfaces) still use
+   Tailwind gray/navy/red text classes that do NOT remap by themselves; in
+   dark mode those rendered at 1.9-3.6:1 (gray-500 #6b7280 on the dark card).
+   Remap them to the semantic ink scale so every surface clears WCAG AA. */
+html.dark .text-navy { color: var(--ink-primary); }
+html.dark .text-navy-light { color: var(--ink-primary); }
+html.dark .text-gray-900 { color: var(--ink-strong); }
+html.dark .text-gray-800 { color: var(--ink-strong); }
+html.dark .text-gray-700 { color: var(--ink-body); }
+html.dark .text-gray-600 { color: var(--ink-body); }
+html.dark .text-gray-500 { color: var(--ink-muted); }
+html.dark .text-gray-400 { color: var(--ink-faint); }
+html.dark .text-gray-300 { color: var(--ink-faint); }
+html.dark .text-red { color: var(--accent); }
+html.dark .hover\:text-navy:hover { color: var(--ink-primary); }
+html.dark .hover\:text-navy-light:hover { color: var(--ink-primary); }
+html.dark .hover\:text-gray-500:hover { color: var(--ink-muted); }
+html.dark .hover\:text-red:hover { color: var(--accent-hover); }
+/* Filled navy elements (buttons, active pills) become the inverse surface
+   so their boundaries stay visible against dark cards. */
+html.dark .bg-navy { background-color: var(--surface-inverse); }
+html.dark .bg-navy-light { background-color: var(--surface-inverse-hover); }
+html.dark .hover\:bg-navy-light:hover { background-color: var(--surface-inverse-hover); }

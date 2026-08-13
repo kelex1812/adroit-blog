@@ -19,7 +19,7 @@ export const metadata: Metadata = buildMetadata({
 
 /** FOUC guard — apply persisted/OS theme to <html> before hydration. */
 function themeFoucScript() {
-  return `(function(){try{var p=JSON.parse(localStorage.getItem('adroit-theme')||'{"mode":"system"}');var m=p.mode||'system';var dark=m==='dark'||(m==='system'&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.classList.add('dark');}catch(e){}})();`;
+  return `(function(){try{var p=JSON.parse(localStorage.getItem('adroit-theme')||'{"mode":"light"}');var m=(p&&p.v===2)?(p.mode||'light'):'light';var dark=m==='dark'||(m==='system'&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.classList.add('dark');}catch(e){}})();`;
 }
 
 export default function RootLayout({
