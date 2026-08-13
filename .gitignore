@@ -43,3 +43,22 @@ next-env.d.ts
 # local env — never commit
 .env.local
 .env
+
+# kanban worker scratch (delivered via cards/Discord, not tracked in main)
+/reports/
+/design/.scratch/
+/.playwright-mcp/
+.steel-complete-metadata-*.json
+scripts/complete_*.py
+scripts/create_qa_card_*.py
+docs/*-audit-*.md
+docs/complete-metadata-*.json
+docs/decomposition-plan-*.json
+t_*-DEPLOY-DIGEST.md
+security-audit-*.md
+security-audit-*.json
+docs/.terminal-state-*.md
+docs/.verify-html.py
+docs/a11y-keyboard-focus-*.md
+mobile-blog-progress.png
+deliverables/*.py
