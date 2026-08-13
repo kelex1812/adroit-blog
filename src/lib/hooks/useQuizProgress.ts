@@ -53,7 +53,12 @@ interface UseQuizProgressReturn {
    * nothing / a placeholder until this is true (QA F-1 hydration gate).
    */
   hydrated: boolean;
-  submitAnswer: (questionIndex: number, userAnswer: number, correctAnswer: number) => void;
+  submitAnswer: (
+    questionIndex: number,
+    userAnswer: number,
+    correctAnswer: number,
+    options?: { skipSync?: boolean },
+  ) => void;
   resetQuiz: () => void;
   /** Record a completed run (updates bestScore/attemptCount + syncs stats). */
   completeRun: () => void;
@@ -149,7 +154,12 @@ export function useQuizProgress(
   }, [quizName]);
 
   const submitAnswer = useCallback(
-    (questionIndex: number, userAnswer: number, correctAnswer: number) => {
+    (
+      questionIndex: number,
+      userAnswer: number,
+      correctAnswer: number,
+      options?: { skipSync?: boolean },
+    ) => {
       if (!hydrated) return;
       const isCorrect = userAnswer === correctAnswer;
       const attempt: QuizAttempt = {
@@ -188,7 +198,12 @@ export function useQuizProgress(
       };
       setProgress(newProgress);
       setQuizInStorage(quizName, newProgress);
-      syncAttemptAPI(attempt);
+      // Server-graded mode (t_79a92b83): the grading POST already upserted
+      // the quiz_attempt row — skip the duplicate sync to stay well under the
+      // 30/min rate limit (a 15-question check would otherwise burn 2×15).
+      if (!options?.skipSync) {
+        syncAttemptAPI(attempt);
+      }
     },
     [progress, quizName, hydrated, totalQuestions],
   );

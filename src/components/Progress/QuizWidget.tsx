@@ -14,6 +14,12 @@
  *                    exactly 80.0 shows "Passed — 80 flat counts" (boundary).
  *   - retakeLabel  "Retake quiz" (lesson) / "Retake check" (check)
  *   - backHref/backLabel  "Back to lesson" / "Back to series" link in results
+ *   - serverGraded True for knowledge checks (security t_79a92b83 F2 /
+ *     CWE-200): the page ships `{question, options}` ONLY — no
+ *     correct_answer_index/explanation in the RSC payload. Each answer is
+ *     POSTed to /api/progress/quiz, which grades it server-side and returns
+ *     { isCorrect, correctAnswerIndex, explanation } for that question; the
+ *     widget renders feedback from the response, never from a client-side key.
  */
 "use client";
 
@@ -28,9 +34,31 @@ export interface QuizQuestion {
   explanation?: string;
 }
 
+/**
+ * Client-safe question shape — what server-graded pages ship to the widget.
+ * Deliberately stripped of the answer key (correct_answer_index, explanation)
+ * server-side (security t_79a92b83 F2 / CWE-200); grading feedback comes from
+ * POST /api/progress/quiz responses, never from the payload.
+ */
+export interface ClientSafeQuestion {
+  question: string;
+  options: string[];
+}
+
+/** Per-question grading result returned by POST /api/progress/quiz. */
+interface GradeResult {
+  isCorrect: boolean;
+  correctAnswerIndex: number;
+  explanation?: string;
+}
+
 interface QuizWidgetProps {
   quizName: string;
-  questions: QuizQuestion[];
+  /**
+   * Full questions (client-graded lesson mode) OR stripped {question, options}
+   * (serverGraded check mode — the answer key must never reach this prop).
+   */
+  questions: QuizQuestion[] | ClientSafeQuestion[];
   /** Card kicker after the red tick (copy deck §1/§2). Defaults to "Quiz". */
   kicker?: string;
   /** Pass threshold (0-100). When set, results show a pass/fail verdict pill. */
@@ -41,6 +69,12 @@ interface QuizWidgetProps {
   backHref?: string;
   /** Back button label (default "Back"). */
   backLabel?: string;
+  /**
+   * Server-graded mode (knowledge checks, t_79a92b83): the payload carries no
+   * answer key; each answer is POSTed to /api/progress/quiz and feedback
+   * (correct/wrong styling, explanation) is rendered from the response.
+   */
+  serverGraded?: boolean;
 }
 
 export default function QuizWidget({
@@ -51,11 +85,17 @@ export default function QuizWidget({
   retakeLabel = "Retake quiz",
   backHref,
   backLabel = "Back",
+  serverGraded = false,
 }: QuizWidgetProps) {
   const [currentQ, setCurrentQ] = useState(0);
   const [selected, setSelected] = useState<number | null>(null);
   const [showExplanation, setShowExplanation] = useState(false);
   const [grading, setGrading] = useState(false);
+  // Server-graded mode (t_79a92b83): per-question grading results returned by
+  // POST /api/progress/quiz. The widget renders correct/wrong styling and the
+  // explanation from these — the payload never carries the answer key.
+  const [gradedResults, setGradedResults] = useState<Record<number, GradeResult>>({});
+  const [gradeError, setGradeError] = useState(false);
   // Track the pending "Grading…" timeout so advancing/retaking can clear it —
   // otherwise the 350ms beat fires after the user has moved on and flips
   // showExplanation for the WRONG question.
@@ -130,6 +170,7 @@ export default function QuizWidget({
   function handleSelect(index: number) {
     if (isAnswered || grading) return;
     setSelected(index);
+    if (gradeError) setGradeError(false);
   }
 
   // WAI-ARIA radiogroup arrow-key roving (QA F-4): ArrowDown/Right move to
@@ -158,6 +199,10 @@ export default function QuizWidget({
   // timeout is cleared on advance/retake so it can't fire for the wrong question.
   function handleSubmit() {
     if (selected === null || !question || grading) return;
+    if (serverGraded) {
+      void gradeAndSubmit();
+      return;
+    }
     setGrading(true);
     if (gradingTimeoutRef.current !== null) {
       window.clearTimeout(gradingTimeoutRef.current);
@@ -166,12 +211,67 @@ export default function QuizWidget({
       const completesNow =
         !answeredIndexes.has(currentQ) &&
         answeredIndexes.size + 1 >= questions.length;
-      submitAnswer(currentQ, selected, question.correct_answer_index);
+      submitAnswer(
+        currentQ,
+        selected,
+        (question as QuizQuestion).correct_answer_index,
+      );
       if (completesNow) setCompletedThisSession(true);
       setGrading(false);
       setShowExplanation(true);
       gradingTimeoutRef.current = null;
     }, 350);
+  }
+
+  // Server-graded submit (knowledge checks, t_79a92b83 F2 / CWE-200): POST the
+  // answer to /api/progress/quiz — the payload carries NO correctAnswerIndex /
+  // isCorrect (the server grades from canonical JSON) — and render feedback
+  // from the response. The 350ms minimum beat keeps the copy-deck "Grading…"
+  // affordance visible while the request is in flight. On failure the question
+  // stays open (isAnswered stays false) so the user can retry.
+  async function gradeAndSubmit() {
+    if (selected === null || !question || grading) return;
+    setGrading(true);
+    setGradeError(false);
+    try {
+      const [resp] = await Promise.all([
+        fetch("/api/progress/quiz", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            quizName,
+            questionIndex: currentQ,
+            userAnswerIndex: selected,
+          }),
+        }).then((r) => r.json()),
+        new Promise<void>((resolve) => window.setTimeout(resolve, 350)),
+      ]);
+      const result = (resp as { status?: string; result?: GradeResult }).result;
+      if (!result || typeof result.isCorrect !== "boolean") {
+        setGradeError(true);
+        return;
+      }
+      setGradedResults((prev) => ({
+        ...prev,
+        [currentQ]: {
+          isCorrect: result.isCorrect,
+          correctAnswerIndex: result.correctAnswerIndex,
+          explanation: result.explanation,
+        },
+      }));
+      const completesNow =
+        !answeredIndexes.has(currentQ) &&
+        answeredIndexes.size + 1 >= questions.length;
+      // skipSync: the grading POST above already upserted the quiz_attempt row —
+      // a second sync POST would double the rate-limit load (30/min per IP).
+      submitAnswer(currentQ, selected, result.correctAnswerIndex, { skipSync: true });
+      if (completesNow) setCompletedThisSession(true);
+      setShowExplanation(true);
+    } catch {
+      setGradeError(true);
+    } finally {
+      setGrading(false);
+    }
   }
 
   function handleNext() {
@@ -360,7 +460,20 @@ export default function QuizWidget({
 
   if (!question) return null;
 
-  const isCorrect = selected !== null && selected === question.correct_answer_index;
+  // Answer-key source (t_79a92b83): server-graded mode reads correctness from
+  // the grading response (gradedResults); client-graded (lesson) mode reads it
+  // from the full question payload. The payload in server-graded mode never
+  // carries correct_answer_index/explanation.
+  const graded = gradedResults[currentQ];
+  const answerIndex = serverGraded
+    ? graded?.correctAnswerIndex
+    : (question as QuizQuestion).correct_answer_index;
+  const isCorrect = serverGraded
+    ? (graded?.isCorrect ?? false)
+    : selected !== null && selected === answerIndex;
+  const explanation = serverGraded
+    ? graded?.explanation
+    : (question as QuizQuestion).explanation;
 
   const segmentsLabel = questions
     .map((_, i) => {
@@ -444,7 +557,7 @@ export default function QuizWidget({
       >
         {question.options.map((option, i) => {
           const isSelected = selected === i;
-          const isCorrectOption = i === question.correct_answer_index;
+          const isCorrectOption = i === answerIndex;
           const showTag = isAnswered && (isCorrectOption || isSelected);
 
           let borderClass = "border-gray-200 bg-white hover:border-navy/40 hover:bg-navy/[0.02]";
@@ -512,7 +625,7 @@ export default function QuizWidget({
       </span>
 
       {/* Explanation panel */}
-      {showExplanation && question.explanation && (
+      {showExplanation && explanation && (
         <div
           role="status"
           className={`reveal-up rounded-[14px] border p-[18px] mb-5 text-[13px] leading-relaxed ${
@@ -524,8 +637,15 @@ export default function QuizWidget({
           <div className="font-mono text-[10px] font-bold text-gray-500 uppercase tracking-[0.08em] mb-1.5">
             Why
           </div>
-          <p>{question.explanation}</p>
+          <p>{explanation}</p>
         </div>
+      )}
+
+      {/* Server-grade failure (t_79a92b83): question stays open for retry */}
+      {gradeError && (
+        <p role="alert" className="mb-4 text-[12.5px] font-medium text-red">
+          Couldn&apos;t grade this answer — check your connection and try again.
+        </p>
       )}
 
       <div className="flex gap-2.5">

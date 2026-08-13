@@ -9,6 +9,13 @@
  * Security (t_3bbee885 F3): correctness is recomputed server-side from
  * the canonical `questions.json` — the client's `correctAnswerIndex` /
  * `isCorrect` are treated as hints, never trusted verbatim.
+ *
+ * Check-page key stripping (t_79a92b83 F2 / CWE-200): the knowledge-check
+ * page ships `{question, options}` only (no answer key), so QuizWidget in
+ * server-graded mode POSTs each answer here and grades feedback from the
+ * RESPONSE, not from a client-side key. The response includes the correct
+ * answer + explanation ONLY for the question just answered — the same
+ * minimal-disclosure model as POST /api/progress/quiz/batch (t_c0c452f5).
  */
 import { NextRequest, NextResponse } from "next/server";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
@@ -109,7 +116,19 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ status: "error", error: sanitiseDbError(error) }, { status: 500 });
     }
 
-    return NextResponse.json({ status: "ok" });
+    // Return the server-graded result so server-graded clients (check page,
+    // t_79a92b83) can render feedback without the key ever shipping in the
+    // page payload. Disclosure is minimal: only the question just answered.
+    return NextResponse.json({
+      status: "ok",
+      result: {
+        isCorrect,
+        correctAnswerIndex,
+        ...(quiz.questions[questionIndex]!.explanation
+          ? { explanation: quiz.questions[questionIndex]!.explanation }
+          : {}),
+      },
+    });
   } catch {
     // Client keeps the authoritative copy in localStorage
     return NextResponse.json({ status: "error" }, { status: 500 });

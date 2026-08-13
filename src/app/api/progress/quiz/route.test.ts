@@ -86,6 +86,36 @@ describe("POST /api/progress/quiz — server-side recompute (F3)", () => {
     expect(writeSink.quizAttemptUpserts).toHaveLength(0);
   });
 
+  it("returns NO grading result to guests (answer key never leaks pre-auth, t_79a92b83)", async () => {
+    mocks.getUser.mockResolvedValue({ data: { user: null } });
+    const res = await post({
+      quizName: CHECK_QUIZ,
+      questionIndex: 0,
+      userAnswerIndex: 2,
+    });
+    const body = await res.json();
+    expect(body.status).toBe("unauthenticated");
+    expect(body.result).toBeUndefined();
+  });
+
+  it("returns the server-graded result for the answered question (t_79a92b83)", async () => {
+    authedUser();
+    const res = await post({
+      quizName: CHECK_QUIZ,
+      questionIndex: 0,
+      userAnswerIndex: 2, // correct
+    });
+    expect(res.status).toBe(200);
+    const body = await res.json();
+    expect(body.status).toBe("ok");
+    expect(body.result).toEqual({
+      isCorrect: true,
+      correctAnswerIndex: 2,
+      explanation:
+        "OmniScripts build guided experiences; IPs can be invoked from them for server-side orchestration.",
+    });
+  });
+
   it("recomputes correctness server-side, ignoring the client's isCorrect hint", async () => {
     authedUser();
     // q0 correct answer is index 2. The client picks index 0 (wrong) but
@@ -98,6 +128,10 @@ describe("POST /api/progress/quiz — server-side recompute (F3)", () => {
       isCorrect: true, // client hint — ignored
     });
     expect(res.status).toBe(200);
+    const body = await res.json();
+    // The graded result must reflect the SERVER's recomputation, not the
+    // forged client hint (t_3bbee885 F3 / t_79a92b83).
+    expect(body.result).toMatchObject({ isCorrect: false, correctAnswerIndex: 2 });
     expect(writeSink.quizAttemptUpserts).toHaveLength(1);
     expect(writeSink.quizAttemptUpserts[0]).toMatchObject({
       user_id: "user-1",

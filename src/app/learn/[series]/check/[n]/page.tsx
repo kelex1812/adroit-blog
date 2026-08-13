@@ -132,7 +132,16 @@ export default async function KnowledgeCheckPage({ params }: Props) {
           ) : (
             <QuizWidget
               quizName={check.quizName}
-              questions={check.questions}
+              // F2 (CWE-200, t_79a92b83): strip the answer key server-side —
+              // the check page must NEVER ship correct_answer_index/explanation
+              // in the RSC payload (mirrors exam/page.tsx). QuizWidget grades
+              // each answer via POST /api/progress/quiz and renders feedback
+              // from the response; the unlock gate stays server-side.
+              questions={check.questions.map(({ question, options }) => ({
+                question,
+                options,
+              }))}
+              serverGraded
               kicker={`Knowledge Check ${n} · 15 questions`}
               passThreshold={80}
               retakeLabel="Retake check"

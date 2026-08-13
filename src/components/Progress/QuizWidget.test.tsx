@@ -12,7 +12,7 @@
  *    "Grading…" during grading, "Next question" / "See results",
  *    "Best score · {n} attempts", pass/fail verdict pill for checks (≥80).
  */
-import { describe, it, expect, beforeEach } from "vitest";
+import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import QuizWidget, { QuizQuestion } from "./QuizWidget";
@@ -400,5 +400,186 @@ describe("QuizWidget", () => {
     const why = p.closest("[role=status]");
     expect(why?.getAttribute("style")).toBeNull();
     expect(why?.getAttribute("class") ?? "").toContain("reveal-up");
+  });
+});
+
+/* ------------------------------------------------------------------ */
+/*  Server-graded mode (security t_79a92b83 F2 / CWE-200)              */
+/* ------------------------------------------------------------------ */
+
+// The check page ships {question, options} ONLY — no answer key. Feedback is
+// graded by POST /api/progress/quiz and rendered from the response.
+const STRIPPED = QUESTIONS.map(({ question, options }) => ({ question, options }));
+
+function mockGradeFetch(
+  gradeByIndex: Record<number, { isCorrect: boolean; correctAnswerIndex: number; explanation?: string }>,
+) {
+  const fetchMock = vi.fn(async (_url: string, init?: RequestInit) => {
+    const body = JSON.parse((init?.body as string) ?? "{}") as {
+      questionIndex: number;
+    };
+    const result =
+      gradeByIndex[body.questionIndex] ?? { isCorrect: true, correctAnswerIndex: 0 };
+    return {
+      ok: true,
+      json: async () => ({ status: "ok", result }),
+    };
+  });
+  vi.stubGlobal("fetch", fetchMock);
+  return fetchMock;
+}
+
+describe("QuizWidget server-graded mode (t_79a92b83)", () => {
+  beforeEach(() => {
+    localStorage.clear();
+  });
+
+  afterEach(() => {
+    vi.unstubAllGlobals();
+  });
+
+  it("ships NO answer key to the server and grades feedback from the response", async () => {
+    const fetchMock = mockGradeFetch({
+      0: { isCorrect: true, correctAnswerIndex: 0, explanation: "Because Alpha." },
+    });
+    render(
+      <QuizWidget
+        quizName="test-quiz"
+        questions={STRIPPED}
+        serverGraded
+        kicker="Knowledge Check 1 · 15 questions"
+      />,
+    );
+
+    fireEvent.click(screen.getAllByRole("radio")[0]); // user picks Alpha
+    fireEvent.click(screen.getByRole("button", { name: "Submit answer" }));
+
+    // Feedback (explanation) arrives from the grading response, not the payload.
+    await screen.findByText(/Because Alpha/);
+    expect(
+      screen.getByRole("button", { name: "Next question" }),
+    ).toBeInTheDocument();
+
+    // Exactly one request per answer — the grading POST is the sync; no
+    // duplicate attempt-sync POST (rate limit 30/min would be blown 2×15).
+    expect(fetchMock).toHaveBeenCalledTimes(1);
+    const [url, init] = fetchMock.mock.calls[0] as [string, RequestInit];
+    expect(url).toBe("/api/progress/quiz");
+    const sent = JSON.parse(init.body as string);
+    // The wire payload carries ONLY quizName/questionIndex/userAnswerIndex.
+    expect(sent).toEqual({
+      quizName: "test-quiz",
+      questionIndex: 0,
+      userAnswerIndex: 0,
+    });
+    expect(sent).not.toHaveProperty("correctAnswerIndex");
+    expect(sent).not.toHaveProperty("isCorrect");
+
+    // The recorded attempt reflects the SERVER's grading.
+    const stored = JSON.parse(localStorage.getItem(KEY) ?? "{}");
+    expect(stored.attempts[0]).toMatchObject({
+      questionIndex: 0,
+      userAnswer: 0,
+      correctAnswer: 0,
+      isCorrect: true,
+    });
+  });
+
+  it("renders wrong-answer feedback from the response, not the user's selection", async () => {
+    mockGradeFetch({
+      0: { isCorrect: false, correctAnswerIndex: 2, explanation: "Because Alpha." },
+    });
+    render(
+      <QuizWidget quizName="test-quiz" questions={STRIPPED} serverGraded />,
+    );
+
+    fireEvent.click(screen.getAllByRole("radio")[1]); // user picks Beta
+    fireEvent.click(screen.getByRole("button", { name: "Submit answer" }));
+
+    await screen.findByText(/Because Alpha/);
+
+    // The SERVER says the correct answer is index 2 — the option styling and
+    // tags must come from the response (the widget has no client-side key).
+    const options = screen.getAllByRole("radio");
+    expect(options[2]).toHaveTextContent("Correct answer");
+    expect(options[1]).toHaveTextContent("Your answer");
+    // The sr-only live region announces the server-graded verdict.
+    expect(screen.getByText("Incorrect answer")).toBeInTheDocument();
+
+    const stored = JSON.parse(localStorage.getItem(KEY) ?? "{}");
+    expect(stored.attempts[0]).toMatchObject({
+      userAnswer: 1,
+      correctAnswer: 2,
+      isCorrect: false,
+    });
+  });
+
+  it("keeps the question open with an error when grading fails (no local key fallback)", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockResolvedValue({
+        ok: true,
+        json: async () => ({ status: "error" }), // no result → cannot grade
+      }),
+    );
+    render(
+      <QuizWidget quizName="test-quiz" questions={STRIPPED} serverGraded />,
+    );
+
+    fireEvent.click(screen.getAllByRole("radio")[0]);
+    fireEvent.click(screen.getByRole("button", { name: "Submit answer" }));
+
+    const alert = await screen.findByRole("alert");
+    expect(alert).toHaveTextContent(/couldn't grade/i);
+    // Question stays open — the user can retry (no recorded attempt).
+    expect(
+      screen.getByRole("button", { name: "Submit answer" }),
+    ).toBeInTheDocument();
+    expect(
+      screen.queryByRole("button", { name: "Next question" }),
+    ).not.toBeInTheDocument();
+    const stored = JSON.parse(localStorage.getItem(KEY) ?? "{}");
+    expect(stored.attempts ?? []).toHaveLength(0);
+  });
+
+  it("completes a run with server-graded answers and shows the pass verdict", async () => {
+    // Correct answers come back from the server for every question.
+    const fetchMock = mockGradeFetch({
+      0: { isCorrect: true, correctAnswerIndex: 0, explanation: "Because Alpha." },
+      1: { isCorrect: true, correctAnswerIndex: 1, explanation: "Because Two." },
+      2: { isCorrect: true, correctAnswerIndex: 2, explanation: "Because Blue." },
+    });
+    render(
+      <QuizWidget
+        quizName="test-quiz"
+        questions={STRIPPED}
+        serverGraded
+        passThreshold={80}
+        retakeLabel="Retake check"
+      />,
+    );
+
+    for (let i = 0; i < STRIPPED.length; i += 1) {
+      fireEvent.click(screen.getAllByRole("radio")[i]);
+      fireEvent.click(screen.getByRole("button", { name: "Submit answer" }));
+      if (i < STRIPPED.length - 1) {
+        await screen.findByRole("button", { name: "Next question" });
+        fireEvent.click(screen.getByRole("button", { name: "Next question" }));
+      }
+    }
+    await screen.findByRole("button", { name: "See results" });
+    fireEvent.click(screen.getByRole("button", { name: "See results" }));
+
+    // 100% → Passed verdict; one run recorded.
+    expect(await screen.findByText(/Passed · 80% required/)).toBeInTheDocument();
+    expect(screen.getByText(/Best score · 1 attempt/)).toBeInTheDocument();
+
+    // 3 grade POSTs + 1 run-stats POST — never a per-answer duplicate sync.
+    const gradeCalls = fetchMock.mock.calls.filter((c: unknown[]) => {
+      const [url, init] = c as [string, RequestInit];
+      const body = JSON.parse(init.body as string);
+      return url === "/api/progress/quiz" && typeof body.questionIndex === "number";
+    });
+    expect(gradeCalls).toHaveLength(3);
   });
 });

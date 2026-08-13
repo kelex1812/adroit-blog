@@ -8,7 +8,7 @@
  *  - run completion is session-scoped: attemptCount increments only when a
  *    submission completes the quiz, never on hydration/remount (QA F-2)
  */
-import { describe, it, expect, beforeEach } from "vitest";
+import { describe, it, expect, beforeEach, vi } from "vitest";
 import { renderHook, act, waitFor } from "@testing-library/react";
 import { renderToString } from "react-dom/server";
 import { useQuizProgress, quizScorePercentage } from "./useQuizProgress";
@@ -164,6 +164,29 @@ describe("useQuizProgress", () => {
     expect(result.current.progress.bestScore).toBe(100);
     expect(result.current.progress.total).toBe(3);
     expect(result.current.progress.correct).toBe(3);
+  });
+
+  it("submitAnswer with skipSync suppresses the attempt-sync POST (server-graded mode, t_79a92b83)", async () => {
+    const fetchMock = vi
+      .fn()
+      .mockResolvedValue({ ok: true, json: async () => ({ status: "ok" }) });
+    vi.stubGlobal("fetch", fetchMock);
+    try {
+      const { result } = renderHook(() => useQuizProgress("test-quiz"));
+      await waitFor(() => expect(result.current.hydrated).toBe(true));
+
+      // Server-graded flow: the grading POST already upserted quiz_attempt —
+      // the hook must NOT fire a duplicate sync POST (rate limit 30/min).
+      act(() => result.current.submitAnswer(0, 1, 1, { skipSync: true }));
+      expect(fetchMock).not.toHaveBeenCalled();
+
+      // Default path (lesson client-graded mode) still syncs.
+      act(() => result.current.submitAnswer(1, 1, 1));
+      expect(fetchMock).toHaveBeenCalledTimes(1);
+      expect(fetchMock.mock.calls[0]?.[0]).toBe("/api/progress/quiz");
+    } finally {
+      vi.unstubAllGlobals();
+    }
   });
 
   it("remounting with an already-completed quiz does NOT inflate attemptCount (QA F-2)", async () => {

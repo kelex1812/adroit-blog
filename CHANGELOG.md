@@ -4,6 +4,55 @@ All notable changes to the Adroit Consulting Blog project will be documented in 
 
 ## [Unreleased]
 
+### Security: strip knowledge-check answer key from client bundle (t_79a92b83, CWE-200)
+
+Val-el's audit finding 2 (t_77dd715a): the check page shipped the FULL
+`QuizQuestion[]` — including `correct_answer_index` and `explanation` — into the
+client-side QuizWidget, so the check answer key was readable from the RSC
+payload before a single question was answered, making the exam-unlock gate
+(≥80% per check) cosmetic. Mirrors the exam page's existing strip (t_7469e31d
+F3): checks now grade server-side, per answer.
+
+**What**
+- `src/app/learn/[series]/check/[n]/page.tsx` — passes `{question, options}`
+  only (mapped server-side) to QuizWidget, plus `serverGraded`. The answer key
+  never enters the RSC payload.
+- `src/components/Progress/QuizWidget.tsx` — new `serverGraded` mode: each
+  answer is POSTed to `/api/progress/quiz` (payload carries NO
+  correctAnswerIndex/isCorrect) and correct/wrong styling + the "Why"
+  explanation are rendered from the server response. Grade failures leave the
+  question open with an inline alert (no local-key fallback).
+- `src/app/api/progress/quiz/route.ts` — returns the server-graded result
+  (`{isCorrect, correctAnswerIndex, explanation}`) for the answered question
+  only (minimal disclosure, matching the batch route's t_c0c452f5 model);
+  guests still get `unauthenticated` with no result. Correctness was already
+  recomputed server-side (t_3bbee885 F3) — the response now just reflects it.
+- `src/lib/hooks/useQuizProgress.ts` — `submitAnswer(..., {skipSync})` so the
+  server-graded flow doesn't double-POST (grading POST already upserts
+  quiz_attempt; 15 questions × 2 would blow the 30/min rate limit).
+- Lesson-quiz embeds (LessonQuiz) unchanged — client-graded mode preserved.
+
+**Why**
+A user could previously open devtools, read all 15 correct answers from the
+check page payload, answer perfectly without learning, and unlock the exam.
+With server-side grading the answer to a question is only disclosed after the
+user answers it — the anti-cheat property of the unlock gate is restored.
+
+**Verification**
+`tsc --noEmit` clean; `npm run build` clean; 207 tests pass (7 new: route
+result shape + no guest leak, QuizWidget server-graded wire payload / feedback
+source / failure path / full-run pass verdict, hook skipSync). Exam page strip
+untouched.
+
+**Known issues**
+- The in-memory rate limiter still applies (30/min/IP): a full check run is
+  16 POSTs (15 grades + 1 run stats), leaving headroom for one immediate
+  retake; a third retake in the same minute may hit 429 (pre-existing
+  limitation, same as the exam).
+- Per-question feedback inherently discloses each answer after it is
+  submitted — identical disclosure model to the exam batch route; the initial
+  payload no longer carries any part of the key.
+
 ### Draft-state plumbing: status field + build filters + preview routes + auth gate (t_e1c8239e)
 
 Implements brainiac's draft-state architecture (`docs/draft-state-architecture.md`,
