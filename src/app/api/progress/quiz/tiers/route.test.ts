@@ -170,8 +170,8 @@ describe("GET /api/progress/quiz/tiers — canonical coverage (t_55105899)", () 
     const res = await get("agentic-ai");
     const json = await res.json();
     // agentic-ai has no content/learn/agentic-ai/questions/ → fall back to
-    // the series' totalLessons (8 lessons published in src/data/learn.ts).
-    expect(json.lessons.total).toBe(8);
+    // the series' totalLessons (9 lessons published in src/data/learn.ts).
+    expect(json.lessons.total).toBe(9);
     expect(json.checks).toEqual([]);
   });
 });

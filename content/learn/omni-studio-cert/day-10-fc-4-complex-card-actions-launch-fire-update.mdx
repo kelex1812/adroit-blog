@@ -1,5 +1,5 @@
 ---
-title: "OmniStudio FC-4: Complex Card Actions — Launch, Fire, Update"
+title: "OmniStudio FC-4: Complex Card Actions (Launch, Fire, Update)"
 slug: day-10-fc-4-complex-card-actions-launch-fire-update
 series: omni-studio-cert
 lesson: 10
@@ -14,13 +14,13 @@ tags: [OmniStudio, FlexCards]
 
 **Actions make a card DO something:** launch an OmniScript (passing record context like Id and attributes), open a flyout (drill-down detail), fire events (custom/platform/pubsub), navigate, or update other components on the page.
 
-**Launching an OmniScript** from a card action passes context so the flow opens pre-populated for the selected record — the standard 'act on this record' pattern.
+**Launching an OmniScript** from a card action passes context so the flow opens pre-populated for the selected record: the standard 'act on this record' pattern.
 
 **Events are the communication bus:** a card fires an event (e.g., 'record updated'), and other cards/components with event listeners react (refresh, change state, update data).
 
 **Updating other components:** via event → listener, or direct component updates where the platform supports it. This is card-to-card coordination without code.
 
-**Action parameters carry the data:** which record, which values, which navigation target. Configure parameters precisely — a missing Id breaks the downstream flow.
+**Action parameters carry the data:** which record, which values, which navigation target. Configure parameters precisely: a missing Id breaks the downstream flow.
 
 ## Configuration Walkthrough
 
@@ -31,8 +31,8 @@ tags: [OmniStudio, FlexCards]
 
 ## Exam Traps
 
-- Firing an event with no listener anywhere — the event is lost.
-- Launching an OmniScript without passing the record Id — the flow opens empty.
+- Firing an event with no listener anywhere: the event is lost.
+- Launching an OmniScript without passing the record Id: the flow opens empty.
 - Using actions for static links when a simple URL would do.
 
 ## Practice Questions
@@ -46,7 +46,7 @@ D. Cloning the card
 
 <details>
   <summary>Show answer</summary>
-  **Correct: A** — Card Actions launch OmniScripts with context so the flow opens pre-populated.
+  **Correct: A.** Card Actions launch OmniScripts with context so the flow opens pre-populated.
 </details>
 
 **Q2.** Card A must refresh when Card B saves data. What do you configure?
@@ -58,7 +58,7 @@ D. Platform Cache only
 
 <details>
   <summary>Show answer</summary>
-  **Correct: B** — Events + listeners coordinate cards: fire on change, listen and react on the other side.
+  **Correct: B.** Events + listeners coordinate cards: fire on change, listen and react on the other side.
 </details>
 
 **Q3.** What carries the data when a card action launches an OmniScript?
@@ -70,7 +70,7 @@ D. A hardcoded file
 
 <details>
   <summary>Show answer</summary>
-  **Correct: A** — Action parameters define what context the launched flow receives.
+  **Correct: A.** Action parameters define what context the launched flow receives.
 </details>
 
 ## Exam Tip

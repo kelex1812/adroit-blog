@@ -46,7 +46,7 @@ describe("GET /api/continue-learning", () => {
 
   it("returns an in-progress series with the next uncompleted lesson", async () => {
     mocks.getUser.mockResolvedValue(AUTHED);
-    // omni-studio-cert has 9 published lessons; mark the first 3 complete.
+    // omni-studio-cert has 11 published lessons; mark the first 3 complete.
     const completed = [
       "day-01-f1-omnistudio-solution-and-industry-use-cases",
       "day-02-f2-project-needs-requirements-assumptions-risks-const",
@@ -64,15 +64,15 @@ describe("GET /api/continue-learning", () => {
     const item = json.items[0];
     expect(item.seriesSlug).toBe("omni-studio-cert");
     expect(item.completedCount).toBe(3);
-    expect(item.totalLessons).toBe(9);
-    expect(item.percent).toBe(33);
+    expect(item.totalLessons).toBe(11);
+    expect(item.percent).toBe(27);
     expect(item.nextLessonSlug).toBeTruthy(); // lowest-numbered uncompleted
     expect(item.lastCompletedAt).toBe("2026-08-11T10:00:00Z");
   });
 
   it("excludes fully-completed series (completedCount === total)", async () => {
     mocks.getUser.mockResolvedValue(AUTHED);
-    // agentic-ai has 8 published lessons; mark ALL complete.
+    // agentic-ai has 9 published lessons; mark ALL complete.
     const slugs = [
       "what-is-an-agent",
       "how-llms-work-tokens-context-inference",
@@ -82,6 +82,7 @@ describe("GET /api/continue-learning", () => {
       "choosing-models-providers-routing-fallbacks",
       "structured-output-json-mode-function-calling-tool-schemas",
       "tool-design-schemas-error-handling-retries",
+      "function-calling-parity-across-providers",
     ];
     const completed = slugs.map((slug) => ({
       lesson_slug: slug,
@@ -101,7 +102,7 @@ describe("GET /api/continue-learning", () => {
 
   it("sorts multiple in-progress series most-recent-first", async () => {
     mocks.getUser.mockResolvedValue(AUTHED);
-    // agentic-ai: 1 of 8 complete, recent. omni: 1 of 9 complete, older.
+    // agentic-ai: 1 of 9 complete, recent. omni: 1 of 9 complete, older.
     const completed = [
       { lesson_slug: "what-is-an-agent", completed_at: "2026-08-11T09:00:00Z" },
       {

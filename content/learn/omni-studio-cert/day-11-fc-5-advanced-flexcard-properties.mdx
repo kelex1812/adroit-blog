@@ -3,7 +3,7 @@ title: "OmniStudio FC-5: Advanced FlexCard Properties"
 slug: day-11-fc-5-advanced-flexcard-properties
 series: omni-studio-cert
 lesson: 11
-excerpt: "Configure advanced FlexCard properties — Event Listeners, Session Variables, Public Attributes, multi-language, child FlexCards, and custom LWC integration."
+excerpt: "Configure advanced FlexCard properties: Event Listeners, Session Variables, Public Attributes, multi-language, child FlexCards, and custom LWC integration."
 date: "August 13, 2026"
 author: "Adroit Consulting"
 readTime: "6 min read"
@@ -12,17 +12,17 @@ tags: [OmniStudio, FlexCards]
 
 ## Deep Dive
 
-**Event Listeners:** card-side subscriptions to events fired elsewhere (other cards, OmniScripts, the page) — enabling refresh-on-change and cross-component coordination.
+**Event Listeners:** card-side subscriptions to events fired elsewhere (other cards, OmniScripts, the page), enabling refresh-on-change and cross-component coordination.
 
-**Session Variables:** values shared across components within the session (e.g., logged-in user context) — available to cards for display or conditions.
+**Session Variables:** values shared across components within the session (e.g., logged-in user context), available to cards for display or conditions.
 
-**Public Attributes:** the card's public API — the host page passes values IN (e.g., recordId, accountId) so the card renders in context. Essential for reuse across pages.
+**Public Attributes:** the card's public API. The host page passes values IN (e.g., recordId, accountId) so the card renders in context. Essential for reuse across pages.
 
 **Multi-language:** cards support translations so labels/values render per locale.
 
 **Integration points:** embed a child FlexCard inside a parent card; launch/integrate with OmniScripts; embed custom LWCs as elements for UI beyond the standard set.
 
-Together these make cards context-aware, coordinated, and embeddable — the difference between a static card and a real application component.
+Together these make cards context-aware, coordinated, and embeddable: the difference between a static card and a real application component.
 
 ## Configuration Walkthrough
 
@@ -34,8 +34,8 @@ Together these make cards context-aware, coordinated, and embeddable — the dif
 
 ## Exam Traps
 
-- Hardcoding context instead of using public attributes — kills reuse.
-- No listener for a fired event — coordination silently fails.
+- Hardcoding context instead of using public attributes kills reuse.
+- No listener for a fired event: coordination silently fails.
 - Assuming session variables are available cross-session (they are session-scoped).
 
 ## Practice Questions
@@ -49,7 +49,7 @@ D. Reports
 
 <details>
   <summary>Show answer</summary>
-  **Correct: A** — Public attributes (and session variables) expose entry points for host context.
+  **Correct: A.** Public attributes (and session variables) expose entry points for host context.
 </details>
 
 **Q2.** How does a card react to changes elsewhere on the page?
@@ -61,7 +61,7 @@ D. Manual refresh
 
 <details>
   <summary>Show answer</summary>
-  **Correct: A** — Event listeners subscribe to events and trigger card reactions.
+  **Correct: A.** Event listeners subscribe to events and trigger card reactions.
 </details>
 
 **Q3.** Which advanced integration lets you nest one card inside another?
@@ -73,7 +73,7 @@ D. Streaming API
 
 <details>
   <summary>Show answer</summary>
-  **Correct: A** — Child FlexCards nest inside parent cards for composed displays.
+  **Correct: A.** Child FlexCards nest inside parent cards for composed displays.
 </details>
 
 ## Exam Tip
