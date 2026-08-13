@@ -3,8 +3,8 @@ import { BlogPost } from "./types";
 export const posts: BlogPost[] = [
   {
     "slug": "kubernetes-llm-serving-2026",
-    "title": "Serving LLMs on Kubernetes in 2026: The Inference Stack That Finally Fits",
-    "excerpt": "Kubernetes was built for stateless web workloads, and inference breaks that model. In 2026 the pieces landed: inference-aware routing went GA, GPU scheduling got DRA, and llm-d brought disaggregation into the CNCF.",
+    "title": "Kubernetes for LLM Inference in 2026: The Stack That Fits",
+    "excerpt": "66% of organizations run GenAI on Kubernetes, but only 7% ship to production daily. In 2026 the pieces landed: inference-aware routing, DRA, and llm-d.",
     "category": "AI & Consulting",
     "categoryColor": "ai",
     "categoryGradient": "from-amber to-amber-dark",

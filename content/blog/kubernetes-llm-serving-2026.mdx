@@ -1,7 +1,7 @@
 ---
-title: "Serving LLMs on Kubernetes in 2026: The Inference Stack That Finally Fits"
+title: "Kubernetes for LLM Inference in 2026: The Stack That Fits"
 slug: kubernetes-llm-serving-2026
-excerpt: "Kubernetes was built for stateless web workloads, and inference breaks that model. In 2026 the pieces landed: inference-aware routing went GA, GPU scheduling got DRA, and llm-d brought disaggregation into the CNCF."
+excerpt: "66% of organizations run GenAI on Kubernetes, but only 7% ship to production daily. In 2026 the pieces landed: inference-aware routing, DRA, and llm-d."
 category: "AI & Consulting"
 categoryColor: ai
 categoryGradient: "from-amber to-amber-dark"
@@ -13,9 +13,9 @@ tags: ["DevOps", "Kubernetes", "LLM Serving", "Inference", "Gateway API", "vLLM"
 bannerImage: /banners/kubernetes-llm-serving-2026.png
 ---
 
-# Serving LLMs on Kubernetes in 2026: The Inference Stack That Finally Fits
+# Kubernetes for LLM Inference in 2026: The Stack That Fits
 
-Kubernetes won the orchestration war. It runs web tiers, batch jobs, and databases for most of the industry, and generative AI is no exception: according to the Cloud Native Computing Foundation, 66% of organizations now host GenAI workloads on Kubernetes. The uncomfortable part of that number is the second one: only 7% deploy those workloads to production daily [^1]. Kubernetes is where models live, not, for most teams, where models are served.
+Kubernetes won the orchestration war. It runs web tiers, batch jobs, and databases for most of the industry, and generative AI is no exception: according to the Cloud Native Computing Foundation, 66% of organizations now host GenAI workloads on Kubernetes. The uncomfortable part of that number is the second one: only 7% deploy workloads to production daily [^1]. Kubernetes is where models live, not, for most teams, where models are served.
 
 The gap is not a skills problem. It is a model problem. Kubernetes was designed around three assumptions that inference violates: resources are fungible, pods are cheap to replace, and requests cost about the same to serve. None of those hold for LLMs, which is why the first wave of Kubernetes AI deployments stayed demos.
 
@@ -73,11 +73,11 @@ One more data point for anyone holding on to an older choice: Hugging Face has p
 
 The practical question is where your team starts. The ecosystem offers three paths, and they are not mutually exclusive [^4].
 
-**Extend Kubernetes.** Add the Inference Extension for routing, Kueue for admission, and DRA for device allocation, and keep your existing cluster investment. The cost is stack sprawl: a working inference stack now requires the GPU Operator, a scheduler, a model serving platform, a custom metrics adapter, and an inference gateway, each with its own CRDs and failure modes [^4]. This path fits when your platform team already lives in Kubernetes and the workloads are stable enough to justify the operator count.
+First, extend Kubernetes. Add the Inference Extension for routing, Kueue for admission, and DRA for device allocation, and keep your existing cluster investment. The cost is stack sprawl: a working inference stack now requires the GPU Operator, a scheduler, a model serving platform, a custom metrics adapter, and an inference gateway, each with its own CRDs and failure modes [^4]. This path fits when your platform team already lives in Kubernetes and the workloads are stable enough to justify the operator count.
 
-**Abstract above it.** Ray Serve gives a model-level abstraction on top of Kubernetes, trading one orchestration system for a runtime designed around stateful AI workloads. Managed endpoints like Replicate, Baseten, or Fireworks take GPUs off your plate entirely [^4].
+Or abstract above it. Ray Serve gives a model-level abstraction on top of Kubernetes, trading one orchestration system for a runtime designed around stateful AI workloads. Managed endpoints like Replicate, Baseten, or Fireworks take GPUs off your plate entirely [^4].
 
-**Be honest about scale.** If you serve under 10 concurrent users on a model under 13B parameters, Ollama on a decent GPU is fine, and a managed endpoint costs less than the engineering time to run vLLM [^8]. Self-hosting pays off at latency-sensitive or data-sovereign workloads at real volume, which we covered when we looked at when local inference earns its keep.
+Finally, be honest about scale. If you serve under 10 concurrent users on a model under 13B parameters, Ollama on a decent GPU is fine, and a managed endpoint costs less than the engineering time to run vLLM [^8]. Self-hosting pays off at latency-sensitive or data-sovereign workloads at real volume, which we covered when we looked at [when local inference earns its keep](/blog/local-llm-infrastructure-2026).
 
 Whichever path you take, the pitfalls are the same. Autoscale on token throughput and queue depth, not GPU utilization, or you will scale up, wait minutes for a cold model load, and watch the burst pass before a single request is served [^4]. Think hard before letting HPA scale down warm replicas, since the load cost is the hidden tax [^4]. And optimize the model before the engine: a poorly quantized model on the fastest engine is still slow [^8].
 
