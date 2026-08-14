@@ -68,7 +68,8 @@ export default async function SeriesPage({ params }: Props) {
       itemListElement: baseLessons.map((l, i) => ({
         "@type": "ListItem",
         position: i + 1,
-        name: `Lesson ${l.lesson}: ${l.title}`,
+        // lesson.title already carries the "Lesson N:" prefix (t_fa2f15c7)
+        name: l.title,
         url: `${siteConfig.url}/learn/${series}/${l.slug}`,
       })),
     },

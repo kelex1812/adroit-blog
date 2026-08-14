@@ -4,6 +4,42 @@ All notable changes to the Adroit Consulting Blog project will be documented in 
 
 ## [Unreleased]
 
+### Fix: Round 3 SEO findings — duplicate Lesson title/OG/JSON-LD prefix, non-ISO datePublished (t_fa2f15c7)
+
+Round 3 SEO audit (t_14e4882a) findings, all code-level and verified against
+the running app. Lesson titles in the data are authored as "Lesson N: …", so
+the lesson page's `buildMetadata` was re-prefixing them → `<title>` and
+`og:title` rendered "Lesson 1: Lesson 1: …" (duplicate). The LearningPath
+JSON-LD in the series syllabus did the same. And lesson dates were emitted
+verbatim ("August 04, 2026") into `datePublished` / `article:published_time`,
+which requires ISO-8601. The `/login` metadata finding was already resolved in
+commit 110ed35 (page-specific title/canonical + noindex) and was re-verified.
+
+**What**
+
+- `src/app/learn/[series]/[slug]/page.tsx` — `buildMetadata` title now uses
+  `lesson.title` alone (it already carries the "Lesson N:" prefix); stop
+  re-prefixing. `publishedTime` now passes `toIsoDate(lesson.date)`. JSON-LD
+  `datePublished` likewise ISO-8601.
+- `src/app/learn/[series]/page.tsx` — LearningPath JSON-LD `hasPart` item
+  `name` now uses `l.title` alone (no re-prefix).
+- `src/lib/learn.ts` — new `toIsoDate()` helper: human-readable
+  "Month DD, YYYY" → timezone-free ISO-8601 full-date (`YYYY-MM-DD`), falling
+  back to the raw string on unparseable input ("Date unknown").
+- `src/lib/learn.test.ts` — new unit tests for `toIsoDate` (5 cases).
+
+**Why**
+
+Duplicate "Lesson N:" prefixes corrupt the page title and the structured
+data; JSON-LD `datePublished` and OG/`article:published_time` require
+ISO-8601 to be consumed correctly by search engines and social scrapers.
+Fixing the source prevents search engines from indexing duplicated titles and
+rejecting the non-standard date format.
+
+**Known Issues**
+
+None. The `/login` finding required no change — already fixed in 110ed35.
+
 ### Fix: Certificate lessons eligibility icon — emerald contrast carryover (t_253cd18c)
 
 A11Y re-audit (run 2810) carryover from t_926221f7. The `lessons` eligibility

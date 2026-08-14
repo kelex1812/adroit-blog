@@ -169,6 +169,25 @@ export function formatLessonDate(date: string): string {
 }
 
 /**
+ * ISO-8601 for structured data / Open Graph (datePublished, published_time).
+ * Lesson dates are authored as human-readable "Month DD, YYYY" (e.g.
+ * "August 04, 2026"); JSON-LD and og:article:published_time require a
+ * machine-readable ISO-8601 timestamp (t_fa2f15c7). Emits the timezone-free
+ * full-date form (YYYY-MM-DD) so the authored calendar day never shifts by the
+ * host's UTC offset. Falls back to the raw string when unparseable so
+ * "Date unknown" survives without an invalid date.
+ */
+export function toIsoDate(date: string): string {
+  if (!date || date === "Date unknown") return date;
+  const d = new Date(date);
+  if (Number.isNaN(d.getTime())) return date;
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
+  return `${y}-${m}-${day}`;
+}
+
+/**
  * Progress derivation (ADR-004): published = lessons present,
  * total = highest lesson number in the series (NOT hardcoded "90").
  */

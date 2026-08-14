@@ -14,6 +14,7 @@ import {
   getLessonsForSeries,
   getSeriesBySlug,
   stripMDXFrontmatter,
+  toIsoDate,
 } from "@/lib/learn";
 import { linkifySourceCitations } from "@/lib/mdx";
 import { buildMetadata, siteConfig } from "@/lib/seo";
@@ -43,10 +44,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!lesson) return {};
   const s = getSeriesBySlug(series);
   return buildMetadata({
-    title: `Lesson ${lesson.lesson}: ${lesson.title} | ${s?.name ?? series} | Adroit`,
+    // lesson.title already carries the "Lesson N:" prefix — do NOT re-prefix
+    // (t_fa2f15c7 HIGH: previously rendered "Lesson 1: Lesson 1: ...").
+    title: `${lesson.title} | ${s?.name ?? series} | Adroit`,
     description: lesson.excerpt,
     path: `/learn/${series}/${slug}`,
-    publishedTime: lesson.date,
+    publishedTime: toIsoDate(lesson.date),
     tags: lesson.tags,
   });
 }
@@ -80,7 +83,7 @@ export default async function LessonPage({ params }: Props) {
     "@type": "Article",
     headline: lesson.title,
     description: lesson.excerpt,
-    datePublished: lesson.date,
+    datePublished: toIsoDate(lesson.date),
     author: { "@type": "Organization", name: lesson.author },
     url: `${siteConfig.url}/learn/${series}/${slug}`,
     isPartOf: {
