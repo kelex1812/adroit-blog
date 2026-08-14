@@ -365,6 +365,11 @@ export default function ExamWidget({
   }
 
   // ------------------------- Sticky timer bar -------------------------
+  // WAI-ARIA radiogroup roving tabindex (APG; R3 follow-up t_42efdd92 F4):
+  // only the checked option is in the tab order; the rest are reached with the
+  // Arrow keys (handleRadiogroupKeyDown). Before any selection the first
+  // option is the tab stop.
+  const radioTabIndex = answers[currentQ] === undefined ? 0 : answers[currentQ]!;
   return (
     <>
       {/* a11y (finding 2): polite live region for threshold announcements.
@@ -460,6 +465,7 @@ export default function ExamWidget({
                   id={`exam-option-${quizName}-${currentQ}-${i}`}
                   role="radio"
                   aria-checked={isSelected}
+                  tabIndex={i === radioTabIndex ? 0 : -1}
                   onClick={() => selectOption(i)}
                   className={`w-full min-h-12 flex items-center gap-3 px-4 rounded-[14px] border-[1.5px] text-left text-[14.5px] font-medium transition-all duration-150 cursor-pointer ${
                     isSelected
@@ -480,7 +486,9 @@ export default function ExamWidget({
             })}
           </div>
 
-          <div className="flex gap-2.5">
+          {/* a11y (R3 follow-up t_42efdd92 F5): flag + next/submit are one
+              action cluster — grouped so AT announces them together. */}
+          <div role="group" aria-label="Exam actions" className="flex gap-2.5">
             <button
               onClick={toggleFlag}
               aria-pressed={flagged.has(currentQ)}

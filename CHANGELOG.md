@@ -4,6 +4,64 @@ All notable changes to the Adroit Consulting Blog project will be documented in 
 
 ## [Unreleased]
 
+### Fix: Round-3 low-severity a11y hardening — decorative contrast, APG radiogroup, dark-mode reach (t_42efdd92)
+
+Follow-up to the Round-3 a11y audit (t_d56a2fb4 → Lara). All items LOW severity,
+no compliance failure. Baseline preserved: tsc 0, eslint 0, vitest 212/212,
+`next build` clean.
+
+**What**
+
+Decorative contrast (WCAG 1.4.11 / 1.4.3):
+- `src/components/Learn/LessonCard.tsx` — decorative row chevron `text-gray-300`
+  → `text-gray-500` (≈1.47:1 → 4.83:1 light). (F1)
+- `src/components/Learn/EmptyState.tsx` — decorative "00 / 00" counter
+  `text-gray-300` → `text-[var(--ink-muted)]` (≈1.47:1 → 4.83:1). (F2)
+- `src/components/StubBadge.tsx` — `text-amber-700` → `text-amber-800`
+  (4.51:1 → ≈6.9:1 on amber-light; new `--color-amber-800` token added to
+  globals.css). (F3)
+
+APG radiogroup polish (WCAG 1.3.1 / 4.1.2):
+- `src/components/Progress/QuizWidget.tsx` + `ExamWidget.tsx` — each radio was a
+  separate tab stop AND arrow-key nav (dual-nav). Now APG roving tabindex:
+  only the checked radio is in the tab order (`tabIndex=0`), others
+  `tabIndex=-1`, reached via Arrow keys. Before selection the first option is
+  the tab stop; after submission the buttons are disabled so tabIndex is inert.
+  (F4)
+- `src/components/Progress/ExamWidget.tsx` — flag + next/submit buttons wrapped
+  in `role="group" aria-label="Exam actions"` so AT announces them as one
+  cluster. (F5)
+
+Dark-mode reach (human-judgment scope → tokenized):
+- `src/components/Learn/LessonNavigation.tsx` + `EmptyState.tsx` — raw
+  `text-navy`/`text-gray-500`/`bg-white`/`border-gray-*` utilities converted to
+  semantic tokens (`--ink-primary`, `--ink-muted`, `--ink-body`,
+  `--surface-inverse`, `--surface-card-soft`, `--border-default`,
+  `--border-strong`, `--accent`). Decision: tokenize for full dark-mode
+  coverage. The global `html.dark` remap (2026-08-13 pass) covers text classes
+  and `bg-navy` but NOT `bg-white`/`hover:bg-white`/`border-gray-*` — a white
+  hover card and light borders were the remaining dark-mode gaps. (F6)
+
+**Why**
+
+Close every open Round-3 a11y finding so the audit chain is fully clean and the
+learn surface (hub, syllabus, lesson nav, quiz, exam) is accessible and
+dark-mode-correct. Roving tabindex removes the redundant tab stops APG
+deprecates; tokenizing closes dark-mode gaps the global remap can't reach.
+
+**Known issues**
+
+- `PathCard.tsx` shows no low-contrast decorative chevron at HEAD (already
+  tokenized in the earlier round) — the audit's F1 PathCard:52 reference is
+  stale; only `LessonCard.tsx` needed the bump.
+- Progress widgets (QuizWidget/ExamWidget cards) still use light-mode
+  `bg-white`/`border-gray-200` surfaces; out of scope for this follow-up (F6
+  was scoped to LessonNavigation + EmptyState). If full dark-mode coverage of
+  the quiz/exam surfaces is wanted, tokenize them the same way in a later pass.
+- ExamWidget F4/F5 verified by unit tests (component requires auth to render);
+  direct guest navigation to the exam route 404s on series without a cert exam
+  (`getCertExam` → `notFound()`) — pre-existing gating, unchanged.
+
 ### Fix: Round 3 remaining a11y findings — dark-mode contrast, learn-flow, spacing (t_47b7ed5e)
 
 Consolidated fix for the three Round-3 audits still blocked on re-verified

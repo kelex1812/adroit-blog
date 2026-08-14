@@ -49,7 +49,7 @@ export default function LessonCard({
           New
         </span>
       )}
-      <span className="flex-shrink-0 text-gray-300 text-sm transition-all duration-200 group-hover:text-red group-hover:translate-x-0.5">
+      <span className="flex-shrink-0 text-gray-500 text-sm transition-all duration-200 group-hover:text-red group-hover:translate-x-0.5">
         &rarr;
       </span>
     </Link>

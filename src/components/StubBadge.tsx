@@ -5,7 +5,7 @@
  */
 export default function StubBadge() {
   return (
-    <span className="inline-block rounded-full bg-amber-light px-2 py-0.5 font-mono text-[9px] font-bold uppercase tracking-wide text-amber-700">
+    <span className="inline-block rounded-full bg-amber-light px-2 py-0.5 font-mono text-[9px] font-bold uppercase tracking-wide text-amber-800">
       Coming soon
     </span>
   );

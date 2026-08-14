@@ -11,6 +11,12 @@ interface LessonNavigationProps {
 /**
  * Prev/next within the same series, ordered by authored sequence
  * (lesson number), mirroring PostNavigation visuals (ADR-005).
+ *
+ * a11y (R3 follow-up t_42efdd92 F6): surface/border/ink utilities are
+ * tokenized (--surface-card-soft, --border-default/strong, --ink-muted,
+ * --ink-primary, --accent) so the nav fully restyles in dark mode — the
+ * global html.dark remap covers text classes and bg-navy but NOT bg-white
+ * or border-gray-* (a white hover card in dark mode was the gap).
  */
 export default function LessonNavigation({
   lessons,
@@ -26,15 +32,15 @@ export default function LessonNavigation({
       {prev ? (
         <Link
           href={`/learn/${prev.series}/${prev.slug}`}
-          className="group p-5 border border-gray-200 rounded-xl hover:border-gray-300 hover:bg-white hover:shadow-md hover:shadow-navy/5 hover:-translate-y-0.5 transition-all duration-200 no-underline"
+          className="group p-5 border border-[var(--border-default)] rounded-xl hover:border-[var(--border-strong)] hover:bg-[var(--surface-card-soft)] hover:shadow-md hover:shadow-navy/5 hover:-translate-y-0.5 transition-all duration-200 no-underline"
         >
-          <div className="flex items-center gap-1 font-mono text-[10.5px] text-gray-500 uppercase tracking-[0.06em] font-bold mb-2 transition-colors duration-150 group-hover:text-red">
+          <div className="flex items-center gap-1 font-mono text-[10.5px] text-[var(--ink-muted)] uppercase tracking-[0.06em] font-bold mb-2 transition-colors duration-150 group-hover:text-[var(--accent)]">
             <span className="transition-transform duration-200 group-hover:-translate-x-0.5">
               &larr;
             </span>
             Lesson {prev.lesson}
           </div>
-          <h4 className="text-sm font-semibold text-navy leading-snug transition-colors duration-150 group-hover:text-red">
+          <h4 className="text-sm font-semibold text-[var(--ink-primary)] leading-snug transition-colors duration-150 group-hover:text-[var(--accent)]">
             {prev.title}
           </h4>
         </Link>
@@ -44,15 +50,15 @@ export default function LessonNavigation({
       {next ? (
         <Link
           href={`/learn/${next.series}/${next.slug}`}
-          className="group p-5 border border-gray-200 rounded-xl hover:border-gray-300 hover:bg-white hover:shadow-md hover:shadow-navy/5 hover:-translate-y-0.5 transition-all duration-200 no-underline text-right"
+          className="group p-5 border border-[var(--border-default)] rounded-xl hover:border-[var(--border-strong)] hover:bg-[var(--surface-card-soft)] hover:shadow-md hover:shadow-navy/5 hover:-translate-y-0.5 transition-all duration-200 no-underline text-right"
         >
-          <div className="flex items-center justify-end gap-1 font-mono text-[10.5px] text-gray-500 uppercase tracking-[0.06em] font-bold mb-2 transition-colors duration-150 group-hover:text-red">
+          <div className="flex items-center justify-end gap-1 font-mono text-[10.5px] text-[var(--ink-muted)] uppercase tracking-[0.06em] font-bold mb-2 transition-colors duration-150 group-hover:text-[var(--accent)]">
             Lesson {next.lesson}
             <span className="transition-transform duration-200 group-hover:translate-x-0.5">
               &rarr;
             </span>
           </div>
-          <h4 className="text-sm font-semibold text-navy leading-snug transition-colors duration-150 group-hover:text-red">
+          <h4 className="text-sm font-semibold text-[var(--ink-primary)] leading-snug transition-colors duration-150 group-hover:text-[var(--accent)]">
             {next.title}
           </h4>
         </Link>

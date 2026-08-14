@@ -475,6 +475,15 @@ export default function QuizWidget({
     ? graded?.explanation
     : (question as QuizQuestion).explanation;
 
+  // WAI-ARIA radiogroup roving tabindex (APG; R3 follow-up t_42efdd92 F4):
+  // only the checked radio is in the tab order (tabIndex=0) — all others are
+  // tabIndex=-1, reached via the Arrow keys in handleRadiogroupKeyDown. This
+  // replaces the dual-nav (every radio as its own tab stop) with the single
+  // Tab entry + arrow-key roving the ARIA radiogroup pattern calls for.
+  // Before any selection the first option is the tab stop. (After submission
+  // the buttons are disabled, so tabIndex is inert.)
+  const radioTabIndex = selected === null ? 0 : selected;
+
   const segmentsLabel = questions
     .map((_, i) => {
       const attempt = progress.attempts.find((a) => a.questionIndex === i);
@@ -595,6 +604,7 @@ export default function QuizWidget({
               id={`quiz-option-${quizName}-${currentQ}-${i}`}
               role="radio"
               aria-checked={isSelected}
+              tabIndex={i === radioTabIndex ? 0 : -1}
               onClick={() => handleSelect(i)}
               disabled={isAnswered}
               className={`w-full min-h-12 flex items-center gap-3 px-4 rounded-[14px] border-[1.5px] text-left text-[14.5px] font-medium transition-all duration-150 cursor-pointer disabled:cursor-not-allowed ${borderClass} ${textClass}`}
