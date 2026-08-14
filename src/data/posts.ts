@@ -26,6 +26,29 @@ export const posts: BlogPost[] = [
     "status": "published"
   },
   {
+    "slug": "ai-requirements-bottleneck-2026",
+    "title": "AI Made Code Cheap. Now Requirements Are the Delivery Bottleneck",
+    "excerpt": "AI coding agents made implementation cheap, so the cost moved upstream. Requirements quality is now the critical path, and spec-driven delivery is how consulting teams keep control.",
+    "category": "Project Management",
+    "categoryColor": "pm",
+    "categoryGradient": "from-teal to-teal-dark",
+    "date": "August 14, 2026",
+    "author": "Adroit Consulting",
+    "authorInitials": "AC",
+    "readTime": "9 min read",
+    "featured": false,
+    "tags": [
+      "Project Management",
+      "Requirements",
+      "AI",
+      "Delivery",
+      "Agile",
+      "Spec-Driven Development"
+    ],
+    "bannerImage": "/banners/ai-requirements-bottleneck-2026.png",
+    "status": "published"
+  },
+  {
     "slug": "kubernetes-llm-serving-2026",
     "title": "Kubernetes for LLM Inference in 2026: The Stack That Fits",
     "excerpt": "66% of organizations run GenAI on Kubernetes, but only 7% ship to production daily. In 2026 the pieces landed: inference-aware routing, DRA, and llm-d.",
