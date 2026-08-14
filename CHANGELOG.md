@@ -4,6 +4,46 @@ All notable changes to the Adroit Consulting Blog project will be documented in 
 
 ## [Unreleased]
 
+### Fix: PostCard dark-mode contrast — white card got no dark override, ink tokens remapped onto white = 2.55:1 (t_20fb49e9)
+
+Lara's checker re-verified the earlier read-time meta fix (commit 2433c2b,
+`text-gray-300 → text-gray-500`) and found it only corrected LIGHT mode. In
+dark mode `html.dark .text-gray-500` (globals.css:653) remaps to
+`var(--ink-muted)` = #94a3b8, but the PostCard kept `bg-white` with no dark
+override — so the lighter ink token landed on a white card at 2.55:1 (WCAG
+1.4.3 FAIL, worse than the pre-fix 3.40:1). The whole card's text classes were
+affected since the card stayed white while the ink tokens lightened.
+
+**What**
+
+- `src/components/BlogListing/PostCard.tsx` — card container now sets
+  `dark:bg-[var(--surface-card)]` (matching the app convention already used by
+  ShareBar.tsx:76,87 and MarkAsRead.tsx:46) plus `dark:border-[var(--border-default)]`
+  / `dark:border-[var(--border-subtle)]` for the read/unread variants. With the
+  card on the dark surface, every swept text class (read-time meta `text-gray-500`,
+  title `gray-900`/`gray-500`, excerpt `gray-500`, date, read-link `text-red`)
+  now sits on `--surface-card` #121a2e: `--ink-muted` #94a3b8 = 6.75:1 PASS,
+  `--ink-strong` #f1f5f9 higher still. Light mode unchanged (4.83:1).
+
+**Why**
+
+The dark-mode ink remaps are designed to land on the dark semantic surfaces;
+the PostCard simply never opted into `--surface-card`, so it rendered light
+ink on a white card. Opting in restores the intended token pairing and clears
+WCAG AA in both themes with one container-level change (no per-class hacks).
+
+**Verification**
+
+- `npx tsc --noEmit` clean.
+- `npm run build` succeeds (full production build).
+- Contrast computed from the token values: dark `#94a3b8` on `#121a2e` =
+  6.75:1 (≥4.5:1 PASS); light `#6B7280` on white = 4.83:1 (unchanged PASS).
+
+**Known Issues**
+
+None. Loading-skeleton pulse blocks in PostCardWithRead.tsx are transient
+placeholder surfaces (no text content), intentionally left as-is.
+
 ### Fix: Round 3 SEO findings — duplicate Lesson title/OG/JSON-LD prefix, non-ISO datePublished (t_fa2f15c7)
 
 Round 3 SEO audit (t_14e4882a) findings, all code-level and verified against
