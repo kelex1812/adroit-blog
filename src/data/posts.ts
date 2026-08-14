@@ -27,8 +27,8 @@ export const posts: BlogPost[] = [
   },
   {
     "slug": "ai-requirements-bottleneck-2026",
-    "title": "AI Made Code Cheap. Now Requirements Are the Delivery Bottleneck",
-    "excerpt": "AI coding agents made implementation cheap, so the cost moved upstream. Requirements quality is now the critical path, and spec-driven delivery is how consulting teams keep control.",
+    "title": "AI Made Code Cheap. Requirements Are the Delivery Bottleneck",
+    "excerpt": "AI coding agents made implementation cheap. Requirements quality is now the critical path, and spec-driven delivery is how consulting teams keep control.",
     "category": "Project Management",
     "categoryColor": "pm",
     "categoryGradient": "from-teal to-teal-dark",
