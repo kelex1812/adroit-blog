@@ -4,6 +4,70 @@ All notable changes to the Adroit Consulting Blog project will be documented in 
 
 ## [Unreleased]
 
+### Fix: Dark-mode contrast gaps (featured border, filter pills, pagination, empty state, article prose) + theme-switch cross-fade (t_6ab6c68e)
+
+Five dark-mode contrast gaps, all root-caused in code before implementation, plus a
+small new feature (animated theme toggle). The site's `html.dark` sweep remaps the
+semantic tokens but several components used **raw Tailwind light utilities**
+(`bg-white`, `border-gray-200`, `bg-gray-100`, `text-gray-600`) that the sweep does
+not touch, so they stayed white/light on the dark surface. The article prose was the
+worst: `.article-body p` / `.article-body li` carry their own
+`color: var(--color-gray-700)` (#374151) which overrides the inherited dark
+`--ink-body`, rendering at ≈1.4:1 on `#0a0e1a` — effectively invisible.
+
+**What**
+
+- `src/components/BlogListing/FeaturedPost.tsx` — featured card Link gains
+  `dark:border-[var(--border-default)]` so the light `border-gray-200` becomes the
+  dark border token (#26324a) in dark mode.
+- `src/app/blog/page.tsx` — inactive category filter pills get dark surface/border/ink
+  + hover (`dark:bg-[var(--surface-card)]`, `dark:border-[var(--border-default)]`,
+  `dark:text-[var(--ink-body)]`, `dark:hover:bg-[var(--surface-card-soft)]`); the count
+  badge uses `dark:bg-[var(--surface-sunken)] dark:text-[var(--ink-muted)]`. Pagination
+  prev/next/page buttons get the same pill treatment; the active page uses
+  `dark:bg-[var(--surface-inverse)] dark:border-[var(--surface-inverse)]`. Empty-state
+  card gets `dark:bg-[var(--surface-card)] dark:border-[var(--border-default)]`.
+  The sign-in prompt (page.tsx:211) was already tokenized (`bg-[var(--surface-card)]`
+  `border-[var(--border-default)]`) — verified it auto-remaps, no change needed.
+- `src/app/globals.css` — new `html.dark .article-body p, html.dark .article-body li`
+  override to `var(--ink-body)` (#cbd5e1, ≈12:1). Plus the theme-switch cross-fade:
+  `.theme-fade-overlay` (fixed, inset:0, `pointer-events:none`, `aria-hidden` in the
+  component) with a `theme-crossfade` 440ms keyframe that fades in to the target
+  theme's `--surface-page`, holds at peak, fades out.
+- `src/components/Theme/ThemeProvider.tsx` — `setMode` now runs a dependency-free
+  cross-fade: captures the target theme's `--surface-page`, mounts the overlay, flips
+  the theme at peak opacity (~50% of the animation), and unmounts via `setTimeout`
+  (deterministic — `onAnimationEnd` is unreliable if the tab is backgrounded).
+  Reduced-motion users (`prefers-reduced-motion: reduce`) skip the overlay entirely
+  and get an instant switch (in addition to the existing CSS animation-collapse block).
+
+**Why**
+
+Raw light utilities are invisible gaps in the dark sweep — they must opt into the
+semantic tokens (`dark:bg-[var(--surface-card)]` etc.) like the PostCard fix already
+did (t_20fb49e9). The prose override fixes a genuine 1.4:1 fail to ~12:1. The cross-fade
+makes the theme toggle feel polished without adding a dependency, and stays WCAG-safe
+for reduced-motion users.
+
+**Verification**
+
+- `npx eslint` clean on all changed files.
+- `npm run build` succeeds (full production build, 194 routes).
+- Browser-verified against the running production build (`next start`): in dark mode
+  the featured border = #26324a, filter pills = #121a2e bg / #26324a border / #cbd5e1
+  text, pagination prev/next = #121a2e/#26324a/#cbd5e1 with active page #1e293b,
+  article `p`/`li` = #cbd5e1 (~12:1 on #0a0e1a), `h2` #f1f5f9, links #e2e8f0.
+  Theme toggle mounts the overlay (target `--surface-page`, `pointer-events:none`),
+  flips the theme, and unmounts it. NOTE: the headless test browser does not tick CSS
+  animations during measurement, so the visible fade couldn't be captured there, but
+  the keyframes/duration/play-state are verified present and correct in the built CSS.
+  Contrast ratios computed from the resolved token values.
+
+**Known Issues**
+
+None. The stale `next dev` server on :3000 (from the earlier worker collision) is a
+separate process and was left running (out of scope — see docs/worker-collision-t_926221f7.md).
+
 ### Fix: PostCard dark-mode contrast — white card got no dark override, ink tokens remapped onto white = 2.55:1 (t_20fb49e9)
 
 Lara's checker re-verified the earlier read-time meta fix (commit 2433c2b,

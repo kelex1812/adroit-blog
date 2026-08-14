@@ -164,7 +164,7 @@ function BlogListingContent() {
                       className={`group inline-flex items-center gap-1.5 pl-4 pr-1.5 py-1.5 rounded-full text-xs font-semibold cursor-pointer no-underline transition-all duration-150 active:scale-[0.98] ${
                         active
                           ? "bg-navy text-white shadow-md shadow-navy/20"
-                          : "bg-white text-gray-600 border border-gray-200 hover:bg-gray-50 hover:border-gray-300 hover:-translate-y-px"
+                          : "bg-white text-gray-600 border border-gray-200 hover:bg-gray-50 hover:border-gray-300 hover:-translate-y-px dark:bg-[var(--surface-card)] dark:text-[var(--ink-body)] dark:border-[var(--border-default)] dark:hover:bg-[var(--surface-card-soft)] dark:hover:border-[var(--border-strong)]"
                       }`}
                     >
                       {cat.label}
@@ -172,7 +172,7 @@ function BlogListingContent() {
                         className={`inline-flex items-center justify-center min-w-[20px] h-5 px-1.5 rounded-full font-mono text-[10.5px] font-bold tabular-nums transition-colors duration-150 ${
                           active
                             ? "bg-white/15 text-white"
-                            : "bg-gray-100 text-gray-600 group-hover:bg-gray-200 group-hover:text-gray-700"
+                            : "bg-gray-100 text-gray-600 group-hover:bg-gray-200 group-hover:text-gray-700 dark:bg-[var(--surface-sunken)] dark:text-[var(--ink-muted)] dark:group-hover:bg-[var(--surface-sunken)] dark:group-hover:text-[var(--ink-body)]"
                         }`}
                       >
                         {count}
@@ -226,7 +226,7 @@ function BlogListingContent() {
         {/* Post Cards Grid */}
         <div className="max-w-[1120px] mx-auto px-6 pb-24">
           {paginatedPosts.length === 0 ? (
-            <div className="mt-6 rounded-2xl border border-dashed border-gray-300 bg-white/60 px-6 py-12 text-center">
+            <div className="mt-6 rounded-2xl border border-dashed border-gray-300 bg-white/60 px-6 py-12 text-center dark:border-[var(--border-default)] dark:bg-[var(--surface-card)]">
               <p className="text-[14.5px] font-semibold text-gray-700">
                 {readFilter === "unread"
                   ? "No unread posts in this category."
@@ -274,7 +274,7 @@ function BlogListingContent() {
                 onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
                 disabled={currentPage === 1}
                 aria-label="Previous page"
-                className="w-9 h-9 rounded-md border border-gray-200 bg-white flex items-center justify-center text-xs font-medium text-gray-600 cursor-pointer hover:bg-gray-50 hover:border-gray-300 transition-all duration-150 disabled:opacity-40 disabled:cursor-not-allowed active:scale-[0.98]"
+                className="w-9 h-9 rounded-md border border-gray-200 bg-white flex items-center justify-center text-xs font-medium text-gray-600 cursor-pointer hover:bg-gray-50 hover:border-gray-300 transition-all duration-150 disabled:opacity-40 disabled:cursor-not-allowed active:scale-[0.98] dark:bg-[var(--surface-card)] dark:border-[var(--border-default)] dark:text-[var(--ink-body)] dark:hover:bg-[var(--surface-card-soft)] dark:hover:border-[var(--border-strong)]"
               >
                 &lsaquo;
               </button>
@@ -287,8 +287,8 @@ function BlogListingContent() {
                     aria-label={`Page ${page}`}
                     className={`w-9 h-9 rounded-md border flex items-center justify-center text-xs font-medium cursor-pointer transition-all duration-150 active:scale-[0.98] ${
                       page === currentPage
-                        ? "bg-navy text-white border-navy"
-                        : "border-gray-200 bg-white text-gray-600 hover:bg-gray-50 hover:border-gray-300"
+                        ? "bg-navy text-white border-navy dark:bg-[var(--surface-inverse)] dark:border-[var(--surface-inverse)]"
+                        : "border-gray-200 bg-white text-gray-600 hover:bg-gray-50 hover:border-gray-300 dark:bg-[var(--surface-card)] dark:border-[var(--border-default)] dark:text-[var(--ink-body)] dark:hover:bg-[var(--surface-card-soft)] dark:hover:border-[var(--border-strong)]"
                     }`}
                   >
                     {page}
@@ -301,7 +301,7 @@ function BlogListingContent() {
                 }
                 disabled={currentPage === totalPages}
                 aria-label="Next page"
-                className="w-9 h-9 rounded-md border border-gray-200 bg-white flex items-center justify-center text-sm font-medium text-gray-600 cursor-pointer hover:bg-gray-50 hover:border-gray-300 transition-all duration-150 disabled:opacity-40 disabled:cursor-not-allowed active:scale-[0.98]"
+                className="w-9 h-9 rounded-md border border-gray-200 bg-white flex items-center justify-center text-sm font-medium text-gray-600 cursor-pointer hover:bg-gray-50 hover:border-gray-300 transition-all duration-150 disabled:opacity-40 disabled:cursor-not-allowed active:scale-[0.98] dark:bg-[var(--surface-card)] dark:border-[var(--border-default)] dark:text-[var(--ink-body)] dark:hover:bg-[var(--surface-card-soft)] dark:hover:border-[var(--border-strong)]"
               >
                 &rsaquo;
               </button>

@@ -26,6 +26,7 @@ import {
   applyDarkClass,
   persistStoredMode,
   readStoredMode,
+  resolveDark,
   type ThemeMode,
 } from "@/lib/hooks/useTheme";
 
@@ -83,16 +84,72 @@ export function ThemeProvider({
     persistStoredMode(mode);
   }, [resolvedDark, mode]);
 
-  const setMode = useCallback((next: ThemeMode) => {
-    setModeState(next);
-  }, []);
+  // Overlay color while a theme-switch cross-fade is in flight (null = none).
+  const [overlayColor, setOverlayColor] = useState<string | null>(null);
+
+  const setMode = useCallback(
+    (next: ThemeMode) => {
+      const targetDark = resolveDark(next, prefersDark);
+      if (targetDark === resolvedDark && next === mode) return;
+
+      // Reduced-motion users get an instant switch — no overlay at all.
+      const reduce =
+        typeof window !== "undefined" &&
+        window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches === true;
+      if (reduce) {
+        setModeState(next);
+        return;
+      }
+
+      // Capture the TARGET theme's --surface-page so the overlay bridges the
+      // swap. The class toggle/restore below is synchronous (no paint between
+      // getComputedStyle reads), so nothing flickers.
+      const root = document.documentElement;
+      const hadDark = root.classList.contains("dark");
+      if (hadDark !== targetDark) root.classList.toggle("dark", targetDark);
+      let targetBg = "";
+      try {
+        targetBg =
+          getComputedStyle(root)
+            .getPropertyValue("--surface-page")
+            .trim() || "";
+      } catch {
+        targetBg = "";
+      }
+      if (hadDark !== targetDark) root.classList.toggle("dark", hadDark);
+      if (!targetBg) {
+        setModeState(next);
+        return;
+      }
+
+      // Mount the opaque overlay (fades in), flip the theme at peak opacity
+      // (~50% of the 440ms animation), unmount after the animation window.
+      // Unmount via setTimeout (not onAnimationEnd) — deterministic, and the
+      // animation end event isn't reliable if the tab is backgrounded.
+      setOverlayColor(targetBg);
+      window.setTimeout(() => setModeState(next), 220);
+      window.setTimeout(() => setOverlayColor(null), 480);
+    },
+    [mode, prefersDark, resolvedDark],
+  );
 
   const value = useMemo(
     () => ({ mode, setMode, resolvedDark }),
     [mode, setMode, resolvedDark],
   );
 
-  return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>;
+  return (
+    <ThemeContext.Provider value={value}>
+      {children}
+      {overlayColor ? (
+        <div
+          aria-hidden
+          className="theme-fade-overlay"
+          style={{ background: overlayColor }}
+        />
+      ) : null}
+    </ThemeContext.Provider>
+  );
 }
 
 export function useThemeContext(): ThemeContextValue {

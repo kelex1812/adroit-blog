@@ -24,7 +24,7 @@ export default function FeaturedPost({ post }: FeaturedPostProps) {
       <Link
         href={`/blog/${post.slug}`}
         style={{ boxShadow: `var(--shadow-glow-${glow})` }}
-        className="group block rounded-xl overflow-hidden bg-navy border border-gray-200 grid grid-cols-1 md:grid-cols-2 hover:-translate-y-1 transition-all duration-300 no-underline"
+        className="group block rounded-xl overflow-hidden bg-navy border border-gray-200 dark:border-[var(--border-default)] grid grid-cols-1 md:grid-cols-2 hover:-translate-y-1 transition-all duration-300 no-underline"
       >
         {/* Image side */}
         <div className="relative overflow-hidden">

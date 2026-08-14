@@ -473,6 +473,32 @@ button:focus-visible {
 }
 
 /* ─────────────────────────────────────────────
+   THEME-SWITCH CROSS-FADE — ThemeProvider mounts a fixed
+   full-viewport overlay (background = target theme's --surface-page)
+   that fades in, hides the dark-class flip at peak opacity, then fades
+   out. pointer-events:none + aria-hidden so it never traps input or
+   focus. The reduced-motion block above collapses the animation to
+   ~instant; ThemeProvider additionally skips the overlay entirely for
+   reduce users.
+   ───────────────────────────────────────────── */
+
+.theme-fade-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0;
+  animation: theme-crossfade 440ms ease-in-out forwards;
+}
+
+@keyframes theme-crossfade {
+  0%   { opacity: 0; }
+  40%  { opacity: 1; }
+  60%  { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+/* ─────────────────────────────────────────────
    ROUND 3 — WS-1 spacing scale + WS-2 semantic tokens
    (kara t_f1f7696b → steel). Components reference the semantic
    tokens below; html.dark remaps them for dark mode.
@@ -608,6 +634,12 @@ html.dark body {
 }
 
 html.dark .article-body {
+  color: var(--ink-body);
+}
+/* p/li carry their OWN --color-gray-700 (#374151 on #0a0e1a ≈ 1.4:1 —
+   effectively invisible). Override to --ink-body (slate-300, ~12:1). */
+html.dark .article-body p,
+html.dark .article-body li {
   color: var(--ink-body);
 }
 html.dark .article-body h2,
