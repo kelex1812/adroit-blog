@@ -3,8 +3,8 @@ import { BlogPost } from "./types";
 export const posts: BlogPost[] = [
   {
     "slug": "ai-in-ux-research-2026",
-    "title": "AI Can Moderate Your Interviews. It Can't Replace Your Users.",
-    "excerpt": "Two AI research paths get conflated: AI-moderating real humans (which scales discovery) and synthetic users standing in for humans (where the evidence is weak). Know which is which.",
+    "title": "AI Can Moderate Interviews. It Can't Replace Your Users.",
+    "excerpt": "Two AI research paths get conflated: AI-moderated interviews with real humans scale discovery; synthetic users lack strong evidence. Know which is which.",
     "category": "UI/UX",
     "categoryColor": "ux",
     "categoryGradient": "from-violet to-violet-dark",
