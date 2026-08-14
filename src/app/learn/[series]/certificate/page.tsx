@@ -240,7 +240,7 @@ export default async function CertificatePage({ params }: Props) {
                   <span
                     className={`w-5 h-5 rounded-full flex-shrink-0 flex items-center justify-center ${
                       lessonsDone
-                        ? "bg-emerald/[0.12] text-emerald"
+                        ? "bg-[var(--signal-done-bg)] text-[var(--signal-done)]"
                         : "bg-gray-100 text-gray-500"
                     }`}
                   >

@@ -4,6 +4,32 @@ All notable changes to the Adroit Consulting Blog project will be documented in 
 
 ## [Unreleased]
 
+### Fix: Certificate lessons eligibility icon — emerald contrast carryover (t_253cd18c)
+
+A11Y re-audit (run 2810) carryover from t_926221f7. The `lessons` eligibility
+badge in the not-eligible certificate branch still used raw
+`bg-emerald/[0.12] text-emerald` (#10B981 on emerald-tint-over-white = 2.27:1
+light — fails WCAG 1.4.11 3:1). The consolidated fix (t_47b7ed5e, commit 1202f53)
+updated the `exam` and `checks` sibling badges to `--signal-done` tokens but
+missed this identical `lessons` badge. Grep confirmed it was the only remaining
+raw `#10B981` live usage (all other emerald refs are `text-emerald-800` = PASS).
+
+**What**
+
+- `src/app/learn/[series]/certificate/page.tsx` — `lessons` badge
+  `bg-emerald/[0.12] text-emerald` → `bg-[var(--signal-done-bg)]
+  text-[var(--signal-done)]`, matching the `exam`/`checks` siblings.
+  Now 4.84:1 light / 9.29:1 dark — passes WCAG 1.4.11.
+
+**Why**
+
+Non-text contrast (WCAG 1.4.11) for the completion status indicator.
+
+**Known issues**
+
+None. Baseline preserved: tsc 0, vitest 212/212, `next build` clean.
+
+
 ### Fix: Round-3 low-severity a11y hardening — decorative contrast, APG radiogroup, dark-mode reach (t_42efdd92)
 
 Follow-up to the Round-3 a11y audit (t_d56a2fb4 → Lara). All items LOW severity,
