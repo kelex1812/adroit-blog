@@ -2,6 +2,30 @@ import { BlogPost } from "./types";
 
 export const posts: BlogPost[] = [
   {
+    "slug": "ai-in-ux-research-2026",
+    "title": "AI Can Moderate Your Interviews. It Can't Replace Your Users.",
+    "excerpt": "Two AI research paths get conflated: AI-moderating real humans (which scales discovery) and synthetic users standing in for humans (where the evidence is weak). Know which is which.",
+    "category": "UI/UX",
+    "categoryColor": "ux",
+    "categoryGradient": "from-violet to-violet-dark",
+    "date": "August 14, 2026",
+    "author": "Adroit Consulting",
+    "authorInitials": "AC",
+    "readTime": "10 min read",
+    "featured": false,
+    "tags": [
+      "UX Research",
+      "AI",
+      "User Research",
+      "Synthetic Users",
+      "Discovery",
+      "Design Research",
+      "ResearchOps"
+    ],
+    "bannerImage": "/banners/ai-in-ux-research-2026.png",
+    "status": "published"
+  },
+  {
     "slug": "kubernetes-llm-serving-2026",
     "title": "Kubernetes for LLM Inference in 2026: The Stack That Fits",
     "excerpt": "66% of organizations run GenAI on Kubernetes, but only 7% ship to production daily. In 2026 the pieces landed: inference-aware routing, DRA, and llm-d.",
