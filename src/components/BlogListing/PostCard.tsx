@@ -58,7 +58,7 @@ export default function PostCard({ post, read = false }: PostCardProps) {
       <div className="p-4">
         <div className="flex items-center justify-between">
           <Tag label={post.category} color={post.categoryColor} />
-          <span className="text-[0.65rem] font-mono text-gray-300 tabular-nums">
+          <span className="text-[0.65rem] font-mono text-gray-500 tabular-nums">
             {post.readTime}
           </span>
         </div>
