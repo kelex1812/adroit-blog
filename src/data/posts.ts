@@ -2,6 +2,28 @@ import { BlogPost } from "./types";
 
 export const posts: BlogPost[] = [
   {
+    "slug": "salesforce-mcp-hosting-ga-2026",
+    "title": "Salesforce Hosted MCP Servers: Connecting AI to Your Org",
+    "excerpt": "Salesforce's hosted MCP servers are GA. Expose flows, Apex, and Data 360 to any AI client under your permissions, or point Agentforce at external tools.",
+    "category": "Salesforce",
+    "categoryColor": "sf",
+    "categoryGradient": "from-sky to-sky-dark",
+    "date": "August 15, 2026",
+    "author": "Adroit Consulting",
+    "authorInitials": "AC",
+    "readTime": "9",
+    "featured": false,
+    "tags": [
+      "Salesforce",
+      "MCP",
+      "Agentforce",
+      "Data 360",
+      "AI Agents"
+    ],
+    "bannerImage": "/banners/salesforce-mcp-hosting-ga-2026.png",
+    "status": "published"
+  },
+  {
     "slug": "sse-vs-websockets-2026",
     "title": "Real-Time Web 2026: When SSE Beats WebSockets",
     "excerpt": "Most real-time features only need server-to-client updates. SSE delivers them with less complexity. Here's when WebSockets still earn their keep.",
