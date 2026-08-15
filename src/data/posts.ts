@@ -2,6 +2,29 @@ import { BlogPost } from "./types";
 
 export const posts: BlogPost[] = [
   {
+    "slug": "sse-vs-websockets-2026",
+    "title": "Real-Time Web 2026: When SSE Beats WebSockets",
+    "excerpt": "Most real-time features only need server-to-client updates. SSE delivers them with less complexity. Here's when WebSockets still earn their keep.",
+    "category": "React & Web Dev",
+    "categoryColor": "react",
+    "categoryGradient": "from-emerald to-emerald-dark",
+    "date": "August 15, 2026",
+    "author": "Adroit Consulting",
+    "authorInitials": "AC",
+    "readTime": "8 min read",
+    "featured": false,
+    "tags": [
+      "Web Development",
+      "SSE",
+      "WebSockets",
+      "Real-Time",
+      "Streaming",
+      "AI"
+    ],
+    "bannerImage": "/banners/sse-vs-websockets-2026.png",
+    "status": "published"
+  },
+  {
     "slug": "ai-in-ux-research-2026",
     "title": "AI Can Moderate Interviews. It Can't Replace Your Users.",
     "excerpt": "Two AI research paths get conflated: AI-moderated interviews with real humans scale discovery; synthetic users lack strong evidence. Know which is which.",
