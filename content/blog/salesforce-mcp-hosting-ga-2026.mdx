@@ -51,9 +51,9 @@ You can also add your Agentforce agents themselves as tools on a hosted server, 
 
 Salesforce's own getting-started path claims under thirty minutes, and it is genuinely short [^1].
 
-1. **Enable a server.** Setup, then API Catalog, then MCP Servers. Enable a standard server or create a custom one. Custom servers are available in Developer, Enterprise, Performance, and Unlimited editions [^2].
-2. **Create an External Client App.** This needs the `mcp_api` and `refresh_token` OAuth scopes [^1]. This is the credential your client uses, and the scoped-access model means it only unlocks the MCP tools you explicitly exposed, not the REST API.
-3. **Connect a client.** Start with Postman to test the server returns what you expect, then connect your real client, Claude or ChatGPT or whatever your users already sit in [^1].
+1. Enable a server. Go to Setup, then API Catalog, then MCP Servers, and enable a standard server or create a custom one. Custom servers are available in Developer, Enterprise, Performance, and Unlimited editions [^2].
+2. Create an External Client App. This needs the `mcp_api` and `refresh_token` OAuth scopes [^1]. This is the credential your client uses, and the scoped-access model means it only unlocks the MCP tools you explicitly exposed, not the REST API.
+3. Connect a client. Start with Postman to test the server returns what you expect, then connect your real client, Claude or ChatGPT or whatever your users already sit in [^1].
 
 The recommended first move is the `platform/sobject-reads` server in a sandbox. It is read-only, so it is risk-free, and it proves the whole loop before you expose anything that writes [^1]. The docs split cleanly by role: Salesforce Help for admin setup, the developer docs for the technical reference and client connection, and a community wiki for patterns and design rationale [^1].
 
@@ -75,7 +75,7 @@ The pragmatic split: MCP for the new agent-driven connections, REST for the esta
 
 ## The pitfalls that are not hypothetical
 
-The biggest one is indirect prompt injection, specifically tool poisoning. In April 2026 the security research firm Invariant Labs published a bulletin on a new class of attack where a malicious MCP server returns poisoned tool descriptions that redirect an agent's behavior [^3]. Because your agent trusts the tool manifest it discovers, a compromised server can steer it. The defense is the admin control Salesforce built: closely vet and manage every server you register, and curate the tool allowlist so agents can only reach what you explicitly approved [^4]. This is why the registry-plus-allowlist model is the load-bearing part of the design, not a convenience.
+The biggest one is indirect prompt injection, specifically tool poisoning. In April 2025 the security research firm Invariant Labs published a bulletin on a new class of attack where a malicious MCP server returns poisoned tool descriptions that redirect an agent's behavior [^3]. Because your agent trusts the tool manifest it discovers, a compromised server can steer it. The defense is the admin control Salesforce built: closely vet and manage every server you register, and curate the tool allowlist so agents can only reach what you explicitly approved [^4]. This is why the registry-plus-allowlist model is the load-bearing part of the design, not a convenience.
 
 The second pitfall is governance at enterprise scale. Salesforce's hosted servers handle governance within their own perimeter, but a company running MCP across multiple vendors needs a control plane that spans all of them. That is the emerging category of MCP gateways, products like MuleSoft AI Gateway that provide centralized access control across all your MCP servers, not just the Salesforce ones [^1]. If you are deploying MCP beyond a single vendor, budget for one.
 
