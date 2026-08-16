@@ -204,6 +204,7 @@ export function seriesShortLabel(slug: string): string {
     "salesforce-architect": "Salesforce",
     "agentic-ai": "Agentic AI",
     "omni-studio-cert": "OmniStudio",
+    "ai-at-work": "AI at Work",
   };
   if (map[slug]) return map[slug];
   return slug
