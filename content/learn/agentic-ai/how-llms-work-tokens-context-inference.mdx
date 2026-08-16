@@ -16,40 +16,40 @@ Lesson 1 gave you the taxonomy (rules, workflows, agents) and the uncomfortable 
 
 ## Tokens: the currency
 
-An LLM does not read text. It reads **tokens**: the smallest units of language a model processes, produced by a **tokenizer** that runs on your text before the model ever sees it. A token can be a whole word, part of a word, a single character, or even a short phrase. [Source: https://www.ibm.com/think/topics/context-window] Each token maps to an ID number in the model's vocabulary; your sentence becomes a sequence of IDs, and everything the model does (training, prediction, generation) happens on those ID sequences. [Source: https://learn.microsoft.com/en-us/dotnet/ai/conceptual/understanding-tokens]
+An LLM does not read text. It reads **tokens**: the smallest units of language a model processes, produced by a **tokenizer** that runs on your text before the model ever sees it. A token can be a whole word, part of a word, a single character, or even a short phrase. [^1] Each token maps to an ID number in the model's vocabulary; your sentence becomes a sequence of IDs, and everything the model does (training, prediction, generation) happens on those ID sequences. [^2]
 
-Most modern models use **Byte-Pair Encoding (BPE)**, a subword tokenizer that iteratively merges the most frequent character pairs, so common words become single tokens and rare words split into several. [Source: https://github.com/openai/tiktoken] Two rules of thumb are worth memorizing, and both are approximations that break in predictable places:
+Most modern models use **Byte-Pair Encoding (BPE)**, a subword tokenizer that iteratively merges the most frequent character pairs, so common words become single tokens and rare words split into several. [^3] Two rules of thumb are worth memorizing, and both are approximations that break in predictable places:
 
-- **~4 characters per token** (English), or **~1.5 tokens per word**. [Source: https://www.ibm.com/think/topics/context-window] [Source: https://developer.nvidia.com/blog/mastering-llm-techniques-inference-optimization/]
-- **The tokenizer is per-model.** OpenAI's GPT models use BPE with model-specific encodings (`o200k_base` for the GPT-4o family), and OpenAI ships `tiktoken`, a fast BPE tokenizer, so you can count tokens before you spend them. [Source: https://github.com/openai/tiktoken]
+- **~4 characters per token** (English), or **~1.5 tokens per word**. [^1] [^4]
+- **The tokenizer is per-model.** OpenAI's GPT models use BPE with model-specific encodings (`o200k_base` for the GPT-4o family), and OpenAI ships `tiktoken`, a fast BPE tokenizer, so you can count tokens before you spend them. [^3]
 
-Where the rules of thumb break is where the money goes. Structured data, code, and JSON inflate token counts because every brace, quote, and colon tends to become its own token; non-Latin scripts inflate harder because most tokenizers are trained mostly on English text; IBM cites a Telugu sentence that tokenized to over 7x its English equivalent. [Source: https://www.ibm.com/think/topics/context-window] I measured this while writing this lesson: `{"name": "John", "age": 30}` is **12 tokens** with `o200k_base`, while "John is 30 years old" is **6**. The same information, twice the price, just for choosing JSON. [Measured with tiktoken: https://github.com/openai/tiktoken]
+Where the rules of thumb break is where the money goes. Structured data, code, and JSON inflate token counts because every brace, quote, and colon tends to become its own token; non-Latin scripts inflate harder because most tokenizers are trained mostly on English text; IBM cites a Telugu sentence that tokenized to over 7x its English equivalent. [^1] I measured this while writing this lesson: `{"name": "John", "age": 30}` is **12 tokens** with `o200k_base`, while "John is 30 years old" is **6**. The same information, twice the price, just for choosing JSON. [Measured with tiktoken: https://github.com/openai/tiktoken]
 
-Why should an implementer care? Because LLM APIs are **billed per token**: input and output priced separately, with rate limits in tokens per minute. [Source: https://learn.microsoft.com/en-us/dotnet/ai/conceptual/understanding-tokens] Token count is the unit of both cost and throughput, and you can measure it locally before you spend a cent.
+Why should an implementer care? Because LLM APIs are **billed per token**: input and output priced separately, with rate limits in tokens per minute. [^2] Token count is the unit of both cost and throughput, and you can measure it locally before you spend a cent.
 
 ## Context: the working memory
 
-The **context window** is the maximum number of tokens a model can consider at one time: its working memory. Everything in a request competes for it: the system prompt, retrieved documents, conversation history, your new message, *and* the output, because context is usually a combined input-plus-output budget. [Source: https://www.ibm.com/think/topics/context-window] [Source: https://redis.io/blog/llm-context-windows/]
+The **context window** is the maximum number of tokens a model can consider at one time: its working memory. Everything in a request competes for it: the system prompt, retrieved documents, conversation history, your new message, *and* the output, because context is usually a combined input-plus-output budget. [^1] [^5]
 
 Two facts about context matter more than the spec sheet:
 
-1. **Cost is quadratic, not linear.** Transformer self-attention compares every token to every other token, so doubling the input roughly quadruples the compute. A 10K-token context needs ~100 million comparisons; 100K needs ~10 billion. [Source: https://redis.io/blog/llm-context-windows/] [Source: https://www.ibm.com/think/topics/context-window] This is why your request slows down as you stuff more in, and why "just buy a bigger window" is not free.
-2. **Models don't use long contexts well.** A 2023 paper found LLMs don't robustly use information in the middle of long inputs (the well-documented **lost-in-the-middle** effect), and Redis's 2026 guidance is blunter: most long-context models show sharp performance drops past ~32K tokens, so benchmark your actual use case rather than trusting the spec sheet. [Source: https://arxiv.org/abs/2307.03172] [Source: https://redis.io/blog/llm-context-windows/]
+1. **Cost is quadratic, not linear.** Transformer self-attention compares every token to every other token, so doubling the input roughly quadruples the compute. A 10K-token context needs ~100 million comparisons; 100K needs ~10 billion. [^5] [^1] This is why your request slows down as you stuff more in, and why "just buy a bigger window" is not free.
+2. **Models don't use long contexts well.** A 2023 paper found LLMs don't robustly use information in the middle of long inputs (the well-documented **lost-in-the-middle** effect), and Redis's 2026 guidance is blunter: most long-context models show sharp performance drops past ~32K tokens, so benchmark your actual use case rather than trusting the spec sheet. [^6] [^5]
 
-Context windows have grown roughly two orders of magnitude since the original transformer, from a few thousand tokens to 1–2M today, with common configurations around 128K–200K tokens as of early 2026 (GPT-4o and Llama 3.1 at 128K, Claude 3.5 Sonnet around 200K, Gemini 1.5 Pro up to 2M). [Source: https://redis.io/blog/llm-context-windows/] [Source: https://www.ibm.com/think/topics/context-window] *Note: model versions and windows move fast; check current provider docs before any architecture decision.*
+Context windows have grown roughly two orders of magnitude since the original transformer, from a few thousand tokens to 1–2M today, with common configurations around 128K–200K tokens as of early 2026 (GPT-4o and Llama 3.1 at 128K, Claude 3.5 Sonnet around 200K, Gemini 1.5 Pro up to 2M). [^5] [^1] *Note: model versions and windows move fast; check current provider docs before any architecture decision.*
 
-The architectural consequence: **context engineering beats context size.** Retrieval-augmented generation (RAG) that pulls only relevant sections keeps accuracy stable as your corpus grows, while stuffing an entire corpus into one window degrades and gets expensive. Most production systems combine a reasonable window, RAG, and prompt caching. [Source: https://redis.io/blog/llm-context-windows/]
+The architectural consequence: **context engineering beats context size.** Retrieval-augmented generation (RAG) that pulls only relevant sections keeps accuracy stable as your corpus grows, while stuffing an entire corpus into one window degrades and gets expensive. Most production systems combine a reasonable window, RAG, and prompt caching. [^5]
 
 ## Inference: two very different phases
 
 When you call an LLM, two phases run, and they have opposite bottlenecks. This is the single most useful mental model for debugging slow responses:
 
-- **Prefill** processes your entire input in one highly parallel pass and produces the first output token. It's compute-bound; longer prompts mean longer waits before the first word. This latency is **time to first token (TTFT)**. [Source: https://developer.nvidia.com/blog/mastering-llm-techniques-inference-optimization/] [Source: https://arxiv.org/html/2606.17104v1]
-- **Decode** then generates output **one token at a time**, each depending on all previous tokens. It's sequential and memory-bandwidth-bound, measured as time per output token (TPOT) or inter-token latency. [Source: https://developer.nvidia.com/blog/mastering-llm-techniques-inference-optimization/] [Source: https://arxiv.org/html/2606.17104v1]
+- **Prefill** processes your entire input in one highly parallel pass and produces the first output token. It's compute-bound; longer prompts mean longer waits before the first word. This latency is **time to first token (TTFT)**. [^4] [^7]
+- **Decode** then generates output **one token at a time**, each depending on all previous tokens. It's sequential and memory-bandwidth-bound, measured as time per output token (TPOT) or inter-token latency. [^4] [^7]
 
-Between the phases sits the **KV cache**: the key/value tensors computed during prefill and reused during decode, growing by one entry per generated token. It's why chatbots feel fast at first and slow down as conversations (and cached state) lengthen, and why long responses with long prompts can exhaust GPU memory. [Source: https://redis.io/blog/llm-context-windows/] [Source: https://developer.nvidia.com/blog/mastering-llm-techniques-inference-optimization/]
+Between the phases sits the **KV cache**: the key/value tensors computed during prefill and reused during decode, growing by one entry per generated token. It's why chatbots feel fast at first and slow down as conversations (and cached state) lengthen, and why long responses with long prompts can exhaust GPU memory. [^5] [^4]
 
-For an implementer this means: sluggish *before* the first token is a prefill problem (prompt too long, or bad prompt design); sluggish *while streaming* is a decode problem (output too long, or the model is memory-bound). Different problems, different fixes. [Source: https://redis.io/blog/prefill-vs-decode/]
+For an implementer this means: sluggish *before* the first token is a prefill problem (prompt too long, or bad prompt design); sluggish *while streaming* is a decode problem (output too long, or the model is memory-bound). Different problems, different fixes. [^8]
 
 ## Temperature: the randomness knob
 
@@ -57,11 +57,11 @@ At each decode step, the model produces raw scores (**logits**) for every token 
 
 > P(token) = e^(logit / T) / Σ e^(logit_i / T)
 
-Higher temperature flattens the distribution (more randomness, more variety); lower temperature sharpens it (more deterministic, more focused). [Source: https://dev.to/fagundesv/temperature-tokens-and-context-windows-the-three-pillars-of-llm-control-34jg] At **temperature 0** the model picks the single most-likely token each step: greedy decoding, the most deterministic setting available. [Source: https://huggingface.co/docs/transformers/generation_strategies] [Source: https://community.openai.com/t/cheat-sheet-mastering-temperature-and-top-p-in-chatgpt-api/172683]
+Higher temperature flattens the distribution (more randomness, more variety); lower temperature sharpens it (more deterministic, more focused). [^9] At **temperature 0** the model picks the single most-likely token each step: greedy decoding, the most deterministic setting available. [^10] [^11]
 
-Its partner knob is **top-p (nucleus sampling)**: keep the smallest set of tokens whose cumulative probability reaches p, and sample only from that set. Top-p adapts: when the model is confident, the nucleus is tiny; when it's uncertain, the nucleus widens. [Source: https://huggingface.co/docs/transformers/generation_strategies] Provider guidance is to tune one or the other, not both at once. [Source: https://tomarcher.io/posts/temperature-top-p-creativity-knobs/]
+Its partner knob is **top-p (nucleus sampling)**: keep the smallest set of tokens whose cumulative probability reaches p, and sample only from that set. Top-p adapts: when the model is confident, the nucleus is tiny; when it's uncertain, the nucleus widens. [^10] Provider guidance is to tune one or the other, not both at once. [^12]
 
-Two cautions. First, temperature doesn't make a model smarter; it only changes how it picks among what it already knows, and "0.7 for creative writing" is folklore, not a spec; choose by task (low for extraction/classification/structured output, higher for brainstorming). Second, temperature 0 is *nearly* deterministic, not bit-for-bit reproducible; floating-point math, MoE routing, and hardware load balancing can still introduce rare variation, so add a seed if you need true reproducibility. [Source: https://prompt-architects.com/blog/48-temperature-top-p-top-k-explained]
+Two cautions. First, temperature doesn't make a model smarter; it only changes how it picks among what it already knows, and "0.7 for creative writing" is folklore, not a spec; choose by task (low for extraction/classification/structured output, higher for brainstorming). Second, temperature 0 is *nearly* deterministic, not bit-for-bit reproducible; floating-point math, MoE routing, and hardware load balancing can still introduce rare variation, so add a seed if you need true reproducibility. [^13]
 
 ## Worked example: this lesson's own pipeline
 
@@ -75,7 +75,7 @@ Now the reliability angle, which ties back to Lesson 1's cautionary tale: the Fo
 
 ## Try it
 
-1. Install `tiktoken` (`pip install tiktoken`) and count this exact string: `{"name": "John", "age": 30}`. Then count "John is 30 years old". You should see roughly 2x for the JSON; confirm it, don't trust my number. [Source: https://github.com/openai/tiktoken]
+1. Install `tiktoken` (`pip install tiktoken`) and count this exact string: `{"name": "John", "age": 30}`. Then count "John is 30 years old". You should see roughly 2x for the JSON; confirm it, don't trust my number. [^3]
 2. Take a prompt you use in production and run it at temperature 0 and temperature 0.8 ten times each. Count how many outputs differ. That spread is the cost of your randomness. Is it worth it for this task?
 3. Audit one agent request: system prompt + tool schemas + retrieved context + user message. What fraction of the context window is overhead vs. actual task content? If it's over half, that's your first optimization target.
 
@@ -83,20 +83,16 @@ Now the reliability angle, which ties back to Lesson 1's cautionary tale: the Fo
 
 Lesson 3 puts this machinery to work: the **augmented LLM** (prompting, retrieval, tools, and memory), and how the Model Context Protocol standardizes the tool layer. You now know the four constraints every agent operates under; next you'll learn how to extend the model past them. (Lesson 1's "what's next" pointed here first, and the curriculum ordering was adjusted so the mechanics came first; the augmented LLM is Lesson 3.)
 
-## Sources
-
-- "What is a context window?" by IBM Think (Dave Bergmann): https://www.ibm.com/think/topics/context-window
-- "Understand tokens" by Microsoft Learn (.NET AI docs, updated 03/13/2026): https://learn.microsoft.com/en-us/dotnet/ai/conceptual/understanding-tokens
-- "LLM context windows: Understanding and optimizing working memory" by Redis (Jan 23, 2026): https://redis.io/blog/llm-context-windows/
-- "Prefill vs Decode: LLM Inference Phases Explained" by Redis: https://redis.io/blog/prefill-vs-decode/
-- "Mastering LLM Techniques: Inference Optimization" by NVIDIA Technical Blog: https://developer.nvidia.com/blog/mastering-llm-techniques-inference-optimization/
-- "Prefill/Decode-Aware Evaluation of LLM Inference on Emerging AI Accelerators" by arXiv (HPAI4S'26): https://arxiv.org/html/2606.17104v1
-- "Generation strategies" by Hugging Face Transformers docs: https://huggingface.co/docs/transformers/generation_strategies
-- "tiktoken: a fast BPE tokeniser for use with OpenAI's models" by GitHub (token counts in this lesson measured with `o200k_base`): https://github.com/openai/tiktoken
-- "Temperature, Tokens, and Context Windows: The Three Pillars of LLM Control" by DEV Community: https://dev.to/fagundesv/temperature-tokens-and-context-windows-the-three-pillars-of-llm-control-34jg
-- "Temperature and Top-P: The Creativity Knobs" by Signal & Syntax: https://tomarcher.io/posts/temperature-top-p-creativity-knobs/
-- "Temperature, Top-P, Top-K: AI Sampling Parameters Explained" by Prompt Architects: https://prompt-architects.com/blog/48-temperature-top-p-top-k-explained
-- "Cheat Sheet: Mastering Temperature and Top_p in ChatGPT API" by OpenAI Developer Forum: https://community.openai.com/t/cheat-sheet-mastering-temperature-and-top-p-in-chatgpt-api/172683
-- "Lost in the Middle: How Language Models Use Long Contexts" by Liu et al. (arXiv): https://arxiv.org/abs/2307.03172
-
-*Note: model names, context windows, and pricing move fast; the context-window table figures are as cited (IBM's data as of Oct 2024, Redis's as of Jan 2026); verify current specs against provider docs before architecture decisions. The Fortress token measurements (directive = 126 tokens; JSON 12 vs prose 6) were produced locally with tiktoken during this run, August 2026.*
+[^1]: ibm.com. [ibm.com](https://www.ibm.com/think/topics/context-window)
+[^2]: learn.microsoft.com. [learn.microsoft.com](https://learn.microsoft.com/en-us/dotnet/ai/conceptual/understanding-tokens)
+[^3]: github.com. [github.com](https://github.com/openai/tiktoken)
+[^4]: developer.nvidia.com. [developer.nvidia.com](https://developer.nvidia.com/blog/mastering-llm-techniques-inference-optimization/)
+[^5]: redis.io. [redis.io](https://redis.io/blog/llm-context-windows/)
+[^6]: arxiv.org. [arxiv.org](https://arxiv.org/abs/2307.03172)
+[^7]: arxiv.org. [arxiv.org](https://arxiv.org/html/2606.17104v1)
+[^8]: redis.io. [redis.io](https://redis.io/blog/prefill-vs-decode/)
+[^9]: dev.to. [dev.to](https://dev.to/fagundesv/temperature-tokens-and-context-windows-the-three-pillars-of-llm-control-34jg)
+[^10]: huggingface.co. [huggingface.co](https://huggingface.co/docs/transformers/generation_strategies)
+[^11]: community.openai.com. [community.openai.com](https://community.openai.com/t/cheat-sheet-mastering-temperature-and-top-p-in-chatgpt-api/172683)
+[^12]: tomarcher.io. [tomarcher.io](https://tomarcher.io/posts/temperature-top-p-creativity-knobs/)
+[^13]: prompt-architects.com. [prompt-architects.com](https://prompt-architects.com/blog/48-temperature-top-p-top-k-explained)

@@ -59,15 +59,12 @@ export default async function MDXArticle({
     import("@/components/BlogPost/Figure"),
   ]);
 
-  const options: MDXRemoteProps["options"] =
-    kind === "learn"
-      ? { mdxOptions: { remarkPlugins: [remarkGfm.default] } }
-      : {
-          mdxOptions: {
-            remarkPlugins: [remarkGfm.default],
-            rehypePlugins: [renameFootnoteHeading],
-          },
-        };
+  const options: MDXRemoteProps["options"] = {
+    mdxOptions: {
+      remarkPlugins: [remarkGfm.default],
+      rehypePlugins: [renameFootnoteHeading],
+    },
+  };
 
   return (
     <MDXRemote

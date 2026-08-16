@@ -19,7 +19,7 @@ tags: [Learn, Salesforce, Architect, Certifications]
 Salesforce's own definition is the one to internalize:
 
 > Salesforce Architects are big-picture thinkers and in-depth problem solvers. They design systems for the long-term that stand up to high volumes and won't fail at critical points.
-> [Source: https://trailhead.salesforce.com/en/credentials/architectoverview]
+> [^1]
 
 Two phrases there do the heavy lifting. **"For the long-term"**: an architect is optimizing for the org's state five years out, not the demo next week. **"Won't fail at critical points"**: high volumes, security boundaries, integration failures, release windows. The architect is the person who answers "what happens when this scales / when this breaks / when this gets hacked?" before anyone ships.
 
@@ -27,12 +27,12 @@ A working definition for this track: *an architect translates business requireme
 
 ## The three-tier certification arc
 
-Salesforce organizes architect credentials into two "domain" architect certifications, and one pinnacle credential above them both. [Source: https://trailhead.salesforce.com/en/credentials/architectoverview]
+Salesforce organizes architect credentials into two "domain" architect certifications, and one pinnacle credential above them both. [^1]
 
 ### 1. Application Architect: the on-platform owner
 
 > Certified Application Architects have a deep understanding of native Salesforce features and functionality. They're also experts at modeling a role hierarchy, data, and appropriate sharing mechanisms.
-> [Source: https://trailhead.salesforce.com/en/credentials/applicationarchitect]
+> [^2]
 
 The Application Architect owns what happens **inside** Salesforce: the data model, the sharing and visibility model, and native features. The credential is granted automatically after four prerequisites:
 
@@ -41,12 +41,12 @@ The Application Architect owns what happens **inside** Salesforce: the data mode
 - Salesforce Certified Platform Developer I
 - Salesforce Certified Platform Sharing and Visibility Architect
 
-[Source: https://trailhead.salesforce.com/en/credentials/applicationarchitect]
+[^2]
 
 ### 2. System Architect: the between-systems owner
 
 > Certified System Architects focus on off-platform systems, integration, and securing access between systems. They're also skilled at managing governance and testing capabilities for deployment and ongoing Salesforce modification requirements.
-> [Source: https://trailhead.salesforce.com/en/credentials/systemarchitect]
+> [^3]
 
 The System Architect owns what happens **between** systems: integration architecture, identity and access between systems, and the release/governance machinery that keeps changes safe. The credential is granted automatically after four prerequisites:
 
@@ -55,7 +55,7 @@ The System Architect owns what happens **between** systems: integration architec
 - Salesforce Certified Platform Identity and Access Management Architect
 - Salesforce Certified Platform Integration Architect
 
-[Source: https://trailheadacademy.salesforce.com/certificate/exam-sys-architect---Sys-Arch-301]
+[^4]
 
 Note the split: it's the mental model that will organize this entire track:
 
@@ -64,22 +64,22 @@ Note the split: it's the mental model that will organize this entire track:
 | Data model, sharing, native features | **Application Architect** |
 | Integration, identity, deployment, governance | **System Architect** |
 
-Salesforce classifies both credentials as **Advanced** level, Architect role. [Source: https://trailheadacademy.salesforce.com/certificate/exam-sys-architect---Sys-Arch-301]
+Salesforce classifies both credentials as **Advanced** level, Architect role. [^4]
 
 ### 3. Technical Architect (CTA): the endgame
 
 > Salesforce Certified Technical Architects have experience in designing and implementing secure, high-performance, integrated technical solutions using the Lightning platform within the context of a client's architectural landscape.
-> [Source: https://trailhead.salesforce.com/en/credentials/technicalarchitect]
+> [^5]
 
-The CTA is the pinnacle credential. It requires **both** the Application Architect and System Architect credentials as prerequisites [Source: https://trailhead.salesforce.com/en/credentials/technicalarchitect], and then a two-step evaluation: an Architect Evaluation, then the Architect Review Board Exam. [Source: https://trailheadacademy.salesforce.com/certificate/exam-review-board---Plat-Arch-401-Eval]
+The CTA is the pinnacle credential. It requires **both** the Application Architect and System Architect credentials as prerequisites [^5], and then a two-step evaluation: an Architect Evaluation, then the Architect Review Board Exam. [^6]
 
-Salesforce's own blog calls CTAs "the pinnacle credential holder" and "quite rare gems." [Source: https://www.salesforce.com/blog/certified-technical-architects/] The history explains why the bar is high:
+Salesforce's own blog calls CTAs "the pinnacle credential holder" and "quite rare gems." [^7] The history explains why the bar is high:
 
 - The CTA credential launched in **2011**; the first 10 CTAs were certified in September of that year.
 - The **Architect Academy** launched in February 2016, the first official CTA preparation resources.
 - At **Dreamforce '17**, Salesforce introduced the "Architect Journey": domain certifications as stepping stones to the CTA pinnacle.
 
-[Source: https://www.salesforce.com/blog/certified-technical-architects/]
+[^7]
 
 So the arc is: **eight domain prerequisite exams → Application Architect + System Architect → CTA**. That's the mountain. This 90-lesson track is the trail map.
 
@@ -89,11 +89,11 @@ A client wants Salesforce integrated with their legacy ERP, with single sign-on 
 
 - **Application Architect:** designs the Salesforce data model (e.g., how the ERP's orders map to custom objects and fields), the role hierarchy, and the sharing rules so each department sees only its records. Owns "inside the org."
 - **System Architect:** designs the integration: how Salesforce and the ERP exchange data (API choice, sync vs async, error handling), how SSO federates identity into Salesforce, and the sandbox → production deployment pipeline with change governance. Owns "between systems."
-- **CTA:** sits above both. The CTA weighs the tradeoffs end to end: is a custom integration better than a managed package? Is SSO via an existing IdP enough, or does the identity model need rework? When requirements conflict, the CTA makes the call and defends it. The Review Board exam is precisely this: a rigorous, scenario-based defense of a complete architecture. [Source: https://www.salesforce.com/blog/certified-technical-architects/]
+- **CTA:** sits above both. The CTA weighs the tradeoffs end to end: is a custom integration better than a managed package? Is SSO via an existing IdP enough, or does the identity model need rework? When requirements conflict, the CTA makes the call and defends it. The Review Board exam is precisely this: a rigorous, scenario-based defense of a complete architecture. [^7]
 
 ## The pitfall to avoid
 
-**Treating the certificate as the job.** The System Architect certification is a *gate*: it proves you passed the four prerequisite exams, but the role is judgment: choosing between a synchronous REST call and a queued batch when the ERP is down, deciding where identity lives, designing a governance model that developers will actually follow. The exams test that you know the platform's patterns; the career is about knowing *when* to use them. Trailhead's career path says it best: "Good architecture is about balancing what works today with what will scale tomorrow." [Source: https://trailhead.salesforce.com/career-path/architect]
+**Treating the certificate as the job.** The System Architect certification is a *gate*: it proves you passed the four prerequisite exams, but the role is judgment: choosing between a synchronous REST call and a queued batch when the ERP is down, deciding where identity lives, designing a governance model that developers will actually follow. The exams test that you know the platform's patterns; the career is about knowing *when* to use them. Trailhead's career path says it best: "Good architecture is about balancing what works today with what will scale tomorrow." [^8]
 
 A second, subtler trap: mixing up the two domain architects. "System Architect" is not "the architect who knows everything about systems." It is specifically the **off-platform** concern (integration, identity, governance), while the **Application Architect** owns the **on-platform** concern (data, sharing, native features). Getting that split wrong on an exam question is the fastest way to lose points. Get it wrong in a real org and you'll have two teams designing past each other.
 
@@ -113,15 +113,11 @@ Then write one sentence for each naming the specific prerequisite credential tha
 
 This lesson was the map. Lessons 2–4 build the foundation the System Architect track is graded on, starting with the platform's data model and identity model, then integration patterns. And because architecture thinking is transferable, Lesson 5 is the first **General Systems Architecture for AI** lesson in this track: the same design laws (state, queues, scaling, failure) applied to AI/agent systems. You'll see one of those every fifth lesson.
 
-## Sources
-
-- Salesforce Certified System Architect, Trailhead: https://trailhead.salesforce.com/en/credentials/systemarchitect
-- Salesforce Certified System Architect, Trailhead Academy exam page: https://trailheadacademy.salesforce.com/certificate/exam-sys-architect---Sys-Arch-301
-- Salesforce Certified Application Architect, Trailhead: https://trailhead.salesforce.com/en/credentials/applicationarchitect
-- Salesforce Certified Technical Architect, Trailhead: https://trailhead.salesforce.com/en/credentials/technicalarchitect
-- Salesforce Certified Technical Architect, Architect Evaluation (Trailhead Academy): https://trailheadacademy.salesforce.com/certificate/exam-review-board---Plat-Arch-401-Eval
-- Salesforce Architect Credentials overview, Trailhead: https://trailhead.salesforce.com/en/credentials/architectoverview
-- "Salesforce Certified Technical Architect – What's a CTA?", Salesforce blog: https://www.salesforce.com/blog/certified-technical-architects/
-- Salesforce Architect Career Path, Trailhead: https://trailhead.salesforce.com/career-path/architect
-
-*Note: Exam formats, prerequisite lists, and prices change; verify against the Trailhead credential pages before booking any exam. The Architect Evaluation / Review Board two-step structure is per Salesforce's Trailhead Academy page as of this lesson.*
+[^1]: trailhead.salesforce.com. [trailhead.salesforce.com](https://trailhead.salesforce.com/en/credentials/architectoverview)
+[^2]: trailhead.salesforce.com. [trailhead.salesforce.com](https://trailhead.salesforce.com/en/credentials/applicationarchitect)
+[^3]: trailhead.salesforce.com. [trailhead.salesforce.com](https://trailhead.salesforce.com/en/credentials/systemarchitect)
+[^4]: trailheadacademy.salesforce.com. [trailheadacademy.salesforce.com](https://trailheadacademy.salesforce.com/certificate/exam-sys-architect---Sys-Arch-301)
+[^5]: trailhead.salesforce.com. [trailhead.salesforce.com](https://trailhead.salesforce.com/en/credentials/technicalarchitect)
+[^6]: trailheadacademy.salesforce.com. [trailheadacademy.salesforce.com](https://trailheadacademy.salesforce.com/certificate/exam-review-board---Plat-Arch-401-Eval)
+[^7]: salesforce.com. [salesforce.com](https://www.salesforce.com/blog/certified-technical-architects/)
+[^8]: trailhead.salesforce.com. [trailhead.salesforce.com](https://trailhead.salesforce.com/career-path/architect)

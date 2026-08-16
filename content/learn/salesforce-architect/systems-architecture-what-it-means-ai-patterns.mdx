@@ -18,9 +18,9 @@ Here's the thesis: **architecture is about making decisions under constraints.**
 
 ## What "architecture" actually means
 
-The ISO/IEC/IEEE 42010 standard defines architecture as "the fundamental concepts or properties of a system in its environment embodied in its elements, relationships, and in the principles of its design and evolution." [Source: https://www.iso.org/standard/74393.html]
+The ISO/IEC/IEEE 42010 standard defines architecture as "the fundamental concepts or properties of a system in its environment embodied in its elements, relationships, and in the principles of its design and evolution." [^1]
 
-The Systems Engineering Body of Knowledge (SEBoK) distills it further: architecture comprises the fundamental organization of a system, embodied in its **components**, their **relationships** to each other and to the environment, and the **principles** governing its design and evolution. [Source: https://sebokwiki.org/wiki/Architecture_(glossary)]
+The Systems Engineering Body of Knowledge (SEBoK) distills it further: architecture comprises the fundamental organization of a system, embodied in its **components**, their **relationships** to each other and to the environment, and the **principles** governing its design and evolution. [^2]
 
 Three words do the work:
 
@@ -40,7 +40,7 @@ Unix pipes (`ls | grep foo | wc -l`) are the classic example. Data flows through
 
 AI agents call this **prompt chaining** or **sequential orchestration**. A contractor intake agent classifies a request, passes it to a clause-customization agent, which passes it to a compliance checker. Same topology, different processing units: LLM calls instead of shell commands.
 
-Azure's Architecture Center explicitly notes that sequential orchestration "resembles the Pipes and Filters cloud design pattern, but it uses AI agents instead of custom-coded processing components." [Source: https://learn.microsoft.com/en-us/azure/architecture/ai-ml/guide/ai-agent-design-patterns]
+Azure's Architecture Center explicitly notes that sequential orchestration "resembles the Pipes and Filters cloud design pattern, but it uses AI agents instead of custom-coded processing components." [^3]
 
 **Tradeoff:** simple to debug (breakpoints at each stage), but latency adds up linearly, and errors cascade forward: an early mistake propagates through every subsequent stage.
 
@@ -48,7 +48,7 @@ Azure's Architecture Center explicitly notes that sequential orchestration "rese
 
 Google's MapReduce paper (2004) formalized an idea that had existed in distributed computing for years: split a problem into independent pieces, process them in parallel, then merge results.
 
-AI agents call this **parallel orchestration** or **ensemble voting**. Multiple agents research a legal question from different angles, then a synthesizer agent merges the findings. Patrick Koss draws the line directly: "Concurrent agents voting on results? Welcome to MapReduce." [Source: https://medium.com/@patrickkoss/ai-agents-software-engineering-new-patterns-or-old-tricks-122fc9ab2eee]
+AI agents call this **parallel orchestration** or **ensemble voting**. Multiple agents research a legal question from different angles, then a synthesizer agent merges the findings. Patrick Koss draws the line directly: "Concurrent agents voting on results? Welcome to MapReduce." [^4]
 
 **Tradeoff:** lower wall-clock latency, but cost spikes (multiple LLM calls at once), and aggregation is harder than splitting: conflicting results need tie-breaking rules, not just union.
 
@@ -56,7 +56,7 @@ AI agents call this **parallel orchestration** or **ensemble voting**. Multiple 
 
 The Gang of Four's Mediator pattern (1994) centralizes communication between components so they don't talk to each other directly; they talk through the mediator. This reduces coupling but creates a single point of complexity.
 
-AI agents call this **supervisor orchestration** or **hierarchical agent architecture**. A supervisor agent decomposes a goal, assigns sub-tasks to specialist workers, collects results, and decides whether to iterate or finalize. StackAI's guide describes it as "what you reach for when the problem is too complex for a single agent loop." [Source: https://www.stackai.com/insights/ai-agent-architecture-patterns-sequential-parallel-and-hierarchical-workflows]
+AI agents call this **supervisor orchestration** or **hierarchical agent architecture**. A supervisor agent decomposes a goal, assigns sub-tasks to specialist workers, collects results, and decides whether to iterate or finalize. StackAI's guide describes it as "what you reach for when the problem is too complex for a single agent loop." [^5]
 
 **Tradeoff:** the supervisor becomes the bottleneck and the most complex component to test. It's the right choice when different parts of the process need different permissions or models, but overused, it's a governance tax on every interaction.
 
@@ -64,7 +64,7 @@ AI agents call this **supervisor orchestration** or **hierarchical agent archite
 
 The old-school Blackboard pattern has independent specialists read and write to a shared workspace, solving a problem collaboratively without direct communication. It dates to the 1970s in speech-recognition research.
 
-AI agents call this **shared memory** or **context store**. A centralized state (vector database, Redis store, or just a growing conversation context) holds intermediate artifacts, evidence pointers, and decisions. Every agent reads what it needs and writes what it produces. [Source: https://www.jetbrains.com/pages/ai-agents/architecture/ai-agent-orchestration/]
+AI agents call this **shared memory** or **context store**. A centralized state (vector database, Redis store, or just a growing conversation context) holds intermediate artifacts, evidence pointers, and decisions. Every agent reads what it needs and writes what it produces. [^6]
 
 **Tradeoff:** state management becomes the hardest problem in the system. Atomic writes, optimistic locking, and context-window budgeting matter far more than any individual agent's reasoning quality.
 
@@ -72,7 +72,7 @@ AI agents call this **shared memory** or **context store**. A centralized state 
 
 Every microservices architecture has a gateway that routes requests to the right service based on the request content. In a message queue system, a router reads a message header and sends it to the correct handler.
 
-AI agents call this **agent routing** or **triage-first design**. An input arrives, a router agent classifies it ("this is a billing question, not a technical support question"), and dispatches it to the specialist agent. [Source: https://learn.microsoft.com/en-us/azure/architecture/ai-ml/guide/ai-agent-design-patterns]
+AI agents call this **agent routing** or **triage-first design**. An input arrives, a router agent classifies it ("this is a billing question, not a technical support question"), and dispatches it to the specialist agent. [^3]
 
 **Tradeoff:** the router must be highly accurate: a misclassification means the wrong agent gets the work, wasting cost and time. Rule-based routing is predictable but brittle; LLM-based routing is flexible but hallucinates.
 
@@ -80,7 +80,7 @@ AI agents call this **agent routing** or **triage-first design**. An input arriv
 
 Michael Nygard's "Release It!" (2007) popularized the circuit breaker pattern: when a dependency fails repeatedly, stop calling it to prevent cascading failure. The system defaults to degraded mode until the dependency recovers.
 
-AI agents call this **guardrails** or **human-in-the-loop escalation**. When an agent confidence score drops below a threshold, when a tool call fails three times, or when the proposed action involves a write operation to a production system, the agent circuit-breaks to a human. [Source: https://www.dataiku.com/blog/agent-orchestration-explained]
+AI agents call this **guardrails** or **human-in-the-loop escalation**. When an agent confidence score drops below a threshold, when a tool call fails three times, or when the proposed action involves a write operation to a production system, the agent circuit-breaks to a human. [^7]
 
 **Tradeoff:** circuit breakers that are too sensitive destroy workflow velocity; ones that are too forgiving let bad outputs reach users. Getting the threshold right requires production data, not guesswork.
 
@@ -123,15 +123,10 @@ You have just written an architecture description, possibly the first explicit o
 
 Next lesson stays in general-sysarch-ai mode and picks up **queues, work pools, and backpressure**, the architectural patterns that keep systems (including multi-agent systems) stable under load. You will see why every Salesforce architect cares about the Bulk API retry schedule, and why every AI agent system needs a message queue whether it knows it yet or not.
 
-## Sources
-
-1. ISO/IEC/IEEE 42010:2022 - Systems and software engineering: Architecture description. https://www.iso.org/standard/74393.html
-2. SEBoK - Architecture (glossary). https://sebokwiki.org/wiki/Architecture_(glossary)
-3. Wikipedia - Systems architecture. https://en.wikipedia.org/wiki/Systems_architecture
-4. Azure Architecture Center - AI agent orchestration patterns. https://learn.microsoft.com/en-us/azure/architecture/ai-ml/guide/ai-agent-design-patterns
-5. Patrick Koss - AI Agents & Software Engineering: New Patterns or Old Tricks? https://medium.com/@patrickkoss/ai-agents-software-engineering-new-patterns-or-old-tricks-122fc9ab2eee
-6. StackAI - AI Agent Architecture Patterns: Sequential, Parallel, and Hierarchical Workflows. https://www.stackai.com/insights/ai-agent-architecture-patterns-sequential-parallel-and-hierarchical-workflows
-7. JetBrains - AI Agent Orchestration Explained. https://www.jetbrains.com/pages/ai-agents/architecture/ai-agent-orchestration/
-8. Dataiku - Agent orchestration explained. https://www.dataiku.com/blog/agent-orchestration-explained
-9. Shaili Guru - AI Architecture Patterns 101: Workflows, Agents, MCPs, and A2A Systems. https://aipmguru.substack.com/p/ai-architecture-patterns-101-workflows
-10. Michael Nygard - Release It! (Pragmatic Programmers, 2007) - Circuit Breaker pattern.
+[^1]: iso.org. [iso.org](https://www.iso.org/standard/74393.html)
+[^2]: sebokwiki.org. [sebokwiki.org](https://sebokwiki.org/wiki/Architecture_(glossary))
+[^3]: learn.microsoft.com. [learn.microsoft.com](https://learn.microsoft.com/en-us/azure/architecture/ai-ml/guide/ai-agent-design-patterns)
+[^4]: medium.com. [medium.com](https://medium.com/@patrickkoss/ai-agents-software-engineering-new-patterns-or-old-tricks-122fc9ab2eee)
+[^5]: stackai.com. [stackai.com](https://www.stackai.com/insights/ai-agent-architecture-patterns-sequential-parallel-and-hierarchical-workflows)
+[^6]: jetbrains.com. [jetbrains.com](https://www.jetbrains.com/pages/ai-agents/architecture/ai-agent-orchestration/)
+[^7]: dataiku.com. [dataiku.com](https://www.dataiku.com/blog/agent-orchestration-explained)

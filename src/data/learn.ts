@@ -8,6 +8,32 @@ import { LearnLesson, LearningSeries } from "./types";
 /** All series, sorted by newest lesson date DESC (ties → slug asc). Empty dirs included with lessons: []. */
 export const learnSeries: LearningSeries[] = [
   {
+    "slug": "ai-at-work",
+    "name": "AI at Work",
+    "description": "A vendor-agnostic, 30-lesson primer for using AI in day-to-day work: foundations, prompting, productivity, small automations, and team adoption. Company-wide training that works for any team and any AI tool.",
+    "gradient": "from-fuchsia to-purple-600",
+    "lessons": [
+      {
+        "slug": "what-ai-actually-is",
+        "title": "Lesson 1: What AI Actually Is",
+        "series": "ai-at-work",
+        "lesson": 1,
+        "excerpt": "The words around AI are doing more confusing than clarifying. This lesson separates the four that trip up most people: models vs automation, chatbots vs tools, plus why 'LLM' and 'generative AI' are not synonyms.",
+        "date": "August 16, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "8 min read",
+        "tags": [
+          "Learn",
+          "AI",
+          "Workplace",
+          "Foundations"
+        ],
+        "status": "published"
+      }
+    ],
+    "totalLessons": 1
+  },
+  {
     "slug": "agentic-ai",
     "name": "Agentic AI Implementation Path",
     "description": "From single-agent prototypes to multi-agent orchestration, a practitioner's curriculum for shipping agentic systems.",
@@ -182,9 +208,43 @@ export const learnSeries: LearningSeries[] = [
           "RAG"
         ],
         "status": "published"
+      },
+      {
+        "slug": "embeddings-models-similarity-when-they-fail",
+        "title": "Lesson 11: Embeddings: Models, Similarity, and When They Fail",
+        "series": "agentic-ai",
+        "lesson": 11,
+        "excerpt": "What an embedding actually is, how the popular models differ, why cosine similarity works, and the failure modes that make pure vector search miss the answer: rare terms, domain jargon, short queries, and model mismatch.",
+        "date": "August 14, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "10 min read",
+        "tags": [
+          "Learn",
+          "AI",
+          "Agentic",
+          "Embeddings"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "vector-databases-pinecone-pgvector-milvus-weaviate",
+        "title": "Lesson 12: Vector Databases: Pinecone, pgvector, Milvus, Weaviate, and Choosing for Your Workload",
+        "series": "agentic-ai",
+        "lesson": 12,
+        "excerpt": "What a vector database actually does, why you need one instead of scanning vectors in memory, the approximate nearest neighbor tradeoff you are making, and how to choose between Pinecone, pgvector, Milvus, and Weaviate for your workload and your team.",
+        "date": "August 15, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "10 min read",
+        "tags": [
+          "Learn",
+          "AI",
+          "Agentic",
+          "Vector Databases"
+        ],
+        "status": "published"
       }
     ],
-    "totalLessons": 10
+    "totalLessons": 12
   },
   {
     "slug": "omni-studio-cert",
@@ -358,9 +418,39 @@ export const learnSeries: LearningSeries[] = [
           "FlexCards"
         ],
         "status": "published"
+      },
+      {
+        "slug": "day-12-fc-6-flexcard-styling-themes",
+        "title": "OmniStudio FC-6: FlexCard Styling & Themes",
+        "series": "omni-studio-cert",
+        "lesson": 12,
+        "excerpt": "Control FlexCard appearance two ways: element-level inline styling for one-off tweaks and shared themes for consistent branding.",
+        "date": "August 14, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "5 min read",
+        "tags": [
+          "OmniStudio",
+          "FlexCards"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "day-13-fc-7-conditional-rendering-with-states",
+        "title": "OmniStudio FC-7: Conditional Rendering with States",
+        "series": "omni-studio-cert",
+        "lesson": 13,
+        "excerpt": "Use FlexCard states and element-level conditions to show, hide, or restyle content when expressions against card data evaluate true.",
+        "date": "August 15, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "5 min read",
+        "tags": [
+          "OmniStudio",
+          "FlexCards"
+        ],
+        "status": "published"
       }
     ],
-    "totalLessons": 11
+    "totalLessons": 13
   },
   {
     "slug": "salesforce-architect",
@@ -547,14 +637,167 @@ export const learnSeries: LearningSeries[] = [
           "AI"
         ],
         "status": "published"
+      },
+      {
+        "slug": "security-architecture-sharing-model-owd-role-hierarchy-sharing-rules",
+        "title": "Lesson 11: Security Architecture: The Sharing Model, OWD, Role Hierarchy, Sharing Rules, and Manual Sharing",
+        "series": "salesforce-architect",
+        "lesson": 11,
+        "excerpt": "Who can see a given record? The four record-level controls that answer it: org-wide defaults, the role hierarchy, sharing rules, and manual sharing. How they layer, how they only ever open access, and why 'most permissive wins' is the whole game.",
+        "date": "August 14, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "10 min read",
+        "tags": [
+          "Learn",
+          "Salesforce",
+          "Architect",
+          "Security",
+          "Sharing"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "security-profiles-permission-sets-permission-set-groups-mfa-session-policies",
+        "title": "Lesson 12: Security, Part 2: Profiles, Permission Sets, Permission Set Groups, MFA, and Session Policies",
+        "series": "salesforce-architect",
+        "lesson": 12,
+        "excerpt": "Who can do what in an org. The move from profile-led to permission-set-led access, what a permission set group bundles together, the 2026 MFA enforcement that now touches every login, and the session policies that decide how long a session lives.",
+        "date": "August 15, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "10 min read",
+        "tags": [
+          "Learn",
+          "Salesforce",
+          "Architect",
+          "Security",
+          "Permissions"
+        ],
+        "status": "published"
       }
     ],
-    "totalLessons": 10
+    "totalLessons": 12
   }
 ];
 
 /** Flat list of every lesson, NEWEST FIRST (for sitemap, nav, flat lookups). */
 export const learnLessons: LearnLesson[] = [
+  {
+    "slug": "what-ai-actually-is",
+    "title": "Lesson 1: What AI Actually Is",
+    "series": "ai-at-work",
+    "lesson": 1,
+    "excerpt": "The words around AI are doing more confusing than clarifying. This lesson separates the four that trip up most people: models vs automation, chatbots vs tools, plus why 'LLM' and 'generative AI' are not synonyms.",
+    "date": "August 16, 2026",
+    "author": "Adroit Consulting",
+    "readTime": "8 min read",
+    "tags": [
+      "Learn",
+      "AI",
+      "Workplace",
+      "Foundations"
+    ],
+    "status": "published"
+  },
+  {
+    "slug": "vector-databases-pinecone-pgvector-milvus-weaviate",
+    "title": "Lesson 12: Vector Databases: Pinecone, pgvector, Milvus, Weaviate, and Choosing for Your Workload",
+    "series": "agentic-ai",
+    "lesson": 12,
+    "excerpt": "What a vector database actually does, why you need one instead of scanning vectors in memory, the approximate nearest neighbor tradeoff you are making, and how to choose between Pinecone, pgvector, Milvus, and Weaviate for your workload and your team.",
+    "date": "August 15, 2026",
+    "author": "Adroit Consulting",
+    "readTime": "10 min read",
+    "tags": [
+      "Learn",
+      "AI",
+      "Agentic",
+      "Vector Databases"
+    ],
+    "status": "published"
+  },
+  {
+    "slug": "day-13-fc-7-conditional-rendering-with-states",
+    "title": "OmniStudio FC-7: Conditional Rendering with States",
+    "series": "omni-studio-cert",
+    "lesson": 13,
+    "excerpt": "Use FlexCard states and element-level conditions to show, hide, or restyle content when expressions against card data evaluate true.",
+    "date": "August 15, 2026",
+    "author": "Adroit Consulting",
+    "readTime": "5 min read",
+    "tags": [
+      "OmniStudio",
+      "FlexCards"
+    ],
+    "status": "published"
+  },
+  {
+    "slug": "security-profiles-permission-sets-permission-set-groups-mfa-session-policies",
+    "title": "Lesson 12: Security, Part 2: Profiles, Permission Sets, Permission Set Groups, MFA, and Session Policies",
+    "series": "salesforce-architect",
+    "lesson": 12,
+    "excerpt": "Who can do what in an org. The move from profile-led to permission-set-led access, what a permission set group bundles together, the 2026 MFA enforcement that now touches every login, and the session policies that decide how long a session lives.",
+    "date": "August 15, 2026",
+    "author": "Adroit Consulting",
+    "readTime": "10 min read",
+    "tags": [
+      "Learn",
+      "Salesforce",
+      "Architect",
+      "Security",
+      "Permissions"
+    ],
+    "status": "published"
+  },
+  {
+    "slug": "embeddings-models-similarity-when-they-fail",
+    "title": "Lesson 11: Embeddings: Models, Similarity, and When They Fail",
+    "series": "agentic-ai",
+    "lesson": 11,
+    "excerpt": "What an embedding actually is, how the popular models differ, why cosine similarity works, and the failure modes that make pure vector search miss the answer: rare terms, domain jargon, short queries, and model mismatch.",
+    "date": "August 14, 2026",
+    "author": "Adroit Consulting",
+    "readTime": "10 min read",
+    "tags": [
+      "Learn",
+      "AI",
+      "Agentic",
+      "Embeddings"
+    ],
+    "status": "published"
+  },
+  {
+    "slug": "day-12-fc-6-flexcard-styling-themes",
+    "title": "OmniStudio FC-6: FlexCard Styling & Themes",
+    "series": "omni-studio-cert",
+    "lesson": 12,
+    "excerpt": "Control FlexCard appearance two ways: element-level inline styling for one-off tweaks and shared themes for consistent branding.",
+    "date": "August 14, 2026",
+    "author": "Adroit Consulting",
+    "readTime": "5 min read",
+    "tags": [
+      "OmniStudio",
+      "FlexCards"
+    ],
+    "status": "published"
+  },
+  {
+    "slug": "security-architecture-sharing-model-owd-role-hierarchy-sharing-rules",
+    "title": "Lesson 11: Security Architecture: The Sharing Model, OWD, Role Hierarchy, Sharing Rules, and Manual Sharing",
+    "series": "salesforce-architect",
+    "lesson": 11,
+    "excerpt": "Who can see a given record? The four record-level controls that answer it: org-wide defaults, the role hierarchy, sharing rules, and manual sharing. How they layer, how they only ever open access, and why 'most permissive wins' is the whole game.",
+    "date": "August 14, 2026",
+    "author": "Adroit Consulting",
+    "readTime": "10 min read",
+    "tags": [
+      "Learn",
+      "Salesforce",
+      "Architect",
+      "Security",
+      "Sharing"
+    ],
+    "status": "published"
+  },
   {
     "slug": "rag-fundamentals-chunking-embeddings-retrieval",
     "title": "Lesson 10: RAG Fundamentals: Chunking, Embeddings, Retrieval, and Why RAG Is the First Enterprise Pattern",

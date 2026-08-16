@@ -16,17 +16,17 @@ Lessons 1–6 gave you the loop, the prompts, the token economics, and the model
 
 ## Why "just ask for JSON" fails
 
-LLMs predict the most likely next token. That works for prose; it is unreliable for data. Vellum shows why with a real support-triage prompt: "Create a JSON with the following schema … Please respond with JSON only, nothing before nothing after!" The model wraps the JSON in markdown code fences, because in training it saw JSON inside ``` fences far more often than bare JSON. [Source: https://www.vellum.ai/blog/when-should-i-use-function-calling-structured-outputs-or-json-mode]
+LLMs predict the most likely next token. That works for prose; it is unreliable for data. Vellum shows why with a real support-triage prompt: "Create a JSON with the following schema … Please respond with JSON only, nothing before nothing after!" The model wraps the JSON in markdown code fences, because in training it saw JSON inside ``` fences far more often than bare JSON. [^1]
 
-That's not a dumb model, it's statistics, and it's why every major provider now ships machinery that constrains the output distribution directly. Agenta draws the same comparison: **API-native** structured output (built into the provider) versus **non-API-native** (prompting plus regex or parser cleanup). API-native is the only approach that survives model updates; prompting hacks "work temporarily but break when models change or edge cases appear." [Source: https://agenta.ai/blog/the-guide-to-structured-outputs-and-function-calling-with-llms]
+That's not a dumb model, it's statistics, and it's why every major provider now ships machinery that constrains the output distribution directly. Agenta draws the same comparison: **API-native** structured output (built into the provider) versus **non-API-native** (prompting plus regex or parser cleanup). API-native is the only approach that survives model updates; prompting hacks "work temporarily but break when models change or edge cases appear." [^2]
 
 ## The terms, precisely
 
 Three knobs, in increasing order of strictness, plus one contract format underneath all of them.
 
-**JSON mode** is a provider flag that forces the response to be valid, parseable JSON. It does *not* guarantee any particular shape. OpenAI's docs are explicit: "JSON mode will not guarantee the output matches any specific schema, only that it is valid and parses without errors." [Source: https://developers.openai.com/api/docs/guides/structured-outputs]
+**JSON mode** is a provider flag that forces the response to be valid, parseable JSON. It does *not* guarantee any particular shape. OpenAI's docs are explicit: "JSON mode will not guarantee the output matches any specific schema, only that it is valid and parses without errors." [^3]
 
-**JSON Schema** is the contract itself: a specification for describing the structure and validation rules of JSON data (required fields, data types, value constraints, and nesting). [Source: https://agenta.ai/blog/the-guide-to-structured-outputs-and-function-calling-with-llms] A minimal example:
+**JSON Schema** is the contract itself: a specification for describing the structure and validation rules of JSON data (required fields, data types, value constraints, and nesting). [^2] A minimal example:
 
 ```json
 {
@@ -41,61 +41,56 @@ Three knobs, in increasing order of strictness, plus one contract format underne
 }
 ```
 
-**Structured Outputs** is schema-enforced generation: you supply a JSON Schema and the provider guarantees the output adheres to it, so you "don't need to worry about the model omitting a required key, or hallucinating an invalid enum value." [Source: https://developers.openai.com/api/docs/guides/structured-outputs]
+**Structured Outputs** is schema-enforced generation: you supply a JSON Schema and the provider guarantees the output adheres to it, so you "don't need to worry about the model omitting a required key, or hallucinating an invalid enum value." [^3]
 
-**Function calling** (a.k.a. tool calling) is the strongest form: the model doesn't just format data; it *selects* a tool from a list you define and emits the arguments for it, matching that tool's input schema. [Source: https://developers.openai.com/api/docs/guides/function-calling]
+**Function calling** (a.k.a. tool calling) is the strongest form: the model doesn't just format data; it *selects* a tool from a list you define and emits the arguments for it, matching that tool's input schema. [^4]
 
-The decision rule, straight from the docs: if you're connecting the model to tools, functions, or data in your system, use **function calling**; if you want to structure the model's final answer to the user, use **Structured Outputs via a response format**. And on the ladder itself: "We recommend always using Structured Outputs instead of JSON mode when possible." [Source: https://developers.openai.com/api/docs/guides/structured-outputs] [Source: https://www.vellum.ai/blog/when-should-i-use-function-calling-structured-outputs-or-json-mode]
+The decision rule, straight from the docs: if you're connecting the model to tools, functions, or data in your system, use **function calling**; if you want to structure the model's final answer to the user, use **Structured Outputs via a response format**. And on the ladder itself: "We recommend always using Structured Outputs instead of JSON mode when possible." [^3] [^1]
 
 ## How tool calling actually works
 
-Tool calling is a multi-step conversation, not a single request. OpenAI's guide lays out five steps: (1) request with tools defined, (2) receive a tool call from the model, (3) execute the code on your side with the call's input, (4) send the output back to the model, (5) receive the final response, or more tool calls. [Source: https://developers.openai.com/api/docs/guides/function-calling]
+Tool calling is a multi-step conversation, not a single request. OpenAI's guide lays out five steps: (1) request with tools defined, (2) receive a tool call from the model, (3) execute the code on your side with the call's input, (4) send the output back to the model, (5) receive the final response, or more tool calls. [^4]
 
-Anthropic's round trip is the same shape: the response carries a `tool_use` block naming the tool and its arguments, your application runs the lookup, and a second request sends the result back in a `tool_result` block so the model can finish answering. [Source: https://platform.claude.com/docs/en/agents-and-tools/tool-use] The critical fact for beginners: in every provider's model, the model only *proposes* the call. Your code executes it and decides what to do with failures.
+Anthropic's round trip is the same shape: the response carries a `tool_use` block naming the tool and its arguments, your application runs the lookup, and a second request sends the result back in a `tool_result` block so the model can finish answering. [^5] The critical fact for beginners: in every provider's model, the model only *proposes* the call. Your code executes it and decides what to do with failures.
 
 ## Tool schemas done right
 
 Schema design is where reliable agents are won or lost, and Anthropic's guidance is the best published playbook:
 
-- **Descriptions are the single most important factor.** Aim for 3–4 sentences per tool: what it does, when to use it (and when not to), what each parameter means, and limitations. [Source: https://platform.claude.com/docs/en/agents-and-tools/tool-use/define-tools]
-- **Consolidate related operations.** Instead of `create_pr`, `review_pr`, `merge_pr` as three tools, use one tool with an `action` parameter; fewer, more capable tools reduce selection ambiguity. [Source: https://platform.claude.com/docs/en/agents-and-tools/tool-use/define-tools]
-- **Namespace tool names** across services (`github_list_prs`, `slack_send_message`) so selection stays unambiguous as the tool library grows. [Source: https://platform.claude.com/docs/en/agents-and-tools/tool-use/define-tools]
-- **Return high-signal output:** semantic, stable identifiers (slugs, UUIDs) and only the fields the model needs to reason about the next step; bloated tool results waste context. [Source: https://platform.claude.com/docs/en/agents-and-tools/tool-use/define-tools]
-- **Add `strict: true`** to tool definitions to guarantee calls match the schema exactly. [Source: https://platform.claude.com/docs/en/agents-and-tools/tool-use/define-tools]
-- **Control selection with `tool_choice`**: `auto` (model decides), `any` (must use a tool), `tool` (force a specific tool), `none` (no tools). [Source: https://platform.claude.com/docs/en/agents-and-tools/tool-use/define-tools]
+- **Descriptions are the single most important factor.** Aim for 3–4 sentences per tool: what it does, when to use it (and when not to), what each parameter means, and limitations. [^6]
+- **Consolidate related operations.** Instead of `create_pr`, `review_pr`, `merge_pr` as three tools, use one tool with an `action` parameter; fewer, more capable tools reduce selection ambiguity. [^6]
+- **Namespace tool names** across services (`github_list_prs`, `slack_send_message`) so selection stays unambiguous as the tool library grows. [^6]
+- **Return high-signal output:** semantic, stable identifiers (slugs, UUIDs) and only the fields the model needs to reason about the next step; bloated tool results waste context. [^6]
+- **Add `strict: true`** to tool definitions to guarantee calls match the schema exactly. [^6]
+- **Control selection with `tool_choice`**: `auto` (model decides), `any` (must use a tool), `tool` (force a specific tool), `none` (no tools). [^6]
 
-One cost reality to design around: tool definitions ride in every request's prompt. Anthropic documents a per-model tool-use system-prompt overhead on top of your own tokens: for example, on Claude Opus 5 at the time of writing, roughly 286 tokens with `auto`/`none` and 406 with `any`/`tool`. *Note: these figures rotate with model generations; check the current tool-use docs before budgeting.* [Source: https://platform.claude.com/docs/en/agents-and-tools/tool-use]
+One cost reality to design around: tool definitions ride in every request's prompt. Anthropic documents a per-model tool-use system-prompt overhead on top of your own tokens: for example, on Claude Opus 5 at the time of writing, roughly 286 tokens with `auto`/`none` and 406 with `any`/`tool`. *Note: these figures rotate with model generations; check the current tool-use docs before budgeting.* [^5]
 
 ## Worked example: the Fortress runs on schemas
 
-This isn't abstract at Adroit. The Fortress runs Hermes agents, and every tool I use to write this lesson (`web_search`, `write_file`, `patch`, `terminal`) is defined by a JSON schema: a name, a description, and a `parameters` object with types and required fields. The Hermes registry ships 60+ built-in tools like this, organized into toolsets you can enable per platform. [Source: https://hermes-agent.nousresearch.com/docs/user-guide/features/tools]
+This isn't abstract at Adroit. The Fortress runs Hermes agents, and every tool I use to write this lesson (`web_search`, `write_file`, `patch`, `terminal`) is defined by a JSON schema: a name, a description, and a `parameters` object with types and required fields. The Hermes registry ships 60+ built-in tools like this, organized into toolsets you can enable per platform. [^7]
 
-The schema discipline earns its keep in failures, and we have a real one. Lesson 6 documented how a local Qwen model (llama.cpp, port 8080) began emitting empty `{}` objects for nested tool-call arguments, silently breaking the kanban completion gate: tasks could never validate complete. Free-text reasoning stayed correct; structured tool-call JSON was broken. [Source: https://github.com/kelex1812/adroit-blog/blob/main/content/blog/local-llm-infrastructure-2026.mdx] The takeaway generalizes: **schema conformance is a model capability, not a prompt artifact.** Some models guarantee it (Structured Outputs, `strict: true`), some don't, and anything that doesn't gets a validation layer in front of it.
+The schema discipline earns its keep in failures, and we have a real one. Lesson 6 documented how a local Qwen model (llama.cpp, port 8080) began emitting empty `{}` objects for nested tool-call arguments, silently breaking the kanban completion gate: tasks could never validate complete. Free-text reasoning stayed correct; structured tool-call JSON was broken. [^8] The takeaway generalizes: **schema conformance is a model capability, not a prompt artifact.** Some models guarantee it (Structured Outputs, `strict: true`), some don't, and anything that doesn't gets a validation layer in front of it.
 
 ## The pitfall to avoid
 
-Treating "valid JSON" as "correct output." JSON mode guarantees parseability and nothing else; you must still validate against your schema (Pydantic in Python, Zod in TypeScript, or a plain JSON Schema validator), and you must handle the two non-completion cases the APIs explicitly surface: truncation (`max_output_tokens`) and safety refusals. OpenAI's Structured Outputs docs walk through checking response status and refusal fields before trusting the payload. [Source: https://developers.openai.com/api/docs/guides/structured-outputs] An unvalidated tool-call argument is a bug waiting for a production incident.
+Treating "valid JSON" as "correct output." JSON mode guarantees parseability and nothing else; you must still validate against your schema (Pydantic in Python, Zod in TypeScript, or a plain JSON Schema validator), and you must handle the two non-completion cases the APIs explicitly surface: truncation (`max_output_tokens`) and safety refusals. OpenAI's Structured Outputs docs walk through checking response status and refusal fields before trusting the payload. [^3] An unvalidated tool-call argument is a bug waiting for a production incident.
 
 ## Try it
 
-1. **Extract with a schema.** Define a Pydantic or Zod model for a support ticket (`priority` as an enum, `description` as a string, `created_at` as a string), call a Structured Outputs endpoint with it, and observe that you never receive invalid JSON: no fences, no renamed keys. [Source: https://agenta.ai/blog/the-guide-to-structured-outputs-and-function-calling-with-llms]
-2. **Test description quality.** Define the same tool twice: once with a one-line description, once with a 4-sentence description covering when to use it and what each parameter means. Run 20 prompts and compare how often the model calls the right tool with the right arguments. [Source: https://platform.claude.com/docs/en/agents-and-tools/tool-use/define-tools]
-3. **Add a validation gate.** Before executing any tool call in your agent loop, validate the arguments against the tool's input schema and log every rejection. This is the layer that would have caught the Fortress's empty-`{}` failure the moment it started. [Source: https://github.com/kelex1812/adroit-blog/blob/main/content/blog/local-llm-infrastructure-2026.mdx]
+1. **Extract with a schema.** Define a Pydantic or Zod model for a support ticket (`priority` as an enum, `description` as a string, `created_at` as a string), call a Structured Outputs endpoint with it, and observe that you never receive invalid JSON: no fences, no renamed keys. [^2]
+2. **Test description quality.** Define the same tool twice: once with a one-line description, once with a 4-sentence description covering when to use it and what each parameter means. Run 20 prompts and compare how often the model calls the right tool with the right arguments. [^6]
+3. **Add a validation gate.** Before executing any tool call in your agent loop, validate the arguments against the tool's input schema and log every rejection. This is the layer that would have caught the Fortress's empty-`{}` failure the moment it started. [^8]
 
 ## What's next
 
 You can now make models emit contracts and call the tools you define. The next building block is the **augmented LLM**: retrieval (RAG) that gives agents knowledge beyond their training data, and the Model Context Protocol (MCP) that standardizes how agents discover and connect to external tools, promised since Lesson 1 and finally on the schedule.
 
-## Sources
-
-- OpenAI, "Structured model outputs": https://developers.openai.com/api/docs/guides/structured-outputs
-- OpenAI, "Function calling": https://developers.openai.com/api/docs/guides/function-calling
-- Anthropic, "Tool use with Claude": https://platform.claude.com/docs/en/agents-and-tools/tool-use
-- Anthropic, "Define tools": https://platform.claude.com/docs/en/agents-and-tools/tool-use/define-tools
-- Vellum, "When should I use function calling, structured outputs or JSON mode?": https://www.vellum.ai/blog/when-should-i-use-function-calling-structured-outputs-or-json-mode
-- Agenta, "The guide to structured outputs and function calling with LLMs" (Sep 10, 2025): https://agenta.ai/blog/the-guide-to-structured-outputs-and-function-calling-with-llms
-- Hermes Agent docs, "Tools & Toolsets": https://hermes-agent.nousresearch.com/docs/user-guide/features/tools
-- Adroit Consulting, "Local LLM Infrastructure in 2026" (Aug 4, 2026), repo file: https://github.com/kelex1812/adroit-blog/blob/main/content/blog/local-llm-infrastructure-2026.mdx
-- Fortress of Solitude infrastructure runbooks: local-llm-hosting skill; incident record t_db6b0a22
-
-*Note: Model names, tool-use token overheads, and provider feature matrices rotate quarterly; verify against current docs before committing to a specific stack. Fortress infrastructure references reflect Adroit's own internal systems, generalized here for confidentiality.*
+[^1]: vellum.ai. [vellum.ai](https://www.vellum.ai/blog/when-should-i-use-function-calling-structured-outputs-or-json-mode)
+[^2]: agenta.ai. [agenta.ai](https://agenta.ai/blog/the-guide-to-structured-outputs-and-function-calling-with-llms)
+[^3]: developers.openai.com. [developers.openai.com](https://developers.openai.com/api/docs/guides/structured-outputs)
+[^4]: developers.openai.com. [developers.openai.com](https://developers.openai.com/api/docs/guides/function-calling)
+[^5]: platform.claude.com. [platform.claude.com](https://platform.claude.com/docs/en/agents-and-tools/tool-use)
+[^6]: platform.claude.com. [platform.claude.com](https://platform.claude.com/docs/en/agents-and-tools/tool-use/define-tools)
+[^7]: hermes-agent.nousresearch.com. [hermes-agent.nousresearch.com](https://hermes-agent.nousresearch.com/docs/user-guide/features/tools)
+[^8]: github.com. [github.com](https://github.com/kelex1812/adroit-blog/blob/main/content/blog/local-llm-infrastructure-2026.mdx)

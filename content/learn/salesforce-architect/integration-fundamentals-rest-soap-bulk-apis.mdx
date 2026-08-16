@@ -25,39 +25,39 @@ Salesforce ships a dozen-plus APIs, but for plain data movement the Help doc "Wh
 | Bulk API 2.0 | CSV | Asynchronous | Large data volumes, bulk queries |
 | Pub/Sub API | gRPC / Avro (binary) | Asynchronous | Event-driven integration |
 
-[Source: https://help.salesforce.com/s/articleView?id=platform.integrate_what_is_api.htm&type=5]
+[^1]
 
 ## REST API: the default choice
 
-REST API is "one of several web interfaces that you can use to access your Salesforce data without using the Salesforce user interface." You send HTTP requests to endpoints called **resources** (records, query results, metadata), each exposed by a URI. Its primary benefit: "it doesn't require much tooling to access your data. It's simpler to use than SOAP API but still provides plenty of functionality." [Source: https://developer.salesforce.com/docs/atlas.en-us.api_rest.meta/api_rest/intro_what_is_rest_api.htm]
+REST API is "one of several web interfaces that you can use to access your Salesforce data without using the Salesforce user interface." You send HTTP requests to endpoints called **resources** (records, query results, metadata), each exposed by a URI. Its primary benefit: "it doesn't require much tooling to access your data. It's simpler to use than SOAP API but still provides plenty of functionality." [^2]
 
-For an architect, REST is the workhorse for synchronous, interactive flows: a customer submits an order on a website, the site creates the Order record and gets the Salesforce ID back in the same request. The REST ecosystem also includes **Composite** resources, which batch several subrequests into one HTTP call (up to 25 subrequests per request, with `allOrNone` semantics and the ability to feed one subrequest's output into another). Each composite request counts as a single call toward your API limits. [Source: https://developer.salesforce.com/blogs/2024/04/accessing-object-data-with-salesforce-platform-apis]
+For an architect, REST is the workhorse for synchronous, interactive flows: a customer submits an order on a website, the site creates the Order record and gets the Salesforce ID back in the same request. The REST ecosystem also includes **Composite** resources, which batch several subrequests into one HTTP call (up to 25 subrequests per request, with `allOrNone` semantics and the ability to feed one subrequest's output into another). Each composite request counts as a single call toward your API limits. [^3]
 
 ## SOAP API: the contract-driven option
 
-SOAP API is the older sibling: WSDL-based, XML only, synchronous. You generate a WSDL that describes the org's objects, then call operations like `create()` and `query()` from any language that supports web services. There are two WSDLs: the **enterprise WSDL**, generated from your org's schema (regenerate it whenever objects or fields change), and the **partner WSDL**, a loosely-typed version for apps that run against many orgs. [Source: https://developer.salesforce.com/docs/atlas.en-us.api.meta/api/sforce_api_quickstart_intro.htm]
+SOAP API is the older sibling: WSDL-based, XML only, synchronous. You generate a WSDL that describes the org's objects, then call operations like `create()` and `query()` from any language that supports web services. There are two WSDLs: the **enterprise WSDL**, generated from your org's schema (regenerate it whenever objects or fields change), and the **partner WSDL**, a loosely-typed version for apps that run against many orgs. [^4]
 
-Salesforce's own guidance names its niche: "you can use SOAP API to integrate Salesforce with your org's ERP and finance systems." [Source: https://help.salesforce.com/s/articleView?id=platform.integrate_what_is_api.htm&type=5] That's not nostalgia: SOAP gives you a machine-verifiable contract (the WSDL) that fits enterprises with rigid governance, and it's still the interface many middleware stacks already speak. One operational limit to remember: `create()` and `update()` accept **up to 200 records per call**, and if you exceed it "the entire operation fails." [Source: https://developer.salesforce.com/docs/atlas.en-us.salesforce_app_limits_cheatsheet.meta/salesforce_app_limits_cheatsheet/salesforce_app_limits_platform_apicalls.htm]
+Salesforce's own guidance names its niche: "you can use SOAP API to integrate Salesforce with your org's ERP and finance systems." [^1] That's not nostalgia: SOAP gives you a machine-verifiable contract (the WSDL) that fits enterprises with rigid governance, and it's still the interface many middleware stacks already speak. One operational limit to remember: `create()` and `update()` accept **up to 200 records per call**, and if you exceed it "the entire operation fails." [^5]
 
 ## Bulk API 2.0: scale without the wait
 
-Bulk API 2.0 is "based on REST principles and optimized for working with large sets of data": insert, update, upsert, or delete many records **asynchronously**. You submit a job, Salesforce processes it in the background, and you come back for results later. It speaks CSV, and because it's asynchronous, "Salesforce doesn't guarantee a service level agreement." [Source: https://developer.salesforce.com/docs/atlas.en-us.api_asynch.meta/api_asynch/asynch_api_intro.htm]
+Bulk API 2.0 is "based on REST principles and optimized for working with large sets of data": insert, update, upsert, or delete many records **asynchronously**. You submit a job, Salesforce processes it in the background, and you come back for results later. It speaks CSV, and because it's asynchronous, "Salesforce doesn't guarantee a service level agreement." [^6]
 
-The official sizing rule is your exam anchor: **any operation with more than 2,000 records is a good candidate for Bulk API 2.0**; jobs with fewer than 2,000 records should use "bulkified" synchronous calls in REST (for example, Composite) or SOAP. [Source: https://developer.salesforce.com/docs/atlas.en-us.api_asynch.meta/api_asynch/asynch_api_intro.htm] For bulk queries, Bulk API 2.0 supports extracting up to 1 TB of data per day. [Source: https://help.salesforce.com/s/articleView?id=platform.integrate_what_is_api.htm&type=5]
+The official sizing rule is your exam anchor: **any operation with more than 2,000 records is a good candidate for Bulk API 2.0**; jobs with fewer than 2,000 records should use "bulkified" synchronous calls in REST (for example, Composite) or SOAP. [^6] For bulk queries, Bulk API 2.0 supports extracting up to 1 TB of data per day. [^1]
 
-And use Bulk API 2.0, not its predecessor: the old Bulk API still exists, but "use Bulk API 2.0 instead of Bulk API if you want a more streamlined workflow"; it manages batches for you automatically and has the advantage of future innovation. [Source: https://developer.salesforce.com/docs/atlas.en-us.api_asynch.meta/api_asynch/asynch_api_intro.htm]
+And use Bulk API 2.0, not its predecessor: the old Bulk API still exists, but "use Bulk API 2.0 instead of Bulk API if you want a more streamlined workflow"; it manages batches for you automatically and has the advantage of future innovation. [^6]
 
 ## The limits that make the choice matter
 
-Salesforce balances API load with **three types of limits**, and the architect who ignores them gets a 3 AM page: [Source: https://developer.salesforce.com/docs/atlas.en-us.salesforce_app_limits_cheatsheet.meta/salesforce_app_limits_cheatsheet/salesforce_app_limits_platform_api.htm]
+Salesforce balances API load with **three types of limits**, and the architect who ignores them gets a 3 AM page: [^7]
 
 - **Concurrent request limits**: for calls running 20 seconds or longer: 5 in Developer Edition and trial orgs, 25 in production orgs and sandboxes. Exceed it and you get `REQUEST_LIMIT_EXCEEDED`. Requests shorter than 20 seconds have no concurrency cap.
 - **Timeout limits**: REST and SOAP calls time out at **10 minutes** (query calls are governed by SOQL limits instead).
 - **Total API request allocations**: per 24-hour period, per org (not per user): Developer Edition gets **15,000**; Enterprise gets **100,000 + 1,000 per Salesforce license**; Unlimited/Performance gets **100,000 + 5,000 per Salesforce license**; a Full Sandbox gets **5,000,000**. REST, SOAP, Bulk, and Bulk API 2.0 all count against this pool.
 
-Monitor with the `Sforce-Limit-Info` response header (REST), the `/limits` endpoint, or the API Usage section of System Overview in Setup. [Source: https://developer.salesforce.com/docs/atlas.en-us.salesforce_app_limits_cheatsheet.meta/salesforce_app_limits_cheatsheet/salesforce_app_limits_platform_api.htm]
+Monitor with the `Sforce-Limit-Info` response header (REST), the `/limits` endpoint, or the API Usage section of System Overview in Setup. [^7]
 
-Bulk has its own layer of allocations: **15,000 batches per rolling 24 hours** (shared between Bulk API and Bulk API 2.0), a max of **150,000,000 records uploaded per 24-hour period**, up to **10,000 Bulk 2.0 query jobs per day**, and ingest results retrievable for **7 days** after job completion. [Source: https://developer.salesforce.com/docs/atlas.en-us.salesforce_app_limits_cheatsheet.meta/salesforce_app_limits_cheatsheet/salesforce_app_limits_platform_bulkapi.htm]
+Bulk has its own layer of allocations: **15,000 batches per rolling 24 hours** (shared between Bulk API and Bulk API 2.0), a max of **150,000,000 records uploaded per 24-hour period**, up to **10,000 Bulk 2.0 query jobs per day**, and ingest results retrievable for **7 days** after job completion. [^8]
 
 ## Worked example: an order sync architecture
 
@@ -70,9 +70,9 @@ A retailer runs Salesforce for order management and needs four integrations. Her
 
 ## The pitfall to avoid
 
-**Using a synchronous API for a bulk problem.** The classic failure: a developer takes a working REST integration and loops it, 100,000 records, one HTTP call each. That's 100,000 API calls against an Enterprise allocation of maybe 125,000 for the whole day, so the org's limit is gone by noon, every other integration starts failing with `REQUEST_LIMIT_EXCEEDED`, and the vendor (you) gets the call. The rule of thumb from the docs is also a cost rule: above 2,000 records, go Bulk. [Source: https://developer.salesforce.com/docs/atlas.en-us.api_asynch.meta/api_asynch/asynch_api_intro.htm]
+**Using a synchronous API for a bulk problem.** The classic failure: a developer takes a working REST integration and loops it, 100,000 records, one HTTP call each. That's 100,000 API calls against an Enterprise allocation of maybe 125,000 for the whole day, so the org's limit is gone by noon, every other integration starts failing with `REQUEST_LIMIT_EXCEEDED`, and the vendor (you) gets the call. The rule of thumb from the docs is also a cost rule: above 2,000 records, go Bulk. [^6]
 
-The second trap is subtler: **ignoring the concurrency limit for long-running calls.** A middleware that fires 30 parallel sync REST queries, each running 25 seconds, exceeds the 25-long-running-request ceiling and gets throttled. Design for batch over burst, and when you size an org's API allocation, remember limits are org-wide, so one chatty integration starves every other one. [Source: https://developer.salesforce.com/docs/atlas.en-us.salesforce_app_limits_cheatsheet.meta/salesforce_app_limits_cheatsheet/salesforce_app_limits_platform_api.htm]
+The second trap is subtler: **ignoring the concurrency limit for long-running calls.** A middleware that fires 30 parallel sync REST queries, each running 25 seconds, exceeds the 25-long-running-request ceiling and gets throttled. Design for batch over burst, and when you size an org's API allocation, remember limits are org-wide, so one chatty integration starves every other one. [^7]
 
 ## Try it
 
@@ -89,15 +89,11 @@ A manufacturer's middleware must move data in these shapes. For each, pick the A
 
 You now know how records get *into* and *out of* the platform. The track continues building the System Architect blueprint; upcoming lessons cover the sharing and visibility model (who can see the records your integrations write) and the Apex and automation engine that processes them.
 
-## Sources
-
-- Which API Do I Use?, Salesforce Help: https://help.salesforce.com/s/articleView?id=platform.integrate_what_is_api.htm&type=5
-- About REST API, REST API Developer Guide: https://developer.salesforce.com/docs/atlas.en-us.api_rest.meta/api_rest/intro_what_is_rest_api.htm
-- Accessing Object Data with Salesforce Platform APIs (Composite), Salesforce Developers Blog: https://developer.salesforce.com/blogs/2024/04/accessing-object-data-with-salesforce-platform-apis
-- About SOAP API, SOAP API Developer Guide: https://developer.salesforce.com/docs/atlas.en-us.api.meta/api/sforce_api_quickstart_intro.htm
-- Introduction to Bulk API 2.0 and Bulk API, Bulk API 2.0 and Bulk API Developer Guide: https://developer.salesforce.com/docs/atlas.en-us.api_asynch.meta/api_asynch/asynch_api_intro.htm
-- API Request Limits and Allocations, Limits and Allocations Quick Reference: https://developer.salesforce.com/docs/atlas.en-us.salesforce_app_limits_cheatsheet.meta/salesforce_app_limits_cheatsheet/salesforce_app_limits_platform_api.htm
-- Bulk API and Bulk API 2.0 Limits and Allocations, Limits and Allocations Quick Reference: https://developer.salesforce.com/docs/atlas.en-us.salesforce_app_limits_cheatsheet.meta/salesforce_app_limits_cheatsheet/salesforce_app_limits_platform_bulkapi.htm
-- SOAP API Call Limits, Limits and Allocations Quick Reference: https://developer.salesforce.com/docs/atlas.en-us.salesforce_app_limits_cheatsheet.meta/salesforce_app_limits_cheatsheet/salesforce_app_limits_platform_apicalls.htm
-
-*Note: Allocations, concurrency limits, and batch caps change with releases; verify against the linked pages before sizing a client's org. Figures above are per Salesforce docs as of August 2026 (Summer '26, API version 67.0).*
+[^1]: help.salesforce.com. [help.salesforce.com](https://help.salesforce.com/s/articleView?id=platform.integrate_what_is_api.htm&type=5)
+[^2]: developer.salesforce.com. [developer.salesforce.com](https://developer.salesforce.com/docs/atlas.en-us.api_rest.meta/api_rest/intro_what_is_rest_api.htm)
+[^3]: developer.salesforce.com. [developer.salesforce.com](https://developer.salesforce.com/blogs/2024/04/accessing-object-data-with-salesforce-platform-apis)
+[^4]: developer.salesforce.com. [developer.salesforce.com](https://developer.salesforce.com/docs/atlas.en-us.api.meta/api/sforce_api_quickstart_intro.htm)
+[^5]: developer.salesforce.com. [developer.salesforce.com](https://developer.salesforce.com/docs/atlas.en-us.salesforce_app_limits_cheatsheet.meta/salesforce_app_limits_cheatsheet/salesforce_app_limits_platform_apicalls.htm)
+[^6]: developer.salesforce.com. [developer.salesforce.com](https://developer.salesforce.com/docs/atlas.en-us.api_asynch.meta/api_asynch/asynch_api_intro.htm)
+[^7]: developer.salesforce.com. [developer.salesforce.com](https://developer.salesforce.com/docs/atlas.en-us.salesforce_app_limits_cheatsheet.meta/salesforce_app_limits_cheatsheet/salesforce_app_limits_platform_api.htm)
+[^8]: developer.salesforce.com. [developer.salesforce.com](https://developer.salesforce.com/docs/atlas.en-us.salesforce_app_limits_cheatsheet.meta/salesforce_app_limits_cheatsheet/salesforce_app_limits_platform_bulkapi.htm)
