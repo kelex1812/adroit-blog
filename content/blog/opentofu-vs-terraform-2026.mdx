@@ -1,7 +1,7 @@
 ---
-title: "OpenTofu vs Terraform in 2026: The Fork Is Finally a Real Decision"
+title: "OpenTofu vs Terraform in 2026: The Fork Is a Real Decision"
 slug: opentofu-vs-terraform-2026
-excerpt: "Three years after the BSL relicense, OpenTofu is a credible MPL alternative that has shipped features upstream Terraform still lacks. Here's the license, governance, feature, and migration math for choosing between them."
+excerpt: "Three years after the BSL relicense, OpenTofu has shipped features Terraform still lacks. Here's the license, governance, and migration math."
 category: "AI & Consulting"
 categoryColor: ai
 categoryGradient: "from-amber to-amber-dark"
@@ -19,11 +19,11 @@ The Terraform fork grew up. Three years after HashiCorp moved Terraform off the 
 
 The origin story is short and it matters because it frames everything after it. In August 2023, HashiCorp changed Terraform's license from the Mozilla Public License (MPL) 2.0 to the Business Source License (BSL) 1.1. The new terms allow internal production use but restrict using Terraform in a way that competes with HashiCorp's own products, and BSL only converts back to MPL after four years per release [^1]. A coalition of vendors and community members, including Spacelift, env0, Gruntwork, Harness, Scalr, and Cloud Posse, forked the last MPL release, Terraform 1.5, and formed OpenTofu under the Linux Foundation [^1].
 
-Then, in December 2024, IBM completed its acquisition of HashiCorp for $6.4 billion [^8]. The acquisition did not change the BSL license, but it did raise the stewardship question the fork was built to hedge against: whether Terraform's roadmap would stay independent under a single large corporate owner [^1]. If you are evaluating IaC in 2026, that IBM relationship is the background condition. It is not automatically a reason to leave, but it is the reason the fork stopped being academic.
+Then, in February 2025, IBM completed its acquisition of HashiCorp for $6.4 billion [^8]. The acquisition did not change the BSL license, but it did raise the stewardship question the fork was built to hedge against: whether Terraform's roadmap would stay independent under a single large corporate owner [^1]. If you are evaluating IaC in 2026, that IBM relationship is the background condition. It is not automatically a reason to leave, but it is the reason the fork stopped being academic.
 
 Adoption reflects that it is not academic anymore. Independent tracking from April 2026 put OpenTofu at roughly 12% adoption among IaC practitioners, with 27% of teams planning to evaluate or expand its use [^8]. That is still a minority position, momentum rather than a landslide, but a far cry from "nobody uses it."
 
-![Three years of IaC history: the 2023 BSL relicense spawned the OpenTofu fork, IBM acquired HashiCorp in late 2024, and by 2026 OpenTofu reached roughly 12 percent adoption with 27 percent of teams evaluating it](</diagrams/opentofu-vs-terraform-2026/1-timeline.png>)
+![Three years of IaC history: the 2023 BSL relicense spawned the OpenTofu fork, IBM acquired HashiCorp in early 2025, and by 2026 OpenTofu reached roughly 12 percent adoption with 27 percent of teams evaluating it](</diagrams/opentofu-vs-terraform-2026/1-timeline.png>)
 
 ## The core divide is license and governance
 

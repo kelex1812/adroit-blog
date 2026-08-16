@@ -26,8 +26,8 @@ export const posts: BlogPost[] = [
   },
   {
     "slug": "opentofu-vs-terraform-2026",
-    "title": "OpenTofu vs Terraform in 2026: The Fork Is Finally a Real Decision",
-    "excerpt": "Three years after the BSL relicense, OpenTofu is a credible MPL alternative that has shipped features upstream Terraform still lacks. Here's the license, governance, feature, and migration math for choosing between them.",
+    "title": "OpenTofu vs Terraform in 2026: The Fork Is a Real Decision",
+    "excerpt": "Three years after the BSL relicense, OpenTofu has shipped features Terraform still lacks. Here's the license, governance, and migration math.",
     "category": "AI & Consulting",
     "categoryColor": "ai",
     "categoryGradient": "from-amber to-amber-dark",
