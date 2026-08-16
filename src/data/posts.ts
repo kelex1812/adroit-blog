@@ -3,8 +3,8 @@ import { BlogPost } from "./types";
 export const posts: BlogPost[] = [
   {
     "slug": "a2a-agent-coordination-2026",
-    "title": "A2A v1.0: The Agent-to-Agent Protocol That Ties Multi-Agent Systems Together",
-    "excerpt": "MCP wires an agent to its tools. A2A wires agents to each other. With v1.0 stable, 150+ supporting organizations, and cloud-native support, here is how the coordination layer works and when to adopt it.",
+    "title": "A2A v1.0: The Multi-Agent Coordination Layer",
+    "excerpt": "MCP wires an agent to its tools. A2A wires agents to each other. Here is how the v1.0 coordination layer works and when to adopt it.",
     "category": "AI & Consulting",
     "categoryColor": "ai",
     "categoryGradient": "from-amber to-amber-dark",

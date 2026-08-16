@@ -1,7 +1,7 @@
 ---
-title: "A2A v1.0: The Agent-to-Agent Protocol That Ties Multi-Agent Systems Together"
+title: "A2A v1.0: The Multi-Agent Coordination Layer"
 slug: a2a-agent-coordination-2026
-excerpt: "MCP wires an agent to its tools. A2A wires agents to each other. With v1.0 stable, 150+ supporting organizations, and cloud-native support, here is how the coordination layer works and when to adopt it."
+excerpt: "MCP wires an agent to its tools. A2A wires agents to each other. Here is how the v1.0 coordination layer works and when to adopt it."
 category: "AI & Consulting"
 categoryColor: ai
 categoryGradient: "from-amber to-amber-dark"
@@ -33,13 +33,21 @@ None of that made the problem go away. It made the problem standardized, which i
 
 A2A is a JSON-over-HTTP protocol built around four primitives [^4].
 
-**Agent Card.** Every agent publishes a JSON manifest, served at a well-known URL, that advertises its identity, its endpoint, its authentication requirements, and a skills list. A client agent fetches that card, reads what the remote agent can do, and decides whether it is the right agent for the job, all before any conversation starts. This is the discovery mechanism [^5].
+### Agent Card
 
-**Task.** The unit of work between agents. A task moves through a defined lifecycle: submitted, working, input-required, completed, failed, canceled. Unlike a one-shot tool call, a task is a first-class long-running operation, which is exactly what agent work tends to be [^4].
+Every agent publishes a JSON manifest, served at a well-known URL, that advertises its identity, its endpoint, its authentication requirements, and a skills list. A client agent fetches that card, reads what the remote agent can do, and decides whether it is the right agent for the job, all before any conversation starts. This is the discovery mechanism [^5].
 
-**Message.** The unit of exchange within a task. Each message carries parts: text, files, or structured data, with a role saying who sent it [^4].
+### Task
 
-**Artifact.** The output of a completed task. A named, multi-part envelope carrying JSON, PDFs, images, or generated content back to the delegating agent [^4].
+The unit of work between agents. A task moves through a defined lifecycle: submitted, working, input-required, completed, failed, canceled. Unlike a one-shot tool call, a task is a first-class long-running operation, which is exactly what agent work tends to be [^4].
+
+### Message
+
+The unit of exchange within a task. Each message carries parts: text, files, or structured data, with a role saying who sent it [^4].
+
+### Artifact
+
+The output of a completed task. A named, multi-part envelope carrying JSON, PDFs, images, or generated content back to the delegating agent [^4].
 
 The interaction flow is worth picturing because it explains the difference from MCP. A client agent discovers a remote agent through its card, sends a task, streams progress over Server-Sent Events, and collects artifacts when the task completes [^5].
 
@@ -49,13 +57,21 @@ The interaction flow is worth picturing because it explains the difference from 
 
 A2A's first stable spec is the release that matters for production. The v1.0 announcement is explicit that it targets the requirements that kept early adopters stuck in pilots: trust, scale, and operational control [^1].
 
-**Signed Agent Cards.** Cards now carry cryptographic signatures that verify the issuer's identity, so a client can establish trust before interacting across organizational boundaries. This is the fix for a real attack: a forged agent card could impersonate a trusted peer [^1].
+### Signed Agent Cards
 
-**Multi-tenancy.** A single endpoint can securely host many agents, which matters when you run a fleet behind one gateway [^1].
+Cards now carry cryptographic signatures that verify the issuer's identity, so a client can establish trust before interacting across organizational boundaries. This is the fix for a real attack: a forged agent card could impersonate a trusted peer [^1].
 
-**Multi-protocol bindings and version negotiation.** A2A v1.0 supports JSON+HTTP, gRPC, and JSON-RPC, and agents can negotiate versions so older and newer implementations interoperate predictably. Enterprises are not locked to a single vendor or platform [^1].
+### Multi-tenancy
 
-**Web-aligned architecture.** The spec leans on patterns the web already solved: stateless, layered, load balanced, observable. In its simplest form an interaction begins with a single HTTP request, and clients can consume task updates through polling, streaming, or webhooks [^1].
+A single endpoint can securely host many agents, which matters when you run a fleet behind one gateway [^1].
+
+### Multi-protocol bindings and version negotiation
+
+A2A v1.0 supports JSON+HTTP, gRPC, and JSON-RPC, and agents can negotiate versions so older and newer implementations interoperate predictably. Enterprises are not locked to a single vendor or platform [^1].
+
+### Web-aligned architecture
+
+The spec leans on patterns the web already solved: stateless, layered, load balanced, observable. In its simplest form an interaction begins with a single HTTP request, and clients can consume task updates through polling, streaming, or webhooks [^1].
 
 Version 1.0 also reinforced the relationship that generated the most confusion: A2A is complementary to MCP, not a replacement. MCP handles tool and context integration at the individual agent level. A2A handles communication between agents. Most real systems will use both, MCP inside agents, A2A between them [^1].
 
