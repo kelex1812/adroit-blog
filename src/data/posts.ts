@@ -25,6 +25,29 @@ export const posts: BlogPost[] = [
     "status": "published"
   },
   {
+    "slug": "opentofu-vs-terraform-2026",
+    "title": "OpenTofu vs Terraform in 2026: The Fork Is Finally a Real Decision",
+    "excerpt": "Three years after the BSL relicense, OpenTofu is a credible MPL alternative that has shipped features upstream Terraform still lacks. Here's the license, governance, feature, and migration math for choosing between them.",
+    "category": "AI & Consulting",
+    "categoryColor": "ai",
+    "categoryGradient": "from-amber to-amber-dark",
+    "date": "August 16, 2026",
+    "author": "Adroit Consulting",
+    "authorInitials": "AC",
+    "readTime": "9 min read",
+    "featured": false,
+    "tags": [
+      "DevOps",
+      "Infrastructure as Code",
+      "OpenTofu",
+      "Terraform",
+      "IaC",
+      "Platform Engineering"
+    ],
+    "bannerImage": "/banners/opentofu-vs-terraform-2026.png",
+    "status": "published"
+  },
+  {
     "slug": "salesforce-mcp-hosting-ga-2026",
     "title": "Salesforce Hosted MCP Servers: Connecting AI to Your Org",
     "excerpt": "Salesforce's hosted MCP servers are GA. Expose flows, Apex, and Data 360 to any AI client under your permissions, or point Agentforce at external tools.",
