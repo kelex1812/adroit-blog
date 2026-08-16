@@ -29,7 +29,7 @@ export default function LessonSortToggle({ compact = false }: LessonSortTogglePr
 
   return (
     <div
-      className={`inline-flex items-center rounded-full border border-gray-200 bg-white p-0.5 ${
+      className={`inline-flex items-center rounded-full border border-gray-200 bg-white dark:bg-[var(--surface-card)] dark:border-[var(--border-default)] p-0.5 ${
         compact ? "text-[0.7rem]" : "text-xs"
       } font-semibold`}
     >
@@ -40,7 +40,7 @@ export default function LessonSortToggle({ compact = false }: LessonSortTogglePr
         className={`px-3 py-1 rounded-full cursor-pointer transition-all duration-150 active:scale-[0.98] ${
           sort === "asc"
             ? "bg-navy text-white"
-            : "text-gray-500 hover:text-navy"
+            : "text-gray-500 dark:text-[var(--ink-muted)] hover:text-navy"
         }`}
       >
         1 → 9
@@ -52,7 +52,7 @@ export default function LessonSortToggle({ compact = false }: LessonSortTogglePr
         className={`px-3 py-1 rounded-full cursor-pointer transition-all duration-150 active:scale-[0.98] ${
           sort === "desc"
             ? "bg-navy text-white"
-            : "text-gray-500 hover:text-navy"
+            : "text-gray-500 dark:text-[var(--ink-muted)] hover:text-navy"
         }`}
       >
         9 → 1

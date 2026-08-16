@@ -55,15 +55,15 @@ export default function SeriesSyllabus({
   return (
     <>
       <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-2 px-2 mb-1.5">
-        <h2 className="font-mono text-[13px] font-bold text-gray-500 uppercase tracking-[0.08em]">
+        <h2 className="font-mono text-[13px] font-bold text-gray-500 dark:text-[var(--ink-muted)] uppercase tracking-[0.08em]">
           {hideCompleted ? "In Progress" : "All Lessons"}
         </h2>
         <div className="flex flex-wrap items-center gap-2">
-          <span className="font-mono text-[11.5px] text-gray-500 font-medium hidden min-[430px]:inline">
+          <span className="font-mono text-[11.5px] text-gray-500 dark:text-[var(--ink-muted)] font-medium hidden min-[430px]:inline">
             {published} published · {upcoming} upcoming
           </span>
           <label className="inline-flex items-center gap-1.5 cursor-pointer select-none">
-            <span className="font-mono text-[10.5px] font-semibold text-gray-500">
+            <span className="font-mono text-[10.5px] font-semibold text-gray-500 dark:text-[var(--ink-muted)]">
               Hide completed
             </span>
             {/* a11y (finding 6): 44x44 hit target — the visual track stays
@@ -74,17 +74,19 @@ export default function SeriesSyllabus({
               aria-label="Hide completed lessons"
               onClick={() => setHideCompleted((v) => !v)}
               className={`relative w-11 h-11 rounded-full flex items-center justify-center transition-colors duration-200 cursor-pointer ${
-                hideCompleted ? "bg-navy/[0.06]" : "bg-transparent"
-              }`}
-            >
-              <span
-                aria-hidden="true"
-                className={`relative w-8 h-[18px] rounded-full transition-colors duration-200 ${
-                  hideCompleted ? "bg-navy" : "bg-gray-300"
-                }`}
-              >
-                <span
-                  className={`absolute top-[2px] left-[2px] w-[14px] h-[14px] rounded-full bg-white shadow transition-transform duration-200 ${
+        hideCompleted
+          ? "bg-navy/[0.06] dark:bg-[var(--surface-sunken)]"
+          : "bg-transparent"
+      }`}
+    >
+      <span
+        aria-hidden="true"
+        className={`relative w-8 h-[18px] rounded-full transition-colors duration-200 ${
+          hideCompleted ? "bg-navy" : "bg-gray-300 dark:bg-[var(--border-default)]"
+        }`}
+      >
+        <span
+          className={`absolute top-[2px] left-[2px] w-[14px] h-[14px] rounded-full bg-white shadow dark:bg-[var(--ink-body)] transition-transform duration-200 ${
                     hideCompleted ? "translate-x-[14px]" : ""
                   }`}
                 />
@@ -95,14 +97,14 @@ export default function SeriesSyllabus({
         </div>
       </div>
 
-      <div className="border-t border-gray-200 mt-3">
+      <div className="border-t border-gray-200 dark:border-[var(--border-default)] mt-3">
         {displayed.length > 0 ? (
           displayed.map((lesson) => (
             <div key={lesson.slug} className="relative">
               <LessonCard lesson={lesson} totalLessons={totalLessons} />
               {/* Per-lesson completion tracking */}
               <div className="flex items-center justify-between px-3 py-2">
-                <span className="font-mono text-[10px] font-bold text-gray-500 uppercase tracking-[0.07em]">
+                <span className="font-mono text-[10px] font-bold text-gray-500 dark:text-[var(--ink-muted)] uppercase tracking-[0.07em]">
                   Mark complete
                 </span>
                 <MarkComplete lessonSlug={lesson.slug} label={`lesson ${lesson.slug}`} />
@@ -110,7 +112,7 @@ export default function SeriesSyllabus({
             </div>
           ))
         ) : (
-          <p className="text-[13px] text-gray-500 py-6 text-center font-mono">
+          <p className="text-[13px] text-gray-500 dark:text-[var(--ink-muted)] py-6 text-center font-mono">
             {hideCompleted ? "All lessons completed — nice work." : "No lessons yet."}
           </p>
         )}

@@ -4,6 +4,46 @@ All notable changes to the Adroit Consulting Blog project will be documented in 
 
 ## [Unreleased]
 
+### Fix: Dark-mode gaps in Learn lessons view — MarkComplete, toggles, lesson rows (t_38a3f180)
+
+Three elements in the Learn lessons (series syllabus) view stayed light on the dark
+surface because they used raw Tailwind light utilities (`bg-white`, `border-gray-200`,
+`bg-gray-300`, `text-gray-500`, `text-gray-800`, `hover:bg-gray-50`) that the
+`html.dark` legacy remap block in `globals.css` does not touch. Root causes were
+verified in code before implementation, and each fix adds explicit `dark:` variants
+mapped to the semantic tokens.
+
+**What**
+
+- `src/components/Progress/MarkComplete.tsx` — unchecked 48px circle gains
+  `dark:bg-[var(--surface-card)] dark:border-[var(--border-default)]` so it is no
+  longer a hard white disc on the dark surface (checked `bg-green-500` state unchanged).
+- `src/components/Learn/SeriesSyllabus.tsx` — "Hide completed" switch: off-track
+  `bg-gray-300` → `dark:bg-[var(--border-default)]`; knob `bg-white` →
+  `dark:bg-[var(--ink-body)]`; wrapper on-state `bg-navy/[0.06]` →
+  `dark:bg-[var(--surface-sunken)]`. Section heading, "published/upcoming" meta,
+  "Hide completed" label, "Mark complete" label, and the empty-state text all get
+  `dark:text-[var(--ink-muted)]`; the list top divider gets
+  `dark:border-[var(--border-default)]`.
+- `src/components/Learn/LessonSortToggle.tsx` — pill shell gains
+  `dark:bg-[var(--surface-card)] dark:border-[var(--border-default)]`; inactive segment
+  text `text-gray-500` → `dark:text-[var(--ink-muted)]` (`hover:text-navy` retained).
+- `src/components/Learn/LessonCard.tsx` — row border `border-gray-200` →
+  `dark:border-[var(--border-default)]`; `hover:bg-gray-50` →
+  `dark:hover:bg-[var(--surface-card-soft)]`; title `text-gray-800` →
+  `dark:text-[var(--ink-body)]` (group-hover:text-red kept); meta + arrow
+  `text-gray-500` → `dark:text-[var(--ink-muted)]`; dot `bg-gray-300` →
+  `dark:bg-[var(--border-default)]`.
+
+**Why** — previously these controls rendered bright white/light-gray on the dark
+`#0a0e1a` surface, and the `text-gray-800` lesson titles were near-invisible; the
+`hover:bg-gray-50` row highlight produced a bright card flash. All fixes map to the
+site's semantic tokens so contrast reaches the dark palette's guaranteed floor
+(`--ink-muted` #94a3b8 ≈ 7:1 on `--surface-card`).
+
+**Known issues** — none. Light mode is byte-identical (dark: variants only activate
+under `html.dark`).
+
 ### Fix: Dark-mode contrast gaps (featured border, filter pills, pagination, empty state, article prose) + theme-switch cross-fade (t_6ab6c68e)
 
 Five dark-mode contrast gaps, all root-caused in code before implementation, plus a

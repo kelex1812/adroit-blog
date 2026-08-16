@@ -17,7 +17,7 @@ export default function LessonCard({
   return (
     <Link
       href={`/learn/${lesson.series}/${lesson.slug}`}
-      className="group flex items-center gap-[18px] px-3 py-[18px] border-b border-gray-200 rounded-lg transition-[background-color,transform] duration-150 no-underline hover:bg-gray-50 hover:translate-x-1"
+      className="group flex items-center gap-[18px] px-3 py-[18px] border-b border-gray-200 dark:border-[var(--border-default)] rounded-lg transition-[background-color,transform] duration-150 no-underline hover:bg-gray-50 dark:hover:bg-[var(--surface-card-soft)] hover:translate-x-1"
     >
       {/* Sequence badge */}
       <div
@@ -34,12 +34,12 @@ export default function LessonCard({
 
       {/* Title + meta */}
       <div className="flex-1 min-w-0">
-        <h3 className="text-[15px] font-semibold text-gray-800 leading-snug truncate transition-colors duration-150 group-hover:text-red">
+        <h3 className="text-[15px] font-semibold text-gray-800 dark:text-[var(--ink-body)] leading-snug truncate transition-colors duration-150 group-hover:text-red">
           {lesson.title}
         </h3>
-        <div className="flex items-center gap-2 text-xs text-gray-500 mt-1">
+        <div className="flex items-center gap-2 text-xs text-gray-500 dark:text-[var(--ink-muted)] mt-1">
           <span>{lesson.date}</span>
-          <span className="w-[3px] h-[3px] rounded-full bg-gray-300" />
+          <span className="w-[3px] h-[3px] rounded-full bg-gray-300 dark:bg-[var(--border-default)]" />
           <span>{lesson.readTime}</span>
         </div>
       </div>
@@ -49,7 +49,7 @@ export default function LessonCard({
           New
         </span>
       )}
-      <span className="flex-shrink-0 text-gray-500 text-sm transition-all duration-200 group-hover:text-red group-hover:translate-x-0.5">
+      <span className="flex-shrink-0 text-gray-500 dark:text-[var(--ink-muted)] text-sm transition-all duration-200 group-hover:text-red group-hover:translate-x-0.5">
         &rarr;
       </span>
     </Link>
