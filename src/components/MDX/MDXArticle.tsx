@@ -8,9 +8,8 @@
  * "Sources". remark-gfm renders the superscript + numbered-section natively
  * (no raw HTML, no extra plugins); the footnote section's sr-only <h2> label
  * defaults to "Footnotes", so a rehype plugin renames it to "Sources" (the
- * CSS reveals it as the visible heading). The learn renderer historically
- * skipped that rename (no footnote-label plugin) — kept via `kind` so both
- * surfaces behave exactly as before.
+ * CSS reveals it as the visible heading). Both blog AND learn apply the
+ * rename since 2026-08-16 (Chris: Learn sources must match article convention).
  */
 import type { ComponentProps } from "react";
 
