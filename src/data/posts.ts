@@ -2,6 +2,29 @@ import { BlogPost } from "./types";
 
 export const posts: BlogPost[] = [
   {
+    "slug": "a2a-agent-coordination-2026",
+    "title": "A2A v1.0: The Agent-to-Agent Protocol That Ties Multi-Agent Systems Together",
+    "excerpt": "MCP wires an agent to its tools. A2A wires agents to each other. With v1.0 stable, 150+ supporting organizations, and cloud-native support, here is how the coordination layer works and when to adopt it.",
+    "category": "AI & Consulting",
+    "categoryColor": "ai",
+    "categoryGradient": "from-amber to-amber-dark",
+    "date": "August 16, 2026",
+    "author": "Adroit Consulting",
+    "authorInitials": "AC",
+    "readTime": "9",
+    "featured": false,
+    "tags": [
+      "AI Agents",
+      "A2A",
+      "MCP",
+      "Multi-Agent Systems",
+      "Orchestration",
+      "Interoperability"
+    ],
+    "bannerImage": "/banners/a2a-agent-coordination-2026.png",
+    "status": "published"
+  },
+  {
     "slug": "salesforce-mcp-hosting-ga-2026",
     "title": "Salesforce Hosted MCP Servers: Connecting AI to Your Org",
     "excerpt": "Salesforce's hosted MCP servers are GA. Expose flows, Apex, and Data 360 to any AI client under your permissions, or point Agentforce at external tools.",
