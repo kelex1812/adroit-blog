@@ -20,7 +20,7 @@ Here is the framing that ties all four together. Retrieval quality is not one nu
 
 A bi-encoder, the kind behind dense vector search, embeds each document into a single fixed-size vector before the query ever arrives. The information is compressed, and that compression loses nuance. [^1] The result is a retriever built for recall: it is designed to get the right answer somewhere in the top 50 to 200, not to put it at rank 1. [^2]
 
-That tradeoff is fine when a human scrolls a results page. It is brutal when an LLM reads only the top 3 to 5 chunks. Pinecone makes the point directly: because of the information loss in a single vector, the top three vector-search documents often miss relevant information, and the relevant one sits below your top_k cutoff. [^1] The bigdata aboutique analysis names the specific failure modes. Chunk boundary artifacts: the sentence that answers the query lands in chunk A and its supporting context in chunk B, so neither scores high alone. Embedding collisions: negations and near-paraphrases collapse into nearby points in vector space, so "refunds are issued within 14 days" and "refunds are not issued after 14 days" sit close enough to confuse a top-k cut. Lexical gaps: rare entity names, IDs, error codes, and product SKUs are exactly the tokens dense embeddings struggle with, and those are the tokens users care about most. [^2]
+That tradeoff is fine when a human scrolls a results page. It is brutal when an LLM reads only the top 3 to 5 chunks. Pinecone makes the point directly: because of the information loss in a single vector, the top three vector-search documents often miss relevant information, and the relevant one sits below your top_k cutoff. [^1] The Big Data Boutique analysis names the specific failure modes. Chunk boundary artifacts: the sentence that answers the query lands in chunk A and its supporting context in chunk B, so neither scores high alone. Embedding collisions: negations and near-paraphrases collapse into nearby points in vector space, so "refunds are issued within 14 days" and "refunds are not issued after 14 days" sit close enough to confuse a top-k cut. Lexical gaps: rare entity names, IDs, error codes, and product SKUs are exactly the tokens dense embeddings struggle with, and those are the tokens users care about most. [^2]
 
 The naive fix is to raise top_k and stuff everything into the context window. That backfires. LLM recall degrades as the context window fills, and the "lost in the middle" research shows a model's ability to recall information placed mid-context is worse than if it had never been provided at all. [^1] So you cannot pass 100 chunks to the model. The answer is to retrieve many and keep few: maximize retrieval recall on the first pass, then minimize what reaches the LLM on the second. That second pass is reranking. [^1]
 
@@ -160,7 +160,7 @@ def rerank(shortlist, query_terms):
     def relevance(doc):
         # crude cross-encoder stand-in: penalize "not issued" for a query
         # that asks about the policy.
-        return -1 if "not" in doc else sum(q in doc for q in query_terms)
+        return -1 if "not" in docs[doc] else sum(q in docs[doc] for q in query_terms)
     return sorted(shortlist, key=lambda x: relevance(x[0]), reverse=True)
 
 print("reranked:", [d for d, _ in rerank(fused, query_terms)])
