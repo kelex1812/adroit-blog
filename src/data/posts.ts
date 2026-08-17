@@ -4,7 +4,7 @@ export const posts: BlogPost[] = [
   {
     "slug": "headless-ui-component-libraries-2026",
     "title": "Headless UI in 2026: The Component Library Fork Is Real",
-    "excerpt": "Radix runs the web but its updates have slowed, Base UI is now the active primitive layer, and shadcn/ui consumes both. Here is how to pick the foundation your design system stands on.",
+    "excerpt": "Radix runs the web but its updates have slowed; Base UI is the active primitive layer. Here is how to pick the foundation for your design system.",
     "category": "UI/UX",
     "categoryColor": "ux",
     "categoryGradient": "from-violet to-violet-dark",
