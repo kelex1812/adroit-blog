@@ -2,6 +2,31 @@ import { BlogPost } from "./types";
 
 export const posts: BlogPost[] = [
   {
+    "slug": "headless-ui-component-libraries-2026",
+    "title": "Headless UI in 2026: The Component Library Fork Is Real",
+    "excerpt": "Radix runs the web but its updates have slowed, Base UI is now the active primitive layer, and shadcn/ui consumes both. Here is how to pick the foundation your design system stands on.",
+    "category": "UI/UX",
+    "categoryColor": "ux",
+    "categoryGradient": "from-violet to-violet-dark",
+    "date": "August 17, 2026",
+    "author": "Adroit Consulting",
+    "authorInitials": "AC",
+    "readTime": "11 min read",
+    "featured": false,
+    "tags": [
+      "Design Systems",
+      "Headless UI",
+      "Component Libraries",
+      "Radix",
+      "Base UI",
+      "shadcn/ui",
+      "React Aria",
+      "Design Engineering"
+    ],
+    "bannerImage": "/banners/headless-ui-component-libraries-2026.png",
+    "status": "published"
+  },
+  {
     "slug": "a2a-agent-coordination-2026",
     "title": "A2A v1.0: The Multi-Agent Coordination Layer",
     "excerpt": "MCP wires an agent to its tools. A2A wires agents to each other. Here is how the v1.0 coordination layer works and when to adopt it.",
