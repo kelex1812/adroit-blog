@@ -28,8 +28,8 @@ export const posts: BlogPost[] = [
   },
   {
     "slug": "scrum-ceremonies-ai-agents-2026",
-    "title": "The Sprint Review Is Broken: AI Agents Are Reshaping Scrum Ceremonies",
-    "excerpt": "Coding agents compress the building part of delivery to near-zero, so the bottleneck moves from production to verification and alignment. Scrum ceremonies built to track human effort, starting with the sprint review, have to become evidence and decision forums.",
+    "title": "The Sprint Review Is Broken: AI Reshapes Scrum",
+    "excerpt": "Coding agents compress the building part of delivery to near-zero, so the sprint review must become an evidence and decision forum.",
     "category": "Project Management",
     "categoryColor": "pm",
     "categoryGradient": "from-teal to-teal-dark",
