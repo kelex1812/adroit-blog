@@ -27,6 +27,30 @@ export const posts: BlogPost[] = [
     "status": "published"
   },
   {
+    "slug": "scrum-ceremonies-ai-agents-2026",
+    "title": "The Sprint Review Is Broken: AI Agents Are Reshaping Scrum Ceremonies",
+    "excerpt": "Coding agents compress the building part of delivery to near-zero, so the bottleneck moves from production to verification and alignment. Scrum ceremonies built to track human effort, starting with the sprint review, have to become evidence and decision forums.",
+    "category": "Project Management",
+    "categoryColor": "pm",
+    "categoryGradient": "from-teal to-teal-dark",
+    "date": "August 17, 2026",
+    "author": "Adroit Consulting",
+    "authorInitials": "AC",
+    "readTime": "9 min read",
+    "featured": false,
+    "tags": [
+      "Project Management",
+      "Agile",
+      "Scrum",
+      "Sprint Review",
+      "AI Agents",
+      "Stakeholder Management",
+      "Delivery"
+    ],
+    "bannerImage": "/banners/scrum-ceremonies-ai-agents-2026.png",
+    "status": "published"
+  },
+  {
     "slug": "a2a-agent-coordination-2026",
     "title": "A2A v1.0: The Multi-Agent Coordination Layer",
     "excerpt": "MCP wires an agent to its tools. A2A wires agents to each other. Here is how the v1.0 coordination layer works and when to adopt it.",
