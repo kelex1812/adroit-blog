@@ -2,6 +2,28 @@ import { BlogPost } from "./types";
 
 export const posts: BlogPost[] = [
   {
+    "slug": "react-server-actions-mutations-2026",
+    "title": "React 19's Action Model: The End of the fetch-effect Stack",
+    "excerpt": "Server Actions, useOptimistic, useActionState, and useFormStatus replace the useState + useEffect + fetch + rollback stack for data mutations. Here is how the pieces compose and where they don't fit.",
+    "category": "React & Web Dev",
+    "categoryColor": "react",
+    "categoryGradient": "from-emerald to-emerald-dark",
+    "date": "August 18, 2026",
+    "author": "Adroit Consulting",
+    "authorInitials": "AC",
+    "readTime": "10",
+    "featured": false,
+    "tags": [
+      "React",
+      "Next.js",
+      "Server Actions",
+      "Mutations",
+      "Web Development"
+    ],
+    "bannerImage": "/banners/react-server-actions-mutations-2026.png",
+    "status": "published"
+  },
+  {
     "slug": "headless-ui-component-libraries-2026",
     "title": "Headless UI in 2026: The Component Library Fork Is Real",
     "excerpt": "Radix runs the web but its updates have slowed; Base UI is the active primitive layer. Here is how to pick the foundation for your design system.",
