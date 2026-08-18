@@ -2,6 +2,28 @@ import { BlogPost } from "./types";
 
 export const posts: BlogPost[] = [
   {
+    "slug": "apex-summer-26-security-v67-migration",
+    "title": "Apex's Summer '26 Security Reset: What v67.0 Defaults Break and How to Migrate",
+    "excerpt": "API 67.0 flips Apex security defaults: with sharing is now the implicit mode, WITH SECURITY_ENFORCED is retired, and database operations run in user mode. A migration playbook for teams running Apex in production.",
+    "category": "Salesforce",
+    "categoryColor": "sf",
+    "categoryGradient": "from-sky to-sky-dark",
+    "date": "August 18, 2026",
+    "author": "Adroit Consulting",
+    "authorInitials": "AC",
+    "readTime": "10 min read",
+    "featured": false,
+    "tags": [
+      "Salesforce",
+      "Apex",
+      "Summer '26",
+      "security",
+      "Agentforce"
+    ],
+    "bannerImage": "/banners/apex-summer-26-security-v67-migration.png",
+    "status": "published"
+  },
+  {
     "slug": "react-server-actions-mutations-2026",
     "title": "React 19's Action Model: The End of the fetch-effect Stack",
     "excerpt": "Server Actions, useOptimistic, useActionState, and useFormStatus replace the useState + useEffect + fetch + rollback stack for data mutations.",
