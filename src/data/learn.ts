@@ -8,32 +8,6 @@ import { LearnLesson, LearningSeries } from "./types";
 /** All series, sorted by newest lesson date DESC (ties → slug asc). Empty dirs included with lessons: []. */
 export const learnSeries: LearningSeries[] = [
   {
-    "slug": "ai-at-work",
-    "name": "AI at Work",
-    "description": "A vendor-agnostic, 30-lesson primer for using AI in day-to-day work: foundations, prompting, productivity, small automations, and team adoption. Company-wide training that works for any team and any AI tool.",
-    "gradient": "from-fuchsia to-purple-600",
-    "lessons": [
-      {
-        "slug": "what-ai-actually-is",
-        "title": "Lesson 1: What AI Actually Is",
-        "series": "ai-at-work",
-        "lesson": 1,
-        "excerpt": "The words around AI are doing more confusing than clarifying. This lesson separates the four that trip up most people: models vs automation, chatbots vs tools, plus why 'LLM' and 'generative AI' are not synonyms.",
-        "date": "August 16, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "8 min read",
-        "tags": [
-          "Learn",
-          "AI",
-          "Workplace",
-          "Foundations"
-        ],
-        "status": "published"
-      }
-    ],
-    "totalLessons": 1
-  },
-  {
     "slug": "agentic-ai",
     "name": "Agentic AI Implementation Path",
     "description": "From single-agent prototypes to multi-agent orchestration, a practitioner's curriculum for shipping agentic systems.",
@@ -242,9 +216,120 @@ export const learnSeries: LearningSeries[] = [
           "Vector Databases"
         ],
         "status": "published"
+      },
+      {
+        "slug": "rag-quality-reranking-hybrid-search-metadata-filtering-freshness",
+        "title": "Lesson 13: RAG Quality: Reranking, Hybrid Search, Metadata Filtering, and Freshness",
+        "series": "agentic-ai",
+        "lesson": 13,
+        "excerpt": "The four levers that turn a RAG demo into a system you can trust: reranking to fix top-k precision, hybrid search so exact terms still win, metadata filtering so access control and scope survive retrieval, and freshness so the answers do not go stale.",
+        "date": "August 16, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "12 min read",
+        "tags": [
+          "Learn",
+          "AI",
+          "Agentic",
+          "RAG"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "agent-memory-short-term-long-term-episodic-semantic",
+        "title": "Lesson 14: Agent Memory: Short-Term vs Long-Term, Episodic vs Semantic",
+        "series": "agentic-ai",
+        "lesson": 14,
+        "excerpt": "An agent with no memory answers the same question the same way forever. This lesson maps the memory taxonomy production systems borrow from cognitive science: the context window as working memory, long-term stores for persistence, episodic memory for what happened, semantic memory for what you know, and the pipeline that turns raw interactions into retrievable knowledge.",
+        "date": "August 17, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "10 min read",
+        "tags": [
+          "Learn",
+          "AI",
+          "Agentic",
+          "Memory"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "context-engineering-what-to-include-trimming-summarization-windowing",
+        "title": "Lesson 15: Context Engineering: What to Include, Trim, Summarize, and Window",
+        "series": "agentic-ai",
+        "lesson": 15,
+        "excerpt": "The context window is finite and filling it sloppily degrades your agent before it ever fails. This lesson covers the four ways to keep a long-running loop coherent: deciding what to include, trimming what stops earning its keep, summarizing what still matters, and windowing what you can drop. With real numbers from JetBrains on which approach actually pays.",
+        "date": "August 18, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "10 min read",
+        "tags": [
+          "Learn",
+          "AI",
+          "Agentic",
+          "Context"
+        ],
+        "status": "published"
       }
     ],
-    "totalLessons": 12
+    "totalLessons": 15
+  },
+  {
+    "slug": "ai-at-work",
+    "name": "AI at Work",
+    "description": "A vendor-agnostic, 30-lesson primer for using AI in day-to-day work: foundations, prompting, productivity, small automations, and team adoption. Company-wide training that works for any team and any AI tool.",
+    "gradient": "from-fuchsia to-purple-600",
+    "lessons": [
+      {
+        "slug": "what-ai-actually-is",
+        "title": "Lesson 1: What AI Actually Is",
+        "series": "ai-at-work",
+        "lesson": 1,
+        "excerpt": "The words around AI are doing more confusing than clarifying. This lesson separates the four that trip up most people: models vs automation, chatbots vs tools, plus why 'LLM' and 'generative AI' are not synonyms.",
+        "date": "August 16, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "8 min read",
+        "tags": [
+          "Learn",
+          "AI",
+          "Workplace",
+          "Foundations"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "how-ai-thinks",
+        "title": "Lesson 2: How AI Thinks in Plain Language",
+        "series": "ai-at-work",
+        "lesson": 2,
+        "excerpt": "The tools you use every day do not read like you do. They read text in chunks called tokens, predict the next chunk over and over, and can only see a limited slice of the conversation at once. This lesson explains those three ideas and what they mean for how you prompt.",
+        "date": "August 17, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "8 min read",
+        "tags": [
+          "Learn",
+          "AI",
+          "Workplace",
+          "Foundations"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "hallucinations-what-they-are-and-how-to-catch-them",
+        "title": "Lesson 3: Hallucinations, and How to Catch Them",
+        "series": "ai-at-work",
+        "lesson": 3,
+        "excerpt": "AI tools make things up, and they do it in a confident voice. This lesson explains what a hallucination actually is, why a next-word predictor produces them, and the practical habits for catching them before they reach your work.",
+        "date": "August 18, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "8 min read",
+        "tags": [
+          "Learn",
+          "AI",
+          "Workplace",
+          "Foundations"
+        ],
+        "status": "published"
+      }
+    ],
+    "totalLessons": 3
   },
   {
     "slug": "omni-studio-cert",
@@ -448,9 +533,54 @@ export const learnSeries: LearningSeries[] = [
           "FlexCards"
         ],
         "status": "published"
+      },
+      {
+        "slug": "day-14-fc-8-embedding-flexcards-across-channels",
+        "title": "OmniStudio FC-8: Embedding FlexCards Across Channels",
+        "series": "omni-studio-cert",
+        "lesson": 14,
+        "excerpt": "Embed one FlexCard definition across Lightning pages, Experience Cloud sites, OmniScripts, and mobile, and design it for reuse with public attributes.",
+        "date": "August 16, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "5 min read",
+        "tags": [
+          "OmniStudio",
+          "FlexCards"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "day-15-fc-9-flexcard-best-practices",
+        "title": "OmniStudio FC-9: FlexCard Best Practices",
+        "series": "omni-studio-cert",
+        "lesson": 15,
+        "excerpt": "Validate your JSON, keep data sources lean, test every state and channel, and respect FLS. That combination is what separates a card that survives production from one that goes blank.",
+        "date": "August 17, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "5 min read",
+        "tags": [
+          "OmniStudio",
+          "FlexCards"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "day-16-os-1-omniscript-elements-dynamic-interactions",
+        "title": "OmniStudio OS-1: OmniScript Elements & Dynamic Interactions",
+        "series": "omni-studio-cert",
+        "lesson": 16,
+        "excerpt": "OmniScripts are guided journeys built from named elements that all land in one data JSON. If you understand that JSON contract, formulas, actions, and debugging all follow. If you don't, nothing else works.",
+        "date": "August 18, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "6 min read",
+        "tags": [
+          "OmniStudio",
+          "OmniScripts"
+        ],
+        "status": "published"
       }
     ],
-    "totalLessons": 13
+    "totalLessons": 16
   },
   {
     "slug": "salesforce-architect",
@@ -673,14 +803,222 @@ export const learnSeries: LearningSeries[] = [
           "Permissions"
         ],
         "status": "published"
+      },
+      {
+        "slug": "security-external-access-oauth-saml-connected-apps-communities",
+        "title": "Lesson 13: Security, Part 3: External Access, OAuth, SAML/SSO, Connected Apps, and Communities",
+        "series": "salesforce-architect",
+        "lesson": 13,
+        "excerpt": "How outside systems and outside people get in. OAuth flows for machine access, SAML single sign-on for employee logins, connected apps as the doorway, and Experience Cloud communities as the portal where customers and partners authenticate without touching your internal identity system.",
+        "date": "August 16, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "11 min read",
+        "tags": [
+          "Learn",
+          "Salesforce",
+          "Architect",
+          "Security",
+          "Identity",
+          "OAuth",
+          "SAML",
+          "Communities"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "data-architecture-data-model-design-patterns-data-skew",
+        "title": "Lesson 14: Data Architecture: Data Model Design, Common Data Model Patterns, and Data Skew",
+        "series": "salesforce-architect",
+        "lesson": 14,
+        "excerpt": "Data is the load-bearing wall of every org. Designing a data model that scales means deciding where each relationship lives, recognizing the recurring shapes that solve real problems, and keeping the load off any single parent record or owner. This lesson covers data model design, the common patterns (one-to-many, many-to-many, hierarchical, and data tiering), and the three data skews that quietly break performance.",
+        "date": "August 17, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "11 min read",
+        "tags": [
+          "Learn",
+          "Salesforce",
+          "Architect",
+          "Data Model",
+          "Data Architecture"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "data-architecture-for-ai-vector-databases-embeddings",
+        "title": "Lesson 15: Data Architecture for AI: Databases, Vector DBs, Embeddings, and the Same Modeling Discipline",
+        "series": "salesforce-architect",
+        "lesson": 15,
+        "excerpt": "The data side of AI systems. Embeddings, vector databases, chunking, and why the modeling discipline from a Salesforce data model (records, relationships, source of truth, scale) carries over unchanged when the storage engine becomes a vector store. Includes a worked example of a RAG knowledge base, a pgvector walkthrough, and the Data Cloud vector database connection.",
+        "date": "August 18, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "10 min read",
+        "tags": [
+          "Learn",
+          "Architect",
+          "Data Architecture",
+          "AI",
+          "Vector Database"
+        ],
+        "status": "published"
       }
     ],
-    "totalLessons": 12
+    "totalLessons": 15
   }
 ];
 
 /** Flat list of every lesson, NEWEST FIRST (for sitemap, nav, flat lookups). */
 export const learnLessons: LearnLesson[] = [
+  {
+    "slug": "context-engineering-what-to-include-trimming-summarization-windowing",
+    "title": "Lesson 15: Context Engineering: What to Include, Trim, Summarize, and Window",
+    "series": "agentic-ai",
+    "lesson": 15,
+    "excerpt": "The context window is finite and filling it sloppily degrades your agent before it ever fails. This lesson covers the four ways to keep a long-running loop coherent: deciding what to include, trimming what stops earning its keep, summarizing what still matters, and windowing what you can drop. With real numbers from JetBrains on which approach actually pays.",
+    "date": "August 18, 2026",
+    "author": "Adroit Consulting",
+    "readTime": "10 min read",
+    "tags": [
+      "Learn",
+      "AI",
+      "Agentic",
+      "Context"
+    ],
+    "status": "published"
+  },
+  {
+    "slug": "hallucinations-what-they-are-and-how-to-catch-them",
+    "title": "Lesson 3: Hallucinations, and How to Catch Them",
+    "series": "ai-at-work",
+    "lesson": 3,
+    "excerpt": "AI tools make things up, and they do it in a confident voice. This lesson explains what a hallucination actually is, why a next-word predictor produces them, and the practical habits for catching them before they reach your work.",
+    "date": "August 18, 2026",
+    "author": "Adroit Consulting",
+    "readTime": "8 min read",
+    "tags": [
+      "Learn",
+      "AI",
+      "Workplace",
+      "Foundations"
+    ],
+    "status": "published"
+  },
+  {
+    "slug": "day-16-os-1-omniscript-elements-dynamic-interactions",
+    "title": "OmniStudio OS-1: OmniScript Elements & Dynamic Interactions",
+    "series": "omni-studio-cert",
+    "lesson": 16,
+    "excerpt": "OmniScripts are guided journeys built from named elements that all land in one data JSON. If you understand that JSON contract, formulas, actions, and debugging all follow. If you don't, nothing else works.",
+    "date": "August 18, 2026",
+    "author": "Adroit Consulting",
+    "readTime": "6 min read",
+    "tags": [
+      "OmniStudio",
+      "OmniScripts"
+    ],
+    "status": "published"
+  },
+  {
+    "slug": "data-architecture-for-ai-vector-databases-embeddings",
+    "title": "Lesson 15: Data Architecture for AI: Databases, Vector DBs, Embeddings, and the Same Modeling Discipline",
+    "series": "salesforce-architect",
+    "lesson": 15,
+    "excerpt": "The data side of AI systems. Embeddings, vector databases, chunking, and why the modeling discipline from a Salesforce data model (records, relationships, source of truth, scale) carries over unchanged when the storage engine becomes a vector store. Includes a worked example of a RAG knowledge base, a pgvector walkthrough, and the Data Cloud vector database connection.",
+    "date": "August 18, 2026",
+    "author": "Adroit Consulting",
+    "readTime": "10 min read",
+    "tags": [
+      "Learn",
+      "Architect",
+      "Data Architecture",
+      "AI",
+      "Vector Database"
+    ],
+    "status": "published"
+  },
+  {
+    "slug": "agent-memory-short-term-long-term-episodic-semantic",
+    "title": "Lesson 14: Agent Memory: Short-Term vs Long-Term, Episodic vs Semantic",
+    "series": "agentic-ai",
+    "lesson": 14,
+    "excerpt": "An agent with no memory answers the same question the same way forever. This lesson maps the memory taxonomy production systems borrow from cognitive science: the context window as working memory, long-term stores for persistence, episodic memory for what happened, semantic memory for what you know, and the pipeline that turns raw interactions into retrievable knowledge.",
+    "date": "August 17, 2026",
+    "author": "Adroit Consulting",
+    "readTime": "10 min read",
+    "tags": [
+      "Learn",
+      "AI",
+      "Agentic",
+      "Memory"
+    ],
+    "status": "published"
+  },
+  {
+    "slug": "how-ai-thinks",
+    "title": "Lesson 2: How AI Thinks in Plain Language",
+    "series": "ai-at-work",
+    "lesson": 2,
+    "excerpt": "The tools you use every day do not read like you do. They read text in chunks called tokens, predict the next chunk over and over, and can only see a limited slice of the conversation at once. This lesson explains those three ideas and what they mean for how you prompt.",
+    "date": "August 17, 2026",
+    "author": "Adroit Consulting",
+    "readTime": "8 min read",
+    "tags": [
+      "Learn",
+      "AI",
+      "Workplace",
+      "Foundations"
+    ],
+    "status": "published"
+  },
+  {
+    "slug": "day-15-fc-9-flexcard-best-practices",
+    "title": "OmniStudio FC-9: FlexCard Best Practices",
+    "series": "omni-studio-cert",
+    "lesson": 15,
+    "excerpt": "Validate your JSON, keep data sources lean, test every state and channel, and respect FLS. That combination is what separates a card that survives production from one that goes blank.",
+    "date": "August 17, 2026",
+    "author": "Adroit Consulting",
+    "readTime": "5 min read",
+    "tags": [
+      "OmniStudio",
+      "FlexCards"
+    ],
+    "status": "published"
+  },
+  {
+    "slug": "data-architecture-data-model-design-patterns-data-skew",
+    "title": "Lesson 14: Data Architecture: Data Model Design, Common Data Model Patterns, and Data Skew",
+    "series": "salesforce-architect",
+    "lesson": 14,
+    "excerpt": "Data is the load-bearing wall of every org. Designing a data model that scales means deciding where each relationship lives, recognizing the recurring shapes that solve real problems, and keeping the load off any single parent record or owner. This lesson covers data model design, the common patterns (one-to-many, many-to-many, hierarchical, and data tiering), and the three data skews that quietly break performance.",
+    "date": "August 17, 2026",
+    "author": "Adroit Consulting",
+    "readTime": "11 min read",
+    "tags": [
+      "Learn",
+      "Salesforce",
+      "Architect",
+      "Data Model",
+      "Data Architecture"
+    ],
+    "status": "published"
+  },
+  {
+    "slug": "rag-quality-reranking-hybrid-search-metadata-filtering-freshness",
+    "title": "Lesson 13: RAG Quality: Reranking, Hybrid Search, Metadata Filtering, and Freshness",
+    "series": "agentic-ai",
+    "lesson": 13,
+    "excerpt": "The four levers that turn a RAG demo into a system you can trust: reranking to fix top-k precision, hybrid search so exact terms still win, metadata filtering so access control and scope survive retrieval, and freshness so the answers do not go stale.",
+    "date": "August 16, 2026",
+    "author": "Adroit Consulting",
+    "readTime": "12 min read",
+    "tags": [
+      "Learn",
+      "AI",
+      "Agentic",
+      "RAG"
+    ],
+    "status": "published"
+  },
   {
     "slug": "what-ai-actually-is",
     "title": "Lesson 1: What AI Actually Is",
@@ -695,6 +1033,42 @@ export const learnLessons: LearnLesson[] = [
       "AI",
       "Workplace",
       "Foundations"
+    ],
+    "status": "published"
+  },
+  {
+    "slug": "day-14-fc-8-embedding-flexcards-across-channels",
+    "title": "OmniStudio FC-8: Embedding FlexCards Across Channels",
+    "series": "omni-studio-cert",
+    "lesson": 14,
+    "excerpt": "Embed one FlexCard definition across Lightning pages, Experience Cloud sites, OmniScripts, and mobile, and design it for reuse with public attributes.",
+    "date": "August 16, 2026",
+    "author": "Adroit Consulting",
+    "readTime": "5 min read",
+    "tags": [
+      "OmniStudio",
+      "FlexCards"
+    ],
+    "status": "published"
+  },
+  {
+    "slug": "security-external-access-oauth-saml-connected-apps-communities",
+    "title": "Lesson 13: Security, Part 3: External Access, OAuth, SAML/SSO, Connected Apps, and Communities",
+    "series": "salesforce-architect",
+    "lesson": 13,
+    "excerpt": "How outside systems and outside people get in. OAuth flows for machine access, SAML single sign-on for employee logins, connected apps as the doorway, and Experience Cloud communities as the portal where customers and partners authenticate without touching your internal identity system.",
+    "date": "August 16, 2026",
+    "author": "Adroit Consulting",
+    "readTime": "11 min read",
+    "tags": [
+      "Learn",
+      "Salesforce",
+      "Architect",
+      "Security",
+      "Identity",
+      "OAuth",
+      "SAML",
+      "Communities"
     ],
     "status": "published"
   },
