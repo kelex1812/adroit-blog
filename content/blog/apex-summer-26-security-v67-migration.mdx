@@ -1,7 +1,7 @@
 ---
-title: "Apex's Summer '26 Security Reset: What v67.0 Defaults Break and How to Migrate"
+title: "Apex Security Defaults Flip at API 67.0"
 slug: apex-summer-26-security-v67-migration
-excerpt: "API 67.0 flips Apex security defaults: with sharing is now the implicit mode, WITH SECURITY_ENFORCED is retired, and database operations run in user mode. A migration playbook for teams running Apex in production."
+excerpt: "API 67.0 flips Apex security defaults: with sharing is now implicit, WITH SECURITY_ENFORCED no longer compiles, and database operations run in user mode."
 category: "Salesforce"
 categoryColor: sf
 categoryGradient: "from-sky to-sky-dark"
@@ -13,13 +13,13 @@ tags: [Salesforce, Apex, "Summer '26", security, Agentforce]
 bannerImage: /banners/apex-summer-26-security-v67-migration.png
 ---
 
-# Apex's Summer '26 Security Reset: What v67.0 Defaults Break and How to Migrate
+# Apex Security Defaults Flip at API 67.0
 
 Apex classes compiled against API version 67.0 (the version that ships with Summer '26) behave differently from every class you wrote before, even when the code looks identical. This is not a new keyword you opt into. It is a reversal of the platform's default posture: implicit `with sharing`, database operations that run in user mode, and a `WITH SECURITY_ENFORCED` clause that no longer compiles.[^1]
 
 The practical consequence for a consulting team running multiple client orgs is that incrementing an org's API version is now a security migration, not routine maintenance. Code that passed tests on 66.0 can silently return fewer rows, throw access errors that used to be quiet, or refuse to compile. This article is the migration playbook: what changed, what breaks, and how to move an org to 67.0 without a production surprise.
 
-This is the Apex half of the Summer '26 story. If you are here from the Flow or Agentforce side, the security model change lands on your imperative code too, because the Apex actions your agents call and the handler classes your triggers delegate to are exactly what is affected.[^2]
+This is the Apex half of the [Summer '26 story](/blog/salesforce-summer-26-three-things). If you are here from the Flow or [Agentforce side](/blog/flow-orchestrates-agentforce), the security model change lands on your imperative code too, because the Apex actions your agents call and the handler classes your triggers delegate to are exactly what is affected.[^2]
 
 ---
 
@@ -67,15 +67,25 @@ For managed packages in particular, this review is non-negotiable before deploym
 
 The work is mechanical but broad, and most of it is find-and-flag before it is find-and-fix. I would sequence it this way.
 
-**Audit Apex for `WITH SECURITY_ENFORCED` first.** This is the only change that is a hard compile failure, so it is the one that stops a deployment. Find every query using the old clause and replace it with `WITH USER_MODE`, or `WITH SYSTEM_MODE` where system mode is genuinely required.[^2]
+### Audit Apex for `WITH SECURITY_ENFORCED` first
 
-**Flag classes with no explicit sharing declaration.** These are the silent-behavior changes. Grep for class declarations that omit `with sharing` or `without sharing`, and decide per class which the code actually needs. The default is now safe, so most classes are fine as-is, but any class that relied on implicit `without sharing` must be audited for the access errors it will now surface.[^1][^2]
+This is the only change that is a hard compile failure, so it is the one that stops a deployment. Find every query using the old clause and replace it with `WITH USER_MODE`, or `WITH SYSTEM_MODE` where system mode is genuinely required.[^2]
 
-**Update DML to make access mode explicit.** The new user-mode default is correct for most writes, but your intent should be visible. Prefer the explicit `AccessLevel.USER_MODE` form in `Database` methods rather than relying on the implicit default, and reserve `AccessLevel.SYSTEM_MODE` for the cases that need it.[^1] This is the pattern the Agentforce action guidance recommends anyway: run all DML and queries in "with user" mode.[^3]
+### Flag classes with no explicit sharing declaration
 
-**Watch the trigger-handler boundary.** Because triggers cannot declare an access mode, the handler class is where you control it. Any handler counting on implicit `without sharing` needs an explicit decision.[^1][^2]
+These are the silent-behavior changes. Grep for class declarations that omit `with sharing` or `without sharing`, and decide per class which the code actually needs. The default is now safe, so most classes are fine as-is, but any class that relied on implicit `without sharing` must be audited for the access errors it will now surface.[^1][^2]
 
-**Run a second pass for invocable classes.** There is a smaller 67.0 change here that bites Agentforce and Flow integrators: any custom Apex type used as an invocable action input must expose a visible no-argument constructor, public for regular classes or global for packaged classes.[^1] If you have invocable methods with parameter classes that lack one, they stop compiling at 67.0.
+### Update DML to make access mode explicit
+
+The new user-mode default is correct for most writes, but your intent should be visible. Prefer the explicit `AccessLevel.USER_MODE` form in `Database` methods rather than relying on the implicit default, and reserve `AccessLevel.SYSTEM_MODE` for the cases that need it.[^1] This is the pattern the Agentforce action guidance recommends anyway: run all DML and queries in "with user" mode.[^3]
+
+### Watch the trigger-handler boundary
+
+Because triggers cannot declare an access mode, the handler class is where you control it. Any handler counting on implicit `without sharing` needs an explicit decision.[^1][^2]
+
+### Run a second pass for invocable classes
+
+There is a smaller 67.0 change here that bites Agentforce and Flow integrators: any custom Apex type used as an invocable action input must expose a visible no-argument constructor, public for regular classes or global for packaged classes.[^1] If you have invocable methods with parameter classes that lack one, they stop compiling at 67.0.
 
 The sequencing matters. Compile-fail items (`WITH SECURITY_ENFORCED`, the constructor rule) are your hard blockers. Behavior-change items (sharing default, user-mode default) are your silent risks that only restricted-user tests catch. Fix the blockers, then build the test matrix before you flip the API version on a class.
 
@@ -89,7 +99,7 @@ The vehicle is the Apex action. When an agent task involves complex business log
 
 ![An Agentforce agent routes intent to a governed Apex action built with InvocableMethod, which enforces the user's access before updating records, triggering platform events, or running long work via Queueable Apex.](</diagrams/apex-summer-26-security-v67-migration/2-apex-action-wiring.png>)
 
-The Agentforce action guidance adds specific patterns on top of the security baseline. The Atlas Reasoning Engine relies on the labels and descriptions of your invocable methods and their input and output parameters to plan, reason, and execute. Use the same values in the Apex code and the action config, and keep them in sync.[^3] An action with a vague description is an action the engine mis-selects, so name and describe it as if a non-developer were reading it.
+The Agentforce action guidance adds specific patterns on top of the security baseline. For the full production picture, our [Agentforce production implementation patterns](/blog/agentforce-production-implementation-patterns) guide covers the lifecycle end to end. The Atlas Reasoning Engine relies on the labels and descriptions of your invocable methods and their input and output parameters to plan, reason, and execute. Use the same values in the Apex code and the action config, and keep them in sync.[^3] An action with a vague description is an action the engine mis-selects, so name and describe it as if a non-developer were reading it.
 
 Two more patterns matter in production. First, write bulkified actions. Agentforce actions do not bulkify by default, and each action executes in its transaction; since these are invocable actions you may also reuse them in a flow, bulkify for both callers.[^3] Second, for partial success, use the `Database` class with `allOrNone` set to false instead of DML verbs, so a record that fails does not take down the batch and you can return a per-record message to the user.[^3] And when an action runs long, offload to Queueable Apex, providing a `requestId` or a notification so the user can check status, because the action returns before the async work finishes.[^3]
 

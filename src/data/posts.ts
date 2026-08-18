@@ -3,8 +3,8 @@ import { BlogPost } from "./types";
 export const posts: BlogPost[] = [
   {
     "slug": "apex-summer-26-security-v67-migration",
-    "title": "Apex's Summer '26 Security Reset: What v67.0 Defaults Break and How to Migrate",
-    "excerpt": "API 67.0 flips Apex security defaults: with sharing is now the implicit mode, WITH SECURITY_ENFORCED is retired, and database operations run in user mode. A migration playbook for teams running Apex in production.",
+    "title": "Apex Security Defaults Flip at API 67.0",
+    "excerpt": "API 67.0 flips Apex security defaults: with sharing is now implicit, WITH SECURITY_ENFORCED no longer compiles, and database operations run in user mode.",
     "category": "Salesforce",
     "categoryColor": "sf",
     "categoryGradient": "from-sky to-sky-dark",
