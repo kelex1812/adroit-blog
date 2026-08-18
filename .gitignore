@@ -60,5 +60,9 @@ security-audit-*.json
 docs/.terminal-state-*.md
 docs/.verify-html.py
 docs/a11y-keyboard-focus-*.md
+docs/worker-collision-*.md
 mobile-blog-progress.png
 deliverables/*.py
+
+# stray tool output
+/.hermes/
