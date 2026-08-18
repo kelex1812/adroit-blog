@@ -22,7 +22,7 @@ The temptation is always to throw more memory at it. That instinct is wrong for 
 
 The practical result is **context rot**. As token count grows, a model's ability to recall information from its context drops, and this shows up across all models, not just weak ones. [^1] The Chroma research that named context rot found the same thing: longer contexts degrade recall. [^5] JetBrains' researchers are blunter: an agent's *effective* context size is much smaller than the advertised window, which means "agent-generated context actually quickly turns into noise instead of being useful information." [^3]
 
-So the answer to "should I buy a 200K window" is usually "no, learn to curate the 10K you actually need." Anthropic: "context engineering beats context maximization." [^1]
+So the answer to "should I buy a 200K window" is usually "no, learn to curate the 10K you actually need." Anthropic's position is that context engineering beats raw context maximization. [^1]
 
 ## Operation 1: Decide what to include
 
