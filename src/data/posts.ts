@@ -4,7 +4,7 @@ export const posts: BlogPost[] = [
   {
     "slug": "react-server-actions-mutations-2026",
     "title": "React 19's Action Model: The End of the fetch-effect Stack",
-    "excerpt": "Server Actions, useOptimistic, useActionState, and useFormStatus replace the useState + useEffect + fetch + rollback stack for data mutations. Here is how the pieces compose and where they don't fit.",
+    "excerpt": "Server Actions, useOptimistic, useActionState, and useFormStatus replace the useState + useEffect + fetch + rollback stack for data mutations.",
     "category": "React & Web Dev",
     "categoryColor": "react",
     "categoryGradient": "from-emerald to-emerald-dark",

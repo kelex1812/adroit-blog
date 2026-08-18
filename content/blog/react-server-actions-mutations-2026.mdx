@@ -1,7 +1,7 @@
 ---
 title: "React 19's Action Model: The End of the fetch-effect Stack"
 slug: react-server-actions-mutations-2026
-excerpt: "Server Actions, useOptimistic, useActionState, and useFormStatus replace the useState + useEffect + fetch + rollback stack for data mutations. Here is how the pieces compose and where they don't fit."
+excerpt: "Server Actions, useOptimistic, useActionState, and useFormStatus replace the useState + useEffect + fetch + rollback stack for data mutations."
 category: "React & Web Dev"
 categoryColor: react
 categoryGradient: "from-emerald to-emerald-dark"
@@ -15,9 +15,9 @@ bannerImage: "/banners/react-server-actions-mutations-2026.png"
 
 For most of React's run, a data mutation meant the same ritual. You kept a value in `useState`, fired a `fetch` from inside `useEffect` or an event handler, managed a `loading` flag by hand, tracked an `error` string, and rolled the state back yourself when the request failed. Every form repeated it with small variations. It worked, and it was a tax you paid on every single write.
 
-React 19 replaced that stack with an action model. Mutations become async functions, and the framework owns the pending state, the error handling, and the optimistic update for you. The primitives are Server Actions, `useOptimistic`, `useActionState`, and `useFormStatus`, and in Next.js 16 they compose into a mutation pattern that is shorter and harder to get wrong than what came before.[^1] React is at 19.2.8 as of this writing, so the model is stable and shipping in production apps.[^7]
+React 19 replaced that stack with an action model. Mutations become async functions, and the framework owns the pending state, the error handling, and the optimistic update for you. The primitives are Server Actions, `useOptimistic`, `useActionState`, and `useFormStatus`, and in [Next.js 16](/blog/nextjs-16-3-instant-navigations) they compose into a mutation pattern that is shorter and harder to get wrong than what came before.[^1] React is at 19.2.8 as of this writing, so the model is stable and shipping in production apps.[^7]
 
-This article is about the shape of that model: what each piece does, how they compose, and where you should keep the old approach. It is a companion to our earlier look at scalable React architecture, which covered rendering and state management; this one is specifically about the write path.[^4]
+This article is about the shape of that model: what each piece does, how they compose, and where you should keep the old approach. It is a companion to [our earlier look at scalable React architecture](/blog/scalable-react-2026), which covered rendering and state management; this one is specifically about the write path.
 
 ## The problem the action model solves
 
@@ -116,14 +116,13 @@ The line is clearer than it sounds. If the state is authoritative on the server 
 
 You do not have to rip out your state management. Migrate one mutation flow at a time. Pick a form or a write-heavy component, replace its `useState + fetch` handler with a Server Action plus `useActionState`, and watch the error and loading state disappear. Keep the existing store for everything else until the pattern is comfortable.[^6]
 
-Three pitfalls will show up in practice. First, `useFormStatus` must live inside the form, not beside it, or `pending` never turns true. Second, optimistic setters must be called inside Actions, and must compute from current state, or they go stale under rapid input. Third, Server Action arguments are user-controlled, so authorize on the server in every action, no exceptions. The framework handles the CSRF token automatically, but not authorization, and it will not remind you.[^8]
+Three pitfalls will show up in practice. First, `useFormStatus` must live inside the form, not beside it, or `pending` never turns true. Second, optimistic setters must be called inside Actions, and must compute from current state, or they go stale under rapid input. Third, Server Action arguments are user-controlled, so authorize on the server in every action, no exceptions. The framework handles the CSRF token automatically, but not authorization, and it will not remind you.[^6][^8]
 
 For most production Next.js apps on React 19, this is a clear win: less boilerplate on the write path, progressive enhancement for free, and optimistic UI that rolls back without a manual handler. The rendering side of React got the attention in 2024 and 2025. The mutation side is the quieter part of the same change, and it is the one that touches how your app writes data.
 
 [^1]: React Team. React v19. [react.dev](https://react.dev/blog/2024/12/05/react-19)
 [^2]: React Team. useOptimistic. [react.dev](https://react.dev/reference/react/useOptimistic)
 [^3]: React Team. useActionState. [react.dev](https://react.dev/reference/react/useActionState)
-[^4]: Adroit Consulting. Building Scalable React Apps. [adroit-blog-two.vercel.app](https://adroit-blog-two.vercel.app/blog/scalable-react-2026)
 [^5]: React Team. useFormStatus. [react.dev](https://react.dev/reference/react-dom/hooks/useFormStatus)
 [^6]: Sam Cheek. React 19: useOptimistic, use(), Server Actions Explained. [samcheek.com](https://samcheek.com/blog/react-19-features-useoptimistic-use-server-actions-2026)
 [^7]: npm registry version check, react latest. [registry.npmjs.org](https://registry.npmjs.org/react/latest)
