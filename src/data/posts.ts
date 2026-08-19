@@ -2,6 +2,29 @@ import { BlogPost } from "./types";
 
 export const posts: BlogPost[] = [
   {
+    "slug": "agent-trajectory-evals-2026",
+    "title": "The Agent Regression Your Final-Output Eval Misses",
+    "excerpt": "Final-output evals miss agent regressions: a model update that corrupts step 3 breaks steps 4 through 8. Here is the trajectory-level eval loop that catches them.",
+    "category": "AI & Consulting",
+    "categoryColor": "ai",
+    "categoryGradient": "from-amber to-amber-dark",
+    "date": "August 19, 2026",
+    "author": "Adroit Consulting",
+    "authorInitials": "AC",
+    "readTime": "9",
+    "featured": false,
+    "tags": [
+      "AI Agents",
+      "LLM Evals",
+      "Observability",
+      "Regression Testing",
+      "Multi-Agent Systems",
+      "Production"
+    ],
+    "bannerImage": "/banners/agent-trajectory-evals-2026.png",
+    "status": "published"
+  },
+  {
     "slug": "apex-summer-26-security-v67-migration",
     "title": "Apex Security Defaults Flip at API 67.0",
     "excerpt": "API 67.0 flips Apex security defaults: with sharing is now implicit, WITH SECURITY_ENFORCED no longer compiles, and database operations run in user mode.",
