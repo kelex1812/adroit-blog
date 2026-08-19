@@ -25,6 +25,30 @@ export const posts: BlogPost[] = [
     "status": "published"
   },
   {
+    "slug": "gpu-finops-ai-cost-allocation-2026",
+    "title": "The GPU Bill Nobody Can Explain: FinOps for AI Workloads in 2026",
+    "excerpt": "98% of FinOps teams now manage AI spend, but hyperscaler cost tools still can't tell you which team owns a GPU. Here are the four allocation models, the tagging schema, and the levers that actually cut the bill.",
+    "category": "AI & Consulting",
+    "categoryColor": "ai",
+    "categoryGradient": "from-amber to-amber-dark",
+    "date": "August 19, 2026",
+    "author": "Adroit Consulting",
+    "authorInitials": "AC",
+    "readTime": "10 min read",
+    "featured": false,
+    "tags": [
+      "DevOps",
+      "FinOps",
+      "GPU",
+      "LLM Inference",
+      "Cost Optimization",
+      "Kubernetes",
+      "Model Serving"
+    ],
+    "bannerImage": "/banners/gpu-finops-ai-cost-allocation-2026.png",
+    "status": "published"
+  },
+  {
     "slug": "apex-summer-26-security-v67-migration",
     "title": "Apex Security Defaults Flip at API 67.0",
     "excerpt": "API 67.0 flips Apex security defaults: with sharing is now implicit, WITH SECURITY_ENFORCED no longer compiles, and database operations run in user mode.",
