@@ -26,8 +26,8 @@ export const posts: BlogPost[] = [
   },
   {
     "slug": "gpu-finops-ai-cost-allocation-2026",
-    "title": "The GPU Bill Nobody Can Explain: FinOps for AI Workloads in 2026",
-    "excerpt": "98% of FinOps teams now manage AI spend, but hyperscaler cost tools still can't tell you which team owns a GPU. Here are the four allocation models, the tagging schema, and the levers that actually cut the bill.",
+    "title": "The GPU Bill Nobody Can Explain: AI FinOps 2026",
+    "excerpt": "Hyperscaler cost tools still can't tell you which team owns a GPU. Here are four allocation models, a tagging schema, and the levers that actually cut the bill.",
     "category": "AI & Consulting",
     "categoryColor": "ai",
     "categoryGradient": "from-amber to-amber-dark",
