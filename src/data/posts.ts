@@ -2,6 +2,30 @@ import { BlogPost } from "./types";
 
 export const posts: BlogPost[] = [
   {
+    "slug": "generative-ui-runtime-interfaces-2026",
+    "title": "Generative UI: The Interface Is Becoming an AI Output",
+    "excerpt": "Generative UI assembles the interface itself at runtime instead of serving fixed screens. Here is what it is, the three patterns for building it, what it demands from your design system, and the predictability problem most teams miss.",
+    "category": "UI/UX",
+    "categoryColor": "ux",
+    "categoryGradient": "from-violet to-violet-dark",
+    "date": "August 20, 2026",
+    "author": "Adroit Consulting",
+    "authorInitials": "AC",
+    "readTime": "13 min read",
+    "featured": false,
+    "tags": [
+      "Generative UI",
+      "Design Systems",
+      "Design Engineering",
+      "Agentic UI",
+      "A2UI",
+      "Interface Patterns",
+      "AI"
+    ],
+    "bannerImage": "/banners/generative-ui-runtime-interfaces-2026.png",
+    "status": "published"
+  },
+  {
     "slug": "agent-trajectory-evals-2026",
     "title": "The Agent Regression Your Final-Output Eval Misses",
     "excerpt": "Final-output evals miss agent regressions: a model update that corrupts step 3 breaks steps 4 through 8. Here is the trajectory-level eval loop that catches them.",
