@@ -26,6 +26,29 @@ export const posts: BlogPost[] = [
     "status": "published"
   },
   {
+    "slug": "stakeholder-management-delivery-bottleneck-2026",
+    "title": "Stakeholder Management Is the New Delivery Bottleneck",
+    "excerpt": "AI automated the scheduling and status work, then made code cheap. What's left on the critical path is the thing AI can't do: getting humans to agree.",
+    "category": "Project Management",
+    "categoryColor": "pm",
+    "categoryGradient": "from-teal to-teal-dark",
+    "date": "August 20, 2026",
+    "author": "Adroit Consulting",
+    "authorInitials": "AC",
+    "readTime": "9 min read",
+    "featured": false,
+    "tags": [
+      "Project Management",
+      "Stakeholder Management",
+      "Delivery",
+      "Agile",
+      "AI Agents",
+      "Consulting"
+    ],
+    "bannerImage": "/banners/stakeholder-management-delivery-bottleneck-2026.png",
+    "status": "published"
+  },
+  {
     "slug": "agent-trajectory-evals-2026",
     "title": "The Agent Regression Your Final-Output Eval Misses",
     "excerpt": "Final-output evals miss agent regressions: a model update that corrupts step 3 breaks steps 4 through 8. Here is the trajectory-level eval loop that catches them.",
