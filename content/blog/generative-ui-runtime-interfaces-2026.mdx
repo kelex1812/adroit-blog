@@ -1,7 +1,7 @@
 ---
 title: "Generative UI: The Interface Is Becoming an AI Output"
 slug: generative-ui-runtime-interfaces-2026
-excerpt: "Generative UI assembles the interface itself at runtime instead of serving fixed screens. Here is what it is, the three patterns for building it, what it demands from your design system, and the predictability problem most teams miss."
+excerpt: "Generative UI assembles the interface itself at runtime, and most teams miss the predictability problem it creates."
 category: "UI/UX"
 categoryColor: ux
 categoryGradient: "from-violet to-violet-dark"
@@ -41,11 +41,17 @@ Most practical generative UI implementations fall into one of three patterns, an
 
 ![Three generative UI patterns on a control spectrum: static (the agent picks a predefined component, frontend owns layout), declarative (the agent returns a structured UI spec the frontend renders), and open-ended (the agent returns a full UI surface the frontend mostly hosts)](</diagrams/generative-ui-runtime-interfaces-2026/2-control-spectrum.png>)
 
-**Static generative UI, highest control.** The frontend owns the layout and interactions. The agent only selects which predefined component to show and fills it with data. CopilotKit implements this with a `useFrontendTool` hook that binds a built-in component to the lifecycle of an action, so a weather tool renders a styled weather card that reflects loading, executing, and complete states[^4]. The agent streams arguments but never invents UI. This is the safe on-ramp, and for most enterprise products it is the right default: you get the responsiveness of a generated interface without giving up any of your brand or accessibility guarantees.
+### Static Generative UI: Highest Control
 
-**Declarative generative UI, shared control.** The agent returns a structured UI specification, cards, lists, forms, widgets, and the frontend renders it against its own constraints and styling. The two common specs here are Google's A2UI, a JSONL-based declarative format that lets agents return UI widgets as part of their responses, and Open-JSON-UI, an open standardization of OpenAI's internal declarative schema[^4]. A2UI matters because it gives agents a way to render a form or a slider inline in a conversation instead of typing out a request in prose[^3]. The frontend still owns how that spec looks and behaves, so consistency survives, but the agent now composes the structure.
+The frontend owns the layout and interactions. The agent only selects which predefined component to show and fills it with data. CopilotKit implements this with a `useFrontendTool` hook that binds a built-in component to the lifecycle of an action, so a weather tool renders a styled weather card that reflects loading, executing, and complete states[^4]. The agent streams arguments but never invents UI. This is the safe on-ramp, and for most enterprise products it is the right default: you get the responsiveness of a generated interface without giving up any of your brand or accessibility guarantees.
 
-**Open-ended generative UI, lowest control.** The agent returns a full UI surface, often embedded or free-form, and the frontend mainly hosts it. This is the pattern behind Google's dynamic view, where the model writes the HTML, CSS, and JavaScript for a complete page[^1]. You get the most personalization and the least consistency. You trade safety, accessibility, and brand control for flexibility, which is why this belongs in bounded, low-stakes contexts and not on your core transactional flows[^4].
+### Declarative Generative UI: Shared Control
+
+The agent returns a structured UI specification, cards, lists, forms, widgets, and the frontend renders it against its own constraints and styling. The two common specs here are Google's A2UI, a JSONL-based declarative format that lets agents return UI widgets as part of their responses, and Open-JSON-UI, an open standardization of OpenAI's internal declarative schema[^4]. A2UI matters because it gives agents a way to render a form or a slider inline in a conversation instead of typing out a request in prose[^3]. The frontend still owns how that spec looks and behaves, so consistency survives, but the agent now composes the structure.
+
+### Open-Ended Generative UI: Lowest Control
+
+The agent returns a full UI surface, often embedded or free-form, and the frontend mainly hosts it. This is the pattern behind Google's dynamic view, where the model writes the HTML, CSS, and JavaScript for a complete page[^1]. You get the most personalization and the least consistency. You trade safety, accessibility, and brand control for flexibility, which is why this belongs in bounded, low-stakes contexts and not on your core transactional flows[^4].
 
 The three patterns are not competing products. They are a ladder you climb as confidence grows, and a map for deciding what each surface of your product needs. A settings page or a checkout should almost certainly sit at the static end. A search result for "explain how RNA polymerase works" is a fine candidate for open-ended.
 
@@ -55,9 +61,9 @@ Here is the part that should concern design-system teams most: generative UI onl
 
 Vercel's answer is what it calls an AI-native design system, and the requirements are worth stealing even if you never touch v0[^5]:
 
-- **Open, transparent components.** Component libraries that require wrapping, style overrides, or mismatched APIs add abstraction layers the model cannot predict through. Every layer makes the output less consistent.
-- **Composable, consistent APIs.** The architecture has to be predictable so both people and models can work with it.
-- **Simple, token-based styling.** Tokens feed directly into theming, so the model gets a visual baseline and stays on-brand.
+- Open, transparent components. Component libraries that require wrapping, style overrides, or mismatched APIs add abstraction layers the model cannot predict through. Every layer makes the output less consistent, which is why [headless UI component libraries](/blog/headless-ui-component-libraries-2026), which separate structure from styling, are the closest existing pattern to something a model can consume cleanly.
+- Composable, consistent APIs. The architecture has to be predictable so both people and models can work with it.
+- Simple, token-based styling. Tokens feed directly into theming, so the model gets a visual baseline and stays on-brand.
 
 The concrete workflow is a registry. shadcn/ui registries let you define and share branded components and blocks in a format models can consume, and they support the Model Context Protocol, so generations stay grounded in your real system across tools like Cursor and Windsurf[^5]. A registry becomes the mechanism by which both humans and machines contextualize a design system.
 
@@ -77,7 +83,7 @@ There is also the question of explanation. When users understand why an interfac
 
 If your team wants to move on this, the path is deliberately conservative. Start at the static end of the spectrum. Pick one low-stakes, high-repetition surface, a search interface, an FAQ, a recommendation panel, and let an agent select among your existing components and fill them with data. Measure whether the adaptive version beats the fixed one before you build anything more ambitious[^4].
 
-Before you scale, make the design system model-readable. Adopt DTCG-standard tokens if you have not, publish a component registry that supports MCP, and make your documentation searchable by a model[^5][^6]. This is the same token-first discipline our earlier guide covered, now aimed at a machine consumer.
+Before you scale, make the design system model-readable. Adopt DTCG-standard tokens if you have not, publish a component registry that supports MCP, and make your documentation searchable by a model[^5][^6]. This is the same token-first discipline [our earlier guide on token-first design systems](/blog/token-first-design-systems-2026) covered, now aimed at a machine consumer.
 
 Then decide, surface by surface, where the product should stay fixed and where it may adapt. Keep transactional and high-risk flows stable. Let exploratory and low-stakes surfaces move.
 

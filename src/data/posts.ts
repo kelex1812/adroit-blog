@@ -4,7 +4,7 @@ export const posts: BlogPost[] = [
   {
     "slug": "generative-ui-runtime-interfaces-2026",
     "title": "Generative UI: The Interface Is Becoming an AI Output",
-    "excerpt": "Generative UI assembles the interface itself at runtime instead of serving fixed screens. Here is what it is, the three patterns for building it, what it demands from your design system, and the predictability problem most teams miss.",
+    "excerpt": "Generative UI assembles the interface itself at runtime, and most teams miss the predictability problem it creates.",
     "category": "UI/UX",
     "categoryColor": "ux",
     "categoryGradient": "from-violet to-violet-dark",
