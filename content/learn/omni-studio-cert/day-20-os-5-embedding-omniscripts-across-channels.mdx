@@ -16,7 +16,13 @@ tags: [OmniStudio, OmniScripts]
 
 **Pass context to pre-populate.** Hand record context and parameters (for example, `recordId`) into the script so it opens pre-populated. Scripts read context via public attributes or URL parameters.
 
-**Channel nuances.** Experience Cloud needs licensing, mobile needs responsive steps and touch-friendly inputs, and embedded web may need auth context.
+**Channel nuances.** Each channel adds a specific setup step and a specific constraint:
+
+**Experience Cloud: license and site exposure.** Embedding an OmniScript on an Experience Cloud site requires the right licensing in place before anything renders. Configure the site to expose the OmniScript wrapper, then drop the auto-generated component onto the Experience Builder page. Skip the license and the script never renders for portal users.
+
+**Mobile: responsive steps and touch targets.** On the Salesforce mobile app, the same OmniScript definition renders responsively, but only if its steps were laid out with responsive behavior in mind. Keep layouts fluid, keep inputs touch-friendly with larger tap targets, and verify the flow on a narrow screen. A desktop-only step layout that relies on fixed widths breaks on mobile.
+
+**Embedded web: auth context.** When the OmniScript is embedded in an external web context, it runs inside a session that must carry the right context in. Pass auth and record context into the script so it opens authenticated and pre-populated. Without that context, the embedded script cannot resolve the user or the record.
 
 **Auto-generated LWC wrappers.** Auto-generated wrappers make embedding drag-and-drop in App Builder and Experience Builder.
 
@@ -24,10 +30,10 @@ tags: [OmniStudio, OmniScripts]
 
 ## Configuration Walkthrough
 
-1. Design the script to accept context parameters.
-2. Embed via LWC wrapper on Lightning pages.
-3. Embed on Experience Cloud / mobile as required.
-4. Verify context flows in each channel.
+1. Design the script to accept context parameters. Define input parameters in the script Properties panel so host pages can pass `recordId` and other values that pre-populate the flow.
+2. Embed via LWC wrapper on Lightning pages. Add the auto-generated LWC wrapper component to an App Builder page and map the host record values into the wrapper's attributes, which flow into the script's context parameters.
+3. Embed on Experience Cloud / mobile as required. Drop the same wrapper onto an Experience Builder page (after the site is licensed and configured) or into the mobile layout, reusing the one script definition.
+4. Verify context flows in each channel. Open the embedded script on each surface and confirm the record context arrives and pre-populates before the user interacts.
 
 ## Exam Traps
 
