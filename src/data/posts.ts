@@ -2,6 +2,31 @@ import { BlogPost } from "./types";
 
 export const posts: BlogPost[] = [
   {
+    "slug": "dark-mode-accessibility-2026",
+    "title": "Dark Mode Is an Accessibility Feature. Treat It Like One.",
+    "excerpt": "Theme switching got cheap in 2026, which is exactly when it became an accessibility job. The contrast audit applies twice, and the evidence says the OS signal is the feature.",
+    "category": "UI/UX",
+    "categoryColor": "ux",
+    "categoryGradient": "from-violet to-violet-dark",
+    "date": "August 23, 2026",
+    "author": "Adroit Consulting",
+    "authorInitials": "AC",
+    "readTime": "10 min read",
+    "featured": false,
+    "tags": [
+      "Dark Mode",
+      "Accessibility",
+      "Design Tokens",
+      "WCAG",
+      "Interface Patterns",
+      "Design Systems",
+      "CSS",
+      "UI/UX"
+    ],
+    "bannerImage": "/banners/dark-mode-accessibility-2026.png",
+    "status": "published"
+  },
+  {
     "slug": "generative-ui-runtime-interfaces-2026",
     "title": "Generative UI: The Interface Is Becoming an AI Output",
     "excerpt": "Generative UI assembles the interface itself at runtime, and most teams miss the predictability problem it creates.",
