@@ -4,7 +4,7 @@ export const posts: BlogPost[] = [
   {
     "slug": "dark-mode-accessibility-2026",
     "title": "Dark Mode Is an Accessibility Feature. Treat It Like One.",
-    "excerpt": "Theme switching got cheap in 2026, which is exactly when it became an accessibility job. The contrast audit applies twice, and the evidence says the OS signal is the feature.",
+    "excerpt": "Making theming cheap in 2026 is what turned dark mode into an accessibility job. The contrast audit applies twice, and the OS signal is the feature.",
     "category": "UI/UX",
     "categoryColor": "ux",
     "categoryGradient": "from-violet to-violet-dark",
