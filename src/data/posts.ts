@@ -2,6 +2,29 @@ import { BlogPost } from "./types";
 
 export const posts: BlogPost[] = [
   {
+    "slug": "agent-native-pm-tooling-consulting-2026",
+    "title": "The PM Stack Went Agent-Native. Choose It Like a Delivery Decision, Not a Feature List.",
+    "excerpt": "The next PM tooling decision is not which tool has the best Gantt. It is where agents get access, how much autonomy they earn, and whether you can keep one client out of the next.",
+    "category": "Project Management",
+    "categoryColor": "pm",
+    "categoryGradient": "from-teal to-teal-dark",
+    "date": "August 23, 2026",
+    "author": "Adroit Consulting",
+    "authorInitials": "AC",
+    "readTime": "9 min read",
+    "featured": false,
+    "tags": [
+      "Project Management",
+      "PM Tooling",
+      "AI Agents",
+      "Agile",
+      "Consulting",
+      "MCP"
+    ],
+    "bannerImage": "/banners/agent-native-pm-tooling-consulting-2026.png",
+    "status": "published"
+  },
+  {
     "slug": "dark-mode-accessibility-2026",
     "title": "Dark Mode Is an Accessibility Feature. Treat It Like One.",
     "excerpt": "Making theming cheap in 2026 is what turned dark mode into an accessibility job. The contrast audit applies twice, and the OS signal is the feature.",
