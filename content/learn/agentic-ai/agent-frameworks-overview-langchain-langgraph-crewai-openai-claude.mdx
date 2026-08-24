@@ -36,7 +36,7 @@ LangChain and LangGraph are from the same company and are not rivals. They are t
 
 **LangChain** is the ecosystem: integrations for models, vector stores, document loaders, and retrievers, plus the abstractions that string them into chains. Its breadth is the point. The project reports well over a thousand integrations, and that coverage is why it has the highest download volume of the group. LangChain hit a 1.0 general availability release in October 2025, which added a simpler `create_agent` primitive, semantic versioning, and a middleware layer for summarization, PII detection, and human-in-the-loop patterns. [^1] The honest tradeoff is that breadth costs debuggability. When something breaks deep inside a chain, you can end up debugging the framework's internals rather than your own logic. [^9]
 
-**LangGraph** is the orchestration runtime. It models an agent as a `StateGraph`: a typed state schema, a set of nodes that are just Python functions, and edges that decide which node runs next, including conditional edges that branch on the current state. The graph can loop back on itself, which is how you get retries and tool-calling loops, and it can pause for human input and resume later. [^2] [^7]
+**LangGraph** is the orchestration runtime. It models an agent as a `StateGraph`: a typed state schema, a set of nodes that are just Python functions, and edges that decide which node runs next, including conditional edges that branch on the current state. The graph can loop back on itself, which is how you get retries and tool-calling loops, and it can pause for human input and resume later. [^2] [^3]
 
 The core primitive is worth seeing in code, because it is the mental model for the whole framework:
 
@@ -65,7 +65,7 @@ graph = builder.compile()
 
 Each node takes the current state and returns a partial update. The graph compiles into a runnable, and the shared `State` flows through every node. That shared, typed, checkpointable state object is what separates LangGraph from a plain function pipeline. It is what lets the graph loop, pause, and recover. [^2]
 
-LangGraph reached GA in May 2025 and its own 1.0 milestone in October 2025, and its production adopters include companies you have heard of. [^7] It is model-agnostic: different nodes can call different providers, which matters if you want to route cheap work to one model and hard reasoning to another. The cost is verbosity. Even a simple two-agent flow asks you to define a state schema, nodes, edges, and a compile step. For a linear pipeline with no branching, LangChain alone is often enough, and reaching for LangGraph is overkill. [^2] [^9]
+LangGraph reached GA in May 2025 and its own 1.0 milestone in October 2025, and its production adopters include companies you have heard of. [^3] It is model-agnostic: different nodes can call different providers, which matters if you want to route cheap work to one model and hard reasoning to another. The cost is verbosity. Even a simple two-agent flow asks you to define a state schema, nodes, edges, and a compile step. For a linear pipeline with no branching, LangChain alone is often enough, and reaching for LangGraph is overkill. [^2] [^9]
 
 ## CrewAI: agents with roles, goals, and backstories
 
@@ -178,9 +178,9 @@ None of these is the best framework. The question is which coordination model yo
 
 You now have the map of the framework terrain and the axes to read any framework against. The next lessons go deeper into the two that matter most for enterprise work: LangGraph's graph model and checkpointing, and the tool and handoff patterns that make the provider SDKs tick. From here the framework is a means, not the subject. The subject is the coordination your system needs.
 
-[^1]: changelog.langchain.com. [LangChain 1.0 is now generally available](https://changelog.langchain.com/announcements/langchain-1-0-now-generally-available)
+[^1]: blog.langchain.com. [LangChain and LangGraph Agent Frameworks Reach v1.0 Milestones](https://blog.langchain.com/langchain-langgraph-1dot0)
 [^2]: docs.langchain.com. [LangGraph Graph API overview](https://docs.langchain.com/oss/python/langgraph/graph-api)
-[^3]: changelog.langchain.com. [LangGraph 1.0 is now generally available](https://changelog.langchain.com/announcements/langgraph-1-0-is-now-generally-available)
+[^3]: blog.langchain.com. [LangChain and LangGraph Agent Frameworks Reach v1.0 Milestones](https://blog.langchain.com/langchain-langgraph-1dot0)
 [^4]: openai.github.io. [OpenAI Agents SDK documentation](https://openai.github.io/openai-agents-python/)
 [^5]: code.claude.com. [Claude Agent SDK overview](https://code.claude.com/docs/en/agent-sdk/overview)
 [^6]: docs.crewai.com. [CrewAI Agents concepts](https://docs.crewai.com/concepts/agents)
