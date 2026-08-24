@@ -3,8 +3,8 @@ import { BlogPost } from "./types";
 export const posts: BlogPost[] = [
   {
     "slug": "supabase-agent-skills-2026",
-    "title": "Supabase Wrote a Handbook for AI Coding Agents. The Benchmarks Show Why It Matters.",
-    "excerpt": "Your AI coding agent already knows Supabase. It keeps using it wrong: skipping RLS, hallucinating CLI commands, building views that bypass security. Supabase shipped an open Agent Skill to fix that, and its own evals show the pattern is real.",
+    "title": "Supabase Agent Skills: Benchmarks Prove Why It Matters",
+    "excerpt": "Your AI coding agent half-remembers Supabase. An open Agent Skill fixes that, and Supabase's own evals prove the pattern is real.",
     "category": "React & Web Dev",
     "categoryColor": "react",
     "categoryGradient": "from-emerald to-emerald-dark",
