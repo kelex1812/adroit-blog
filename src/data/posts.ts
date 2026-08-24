@@ -3,8 +3,8 @@ import { BlogPost } from "./types";
 export const posts: BlogPost[] = [
   {
     "slug": "agentforce-multi-agent-orchestration-2026",
-    "title": "Agentforce Multi-Agent Orchestration Is GA. Build It Like a Routing Problem, Not a Feature List.",
-    "excerpt": "Summer '26 graduated multi-agent orchestration to GA. The hard part isn't building agents anymore, it's describing them well enough to route and defending the seams between them.",
+    "title": "Agentforce Multi-Agent Orchestration: A Routing Problem",
+    "excerpt": "Summer '26 made multi-agent orchestration GA. Build agents precisely enough to route, and defend the seams where handoffs fail.",
     "category": "Salesforce",
     "categoryColor": "sf",
     "categoryGradient": "from-sky to-sky-dark",
