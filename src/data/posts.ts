@@ -2,6 +2,28 @@ import { BlogPost } from "./types";
 
 export const posts: BlogPost[] = [
   {
+    "slug": "agentforce-multi-agent-orchestration-2026",
+    "title": "Agentforce Multi-Agent Orchestration Is GA. Build It Like a Routing Problem, Not a Feature List.",
+    "excerpt": "Summer '26 graduated multi-agent orchestration to GA. The hard part isn't building agents anymore, it's describing them well enough to route and defending the seams between them.",
+    "category": "Salesforce",
+    "categoryColor": "sf",
+    "categoryGradient": "from-sky to-sky-dark",
+    "date": "August 24, 2026",
+    "author": "Adroit Consulting",
+    "authorInitials": "AC",
+    "readTime": "9 min read",
+    "featured": false,
+    "tags": [
+      "Salesforce",
+      "Agentforce",
+      "Multi-Agent Orchestration",
+      "AI Agents",
+      "Orchestration"
+    ],
+    "bannerImage": "/banners/agentforce-multi-agent-orchestration-2026.png",
+    "status": "published"
+  },
+  {
     "slug": "supabase-agent-skills-2026",
     "title": "Supabase Agent Skills: Benchmarks Prove Why It Matters",
     "excerpt": "Your AI coding agent half-remembers Supabase. An open Agent Skill fixes that, and Supabase's own evals prove the pattern is real.",
@@ -22,6 +44,27 @@ export const posts: BlogPost[] = [
       "AI Agents"
     ],
     "bannerImage": "/banners/supabase-agent-skills-2026.png",
+    "status": "published"
+  },
+  {
+    "slug": "test-drive-qwen-local",
+    "title": "Test-Drive Notes: Local Qwen for Web Dev",
+    "excerpt": "A practical look at running Qwen locally for frontend prototyping, code review, and quick documentation tasks. The notes cover setup, latency, and where local models still need a cloud model.",
+    "category": "React & Web Dev",
+    "categoryColor": "react",
+    "categoryGradient": "from-emerald to-emerald-dark",
+    "date": "August 24, 2026",
+    "author": "Adroit Consulting",
+    "authorInitials": "AC",
+    "readTime": "4 min read",
+    "featured": false,
+    "tags": [
+      "Web Development",
+      "Qwen",
+      "Local Models",
+      "AI Agents",
+      "Next.js"
+    ],
     "status": "published"
   },
   {
