@@ -2,6 +2,29 @@ import { BlogPost } from "./types";
 
 export const posts: BlogPost[] = [
   {
+    "slug": "supabase-agent-skills-2026",
+    "title": "Supabase Wrote a Handbook for AI Coding Agents. The Benchmarks Show Why It Matters.",
+    "excerpt": "Your AI coding agent already knows Supabase. It keeps using it wrong: skipping RLS, hallucinating CLI commands, building views that bypass security. Supabase shipped an open Agent Skill to fix that, and its own evals show the pattern is real.",
+    "category": "React & Web Dev",
+    "categoryColor": "react",
+    "categoryGradient": "from-emerald to-emerald-dark",
+    "date": "August 24, 2026",
+    "author": "Adroit Consulting",
+    "authorInitials": "AC",
+    "readTime": "8 min read",
+    "featured": false,
+    "tags": [
+      "Supabase",
+      "TypeScript",
+      "Web Development",
+      "MCP",
+      "Postgres",
+      "AI Agents"
+    ],
+    "bannerImage": "/banners/supabase-agent-skills-2026.png",
+    "status": "published"
+  },
+  {
     "slug": "agent-native-pm-tooling-consulting-2026",
     "title": "Agent-Native PM Tooling: A Delivery Decision",
     "excerpt": "The next PM tooling decision is where agents get access, how much autonomy they earn, and how you isolate one client from the next.",
