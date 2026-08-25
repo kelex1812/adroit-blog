@@ -3,8 +3,8 @@ import { BlogPost } from "./types";
 export const posts: BlogPost[] = [
   {
     "slug": "multi-agent-failure-structural-2026",
-    "title": "Multi-Agent Pipelines Fail by Design. The 2026 Data Says It's Structural.",
-    "excerpt": "2026 delivered the reliability data: cascade radius grows with pipeline depth, retry never fixes latent failures, and orchestration survives while free-form peer teams do not. Here is how to contain the blast radius.",
+    "title": "Multi-Agent Failure Is Structural: 2026 Data",
+    "excerpt": "Multi-agent systems fail 41-86% in production. The 2026 data: failure is structural, cascade radius grows with depth, retry never fixes latent faults.",
     "category": "AI & Consulting",
     "categoryColor": "ai",
     "categoryGradient": "from-amber to-amber-dark",
