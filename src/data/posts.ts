@@ -4,7 +4,7 @@ export const posts: BlogPost[] = [
   {
     "slug": "ai-agent-observability-opentelemetry-2026",
     "title": "AI Agents Fail Quietly. OpenTelemetry Is How You Catch Them.",
-    "excerpt": "Agents ship to production faster than teams can see them. Standard APM was built for deterministic services, so it misses the token costs, branching tool calls, and semantic failures that actually sink agent deployments. OpenTelemetry's GenAI conventions give agents a vendor-neutral telemetry vocabulary.",
+    "excerpt": "Agents fail while looking like they succeed. OpenTelemetry GenAI conventions give agent telemetry a vendor-neutral vocabulary, and the span model is how you catch the ones that break quietly.",
     "category": "AI & Consulting",
     "categoryColor": "ai",
     "categoryGradient": "from-amber to-amber-dark",
