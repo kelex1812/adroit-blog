@@ -2,6 +2,29 @@ import { BlogPost } from "./types";
 
 export const posts: BlogPost[] = [
   {
+    "slug": "multi-agent-failure-structural-2026",
+    "title": "Multi-Agent Pipelines Fail by Design. The 2026 Data Says It's Structural.",
+    "excerpt": "2026 delivered the reliability data: cascade radius grows with pipeline depth, retry never fixes latent failures, and orchestration survives while free-form peer teams do not. Here is how to contain the blast radius.",
+    "category": "AI & Consulting",
+    "categoryColor": "ai",
+    "categoryGradient": "from-amber to-amber-dark",
+    "date": "August 25, 2026",
+    "author": "Adroit Consulting",
+    "authorInitials": "AC",
+    "readTime": "9",
+    "featured": false,
+    "tags": [
+      "AI Agents",
+      "Multi-Agent Systems",
+      "Reliability",
+      "Orchestration",
+      "Failure Modes",
+      "Production"
+    ],
+    "bannerImage": "/banners/multi-agent-failure-structural-2026.png",
+    "status": "published"
+  },
+  {
     "slug": "agentforce-multi-agent-orchestration-2026",
     "title": "Agentforce Multi-Agent Orchestration: A Routing Problem",
     "excerpt": "Summer '26 made multi-agent orchestration GA. Build agents precisely enough to route, and defend the seams where handoffs fail.",
