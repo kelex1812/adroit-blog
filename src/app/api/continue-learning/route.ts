@@ -12,6 +12,7 @@
 import { NextResponse } from "next/server";
 import { getAllSeries, getLessonsForSeries } from "@/lib/learn";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
+import { accessSeam } from "@/lib/access";
 import type { ContinueLearningItem } from "@/shared/contracts-account";
 
 interface CompletionRow {
@@ -31,6 +32,16 @@ export async function GET() {
 
     const series = getAllSeries();
 
+    // Access seam gate (US-006): only surface in-progress series the user can
+    // actually read. not-launched/paywall → excluded from Continue Learning.
+    const accessible = new Set<string>();
+    for (const s of series) {
+      const decision = await accessSeam.decideCourseAccess(user.id, s.slug);
+      if (decision.kind === "granted" || decision.kind === "admin-preview") {
+        accessible.add(s.slug);
+      }
+    }
+
     const { data } = await supabase
       .from("lesson_completion")
       .select("lesson_slug, completed_at")
@@ -47,6 +58,7 @@ export async function GET() {
     const items: ContinueLearningItem[] = [];
 
     for (const s of series) {
+      if (!accessible.has(s.slug)) continue;
       const lessonSlugs = s.lessons.map((l) => l.slug);
       const completedSlugs = lessonSlugs.filter((slug) => bySlug.has(slug));
       const completedCount = completedSlugs.length;

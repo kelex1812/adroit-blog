@@ -22,6 +22,14 @@ vi.mock("@/lib/supabase/server", () => ({
   }),
 }));
 
+// Continue Learning now surfaces only series the user can read (US-006). The
+// mocked test series are live/free, so the seam grants them all.
+vi.mock("@/lib/access", () => ({
+  accessSeam: {
+    decideCourseAccess: async () => ({ kind: "granted" }),
+  },
+}));
+
 import { GET } from "./route";
 
 const AUTHED = { data: { user: { id: "u1", email: "jane@adroit.io" } } };

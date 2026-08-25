@@ -81,6 +81,46 @@
   --color-avatar-2: #132D54;   /* navy-light */
   --color-avatar-3: #C8102E;   /* red */
   --color-avatar-4: #A00D24;   /* red-dark */
+
+  /* ── COURSE CATALOG + ADMIN TOKENS (kara, t_16658263) ──────────────
+     Additive signal/hue/paywall/admin tokens for the course-catalog +
+     entitlements + admin platform (t_2eab480f). Nothing here replaces a
+     shipped token — it only ADDS. Full spec: design/design-tokens-course-catalog-admin.css. */
+
+  /* 1. Course-status signals */
+  --signal-pending: var(--color-amber);
+  --signal-pending-bg: var(--color-amber-light);
+  --signal-live: var(--color-emerald);
+  --signal-live-bg: var(--color-emerald-light);
+  --signal-archived: #6B7280;
+  --signal-archived-bg: #F3F4F6;
+  --signal-granted: #E11D48;
+  --signal-granted-bg: #FFE4E6;
+
+  /* 2. Access-model hues */
+  --am-free: #0EA5E9;
+  --am-free-text: #0369A1;
+  --am-subscription: #7C3AED;
+  --am-subscription-text: #5B21B6;
+  --am-one-time: #0D9488;
+  --am-one-time-text: #115E59;
+  --am-sub-or-one-time: #4F46E5;
+  --am-sub-or-one-time-text: #3730A3;
+  --am-granted: #E11D48;
+  --am-granted-text: #9F1239;
+
+  /* 3. Admin Operate surface */
+  --admin-sidebar-bg: var(--color-navy);
+  --admin-selected-bg: rgba(200, 16, 46, 0.06);
+  --admin-selected-ring: var(--color-red);
+  --admin-table-head: var(--color-gray-500);
+  --admin-table-border: #E5E7EB;
+
+  /* 4. Paywall (Decide/Learn) */
+  --paywall-panel: #0F2242;
+  --paywall-glow: 0 0 0 1px rgba(200, 16, 46, 0.14),
+                  0 24px 48px -16px rgba(200, 16, 46, 0.30);
+  --paywall-locked-row-opacity: 0.45;
 }
 
 /* ─────────────────────────────────────────────
@@ -99,11 +139,22 @@ body {
   color: #fff;
 }
 
-a:focus-visible,
-button:focus-visible {
+/* Global focus-visible ring — consistent brand ring on ALL interactive
+   elements (links, buttons, form controls, summary, role="button",
+   tabindex>=-1 custom widgets). Uses --focus-ring (red-light in light,
+   accent-hover in dark via the html.dark rule below) so contrast clears
+   WCAG 3:1 on every surface. */
+:focus-visible {
   outline: 2px solid var(--focus-ring);
   outline-offset: 2px;
   border-radius: 4px;
+}
+/* Elements that already draw their own visible border/background still get
+   the ring; keep the ring radius consistent with their small radii. */
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  border-radius: var(--radius-sm, 4px);
 }
 
 /* ─────────────────────────────────────────────
@@ -618,6 +669,26 @@ html.dark {
   --shadow-card-light: 0 1px 0 rgba(255, 255, 255, 0.03), 0 4px 16px -6px rgba(0, 0, 0, 0.5);
   --shadow-card-hover-light: 0 2px 0 rgba(255, 255, 255, 0.04), 0 18px 36px -12px rgba(0, 0, 0, 0.6);
   --shadow-menu-light: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 16px 32px -12px rgba(0, 0, 0, 0.55);
+
+  /* Course catalog + admin dark remap (kara tokens — brighter variants) */
+  --signal-archived: #9CA3AF;
+  --signal-archived-bg: rgba(156, 163, 175, 0.14);
+  --signal-granted: #FB7185;
+  --signal-granted-bg: rgba(225, 29, 72, 0.18);
+
+  --am-free: #38BDF8;
+  --am-free-text: #BAE6FD;
+  --am-subscription: #A78BFA;
+  --am-subscription-text: #DDD6FE;
+  --am-one-time: #2DD4BF;
+  --am-one-time-text: #CCFBF1;
+  --am-sub-or-one-time: #818CF8;
+  --am-sub-or-one-time-text: #E0E7FF;
+  --am-granted: #FB7185;
+  --am-granted-text: #FFE4E6;
+
+  --admin-selected-bg: rgba(200, 16, 46, 0.18);
+  --admin-table-border: #1F2937;
 }
 
 /* Dark focus ring — accent-hover #f47385 clears 6.3:1 on the dark page surface

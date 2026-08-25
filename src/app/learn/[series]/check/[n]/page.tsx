@@ -23,6 +23,14 @@ import {
 import { getSeriesBySlug } from "@/lib/learn";
 import { buildMetadata } from "@/lib/seo";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
+import {
+  accessSeam,
+  getAccessUserId,
+  getCourseRowBySlug,
+} from "@/lib/access";
+import { buildPaywallView } from "@/lib/paywall";
+import { LockedContentPage } from "@/components/Catalog/LockedContentPage";
+import { getLessonsForSeries } from "@/lib/learn";
 
 interface Props {
   params: Promise<{ series: string; n: string }>;
@@ -63,6 +71,27 @@ export default async function KnowledgeCheckPage({ params }: Props) {
   const meta = metas.find((c) => c.n === n);
   if (!meta) notFound();
   const [lessonStart, lessonEnd] = meta.lessons;
+
+  // Access seam gate (ADR-201): DB-backed status + entitlements. not-launched →
+  // 404; paywall → locked-content page (never the quiz, never 404).
+  const userId = await getAccessUserId();
+  const decision = await accessSeam.decideCourseAccess(userId, series);
+  if (decision.kind === "not-launched") notFound();
+  if (decision.kind === "paywall") {
+    const courseRow = await getCourseRowBySlug(series);
+    if (!courseRow) notFound();
+    const lessons = getLessonsForSeries(series);
+    return (
+      <LockedContentPage
+        seriesSlug={series}
+        view={buildPaywallView({
+          course: courseRow,
+          series: s,
+          peekLessonSlug: lessons[0]?.slug ?? null,
+        })}
+      />
+    );
+  }
 
   // Server-side session gate (ADR-104).
   const supabase = await getSupabaseServerClient();

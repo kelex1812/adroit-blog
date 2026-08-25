@@ -21,6 +21,9 @@ import CertReadiness from "@/components/Progress/CertReadiness";
 import CheckCardList from "@/components/Progress/CheckCardList";
 import ExamCard from "@/components/Progress/ExamCard";
 import { getKnowledgeChecks } from "@/lib/quiz";
+import { accessSeam, getAccessUserId, getCourseRowBySlug } from "@/lib/access";
+import { StatusBadge } from "@/components/Catalog/StatusBadge";
+import { AccessModelChip } from "@/components/Catalog/AccessModelChip";
 
 interface Props {
   params: Promise<{ series: string }>;
@@ -45,6 +48,15 @@ export default async function SeriesPage({ params }: Props) {
   const { series } = await params;
   const s = getSeriesBySlug(series);
   if (!s) notFound();
+
+  // Access seam gate (ADR-201): DB-backed status. not-launched (no courses row,
+  // or non-live + non-admin) → 404. The syllabus stays readable on a live course
+  // even when the member isn't entitled (US-004) — content-tier links gate via
+  // the lesson page seam.
+  const userId = await getAccessUserId();
+  const decision = await accessSeam.decideCourseAccess(userId, series);
+  if (decision.kind === "not-launched") notFound();
+  const courseRow = await getCourseRowBySlug(series);
 
   // Lesson-number ordering (ADR-105) — the syllabus client re-sorts on
   // toggle; the server always passes the canonical asc order.
@@ -103,6 +115,13 @@ export default async function SeriesPage({ params }: Props) {
             <span className="relative inline-flex items-center gap-1.5 font-mono text-[11px] font-bold text-white uppercase tracking-[0.07em] bg-white/20 backdrop-blur-sm px-[11px] py-1 rounded-full mb-3.5">
               {seriesShortLabel(s.slug)}
             </span>
+            {/* DB-backed status + access model (platform source of truth) */}
+            {courseRow && (
+              <span className="relative mb-3.5 ml-1.5 inline-flex items-center gap-2">
+                <StatusBadge status={courseRow.status} />
+                <AccessModelChip model={courseRow.access_model} />
+              </span>
+            )}
             <h1 className="relative text-[clamp(1.5rem,3vw,2rem)] font-extrabold text-white tracking-[-0.02em] mb-2 leading-tight">
               {s.name}
             </h1>

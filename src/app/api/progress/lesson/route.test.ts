@@ -26,6 +26,14 @@ vi.mock("@/lib/supabase/server", () => ({
   }),
 }));
 
+// The lesson route now gates writes through the access seam (US-006). The
+// canonical slug under test belongs to a live course, so the seam grants it.
+vi.mock("@/lib/access", () => ({
+  accessSeam: {
+    decideCourseAccess: async () => ({ kind: "granted" }),
+  },
+}));
+
 import { POST } from "./route";
 
 // Real canonical lesson slug (content/learn/omni-studio-cert/questions/…).

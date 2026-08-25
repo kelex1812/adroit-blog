@@ -267,320 +267,128 @@ export const learnSeries: LearningSeries[] = [
           "Context"
         ],
         "status": "published"
-      }
-    ],
-    "totalLessons": 15
-  },
-  {
-    "slug": "ai-at-work",
-    "name": "AI at Work",
-    "description": "A vendor-agnostic, 30-lesson primer for using AI in day-to-day work: foundations, prompting, productivity, small automations, and team adoption. Company-wide training that works for any team and any AI tool.",
-    "gradient": "from-fuchsia to-purple-600",
-    "lessons": [
-      {
-        "slug": "what-ai-actually-is",
-        "title": "Lesson 1: What AI Actually Is",
-        "series": "ai-at-work",
-        "lesson": 1,
-        "excerpt": "The words around AI are doing more confusing than clarifying. This lesson separates the four that trip up most people: models vs automation, chatbots vs tools, plus why 'LLM' and 'generative AI' are not synonyms.",
-        "date": "August 16, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "8 min read",
-        "tags": [
-          "Learn",
-          "AI",
-          "Workplace",
-          "Foundations"
-        ],
-        "status": "published"
       },
       {
-        "slug": "how-ai-thinks",
-        "title": "Lesson 2: How AI Thinks in Plain Language",
-        "series": "ai-at-work",
-        "lesson": 2,
-        "excerpt": "The tools you use every day do not read like you do. They read text in chunks called tokens, predict the next chunk over and over, and can only see a limited slice of the conversation at once. This lesson explains those three ideas and what they mean for how you prompt.",
-        "date": "August 17, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "8 min read",
-        "tags": [
-          "Learn",
-          "AI",
-          "Workplace",
-          "Foundations"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "hallucinations-what-they-are-and-how-to-catch-them",
-        "title": "Lesson 3: Hallucinations, and How to Catch Them",
-        "series": "ai-at-work",
-        "lesson": 3,
-        "excerpt": "AI tools make things up, and they do it in a confident voice. This lesson explains what a hallucination actually is, why a next-word predictor produces them, and the practical habits for catching them before they reach your work.",
-        "date": "August 18, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "8 min read",
-        "tags": [
-          "Learn",
-          "AI",
-          "Workplace",
-          "Foundations"
-        ],
-        "status": "published"
-      }
-    ],
-    "totalLessons": 3
-  },
-  {
-    "slug": "omni-studio-cert",
-    "name": "OmniStudio Developer Certification",
-    "description": "A 46-requirement deep dive for the Salesforce Certified OmniStudio Developer exam. One official exam-guide requirement per day, with config walkthroughs, exam traps, and practice questions.",
-    "group": "Salesforce Certifications",
-    "subgroup": "Developer",
-    "gradient": "from-red to-rose-600",
-    "lessons": [
-      {
-        "slug": "day-01-f1-omnistudio-solution-and-industry-use-cases",
-        "title": "OmniStudio F-1: OmniStudio Solution & Industry Use Cases",
-        "series": "omni-studio-cert",
-        "lesson": 1,
-        "excerpt": "Describe the OmniStudio solution as it applies to common customer use case scenarios in different industries (telco, energy, healthcare, public sector, etc.). Day 1 of the 46-requirement OmniStudio Developer exam prep.",
-        "date": "August 03, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "6 min read",
-        "tags": [
-          "OmniStudio",
-          "OmniStudio Fundamentals"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "day-02-f2-project-needs-requirements-assumptions-risks-const",
-        "title": "OmniStudio F-2: Project Needs: Requirements, Assumptions, Risks, Constraints",
-        "series": "omni-studio-cert",
-        "lesson": 2,
-        "excerpt": "Determine a project's needs by evaluating a customer's requirements, assumptions, risks, and constraints. Day 2 of the 46-requirement OmniStudio Developer exam prep.",
-        "date": "August 04, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "6 min read",
-        "tags": [
-          "OmniStudio",
-          "OmniStudio Fundamentals"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "day-03-f3-managed-package-vs-standard-runtime-upgrades",
-        "title": "OmniStudio F-3: Managed Package vs Standard Runtime; Upgrades",
-        "series": "omni-studio-cert",
-        "lesson": 3,
-        "excerpt": "Explain Managed Package Runtime vs. Standard Runtime, Automatic Upgrades, and Manual Intervention Upgrade. Day 3 of the 46-requirement OmniStudio Developer exam prep.",
-        "date": "August 05, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "6 min read",
-        "tags": [
-          "OmniStudio",
-          "OmniStudio Fundamentals"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "day-04-f4-licensing-permission-set-licenses-permission-sets",
-        "title": "OmniStudio F-4: Licensing, Permission Set Licenses & Permission Sets",
-        "series": "omni-studio-cert",
-        "lesson": 4,
-        "excerpt": "Explain OmniStudio license requirements, Permission Set licenses and Permission Sets. Day 4 of the 46-requirement OmniStudio Developer exam prep.",
-        "date": "August 06, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "6 min read",
-        "tags": [
-          "OmniStudio",
-          "OmniStudio Fundamentals"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "day-05-f5-implementation-toolchain-sfcli-vbt-migration",
-        "title": "OmniStudio F-5: Implementation Toolchain: SFCLI, VBT, Migration",
-        "series": "omni-studio-cert",
-        "lesson": 5,
-        "excerpt": "Describe the tools required to complete the end-to-end implementation process (SFCLI, VBT, Migration, etc.). Day 5 of the 46-requirement OmniStudio Developer exam prep.",
-        "date": "August 07, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "6 min read",
-        "tags": [
-          "OmniStudio",
-          "OmniStudio Fundamentals"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "day-06-f-6-testing-versioning-cloning",
-        "title": "OmniStudio F-6: Testing, Versioning & Cloning Components",
-        "series": "omni-studio-cert",
-        "lesson": 6,
-        "excerpt": "Explain testing, versioning, and cloning through OmniStudio components. This covers save vs. publish, cloning workflows, and version snapshots for deployment.",
-        "date": "August 8, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "10 min read",
-        "tags": [
-          "OmniStudio",
-          "OmniStudio Fundamentals"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "day-07-fc-1-flexcard-data-sources-testing-json",
-        "title": "OmniStudio FC-1: FlexCard Data Sources & Testing JSON",
-        "series": "omni-studio-cert",
-        "lesson": 7,
-        "excerpt": "Configure data sources such as SOQL, Data Mapper, Integration Procedure, Custom, etc. and test resulting JSON structure.",
-        "date": "August 9, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "8 min read",
-        "tags": [
-          "OmniStudio",
-          "FlexCards"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "day-08-fc-2-single-multi-level-cards-layouts-repeaters",
-        "title": "OmniStudio FC-2: Single/Multi-Level Cards, Layouts & Repeaters",
-        "series": "omni-studio-cert",
-        "lesson": 8,
-        "excerpt": "Construct single and multi-level FlexCards, organizing data using layouts, and repeaters.",
-        "date": "August 10, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "6 min read",
-        "tags": [
-          "OmniStudio",
-          "FlexCards"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "day-09-fc-3-binding-components-configuring-properties",
-        "title": "OmniStudio FC-3: Binding Components & Configuring Properties",
-        "series": "omni-studio-cert",
-        "lesson": 9,
-        "excerpt": "Bind essential components to construct FlexCards and configure their properties.",
-        "date": "August 11, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "6 min read",
-        "tags": [
-          "OmniStudio",
-          "FlexCards"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "day-10-fc-4-complex-card-actions-launch-fire-update",
-        "title": "OmniStudio FC-4: Complex Card Actions (Launch, Fire, Update)",
-        "series": "omni-studio-cert",
-        "lesson": 10,
-        "excerpt": "Define and implement complex card actions, including launching OmniScripts, firing events, and updating other components.",
-        "date": "August 12, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "6 min read",
-        "tags": [
-          "OmniStudio",
-          "FlexCards"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "day-11-fc-5-advanced-flexcard-properties",
-        "title": "OmniStudio FC-5: Advanced FlexCard Properties",
-        "series": "omni-studio-cert",
-        "lesson": 11,
-        "excerpt": "Configure advanced FlexCard properties: Event Listeners, Session Variables, Public Attributes, multi-language, child FlexCards, and custom LWC integration.",
-        "date": "August 13, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "6 min read",
-        "tags": [
-          "OmniStudio",
-          "FlexCards"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "day-12-fc-6-flexcard-styling-themes",
-        "title": "OmniStudio FC-6: FlexCard Styling & Themes",
-        "series": "omni-studio-cert",
-        "lesson": 12,
-        "excerpt": "Control FlexCard appearance two ways: element-level inline styling for one-off tweaks and shared themes for consistent branding.",
-        "date": "August 14, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "5 min read",
-        "tags": [
-          "OmniStudio",
-          "FlexCards"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "day-13-fc-7-conditional-rendering-with-states",
-        "title": "OmniStudio FC-7: Conditional Rendering with States",
-        "series": "omni-studio-cert",
-        "lesson": 13,
-        "excerpt": "Use FlexCard states and element-level conditions to show, hide, or restyle content when expressions against card data evaluate true.",
-        "date": "August 15, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "5 min read",
-        "tags": [
-          "OmniStudio",
-          "FlexCards"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "day-14-fc-8-embedding-flexcards-across-channels",
-        "title": "OmniStudio FC-8: Embedding FlexCards Across Channels",
-        "series": "omni-studio-cert",
-        "lesson": 14,
-        "excerpt": "Embed one FlexCard definition across Lightning pages, Experience Cloud sites, OmniScripts, and mobile, and design it for reuse with public attributes.",
-        "date": "August 16, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "5 min read",
-        "tags": [
-          "OmniStudio",
-          "FlexCards"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "day-15-fc-9-flexcard-best-practices",
-        "title": "OmniStudio FC-9: FlexCard Best Practices",
-        "series": "omni-studio-cert",
-        "lesson": 15,
-        "excerpt": "Validate your JSON, keep data sources lean, test every state and channel, and respect FLS. That combination is what separates a card that survives production from one that goes blank.",
-        "date": "August 17, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "5 min read",
-        "tags": [
-          "OmniStudio",
-          "FlexCards"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "day-16-os-1-omniscript-elements-dynamic-interactions",
-        "title": "OmniStudio OS-1: OmniScript Elements & Dynamic Interactions",
-        "series": "omni-studio-cert",
+        "slug": "multi-turn-agents-sessions-state-resuming-conversations",
+        "title": "Lesson 16: Multi-Turn Agents: Sessions, State, and Resuming Conversations",
+        "series": "agentic-ai",
         "lesson": 16,
-        "excerpt": "OmniScripts are guided journeys built from named elements that all land in one data JSON. If you understand that JSON contract, formulas, actions, and debugging all follow. If you don't, nothing else works.",
-        "date": "August 18, 2026",
+        "excerpt": "An LLM is stateless: every call forgets the one before it, so multi-turn behavior has to be built, not assumed. This lesson defines the session, the state it carries, and the checkpointing that lets an agent resume where it left off: the difference between a thread and a durable store, why the state schema is the real design, and how production systems survive restarts and long conversations.",
+        "date": "August 19, 2026",
         "author": "Adroit Consulting",
-        "readTime": "6 min read",
+        "readTime": "11 min read",
         "tags": [
-          "OmniStudio",
-          "OmniScripts"
+          "Learn",
+          "AI",
+          "Agentic",
+          "Sessions"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "guardrails-prompt-injection-system-boundaries-input-validation",
+        "title": "Lesson 17: Guardrails I: Prompt Injection Defense, System Boundaries, and Input Validation",
+        "series": "agentic-ai",
+        "lesson": 17,
+        "excerpt": "Prompt injection tops the OWASP list of LLM risks for a reason: an agent that can act turns a misled model into an unauthorized action. This lesson separates direct from indirect injection, explains why input filters and prompt hardening alone will not stop it, and argues that the durable defense lives at the system boundary: least-privilege tools, hard containment on what the agent can reach, and human approval for high-impact actions.",
+        "date": "August 20, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "11 min read",
+        "tags": [
+          "Learn",
+          "AI",
+          "Agentic",
+          "Security"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "guardrails-output-validation-allowlists-pii-redaction",
+        "title": "Lesson 18: Guardrails II, Output Validation, Allowlists, PII Redaction, and Refusal Paths",
+        "series": "agentic-ai",
+        "lesson": 18,
+        "excerpt": "Input guardrails keep an attacker from pushing the agent past its boundary. Output guardrails keep the agent from pushing bad output out the other side: validation, allowlists, PII redaction, and refusal paths.",
+        "date": "August 21, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "13 min read",
+        "tags": [
+          "Learn",
+          "AI",
+          "Agentic",
+          "Security"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "evaluation-evals-golden-datasets-llm-as-judge",
+        "title": "Lesson 19: Evaluation: Evals, Golden Datasets, LLM-as-Judge, and When It Lies",
+        "series": "agentic-ai",
+        "lesson": 19,
+        "excerpt": "An agent you cannot measure is an agent you cannot trust, and the moment a model changes you have no way to know what you traded away. This lesson walks the evaluation stack from the bottom up: the golden dataset that anchors everything, the classic metrics that break on open-ended output, the LLM-as-judge technique that replaces them, and the biases that make a judge lie, from position and verbosity preference to rating its own output too high and being misled by a confident wrong answer.",
+        "date": "August 22, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "14 min read",
+        "tags": [
+          "Learn",
+          "AI",
+          "Agentic",
+          "Evaluation"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "observability-tracing-logging-langsmith-opentelemetry-replay",
+        "title": "Lesson 20: Observability, Tracing, Logging, and Replay for Agents",
+        "series": "agentic-ai",
+        "lesson": 20,
+        "excerpt": "An agent runs several model calls, tool invocations, and retrieval steps inside one request, and when it returns the wrong answer you have no idea which step caused it. This lesson builds observability from the bottom up: the trace that records every step as a span, the trace tree that shows how they connect, the OpenTelemetry gen_ai.* conventions that give the telemetry a standard shape, the structured logs that answer 'why' when a trace only shows 'what,' and the replay loop that turns a captured trace back into a repeatable bug you can fix and verify.",
+        "date": "August 23, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "15 min read",
+        "tags": [
+          "Learn",
+          "AI",
+          "Agentic",
+          "Observability"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "agent-frameworks-overview-langchain-langgraph-crewai-openai-claude",
+        "title": "Lesson 21: Frameworks overview - LangChain, LangGraph, CrewAI, OpenAI Agents SDK, Claude Agent SDK",
+        "series": "agentic-ai",
+        "lesson": 21,
+        "excerpt": "By now you can build a single agent: a model, a loop, some tools. The hard part is deciding what holds the pieces together when the work grows. This lesson surveys the five frameworks you will actually meet in the wild, and it is honest about what each one is for. LangChain is an integration ecosystem. LangGraph is a stateful graph runtime for workflows that branch and loop. CrewAI is a role-based layer for teams of agents with jobs and backstories. The OpenAI Agents SDK is a deliberately tiny set of primitives with clean handoffs and guardrails. The Claude Agent SDK gives the agent a computer with built-in file, shell, and edit tools. You will learn the mental model behind each one, see the same small task written in two of them so the difference is concrete, and finish with a decision path for choosing a framework instead of trusting star counts.",
+        "date": "August 24, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "16 min read",
+        "tags": [
+          "Learn",
+          "AI",
+          "Agentic",
+          "Frameworks"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "agent-loop-by-hand-no-framework",
+        "title": "Lesson 22: Building Without a Framework: the Agent Loop by Hand in 100 Lines",
+        "series": "agentic-ai",
+        "lesson": 22,
+        "excerpt": "Lesson 21 ended on a quiet note: sometimes you don't need a framework at all. This lesson makes that concrete. You write the loop yourself, in roughly a hundred lines, with nothing but an LLM API and a while loop. You see the canonical agent loop in real code, you build a working agent with two tools, you learn the one ordering mistake that trips up every beginner, and you find out exactly where a hand-rolled loop runs out of room and a framework starts to earn its complexity.",
+        "date": "August 25, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "14 min read",
+        "tags": [
+          "Learn",
+          "AI",
+          "Agentic",
+          "Frameworks"
         ],
         "status": "published"
       }
     ],
-    "totalLessons": 16
+    "totalLessons": 22
   },
   {
     "slug": "salesforce-architect",
@@ -860,14 +668,1032 @@ export const learnSeries: LearningSeries[] = [
           "Vector Database"
         ],
         "status": "published"
+      },
+      {
+        "slug": "data-migration-strategy-etl-elt-tools-validation-cutover-rollback",
+        "title": "Lesson 16: Data Migration Strategy: ETL vs ELT, Tools, Validation, Cutover, and Rollback",
+        "series": "salesforce-architect",
+        "lesson": 16,
+        "excerpt": "The full migration lifecycle: ETL vs ELT, the Salesforce tool options (Data Import Wizard vs Data Loader vs enterprise ETL), dependency-ordered loading with external IDs, validation by record count and spot check, and the cutover and rollback plan that keeps a bad load from becoming a disaster.",
+        "date": "August 19, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "9 min read",
+        "tags": [
+          "Learn",
+          "Salesforce",
+          "Architect",
+          "Data Migration",
+          "ETL",
+          "ELT"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "large-data-volumes-archiving-big-objects-skinny-tables-indexing",
+        "title": "Lesson 17: Large Data Volumes: Archiving, Big Objects, Skinny Tables, and Indexing Strategy",
+        "series": "salesforce-architect",
+        "lesson": 17,
+        "excerpt": "How an org stays fast and inside its storage as volume grows: selectivity and custom indexes, skinny tables for read-heavy hot data, big objects for bulk historical storage, and archiving as the tier that sheds cold data before it drags everything down.",
+        "date": "August 20, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "10 min read",
+        "tags": [
+          "Learn",
+          "Salesforce",
+          "Architect",
+          "Large Data Volumes",
+          "Big Objects",
+          "Indexing"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "system-limits-governor-api-storage-planning",
+        "title": "Lesson 18: System Limits: Governor, API, and Storage Limits, and Planning Around Them",
+        "series": "salesforce-architect",
+        "lesson": 18,
+        "excerpt": "Governors exist to keep a multitenant platform fair. Learn the limits, then bulkify, batch, and monitor so they never fire on your watch.",
+        "date": "August 21, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "12 min read",
+        "tags": [
+          "Learn",
+          "Salesforce",
+          "Architect",
+          "Limits"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "environment-release-strategy-sandboxes-change-sets-devops",
+        "title": "Lesson 19: Environment and Release Strategy: Sandbox Types, Change Sets vs DevOps (sf/sfdx)",
+        "series": "salesforce-architect",
+        "lesson": 19,
+        "excerpt": "Where work happens and how it moves to production. The four sandbox types (Developer, Developer Pro, Partial Copy, Full), what each copies and how often it refreshes, then the release-mechanism fork: click-based change sets versus source-driven deployment with the sf CLI and a Git-based source of truth, including Salesforce DX and DevOps Center.",
+        "date": "August 22, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "10 min read",
+        "tags": [
+          "Learn",
+          "Salesforce",
+          "Architect",
+          "Sandboxes",
+          "Change Sets",
+          "DevOps",
+          "Salesforce DX"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "environments-cicd-in-ml-ai-pipelines",
+        "title": "Lesson 20: General Systems Architecture: Environments and CI/CD in ML and AI Pipelines",
+        "series": "salesforce-architect",
+        "lesson": 20,
+        "excerpt": "The same environment-and-release discipline from Lesson 19, applied to machine learning and AI systems. Why the ML artifact is more than code (code, data, and model all change), the continuous X's (CI, CD, CT, CM), the MLOps maturity levels, how a model promotes from a development environment to production, and what changes when the artifact is a nondeterministic agent that needs eval gates instead of unit tests.",
+        "date": "August 23, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "11 min read",
+        "tags": [
+          "Learn",
+          "Architect",
+          "MLOps",
+          "CI/CD",
+          "Environments",
+          "Model Registry",
+          "Agentic AI",
+          "General"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "solution-design-requirement-to-architecture-doc-nfrs-tradeoffs",
+        "title": "Lesson 21: Solution Design: Turning a Requirement Into an Architecture Document (NFRs and Tradeoffs)",
+        "series": "salesforce-architect",
+        "lesson": 21,
+        "excerpt": "How a requirement becomes an architecture document: separating the business why from the what and the how, writing measurable non-functional requirements using the Salesforce Well-Architected framework (Trusted, Easy, Adaptable), resolving design tradeoffs explicitly, and recording each decision with its rationale so the delivery team can build without re-litigating every choice.",
+        "date": "August 24, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "10 min read",
+        "tags": [
+          "Learn",
+          "Salesforce",
+          "Architect",
+          "Solution Design",
+          "NFRs",
+          "Architecture Documentation"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "architecture-review-design-reviews-decision-records-saying-no",
+        "title": "Lesson 22: Architecture Review: Design Reviews, Decision Records, and How to Say No",
+        "series": "salesforce-architect",
+        "lesson": 22,
+        "excerpt": "The review discipline that keeps architecture coherent as the org grows: design review as a forum, not a gate, the ADR as durable decision memory, and how to decline a bad how without rejecting the person behind it.",
+        "date": "August 25, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "10 min read",
+        "tags": [
+          "Learn",
+          "Salesforce",
+          "Architect",
+          "Architecture Review",
+          "Decision Records",
+          "Governance"
+        ],
+        "status": "published"
       }
     ],
-    "totalLessons": 15
+    "totalLessons": 22
+  },
+  {
+    "slug": "ai-at-work",
+    "name": "AI at Work",
+    "description": "A vendor-agnostic, 30-lesson primer for using AI in day-to-day work: foundations, prompting, productivity, small automations, and team adoption. Company-wide training that works for any team and any AI tool.",
+    "gradient": "from-fuchsia to-purple-600",
+    "lessons": [
+      {
+        "slug": "what-ai-actually-is",
+        "title": "Lesson 1: What AI Actually Is",
+        "series": "ai-at-work",
+        "lesson": 1,
+        "excerpt": "The words around AI are doing more confusing than clarifying. This lesson separates the four that trip up most people: models vs automation, chatbots vs tools, plus why 'LLM' and 'generative AI' are not synonyms.",
+        "date": "August 16, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "8 min read",
+        "tags": [
+          "Learn",
+          "AI",
+          "Workplace",
+          "Foundations"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "how-ai-thinks",
+        "title": "Lesson 2: How AI Thinks in Plain Language",
+        "series": "ai-at-work",
+        "lesson": 2,
+        "excerpt": "The tools you use every day do not read like you do. They read text in chunks called tokens, predict the next chunk over and over, and can only see a limited slice of the conversation at once. This lesson explains those three ideas and what they mean for how you prompt.",
+        "date": "August 17, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "8 min read",
+        "tags": [
+          "Learn",
+          "AI",
+          "Workplace",
+          "Foundations"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "hallucinations-what-they-are-and-how-to-catch-them",
+        "title": "Lesson 3: Hallucinations, and How to Catch Them",
+        "series": "ai-at-work",
+        "lesson": 3,
+        "excerpt": "AI tools make things up, and they do it in a confident voice. This lesson explains what a hallucination actually is, why a next-word predictor produces them, and the practical habits for catching them before they reach your work.",
+        "date": "August 18, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "8 min read",
+        "tags": [
+          "Learn",
+          "AI",
+          "Workplace",
+          "Foundations"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "what-ai-is-genuinely-good-at-and-where-it-fails",
+        "title": "Lesson 4: What AI Is Genuinely Good At, and Where It Fails",
+        "series": "ai-at-work",
+        "lesson": 4,
+        "excerpt": "AI tools are not good at everything, and pretending they are is how people get burned. This lesson gives you a clean dividing line between the work AI genuinely helps with and the work you should keep, backed by what the research actually shows.",
+        "date": "August 19, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "9 min read",
+        "tags": [
+          "Learn",
+          "AI",
+          "Workplace",
+          "Foundations"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "data-safety-what-you-can-and-cannot-put-in",
+        "title": "Lesson 5: Data Safety: What You Can and Cannot Put Into an AI Tool",
+        "series": "ai-at-work",
+        "lesson": 5,
+        "excerpt": "Know what belongs in an AI tool before you paste. Off-limits categories, consumer versus enterprise, and habits that protect client data.",
+        "date": "August 20, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "8 min read",
+        "tags": [
+          "Learn",
+          "AI",
+          "Data Safety"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "ai-literacy-judging-ai-output",
+        "title": "Lesson 6: AI Literacy: Judging AI Output the Way You'd Judge a Colleague's Work",
+        "series": "ai-at-work",
+        "lesson": 6,
+        "excerpt": "The skill that makes every other AI skill safe: read AI output like a draft from a helpful but fallible colleague, then check it before you trust it.",
+        "date": "August 21, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "9 min read",
+        "tags": [
+          "Learn",
+          "AI",
+          "AI Literacy"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "anatomy-of-a-good-prompt-role-task-context-format",
+        "title": "Lesson 7: Anatomy of a Good Prompt: Role, Task, Context, and Format",
+        "series": "ai-at-work",
+        "lesson": 7,
+        "excerpt": "A good prompt is not a wish, it is a brief. This lesson breaks the brief into its four parts: the role you want the tool to play, the task you want done, the context it needs, and the format you want back. Learn the anatomy and you get sharper output from the first try.",
+        "date": "August 22, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "9 min read",
+        "tags": [
+          "Learn",
+          "AI",
+          "Workplace",
+          "Prompting"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "iteration-as-a-skill-refine-rephrase-ask-for-alternatives",
+        "title": "Lesson 8: Iteration as a Skill: Refine, Rephrase, and Ask for Alternatives",
+        "series": "ai-at-work",
+        "lesson": 8,
+        "excerpt": "The first answer is almost never the final one. The real skill is treating the conversation like a conversation: refine what is close, rephrase what misfires, and ask for alternatives when you are stuck. This lesson makes that loop deliberate.",
+        "date": "August 23, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "9 min read",
+        "tags": [
+          "Learn",
+          "AI",
+          "Workplace",
+          "Iteration"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "fixing-the-failure-modes-vague-asks-invented-facts-and-wrong-formats",
+        "title": "Lesson 9: Fixing the Failure Modes: Vague Asks, Invented Facts, and Wrong Formats",
+        "series": "ai-at-work",
+        "lesson": 9,
+        "excerpt": "When AI output misses, the cause is almost always one of three things: you asked vaguely, it invented a fact, or you never said what shape the answer should take. This lesson teaches you to name the failure mode and apply the fix that actually addresses it.",
+        "date": "August 24, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "9 min read",
+        "tags": [
+          "Learn",
+          "AI",
+          "Workplace",
+          "Prompting"
+        ],
+        "status": "published"
+      }
+    ],
+    "totalLessons": 9
+  },
+  {
+    "slug": "omni-studio-cert",
+    "name": "OmniStudio Developer Certification",
+    "description": "A 46-requirement deep dive for the Salesforce Certified OmniStudio Developer exam. One official exam-guide requirement per day, with config walkthroughs, exam traps, and practice questions.",
+    "group": "Salesforce Certifications",
+    "subgroup": "Developer",
+    "gradient": "from-red to-rose-600",
+    "lessons": [
+      {
+        "slug": "day-01-f1-omnistudio-solution-and-industry-use-cases",
+        "title": "OmniStudio F-1: OmniStudio Solution & Industry Use Cases",
+        "series": "omni-studio-cert",
+        "lesson": 1,
+        "excerpt": "Describe the OmniStudio solution as it applies to common customer use case scenarios in different industries (telco, energy, healthcare, public sector, etc.). Day 1 of the 46-requirement OmniStudio Developer exam prep.",
+        "date": "August 03, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "6 min read",
+        "tags": [
+          "OmniStudio",
+          "OmniStudio Fundamentals"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "day-02-f2-project-needs-requirements-assumptions-risks-const",
+        "title": "OmniStudio F-2: Project Needs: Requirements, Assumptions, Risks, Constraints",
+        "series": "omni-studio-cert",
+        "lesson": 2,
+        "excerpt": "Determine a project's needs by evaluating a customer's requirements, assumptions, risks, and constraints. Day 2 of the 46-requirement OmniStudio Developer exam prep.",
+        "date": "August 04, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "6 min read",
+        "tags": [
+          "OmniStudio",
+          "OmniStudio Fundamentals"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "day-03-f3-managed-package-vs-standard-runtime-upgrades",
+        "title": "OmniStudio F-3: Managed Package vs Standard Runtime; Upgrades",
+        "series": "omni-studio-cert",
+        "lesson": 3,
+        "excerpt": "Explain Managed Package Runtime vs. Standard Runtime, Automatic Upgrades, and Manual Intervention Upgrade. Day 3 of the 46-requirement OmniStudio Developer exam prep.",
+        "date": "August 05, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "6 min read",
+        "tags": [
+          "OmniStudio",
+          "OmniStudio Fundamentals"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "day-04-f4-licensing-permission-set-licenses-permission-sets",
+        "title": "OmniStudio F-4: Licensing, Permission Set Licenses & Permission Sets",
+        "series": "omni-studio-cert",
+        "lesson": 4,
+        "excerpt": "Explain OmniStudio license requirements, Permission Set licenses and Permission Sets. Day 4 of the 46-requirement OmniStudio Developer exam prep.",
+        "date": "August 06, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "6 min read",
+        "tags": [
+          "OmniStudio",
+          "OmniStudio Fundamentals"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "day-05-f5-implementation-toolchain-sfcli-vbt-migration",
+        "title": "OmniStudio F-5: Implementation Toolchain: SFCLI, VBT, Migration",
+        "series": "omni-studio-cert",
+        "lesson": 5,
+        "excerpt": "Describe the tools required to complete the end-to-end implementation process (SFCLI, VBT, Migration, etc.). Day 5 of the 46-requirement OmniStudio Developer exam prep.",
+        "date": "August 07, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "6 min read",
+        "tags": [
+          "OmniStudio",
+          "OmniStudio Fundamentals"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "day-06-f-6-testing-versioning-cloning",
+        "title": "OmniStudio F-6: Testing, Versioning & Cloning Components",
+        "series": "omni-studio-cert",
+        "lesson": 6,
+        "excerpt": "Explain testing, versioning, and cloning through OmniStudio components. This covers save vs. publish, cloning workflows, and version snapshots for deployment.",
+        "date": "August 8, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "10 min read",
+        "tags": [
+          "OmniStudio",
+          "OmniStudio Fundamentals"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "day-07-fc-1-flexcard-data-sources-testing-json",
+        "title": "OmniStudio FC-1: FlexCard Data Sources & Testing JSON",
+        "series": "omni-studio-cert",
+        "lesson": 7,
+        "excerpt": "Configure data sources such as SOQL, Data Mapper, Integration Procedure, Custom, etc. and test resulting JSON structure.",
+        "date": "August 9, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "8 min read",
+        "tags": [
+          "OmniStudio",
+          "FlexCards"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "day-08-fc-2-single-multi-level-cards-layouts-repeaters",
+        "title": "OmniStudio FC-2: Single/Multi-Level Cards, Layouts & Repeaters",
+        "series": "omni-studio-cert",
+        "lesson": 8,
+        "excerpt": "Construct single and multi-level FlexCards, organizing data using layouts, and repeaters.",
+        "date": "August 10, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "6 min read",
+        "tags": [
+          "OmniStudio",
+          "FlexCards"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "day-09-fc-3-binding-components-configuring-properties",
+        "title": "OmniStudio FC-3: Binding Components & Configuring Properties",
+        "series": "omni-studio-cert",
+        "lesson": 9,
+        "excerpt": "Bind essential components to construct FlexCards and configure their properties.",
+        "date": "August 11, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "6 min read",
+        "tags": [
+          "OmniStudio",
+          "FlexCards"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "day-10-fc-4-complex-card-actions-launch-fire-update",
+        "title": "OmniStudio FC-4: Complex Card Actions (Launch, Fire, Update)",
+        "series": "omni-studio-cert",
+        "lesson": 10,
+        "excerpt": "Define and implement complex card actions, including launching OmniScripts, firing events, and updating other components.",
+        "date": "August 12, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "6 min read",
+        "tags": [
+          "OmniStudio",
+          "FlexCards"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "day-11-fc-5-advanced-flexcard-properties",
+        "title": "OmniStudio FC-5: Advanced FlexCard Properties",
+        "series": "omni-studio-cert",
+        "lesson": 11,
+        "excerpt": "Configure advanced FlexCard properties: Event Listeners, Session Variables, Public Attributes, multi-language, child FlexCards, and custom LWC integration.",
+        "date": "August 13, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "6 min read",
+        "tags": [
+          "OmniStudio",
+          "FlexCards"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "day-12-fc-6-flexcard-styling-themes",
+        "title": "OmniStudio FC-6: FlexCard Styling & Themes",
+        "series": "omni-studio-cert",
+        "lesson": 12,
+        "excerpt": "Control FlexCard appearance two ways: element-level inline styling for one-off tweaks and shared themes for consistent branding.",
+        "date": "August 14, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "5 min read",
+        "tags": [
+          "OmniStudio",
+          "FlexCards"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "day-13-fc-7-conditional-rendering-with-states",
+        "title": "OmniStudio FC-7: Conditional Rendering with States",
+        "series": "omni-studio-cert",
+        "lesson": 13,
+        "excerpt": "Use FlexCard states and element-level conditions to show, hide, or restyle content when expressions against card data evaluate true.",
+        "date": "August 15, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "5 min read",
+        "tags": [
+          "OmniStudio",
+          "FlexCards"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "day-14-fc-8-embedding-flexcards-across-channels",
+        "title": "OmniStudio FC-8: Embedding FlexCards Across Channels",
+        "series": "omni-studio-cert",
+        "lesson": 14,
+        "excerpt": "Embed one FlexCard definition across Lightning pages, Experience Cloud sites, OmniScripts, and mobile, and design it for reuse with public attributes.",
+        "date": "August 16, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "5 min read",
+        "tags": [
+          "OmniStudio",
+          "FlexCards"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "day-15-fc-9-flexcard-best-practices",
+        "title": "OmniStudio FC-9: FlexCard Best Practices",
+        "series": "omni-studio-cert",
+        "lesson": 15,
+        "excerpt": "Validate your JSON, keep data sources lean, test every state and channel, and respect FLS. That combination is what separates a card that survives production from one that goes blank.",
+        "date": "August 17, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "5 min read",
+        "tags": [
+          "OmniStudio",
+          "FlexCards"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "day-16-os-1-omniscript-elements-dynamic-interactions",
+        "title": "OmniStudio OS-1: OmniScript Elements & Dynamic Interactions",
+        "series": "omni-studio-cert",
+        "lesson": 16,
+        "excerpt": "OmniScripts are guided journeys built from named elements that all land in one data JSON. If you understand that JSON contract, formulas, actions, and debugging all follow. If you don't, nothing else works.",
+        "date": "August 18, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "6 min read",
+        "tags": [
+          "OmniStudio",
+          "OmniScripts"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "day-17-os-2-child-omniscripts-flexcards-custom-lwcs",
+        "title": "OmniStudio OS-2: Child OmniScripts, FlexCards & Custom LWCs",
+        "series": "omni-studio-cert",
+        "lesson": 17,
+        "excerpt": "Child OmniScripts handle reuse, FlexCards handle display, and custom LWCs handle custom UI. Pick the right embed for the job, wire its data back into the script JSON, and complex flows compose cleanly.",
+        "date": "August 19, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "5 min read",
+        "tags": [
+          "OmniStudio",
+          "OmniScripts"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "day-18-os-3-omniscript-styling-themes",
+        "title": "OmniStudio OS-3: OmniScript Styling & Themes",
+        "series": "omni-studio-cert",
+        "lesson": 18,
+        "excerpt": "Themes define the design system across OmniScripts; element-level styling handles one-off exceptions. Use the theme as the source of truth, override sparingly, and verify responsive widths on desktop and mobile.",
+        "date": "August 20, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "5 min read",
+        "tags": [
+          "OmniStudio",
+          "OmniScripts"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "day-19-os-4-advanced-omniscript-properties",
+        "title": "OmniStudio OS-4: Advanced OmniScript Properties",
+        "series": "omni-studio-cert",
+        "lesson": 19,
+        "excerpt": "Configure the advanced properties that carry an OmniScript beyond a bare flow: multi-language translations, Save Options for draft-and-resume, Knowledge Articles for in-flow help, and the Messaging Framework for SMS and email. Match the property to the scenario.",
+        "date": "August 21, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "5 min read",
+        "tags": [
+          "OmniStudio",
+          "OmniScripts"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "day-20-os-5-embedding-omniscripts-across-channels",
+        "title": "OmniStudio OS-5: Embedding OmniScripts Across Channels",
+        "series": "omni-studio-cert",
+        "lesson": 20,
+        "excerpt": "One OmniScript definition embeds across Lightning pages, Experience Cloud, mobile, and web. Pass record context so it opens pre-populated, drop it in via the auto-generated LWC wrapper, and verify context per channel.",
+        "date": "August 22, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "5 min read",
+        "tags": [
+          "OmniStudio",
+          "OmniScripts"
+        ],
+        "status": "published"
+      }
+    ],
+    "totalLessons": 20
   }
 ];
 
 /** Flat list of every lesson, NEWEST FIRST (for sitemap, nav, flat lookups). */
 export const learnLessons: LearnLesson[] = [
+  {
+    "slug": "agent-loop-by-hand-no-framework",
+    "title": "Lesson 22: Building Without a Framework: the Agent Loop by Hand in 100 Lines",
+    "series": "agentic-ai",
+    "lesson": 22,
+    "excerpt": "Lesson 21 ended on a quiet note: sometimes you don't need a framework at all. This lesson makes that concrete. You write the loop yourself, in roughly a hundred lines, with nothing but an LLM API and a while loop. You see the canonical agent loop in real code, you build a working agent with two tools, you learn the one ordering mistake that trips up every beginner, and you find out exactly where a hand-rolled loop runs out of room and a framework starts to earn its complexity.",
+    "date": "August 25, 2026",
+    "author": "Adroit Consulting",
+    "readTime": "14 min read",
+    "tags": [
+      "Learn",
+      "AI",
+      "Agentic",
+      "Frameworks"
+    ],
+    "status": "published"
+  },
+  {
+    "slug": "architecture-review-design-reviews-decision-records-saying-no",
+    "title": "Lesson 22: Architecture Review: Design Reviews, Decision Records, and How to Say No",
+    "series": "salesforce-architect",
+    "lesson": 22,
+    "excerpt": "The review discipline that keeps architecture coherent as the org grows: design review as a forum, not a gate, the ADR as durable decision memory, and how to decline a bad how without rejecting the person behind it.",
+    "date": "August 25, 2026",
+    "author": "Adroit Consulting",
+    "readTime": "10 min read",
+    "tags": [
+      "Learn",
+      "Salesforce",
+      "Architect",
+      "Architecture Review",
+      "Decision Records",
+      "Governance"
+    ],
+    "status": "published"
+  },
+  {
+    "slug": "agent-frameworks-overview-langchain-langgraph-crewai-openai-claude",
+    "title": "Lesson 21: Frameworks overview - LangChain, LangGraph, CrewAI, OpenAI Agents SDK, Claude Agent SDK",
+    "series": "agentic-ai",
+    "lesson": 21,
+    "excerpt": "By now you can build a single agent: a model, a loop, some tools. The hard part is deciding what holds the pieces together when the work grows. This lesson surveys the five frameworks you will actually meet in the wild, and it is honest about what each one is for. LangChain is an integration ecosystem. LangGraph is a stateful graph runtime for workflows that branch and loop. CrewAI is a role-based layer for teams of agents with jobs and backstories. The OpenAI Agents SDK is a deliberately tiny set of primitives with clean handoffs and guardrails. The Claude Agent SDK gives the agent a computer with built-in file, shell, and edit tools. You will learn the mental model behind each one, see the same small task written in two of them so the difference is concrete, and finish with a decision path for choosing a framework instead of trusting star counts.",
+    "date": "August 24, 2026",
+    "author": "Adroit Consulting",
+    "readTime": "16 min read",
+    "tags": [
+      "Learn",
+      "AI",
+      "Agentic",
+      "Frameworks"
+    ],
+    "status": "published"
+  },
+  {
+    "slug": "fixing-the-failure-modes-vague-asks-invented-facts-and-wrong-formats",
+    "title": "Lesson 9: Fixing the Failure Modes: Vague Asks, Invented Facts, and Wrong Formats",
+    "series": "ai-at-work",
+    "lesson": 9,
+    "excerpt": "When AI output misses, the cause is almost always one of three things: you asked vaguely, it invented a fact, or you never said what shape the answer should take. This lesson teaches you to name the failure mode and apply the fix that actually addresses it.",
+    "date": "August 24, 2026",
+    "author": "Adroit Consulting",
+    "readTime": "9 min read",
+    "tags": [
+      "Learn",
+      "AI",
+      "Workplace",
+      "Prompting"
+    ],
+    "status": "published"
+  },
+  {
+    "slug": "solution-design-requirement-to-architecture-doc-nfrs-tradeoffs",
+    "title": "Lesson 21: Solution Design: Turning a Requirement Into an Architecture Document (NFRs and Tradeoffs)",
+    "series": "salesforce-architect",
+    "lesson": 21,
+    "excerpt": "How a requirement becomes an architecture document: separating the business why from the what and the how, writing measurable non-functional requirements using the Salesforce Well-Architected framework (Trusted, Easy, Adaptable), resolving design tradeoffs explicitly, and recording each decision with its rationale so the delivery team can build without re-litigating every choice.",
+    "date": "August 24, 2026",
+    "author": "Adroit Consulting",
+    "readTime": "10 min read",
+    "tags": [
+      "Learn",
+      "Salesforce",
+      "Architect",
+      "Solution Design",
+      "NFRs",
+      "Architecture Documentation"
+    ],
+    "status": "published"
+  },
+  {
+    "slug": "observability-tracing-logging-langsmith-opentelemetry-replay",
+    "title": "Lesson 20: Observability, Tracing, Logging, and Replay for Agents",
+    "series": "agentic-ai",
+    "lesson": 20,
+    "excerpt": "An agent runs several model calls, tool invocations, and retrieval steps inside one request, and when it returns the wrong answer you have no idea which step caused it. This lesson builds observability from the bottom up: the trace that records every step as a span, the trace tree that shows how they connect, the OpenTelemetry gen_ai.* conventions that give the telemetry a standard shape, the structured logs that answer 'why' when a trace only shows 'what,' and the replay loop that turns a captured trace back into a repeatable bug you can fix and verify.",
+    "date": "August 23, 2026",
+    "author": "Adroit Consulting",
+    "readTime": "15 min read",
+    "tags": [
+      "Learn",
+      "AI",
+      "Agentic",
+      "Observability"
+    ],
+    "status": "published"
+  },
+  {
+    "slug": "iteration-as-a-skill-refine-rephrase-ask-for-alternatives",
+    "title": "Lesson 8: Iteration as a Skill: Refine, Rephrase, and Ask for Alternatives",
+    "series": "ai-at-work",
+    "lesson": 8,
+    "excerpt": "The first answer is almost never the final one. The real skill is treating the conversation like a conversation: refine what is close, rephrase what misfires, and ask for alternatives when you are stuck. This lesson makes that loop deliberate.",
+    "date": "August 23, 2026",
+    "author": "Adroit Consulting",
+    "readTime": "9 min read",
+    "tags": [
+      "Learn",
+      "AI",
+      "Workplace",
+      "Iteration"
+    ],
+    "status": "published"
+  },
+  {
+    "slug": "environments-cicd-in-ml-ai-pipelines",
+    "title": "Lesson 20: General Systems Architecture: Environments and CI/CD in ML and AI Pipelines",
+    "series": "salesforce-architect",
+    "lesson": 20,
+    "excerpt": "The same environment-and-release discipline from Lesson 19, applied to machine learning and AI systems. Why the ML artifact is more than code (code, data, and model all change), the continuous X's (CI, CD, CT, CM), the MLOps maturity levels, how a model promotes from a development environment to production, and what changes when the artifact is a nondeterministic agent that needs eval gates instead of unit tests.",
+    "date": "August 23, 2026",
+    "author": "Adroit Consulting",
+    "readTime": "11 min read",
+    "tags": [
+      "Learn",
+      "Architect",
+      "MLOps",
+      "CI/CD",
+      "Environments",
+      "Model Registry",
+      "Agentic AI",
+      "General"
+    ],
+    "status": "published"
+  },
+  {
+    "slug": "evaluation-evals-golden-datasets-llm-as-judge",
+    "title": "Lesson 19: Evaluation: Evals, Golden Datasets, LLM-as-Judge, and When It Lies",
+    "series": "agentic-ai",
+    "lesson": 19,
+    "excerpt": "An agent you cannot measure is an agent you cannot trust, and the moment a model changes you have no way to know what you traded away. This lesson walks the evaluation stack from the bottom up: the golden dataset that anchors everything, the classic metrics that break on open-ended output, the LLM-as-judge technique that replaces them, and the biases that make a judge lie, from position and verbosity preference to rating its own output too high and being misled by a confident wrong answer.",
+    "date": "August 22, 2026",
+    "author": "Adroit Consulting",
+    "readTime": "14 min read",
+    "tags": [
+      "Learn",
+      "AI",
+      "Agentic",
+      "Evaluation"
+    ],
+    "status": "published"
+  },
+  {
+    "slug": "anatomy-of-a-good-prompt-role-task-context-format",
+    "title": "Lesson 7: Anatomy of a Good Prompt: Role, Task, Context, and Format",
+    "series": "ai-at-work",
+    "lesson": 7,
+    "excerpt": "A good prompt is not a wish, it is a brief. This lesson breaks the brief into its four parts: the role you want the tool to play, the task you want done, the context it needs, and the format you want back. Learn the anatomy and you get sharper output from the first try.",
+    "date": "August 22, 2026",
+    "author": "Adroit Consulting",
+    "readTime": "9 min read",
+    "tags": [
+      "Learn",
+      "AI",
+      "Workplace",
+      "Prompting"
+    ],
+    "status": "published"
+  },
+  {
+    "slug": "day-20-os-5-embedding-omniscripts-across-channels",
+    "title": "OmniStudio OS-5: Embedding OmniScripts Across Channels",
+    "series": "omni-studio-cert",
+    "lesson": 20,
+    "excerpt": "One OmniScript definition embeds across Lightning pages, Experience Cloud, mobile, and web. Pass record context so it opens pre-populated, drop it in via the auto-generated LWC wrapper, and verify context per channel.",
+    "date": "August 22, 2026",
+    "author": "Adroit Consulting",
+    "readTime": "5 min read",
+    "tags": [
+      "OmniStudio",
+      "OmniScripts"
+    ],
+    "status": "published"
+  },
+  {
+    "slug": "environment-release-strategy-sandboxes-change-sets-devops",
+    "title": "Lesson 19: Environment and Release Strategy: Sandbox Types, Change Sets vs DevOps (sf/sfdx)",
+    "series": "salesforce-architect",
+    "lesson": 19,
+    "excerpt": "Where work happens and how it moves to production. The four sandbox types (Developer, Developer Pro, Partial Copy, Full), what each copies and how often it refreshes, then the release-mechanism fork: click-based change sets versus source-driven deployment with the sf CLI and a Git-based source of truth, including Salesforce DX and DevOps Center.",
+    "date": "August 22, 2026",
+    "author": "Adroit Consulting",
+    "readTime": "10 min read",
+    "tags": [
+      "Learn",
+      "Salesforce",
+      "Architect",
+      "Sandboxes",
+      "Change Sets",
+      "DevOps",
+      "Salesforce DX"
+    ],
+    "status": "published"
+  },
+  {
+    "slug": "guardrails-output-validation-allowlists-pii-redaction",
+    "title": "Lesson 18: Guardrails II, Output Validation, Allowlists, PII Redaction, and Refusal Paths",
+    "series": "agentic-ai",
+    "lesson": 18,
+    "excerpt": "Input guardrails keep an attacker from pushing the agent past its boundary. Output guardrails keep the agent from pushing bad output out the other side: validation, allowlists, PII redaction, and refusal paths.",
+    "date": "August 21, 2026",
+    "author": "Adroit Consulting",
+    "readTime": "13 min read",
+    "tags": [
+      "Learn",
+      "AI",
+      "Agentic",
+      "Security"
+    ],
+    "status": "published"
+  },
+  {
+    "slug": "ai-literacy-judging-ai-output",
+    "title": "Lesson 6: AI Literacy: Judging AI Output the Way You'd Judge a Colleague's Work",
+    "series": "ai-at-work",
+    "lesson": 6,
+    "excerpt": "The skill that makes every other AI skill safe: read AI output like a draft from a helpful but fallible colleague, then check it before you trust it.",
+    "date": "August 21, 2026",
+    "author": "Adroit Consulting",
+    "readTime": "9 min read",
+    "tags": [
+      "Learn",
+      "AI",
+      "AI Literacy"
+    ],
+    "status": "published"
+  },
+  {
+    "slug": "day-19-os-4-advanced-omniscript-properties",
+    "title": "OmniStudio OS-4: Advanced OmniScript Properties",
+    "series": "omni-studio-cert",
+    "lesson": 19,
+    "excerpt": "Configure the advanced properties that carry an OmniScript beyond a bare flow: multi-language translations, Save Options for draft-and-resume, Knowledge Articles for in-flow help, and the Messaging Framework for SMS and email. Match the property to the scenario.",
+    "date": "August 21, 2026",
+    "author": "Adroit Consulting",
+    "readTime": "5 min read",
+    "tags": [
+      "OmniStudio",
+      "OmniScripts"
+    ],
+    "status": "published"
+  },
+  {
+    "slug": "system-limits-governor-api-storage-planning",
+    "title": "Lesson 18: System Limits: Governor, API, and Storage Limits, and Planning Around Them",
+    "series": "salesforce-architect",
+    "lesson": 18,
+    "excerpt": "Governors exist to keep a multitenant platform fair. Learn the limits, then bulkify, batch, and monitor so they never fire on your watch.",
+    "date": "August 21, 2026",
+    "author": "Adroit Consulting",
+    "readTime": "12 min read",
+    "tags": [
+      "Learn",
+      "Salesforce",
+      "Architect",
+      "Limits"
+    ],
+    "status": "published"
+  },
+  {
+    "slug": "guardrails-prompt-injection-system-boundaries-input-validation",
+    "title": "Lesson 17: Guardrails I: Prompt Injection Defense, System Boundaries, and Input Validation",
+    "series": "agentic-ai",
+    "lesson": 17,
+    "excerpt": "Prompt injection tops the OWASP list of LLM risks for a reason: an agent that can act turns a misled model into an unauthorized action. This lesson separates direct from indirect injection, explains why input filters and prompt hardening alone will not stop it, and argues that the durable defense lives at the system boundary: least-privilege tools, hard containment on what the agent can reach, and human approval for high-impact actions.",
+    "date": "August 20, 2026",
+    "author": "Adroit Consulting",
+    "readTime": "11 min read",
+    "tags": [
+      "Learn",
+      "AI",
+      "Agentic",
+      "Security"
+    ],
+    "status": "published"
+  },
+  {
+    "slug": "data-safety-what-you-can-and-cannot-put-in",
+    "title": "Lesson 5: Data Safety: What You Can and Cannot Put Into an AI Tool",
+    "series": "ai-at-work",
+    "lesson": 5,
+    "excerpt": "Know what belongs in an AI tool before you paste. Off-limits categories, consumer versus enterprise, and habits that protect client data.",
+    "date": "August 20, 2026",
+    "author": "Adroit Consulting",
+    "readTime": "8 min read",
+    "tags": [
+      "Learn",
+      "AI",
+      "Data Safety"
+    ],
+    "status": "published"
+  },
+  {
+    "slug": "day-18-os-3-omniscript-styling-themes",
+    "title": "OmniStudio OS-3: OmniScript Styling & Themes",
+    "series": "omni-studio-cert",
+    "lesson": 18,
+    "excerpt": "Themes define the design system across OmniScripts; element-level styling handles one-off exceptions. Use the theme as the source of truth, override sparingly, and verify responsive widths on desktop and mobile.",
+    "date": "August 20, 2026",
+    "author": "Adroit Consulting",
+    "readTime": "5 min read",
+    "tags": [
+      "OmniStudio",
+      "OmniScripts"
+    ],
+    "status": "published"
+  },
+  {
+    "slug": "large-data-volumes-archiving-big-objects-skinny-tables-indexing",
+    "title": "Lesson 17: Large Data Volumes: Archiving, Big Objects, Skinny Tables, and Indexing Strategy",
+    "series": "salesforce-architect",
+    "lesson": 17,
+    "excerpt": "How an org stays fast and inside its storage as volume grows: selectivity and custom indexes, skinny tables for read-heavy hot data, big objects for bulk historical storage, and archiving as the tier that sheds cold data before it drags everything down.",
+    "date": "August 20, 2026",
+    "author": "Adroit Consulting",
+    "readTime": "10 min read",
+    "tags": [
+      "Learn",
+      "Salesforce",
+      "Architect",
+      "Large Data Volumes",
+      "Big Objects",
+      "Indexing"
+    ],
+    "status": "published"
+  },
+  {
+    "slug": "multi-turn-agents-sessions-state-resuming-conversations",
+    "title": "Lesson 16: Multi-Turn Agents: Sessions, State, and Resuming Conversations",
+    "series": "agentic-ai",
+    "lesson": 16,
+    "excerpt": "An LLM is stateless: every call forgets the one before it, so multi-turn behavior has to be built, not assumed. This lesson defines the session, the state it carries, and the checkpointing that lets an agent resume where it left off: the difference between a thread and a durable store, why the state schema is the real design, and how production systems survive restarts and long conversations.",
+    "date": "August 19, 2026",
+    "author": "Adroit Consulting",
+    "readTime": "11 min read",
+    "tags": [
+      "Learn",
+      "AI",
+      "Agentic",
+      "Sessions"
+    ],
+    "status": "published"
+  },
+  {
+    "slug": "what-ai-is-genuinely-good-at-and-where-it-fails",
+    "title": "Lesson 4: What AI Is Genuinely Good At, and Where It Fails",
+    "series": "ai-at-work",
+    "lesson": 4,
+    "excerpt": "AI tools are not good at everything, and pretending they are is how people get burned. This lesson gives you a clean dividing line between the work AI genuinely helps with and the work you should keep, backed by what the research actually shows.",
+    "date": "August 19, 2026",
+    "author": "Adroit Consulting",
+    "readTime": "9 min read",
+    "tags": [
+      "Learn",
+      "AI",
+      "Workplace",
+      "Foundations"
+    ],
+    "status": "published"
+  },
+  {
+    "slug": "day-17-os-2-child-omniscripts-flexcards-custom-lwcs",
+    "title": "OmniStudio OS-2: Child OmniScripts, FlexCards & Custom LWCs",
+    "series": "omni-studio-cert",
+    "lesson": 17,
+    "excerpt": "Child OmniScripts handle reuse, FlexCards handle display, and custom LWCs handle custom UI. Pick the right embed for the job, wire its data back into the script JSON, and complex flows compose cleanly.",
+    "date": "August 19, 2026",
+    "author": "Adroit Consulting",
+    "readTime": "5 min read",
+    "tags": [
+      "OmniStudio",
+      "OmniScripts"
+    ],
+    "status": "published"
+  },
+  {
+    "slug": "data-migration-strategy-etl-elt-tools-validation-cutover-rollback",
+    "title": "Lesson 16: Data Migration Strategy: ETL vs ELT, Tools, Validation, Cutover, and Rollback",
+    "series": "salesforce-architect",
+    "lesson": 16,
+    "excerpt": "The full migration lifecycle: ETL vs ELT, the Salesforce tool options (Data Import Wizard vs Data Loader vs enterprise ETL), dependency-ordered loading with external IDs, validation by record count and spot check, and the cutover and rollback plan that keeps a bad load from becoming a disaster.",
+    "date": "August 19, 2026",
+    "author": "Adroit Consulting",
+    "readTime": "9 min read",
+    "tags": [
+      "Learn",
+      "Salesforce",
+      "Architect",
+      "Data Migration",
+      "ETL",
+      "ELT"
+    ],
+    "status": "published"
+  },
   {
     "slug": "context-engineering-what-to-include-trimming-summarization-windowing",
     "title": "Lesson 15: Context Engineering: What to Include, Trim, Summarize, and Window",

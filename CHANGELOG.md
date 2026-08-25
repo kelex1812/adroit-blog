@@ -4,6 +4,71 @@ All notable changes to the Adroit Consulting Blog project will be documented in 
 
 ## [Unreleased]
 
+### Platform: Course Catalog + Entitlements + Admin (t_2eab480f)
+
+DB-backed course lifecycle (status) + access model (entitlements) + a server-side
+admin backend, per brainiac arch t_22b26cb9. The database is now the source of
+truth for course status and who can read gated content; the blog stays public and
+content files stay untouched.
+
+**What**
+
+- **Migration `supabase/migrations/008_course_catalog.sql`** — five tables
+  (`user_roles`, `courses`, `user_entitlements`, `subscriptions`,
+  `admin_audit_log`) + indexes + RLS + `is_admin()` helper + admin seed
+  (`chris@adroit.io`) + live-course seeds for the four current published series.
+  `is_admin()` is created AFTER `user_roles` (SQL-language functions validate at
+  CREATE time). RLS is defense-in-depth (ADR-202); the server seam is the gate.
+- **Access seam `src/lib/access.ts`** — `getCatalogForUser`, `decideCourseAccess`,
+  `isAdmin` per the contract `AccessSeam`. Pure decision core (unit-tested without
+  a DB) + Supabase-backed loader (`getAccessUserId`, `getCourseRowBySlug` helpers).
+  Rules mirror US-002: free→granted (incl. guests), granted/one-time/subscription/
+  sub-or-one-time evaluated against entitlements/subscriptions, no row or non-live
+  (non-admin)→`not-launched`, admin→`admin-preview`, live+not-entitled→`paywall`.
+- **Gating sweep** — `/learn` hub filters DB-visible courses; series page 404s on
+  `not-launched` + renders StatusBadge/AccessModelChip; lesson/check/exam/
+  certificate 404 on `not-launched` and render a Paywall on `paywall` (never
+  content, never 404). Sitemap + learn params include live courses only (service
+  client read, graceful fallback to content if DB unreachable at build).
+  `/api/progress/lesson` + `/api/continue-learning` deny writes/reads for locked
+  courses (US-006).
+- **Admin backend** — `src/app/admin/{layout,page,users,matrix,audit}` + 9 API
+  routes (`/api/admin/courses`, `courses/[slug]`, `users`, `users/[id]`,
+  `users/[id]/role`, `entitlements`, `entitlements/bulk`, `audit`). Every route
+  gates `isAdmin` server-side first (404 page / 403 API, US-016); every mutation
+  writes an `admin_audit_log` row (ADR-205). Client hooks + AdminShell/table UI.
+- **Components** — `StatusBadge`, `AccessModelChip`, `Paywall`, `LockedContentPage`
+  (kara tokens added to `globals.css`).
+- **Tests** — `src/lib/access.test.ts` (17), `src/app/api/admin/courses/route.test.ts`
+  (3: guest 403, member 403, admin 200). Updated the lesson + continue-learning
+  route tests to mock the access seam.
+
+**Why**
+
+Adroit Learn needed a real platform for launching courses and controlling access
+without deploying content. Status + entitlements in the DB decouple authoring
+(Daily Planet) from the platform (this build). A single server seam keeps every
+surface consistent; RLS + the seam agree (ADR-201/202). Payment (Stripe) is out of
+scope but the model (subscriptions/one-time) is ready (ADR-204).
+
+**Known Issues**
+
+- Migration 008 was applied to the linked remote Supabase in this session. Re-run
+  `supabase db push` in any other environment (staging/prod) before the feature is
+  live there.
+- Seeded courses are `access_model='free'` so existing public lessons stay
+  reachable (no entitlements exist yet; `granted` would paywall every signed-in
+  user). Change a course's access model in `/admin` to gate it.
+- 3 pre-existing test failures (unrelated to this build, confirmed on the clean
+  baseline via `git stash`): `continue-learning` (×2) and `progress/quiz/tiers`
+  (×1) assert hardcoded lesson counts (agentic-ai=10, omni=11) that no longer match
+  the generated `src/data/learn.ts` (now 15/16) after content publishing. Content
+  team should update those expectations.
+- Lesson/check/exam/cert pages fail closed (500) if the `courses` table is
+  unreachable — documented arch §10 behavior, correct until migration is applied.
+- Blog routes, content files, and the a11y focus-ring/ShareBar changes (lara,
+  uncommitted at session start) are untouched.
+
 ### Fix: Dark-mode gaps in Learn lessons view — MarkComplete, toggles, lesson rows (t_38a3f180)
 
 Three elements in the Learn lessons (series syllabus) view stayed light on the dark

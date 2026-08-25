@@ -8,7 +8,8 @@
  */
 import { NextRequest, NextResponse } from "next/server";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
-import { getAllCanonicalLessonSlugs } from "@/lib/learn";
+import { getAllCanonicalLessonSlugs, findSeriesForLessonSlug } from "@/lib/learn";
+import { accessSeam } from "@/lib/access";
 import {
   checkOrigin,
   checkRateLimit,
@@ -80,6 +81,11 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    // Access seam gate (US-006): deny progress writes for a lesson in a course
+    // the user can't read (not-launched / paywall).
+    const gateErr = await denyIfNotAccessible(user.id, parsed.lessonSlug);
+    if (gateErr) return gateErr;
+
     const { error } = await supabase.from("lesson_completion").upsert(
       {
         user_id: user.id,
@@ -122,6 +128,10 @@ export async function DELETE(req: NextRequest) {
       return NextResponse.json({ status: "unauthenticated" });
     }
 
+    // Access seam gate (US-006): deny writes for a locked course.
+    const gateErr = await denyIfNotAccessible(user.id, parsed.lessonSlug);
+    if (gateErr) return gateErr;
+
     // Delete: remove the completion row so unmark survives reloads
     const { error } = await supabase
       .from("lesson_completion")
@@ -136,5 +146,30 @@ export async function DELETE(req: NextRequest) {
     return NextResponse.json({ status: "ok" });
   } catch {
     return NextResponse.json({ status: "error" }, { status: 500 });
+  }
+}
+
+/**
+ * Access-seam gate for a lesson write (US-006). Resolves the lesson's series,
+ * then denies (403) when the course is not-launched or paywalled for the user.
+ * Returns null when the write may proceed. Fail-closed: DB errors deny.
+ */
+async function denyIfNotAccessible(
+  userId: string,
+  lessonSlug: string,
+): Promise<NextResponse | null> {
+  try {
+    const series = findSeriesForLessonSlug(lessonSlug);
+    if (!series) return null; // unknown lesson — canonical check already handled
+    const decision = await accessSeam.decideCourseAccess(userId, series);
+    if (decision.kind === "granted" || decision.kind === "admin-preview") {
+      return null;
+    }
+    return NextResponse.json(
+      { error: "This course is not available to you" },
+      { status: 403 },
+    );
+  } catch {
+    return NextResponse.json({ error: "Server error" }, { status: 500 });
   }
 }

@@ -25,6 +25,9 @@ import GuestCTA from "@/components/Progress/GuestCTA";
 import { getQuizForLesson } from "@/lib/quiz";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
 import MDXArticle from "@/components/MDX/MDXArticle";
+import Paywall from "@/components/Catalog/Paywall";
+import { accessSeam, getAccessUserId, getCourseRowBySlug } from "@/lib/access";
+import { buildPaywallView } from "@/lib/paywall";
 
 interface Props {
   params: Promise<{ series: string; slug: string }>;
@@ -70,13 +73,46 @@ export default async function LessonPage({ params }: Props) {
 
   const lessons = getLessonsForSeries(series);
 
+  // Access seam gate (ADR-201) — DB-backed status + entitlements. not-launched
+  // → 404; paywall → render the Paywall instead of content (AC-3).
+  const userId = await getAccessUserId();
+  const decision = await accessSeam.decideCourseAccess(userId, series);
+  if (decision.kind === "not-launched") notFound();
+
   // Server-side session gate (ADR-104): guests NEVER receive question text —
-  // the quiz JSON is loaded only in the authed branch. Lesson pages become
-  // dynamic-ish (session read) — accepted trade-off per the arch plan.
+  // the quiz JSON is loaded only in the authed branch.
   const supabase = await getSupabaseServerClient();
   const { data: { user } } = await supabase.auth.getUser();
   const isAuthed = Boolean(user);
   const lessonQuiz = isAuthed ? getQuizForLesson(series, slug) : null;
+
+  // Paywall branch — live + not entitled. Server-rendered with the course's
+  // real access options + first published lesson as the peek.
+  if (decision.kind === "paywall") {
+    const courseRow = await getCourseRowBySlug(series);
+    const peekLessonSlug = lessons[0]?.slug ?? null;
+    return (
+      <div className="min-h-screen flex flex-col">
+        <Header />
+        <main id="main" className="flex-1">
+          {courseRow ? (
+            <Paywall
+              seriesSlug={series}
+              view={buildPaywallView({
+                course: courseRow,
+                series: seriesInfo,
+                peekLessonSlug,
+              })}
+            />
+          ) : (
+            notFound()
+          )}
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
 
   const jsonLd = {
     "@context": "https://schema.org",

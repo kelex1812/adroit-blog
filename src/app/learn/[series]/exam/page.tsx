@@ -26,6 +26,14 @@ import { getSeriesBySlug } from "@/lib/learn";
 import { buildMetadata } from "@/lib/seo";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
 import type { CheckProgress } from "@/shared/contracts";
+import {
+  accessSeam,
+  getAccessUserId,
+  getCourseRowBySlug,
+} from "@/lib/access";
+import { buildPaywallView } from "@/lib/paywall";
+import { LockedContentPage } from "@/components/Catalog/LockedContentPage";
+import { getLessonsForSeries } from "@/lib/learn";
 
 interface Props {
   params: Promise<{ series: string }>;
@@ -60,6 +68,27 @@ export default async function ExamPage({ params }: Props) {
 
   const exam = getCertExam(series);
   if (!exam) notFound();
+
+  // Access seam gate (ADR-201): DB-backed status + entitlements. not-launched →
+  // 404; paywall → locked-content page (never the exam, never 404).
+  const userId = await getAccessUserId();
+  const decision = await accessSeam.decideCourseAccess(userId, series);
+  if (decision.kind === "not-launched") notFound();
+  if (decision.kind === "paywall") {
+    const courseRow = await getCourseRowBySlug(series);
+    if (!courseRow) notFound();
+    const lessons = getLessonsForSeries(series);
+    return (
+      <LockedContentPage
+        seriesSlug={series}
+        view={buildPaywallView({
+          course: courseRow,
+          series: s,
+          peekLessonSlug: lessons[0]?.slug ?? null,
+        })}
+      />
+    );
+  }
 
   const supabase = await getSupabaseServerClient();
   const { data: { user } } = await supabase.auth.getUser();

@@ -84,6 +84,16 @@ export function getLesson(
 }
 
 /**
+ * Resolve the series slug a canonical lesson slug belongs to (first match
+ * across published lessons). Used by the progress APIs to gate a lesson write
+ * against the access seam (a lesson can't be completed in a course the user
+ * can't read). Returns undefined when the slug isn't a published lesson.
+ */
+export function findSeriesForLessonSlug(slug: string): string | undefined {
+  return learnLessons.find((l) => l.slug === slug)?.series;
+}
+
+/**
  * All canonical lesson slugs across EVERY series: the union of published
  * lesson data (learnLessons) and the generator's planned per-lesson question
  * files (content/learn/<series>/questions/<slug>.json — the same planned set

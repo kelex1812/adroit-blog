@@ -5,6 +5,7 @@ import { getAllSeries, toLearnCardSeries } from "@/lib/learn";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
 import { siteConfig } from "@/lib/seo";
 import type { CardGateState } from "@/shared/contracts-account";
+import { accessSeam, getAccessUserId } from "@/lib/access";
 
 /**
  * /learn hub — group/subgroup filters, Continue Learning (signed-in), and one
@@ -19,7 +20,7 @@ import type { CardGateState } from "@/shared/contracts-account";
  * slugs for SeriesProgress.
  */
 export default async function LearnLandingPage() {
-  const series = getAllSeries();
+  let series = getAllSeries();
 
   // Auth state (guest vs signed-in) resolved server-side from the HttpOnly
   // cookie — the same source as every other gated surface.
@@ -32,6 +33,22 @@ export default async function LearnLandingPage() {
     if (user) gate = "signed-in";
   } catch {
     // default to guest on session errors
+  }
+
+  // Access seam (ADR-201): DB-backed status. Live courses visible to all;
+  // pending/archived additionally to admins. A content series with no `courses`
+  // row (or non-live) is hidden from members. canAccess flows to the cards so
+  // locked cards render a lock (vs click-through).
+  try {
+    const userId = await getAccessUserId();
+    const catalog = await accessSeam.getCatalogForUser(userId);
+    const visibleSlugs = new Set(
+      catalog.entries.filter((e) => e.visible).map((e) => e.course.series_slug),
+    );
+    series = series.filter((s) => visibleSlugs.has(s.slug));
+  } catch {
+    // DB unreachable → keep content-derived series (degraded but non-breaking);
+    // the per-course pages still enforce the seam.
   }
 
   // Slim the payload at the server boundary: guests get card-render fields only.
