@@ -2,6 +2,30 @@ import { BlogPost } from "./types";
 
 export const posts: BlogPost[] = [
   {
+    "slug": "ai-agent-observability-opentelemetry-2026",
+    "title": "AI Agents Fail Quietly. OpenTelemetry Is How You Catch Them.",
+    "excerpt": "Agents ship to production faster than teams can see them. Standard APM was built for deterministic services, so it misses the token costs, branching tool calls, and semantic failures that actually sink agent deployments. OpenTelemetry's GenAI conventions give agents a vendor-neutral telemetry vocabulary.",
+    "category": "AI & Consulting",
+    "categoryColor": "ai",
+    "categoryGradient": "from-amber to-amber-dark",
+    "date": "August 25, 2026",
+    "author": "Adroit Consulting",
+    "authorInitials": "AC",
+    "readTime": "9 min read",
+    "featured": false,
+    "tags": [
+      "DevOps",
+      "Observability",
+      "OpenTelemetry",
+      "AI Agents",
+      "LLM",
+      "Telemetry",
+      "Cross-Pillar"
+    ],
+    "bannerImage": "/banners/ai-agent-observability-opentelemetry-2026.png",
+    "status": "published"
+  },
+  {
     "slug": "multi-agent-failure-structural-2026",
     "title": "Multi-Agent Failure Is Structural: 2026 Data",
     "excerpt": "Multi-agent systems fail 41-86% in production. The 2026 data: failure is structural, cascade radius grows with depth, retry never fixes latent faults.",
