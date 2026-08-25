@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useAdminUsers } from "@/lib/hooks/useAdminUsers";
 import { useAdminCourses } from "@/lib/hooks/useAdminCourses";
 import type { UserRole } from "@/shared/contracts-course-catalog";
@@ -25,26 +25,25 @@ export default function AdminUsersPage() {
   const [grantCourse, setGrantCourse] = useState<string>("");
   const [toast, setToast] = useState<string | null>(null);
 
-  // Default the grant course select to the first course once loaded.
-  useEffect(() => {
-    if (!grantCourse && courses && courses.length > 0) {
-      setGrantCourse(courses[0].course.id);
-    }
-  }, [courses, grantCourse]);
+  // Default the grant course select to the first course once loaded — derived,
+  // so the select shows a course without a sync setState-in-effect.
+  const defaultCourseId =
+    courses && courses.length > 0 ? courses[0].course.id : "";
+  const effectiveGrantCourse = grantCourse || defaultCourseId;
 
   async function onSetRole(userId: string, role: UserRole) {
     setToast((await setRole(userId, role)) ? "Role updated" : "Failed");
   }
 
   async function onGrant(userId: string) {
-    if (!grantCourse) return setToast("Select a course first");
-    const ok = await grant({ userId, courseId: grantCourse });
+    if (!effectiveGrantCourse) return setToast("Select a course first");
+    const ok = await grant({ userId, courseId: effectiveGrantCourse });
     setToast(ok ? "Granted" : "Grant failed");
   }
 
   async function onRevoke(userId: string) {
-    if (!grantCourse) return setToast("Select a course first");
-    const ok = await revoke(userId, grantCourse);
+    if (!effectiveGrantCourse) return setToast("Select a course first");
+    const ok = await revoke(userId, effectiveGrantCourse);
     setToast(ok ? "Revoked" : "Revoke failed");
   }
 
@@ -64,7 +63,7 @@ export default function AdminUsersPage() {
         </div>
         <div className="flex items-center gap-3">
           <select
-            value={grantCourse}
+            value={effectiveGrantCourse}
             onChange={(e) => setGrantCourse(e.target.value)}
             className="rounded-md border text-[12.5px] px-2 py-1.5 bg-transparent"
             style={{ borderColor: "var(--admin-table-border)" }}

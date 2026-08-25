@@ -16,7 +16,6 @@ export function useAdminUsers() {
   const [loading, setLoading] = useState(true);
 
   const refresh = useCallback(async (q: string) => {
-    setLoading(true);
     try {
       const url = q
         ? `/api/admin/users?q=${encodeURIComponent(q)}`
@@ -34,6 +33,8 @@ export function useAdminUsers() {
   }, []);
 
   useEffect(() => {
+    // Data-fetch on mount/query change — setState runs after await.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     refresh(query);
   }, [refresh, query]);
 

@@ -4,7 +4,6 @@
  * gate" tests across the admin backend (every route shares requireAdminApi).
  */
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { NextRequest } from "next/server";
 
 const { mocks } = vi.hoisted(() => {
   const getAccessUserId = vi.fn();
@@ -27,12 +26,6 @@ import { GET } from "./route";
 const ADMIN_ID = "user-admin";
 const MEMBER_ID = "user-member";
 
-function req(): NextRequest {
-  return new NextRequest("http://localhost:3000/api/admin/courses", {
-    method: "GET",
-  });
-}
-
 beforeEach(() => {
   vi.clearAllMocks();
   mocks.isAdmin.mockReset();
@@ -43,7 +36,7 @@ beforeEach(() => {
 describe("GET /api/admin/courses", () => {
   it("403s a guest (no session) — gate fires before any data access", async () => {
     mocks.getAccessUserId.mockResolvedValue(null);
-    const res = await GET(req());
+    const res = await GET();
     expect(res.status).toBe(403);
     expect(mocks.service.from).not.toHaveBeenCalled();
   });
@@ -51,7 +44,7 @@ describe("GET /api/admin/courses", () => {
   it("403s a signed-in non-admin", async () => {
     mocks.getAccessUserId.mockResolvedValue(MEMBER_ID);
     mocks.isAdmin.mockResolvedValue(false);
-    const res = await GET(req());
+    const res = await GET();
     expect(res.status).toBe(403);
     expect(mocks.service.from).not.toHaveBeenCalled();
   });
@@ -69,7 +62,7 @@ describe("GET /api/admin/courses", () => {
       table === "courses" ? coursesQuery : entsQuery,
     );
 
-    const res = await GET(req());
+    const res = await GET();
     expect(res.status).toBe(200);
     const json = (await res.json()) as { ok: boolean; data: { activeEntitlementCount: number }[] };
     expect(json.ok).toBe(true);

@@ -28,6 +28,9 @@ export function useAdminCourses() {
   }, []);
 
   useEffect(() => {
+    // Data-fetch on mount — setState runs after await (not synchronously),
+    // so the set-state-in-effect rule is a false positive here.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     refresh();
   }, [refresh]);
 

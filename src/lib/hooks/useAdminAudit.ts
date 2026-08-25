@@ -10,7 +10,6 @@ export function useAdminAudit(limit = 100) {
   const [loading, setLoading] = useState(true);
 
   const refresh = useCallback(async () => {
-    setLoading(true);
     try {
       const res = await fetch(`/api/admin/audit?limit=${limit}`);
       if (!res.ok) throw new Error("Failed to load audit log");
@@ -25,6 +24,8 @@ export function useAdminAudit(limit = 100) {
   }, [limit]);
 
   useEffect(() => {
+    // Data-fetch on mount — setState runs after await.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     refresh();
   }, [refresh]);
 

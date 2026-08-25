@@ -3,7 +3,7 @@
  * row + its active (non-revoked) entitlement count. Admin-only (US-016).
  * Contract: src/shared/contracts-course-catalog.ts → AdminCourseListRow.
  */
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { requireAdminApi } from "@/lib/admin";
 import { getSupabaseServiceClient } from "@/lib/supabase/service";
 import type {
@@ -11,7 +11,7 @@ import type {
   CourseRow,
 } from "@/shared/contracts-course-catalog";
 
-export async function GET(req: NextRequest) {
+export async function GET() {
   const gate = await requireAdminApi();
   if (!gate.ok) return gate.response;
 
