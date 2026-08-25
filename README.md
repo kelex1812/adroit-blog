@@ -1,36 +1,91 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Adroit Consulting Site
 
-## Getting Started
+The **Adroit Consulting site** — a [Next.js](https://nextjs.org) (App Router) application hosting the Adroit Consulting **blog** and the **Learn tab** (learning paths and certification-prep courses). Published content is authored as MDX and generated into static data at build time; user accounts, progress, and quizzes are backed by [Supabase](https://supabase.com).
 
-First, run the development server:
+- **Production:** `https://adroit-blog-two.vercel.app` (Vercel project `adroit-blog`; auto-deploys on push to `main`)
+- **Documentation:** [Wiki](https://github.com/kelex1812/adroit-blog/wiki)
+- **Project board:** [Adroit Consulting Site](https://github.com/users/kelex1812/projects/1) (GitHub Projects)
+
+> The production domain `adroit.io/blog` is intentionally not wired until launch. The site is staged on the private Vercel deployment.
+
+## Stack
+
+| | |
+|---|---|
+| **Framework** | Next.js 16 (App Router), React 19 |
+| **Styling** | Tailwind CSS v4 with semantic design tokens |
+| **Content** | MDX (blog + learn) → generated static data |
+| **Backend** | Supabase (auth, progress, quizzes, course catalog) |
+| **Testing** | Vitest + React Testing Library |
+| **Deployment** | Vercel (auto-deploy on push to `main`) |
+
+## Quick Start
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install          # install dependencies
+npm run dev          # development server (default :3000)
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Requires the Supabase env vars (`NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Production build:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run build        # prebuild (generates data) + next build
+npm start            # run the production build
+```
 
-## Learn More
+## Project Layout
 
-To learn more about Next.js, take a look at the following resources:
+```
+content/
+  blog/<slug>.mdx          # blog articles (frontmatter-driven)
+  learn/<series>/          # learning lessons + series.json
+scripts/
+  build-posts.js           # regenerates src/data/posts.ts
+  build-learn.js           # regenerates src/data/learn.ts
+src/
+  app/                     # App Router pages + API routes
+  components/              # React components (Blog, Learn, Progress, MDX)
+  lib/                     # helpers, Supabase clients, access seam, mdx
+  data/                    # GENERATED static data (do not hand-edit)
+  shared/                  # contracts + types
+docs/                      # architecture, plans, audit reports
+supabase/                  # migrations, config
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Key Scripts
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+npm run dev          # development server
+npm run build        # prebuild + next build
+npm run prebuild     # node scripts/build-posts.js && node scripts/build-learn.js
+npm run lint         # eslint
+npm test             # vitest run
+npm run test:watch   # vitest watch
+```
 
-## Deploy on Vercel
+## Documentation
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Full documentation lives in the **repo wiki**:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- [Architecture](https://github.com/kelex1812/adroit-blog/wiki/Architecture)
+- [Content Pipeline](https://github.com/kelex1812/adroit-blog/wiki/Content-Pipeline)
+- [Learn Tab & Course Progression](https://github.com/kelex1812/adroit-blog/wiki/Learn-Tab-and-Course-Progression)
+- [Auth & User Progress](https://github.com/kelex1812/adroit-blog/wiki/Auth-and-User-Progress)
+- [Admin & Course Catalog](https://github.com/kelex1812/adroit-blog/wiki/Admin-and-Course-Catalog)
+- [Development Setup](https://github.com/kelex1812/adroit-blog/wiki/Development-Setup)
+- [Testing](https://github.com/kelex1812/adroit-blog/wiki/Testing)
+
+For AI agents: read the Next.js version docs in `node_modules/next/dist/docs/` before writing code — this version has breaking changes vs older Next.js.
+
+## Contributing Notes (Fortress conventions)
+
+- **Never hand-edit `src/data/posts.ts` or `src/data/learn.ts`** — they are generated by `prebuild`. Regenerate instead.
+- **No em-dashes** anywhere; content follows the Fortress writing standards (no AI-slop, GFM endnote citations).
+- Content is authored as MDX; course status + entitlements live in the database, not in content files.
+- Commits land on `main` and auto-deploy. Keep the working tree clean of worker scratch (see `.gitignore`).
+
+## License
+
+Not yet licensed.
