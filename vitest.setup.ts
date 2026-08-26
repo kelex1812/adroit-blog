@@ -31,8 +31,36 @@ if (typeof window !== "undefined" && !window.matchMedia) {
   });
 }
 
-// Keep the DOM clean between tests.
+// Node 22+ exposes an experimental `localStorage` global that is `undefined`
+// unless `--localstorage-file` is passed, which shadows jsdom's real Storage
+// in vitest's jsdom environment (getWindowKeys skips keys already `in
+// global`). Component tests rely on localStorage, so back it with a simple
+// in-memory implementation when the real one isn't reachable.
+if (typeof globalThis.localStorage === "undefined") {
+  const store = new Map<string, string>();
+  Object.defineProperty(globalThis, "localStorage", {
+    configurable: true,
+    value: {
+      get length() {
+        return store.size;
+      },
+      clear: () => store.clear(),
+      getItem: (key: string) => (store.has(key) ? store.get(key)! : null),
+      key: (index: number) => Array.from(store.keys())[index] ?? null,
+      removeItem: (key: string) => {
+        store.delete(key);
+      },
+      setItem: (key: string, value: string) => {
+        store.set(key, String(value));
+      },
+    },
+  });
+}
+
+// Keep the DOM clean between tests. localStorage is defensive: in some
+// vitest/jsdom combos the Storage global is not initialized, and non-DOM
+// route tests don't need it — don't crash the whole suite on its absence.
 afterEach(() => {
   cleanup();
-  localStorage.clear();
+  localStorage?.clear();
 });

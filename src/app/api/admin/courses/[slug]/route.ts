@@ -126,6 +126,20 @@ export async function PATCH(req: NextRequest, { params }: Params) {
         },
       });
     }
+    // ADR-205 gap (t_10214e52 / CWE-778): a price-only change is still a
+    // commercial mutation and must leave an audit trail.
+    if (
+      body.price_cents !== undefined &&
+      body.price_cents !== existingRow.price_cents
+    ) {
+      auditActions.push({
+        action: "course.price_change",
+        details: {
+          from: existingRow.price_cents,
+          to: body.price_cents,
+        },
+      });
+    }
     for (const a of auditActions) {
       await writeAuditLog({
         actorUserId: gate.userId,

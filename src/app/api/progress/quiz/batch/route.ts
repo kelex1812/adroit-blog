@@ -24,6 +24,7 @@ import { getSupabaseServerClient } from "@/lib/supabase/server";
 import { getSupabaseServiceClient } from "@/lib/supabase/service";
 import { getKnowledgeChecks, parseQuizName, resolveQuizByName } from "@/lib/quiz";
 import { areAllChecksPassed } from "@/lib/certificate";
+import { denyQuizNotAccessible } from "@/lib/access-gate";
 import {
   checkOrigin,
   checkRateLimit,
@@ -151,6 +152,12 @@ export async function POST(req: NextRequest) {
     if (!user) {
       return NextResponse.json({ status: "unauthenticated" }, { status: 401 });
     }
+
+    // Entitlement gate (t_10214e52 / CWE-862): a user with no access to the
+    // exam's course must not receive per-question correctAnswerIndex for any
+    // submitted answer (answer-key reconstruction / paywall bypass).
+    const gateErr = await denyQuizNotAccessible(user.id, body.quizName);
+    if (gateErr) return gateErr;
 
     /* --- Exam-unlock re-verification (OWASP A01 / CWE-285) ---
      * The page gates the exam until every knowledge check best >= 80

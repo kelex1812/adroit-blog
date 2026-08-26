@@ -19,6 +19,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
 import { getSupabaseServiceClient } from "@/lib/supabase/service";
 import { resolveQuizByName, scoreQuizAttemptRows } from "@/lib/quiz";
+import { denyQuizNotAccessible } from "@/lib/access-gate";
 import {
   checkOrigin,
   checkRateLimit,
@@ -61,6 +62,11 @@ export async function POST(req: NextRequest) {
     if (!user) {
       return NextResponse.json({ status: "unauthenticated" });
     }
+
+    // Entitlement gate (t_10214e52 / CWE-862): do not record a run (nor read
+    // graded attempts) for a quiz in a course the user can't access.
+    const gateErr = await denyQuizNotAccessible(user.id, body.quizName);
+    if (gateErr) return gateErr;
 
     /* --- Derive score from server-graded quiz_attempt rows (F1) --- */
     const quiz = resolveQuizByName(body.quizName); // canonical question count
@@ -135,6 +141,11 @@ export async function GET(req: NextRequest) {
     if (!user) {
       return NextResponse.json({ bestScore: 0, attempts: 0 });
     }
+
+    // Entitlement gate (t_10214e52 / CWE-862): don't reveal run stats for a
+    // quiz in a course the user can't access.
+    const gateErr = await denyQuizNotAccessible(user.id, quizName);
+    if (gateErr) return gateErr;
 
     const { data, error } = await supabase
       .from("quiz_run")

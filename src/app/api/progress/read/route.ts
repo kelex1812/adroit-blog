@@ -8,6 +8,7 @@
  */
 import { NextRequest, NextResponse } from "next/server";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
+import { denyLessonNotAccessible } from "@/lib/access-gate";
 import {
   checkOrigin,
   checkRateLimit,
@@ -88,6 +89,17 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ status: "unauthenticated" });
     }
 
+    // Entitlement gate (t_10214e52 / CWE-862): lesson reads are course-gated
+    // (blog reads are not part of any course). A user with no access to the
+    // lesson's course must not fabricate read progress in a paywalled course.
+    if (parsed.contentType === "lesson") {
+      const gateErr = await denyLessonNotAccessible(
+        user.id,
+        parsed.contentSlug.replace(/^lesson\//, ""),
+      );
+      if (gateErr) return gateErr;
+    }
+
     // Upsert: insert or update read_at timestamp
     const { error } = await supabase.from("read_progress").upsert(
       {
@@ -131,6 +143,16 @@ export async function DELETE(req: NextRequest) {
 
     if (!user) {
       return NextResponse.json({ status: "unauthenticated" });
+    }
+
+    // Entitlement gate (t_10214e52 / CWE-862): lesson reads are course-gated
+    // (blog reads are not part of any course).
+    if (parsed.contentType === "lesson") {
+      const gateErr = await denyLessonNotAccessible(
+        user.id,
+        parsed.contentSlug.replace(/^lesson\//, ""),
+      );
+      if (gateErr) return gateErr;
     }
 
     // Delete: remove the read row so unmark survives reloads

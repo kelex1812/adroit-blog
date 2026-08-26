@@ -21,6 +21,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
 import { getSupabaseServiceClient } from "@/lib/supabase/service";
 import { resolveQuizByName } from "@/lib/quiz";
+import { denyQuizNotAccessible } from "@/lib/access-gate";
 import {
   checkOrigin,
   checkRateLimit,
@@ -92,6 +93,12 @@ export async function POST(req: NextRequest) {
     if (!user) {
       return NextResponse.json({ status: "unauthenticated" });
     }
+
+    // Entitlement gate (t_10214e52 / CWE-862): a signed-in user with no
+    // access to the quiz's course must not receive the server-graded
+    // correctAnswerIndex + explanation (answer-key reconstruction bypass).
+    const gateErr = await denyQuizNotAccessible(user.id, quizName);
+    if (gateErr) return gateErr;
 
     // Server-write-only (t_bb6ed113): quiz_attempt is RLS read-only for
     // clients (migration 006) — a direct anon-key + JWT write is now denied.

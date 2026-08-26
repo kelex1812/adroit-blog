@@ -4,6 +4,60 @@ All notable changes to the Adroit Consulting Blog project will be documented in 
 
 ## [Unreleased]
 
+### Fix: Security audit findings — course catalog + admin entitlement gates (t_8813eb56)
+
+Resolves every finding from val-el's security audit
+(`reports/security-audit-t_10214e52.md`): 1 HIGH, 1 MEDIUM, 3 LOW.
+
+**What**
+
+- **Entitlement gate on every progress/quiz API (HIGH, CWE-862 / OWASP A01)** —
+  added a shared access-seam gate (`src/lib/access-gate.ts`, mirroring the
+  existing `progress/lesson` denyIfNotAccessible) and wired it into all six
+  ungated routes: `POST /api/progress/quiz`, `POST /api/progress/quiz/batch`,
+  `POST` + `GET /api/progress/quiz/run`, `GET /api/progress/quiz/tiers`,
+  `POST`/`DELETE /api/progress/read` (lesson type), and
+  `GET /api/progress/summary`. A signed-in user with no entitlement to a
+  paywalled/not-launched course now gets 403 before any server-graded
+  `correctAnswerIndex`/`explanation` is returned, before any progress write,
+  or before run/tier stats are revealed — closing the answer-key
+  reconstruction paywall bypass. Summary filters course-scoped progress
+  (rather than 403ing the whole request) so blog reads still return.
+- **Price-only course PATCH now audited (MEDIUM, CWE-778 / ADR-205)** —
+  `PATCH /api/admin/courses/[slug]` writes a `course.price_change` audit row
+  (from/to) when `price_cents` changes, alongside the existing status /
+  access-model actions.
+- **Entitlement revoke row-affected check (LOW, CWE-778)** —
+  `DELETE /api/admin/entitlements` verifies how many active rows were
+  soft-revoked; when none match (never granted / already revoked) it returns
+  404 and writes no misleading `entitlement.revoke` audit row.
+- **Admin self-demotion / last-admin lockout guards (LOW, CWE-841)** —
+  `PATCH /api/admin/users/[id]/role` rejects an admin demoting their own
+  account (400) and rejects demoting the last remaining admin (400).
+- **nanoid transitive advisory (LOW, CWE-1104)** — added a `package.json`
+  override pinning transitive `nanoid` to `3.3.18` (build-time only; `npm
+  audit` now reports 0 vulnerabilities).
+- **Test infra unblock (pre-existing)** — Node 22's experimental
+  `localStorage` global shadows jsdom's under vitest, crashing every suite
+  (`localStorage?.clear()` + an in-memory Storage shim in
+  `vitest.setup.ts`). This is a test-runner fix that restores the green suite
+  (258 passing); not a security behavior change.
+
+**Why**
+
+- The explicit acceptance criterion "entitlement check on every progress/quiz
+  API" was unmet: the six routes authenticated but never consulted the access
+  seam, so a non-entitled user could reconstruct a gated course's full answer
+  key via the server-graded endpoints. All changes are defense-in-depth
+  against authorization / audit-integrity gaps and lockout.
+
+**Known Issues**
+
+- `GET /api/progress/quiz/run` (stats) is gated the same as the POST; the
+  audit only listed the POST, so gating the GET is a superset.
+- The `nanoid` override is build-time only and does not change runtime
+  behaviour.
+
 ### Fix: A11y + SEO audit findings — course catalog + admin (t_d2dfc405)
 
 Resolves every finding from lara's WCAG 2.2 / SEO audit

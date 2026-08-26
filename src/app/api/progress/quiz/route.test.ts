@@ -18,8 +18,9 @@ const { mocks } = vi.hoisted(() => {
   const getUser = vi.fn();
   const from = vi.fn();
   const serviceFrom = vi.fn();
+  const decideCourseAccess = vi.fn();
   return {
-    mocks: { getSupabaseServerClient, getSupabaseServiceClient, getUser, from, serviceFrom },
+    mocks: { getSupabaseServerClient, getSupabaseServiceClient, getUser, from, serviceFrom, decideCourseAccess },
   };
 });
 
@@ -32,6 +33,12 @@ vi.mock("@/lib/supabase/server", () => ({
 
 vi.mock("@/lib/supabase/service", () => ({
   getSupabaseServiceClient: () => ({ from: mocks.serviceFrom }),
+}));
+
+// The route gates through the access seam (t_10214e52). Default: the quiz's
+// course is granted. Individual tests override to assert the 403 path.
+vi.mock("@/lib/access", () => ({
+  accessSeam: { decideCourseAccess: mocks.decideCourseAccess },
 }));
 
 import { POST } from "./route";
@@ -70,6 +77,7 @@ function post(body: Record<string, unknown>): Promise<Response> {
 beforeEach(() => {
   vi.clearAllMocks();
   writeSink.quizAttemptUpserts.length = 0;
+  mocks.decideCourseAccess.mockResolvedValue({ kind: "granted" });
   mocks.serviceFrom.mockImplementation((table: string) => makeServiceFrom(table));
 });
 
@@ -186,5 +194,20 @@ describe("POST /api/progress/quiz — server-side recompute (F3)", () => {
       (r) => (r.value as { upsert?: unknown } | undefined)?.upsert !== undefined,
     );
     expect(rlsUpsert).toBeUndefined();
+  });
+
+  it("rejects a user with no entitlement to the quiz's course with 403 and no answer key (t_10214e52)", async () => {
+    authedUser();
+    // Paywalled course → the gate must deny before any write / grading reply.
+    mocks.decideCourseAccess.mockResolvedValue({ kind: "paywall" });
+    const res = await post({
+      quizName: CHECK_QUIZ,
+      questionIndex: 0,
+      userAnswerIndex: 2, // correct answer — would otherwise be disclosed
+    });
+    expect(res.status).toBe(403);
+    const body = await res.json();
+    expect(body.result).toBeUndefined(); // answer key never leaks
+    expect(writeSink.quizAttemptUpserts).toHaveLength(0);
   });
 });

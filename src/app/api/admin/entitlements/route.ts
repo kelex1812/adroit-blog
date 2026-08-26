@@ -107,14 +107,25 @@ export async function DELETE(req: NextRequest) {
 
   const service = getSupabaseServiceClient();
   try {
-    const { error } = await service
+    const { data: revokedRows, error } = await service
       .from("user_entitlements")
       .update({ revoked_at: new Date().toISOString() })
       .eq("user_id", body.userId)
       .eq("course_id", body.courseId)
       .eq("source", "granted")
-      .is("revoked_at", null);
+      .is("revoked_at", null)
+      .select("user_id");
     if (error) throw error;
+
+    // Row-affected check (t_10214e52 / CWE-778): no active granted row
+    // matched (never granted, or already revoked) → don't claim a revoke and
+    // don't write a misleading audit row.
+    if (!revokedRows || revokedRows.length === 0) {
+      return NextResponse.json(
+        { ok: false, error: "No active entitlement to revoke" },
+        { status: 404 },
+      );
+    }
 
     await writeAuditLog({
       actorUserId: gate.userId,

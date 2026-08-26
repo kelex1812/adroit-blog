@@ -16,8 +16,9 @@ const { mocks } = vi.hoisted(() => {
   const getUser = vi.fn();
   const from = vi.fn();
   const serviceFrom = vi.fn();
+  const decideCourseAccess = vi.fn();
   return {
-    mocks: { getSupabaseServerClient, getSupabaseServiceClient, getUser, from, serviceFrom },
+    mocks: { getSupabaseServerClient, getSupabaseServiceClient, getUser, from, serviceFrom, decideCourseAccess },
   };
 });
 
@@ -32,6 +33,12 @@ vi.mock("@/lib/supabase/server", () => ({
 // through the service-role client, never the RLS-bound (anon/cookie) client.
 vi.mock("@/lib/supabase/service", () => ({
   getSupabaseServiceClient: () => ({ from: mocks.serviceFrom }),
+}));
+
+// The route gates through the access seam (t_10214e52). Default granted;
+// tests override to assert the 403 path.
+vi.mock("@/lib/access", () => ({
+  accessSeam: { decideCourseAccess: mocks.decideCourseAccess },
 }));
 
 import { POST } from "./route";
@@ -111,6 +118,7 @@ beforeEach(() => {
   vi.clearAllMocks();
   writeSink.quizAttemptUpserts.length = 0;
   writeSink.quizRunInserts.length = 0;
+  mocks.decideCourseAccess.mockResolvedValue({ kind: "granted" });
   mocks.from.mockImplementation((table: string) => makeFrom(table, []));
   mocks.serviceFrom.mockImplementation((table: string) => makeServiceFrom(table));
 });
@@ -122,6 +130,19 @@ describe("POST /api/progress/quiz/batch — exam unlock gate", () => {
     expect(res.status).toBe(401);
     // Must reject before querying check runs.
     expect(mocks.from).not.toHaveBeenCalled();
+  });
+
+  it("returns 403 for a user with no entitlement to the exam's course, before any write (t_10214e52)", async () => {
+    authedUser();
+    // Paywalled course → the entitlement gate denies before the exam-unlock
+    // re-verification and before any attempt/run write.
+    mocks.decideCourseAccess.mockResolvedValue({ kind: "paywall" });
+    const res = await post(examBody());
+    expect(res.status).toBe(403);
+    const json = await res.json();
+    expect(json.status).toBeUndefined(); // not the unlock-required shape
+    expect(writeSink.quizAttemptUpserts).toHaveLength(0);
+    expect(writeSink.quizRunInserts).toHaveLength(0);
   });
 
   it("returns 403 unlock-required when the user has no check runs at all", async () => {

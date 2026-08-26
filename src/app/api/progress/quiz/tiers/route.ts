@@ -25,6 +25,7 @@ import {
 } from "@/lib/quiz";
 import { getSeriesBySlug, getLessonsForSeries } from "@/lib/learn";
 import { getSeriesLessonSlugs } from "@/lib/certificate";
+import { denySeriesNotAccessible } from "@/lib/access-gate";
 import { validateSlug } from "@/lib/api-security";
 import type { CheckProgress, TierProgress } from "@/shared/contracts";
 
@@ -79,6 +80,12 @@ export async function GET(req: NextRequest) {
     if (!user) {
       return NextResponse.json(emptyTierProgress(series));
     }
+
+    // Entitlement gate (t_10214e52 / CWE-862): a user with no access to the
+    // series' course must not get per-check best scores / exam unlock state
+    // for a gated course (paywall bypass signal).
+    const gateErr = await denySeriesNotAccessible(user.id, series);
+    if (gateErr) return gateErr;
 
     const checkMetas = getKnowledgeChecks(series);
     const checkQuizNames = checkMetas.map((c) => `${series}:check:${c.n}`);

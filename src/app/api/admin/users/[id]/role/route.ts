@@ -58,6 +58,31 @@ export async function PATCH(req: NextRequest, { params }: Params) {
     })();
 
     const role: UserRole = body.role;
+
+    // Lockout guards (t_10214e52 / CWE-841, operational): never let an admin
+    // demote themselves, and never demote the last remaining admin (no in-app
+    // recovery path — the only seeded admin is chris@adroit.io).
+    if (role === "member" && previous === "admin") {
+      if (id === gate.userId) {
+        return NextResponse.json(
+          { error: "You cannot demote your own account" },
+          { status: 400 },
+        );
+      }
+      const { data: adminRows, error: adminErr } = await service
+        .from("user_roles")
+        .select("user_id")
+        .eq("role", "admin");
+      if (adminErr) throw adminErr;
+      const adminCount = (adminRows ?? []).length;
+      if (adminCount <= 1) {
+        return NextResponse.json(
+          { error: "Cannot demote the last admin" },
+          { status: 400 },
+        );
+      }
+    }
+
     const { error } = await service
       .from("user_roles")
       .upsert({ user_id: id, role, updated_at: new Date().toISOString() });

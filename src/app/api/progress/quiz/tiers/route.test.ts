@@ -16,8 +16,9 @@ const { mocks } = vi.hoisted(() => {
   const getSupabaseServerClient = vi.fn();
   const getUser = vi.fn();
   const from = vi.fn();
+  const decideCourseAccess = vi.fn();
   return {
-    mocks: { getSupabaseServerClient, getUser, from },
+    mocks: { getSupabaseServerClient, getUser, from, decideCourseAccess },
   };
 });
 
@@ -26,6 +27,11 @@ vi.mock("@/lib/supabase/server", () => ({
     auth: { getUser: mocks.getUser },
     from: mocks.from,
   }),
+}));
+
+// The route gates through the access seam (t_10214e52). Default granted.
+vi.mock("@/lib/access", () => ({
+  accessSeam: { decideCourseAccess: mocks.decideCourseAccess },
 }));
 
 import { GET } from "./route";
@@ -67,6 +73,7 @@ function guest() {
 
 beforeEach(() => {
   vi.clearAllMocks();
+  mocks.decideCourseAccess.mockResolvedValue({ kind: "granted" });
   mocks.from.mockImplementation((table: string) => makeFrom(table, []));
 });
 
@@ -146,6 +153,13 @@ describe("GET /api/progress/quiz/tiers — canonical coverage (t_55105899)", () 
     const json = await res.json();
     expect(json.unlocked).toBe(false);
     expect(json.exam.bestScore).toBe(0);
+  });
+
+  it("returns 403 for a user with no entitlement to the series' course (t_10214e52)", async () => {
+    authedUser();
+    mocks.decideCourseAccess.mockResolvedValue({ kind: "paywall" });
+    const res = await get("omni-studio-cert");
+    expect(res.status).toBe(403);
   });
 
   it("reports lessons.total as the PLANNED lesson set (46), not published (9), for tier series", async () => {

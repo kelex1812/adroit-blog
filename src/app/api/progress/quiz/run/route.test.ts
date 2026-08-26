@@ -17,8 +17,9 @@ const { mocks } = vi.hoisted(() => {
   const getUser = vi.fn();
   const from = vi.fn();
   const serviceFrom = vi.fn();
+  const decideCourseAccess = vi.fn();
   return {
-    mocks: { getSupabaseServerClient, getSupabaseServiceClient, getUser, from, serviceFrom },
+    mocks: { getSupabaseServerClient, getSupabaseServiceClient, getUser, from, serviceFrom, decideCourseAccess },
   };
 });
 
@@ -33,6 +34,11 @@ vi.mock("@/lib/supabase/server", () => ({
 // service-role client, never the RLS-bound (anon/cookie) server client.
 vi.mock("@/lib/supabase/service", () => ({
   getSupabaseServiceClient: () => ({ from: mocks.serviceFrom }),
+}));
+
+// The route gates through the access seam (t_10214e52). Default granted.
+vi.mock("@/lib/access", () => ({
+  accessSeam: { decideCourseAccess: mocks.decideCourseAccess },
 }));
 
 import { POST } from "./route";
@@ -85,6 +91,7 @@ function authedUser(id = "user-1") {
 beforeEach(() => {
   vi.clearAllMocks();
   writeSink.quizRunInserts.length = 0;
+  mocks.decideCourseAccess.mockResolvedValue({ kind: "granted" });
   mocks.from.mockImplementation((table: string) => makeFrom(table, []));
   mocks.serviceFrom.mockImplementation((table: string) => makeServiceFrom(table));
 });
@@ -174,5 +181,13 @@ describe("POST /api/progress/quiz/run — server-side scoring (F1)", () => {
       (r) => r.value && typeof r.value === "object",
     );
     expect(rlsQuizRunResult?.value?.insert).toBeUndefined();
+  });
+
+  it("returns 403 for a user with no entitlement to the quiz's course (t_10214e52)", async () => {
+    authedUser();
+    mocks.decideCourseAccess.mockResolvedValue({ kind: "paywall" });
+    const res = await post({ quizName: CHECK_QUIZ, correct: 15, total: 15 });
+    expect(res.status).toBe(403);
+    expect(writeSink.quizRunInserts).toHaveLength(0);
   });
 });
