@@ -98,6 +98,8 @@
   --signal-archived-bg: #F3F4F6;
   --signal-granted: #E11D48;
   --signal-granted-bg: #FFE4E6;
+  --signal-info: #0C4A6E;
+  --signal-info-bg: #E0F2FE;
 
   /* 2. Access-model hues */
   --am-free: #0EA5E9;

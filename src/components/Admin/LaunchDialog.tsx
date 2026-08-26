@@ -33,11 +33,18 @@ const CHECK_ROWS: {
   key: keyof CourseReadiness;
   label: string;
   okText: string;
+  /** Advisory rows do NOT block launch (server + `ready` ignore them). */
+  warnOnly?: boolean;
 }[] = [
   { key: "hasTitle", label: "Has a title", okText: "ok" },
   { key: "hasPublishedLesson", label: "Has at least one published lesson", okText: "lessons" },
   { key: "accessModelSet", label: "Access model is set", okText: "model" },
-  { key: "allQuizzesPublished", label: "All quizzes published", okText: "quizzes" },
+  {
+    key: "allQuizzesPublished",
+    label: "Quizzes for published lessons",
+    okText: "all present",
+    warnOnly: true, // ongoing courses publish quizzes as lessons land — never a launch blocker
+  },
 ];
 
 function priceLabel(price_cents: number | null): string {
@@ -228,11 +235,16 @@ export function LaunchDialog({ course, onClose, onLaunched, onToast }: LaunchDia
               <div className="flex flex-col gap-2 mb-1.5">
                 {CHECK_ROWS.map((row) => {
                   const ok = readiness[row.key];
+                  const blocked = !ok && !row.warnOnly;
                   return (
                     <div
                       key={row.key}
                       className={`flex items-center gap-2.5 text-[12.5px] px-2.5 py-2 rounded-lg ${
-                        ok ? "bg-emerald/5" : "bg-amber/10"
+                        ok
+                          ? "bg-emerald/5"
+                          : blocked
+                            ? "bg-amber/10"
+                            : "bg-sky/5"
                       }`}
                     >
                       <span
@@ -240,14 +252,20 @@ export function LaunchDialog({ course, onClose, onLaunched, onToast }: LaunchDia
                         style={
                           ok
                             ? { background: "var(--signal-live-bg, #D1FAE5)", color: "var(--signal-live, #047857)" }
-                            : { background: "var(--signal-pending-bg, #FEF3C7)", color: "#B45309" }
+                            : blocked
+                              ? { background: "var(--signal-pending-bg, #FEF3C7)", color: "#B45309" }
+                              : { background: "var(--signal-info-bg, #E0F2FE)", color: "#0C4A6E" }
                         }
                       >
-                        {ok ? "✓" : "!"}
+                        {ok ? "✓" : blocked ? "!" : "i"}
                       </span>
                       <span className="font-semibold text-[var(--ink-primary)]">{row.label}</span>
                       <span className="ml-auto font-mono text-[10px] text-[var(--ink-faint)]">
-                        {ok ? row.okText : "blocks launch"}
+                        {ok
+                          ? row.okText
+                          : blocked
+                            ? "blocks launch"
+                            : "advisory — fills in as lessons are published"}
                       </span>
                     </div>
                   );
@@ -255,7 +273,8 @@ export function LaunchDialog({ course, onClose, onLaunched, onToast }: LaunchDia
               </div>
               {!readiness.ready && (
                 <p className="text-[11px] text-[var(--ink-faint)] mt-1">
-                  If any check fails, the course cannot launch — resolve it, then continue.
+                  If any required check fails, the course cannot launch — resolve it, then
+                  continue. Advisory rows fill in automatically as lessons are published.
                 </p>
               )}
             </>
