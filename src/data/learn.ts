@@ -386,186 +386,52 @@ export const learnSeries: LearningSeries[] = [
           "Frameworks"
         ],
         "status": "published"
+      },
+      {
+        "slug": "agent-patterns-react-plan-execute-reflection-tool-loops",
+        "title": "Lesson 23: Agent Patterns: ReAct, Plan-and-Execute, Reflection, and Tool Loops",
+        "series": "agentic-ai",
+        "lesson": 23,
+        "excerpt": "Lesson 22 built the loop by hand. This lesson gives that loop its names. You learn the four patterns that dominate real agent work: ReAct (reason and act interleaved), plan-and-execute (plan first, then execute), reflection (evaluate and revise), and the tool loop they all run on, plus when each one earns its complexity.",
+        "date": "August 26, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "10 min read",
+        "tags": [
+          "Learn",
+          "AI",
+          "Agentic",
+          "Patterns"
+        ],
+        "status": "published"
       }
     ],
-    "totalLessons": 22
+    "totalLessons": 23
   },
   {
-    "slug": "ai-at-work",
-    "name": "AI at Work",
-    "description": "A vendor-agnostic, 30-lesson primer for using AI in day-to-day work: foundations, prompting, productivity, small automations, and team adoption. Company-wide training that works for any team and any AI tool.",
-    "gradient": "from-fuchsia to-purple-600",
+    "slug": "hermes-consultant",
+    "name": "Hermes Agent Consultant",
+    "description": "A ~30-lesson path to becoming an agent-implementation consultant: scoping, implementation craft, delivery practice, and the business of consulting. Platform-agnostic skills with Hermes Agent as the working example.",
+    "gradient": "from-teal to-emerald-600",
     "lessons": [
       {
-        "slug": "what-ai-actually-is",
-        "title": "Lesson 1: What AI Actually Is",
-        "series": "ai-at-work",
+        "slug": "what-an-agent-implementation-consultant-does",
+        "title": "Lesson 1: What an Agent-Implementation Consultant Actually Does",
+        "series": "hermes-consultant",
         "lesson": 1,
-        "excerpt": "The words around AI are doing more confusing than clarifying. This lesson separates the four that trip up most people: models vs automation, chatbots vs tools, plus why 'LLM' and 'generative AI' are not synonyms.",
-        "date": "August 16, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "8 min read",
-        "tags": [
-          "Learn",
-          "AI",
-          "Workplace",
-          "Foundations"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "how-ai-thinks",
-        "title": "Lesson 2: How AI Thinks in Plain Language",
-        "series": "ai-at-work",
-        "lesson": 2,
-        "excerpt": "The tools you use every day do not read like you do. They read text in chunks called tokens, predict the next chunk over and over, and can only see a limited slice of the conversation at once. This lesson explains those three ideas and what they mean for how you prompt.",
-        "date": "August 17, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "8 min read",
-        "tags": [
-          "Learn",
-          "AI",
-          "Workplace",
-          "Foundations"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "hallucinations-what-they-are-and-how-to-catch-them",
-        "title": "Lesson 3: Hallucinations, and How to Catch Them",
-        "series": "ai-at-work",
-        "lesson": 3,
-        "excerpt": "AI tools make things up, and they do it in a confident voice. This lesson explains what a hallucination actually is, why a next-word predictor produces them, and the practical habits for catching them before they reach your work.",
-        "date": "August 18, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "8 min read",
-        "tags": [
-          "Learn",
-          "AI",
-          "Workplace",
-          "Foundations"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "what-ai-is-genuinely-good-at-and-where-it-fails",
-        "title": "Lesson 4: What AI Is Genuinely Good At, and Where It Fails",
-        "series": "ai-at-work",
-        "lesson": 4,
-        "excerpt": "AI tools are not good at everything, and pretending they are is how people get burned. This lesson gives you a clean dividing line between the work AI genuinely helps with and the work you should keep, backed by what the research actually shows.",
-        "date": "August 19, 2026",
+        "excerpt": "The agent-implementation consultant arc in one lesson: what an engagement looks like, what you actually deliver, and why this is not the same job as building agents for yourself.",
+        "date": "August 26, 2026",
         "author": "Adroit Consulting",
         "readTime": "9 min read",
         "tags": [
           "Learn",
-          "AI",
-          "Workplace",
-          "Foundations"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "data-safety-what-you-can-and-cannot-put-in",
-        "title": "Lesson 5: Data Safety: What You Can and Cannot Put Into an AI Tool",
-        "series": "ai-at-work",
-        "lesson": 5,
-        "excerpt": "Know what belongs in an AI tool before you paste. Off-limits categories, consumer versus enterprise, and habits that protect client data.",
-        "date": "August 20, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "8 min read",
-        "tags": [
-          "Learn",
-          "AI",
-          "Data Safety"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "ai-literacy-judging-ai-output",
-        "title": "Lesson 6: AI Literacy: Judging AI Output the Way You'd Judge a Colleague's Work",
-        "series": "ai-at-work",
-        "lesson": 6,
-        "excerpt": "The skill that makes every other AI skill safe: read AI output like a draft from a helpful but fallible colleague, then check it before you trust it.",
-        "date": "August 21, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "9 min read",
-        "tags": [
-          "Learn",
-          "AI",
-          "AI Literacy"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "anatomy-of-a-good-prompt-role-task-context-format",
-        "title": "Lesson 7: Anatomy of a Good Prompt: Role, Task, Context, and Format",
-        "series": "ai-at-work",
-        "lesson": 7,
-        "excerpt": "A good prompt is not a wish, it is a brief. This lesson breaks the brief into its four parts: the role you want the tool to play, the task you want done, the context it needs, and the format you want back. Learn the anatomy and you get sharper output from the first try.",
-        "date": "August 22, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "9 min read",
-        "tags": [
-          "Learn",
-          "AI",
-          "Workplace",
-          "Prompting"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "iteration-as-a-skill-refine-rephrase-ask-for-alternatives",
-        "title": "Lesson 8: Iteration as a Skill: Refine, Rephrase, and Ask for Alternatives",
-        "series": "ai-at-work",
-        "lesson": 8,
-        "excerpt": "The first answer is almost never the final one. The real skill is treating the conversation like a conversation: refine what is close, rephrase what misfires, and ask for alternatives when you are stuck. This lesson makes that loop deliberate.",
-        "date": "August 23, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "9 min read",
-        "tags": [
-          "Learn",
-          "AI",
-          "Workplace",
-          "Iteration"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "fixing-the-failure-modes-vague-asks-invented-facts-and-wrong-formats",
-        "title": "Lesson 9: Fixing the Failure Modes: Vague Asks, Invented Facts, and Wrong Formats",
-        "series": "ai-at-work",
-        "lesson": 9,
-        "excerpt": "When AI output misses, the cause is almost always one of three things: you asked vaguely, it invented a fact, or you never said what shape the answer should take. This lesson teaches you to name the failure mode and apply the fix that actually addresses it.",
-        "date": "August 24, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "9 min read",
-        "tags": [
-          "Learn",
-          "AI",
-          "Workplace",
-          "Prompting"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "turning-a-one-off-prompt-into-a-reusable-template",
-        "title": "Lesson 10: Turning a One-Off Prompt into a Reusable Template",
-        "series": "ai-at-work",
-        "lesson": 10,
-        "excerpt": "You have a prompt that nailed it once. Now you retype the same shape every week with small changes. This lesson teaches you to notice the parts that stay the same and the parts that change, and to lock the stable ones into a reusable template so you stop rewriting the whole thing each time.",
-        "date": "August 25, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "9 min read",
-        "tags": [
-          "Learn",
-          "AI",
-          "Workplace",
-          "Prompting"
+          "Hermes Agent",
+          "Consulting",
+          "AI"
         ],
         "status": "published"
       }
     ],
-    "totalLessons": 10
+    "totalLessons": 1
   },
   {
     "slug": "salesforce-architect",
@@ -979,9 +845,206 @@ export const learnSeries: LearningSeries[] = [
           "Governance"
         ],
         "status": "published"
+      },
+      {
+        "slug": "error-handling-monitoring-debug-logs-event-monitoring-health-checks-alerts",
+        "title": "Lesson 23: Error Handling and Monitoring: Debug Logs, Event Monitoring, Health Checks, and Alerts",
+        "series": "salesforce-architect",
+        "lesson": 23,
+        "excerpt": "The observability layer of a Salesforce org: debug logs and trace flags when a transaction misbehaves, Event Monitoring when you need who, what, and when across the whole org, health checks for the security baseline and the platform status, and the alerting that turns all of it into action instead of archaeology.",
+        "date": "August 26, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "11 min read",
+        "tags": [
+          "Learn",
+          "Salesforce",
+          "Architect",
+          "Monitoring",
+          "Error Handling",
+          "Event Monitoring",
+          "Debug Logs"
+        ],
+        "status": "published"
       }
     ],
-    "totalLessons": 22
+    "totalLessons": 23
+  },
+  {
+    "slug": "ai-at-work",
+    "name": "AI at Work",
+    "description": "A vendor-agnostic, 30-lesson primer for using AI in day-to-day work: foundations, prompting, productivity, small automations, and team adoption. Company-wide training that works for any team and any AI tool.",
+    "gradient": "from-fuchsia to-purple-600",
+    "lessons": [
+      {
+        "slug": "what-ai-actually-is",
+        "title": "Lesson 1: What AI Actually Is",
+        "series": "ai-at-work",
+        "lesson": 1,
+        "excerpt": "The words around AI are doing more confusing than clarifying. This lesson separates the four that trip up most people: models vs automation, chatbots vs tools, plus why 'LLM' and 'generative AI' are not synonyms.",
+        "date": "August 16, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "8 min read",
+        "tags": [
+          "Learn",
+          "AI",
+          "Workplace",
+          "Foundations"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "how-ai-thinks",
+        "title": "Lesson 2: How AI Thinks in Plain Language",
+        "series": "ai-at-work",
+        "lesson": 2,
+        "excerpt": "The tools you use every day do not read like you do. They read text in chunks called tokens, predict the next chunk over and over, and can only see a limited slice of the conversation at once. This lesson explains those three ideas and what they mean for how you prompt.",
+        "date": "August 17, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "8 min read",
+        "tags": [
+          "Learn",
+          "AI",
+          "Workplace",
+          "Foundations"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "hallucinations-what-they-are-and-how-to-catch-them",
+        "title": "Lesson 3: Hallucinations, and How to Catch Them",
+        "series": "ai-at-work",
+        "lesson": 3,
+        "excerpt": "AI tools make things up, and they do it in a confident voice. This lesson explains what a hallucination actually is, why a next-word predictor produces them, and the practical habits for catching them before they reach your work.",
+        "date": "August 18, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "8 min read",
+        "tags": [
+          "Learn",
+          "AI",
+          "Workplace",
+          "Foundations"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "what-ai-is-genuinely-good-at-and-where-it-fails",
+        "title": "Lesson 4: What AI Is Genuinely Good At, and Where It Fails",
+        "series": "ai-at-work",
+        "lesson": 4,
+        "excerpt": "AI tools are not good at everything, and pretending they are is how people get burned. This lesson gives you a clean dividing line between the work AI genuinely helps with and the work you should keep, backed by what the research actually shows.",
+        "date": "August 19, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "9 min read",
+        "tags": [
+          "Learn",
+          "AI",
+          "Workplace",
+          "Foundations"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "data-safety-what-you-can-and-cannot-put-in",
+        "title": "Lesson 5: Data Safety: What You Can and Cannot Put Into an AI Tool",
+        "series": "ai-at-work",
+        "lesson": 5,
+        "excerpt": "Know what belongs in an AI tool before you paste. Off-limits categories, consumer versus enterprise, and habits that protect client data.",
+        "date": "August 20, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "8 min read",
+        "tags": [
+          "Learn",
+          "AI",
+          "Data Safety"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "ai-literacy-judging-ai-output",
+        "title": "Lesson 6: AI Literacy: Judging AI Output the Way You'd Judge a Colleague's Work",
+        "series": "ai-at-work",
+        "lesson": 6,
+        "excerpt": "The skill that makes every other AI skill safe: read AI output like a draft from a helpful but fallible colleague, then check it before you trust it.",
+        "date": "August 21, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "9 min read",
+        "tags": [
+          "Learn",
+          "AI",
+          "AI Literacy"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "anatomy-of-a-good-prompt-role-task-context-format",
+        "title": "Lesson 7: Anatomy of a Good Prompt: Role, Task, Context, and Format",
+        "series": "ai-at-work",
+        "lesson": 7,
+        "excerpt": "A good prompt is not a wish, it is a brief. This lesson breaks the brief into its four parts: the role you want the tool to play, the task you want done, the context it needs, and the format you want back. Learn the anatomy and you get sharper output from the first try.",
+        "date": "August 22, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "9 min read",
+        "tags": [
+          "Learn",
+          "AI",
+          "Workplace",
+          "Prompting"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "iteration-as-a-skill-refine-rephrase-ask-for-alternatives",
+        "title": "Lesson 8: Iteration as a Skill: Refine, Rephrase, and Ask for Alternatives",
+        "series": "ai-at-work",
+        "lesson": 8,
+        "excerpt": "The first answer is almost never the final one. The real skill is treating the conversation like a conversation: refine what is close, rephrase what misfires, and ask for alternatives when you are stuck. This lesson makes that loop deliberate.",
+        "date": "August 23, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "9 min read",
+        "tags": [
+          "Learn",
+          "AI",
+          "Workplace",
+          "Iteration"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "fixing-the-failure-modes-vague-asks-invented-facts-and-wrong-formats",
+        "title": "Lesson 9: Fixing the Failure Modes: Vague Asks, Invented Facts, and Wrong Formats",
+        "series": "ai-at-work",
+        "lesson": 9,
+        "excerpt": "When AI output misses, the cause is almost always one of three things: you asked vaguely, it invented a fact, or you never said what shape the answer should take. This lesson teaches you to name the failure mode and apply the fix that actually addresses it.",
+        "date": "August 24, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "9 min read",
+        "tags": [
+          "Learn",
+          "AI",
+          "Workplace",
+          "Prompting"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "turning-a-one-off-prompt-into-a-reusable-template",
+        "title": "Lesson 10: Turning a One-Off Prompt into a Reusable Template",
+        "series": "ai-at-work",
+        "lesson": 10,
+        "excerpt": "You have a prompt that nailed it once. Now you retype the same shape every week with small changes. This lesson teaches you to notice the parts that stay the same and the parts that change, and to lock the stable ones into a reusable template so you stop rewriting the whole thing each time.",
+        "date": "August 25, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "9 min read",
+        "tags": [
+          "Learn",
+          "AI",
+          "Workplace",
+          "Prompting"
+        ],
+        "status": "published"
+      }
+    ],
+    "totalLessons": 10
   },
   {
     "slug": "omni-studio-cert",
@@ -1298,6 +1361,60 @@ export const learnSeries: LearningSeries[] = [
 
 /** Flat list of every lesson, NEWEST FIRST (for sitemap, nav, flat lookups). */
 export const learnLessons: LearnLesson[] = [
+  {
+    "slug": "agent-patterns-react-plan-execute-reflection-tool-loops",
+    "title": "Lesson 23: Agent Patterns: ReAct, Plan-and-Execute, Reflection, and Tool Loops",
+    "series": "agentic-ai",
+    "lesson": 23,
+    "excerpt": "Lesson 22 built the loop by hand. This lesson gives that loop its names. You learn the four patterns that dominate real agent work: ReAct (reason and act interleaved), plan-and-execute (plan first, then execute), reflection (evaluate and revise), and the tool loop they all run on, plus when each one earns its complexity.",
+    "date": "August 26, 2026",
+    "author": "Adroit Consulting",
+    "readTime": "10 min read",
+    "tags": [
+      "Learn",
+      "AI",
+      "Agentic",
+      "Patterns"
+    ],
+    "status": "published"
+  },
+  {
+    "slug": "what-an-agent-implementation-consultant-does",
+    "title": "Lesson 1: What an Agent-Implementation Consultant Actually Does",
+    "series": "hermes-consultant",
+    "lesson": 1,
+    "excerpt": "The agent-implementation consultant arc in one lesson: what an engagement looks like, what you actually deliver, and why this is not the same job as building agents for yourself.",
+    "date": "August 26, 2026",
+    "author": "Adroit Consulting",
+    "readTime": "9 min read",
+    "tags": [
+      "Learn",
+      "Hermes Agent",
+      "Consulting",
+      "AI"
+    ],
+    "status": "published"
+  },
+  {
+    "slug": "error-handling-monitoring-debug-logs-event-monitoring-health-checks-alerts",
+    "title": "Lesson 23: Error Handling and Monitoring: Debug Logs, Event Monitoring, Health Checks, and Alerts",
+    "series": "salesforce-architect",
+    "lesson": 23,
+    "excerpt": "The observability layer of a Salesforce org: debug logs and trace flags when a transaction misbehaves, Event Monitoring when you need who, what, and when across the whole org, health checks for the security baseline and the platform status, and the alerting that turns all of it into action instead of archaeology.",
+    "date": "August 26, 2026",
+    "author": "Adroit Consulting",
+    "readTime": "11 min read",
+    "tags": [
+      "Learn",
+      "Salesforce",
+      "Architect",
+      "Monitoring",
+      "Error Handling",
+      "Event Monitoring",
+      "Debug Logs"
+    ],
+    "status": "published"
+  },
   {
     "slug": "agent-loop-by-hand-no-framework",
     "title": "Lesson 22: Building Without a Framework: the Agent Loop by Hand in 100 Lines",
