@@ -81,6 +81,7 @@ export default function ShareBar() {
       <button
         onClick={copyLink}
         title="Copy link"
+        aria-label="Copy link to clipboard"
         className={`w-9 h-9 rounded-full border flex items-center justify-center cursor-pointer transition-all duration-150 ${
           copied
             ? "bg-emerald-700 text-white border-emerald-700 dark:bg-emerald-600 dark:border-emerald-600"

@@ -42,4 +42,14 @@ describe("ShareBar", () => {
       }
     });
   });
+
+  it("exposes the copy-link button with an accessible name (QA a11y fix)", () => {
+    render(<ShareBar />);
+
+    // The copy-link button must carry an explicit aria-label so the
+    // icon-only button has a meaningful accessible name for screen readers.
+    expect(
+      screen.getByRole("button", { name: "Copy link to clipboard" })
+    ).toBeInTheDocument();
+  });
 });
