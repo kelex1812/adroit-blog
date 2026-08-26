@@ -117,7 +117,7 @@ describe("decideCourseAccessFromInput", () => {
     ).toEqual({ kind: "granted" });
   });
 
-  it("granted model → granted only with an active granted entitlement", () => {
+  it("granted model → granted only with an active granted entitlement for THIS course (stealth: non-entitled → not-launched)", () => {
     const c = course({ access_model: "granted" });
     expect(
       decideCourseAccessFromInput({
@@ -127,7 +127,7 @@ describe("decideCourseAccessFromInput", () => {
         subscriptions: [],
         now: NOW,
       }),
-    ).toEqual({ kind: "paywall" });
+    ).toEqual({ kind: "not-launched" });
     expect(
       decideCourseAccessFromInput({
         course: c,
@@ -137,6 +137,28 @@ describe("decideCourseAccessFromInput", () => {
         now: NOW,
       }),
     ).toEqual({ kind: "granted" });
+    // an entitlement for a DIFFERENT course must not unlock this one
+    expect(
+      decideCourseAccessFromInput({
+        course: c,
+        isAdmin: false,
+        entitlements: [entitlement({ course_id: "other-course" })],
+        subscriptions: [],
+        now: NOW,
+      }),
+    ).toEqual({ kind: "not-launched" });
+  });
+
+  it("admin previews a granted course even without an entitlement → admin-preview", () => {
+    expect(
+      decideCourseAccessFromInput({
+        course: course({ access_model: "granted" }),
+        isAdmin: true,
+        entitlements: [],
+        subscriptions: [],
+        now: NOW,
+      }),
+    ).toEqual({ kind: "admin-preview" });
   });
 
   it("one-time model → granted only with a one-time entitlement (granted does NOT unlock)", () => {
@@ -229,7 +251,7 @@ describe("courseGrantsAccess", () => {
   it("revoked entitlements are filtered before this function (active only passed in)", () => {
     // The loader filters revoked_at IS NULL; here we just confirm granted model
     // depends purely on the entitlement array passed in.
-    expect(courseGrantsAccess("granted", [], [], NOW)).toBe(false);
+    expect(courseGrantsAccess("granted", [], [], NOW, "c1")).toBe(false);
   });
 });
 
@@ -265,15 +287,48 @@ describe("buildCatalogEntries", () => {
     expect(admin.every((e) => e.visible)).toBe(true);
   });
 
-  it("non-entitled member on a live gated course → visible but not accessible", () => {
-    const entries = buildCatalogEntries({
+  it("stealth-granted: non-entitled member does NOT see a granted course; entitled member + admin do", () => {
+    const granted = course({ id: "granted-course", access_model: "granted" });
+    const memberNoEnt = buildCatalogEntries({
       isAdmin: false,
-      courses: [course({ access_model: "granted" })],
+      courses: [granted],
       entitlements: [],
       subscriptions: [],
       now: NOW,
     });
-    expect(entries[0].visible).toBe(true);
+    expect(memberNoEnt[0].visible).toBe(false);
+    expect(memberNoEnt[0].canAccess).toBe(false);
+
+    const memberWithEnt = buildCatalogEntries({
+      isAdmin: false,
+      courses: [granted],
+      entitlements: [entitlement({ course_id: "granted-course" })],
+      subscriptions: [],
+      now: NOW,
+    });
+    expect(memberWithEnt[0].visible).toBe(true);
+    expect(memberWithEnt[0].canAccess).toBe(true);
+
+    const admin = buildCatalogEntries({
+      isAdmin: true,
+      courses: [granted],
+      entitlements: [],
+      subscriptions: [],
+      now: NOW,
+    });
+    expect(admin[0].visible).toBe(true);
+    expect(admin[0].canAccess).toBe(true);
+  });
+
+  it("granted course entitlement for a DIFFERENT course does not make it visible", () => {
+    const entries = buildCatalogEntries({
+      isAdmin: false,
+      courses: [course({ id: "granted-course", access_model: "granted" })],
+      entitlements: [entitlement({ course_id: "other-course" })],
+      subscriptions: [],
+      now: NOW,
+    });
+    expect(entries[0].visible).toBe(false);
     expect(entries[0].canAccess).toBe(false);
   });
 });
@@ -308,7 +363,7 @@ describe("accessSeam (createAccessSeam over fake loader)", () => {
     expect(await seam.isAdmin("u-admin")).toBe(true);
   });
 
-  it("decideCourseAccess wires the loader to the pure core (paywall for gated member)", async () => {
+  it("decideCourseAccess wires the loader to the pure core (stealth-granted → not-launched for gated member)", async () => {
     const loader = fakeLoader({
       getCourseBySlug: vi.fn().mockResolvedValue(
         course({ access_model: "granted" }),
@@ -317,7 +372,7 @@ describe("accessSeam (createAccessSeam over fake loader)", () => {
     });
     const seam = createAccessSeam(loader);
     expect(await seam.decideCourseAccess("u1", "test-series")).toEqual({
-      kind: "paywall",
+      kind: "not-launched",
     });
   });
 

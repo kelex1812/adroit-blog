@@ -4,6 +4,66 @@ All notable changes to the Adroit Consulting Blog project will be documented in 
 
 ## [Unreleased]
 
+### Feature: Admin platform enhancements v4 (t_0ed19ad0)
+
+**What** — Incremental admin-platform build on the existing course-catalog +
+entitlements platform: stealth-granted visibility, an admin dashboard landing,
+course auto-provisioning, launch preview/confirm, per-course completion
+analytics, and audit-log filters + CSV export.
+
+- **Stealth-granted (security-relevant)** — `src/lib/access.ts`: a `granted`-model
+  course is now HIDDEN from the public catalog (and returns `not-launched`, not a
+  paywall, on its content URL) for anyone without a matching granted entitlement
+  for that course. `buildCatalogEntries` / `decideCourseAccessFromInput` now scope
+  the granted check to `course_id` (a grant on one course no longer unlocks another).
+  Admins always see granted courses. Covered by expanded `src/lib/access.test.ts`
+  (19 tests).
+- **Admin dropdown entry** — the avatar account menu (and mobile nav) now show an
+  `Admin console` item (red shield + `Admin` tag + identity role tag) ONLY when the
+  signed-in user is admin. `GET /api/auth/session` now derives `isAdmin` from
+  `user_roles`; `AuthUser` carries it. No top-nav link — this is the single entry
+  point to `/admin`.
+- **Admin dashboard landing** — `/admin` is now a Monitor-in-Operate overview
+  (pending-needs-launch banner + 6-stat grid + recent audit feed + entitlements
+  per course) reusing the existing `useAdminCourses`/`useAdminUsers`/`useAdminAudit`
+  hooks. The courses table moved to `/admin/courses`; `AdminShell` gained
+  Dashboard/Courses/Analytics nav.
+- **Course auto-provisioning** — `POST /api/admin/courses/provision` (admin-gated,
+  idempotent) creates the `pending` `courses` row (default `access_model='granted'`)
+  the Daily Planet scheduler calls on a new series' first lesson. Writes a
+  `course.provision` audit row. No admin create-UI.
+- **Launch preview/confirm** — new `LaunchDialog` (2-step preview→confirm) on
+  pending course rows. Server-side readiness gate added to PATCH
+  `/api/admin/courses/[slug]`: a launch is rejected (400) unless the course has a
+  title, ≥1 published lesson, and an access model — a half-finished course can
+  never go live. `GET /api/admin/courses/[slug]/preview` feeds the dialog.
+- **Completion analytics** — `GET /api/admin/analytics` (new read over
+  `lesson_completion` + `read_progress`) + `/admin/analytics` page (summary strip,
+  inline-SVG 8-week sparkline, pure-CSS completion bars, signal pills). No chart
+  library. Pure aggregation in `src/lib/course-analytics.ts` (unit-tested).
+- **Audit filters + CSV** — `/api/admin/audit` accepts `action` + `actor` filters;
+  `/admin/audit` adds filter selects + a client-side CSV export.
+- **Design tokens** — additive v4 tokens + utilities applied to `src/app/globals.css`
+  (banner, analytics bars, admin-menu-item, launch checklist, reduced-motion).
+
+**Why** — Chris-approved v4 scope (08-26): admins need glanceable platform
+visibility, a safe launch workflow, per-course completion reads, and filterable/
+exportable audit trail; `granted` courses must be invisible until explicitly
+granted (v4 security posture).
+
+**Verified** — `npm run build` + `npm run lint` clean; full vitest suite green
+(262→272 tests across 35→37 files); server verified: `/learn` renders, `/admin`
+404s non-admins, admin APIs return 403 without a session. `eslint.config.mjs`
+ignores `design/v4/shots/**` (designer's one-off capture scripts).
+
+**Known issues** — The admin UI could not be visually click-tested headlessly
+(no admin credentials to authenticate); it's covered by build + route-gate
+verification and the pure-logic unit tests. The `allQuizzesPublished` checklist
+row is advisory (series-level quiz counts as published) and does not block a
+launch — the hard gate is title + ≥1 published lesson + access model. Admin
+analytics uses the service client (BYPASSRLS) after the admin gate, consistent
+with the other admin endpoints.
+
 ### Fix: Dark-mode unreadable elements on /login (t_500a5af8)
 
 **What** — Token-bridge asymmetry on the Adroit Academy `/login` screen: the

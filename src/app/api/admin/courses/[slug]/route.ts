@@ -13,6 +13,10 @@ import {
   checkRateLimit,
   getClientIp,
 } from "@/lib/api-security";
+import {
+  computeCourseReadiness,
+  notReadyReason,
+} from "@/lib/course-readiness";
 import type {
   AdminCourseUpdateRequest,
   CourseRow,
@@ -79,6 +83,23 @@ export async function PATCH(req: NextRequest, { params }: Params) {
     if (findErr) throw findErr;
     const existingRow = (existing as CourseRow | null) ?? null;
     if (!existingRow) return notFoundJson();
+
+    // Launch readiness gate (v4, t_0ed19ad0): a half-finished course must
+    // NOT go live. The server enforces what the LaunchDialog's checklist
+    // reflects — title + ≥1 published lesson + access model set.
+    if (
+      body.status === "live" &&
+      existingRow.status !== "live"
+    ) {
+      const readiness = computeCourseReadiness(existingRow);
+      const reason = notReadyReason(readiness);
+      if (reason) {
+        return NextResponse.json(
+          { ok: false, error: `Cannot launch: ${reason}` },
+          { status: 400 },
+        );
+      }
+    }
 
     const updates: Record<string, unknown> = {
       updated_at: new Date().toISOString(),

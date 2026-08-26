@@ -16,6 +16,8 @@ const eslintConfig = defineConfig([
     "scripts/**",
     // Disposable designer scratch tooling — not part of the app bundle.
     "design/.scratch/**",
+    // Designer's one-off headless-chromium capture scripts (design deliverables).
+    "design/v4/shots/**",
   ]),
 ]);
 

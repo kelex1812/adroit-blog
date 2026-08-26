@@ -101,6 +101,25 @@ function IconChevron({ className }: { className?: string }) {
   );
 }
 
+/** Shield — the privilege mark for the admin-only entry (v4). */
+function IconShield({ className }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+      aria-hidden="true"
+    >
+      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+      <path d="M9 12l2 2 4-4" />
+    </svg>
+  );
+}
+
 const itemBase =
   "flex w-full items-center gap-2.5 rounded-md px-3 py-2 text-left text-[13px] font-medium transition-colors duration-150 cursor-pointer bg-none border-none no-underline";
 const itemNormal = "text-[var(--ink-body)] hover:bg-[var(--surface-card-soft)] hover:text-[var(--ink-primary)]";
@@ -255,6 +274,11 @@ export default function AvatarMenu({ user, onSignOut, isSigningOut = false }: Av
                 Signed in as
               </div>
             </div>
+            {user.isAdmin && (
+              <span className="ml-auto font-mono text-[8.5px] font-bold uppercase tracking-[0.06em] text-[var(--admin-menu-icon,var(--accent))] bg-[var(--admin-menu-tint,rgba(200,16,46,0.10))] px-2 py-0.5 rounded-full">
+                admin
+              </span>
+            )}
           </div>
           <hr className="mx-1.5 border-t border-[var(--border-subtle)]" />
 
@@ -285,6 +309,23 @@ export default function AvatarMenu({ user, onSignOut, isSigningOut = false }: Av
               <IconSettings className="h-4 w-4 text-[var(--ink-faint)]" />
               Settings
             </Link>
+
+            {/* Admin console — the single entry point to /admin (v4). Rendered
+                ONLY for admins (server-derived isAdmin). Shield glyph + faint red
+                tint marks it as a privileged entry. No top-nav link. */}
+            {user.isAdmin && (
+              <Link
+                href="/admin"
+                role="menuitem"
+                tabIndex={-1}
+                onClick={() => setOpen(false)}
+                className="admin-menu-item"
+              >
+                <IconShield className="shield h-4 w-4" />
+                <span className="flex-1">Admin console</span>
+                <span className="tag">Admin</span>
+              </Link>
+            )}
 
             <hr className="mx-1.5 border-t border-[var(--border-subtle)]" />
 

@@ -9,6 +9,7 @@ import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import AvatarMenu from "./AvatarMenu";
 import { ThemeProvider } from "@/components/Theme/ThemeProvider";
+import type { AuthUser } from "@/lib/hooks/useAuth";
 
 vi.mock("next/link", () => ({
   default: ({
@@ -41,7 +42,7 @@ afterEach(() => {
   vi.unstubAllGlobals();
 });
 
-const user = { id: "u1", email: "jane.doe@adroit.io" };
+const user: AuthUser = { id: "u1", email: "jane.doe@adroit.io", isAdmin: false };
 
 function renderMenu(props: { isSigningOut?: boolean } = {}) {
   const onSignOut = vi.fn();
@@ -95,6 +96,30 @@ describe("AvatarMenu menu contents", () => {
     fireEvent.click(screen.getByRole("button", { name: /Account menu/ }));
     fireEvent.click(screen.getByRole("menuitem", { name: "Profile" }));
     expect(screen.queryByRole("menu", { name: "Account" })).not.toBeInTheDocument();
+  });
+
+  it("does NOT render the Admin console item for non-admins (v4 gating)", () => {
+    renderMenu();
+    fireEvent.click(screen.getByRole("button", { name: /Account menu/ }));
+    expect(screen.queryByRole("menuitem", { name: /Admin console/ })).not.toBeInTheDocument();
+    expect(screen.queryByText("admin")).not.toBeInTheDocument();
+  });
+
+  it("renders the Admin console item (with Admin tag) only for admins", () => {
+    const onSignOut = vi.fn();
+    render(
+      <ThemeProvider>
+        <AvatarMenu
+          user={{ id: "u1", email: "chris@adroit.io", isAdmin: true }}
+          onSignOut={onSignOut}
+        />
+      </ThemeProvider>,
+    );
+    fireEvent.click(screen.getByRole("button", { name: /Account menu/ }));
+    const adminItem = screen.getByRole("menuitem", { name: /Admin console/ });
+    expect(adminItem).toHaveAttribute("href", "/admin");
+    expect(screen.getByText("Admin")).toBeInTheDocument();
+    expect(screen.getByText("admin")).toBeInTheDocument(); // identity role tag
   });
 });
 

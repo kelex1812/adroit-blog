@@ -67,28 +67,44 @@ export function activeSubGrantsAccess(
   return sub.current_period_end > now;
 }
 
+/** True when the user holds an active `granted` entitlement for THIS course. */
+export function hasGrantedEntitlementFor(
+  courseId: string,
+  entitlements: UserEntitlementRow[],
+): boolean {
+  return entitlements.some(
+    (e) => e.source === "granted" && e.course_id === courseId,
+  );
+}
+
 /** True when a live course's access_model grants the user access. */
 export function courseGrantsAccess(
   model: AccessModel,
   entitlements: UserEntitlementRow[],
   subscriptions: SubscriptionRow[],
   now: string,
+  courseId: string,
 ): boolean {
   switch (model) {
     case "free":
       // Free = granted to everyone, guests included (preserves public lessons).
       return true;
     case "granted":
-      return entitlements.some((e) => e.source === "granted");
+      // Scope to a matching granted entitlement for THIS course (v4 stealth).
+      return hasGrantedEntitlementFor(courseId, entitlements);
     case "one-time":
-      return entitlements.some((e) => e.source === "one-time");
+      return entitlements.some(
+        (e) => e.source === "one-time" && e.course_id === courseId,
+      );
     case "subscription":
       return subscriptions.some((s) => activeSubGrantsAccess(s, now));
     case "sub-or-one-time":
       return (
         subscriptions.some((s) => activeSubGrantsAccess(s, now)) ||
         entitlements.some(
-          (e) => e.source === "one-time" || e.source === "granted",
+          (e) =>
+            (e.source === "one-time" || e.source === "granted") &&
+            e.course_id === courseId,
         )
       );
   }
@@ -108,12 +124,22 @@ export function decideCourseAccessFromInput(
   if (!course) return { kind: "not-launched" };
   if (isAdmin) return { kind: "admin-preview" };
   if (course.status !== "live") return { kind: "not-launched" };
+  // Stealth-granted (v4): a `granted`-model course is invisible to anyone
+  // without a matching granted entitlement. Return not-launched (NOT a
+  // paywall) so the course's very existence stays hidden from non-admins.
+  if (
+    course.access_model === "granted" &&
+    !hasGrantedEntitlementFor(course.id, input.entitlements)
+  ) {
+    return { kind: "not-launched" };
+  }
   if (
     courseGrantsAccess(
       course.access_model,
       input.entitlements,
       input.subscriptions,
       input.now,
+      course.id,
     )
   ) {
     return { kind: "granted" };
@@ -126,7 +152,15 @@ export function buildCatalogEntries(
   input: AccessInput,
 ): CatalogCourseEntry[] {
   return input.courses.map((course) => {
-    const visible = course.status === "live" || input.isAdmin;
+    const visible = input.isAdmin
+      ? true
+      : course.status !== "live"
+        ? false
+        : // Stealth-granted (v4): a granted-model course is hidden from the
+          // public catalog unless the user holds a matching granted entitlement.
+          course.access_model === "granted"
+          ? hasGrantedEntitlementFor(course.id, input.entitlements)
+          : true;
     const canAccess = input.isAdmin
       ? true // admin previews pending/archived + reads live
       : course.status === "live" &&
@@ -135,6 +169,7 @@ export function buildCatalogEntries(
           input.entitlements,
           input.subscriptions,
           input.now,
+          course.id,
         );
     return { course, visible, canAccess };
   });

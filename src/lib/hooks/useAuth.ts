@@ -18,6 +18,8 @@ import { useState, useEffect, useCallback } from "react";
 export interface AuthUser {
   id: string;
   email: string;
+  /** Derived server-side from user_roles (v4). False for non-admins. */
+  isAdmin: boolean;
 }
 
 export const AUTH_CHANGED_EVENT = "adroit-blog:auth-changed";
@@ -27,6 +29,11 @@ interface UseAuthReturn {
   isLoading: boolean;
   /** Re-fetch session from the server (after login/logout). */
   refresh: () => Promise<void>;
+}
+
+/** Normalize a session user — always carries a definitive isAdmin flag. */
+function normalizeUser(u: AuthUser | null): AuthUser | null {
+  return u ? { ...u, isAdmin: u.isAdmin ?? false } : null;
 }
 
 export function useAuth(): UseAuthReturn {
@@ -41,7 +48,7 @@ export function useAuth(): UseAuthReturn {
         return;
       }
       const data = (await res.json()) as { user: AuthUser | null };
-      setUser(data.user ?? null);
+      setUser(normalizeUser(data.user ?? null));
     } catch {
       setUser(null);
     } finally {
@@ -60,7 +67,7 @@ export function useAuth(): UseAuthReturn {
           return;
         }
         const data = (await res.json()) as { user: AuthUser | null };
-        if (!cancelled) setUser(data.user ?? null);
+        if (!cancelled) setUser(normalizeUser(data.user ?? null));
       } catch {
         if (!cancelled) setUser(null);
       } finally {

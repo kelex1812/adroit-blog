@@ -195,6 +195,15 @@ export default function Header() {
               >
                 Settings
               </Link>
+              {user.isAdmin && (
+                <Link
+                  href="/admin"
+                  className="text-[var(--ink-body)] text-sm font-medium py-2 border-b border-[var(--border-subtle)] no-underline font-semibold"
+                  onClick={() => setMobileOpen(false)}
+                >
+                  Admin console
+                </Link>
+              )}
               <button
                 onClick={() => {
                   handleSignOut();

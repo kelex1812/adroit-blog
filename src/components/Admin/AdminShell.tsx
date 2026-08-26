@@ -8,17 +8,24 @@ import { usePathname } from "next/navigation";
  * kara tokens (design-tokens-course-catalog-admin.css §3): navy sidebar,
  * red active-nav rule, dense tables. Non-admins never reach this shell — the
  * layout guard 404s before rendering (US-016).
+ *
+ * v4 (t_0ed19ad0): added an Overview (dashboard) nav + Analytics; Courses is
+ * now /admin/courses (the dashboard is the /admin landing).
  */
-const NAV = [
-  { href: "/admin", label: "Courses", exact: true },
-  { href: "/admin/users", label: "Users", exact: false },
-  { href: "/admin/matrix", label: "Access Matrix", exact: false },
-  { href: "/admin/audit", label: "Audit Log", exact: false },
+type NavSection = { section?: string; href: string; label: string; exact?: boolean };
+
+const NAV: NavSection[] = [
+  { href: "/admin", label: "Dashboard", exact: true },
+  { section: "Management", href: "/admin/courses", label: "Courses" },
+  { href: "/admin/users", label: "Users" },
+  { href: "/admin/matrix", label: "Access Matrix" },
+  { section: "System", href: "/admin/analytics", label: "Analytics" },
+  { href: "/admin/audit", label: "Audit Log" },
 ];
 
 export function AdminShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const isActive = (href: string, exact: boolean) =>
+  const isActive = (href: string, exact: boolean | undefined) =>
     exact ? pathname === href : pathname.startsWith(href);
 
   return (
@@ -36,28 +43,31 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
           </Link>
         </div>
         <nav className="flex-1 px-3 py-4 flex flex-col gap-1" aria-label="Admin">
-          {NAV.map((item) => {
-            const active = isActive(item.href, item.exact);
-            return (
+          {NAV.map((item, i) => (
+            <div key={item.href}>
+              {item.section && i > 0 && (
+                <div className="font-mono text-[9.5px] font-bold uppercase tracking-[0.1em] text-white/30 px-3 pt-3.5 pb-1.5">
+                  {item.section}
+                </div>
+              )}
               <Link
-                key={item.href}
                 href={item.href}
-                aria-current={active ? "page" : undefined}
+                aria-current={isActive(item.href, item.exact) ? "page" : undefined}
                 className={`relative rounded-lg px-3 py-2 text-[13.5px] font-medium no-underline transition-colors ${
-                  active
+                  isActive(item.href, item.exact)
                     ? "bg-white/10 text-white"
                     : "text-white/75 hover:bg-white/10 hover:text-white"
                 }`}
                 style={
-                  active
+                  isActive(item.href, item.exact)
                     ? { boxShadow: "inset 3px 0 0 var(--color-red)" }
                     : undefined
                 }
               >
                 {item.label}
               </Link>
-            );
-          })}
+            </div>
+          ))}
         </nav>
         <div className="px-5 py-4 border-t border-white/10 text-[11px] font-mono text-white/50">
           /admin
