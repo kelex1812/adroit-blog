@@ -4,6 +4,37 @@ All notable changes to the Adroit Consulting Blog project will be documented in 
 
 ## [Unreleased]
 
+### Fix: Dark-mode unreadable elements on /login (t_500a5af8)
+
+**What** — Token-bridge asymmetry on the Adroit Academy `/login` screen: the
+`html.dark` legacy remap block flips TEXT tokens to dark values (`text-navy` →
+`--ink-primary`, `text-gray-800` → `--ink-strong`, `text-gray-500` →
+`--ink-muted`) but did not remap the SURFACES, so in dark mode the card and
+inputs stayed white while their text flipped to near-white → light-on-white.
+Added `dark:` variants in `src/app/login/page.tsx` so the surfaces go dark to
+match the already-dark text tokens:
+
+- Card: `dark:bg-[var(--surface-card)]` (#121a2e) + `dark:border-[var(--border-default)]`
+- Both inputs: `dark:bg-[var(--surface-sunken)]` (#0c1322) +
+  `dark:text-[var(--ink-body)]` + `dark:placeholder:text-[var(--ink-muted)]` +
+  `dark:border-[var(--border-default)]`
+- Error box: `dark:bg-red/10` + `dark:text-[var(--accent-hover)]`
+- Info box: `dark:bg-emerald/15` + `dark:text-emerald-300`
+
+**Why** — "Sign in" h1, subtitle, labels, and typed input text were effectively
+invisible in dark mode (worst ≈1.05:1).
+
+**Verified** — Computed WCAG contrast on the actual dark token values:
+h1 14.04:1, subtitle/labels 6.75:1, typed input text 12.50:1, input placeholder
+7.24:1, mode-toggle 14.04:1, Back-to-blog 7.51:1 — all pass AA. All `dark:`
+arbitrary-value classes confirmed compiled in the served CSS gated under
+`.where(.dark, .dark *)`. `npm run build` passes. Light mode is unchanged
+(edits add only `dark:` variants, which never apply in light mode).
+
+**Known issues** — None. `src/data/learn.ts` had an unrelated pre-existing
+uncommitted working-tree change (not part of this task); left untouched and not
+committed.
+
 ### Fix: Security audit findings — course catalog + admin entitlement gates (t_8813eb56)
 
 Resolves every finding from val-el's security audit

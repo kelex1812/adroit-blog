@@ -71,7 +71,7 @@ function LoginForm() {
       <Header />
       <main id="main" className="flex-1 flex items-center justify-center px-6 py-16">
         <div className="w-full max-w-[420px]">
-          <div className="rounded-[20px] border border-gray-200 bg-white p-8 shadow-card">
+          <div className="rounded-[20px] border border-gray-200 bg-white p-8 shadow-card dark:border-[var(--border-default)] dark:bg-[var(--surface-card)]">
             <div className="inline-flex items-center gap-2 font-mono text-[11px] font-semibold text-red uppercase tracking-[0.08em] mb-2">
               <span className="w-1.5 h-1.5 rounded-full bg-red" />
               Adroit Academy
@@ -92,7 +92,7 @@ function LoginForm() {
             {error && (
               <div
                 role="alert"
-                className="rounded-xl border border-red/25 bg-red/5 px-4 py-3 text-[12.5px] text-red-dark mb-4"
+                className="rounded-xl border border-red/25 bg-red/5 px-4 py-3 text-[12.5px] text-red-dark mb-4 dark:bg-red/10 dark:text-[var(--accent-hover)]"
               >
                 {error}
               </div>
@@ -100,7 +100,7 @@ function LoginForm() {
             {info && (
               <div
                 role="status"
-                className="rounded-xl border border-emerald/25 bg-emerald-light/40 px-4 py-3 text-[12.5px] text-emerald-700 mb-4"
+                className="rounded-xl border border-emerald/25 bg-emerald-light/40 px-4 py-3 text-[12.5px] text-emerald-700 mb-4 dark:bg-emerald/15 dark:text-emerald-300"
               >
                 {info}
               </div>
@@ -117,7 +117,7 @@ function LoginForm() {
                   autoComplete="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="h-11 rounded-xl border border-gray-200 bg-white px-4 text-[14px] text-gray-800 placeholder:text-gray-500 focus:outline-none focus:border-navy focus:ring-2 focus:ring-red/30 transition-colors duration-150"
+                  className="h-11 rounded-xl border border-gray-200 bg-white px-4 text-[14px] text-gray-800 placeholder:text-gray-500 focus:outline-none focus:border-navy focus:ring-2 focus:ring-red/30 transition-colors duration-150 dark:border-[var(--border-default)] dark:bg-[var(--surface-sunken)] dark:text-[var(--ink-body)] dark:placeholder:text-[var(--ink-muted)]"
                   placeholder="you@company.com"
                 />
               </label>
@@ -133,7 +133,7 @@ function LoginForm() {
                   autoComplete={mode === "signin" ? "current-password" : "new-password"}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="h-11 rounded-xl border border-gray-200 bg-white px-4 text-[14px] text-gray-800 placeholder:text-gray-500 focus:outline-none focus:border-navy focus:ring-2 focus:ring-red/30 transition-colors duration-150"
+                  className="h-11 rounded-xl border border-gray-200 bg-white px-4 text-[14px] text-gray-800 placeholder:text-gray-500 focus:outline-none focus:border-navy focus:ring-2 focus:ring-red/30 transition-colors duration-150 dark:border-[var(--border-default)] dark:bg-[var(--surface-sunken)] dark:text-[var(--ink-body)] dark:placeholder:text-[var(--ink-muted)]"
                   placeholder="••••••••"
                 />
               </label>
