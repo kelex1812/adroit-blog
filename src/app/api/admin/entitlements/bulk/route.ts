@@ -7,6 +7,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { requireAdminApi, writeAuditLog } from "@/lib/admin";
 import { getSupabaseServiceClient } from "@/lib/supabase/service";
+import { authUserIdsExist } from "@/lib/supabase/auth-admin";
 import {
   checkOrigin,
   checkRateLimit,
@@ -62,13 +63,9 @@ export async function POST(req: NextRequest) {
     );
     const note = typeof body.note === "string" ? body.note.trim() || null : null;
 
-    // Validate all users exist (skip unknown ids silently).
-    const { data: known, error: userErr } = await service
-      .from("auth.users")
-      .select("id")
-      .in("id", userIds);
-    if (userErr) throw userErr;
-    const knownIds = new Set((known as { id: string }[]).map((r) => r.id));
+    // Validate all users exist (skip unknown ids silently). Auth users come
+    // from the GoTrue Admin API (`auth` schema not exposed to PostgREST).
+    const knownIds = await authUserIdsExist(userIds);
     const validUserIds = userIds.filter((id) => knownIds.has(id));
 
     const rows = validUserIds.map((userId) => ({

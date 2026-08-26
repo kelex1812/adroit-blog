@@ -91,6 +91,7 @@ export default function AdminDashboardPage() {
   const maxEnt = entitlementRanked[0]?.activeEntitlementCount ?? 1;
 
   const loading = courses.loading || users.loading;
+  const usersError = users.error;
 
   return (
     <div>
@@ -137,13 +138,28 @@ export default function AdminDashboardPage() {
         </p>
       ) : (
         <>
+          {/* users-fetch failure — surface it, never show a wrong 0 */}
+          {usersError && (
+            <div
+              role="alert"
+              className="mb-[16px] rounded-xl border px-4 py-3 text-[13px] font-medium"
+              style={{
+                borderColor: "var(--admin-table-border)",
+                background: "var(--surface-card-soft, #FFF7F7)",
+                color: "#B91C1C",
+              }}
+            >
+              Users failed to load ({usersError}). The Users / admins stats are
+              incomplete — reload or check the admin API.
+            </div>
+          )}
           {/* 6-stat grid */}
           <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-[14px] mb-[22px]">
             <Stat label="Live" value={live} sub="Public & gated" valueColor="var(--signal-live)" swColor="var(--signal-live)" />
             <Stat label="Pending" value={pendingCount} sub="Admin-only" valueColor="#B45309" swColor="#B45309" />
             <Stat label="Archived" value={archived} sub="Retired" valueColor="var(--signal-archived)" swColor="var(--signal-archived)" />
             <Stat label="Granted" value={granted} sub="Private access" valueColor="var(--signal-granted)" swColor="var(--signal-granted)" />
-            <Stat label="Users" value={totalUsers} sub={`${admins} admin${admins === 1 ? "" : "s"}`} valueColor="var(--ink-primary)" swColor="var(--color-navy)" />
+            <Stat label="Users" value={usersError ? "—" : totalUsers} sub={`${admins} admin${admins === 1 ? "" : "s"}`} valueColor="var(--ink-primary)" swColor="var(--color-navy)" />
             <Stat label="Entitlements" value={totalEntitlements} sub="Active grants" valueColor="var(--ink-primary)" swColor="var(--am-subscription)" />
           </div>
 

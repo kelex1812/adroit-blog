@@ -6,6 +6,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { requireAdminApi } from "@/lib/admin";
 import { getSupabaseServiceClient } from "@/lib/supabase/service";
+import { listAuthUsers } from "@/lib/supabase/auth-admin";
 import type {
   AdminUserListRow,
   UserRole,
@@ -19,12 +20,13 @@ export async function GET(req: NextRequest) {
 
   try {
     const service = getSupabaseServiceClient();
-    const [usersRes, rolesRes, profilesRes] = await Promise.all([
-      service.from("auth.users").select("id, email"),
+    // Auth users come from the GoTrue Admin API (the `auth` schema is not
+    // exposed to PostgREST — PGRST205). Roles/profiles are public tables.
+    const [authUsers, rolesRes, profilesRes] = await Promise.all([
+      listAuthUsers(),
       service.from("user_roles").select("user_id, role"),
       service.from("user_profiles").select("user_id, display_name"),
     ]);
-    if (usersRes.error) throw usersRes.error;
     if (rolesRes.error) throw rolesRes.error;
     if (profilesRes.error) throw profilesRes.error;
 
@@ -40,9 +42,7 @@ export async function GET(req: NextRequest) {
       nameByUser.set(p.user_id, p.display_name);
     }
 
-    const rows: AdminUserListRow[] = (
-      (usersRes.data ?? []) as { id: string; email: string }[]
-    )
+    const rows: AdminUserListRow[] = authUsers
       .map((u) => ({
         user_id: u.id,
         email: u.email,

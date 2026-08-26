@@ -6,6 +6,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { requireAdminApi, notFoundJson, writeAuditLog } from "@/lib/admin";
 import { getSupabaseServiceClient } from "@/lib/supabase/service";
+import { getAuthUser } from "@/lib/supabase/auth-admin";
 import {
   checkOrigin,
   checkRateLimit,
@@ -38,13 +39,12 @@ export async function POST(req: NextRequest) {
 
   const service = getSupabaseServiceClient();
   try {
-    const [userRes, courseRes] = await Promise.all([
-      service.from("auth.users").select("id").eq("id", body.userId).maybeSingle(),
+    const [user, courseRes] = await Promise.all([
+      getAuthUser(body.userId),
       service.from("courses").select("id").eq("id", body.courseId).maybeSingle(),
     ]);
-    if (userRes.error) throw userRes.error;
+    if (!user) return notFoundJson();
     if (courseRes.error) throw courseRes.error;
-    if (!userRes.data) return notFoundJson();
     if (!courseRes.data) return notFoundJson();
 
     const note = typeof body.note === "string" ? body.note.trim() || null : null;

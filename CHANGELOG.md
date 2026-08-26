@@ -4,6 +4,26 @@ All notable changes to the Adroit Consulting Blog project will be documented in 
 
 ## [Unreleased]
 
+### Fix: /api/admin/users 500 — auth schema not exposed to PostgREST (t_48183726)
+
+**What** — Admin user reads no longer hit the `auth` schema through PostgREST
+(which 500'd with `PGRST205` because that schema isn't exposed in the Supabase
+project). Auth users now come from the GoTrue Admin API
+(`GET /auth/v1/admin/users[...]`) with the service role key.
+
+**Why** — `service.from("auth.users")` failed for ANY admin, so the v4 dashboard
+Users stat silently showed 0 and `/admin/users` rendered "Failed to load users",
+even though 8 users (2 admins) existed.
+
+- New `src/lib/supabase/auth-admin.ts` — `listAuthUsers()` (paged), `getAuthUser()`
+  (404→null, matching old `.maybeSingle()` semantics), `authUserIdsExist()`.
+  Callers: `src/app/api/admin/users/route.ts`, `users/[id]/route.ts`,
+  `users/[id]/role/route.ts`, `entitlements/route.ts`, `entitlements/bulk/route.ts`.
+- Dashboard error surfacing — `src/app/admin/page.tsx`: when the users fetch
+  fails, an inline alert renders and the Users stat shows `—` instead of a wrong 0.
+
+**Known issues** — None. 281 tests pass (11 added), tsc + lint + build clean.
+
 ### Feature: Admin platform enhancements v4 (t_0ed19ad0)
 
 **What** — Incremental admin-platform build on the existing course-catalog +

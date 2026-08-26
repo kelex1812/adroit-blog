@@ -11,8 +11,9 @@ import { NextRequest } from "next/server";
 const { mocks } = vi.hoisted(() => {
   const getAccessUserId = vi.fn();
   const isAdmin = vi.fn();
+  const getAuthUser = vi.fn();
   const service = { from: vi.fn() };
-  return { mocks: { getAccessUserId, isAdmin, service } };
+  return { mocks: { getAccessUserId, isAdmin, getAuthUser, service } };
 });
 
 vi.mock("@/lib/access", () => ({
@@ -22,6 +23,10 @@ vi.mock("@/lib/access", () => ({
 
 vi.mock("@/lib/supabase/service", () => ({
   getSupabaseServiceClient: () => mocks.service,
+}));
+
+vi.mock("@/lib/supabase/auth-admin", () => ({
+  getAuthUser: mocks.getAuthUser,
 }));
 
 import { PATCH } from "./route";
@@ -45,19 +50,14 @@ function admin() {
 }
 
 /**
- * service.from mock:
- *  - auth.users: find the target (must exist).
- *  - user_roles: select("role") → previous role (maybeSingle);
- *                select("user_id") → admin-count rows.
+ * service.from mock: only public tables now (the target-exists check moved to
+ * getAuthUser). user_roles: select("role") → previous role (maybeSingle);
+ * select("user_id") → admin-count rows.
  */
 function wire({ previousRole, adminCountRows }: { previousRole: string; adminCountRows: unknown[] }) {
   const upserts: unknown[] = [];
+  mocks.getAuthUser.mockResolvedValue({ id: "u2", email: "u2@example.com" });
   mocks.service.from.mockImplementation((table: string) => {
-    if (table === "auth.users") {
-      return {
-        select: () => ({ eq: () => ({ maybeSingle: async () => ({ data: { id: "u2" }, error: null }) }) }),
-      };
-    }
     if (table === "user_roles") {
       return {
         select: (cols: string) =>
@@ -79,6 +79,7 @@ beforeEach(() => {
   vi.clearAllMocks();
   mocks.isAdmin.mockReset();
   mocks.getAccessUserId.mockReset();
+  mocks.getAuthUser.mockReset();
   mocks.service.from.mockReset();
 });
 

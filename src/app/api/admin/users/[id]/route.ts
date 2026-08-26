@@ -6,6 +6,7 @@
 import { NextResponse } from "next/server";
 import { requireAdminApi, notFoundJson } from "@/lib/admin";
 import { getSupabaseServiceClient } from "@/lib/supabase/service";
+import { getAuthUser } from "@/lib/supabase/auth-admin";
 import type {
   AdminUserListRow,
   EntitlementSource,
@@ -21,8 +22,10 @@ export async function GET(_req: Request, { params }: Params) {
   const { id } = await params;
   try {
     const service = getSupabaseServiceClient();
-    const [userRes, roleRes, profileRes, entRes] = await Promise.all([
-      service.from("auth.users").select("id, email").eq("id", id).maybeSingle(),
+    // Auth user comes from the GoTrue Admin API (`auth` schema not exposed to
+    // PostgREST). null → 404 (matches old `.maybeSingle()` semantics).
+    const [user, roleRes, profileRes, entRes] = await Promise.all([
+      getAuthUser(id),
       service
         .from("user_roles")
         .select("role")
@@ -39,8 +42,7 @@ export async function GET(_req: Request, { params }: Params) {
         .eq("user_id", id)
         .is("revoked_at", null),
     ]);
-    if (userRes.error) throw userRes.error;
-    if (!userRes.data) return notFoundJson();
+    if (!user) return notFoundJson();
 
     const entitlements: Record<string, EntitlementSource> = {};
     for (const e of (entRes.data ?? []) as {
@@ -52,7 +54,7 @@ export async function GET(_req: Request, { params }: Params) {
 
     const row: AdminUserListRow = {
       user_id: id,
-      email: (userRes.data as { email: string }).email,
+      email: user.email,
       display_name:
         ((profileRes.data as { display_name: string | null } | null)
           ?.display_name) ?? null,
