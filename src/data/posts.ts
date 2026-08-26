@@ -3,8 +3,8 @@ import { BlogPost } from "./types";
 export const posts: BlogPost[] = [
   {
     "slug": "visual-regression-testing-design-systems-2026",
-    "title": "One Token Edit Breaks Forty Components. Visual Regression Testing Is the Safety Net.",
-    "excerpt": "Design tokens hit 84% adoption and became a W3C standard, which means one spacing tweak can now break dozens of components that unit and integration tests never flag. Visual regression testing is the only automated layer that sees it, and AI-generated UI just made it mandatory.",
+    "title": "Visual Regression Testing: The Design System Safety Net",
+    "excerpt": "A single design-token edit can break dozens of components that unit and integration tests never flag. Visual regression testing is the only layer that sees it.",
     "category": "UI/UX",
     "categoryColor": "ux",
     "categoryGradient": "from-violet to-violet-dark",

@@ -1,7 +1,7 @@
 ---
-title: "One Token Edit Breaks Forty Components. Visual Regression Testing Is the Safety Net."
+title: "Visual Regression Testing: The Design System Safety Net"
 slug: visual-regression-testing-design-systems-2026
-excerpt: "Design tokens hit 84% adoption and became a W3C standard, which means one spacing tweak can now break dozens of components that unit and integration tests never flag. Visual regression testing is the only automated layer that sees it, and AI-generated UI just made it mandatory."
+excerpt: "A single design-token edit can break dozens of components that unit and integration tests never flag. Visual regression testing is the only layer that sees it."
 category: "UI/UX"
 categoryColor: ux
 categoryGradient: "from-violet to-violet-dark"
@@ -13,7 +13,7 @@ tags: [Visual Regression Testing, Design Tokens, Design Systems, Component Libra
 bannerImage: "/banners/visual-regression-testing-design-systems-2026.png"
 ---
 
-Design tokens crossed a threshold this year most teams noticed only in passing. Adoption hit 84% of teams in a survey of roughly 300 design professionals, up from 56% a year earlier, and the W3C Design Tokens Community Group shipped its first stable version of the format in October 2025[^1][^2]. Tokens stopped being a convention and became a real standard.
+Design tokens crossed a threshold this year most teams noticed only in passing. Adoption hit 84% of teams in a survey of roughly 300 design professionals, up from 56% a year earlier, and the W3C Design Tokens Community Group shipped its first stable version of the format in October 2025[^1][^2]. Tokens stopped being a convention and became a real standard, which is why our [design systems guide](/blog/token-first-design-systems-2026) now treats them as the foundation of any scalable UI.
 
 That standardization is the point, and the trap. Consistency is why tokens win, but scale breeds fragility: every shared component depends on a few foundation values. Change one border-radius token and it propagates to cards, buttons, inputs, modals, and tables, each rendering differently by container and breakpoint. And none of your existing tests will tell you[^3].
 
@@ -29,7 +29,7 @@ This is a direct consequence of the standardization win. When tokens were ad-hoc
 
 ## AI-generated UI makes the blind spot bigger
 
-The last two years changed the bug distribution of a typical frontend, and not for the better. Cursor, Copilot, and their peers now write a meaningful share of the UI that ships. The bug class that grows is specific: components that are structurally correct but visually wrong[^4].
+The last two years changed the bug distribution of a typical frontend, and not for the better. Cursor, Copilot, and their peers now write a meaningful share of the UI that ships, the same AI handoff we mapped in our [Figma MCP design-to-code guide](/blog/figma-mcp-design-to-code-2026). The bug class that grows is specific: components that are structurally correct but visually wrong[^4].
 
 A human developer building a component looks at it. They see the button is misaligned or the spacing doesn't match. The visual feedback loop is built into the process. An AI code generator has no such loop. It reasons about tokens: class names, style properties, component props. When an LLM emits `padding: 12px 16px`, it is producing a syntactically valid CSS rule, not placing pixels on a screen. It has no idea your design system uses an 8px spacing scale, so 12px padding puts the component out of step[^4].
 
@@ -45,13 +45,21 @@ Visual regression testing is straightforward. You capture screenshots of your co
 
 The workflow that works for design systems has exactly four steps[^3]:
 
-**Step one, capture the baseline.** The first run screenshots every component variant at the breakpoints you care about. These become your reference. Use a containerized browser so rendering stays consistent across machines and CI runners, because font rendering varies between operating systems[^3].
+### Step one: capture the baseline
 
-**Step two, run on every change.** Wire the tests into CI so they run on every pull request and merge to main. The tool re-renders each component, takes a fresh screenshot, and compares it against the baseline[^3].
+The first run screenshots every component variant at the breakpoints you care about. These become your reference. Use a containerized browser so rendering stays consistent across machines and CI runners, because font rendering varies between operating systems[^3].
 
-**Step three, review the diffs.** Not every difference is a regression. A deliberate color update shows up as a diff but should be approved. A human reviews each in a dashboard that overlays baseline and current renders and highlights the changed regions. This is the one human seam in the loop. The reviewer renders one of three verdicts: pass, fix, or regression. The AI never approves its own output[^3].
+### Step two: run on every change
 
-**Step four, approve or reject.** Approved diffs update the baseline. Rejected diffs route to code review to find the root cause. Then the cycle repeats: baseline, test, diff, verdict, and back again. That loop is the heartbeat of design-system maintenance[^3].
+Wire the tests into CI so they run on every pull request and merge to main. The tool re-renders each component, takes a fresh screenshot, and compares it against the baseline[^3].
+
+### Step three: review the diffs
+
+Not every difference is a regression. A deliberate color update shows up as a diff but should be approved. A human reviews each in a dashboard that overlays baseline and current renders and highlights the changed regions. This is the one human seam in the loop. The reviewer renders one of three verdicts: pass, fix, or regression. The AI never approves its own output[^3].
+
+### Step four: approve or reject
+
+Approved diffs update the baseline. Rejected diffs route to code review to find the root cause. Then the cycle repeats: baseline, test, diff, verdict, and back again. That loop is the heartbeat of design-system maintenance[^3].
 
 Component-level coverage matters, not just full-page screenshots. For a design system you test the atomic units: buttons, cards, form fields, tooltips, badges, and their variants and states. Teams typically wire this into Storybook, rendering each story in isolation. The diff surface is smaller, the false-positive rate drops, and every variant stays verified after any upstream token change[^3][^5].
 
