@@ -4,6 +4,37 @@ All notable changes to the Adroit Consulting Blog project will be documented in 
 
 ## [Unreleased]
 
+### Fix: stale content-count test fixtures (continue-learning + tiers) (t_f44be1e9)
+
+Three vitest expectations hardcoded lesson counts that Daily Planet's content
+stream had outgrown, keeping the suite red on main. The app behavior was correct
+in every case — only the fixtures were stale.
+
+**What**
+
+- **`src/app/api/continue-learning/route.test.ts`** — `totalLessons` for
+  `omni-studio-cert` (was 11, now 20) and the derived `percent` assertion now
+  come from `getLessonsForSeries(...)`. The "excludes fully-completed series"
+  fixture derives its lesson list from the taxonomy instead of a hardcoded
+  10-lesson slice of `agentic-ai` (now 22), so it again completes every lesson
+  and the exclusion holds.
+- **`src/app/api/progress/quiz/tiers/route.test.ts`** — the non-tier fallback
+  assertion for `agentic-ai` (`lessons.total`, was 10, now 22) derives from
+  `getSeriesBySlug(...).totalLessons`.
+
+**Why**
+
+- The platform commit 9253fa0 only added the access-seam gate + mock; the count
+  assertions pre-date it and were not a regression. Deriving counts from
+  `src/data/learn.ts` means future content additions stop breaking the suite.
+
+**Known Issues**
+
+- None introduced by this change. Note: on node v26 the full suite requires
+  `NODE_OPTIONS=--localstorage-file=<path>` because node's experimental global
+  `localStorage` shadows jsdom's; `QuizWidget.test.tsx` reads/writes
+  `localStorage` and fails under that shadowing independently of this change.
+
 ### Platform: Course Catalog + Entitlements + Admin (t_2eab480f)
 
 DB-backed course lifecycle (status) + access model (entitlements) + a server-side

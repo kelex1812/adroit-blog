@@ -10,6 +10,8 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { NextRequest } from "next/server";
 
+import { getSeriesBySlug } from "@/lib/learn";
+
 const { mocks } = vi.hoisted(() => {
   const getSupabaseServerClient = vi.fn();
   const getUser = vi.fn();
@@ -170,8 +172,10 @@ describe("GET /api/progress/quiz/tiers — canonical coverage (t_55105899)", () 
     const res = await get("agentic-ai");
     const json = await res.json();
     // agentic-ai has no content/learn/agentic-ai/questions/ → fall back to
-    // the series' totalLessons (10 lessons published in src/data/learn.ts).
-    expect(json.lessons.total).toBe(10);
+    // the series' totalLessons (derived from the content taxonomy so future
+    // content additions stop breaking the suite, t_f44be1e9).
+    const totalLessons = getSeriesBySlug("agentic-ai")?.totalLessons ?? 0;
+    expect(json.lessons.total).toBe(totalLessons);
     expect(json.checks).toEqual([]);
   });
 });

@@ -8,6 +8,8 @@
  */
 import { describe, it, expect, vi, beforeEach } from "vitest";
 
+import { getLessonsForSeries } from "@/lib/learn";
+
 const { mocks } = vi.hoisted(() => {
   const getSupabaseServerClient = vi.fn();
   const getUser = vi.fn();
@@ -54,7 +56,10 @@ describe("GET /api/continue-learning", () => {
 
   it("returns an in-progress series with the next uncompleted lesson", async () => {
     mocks.getUser.mockResolvedValue(AUTHED);
-    // omni-studio-cert has 11 published lessons; mark the first 3 complete.
+    // omni-studio-cert lessons; derive total from the content taxonomy so the
+    // assertion survives future content additions (t_f44be1e9).
+    const omniLessons = getLessonsForSeries("omni-studio-cert");
+    const totalLessons = omniLessons.length;
     const completed = [
       "day-01-f1-omnistudio-solution-and-industry-use-cases",
       "day-02-f2-project-needs-requirements-assumptions-risks-const",
@@ -72,27 +77,17 @@ describe("GET /api/continue-learning", () => {
     const item = json.items[0];
     expect(item.seriesSlug).toBe("omni-studio-cert");
     expect(item.completedCount).toBe(3);
-    expect(item.totalLessons).toBe(11);
-    expect(item.percent).toBe(27);
+    expect(item.totalLessons).toBe(totalLessons);
+    expect(item.percent).toBe(Math.round((3 / totalLessons) * 100));
     expect(item.nextLessonSlug).toBeTruthy(); // lowest-numbered uncompleted
     expect(item.lastCompletedAt).toBe("2026-08-11T10:00:00Z");
   });
 
   it("excludes fully-completed series (completedCount === total)", async () => {
     mocks.getUser.mockResolvedValue(AUTHED);
-    // agentic-ai has 10 published lessons; mark ALL complete.
-    const slugs = [
-      "what-is-an-agent",
-      "how-llms-work-tokens-context-inference",
-      "the-agent-loop-perceive-reason-act-observe",
-      "prompting-for-agents-system-prompts-few-shot",
-      "tokens-context-cost-engineering-agents",
-      "choosing-models-providers-routing-fallbacks",
-      "structured-output-json-mode-function-calling-tool-schemas",
-      "tool-design-schemas-error-handling-retries",
-      "function-calling-parity-across-providers",
-      "rag-fundamentals-chunking-embeddings-retrieval",
-    ];
+    // agentic-ai; mark EVERY published lesson complete (derived from the
+    // content taxonomy) so the series is excluded as fully complete.
+    const slugs = getLessonsForSeries("agentic-ai").map((l) => l.slug);
     const completed = slugs.map((slug) => ({
       lesson_slug: slug,
       completed_at: "2026-08-10T08:00:00Z",
