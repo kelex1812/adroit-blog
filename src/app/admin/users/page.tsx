@@ -47,8 +47,18 @@ export default function AdminUsersPage() {
     setToast(ok ? "Revoked" : "Revoke failed");
   }
 
-  if (loading && !rows) return <p className="text-sm text-gray-500">Loading users…</p>;
-  if (error) return <p className="text-sm text-red-600">{error}</p>;
+  if (loading && !rows)
+    return (
+      <p role="status" className="text-sm text-gray-500">
+        Loading users…
+      </p>
+    );
+  if (error)
+    return (
+      <p role="status" className="text-sm text-red-600">
+        {error}
+      </p>
+    );
 
   return (
     <div>
@@ -87,7 +97,11 @@ export default function AdminUsersPage() {
       </div>
 
       {toast && (
-        <div className="mb-4 text-[12.5px] font-medium text-emerald-700 bg-emerald/10 px-3 py-1.5 rounded-full inline-block">
+        <div
+          role="status"
+          aria-live="polite"
+          className="mb-4 text-[12.5px] font-medium text-emerald-700 bg-emerald/10 px-3 py-1.5 rounded-full inline-block"
+        >
           {toast}
         </div>
       )}
@@ -96,10 +110,10 @@ export default function AdminUsersPage() {
         <table className="w-full text-left border-collapse">
           <thead>
             <tr className="font-mono text-[11px] font-bold uppercase tracking-[0.07em]" style={{ color: "var(--admin-table-head)" }}>
-              <th className="px-4 py-3">User</th>
-              <th className="px-4 py-3">Role</th>
-              <th className="px-4 py-3">Active entitlements</th>
-              <th className="px-4 py-3">Actions</th>
+              <th scope="col" className="px-4 py-3">User</th>
+              <th scope="col" className="px-4 py-3">Role</th>
+              <th scope="col" className="px-4 py-3">Active entitlements</th>
+              <th scope="col" className="px-4 py-3">Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -121,6 +135,7 @@ export default function AdminUsersPage() {
                       onChange={(e) =>
                         onSetRole(u.user_id, e.target.value as UserRole)
                       }
+                      aria-label={`Role for ${u.display_name ?? u.email}`}
                       className="rounded-md border text-[12.5px] px-2 py-1.5 bg-transparent"
                       style={{ borderColor: "var(--admin-table-border)" }}
                     >

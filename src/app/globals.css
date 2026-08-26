@@ -87,12 +87,14 @@
      entitlements + admin platform (t_2eab480f). Nothing here replaces a
      shipped token — it only ADDS. Full spec: design/design-tokens-course-catalog-admin.css. */
 
-  /* 1. Course-status signals */
-  --signal-pending: var(--color-amber);
+  /* 1. Course-status signals — fg darkened for WCAG 2.2 AA contrast on the
+     tinted bgs (t_d2dfc405): pending #B45309/amber-700, live #047857/emerald-700,
+     archived #4B5563/gray-600. bgs stay as the kara light tints. */
+  --signal-pending: #B45309;
   --signal-pending-bg: var(--color-amber-light);
-  --signal-live: var(--color-emerald);
+  --signal-live: #047857;
   --signal-live-bg: var(--color-emerald-light);
-  --signal-archived: #6B7280;
+  --signal-archived: #4B5563;
   --signal-archived-bg: #F3F4F6;
   --signal-granted: #E11D48;
   --signal-granted-bg: #FFE4E6;

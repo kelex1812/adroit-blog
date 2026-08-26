@@ -4,6 +4,45 @@ All notable changes to the Adroit Consulting Blog project will be documented in 
 
 ## [Unreleased]
 
+### Fix: A11y + SEO audit findings — course catalog + admin (t_d2dfc405)
+
+Resolves every finding from lara's WCAG 2.2 / SEO audit
+(`reports/a11y-seo-audit-t_a2308ac3.md`).
+
+**What**
+
+- **StatusBadge contrast (HIGH, WCAG 1.4.3)** — darkened the signal-foreground
+  tokens in `src/app/globals.css` so they clear 4.5:1 on their tinted bgs:
+  pending `#B45309` (amber-700, was amber-500), live `#047857` (emerald-700,
+  was emerald-500), archived `#4B5563` (gray-600, was gray-500). This also
+  fixes the public Live badge on `/learn/[series]` in both themes (dark mode
+  doesn't remap pending/live, so the darker fg holds there too).
+- **Admin selects missing accessible names (HIGH, WCAG 4.1.2)** — added
+  `aria-label` to the per-row status + access-model selects in
+  `src/app/admin/page.tsx` and the role select in `admin/users/page.tsx`.
+- **Status/toast messages not announced (MED, WCAG 4.1.3)** — `role="status"`
+  (+ `aria-live="polite"` on toasts) added to loading/error/toast text across
+  the four admin pages (courses, users, matrix, audit).
+- **Admin tables missing `scope="col"` (LOW)** — added `scope="col"` to every
+  admin `<th>` (courses, users, matrix, audit).
+- **/admin indexable (MED SEO)** — added `Disallow: /admin/` to `robots.ts`
+  and `robots: { index: false, follow: false }` on the admin layout.
+- **Misleading "Read the first lesson free" (MED SEO)** — Paywall CTA copy
+  changed to "Preview this course" (the peek lesson is not actually free for
+  non-entitled users; the label now matches what the link does).
+
+**Why**
+
+- 2 HIGH contrast/name findings are WCAG 2.2 AA failures on a user-facing
+  surface; the SEO items were defense-in-depth gaps the audit flagged.
+
+**Known Issues**
+
+- None introduced. Contrast re-verified by calculation (pending 4.53:1,
+  live 4.85:1, archived 6.93:1). Paywall copy fix was the code-level resolution
+  the audit recommended; if a different CTA/UX is wanted, that's a design call
+  for kara.
+
 ### Fix: stale content-count test fixtures (continue-learning + tiers) (t_f44be1e9)
 
 Three vitest expectations hardcoded lesson counts that Daily Planet's content

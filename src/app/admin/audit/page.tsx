@@ -7,9 +7,18 @@ export default function AdminAuditPage() {
   const { rows, loading, error, refresh } = useAdminAudit(200);
 
   if (loading && !rows) {
-    return <p className="text-sm text-gray-500">Loading audit log…</p>;
+    return (
+      <p role="status" className="text-sm text-gray-500">
+        Loading audit log…
+      </p>
+    );
   }
-  if (error) return <p className="text-sm text-red-600">{error}</p>;
+  if (error)
+    return (
+      <p role="status" className="text-sm text-red-600">
+        {error}
+      </p>
+    );
 
   return (
     <div>
@@ -36,11 +45,11 @@ export default function AdminAuditPage() {
         <table className="w-full text-left border-collapse">
           <thead>
             <tr className="font-mono text-[11px] font-bold uppercase tracking-[0.07em]" style={{ color: "var(--admin-table-head)" }}>
-              <th className="px-4 py-3">Time</th>
-              <th className="px-4 py-3">Actor</th>
-              <th className="px-4 py-3">Action</th>
-              <th className="px-4 py-3">Target</th>
-              <th className="px-4 py-3">Details</th>
+              <th scope="col" className="px-4 py-3">Time</th>
+              <th scope="col" className="px-4 py-3">Actor</th>
+              <th scope="col" className="px-4 py-3">Action</th>
+              <th scope="col" className="px-4 py-3">Target</th>
+              <th scope="col" className="px-4 py-3">Details</th>
             </tr>
           </thead>
           <tbody>

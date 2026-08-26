@@ -44,8 +44,18 @@ export default function AdminCoursesPage() {
     setToast(ok ? `Updated ${slug} access model` : "Update failed");
   }
 
-  if (loading) return <p className="text-sm text-gray-500">Loading courses…</p>;
-  if (error) return <p className="text-sm text-red-600">{error}</p>;
+  if (loading)
+    return (
+      <p role="status" className="text-sm text-gray-500">
+        Loading courses…
+      </p>
+    );
+  if (error)
+    return (
+      <p role="status" className="text-sm text-red-600">
+        {error}
+      </p>
+    );
   if (!rows) return null;
 
   return (
@@ -60,7 +70,11 @@ export default function AdminCoursesPage() {
           </p>
         </div>
         {toast && (
-          <span className="text-[12.5px] font-medium text-emerald-700 bg-emerald/10 px-3 py-1.5 rounded-full">
+          <span
+            role="status"
+            aria-live="polite"
+            className="text-[12.5px] font-medium text-emerald-700 bg-emerald/10 px-3 py-1.5 rounded-full"
+          >
             {toast}
           </span>
         )}
@@ -70,12 +84,12 @@ export default function AdminCoursesPage() {
         <table className="w-full text-left border-collapse">
           <thead>
             <tr className="font-mono text-[11px] font-bold uppercase tracking-[0.07em]" style={{ color: "var(--admin-table-head)" }}>
-              <th className="px-4 py-3">Series</th>
-              <th className="px-4 py-3">Status</th>
-              <th className="px-4 py-3">Access</th>
-              <th className="px-4 py-3">Entitlements</th>
-              <th className="px-4 py-3">Status</th>
-              <th className="px-4 py-3">Access model</th>
+              <th scope="col" className="px-4 py-3">Series</th>
+              <th scope="col" className="px-4 py-3">Status</th>
+              <th scope="col" className="px-4 py-3">Access</th>
+              <th scope="col" className="px-4 py-3">Entitlements</th>
+              <th scope="col" className="px-4 py-3">Status</th>
+              <th scope="col" className="px-4 py-3">Access model</th>
             </tr>
           </thead>
           <tbody>
@@ -102,6 +116,7 @@ export default function AdminCoursesPage() {
                   <select
                     value={course.status}
                     disabled={saving === course.id}
+                    aria-label={`Status for ${course.title}`}
                     onChange={(e) =>
                       onStatusChange(
                         course.series_slug,
@@ -122,6 +137,7 @@ export default function AdminCoursesPage() {
                   <select
                     value={course.access_model}
                     disabled={saving === course.id}
+                    aria-label={`Access model for ${course.title}`}
                     onChange={(e) =>
                       onModelChange(
                         course.series_slug,

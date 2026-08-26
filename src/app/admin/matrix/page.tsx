@@ -50,7 +50,11 @@ export default function AdminMatrixPage() {
   }, [users]);
 
   if (usersLoading || coursesLoading) {
-    return <p className="text-sm text-gray-500">Loading matrix…</p>;
+    return (
+      <p role="status" className="text-sm text-gray-500">
+        Loading matrix…
+      </p>
+    );
   }
   if (!users || !courses) return null;
 
@@ -67,9 +71,9 @@ export default function AdminMatrixPage() {
         <table className="w-full text-left border-collapse">
           <thead>
             <tr className="font-mono text-[11px] font-bold uppercase tracking-[0.07em]" style={{ color: "var(--admin-table-head)" }}>
-              <th className="px-4 py-3 min-w-[200px]">User</th>
+              <th scope="col" className="px-4 py-3 min-w-[200px]">User</th>
               {courses.map(({ course }) => (
-                <th key={course.id} className="px-3 py-3 text-center min-w-[90px]">
+                <th scope="col" key={course.id} className="px-3 py-3 text-center min-w-[90px]">
                   <div className="truncate max-w-[90px]">{course.series_slug}</div>
                   <div className="mt-1 flex justify-center">
                     <AccessModelChip model={course.access_model} />

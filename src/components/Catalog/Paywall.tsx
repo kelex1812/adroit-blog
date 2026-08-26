@@ -83,7 +83,7 @@ export default function Paywall({
               href={`/learn/${seriesSlug}/${view.peekLessonSlug}`}
               className="inline-flex items-center gap-1.5 text-[13px] font-semibold text-white/80 no-underline hover:text-white transition-colors"
             >
-              Read the first lesson free
+              Preview this course
               <span aria-hidden>&rarr;</span>
             </Link>
           ) : null}
