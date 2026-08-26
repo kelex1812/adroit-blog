@@ -2,6 +2,30 @@ import { BlogPost } from "./types";
 
 export const posts: BlogPost[] = [
   {
+    "slug": "definition-of-done-ai-agents-2026",
+    "title": "When AI Writes the Code, 'Done' Has to Mean More",
+    "excerpt": "AI code isn't deterministic, so 'all tests pass' no longer means done. The definition of done that survives agents defines done as calibration, not a checkbox.",
+    "category": "Project Management",
+    "categoryColor": "pm",
+    "categoryGradient": "from-teal to-teal-dark",
+    "date": "August 26, 2026",
+    "author": "Adroit Consulting",
+    "authorInitials": "AC",
+    "readTime": "10 min read",
+    "featured": false,
+    "tags": [
+      "Project Management",
+      "Definition of Done",
+      "Agile",
+      "Delivery",
+      "AI Agents",
+      "Quality",
+      "Consulting"
+    ],
+    "bannerImage": "/banners/definition-of-done-ai-agents-2026.png",
+    "status": "published"
+  },
+  {
     "slug": "visual-regression-testing-design-systems-2026",
     "title": "Visual Regression Testing: The Design System Safety Net",
     "excerpt": "A single design-token edit can break dozens of components that unit and integration tests never flag. Visual regression testing is the only layer that sees it.",
