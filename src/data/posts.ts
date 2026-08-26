@@ -2,6 +2,31 @@ import { BlogPost } from "./types";
 
 export const posts: BlogPost[] = [
   {
+    "slug": "visual-regression-testing-design-systems-2026",
+    "title": "One Token Edit Breaks Forty Components. Visual Regression Testing Is the Safety Net.",
+    "excerpt": "Design tokens hit 84% adoption and became a W3C standard, which means one spacing tweak can now break dozens of components that unit and integration tests never flag. Visual regression testing is the only automated layer that sees it, and AI-generated UI just made it mandatory.",
+    "category": "UI/UX",
+    "categoryColor": "ux",
+    "categoryGradient": "from-violet to-violet-dark",
+    "date": "August 26, 2026",
+    "author": "Adroit Consulting",
+    "authorInitials": "AC",
+    "readTime": "9 min read",
+    "featured": false,
+    "tags": [
+      "Visual Regression Testing",
+      "Design Tokens",
+      "Design Systems",
+      "Component Libraries",
+      "Design Engineering",
+      "Playwright",
+      "Storybook",
+      "UI/UX"
+    ],
+    "bannerImage": "/banners/visual-regression-testing-design-systems-2026.png",
+    "status": "published"
+  },
+  {
     "slug": "ai-agent-observability-opentelemetry-2026",
     "title": "AI Agents Fail Quietly. OpenTelemetry Is How You Catch Them.",
     "excerpt": "Agents fail while looking like they succeed. OpenTelemetry GenAI conventions give agent telemetry a vendor-neutral vocabulary, and the span model is how you catch the ones that break quietly.",
