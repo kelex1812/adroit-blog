@@ -29,6 +29,16 @@ interface Props {
   params: Promise<{ series: string }>;
 }
 
+/**
+ * This page resolves the signed-in user's access decision from the request's
+ * HttpOnly session cookie + Supabase (ADR-201). Those inputs only exist at
+ * request time, so the page MUST render dynamically — a static prerender
+ * would bake a guest/no-access snapshot into HTML and serve it to everyone.
+ * force-dynamic also prevents the build from executing the Supabase access
+ * seam at build time (env absent in CI).
+ */
+export const dynamic = "force-dynamic";
+
 export async function generateStaticParams() {
   return learnSeries.map((s) => ({ series: s.slug }));
 }

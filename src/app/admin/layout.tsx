@@ -14,6 +14,14 @@ export const metadata: Metadata = {
 };
 
 /**
+ * The /admin layout guards on the request's session cookie (US-016). A
+ * static prerender would bake a no-user snapshot and 404 every admin for all
+ * time — force dynamic so the role gate evaluates per request (and so the
+ * build doesn't execute the Supabase access seam without env in CI).
+ */
+export const dynamic = "force-dynamic";
+
+/**
  * /admin layout — server-side role guard (US-016). Non-admins get a 404 (the
  * shell is never even rendered). This is the FIRST gate; every API route also
  * checks isAdmin (defense-in-depth — hiding the nav is never the only guard).
