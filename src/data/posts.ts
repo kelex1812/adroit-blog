@@ -2,6 +2,29 @@ import { BlogPost } from "./types";
 
 export const posts: BlogPost[] = [
   {
+    "slug": "react-compiler-automatic-memoization-2026",
+    "title": "React Compiler Turned One: The Honest Answer About useMemo, useCallback, and React.memo",
+    "excerpt": "One year after React Compiler 1.0 went stable, teams are finally asking whether automatic memoization lets them delete the manual optimization hooks. The answer is more subtle than a yes or no.",
+    "category": "React & Web Dev",
+    "categoryColor": "react",
+    "categoryGradient": "from-emerald to-emerald-dark",
+    "date": "August 27, 2026",
+    "author": "Adroit Consulting",
+    "authorInitials": "AC",
+    "readTime": "9",
+    "featured": false,
+    "tags": [
+      "React",
+      "React Compiler",
+      "useMemo",
+      "useCallback",
+      "Performance",
+      "Web Development"
+    ],
+    "bannerImage": "/banners/react-compiler-automatic-memoization-2026.png",
+    "status": "published"
+  },
+  {
     "slug": "definition-of-done-ai-agents-2026",
     "title": "When AI Writes the Code, 'Done' Has to Mean More",
     "excerpt": "AI code isn't deterministic, so 'all tests pass' no longer means done. The definition of done that survives agents defines done as calibration, not a checkbox.",
