@@ -49,10 +49,6 @@ export interface LearningSeries {
   name: string;
   /** One-line description from series.json; fallback: "" */
   description: string;
-  /** Optional grouping label for the Learn hub (e.g. "Salesforce Certifications") */
-  group?: string;
-  /** Optional subgroup under a group (content metadata only, e.g. "Developer"); no DB. */
-  subgroup?: string;
   /** Tailwind gradient classes for card headers, e.g. "from-sky to-blue-600"; fallback: "from-navy to-navy-light" */
   gradient: string;
   /** Lessons sorted NEWEST FIRST (date desc) — enforced by build-learn.js AND lib/learn.ts */
@@ -67,6 +63,11 @@ export interface LearningSeries {
  * metadata (slug/title/excerpt/date/author/readTime/tags) is never shipped to
  * the client. `lessonSlugs` is populated for signed-in cards (SeriesProgress)
  * and always empty for guests.
+ *
+ * Learn Platform v2 (migration 009 / ADR-210): the org fields (section/group/
+ * track/level/sortOrder/difficulty) come from the DB-backed CatalogCourse via
+ * the unified catalog builder — NOT from series.json. `group`/`subgroup`
+ * content fields were removed (ADR-207).
  */
 export interface LearnCardSeries {
   /** Series slug — link target + card label. */
@@ -75,10 +76,6 @@ export interface LearnCardSeries {
   name: string;
   /** One-line description from series.json. */
   description: string;
-  /** Optional grouping label for the Learn hub (e.g. "Salesforce Certifications"). */
-  group?: string;
-  /** Optional subgroup under a group (content metadata only, e.g. "Developer"). */
-  subgroup?: string;
   /** Tailwind gradient classes for card headers. */
   gradient: string;
   /** Published lesson count — "{n} / {total} lessons" badge. */
@@ -87,4 +84,19 @@ export interface LearnCardSeries {
   totalLessons: number;
   /** Lesson slugs — signed-in only (SeriesProgress); empty for guests. */
   lessonSlugs: string[];
+  /* ---- Learn v2 org (DB-derived via CatalogCourse) ---- */
+  /** Joined top-level section; null = uncategorized. */
+  section: { slug: string; name: string } | null;
+  /** Joined group under the section; null = standalone course. */
+  group: { slug: string; name: string } | null;
+  /** Track slug; null = standalone / Learning Path. */
+  track: string | null;
+  /** Level within a track (1|2|3); null = standalone. */
+  level: number | null;
+  /** Order within group/track. */
+  sortOrder: number | null;
+  /** Catalog-wide difficulty (Beginner/Intermediate/Advanced); null = unauthored. */
+  difficulty: string | null;
+  /** User's access on this card (drives lock vs click-through). */
+  canAccess: boolean;
 }

@@ -3,6 +3,7 @@ import { LearnCardSeries } from "@/data/types";
 import { seriesShortLabel } from "@/lib/learn-client";
 import SeriesProgress from "@/components/Progress/SeriesProgress";
 import QuizStats from "@/components/Progress/QuizStats";
+import DifficultyPill from "./DifficultyPill";
 import type { CardGateState } from "@/shared/contracts-account";
 
 interface PathCardProps {
@@ -43,10 +44,20 @@ export default function PathCard({ series, gate, loginNext }: PathCardProps) {
         <span className="absolute bottom-3.5 left-5 bg-white/20 backdrop-blur-sm px-2.5 py-1 rounded-full text-xs font-bold text-white uppercase tracking-[0.06em] z-10">
           {seriesShortLabel(series.slug)}
         </span>
-        {series.subgroup && (
+        {/* Learn v2 profile (ADR-208): track Level N pill + difficulty. */}
+        {series.level != null ? (
           <span className="absolute top-3.5 left-5 bg-black/60 backdrop-blur-sm px-2.5 py-1 rounded-full text-[9.5px] font-bold text-white uppercase tracking-[0.07em] font-mono z-10">
-            {series.subgroup}
+            Level {series.level}
           </span>
+        ) : (
+          series.difficulty && (
+            <span className="absolute top-3.5 left-5 z-10">
+              <DifficultyPill
+                difficulty={series.difficulty as "Beginner" | "Intermediate" | "Advanced"}
+                onGradient
+              />
+            </span>
+          )
         )}
         <span className="absolute top-3.5 right-4 bg-black/55 backdrop-blur-sm px-2.5 py-1 rounded-full text-[10.5px] font-bold text-white font-mono z-10">
           {series.lessonCount} / {series.totalLessons} lessons
