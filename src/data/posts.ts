@@ -2,6 +2,28 @@ import { BlogPost } from "./types";
 
 export const posts: BlogPost[] = [
   {
+    "slug": "agentforce-experience-cloud-portal-2026",
+    "title": "Putting an Agent on Your Customer Portal: Agentforce on Experience Cloud",
+    "excerpt": "A customer-facing Agentforce agent on Experience Cloud is a messaging and routing project first, an AI project second. The grounding, the guest-user security model, and the Einstein Bots migration reality decide whether it ships.",
+    "category": "Salesforce",
+    "categoryColor": "sf",
+    "categoryGradient": "from-sky to-sky-dark",
+    "date": "August 27, 2026",
+    "author": "Adroit Consulting",
+    "authorInitials": "AC",
+    "readTime": "10 min read",
+    "featured": false,
+    "tags": [
+      "Salesforce",
+      "Agentforce",
+      "Experience Cloud",
+      "AI Agents",
+      "Data Cloud"
+    ],
+    "bannerImage": "/banners/agentforce-experience-cloud-portal-2026.png",
+    "status": "published"
+  },
+  {
     "slug": "react-compiler-automatic-memoization-2026",
     "title": "React Compiler Turned One: The useMemo Answer",
     "excerpt": "A year after React Compiler 1.0 went stable, here is when you can delete useMemo and when you cannot.",
