@@ -31,7 +31,10 @@ import type {
   AccessSeam,
   CatalogCourseEntry,
   CatalogForUserResult,
+  CatalogGroup,
+  CatalogSection,
   CourseAccessDecision,
+  CoursePrerequisiteRow,
   CourseRow,
   SubscriptionRow,
   UserEntitlementRow,
@@ -191,6 +194,13 @@ export interface PlatformDataLoader {
   getRole(userId: string): Promise<UserRole | null>;
   getActiveEntitlements(userId: string): Promise<UserEntitlementRow[]>;
   getActiveSubscriptions(userId: string): Promise<SubscriptionRow[]>;
+  /* ---- Learn Platform v2 (migration 009) — organization as data ---- */
+  /** Top-level Learn sections (Certifications / Tracks / Learning Paths). */
+  getSections(): Promise<CatalogSection[]>;
+  /** Vendor/family groups under a section. */
+  getGroups(): Promise<CatalogGroup[]>;
+  /** Structured "this course requires X" join rows. */
+  getPrerequisites(): Promise<CoursePrerequisiteRow[]>;
 }
 
 /** ISO "now" — one timestamp per seam call so all reads agree. */
@@ -267,6 +277,56 @@ async function loadActiveSubscriptions(
   return (data ?? []) as SubscriptionRow[];
 }
 
+// Learn v2 org loaders — SELECT public via RLS (sections/groups/prereqs are
+// non-sensitive metadata), so the cookie-bound client can read them for any
+// user (guests included). Per-request cached to share one read across the
+// catalog build on the same request.
+const loadSections = cache(async (): Promise<CatalogSection[]> => {
+  const supabase = await getSupabaseServerClient();
+  const { data, error } = await supabase
+    .from("catalog_sections")
+    .select("*")
+    .order("sort_order", { ascending: true });
+  if (error) throw error;
+  return (data ?? []) as CatalogSection[];
+});
+
+const loadGroups = cache(async (): Promise<CatalogGroup[]> => {
+  const supabase = await getSupabaseServerClient();
+  const { data, error } = await supabase
+    .from("catalog_groups")
+    .select("*")
+    .order("sort_order", { ascending: true });
+  if (error) throw error;
+  return (data ?? []) as CatalogGroup[];
+});
+
+const loadPrerequisites = cache(
+  async (): Promise<CoursePrerequisiteRow[]> => {
+    const supabase = await getSupabaseServerClient();
+    const { data, error } = await supabase
+      .from("course_prerequisites")
+      .select("*")
+      .order("sort_order", { ascending: true });
+    if (error) throw error;
+    return (data ?? []) as CoursePrerequisiteRow[];
+  },
+);
+
+/** Public, per-request-cached catalog org rows (used by the v2 builder). */
+export async function getCatalogOrg(): Promise<{
+  sections: CatalogSection[];
+  groups: CatalogGroup[];
+  prerequisites: CoursePrerequisiteRow[];
+}> {
+  const [sections, groups, prerequisites] = await Promise.all([
+    loadSections(),
+    loadGroups(),
+    loadPrerequisites(),
+  ]);
+  return { sections, groups, prerequisites };
+}
+
 /** Production loader — RLS cookie-bound reads. */
 export const supabaseLoader: PlatformDataLoader = {
   getCourseBySlug: loadCourseBySlug,
@@ -274,6 +334,9 @@ export const supabaseLoader: PlatformDataLoader = {
   getRole: loadRole,
   getActiveEntitlements: loadActiveEntitlements,
   getActiveSubscriptions: loadActiveSubscriptions,
+  getSections: loadSections,
+  getGroups: loadGroups,
+  getPrerequisites: loadPrerequisites,
 };
 
 /* ------------------------------------------------------------------ */
