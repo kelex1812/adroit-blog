@@ -84,7 +84,7 @@ Treating "valid JSON" as "correct output." JSON mode guarantees parseability and
 
 ## What's next
 
-You can now make models emit contracts and call the tools you define. The next building block is the **augmented LLM**: retrieval (RAG) that gives agents knowledge beyond their training data, and the Model Context Protocol (MCP) that standardizes how agents discover and connect to external tools, promised since Lesson 1 and finally on the schedule.
+You can now make models emit contracts and call the tools you define. Lesson 8 makes those contracts do real work: tool calling, designing tools and their schemas so the model knows when and how to call them, and building error handling and retries so a failing tool fails well instead of silently. Structured output gets the model to speak your format; tool calling is how it reaches out and acts on the world.
 
 [^1]: vellum.ai. [vellum.ai](https://www.vellum.ai/blog/when-should-i-use-function-calling-structured-outputs-or-json-mode)
 [^2]: agenta.ai. [agenta.ai](https://agenta.ai/blog/the-guide-to-structured-outputs-and-function-calling-with-llms)
