@@ -3,8 +3,8 @@ import { BlogPost } from "./types";
 export const posts: BlogPost[] = [
   {
     "slug": "react-compiler-automatic-memoization-2026",
-    "title": "React Compiler Turned One: The Honest Answer About useMemo, useCallback, and React.memo",
-    "excerpt": "One year after React Compiler 1.0 went stable, teams are finally asking whether automatic memoization lets them delete the manual optimization hooks. The answer is more subtle than a yes or no.",
+    "title": "React Compiler Turned One: The useMemo Answer",
+    "excerpt": "A year after React Compiler 1.0 went stable, here is when you can delete useMemo and when you cannot.",
     "category": "React & Web Dev",
     "categoryColor": "react",
     "categoryGradient": "from-emerald to-emerald-dark",
