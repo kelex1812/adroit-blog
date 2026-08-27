@@ -3,8 +3,8 @@ import { BlogPost } from "./types";
 export const posts: BlogPost[] = [
   {
     "slug": "agentforce-experience-cloud-portal-2026",
-    "title": "Putting an Agent on Your Customer Portal: Agentforce on Experience Cloud",
-    "excerpt": "A customer-facing Agentforce agent on Experience Cloud is a messaging and routing project first, an AI project second. The grounding, the guest-user security model, and the Einstein Bots migration reality decide whether it ships.",
+    "title": "Agentforce on Experience Cloud: The Portal Agent Reality",
+    "excerpt": "An Agentforce agent on Experience Cloud is a routing and security project first. Grounding and the guest-user model decide whether it ships.",
     "category": "Salesforce",
     "categoryColor": "sf",
     "categoryGradient": "from-sky to-sky-dark",
