@@ -2,6 +2,29 @@ import { BlogPost } from "./types";
 
 export const posts: BlogPost[] = [
   {
+    "slug": "agent-tool-attack-surface-2026",
+    "title": "Your Agent's Tools Are the Attack Surface: MCP Security in 2026",
+    "excerpt": "Tool poisoning, rug pulls, and shadow servers: agent security moved from the prompt to the tool layer. The 2026 MCP data and a layered defense that survives it.",
+    "category": "AI & Consulting",
+    "categoryColor": "ai",
+    "categoryGradient": "from-amber to-amber-dark",
+    "date": "August 28, 2026",
+    "author": "Adroit Consulting",
+    "authorInitials": "AC",
+    "readTime": "9",
+    "featured": false,
+    "tags": [
+      "AI Agents",
+      "MCP",
+      "Security",
+      "Prompt Injection",
+      "Tool Poisoning",
+      "Agentic AI"
+    ],
+    "bannerImage": "/banners/agent-tool-attack-surface-2026.png",
+    "status": "published"
+  },
+  {
     "slug": "agentforce-experience-cloud-portal-2026",
     "title": "Agentforce on Experience Cloud: The Portal Agent Reality",
     "excerpt": "An Agentforce agent on Experience Cloud is a routing and security project first. Grounding and the guest-user model decide whether it ships.",
