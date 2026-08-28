@@ -29,6 +29,8 @@ Supabase's own guidance names the two cases where binary shines: sensor/telemetr
 
 **Sensor and telemetry streams.** Connected devices emit steady streams of numeric readings: temperature, accelerometer values, GPS coordinates, battery levels. Each reading is compact and fixed-width by nature. Across thousands of devices publishing continuously, the JSON overhead compounds fast. Binary lets you pack those readings into a few bytes per sample instead of a 20-30 character JSON object.
 
+To make the trade concrete, take a single reading. A JSON sample such as `{"sensor":42,"temp":21.4,"battery":87}` plus its message envelope runs around 45-55 bytes on the wire, while the same three values packed as two 16-bit integers and one 32-bit float fit in 12 bytes. Multiply by volume: a thousand devices publishing once a second works out to roughly 180 MB of JSON per hour against about 43 MB of binary, so over 135 MB of bandwidth disappears every hour, and that is before you count the JSON parse work every subscriber pays on each message. At this scale the framing schema you choose is worth the small amount of up-front design.
+
 **Screenshot and presentation streaming.** A presenter or support agent shares a live view by broadcasting periodic image frames (JPEG/PNG) to viewers. Each frame is inherently binary, so encoding it as base64 inside JSON wastes ~33% of your bytes for no benefit. With binary payloads you send the image bytes straight to everyone watching. There's no base64 tax, and you don't need durable storage because each frame is transient.
 
 The general rule: **if your data is numeric, high-frequency, or already binary, send it binary.** If it's a low-frequency event that a human will debug, JSON's readability is worth more than its overhead.
@@ -52,6 +54,8 @@ channel.subscribe(async (status) => {
   })
 })
 ```
+
+On the receiving end the delivered payload comes back as an `ArrayBuffer`. Subscribers read it with a `DataView` or a typed array, a `Float32Array` for numeric telemetry or a plain `Uint8Array` for image frames, and since you control the byte layout on both sides, agree on field order and width once and keep that schema shared. That single shared definition is what keeps a binary channel readable across every subscriber.
 
 [^2]
 
@@ -96,6 +100,7 @@ A few things we'd check before shipping binary broadcasts in production:
 1. **Pin and verify client versions everywhere.** The silent-drop behavior means a stale mobile client won't "fail"; it'll just miss data. Make the minimum version a contract, and log client SDK versions on connect if you can.
 2. **Keep a JSON fallback path for mixed fleets.** If you can't guarantee every subscriber is on a binary-capable SDK, broadcast a JSON envelope for legacy clients and binary for current ones (two channels, or a capability flag).
 3. **Test `httpSend` from serverless.** It's the cleanest way to push binary from a function, but confirm your runtime's fetch layer forwards `application/octet-stream` bodies untouched.
+4. **Measure the real win before you commit.** The bandwidth math only holds if your frame format is actually tight. Log the delivered message size for a JSON build and a binary build of the same event during load testing, and confirm the binary path is smaller on your real payloads, not just in a contrived example. A loose fixed-width format can quietly eat the savings you adopted binary to get.
 
 ## The bigger picture: Realtime is becoming the sync layer
 

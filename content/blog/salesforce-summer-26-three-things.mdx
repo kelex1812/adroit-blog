@@ -35,6 +35,8 @@ A new **Any API Auth** user permission lets you control who can authenticate via
 
 **What to do this week:** Check your list of authenticated integrations. If any use SOAP login with stored credentials, document the migration path. The retirement timeline hasn't locked in a hard cutoff date yet, but the Any API Auth permission going GA in Summer '26 is the signal to move.
 
+When you do migrate, pick the right flow for the workload rather than defaulting to whatever the vendor's SDK exposes. External client apps with JWT bearer tokens suit server-to-server integrations where you control the certificate and want to rotate keys on your own schedule. The OAuth 2.0 client credentials flow is the lighter option when you just need a short-lived token and can tolerate the exchange on every call. Either way, the decision belongs in a written plan now, because the migration itself is rarely the hard part. The hard part is the inventory: many orgs discover a middle-aged ETL job or a partner app that was provisioned years ago and forgotten, and that discovery is far cheaper to make in a planned audit than at the moment a production job starts failing. Keep a per-integration note of which flow it targets, who owns the credential, and the date you plan to cut over, so the work is visible on a calendar rather than scattered across tickets.
+
 ---
 
 ## 2. Flow Builder Just Got a Lot Stronger: Your Old Flows Need an Audit
@@ -73,6 +75,8 @@ Radio Button Group is a new component that replaces ugly browser-native radio bu
 
 **The actionable takeaway:** If your org has flows that predate the Transform and Collection Filter elements, schedule a Summer '26 audit. Salesforce Ben's Tim Combridge published a guide just last week on exactly which hacks to replace with native features. The performance gains, especially from Transform over Loop patterns, are real enough that they pay back the audit time.
 
+Don't try to rework the whole portfolio in one pass. Start with the flows that run most often or touch the most records, because those are where a tenfold reduction in processing time shows up as a measurable change in batch job duration and user-facing wait times. For each candidate, run a before-and-after benchmark in a sandbox on a representative data volume, not a handful of records. A flow that loops through a few hundred rows will never show the difference; a collection of ten thousand will. Keep the old version in place until the replacement clears your normal regression checks, and be explicit about what you are testing: no more subtle "it still does the same thing" assumptions. This is also the moment to look for the other quiet wins in the same release, because the native date operators and clickable Lookup links in Data Tables usually solve the same small annoyances in the same batch of flows, so you can fold them into one testing cycle.
+
 ---
 
 ## 3. The Agentforce Migration That's Not a Migration
@@ -93,6 +97,8 @@ Setup goes through Agent Builder: Explorer panel → `+` → "Connect Agent as S
 
 For agencies building multi-tenant or white-labeled Salesforce solutions, this is worth a proof-of-concept in sandbox now. The pattern, one orchestration agent plus specialized subagents, maps directly onto the split between a platform hub and per-client configurations.
 
+The practical thing to test before you adopt it is the routing behavior, not just the build mechanics. Set up two subagents with clearly bounded responsibilities, give the orchestrator a few realistic requests that could plausibly land with either one, and watch where they go. Agent Router hands work to subagents referenced in the Instructions, so the quality of the routing is only as good as the boundaries you define in those instructions. A subagent with a vague job description will quietly become a catch-all, and then you are back to a single agent that happens to be wrapped in orchestration. Define each subagent's scope the way you would write a well-scoped integration contract, with explicit inputs, a defined set of actions it is allowed to take, and a crisp handoff back to the orchestrator. That discipline is the difference between a demo that routes cleanly and a production assistant that surprises you.
+
 ### Setup With Agentforce Is Now GA
 
 Setup with Agentforce, the AI-native setup assistant that answers questions and performs configuration tasks, went GA in Summer '26. All setup actions remain non-billable for now (no Agentforce credit consumption), though Data 360 credits are consumed for the Help and Navigation action. Salesforce plans to move this off Data 360 credits around Dreamforce 2026.
@@ -111,6 +117,8 @@ We manage client orgs across multiple instances, which means Summer '26 hits dif
 4. **Agent upgrade path**: for orgs already piloting agents, run the legacy upgrade and optimization tool; for orgs that aren't, document the Multi-Agent Orchestration beta as a Q3 2026 opportunity
 
 This isn't a release where you can skip testing. The SOAP retirement, Flow performance changes, and Agentforce builder migration all have teeth. Test them in sandbox before August.
+
+One more thing that matters across all three: talk to the people who will feel the change before you schedule it. The SOAP migration may touch a downstream reporting tool your client's finance team relies on every morning. The Flow rewrite changes timing on a process someone has built a routine around. The agent upgrade changes how a support team gets answers. None of that shows up in a technical checklist, but it determines whether the release lands as a smooth transition or a fire drill. Map the affected users, tell them what changes and when, and leave a rollback note in case a benchmark surprises you. Release season is manageable when the testing is grounded in real data shapes and the communication is handled before the code ships.
 
 ---
 

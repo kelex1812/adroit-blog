@@ -90,6 +90,10 @@ The upgrade path we'd recommend to clients, in order:
 3. **Keep `typescript-eslint` pinned to 6.0** via the `@typescript/typescript6` alias until 7.1 ships its API. Don't force it.
 4. **Tune `--checkers` on big monorepos** (and `--builders` for project references). That's where the 12-16x results live, and `--singleThreaded` is your escape hatch on small CI runners.
 
+A couple of practical notes that fall out of the numbers above. First, **measure your own baseline before you promise a speedup.** The 8x-12x figure is what Microsoft sees on five large codebases, and the early-adopter results (Slack at ~6x on a specific CI path, Vanta at 9x) show that real-world wins cluster in that range but are not identical across projects. [^6] [^7] The cheapest reliable measurement is the canary in step 2: run `tsc --noEmit` under 7.0 in CI, compare wall-clock time against your current 6.0 run, and you have a project-specific number in one pipeline pass instead of a guess. [^1]
+
+Second, **plan the tooling migration as its own workstream, separate from the compiler swap.** Because `typescript-eslint` must stay on 6.0 until 7.1, your editor linting will keep running the old checker even after your build moves to 7.0. That split is by design and it is fine, but it means you will briefly have two checkers in play, one for the build and one for editor diagnostics. Teams that flag this up front avoid a confusing week where the editor and CI disagree about a type error that only one checker flags. [^1]
+
 Note: This article is written four weeks after 7.0.2 shipped; the programmatic API situation (7.1) is the one thing to re-verify before you rely on it, since it's expected but not yet released as of this writing. [^1]
 
 TypeScript 7 is an infrastructure release, not a feature release. Your code won't suddenly get smarter, but each build, edit, and agent iteration gets an order of magnitude cheaper. For teams where compile time is the bottleneck between idea and shipped code, that kind of upgrade pays for itself in the first week.
