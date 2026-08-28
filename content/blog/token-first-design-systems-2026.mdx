@@ -107,6 +107,8 @@ The [Tokens Studio](https://tokens.studio/) plugin serializes Figma variables to
 
 CI/CD ships the transformed tokens to every platform automatically on every change. A designer re-points a semantic token in Figma, the export regenerates, Style Dictionary recompiles, and the platforms pick up the new values on the next build. No engineer hand-copies hex codes. No designer files a ticket asking why the button is still the old blue.
 
+![Figma-to-code token pipeline: Figma Variables are the source (Collections and Modes for light, dark, and multi-brand), Tokens Studio exports them as DTCG-compatible JSON, Style Dictionary transforms that JSON into CSS custom properties, Swift enums, and Android XML, and CI/CD ships the transformed tokens to every platform automatically on every change, so the Figma source and the code output cannot drift.](</diagrams/token-first-design-systems-2026/2-figma-pipeline.png>)
+
 [^1]
 
 ### The Payoff
@@ -150,6 +152,8 @@ The result: you get production-ready, accessible components without building fro
 | AI tool compatibility | Manual | Poor (library abstractions) | Excellent (plain files) |
 
 For most teams building one to five products, the copy-in model is the right default. Build from scratch only if your interface *is* the product (like Linear, whose design system enables its focus on craft and quality). Adopt a managed library only if speed to prototype is your sole constraint and you accept the theming ceiling.
+
+![Build, adopt, or copy-in decision: if your interface is the product and craft is the differentiator, build from scratch with full token control (3-6 months to first component); if speed to prototype is your sole constraint, adopt a managed library like MUI or Ant Design (1 day, limited token control); otherwise, for most teams building 1-5 products, copy in shadcn/ui on Radix (1 week, full token control via CSS custom properties mapped to your semantic tokens).](</diagrams/token-first-design-systems-2026/3-build-adopt-copyin-decision.png>)
 
 [^5]
 
@@ -204,6 +208,8 @@ The business case for design systems has matured past "it reduces rework." The F
 ## Getting Started: A 90-Day Playbook
 
 If you are building a token-first design system from scratch or upgrading an existing one, here is a practical sequence.
+
+![90-day token-first design system playbook: Days 1-30 Foundation audits the real palette, defines primitive tokens, installs Tokens Studio, and exports a first DTCG JSON through Style Dictionary; Days 31-60 wires the Figma to Tokens Studio to Style Dictionary to CI/CD pipeline and builds 6-8 high-frequency components on shadcn/ui or Radix; Days 61-90 documents the taxonomy, sets up visual and accessibility regression in CI, and establishes a contribution path.](</diagrams/token-first-design-systems-2026/4-90-day-playbook.png>)
 
 ### Days 1–30: Foundation
 

@@ -75,6 +75,8 @@ The real gotcha is **tooling, not your code**:
 
 ## Real-world results from early adopters
 
+![TypeScript 7.0 real-world speedups: Slack's CI type-checking dropped from about 7.5 minutes to 1.25 minutes (around 6x), Canva's time-to-first-error dropped from 58 seconds to 4.8 seconds (around 12x), Vanta saw up to 9x on its biggest project, Microsoft News Services saved 400 hours a month waiting on CI, and VS Code adopted the compiler incrementally over about six months. Vendor benchmarks on five large codebases show full builds 8x-12x faster.](</diagrams/typescript-7-go-native-compiler/3-real-world-speedups.png>)
+
 - **Slack:** CI type-checking dropped from ~7.5 minutes to 1.25 minutes, and 40% of their merge queue time disappeared. Their editor was previously "almost unusable" at that scale. [^6]
 - **Vanta:** up to 9x faster on one of their biggest projects. [^7]
 - **Microsoft News Services:** 400 hours a month saved waiting on CI builds. [^1]

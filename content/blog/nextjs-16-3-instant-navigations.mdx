@@ -34,6 +34,8 @@ Before 16.3, a navigation in a Next.js App Router app followed this sequence:
 
 Steps 2 and 3 are the gap. On a fast connection with a warm server, that is maybe 100ms. On a mobile connection hitting a cold server rendering a dashboard with five database queries, it is closer to a second. And the browser does nothing visible during that time: no loading state, no shell, just a frozen page.
 
+![Navigation gap before and after Next.js 16.3: before, a link click fires a prefetch for every link in viewport, the server computes the RSC payload, and the browser sits frozen for 100ms to about a second with no loading state before the page paints. With 16.3, a click renders an instant shell reused per route, content streams in behind Suspense or renders from cache, then paints complete content.](</diagrams/nextjs-16-3-instant-navigations/2-navigation-gap-before-after.png>)
+
 The previous fix was `loading.tsx`, a static shell per route segment. It worked when you remembered to write one, but it was opt-in and fragile. A refactor that moved a Suspense boundary or added a `cookies()` call to a shared header could silently de-opt a route from instant to blocking, and nobody would notice until a user complained.
 
 [^2]
@@ -93,6 +95,8 @@ The old prefetch model had a problem that even the Next.js team admitted was bad
 16.3's Partial Prefetching fixes this with a smarter approach. Next.js generates one reusable App Shell per route. The shell is the minimal UI that can render before data arrives: typically layout chrome plus Suspense fallbacks. It is prefetched *once* and cached for the session.
 
 Click any of the twenty chat links and the shell renders immediately while that chat's data streams in behind the Suspense boundaries. No duplicate prefetch requests.
+
+![Partial Prefetching before and after: before, a sidebar with twenty chat links fired twenty separate prefetch requests, all for the same dynamic route. After, Next.js generates one reusable App Shell per route, layout chrome plus Suspense fallbacks, prefetched once and cached for the session, so clicking any chat link renders the shell instantly while that chat's data streams in behind its Suspense boundary.](</diagrams/nextjs-16-3-instant-navigations/3-partial-prefetch-shell.png>)
 
 If the shell is not enough (say you want the chat header with the recipient's name to arrive with real content), you escalate per link by passing `prefetch={true}` to the Link component:
 
