@@ -42,9 +42,9 @@ Every agent-implementation engagement runs through the same four phases. You wil
 
 **1. Discovery and scoping.** You find out what the client actually needs and whether an agent is the right answer. Half the job here is saying no: an agent is wrong for a task that needs human judgment every step, or that happens once a year, or that the client's security policy forbids automating. You also size the work so you can price it honestly. The deliverable is a scoped proposal, not a codebase.
 
-**2. Design and setup.** You decide what the agent should do, what tools it needs, what its guardrails are, and how it fits the client's existing systems. With Hermes Agent this is where you make choices like which model provider to use, which platform the client talks to it through, what skills to install, and what the approval and security posture should be. Setup is fast, and that is a feature: "install in 60 seconds" is literally on the tool's homepage. [^4] The time goes into the design decisions, not the plumbing.
+**2. Design and setup.** You decide what the agent should do, what tools it needs, what its guardrails are, and how it fits the client's existing systems. With Hermes Agent this is where you make choices like which model provider to use, which platform the client talks to it through, what skills to install, and what the approval and security posture should be. Setup is fast, and that is a feature: "install in 60 seconds" is literally on the tool's homepage. The time goes into the design decisions, not the plumbing.
 
-**3. Build and validate.** You implement the agent against the agreed scope and prove it does what the contract says. This means running it on real tasks, checking that outputs are correct, that it does not invent facts, and that its failures are safe and visible. Hermes Agent's security model matters here: command approval, authorization, and container isolation are part of the platform, which gives you an honest story to tell a nervous client. [^5]
+**3. Build and validate.** You implement the agent against the agreed scope and prove it does what the contract says. This means running it on real tasks, checking that outputs are correct, that it does not invent facts, and that its failures are safe and visible. Hermes Agent's security model matters here: command approval, authorization, and container isolation are part of the platform, which gives you an honest story to tell a nervous client. [^4]
 
 **4. Handoff and support.** You document what you built, train the client's people, and set up whatever ongoing cadence the contract covers. With an agent platform this includes things like making sure the client's team knows how to review the agent's work, how to adjust its instructions, and how to keep it updated. Then you leave.
 
@@ -70,7 +70,7 @@ Here is how the consultant's mindset changes what happens.
 
 **A consultant** starts in discovery. They learn that the account managers trust the numbers in the status updates, so the agent's output has to come from real data, not a confident guess. They learn the clients are sensitive about which project details go into a machine. They learn the team wants the drafts to land in Slack where they already work.
 
-So the consultant scopes it: a Hermes Agent that reads approved project notes, drafts a status summary, flags anything it is unsure about instead of inventing it, and posts a draft into a Slack channel for an account manager to approve before anything ships. The approval step is not a compromise. It is the feature that makes the client willing to run it. Hermes Agent fits here precisely because it reaches Slack from one gateway, can be configured with security and approval in mind, and can be told to produce output that a human reviews. [^6] The agent does the boring drafting. The human keeps the judgment and the client relationship.
+So the consultant scopes it: a Hermes Agent that reads approved project notes, drafts a status summary, flags anything it is unsure about instead of inventing it, and posts a draft into a Slack channel for an account manager to approve before anything ships. The approval step is not a compromise. It is the feature that makes the client willing to run it. Hermes Agent fits here precisely because it reaches Slack from one gateway, can be configured with security and approval in mind, and can be told to produce output that a human reviews. [^5] The agent does the boring drafting. The human keeps the judgment and the client relationship.
 
 Then the consultant documents it, walks the account managers through approving and editing the drafts, and hands the keys over. That is the whole engagement: scoped, built, validated, handed off. That is what the job looks like.
 
@@ -95,9 +95,8 @@ That last question is the seed of your first engagement. When you have written t
 
 This lesson gave you the frame: what the role is, the consultant-versus-builder split, the four-phase lifecycle, and the standard deliverables. Lesson 2 moves into the first real phase and starts teaching you how to run discovery and scope an engagement properly, including how to size work so you can price it, and how to say no to the work you should not take. The tool stays the same. The craft is what we are building.
 
-[^1]: Hermes Agent Docs. [hermes-agent.nousresearch.com/docs](https://hermes-agent.nousresearch.com/docs)
-[^2]: Hermes Agent Docs, Key Features. [hermes-agent.nousresearch.com/docs](https://hermes-agent.nousresearch.com/docs)
-[^3]: Hermes Agent Docs, What is Hermes Agent? [hermes-agent.nousresearch.com/docs](https://hermes-agent.nousresearch.com/docs)
-[^4]: Hermes Agent Docs, Quick Links. [hermes-agent.nousresearch.com/docs](https://hermes-agent.nousresearch.com/docs)
-[^5]: Hermes Agent Docs, Security. [hermes-agent.nousresearch.com/docs/user-guide/security](https://hermes-agent.nousresearch.com/docs/user-guide/security)
-[^6]: Hermes Agent Docs, Messaging Gateway. [hermes-agent.nousresearch.com/docs/user-guide/messaging](https://hermes-agent.nousresearch.com/docs/user-guide/messaging)
+[^1]: Hermes Agent Docs, Features Overview. [hermes-agent.nousresearch.com/docs/user-guide/features/overview](https://hermes-agent.nousresearch.com/docs/user-guide/features/overview)
+[^2]: Hermes Agent Docs, Features Overview. [hermes-agent.nousresearch.com/docs/user-guide/features/overview](https://hermes-agent.nousresearch.com/docs/user-guide/features/overview)
+[^3]: Hermes Agent Docs, Tools and Toolsets. [hermes-agent.nousresearch.com/docs/user-guide/features/tools](https://hermes-agent.nousresearch.com/docs/user-guide/features/tools)
+[^4]: Hermes Agent Docs, Security. [hermes-agent.nousresearch.com/docs/user-guide/security](https://hermes-agent.nousresearch.com/docs/user-guide/security)
+[^5]: Hermes Agent Docs, Messaging Gateway. [hermes-agent.nousresearch.com/docs/user-guide/messaging](https://hermes-agent.nousresearch.com/docs/user-guide/messaging)
