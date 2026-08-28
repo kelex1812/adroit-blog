@@ -1,7 +1,7 @@
 ---
-title: "GitHub Actions Is Getting a Lockfile: Inside the 2026 Security Roadmap"
+title: "GitHub Actions Is Getting a Lockfile: The 2026 Roadmap"
 slug: github-actions-supply-chain-security-2026
-excerpt: "GitHub's 2026 Actions security roadmap promises workflow dependency locking, scoped secrets, and a native egress firewall, and parts are already shipping. Here's what changes for teams that live in CI/CD, and what you can do today."
+excerpt: "GitHub's 2026 Actions roadmap promises workflow dependency locking, scoped secrets, and a native egress firewall, with parts already shipping."
 category: "AI & Consulting"
 categoryColor: ai
 categoryGradient: "from-amber to-amber-dark"
@@ -13,7 +13,7 @@ tags: [DevOps, GitHub Actions, CI/CD, Supply Chain Security, DevSecOps]
 bannerImage: "/banners/github-actions-supply-chain-security-2026.png"
 ---
 
-# GitHub Actions Is Getting a Lockfile: Inside the 2026 Security Roadmap
+# GitHub Actions Is Getting a Lockfile: The 2026 Roadmap
 
 In March 2025, an attacker moved a few tags in the `tj-actions/changed-files` repository and thousands of workflows suddenly ran malicious code. The payload dumped CI runner memory, including secrets, into workflow logs on public repositories [^1]. It wasn't a novel technique. Move a mutable tag, and every workflow that references `@v44` silently starts executing something its maintainers never reviewed.
 
@@ -64,7 +64,7 @@ Two pieces of the roadmap are in production right now, no config required:
 
 Every mature practice in this roadmap has a manual equivalent that works right now:
 
-- **Pin actions to full commit SHAs** (`actions/checkout@<40-char-sha>`) instead of tags, and let Dependabot manage the updates so pinning doesn't stall your upgrades [^8] [^3]. Remember the honest caveat the community keeps raising: SHA pinning gives immutability, not provenance, so verify the SHA actually exists in the named repository, not an attacker-controlled fork [^4].
+- **Pin actions to full commit SHAs** (`actions/checkout@<40-char-sha>`) instead of tags, and let Dependabot manage the updates so pinning doesn't stall your upgrades [^8] [^3]. Remember the honest caveat the community keeps raising: SHA pinning gives immutability, not provenance, so verify the SHA actually exists in the named repository, not an attacker-controlled fork [^4]. The same gate-first instinct, blocking on secrets and static checks before anything ships, runs through our [CI/CD guardrails for AI-generated code](/blog/ai-generated-code-cicd-guardrails).
 - **Set `permissions:` to minimum:** `contents: read` by default, escalate per-job [^8].
 - **Stop using `secrets: inherit`** on reusable workflows; pass secrets explicitly so credentials don't flow into every execution path [^9].
 - **Audit your dangerous triggers** (`pull_request_target`, `workflow_dispatch`, `workflow_run`, `release`) and justify each one. These are the Pwn-Requests-style primitives the new execution policies target [^10].

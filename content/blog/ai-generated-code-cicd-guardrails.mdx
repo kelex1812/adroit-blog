@@ -1,7 +1,7 @@
 ---
-title: "AI Writes the Code. Your CI/CD Pipeline Is the Last Line of Defense."
+title: "AI Writes the Code. Your CI/CD Is the Last Line of Defense."
 slug: ai-generated-code-cicd-guardrails
-excerpt: "Agents are in a growing share of pull requests and the review queue is the new bottleneck. AI PRs wait 4.6x longer, get rejected at 2.6x the rate, and 45% of AI-involved deployments cause problems. Here's the CI/CD gate stack that actually ships agent code safely."
+excerpt: "AI coding agents are behind a growing share of PRs, and the review queue is the new bottleneck. Here's the CI/CD gate stack that ships agent code safely."
 category: "AI & Consulting"
 categoryColor: ai
 categoryGradient: "from-amber to-amber-dark"
@@ -13,7 +13,7 @@ tags: ["CI/CD", "AI Agents", "DevOps", "Code Review", "AI-Generated Code"]
 bannerImage: /banners/category-ai.png
 ---
 
-# AI Writes the Code. Your CI/CD Pipeline Is the Last Line of Defense.
+# AI Writes the Code. Your CI/CD Is the Last Line of Defense.
 
 The pipeline didn't change. The workload did. AI coding agents are now participants in a growing share of GitHub pull requests; the number that gets quoted is 14.9% of PRs, up from 1.1% in February 2024, with the important asterisk that most of that participation is agents *reviewing and commenting*, not authoring [^1]. Meanwhile the raw volume keeps compounding: GitHub merged 43.2 million pull requests per month on average in 2025 (+23% year over year), pushed nearly a billion commits (+25.1%), and saw developers merge a record 518.7M PRs (+29% YoY) [^2]. New developers don't even need a decision point anymore; 80% of them use Copilot within their first week [^2].
 
@@ -33,7 +33,7 @@ The downstream damage is measurable: 72% of organizations report at least one pr
 
 The fundamentals don't change: build, test, validate, stage, deploy. What changes is that every stage has to run automatically and reliably at much higher volume, because agents can read a failing check, fix it, and resubmit on their own, turning CI from a gate into a feedback loop [^6]. Four things move from "nice to have" to "non-negotiable":
 
-**1. Mandatory, fully automated PR validation.** Linting, dependency vulnerability scanning, SAST, and secret scanning on every agent PR. Northflank's enterprise guide is blunt that secret scanning on agent PRs is not optional; agents commit credentials more often than humans do, and the check must block merges at the infrastructure level, not rely on the agent [^7]. Same for PR policy gates: agent PRs go through the same review as human PRs (owner review, coverage thresholds, lint, SAST, secret detection), with no pilot exemptions, overrides tied to a named role, and every bypass logged. Label agent PRs with the tool and session ID (e.g. `agent:claude-code`) so you can pivot from a PR to the originating session in your SIEM [^7].
+**1. Mandatory, fully automated PR validation.** Linting, dependency vulnerability scanning, SAST, and secret scanning on every agent PR. Northflank's enterprise guide is blunt that secret scanning on agent PRs is not optional; agents commit credentials more often than humans do, and the check must block merges at the infrastructure level, not rely on the agent [^7]. Same for PR policy gates: agent PRs go through the same review as human PRs (owner review, coverage thresholds, lint, SAST, secret detection), with no pilot exemptions, overrides tied to a named role, and every bypass logged. Label agent PRs with the tool and session ID (e.g. `agent:claude-code`) so you can pivot from a PR to the originating session in your SIEM [^7]. The supply-chain side of these gates, dependency locking and scoped secrets, is part of the wider hardening covered in our [GitHub Actions 2026 security roadmap walkthrough](/blog/github-actions-supply-chain-security-2026).
 
 **2. Preview environments are no longer optional.** AI modifies multiple services and config files in a single change, so "it passed unit tests in isolation" means little. Every PR should deploy its own isolated copy of the application with production-like config, isolated databases, and automatic cleanup [^6].
 

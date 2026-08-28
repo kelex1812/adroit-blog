@@ -1,7 +1,7 @@
 ---
-title: "Local LLM Infrastructure in 2026: When Self-Hosting Inference Actually Pays Off"
+title: "Local LLM Infrastructure in 2026: When Self-Hosting Pays Off"
 slug: local-llm-infrastructure-2026
-excerpt: "The local inference landscape matured fast in 2026: MLX backends, streaming tool-call parsers, and cheaper break-even points. Here's the TCO reality and what running a hybrid stack for months taught us."
+excerpt: "Local inference matured fast in 2026: MLX backends, streaming tool-call parsers, and cheaper break-even points. The TCO reality from a hybrid stack."
 category: "AI & Consulting"
 categoryColor: ai
 categoryGradient: "from-amber to-amber-dark"
@@ -13,7 +13,7 @@ tags: [LLM Infrastructure, Model Serving, DevOps, TCO]
 bannerImage: /banners/category-ai.png
 ---
 
-# Local LLM Infrastructure in 2026: When Self-Hosting Inference Actually Pays Off
+# Local LLM Infrastructure in 2026: When Self-Hosting Pays Off
 
 "Should we self-host our LLMs?" stopped being a hobbyist question somewhere in late 2025 and became a real infrastructure decision. The tools got dramatically better this year, the cost crossover moved, and the failure modes are finally well-documented, because people have been running this in production long enough to hit them.
 
@@ -67,6 +67,8 @@ Putting it together, here's how we'd advise a team asking "should we self-host?"
 | Over 10M tokens/day, or PII/regulated data | Take local seriously; hybrid routing (70% to smaller local models) is the cost story. |
 | Agent / tool-call workloads | Budget for validation layers or keep on cloud. Verify structured output on your local model before committing. |
 | Hardware choice | Apple Silicon dev nodes → llama.cpp or mlx-lm; production multi-tenant → vLLM on GPU servers. |
+
+For teams that already run Kubernetes, the same decision shows up at the cluster level, which is where our [Kubernetes LLM serving guide](/blog/kubernetes-llm-serving-2026) picks it up.
 
 ## The bottom line
 

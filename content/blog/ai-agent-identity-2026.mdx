@@ -1,7 +1,7 @@
 ---
-title: "Who Is Your AI Agent? The 2026 Push to Give Agents Real Identities"
+title: "Who Is Your AI Agent? Giving Agents Real Identities in 2026"
 slug: ai-agent-identity-2026
-excerpt: "NIST, the IETF, and Microsoft all moved on agent identity in 2026, and MCP now mandates OAuth 2.1 for remote servers. Here's what giving agents their own credentials looks like, from the standards to a 10-agent pipeline that runs on isolated identities."
+excerpt: "NIST, the IETF, and Microsoft all moved on agent identity in 2026, and MCP now mandates OAuth 2.1 for remote servers. Giving agents real credentials."
 category: "AI & Consulting"
 categoryColor: ai
 categoryGradient: "from-amber to-amber-dark"
@@ -13,7 +13,7 @@ tags: [AI Agents, Agent Identity, Authentication, IAM, MCP, AI Security]
 bannerImage: "/banners/ai-agent-identity-2026.png"
 ---
 
-# Who Is Your AI Agent? The 2026 Push to Give Agents Real Identities
+# Who Is Your AI Agent? Giving Agents Real Identities in 2026
 
 Your agents are doing real work now: triaging tickets, drafting code, reconciling accounts, coordinating delivery pipelines. But ask a simple question and most organizations freeze: *which identity did that agent act under?* In a startling number of production systems, the answer is "the same service account as everyone else" or worse, "a human's personal credentials."
 
@@ -27,7 +27,7 @@ The problem isn't that agents lack credentials. It's that the credentials they h
 
 **The confused deputy.** An agent with broad credentials can be tricked into using them for something the original user never authorized. The WorkOS developer's guide on agent authentication calls this out with a vivid example: a variable rename that flips `STRIPE_SECRET_KEY` from a test key to a live one, and the agent, holding both, silently reaches for the production secret [^1]. OAuth vendors have known this trap for years; it's called the confused deputy problem, and agents are the most confused deputies we've ever built, because they act on instructions rather than intent.
 
-**The shared-credential audit black hole.** When ten agents and forty humans all authenticate as "svc-ai-bot", the audit log tells you *what* happened but never *who*. Post-incident forensics degrade into guesswork, and least-privilege becomes impossible to enforce because the shared identity carries everyone's permissions at once.
+**The shared-credential audit black hole.** When ten agents and forty humans all authenticate as "svc-ai-bot", the audit log tells you *what* happened but never *who*. Post-incident forensics degrade into guesswork, and least-privilege becomes impossible to enforce because the shared identity carries everyone's permissions at once. Agent identity is the foundation, but it is only one layer of the broader surface we map in our [look at the agent tool attack surface](/blog/agent-tool-attack-surface-2026).
 
 The industry's response in 2026 is a genuine paradigm shift: treat agents as **first-class identity subjects**, principals with their own client IDs, their own scoped credentials, and their own audit trails, separate from users and separate from legacy service accounts [^1].
 

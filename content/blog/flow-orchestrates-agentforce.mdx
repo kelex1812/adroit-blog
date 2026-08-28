@@ -1,7 +1,7 @@
 ---
-title: "Flow Calls the Agent: Orchestrating Agentforce from Salesforce Flow"
+title: "Flow Calls the Agent: Orchestrating Agentforce from Flow"
 slug: flow-orchestrates-agentforce
-excerpt: "The covered story is agents calling Flows. The one that turns Flow into your agentic control plane is Flow calling the agent: the AI Agent action, structured outputs, and the constraints that bite in production."
+excerpt: "The covered story is agents calling Flows. The one that turns Flow into an agentic control plane is Flow calling the agent, via the AI Agent action."
 category: "Salesforce"
 categoryColor: sf
 categoryGradient: "from-sky to-sky-dark"
@@ -57,7 +57,7 @@ This is the section that saves you a failed deployment. Four constraints, all fr
 
 **Strip the conversational furniture.** Standard subagents and actions are designed for conversational use cases and may not work as expected with invocable actions. Salesforce's guidance is to remove them and create custom actions for your use cases [^7]. Custom agent invocable actions also don't support custom variables or the standard context variables `$Context.EndUserId`, `$Context.RoutableId`, `$Context.EndUserLanguage`, and `$Context.EndUserContactId` [^7].
 
-On top of those, the ordinary Flow rules still apply: watch flow timeouts, implement fault paths, and remember every agent call is metered consumption, the cost model laid out in our Agentforce in Practice deep-dive [^8].
+On top of those, the ordinary Flow rules still apply: watch flow timeouts, implement fault paths, and remember every agent call is metered consumption, the cost model laid out in our [Agentforce in Practice deep-dive](/blog/ai-agents-salesforce) [^8].
 
 ## Flow Orchestration is the container the pattern was waiting for
 

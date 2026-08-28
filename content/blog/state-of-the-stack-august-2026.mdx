@@ -1,7 +1,7 @@
 ---
-title: "State of the Stack, August 2026: Every Layer Is Now Built for Agents"
+title: "State of the Stack, August 2026: Built for Agents"
 slug: state-of-the-stack-august-2026
-excerpt: "One month, four pillars: Next.js 16.3 makes frameworks agent-ready, Salesforce Summer '26 ships multi-agent orchestration and Tableau MCP, frontier models got cheaper and more open, and MCP went stateless so production systems can host agents at scale. Here's what changed and what Adroit clients should do about it."
+excerpt: "One month, four pillars: Next.js 16.3 ships for agents, Salesforce Summer '26 adds orchestration and Tableau MCP, models got cheaper, and MCP went stateless."
 category: "AI & Consulting"
 categoryColor: ai
 categoryGradient: "from-amber to-amber-dark"
@@ -13,7 +13,7 @@ tags: ["State of the Stack", "AI Agents", "Next.js", "Salesforce", "MCP", "DevOp
 bannerImage: "/banners/state-of-the-stack-august-2026.png"
 ---
 
-# State of the Stack, August 2026: Every Layer Is Now Built for Agents
+# State of the Stack, August 2026: Built for Agents
 
 If you read one thing about the last month of the web, Salesforce, AI, and DevOps, read this: **agents stopped being demos and started being workloads, and every layer of the stack is now being rebuilt around them.**
 
@@ -72,7 +72,7 @@ The biggest infrastructure story of the month is at the protocol layer. On July 
 
 Also deprecated: sampling, roots, and chatty logging. And the spec is now extensible: MCP Apps is the first official extension, with Tasks moved out of core into an extension. The catch: this isn't backward compatible. Stacklok's enterprise readiness guide warns that servers on the new revision may not work with older clients, and vice versa: "compatibility requires both sides to share a supported protocol era, or for one side to implement deliberate fallback" [^11].
 
-**Why it matters for clients:** if you're running MCP servers (and given Summer '26's Tableau MCP and Marketing Cloud MCP, more Salesforce shops are), you now have a version-compatibility job on your hands. The stateless redesign is the right call for scale, but it's a breaking change you should plan for rather than discover during an outage. This pairs with the GitHub Actions security roadmap we covered in depth this week: both are the same trend, the plumbing agents depend on is being hardened for production.
+**Why it matters for clients:** if you're running MCP servers (and given Summer '26's Tableau MCP and Marketing Cloud MCP, more Salesforce shops are), you now have a version-compatibility job on your hands. The stateless redesign is the right call for scale, but it's a breaking change you should plan for rather than discover during an outage, and our [deep-dive on the stateless MCP revision](/blog/mcp-stateless-2026-07-28-production-agents) walks through the migration. This pairs with the GitHub Actions security roadmap we covered in depth this week: both are the same trend, the plumbing agents depend on is being hardened for production.
 
 The governance layer is maturing fast too. This week alone: Drata launched AI Agent Governance (discover, monitor, govern agents, Anthropic-first), and Cloudflare introduced Wallets + `cloudflare.pay` so agents get a stable identity plus hard spending caps for online transactions [^12]. And a real-world warning for agent-platform teams: a critical unauthenticated RCE in Langflow (CVE-2026-9198, fixed in 1.10.1) was added to CISA's Known Exploited Vulnerabilities catalog, so treat agent frameworks like any other critical middleware with patch management and runtime monitoring [^12].
 
