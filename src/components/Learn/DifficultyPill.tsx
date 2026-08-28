@@ -23,7 +23,7 @@ export default function DifficultyPill({
     <span
       className={`inline-flex items-center font-mono text-[10.5px] font-bold uppercase tracking-[0.06em] px-2.5 py-1 rounded-full border ${
         onGradient
-          ? "text-white/90 bg-white/15 border-white/25 backdrop-blur-sm"
+          ? "text-white bg-black/55 border-white/25 backdrop-blur-sm"
           : STYLES[difficulty]
       }`}
     >
