@@ -23,6 +23,32 @@ themes). Non-gradient DifficultyPill `STYLES` untouched; no other Learn v2 surfa
 **Known issues** — None. tsc, lint, build clean; 297 tests pass (41 files).
 
 
+### Fix: Learn v2 gradient band sibling elements contrast — WCAG 1.4.3 (t_c5203795)
+
+**What** — Extended the dark-overlay treatment from d2c3e3b to the four remaining
+translucent-white sibling elements on the course-outline gradient band
+(`/learn/[series]`): series label chip, band description, and the onGradient
+CertReadiness + QuizStats strips.
+
+- `src/app/learn/[series]/page.tsx` — label chip `bg-white/20` → `bg-black/55`;
+  band description `text-white/80` (no bg) → `text-white` on a `bg-black/55`
+  `backdrop-blur-sm rounded-xl px-4 py-3` panel.
+- `src/components/Progress/CertReadiness.tsx` — onGradient tone
+  `text-white/85 bg-white/15` → `text-white bg-black/55`.
+- `src/components/Progress/QuizStats.tsx` — onGradient tone
+  `text-white/85 bg-white/15` → `text-white bg-black/55`.
+
+**Why** — The four pre-existing v1 elements (commit 45e4d0d) sat on the same gradient
+band at 1.74–1.85:1 effective contrast at the amber endpoint, failing WCAG 1.4.3
+4.5:1 (a11y checker review t_876d5028, MEDIUM). All four now use the byte-identical
+`text-white bg-black/55 backdrop-blur-sm` pattern proven in d2c3e3b (and the passing
+PathCard pills), yielding 8.16–14.22:1 across all 10 gradient endpoints + navy
+fallback, both themes.
+
+**Known issues** — None. tsc, lint, build clean; non-onGradient variants of
+CertReadiness/QuizStats untouched.
+
+
 ### Feature: Learn Platform v2 — org-as-data, unified catalog contract, course profile, hub restructure, completion foundation (t_73759dd5)
 
 **What** — Rebuilt the Learn catalog on a once-and-done, scalable structure

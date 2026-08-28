@@ -156,7 +156,7 @@ export default async function SeriesPage({ params }: Props) {
                   "radial-gradient(circle at 85% 15%, rgba(255,255,255,0.22) 0%, transparent 45%)",
               }}
             />
-            <span className="relative inline-flex items-center gap-1.5 font-mono text-[11px] font-bold text-white uppercase tracking-[0.07em] bg-white/20 backdrop-blur-sm px-[11px] py-1 rounded-full mb-3.5">
+            <span className="relative inline-flex items-center gap-1.5 font-mono text-[11px] font-bold text-white uppercase tracking-[0.07em] bg-black/55 backdrop-blur-sm px-[11px] py-1 rounded-full mb-3.5">
               {seriesShortLabel(s.slug)}
             </span>
             {/* DB-backed status + access model (platform source of truth) */}
@@ -169,7 +169,7 @@ export default async function SeriesPage({ params }: Props) {
             <h1 className="relative text-[clamp(1.5rem,3vw,2rem)] font-extrabold text-white tracking-[-0.02em] mb-2 leading-tight">
               {s.name}
             </h1>
-            <p className="relative text-white/80 text-sm max-w-[560px] leading-relaxed mb-5">
+            <p className="relative text-white text-sm max-w-[560px] leading-relaxed mb-5 bg-black/55 backdrop-blur-sm rounded-xl px-4 py-3">
               {s.description}
             </p>
             {/* Learn v2 profile chips (ADR-208): difficulty + audience on the band. */}

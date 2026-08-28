@@ -54,7 +54,7 @@ export default function CertReadiness({ series, onGradient = false }: CertReadin
   );
 
   const tone = onGradient
-    ? "text-white/85 bg-white/15 backdrop-blur-sm px-3 py-2 rounded-2xl"
+    ? "text-white bg-black/55 backdrop-blur-sm px-3 py-2 rounded-2xl"
     : "text-gray-500";
 
   return (
