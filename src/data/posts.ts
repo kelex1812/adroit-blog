@@ -26,8 +26,8 @@ export const posts: BlogPost[] = [
   },
   {
     "slug": "ebpf-kubernetes-observability-security-2026",
-    "title": "The eBPF Stack Is Already in Your Kernel. You're Still Paying for What It Replaced.",
-    "excerpt": "Cilium is the default CNI on EKS, GKE, and AKS, yet most teams still run sidecars, iptables policies, and audit daemons in parallel. Here's how to consolidate onto the eBPF stack you already own.",
+    "title": "eBPF Already Runs in Your Kernel. Stop Paying for It Twice.",
+    "excerpt": "Cilium is already the default CNI on EKS, GKE, and AKS. Most teams still run sidecars and iptables policies alongside it. Here's how to switch off the legacy stack.",
     "category": "AI & Consulting",
     "categoryColor": "ai",
     "categoryGradient": "from-amber to-amber-dark",
