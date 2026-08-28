@@ -3,7 +3,7 @@ import { BlogPost } from "./types";
 export const posts: BlogPost[] = [
   {
     "slug": "agent-tool-attack-surface-2026",
-    "title": "Your Agent's Tools Are the Attack Surface: MCP Security in 2026",
+    "title": "MCP Security in 2026: The Tool-Layer Attack Surface",
     "excerpt": "Tool poisoning, rug pulls, and shadow servers: agent security moved from the prompt to the tool layer. The 2026 MCP data and a layered defense that survives it.",
     "category": "AI & Consulting",
     "categoryColor": "ai",
