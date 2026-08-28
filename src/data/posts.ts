@@ -25,6 +25,30 @@ export const posts: BlogPost[] = [
     "status": "published"
   },
   {
+    "slug": "ebpf-kubernetes-observability-security-2026",
+    "title": "The eBPF Stack Is Already in Your Kernel. You're Still Paying for What It Replaced.",
+    "excerpt": "Cilium is the default CNI on EKS, GKE, and AKS, yet most teams still run sidecars, iptables policies, and audit daemons in parallel. Here's how to consolidate onto the eBPF stack you already own.",
+    "category": "AI & Consulting",
+    "categoryColor": "ai",
+    "categoryGradient": "from-amber to-amber-dark",
+    "date": "August 28, 2026",
+    "author": "Adroit Consulting",
+    "authorInitials": "AC",
+    "readTime": "10 min read",
+    "featured": false,
+    "tags": [
+      "DevOps",
+      "Observability",
+      "Security",
+      "Kubernetes",
+      "eBPF",
+      "Cilium",
+      "Tetragon"
+    ],
+    "bannerImage": "/banners/ebpf-kubernetes-observability-security-2026.png",
+    "status": "published"
+  },
+  {
     "slug": "agentforce-experience-cloud-portal-2026",
     "title": "Agentforce on Experience Cloud: The Portal Agent Reality",
     "excerpt": "An Agentforce agent on Experience Cloud is a routing and security project first. Grounding and the guest-user model decide whether it ships.",
