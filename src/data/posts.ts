@@ -229,6 +229,7 @@ export const posts: BlogPost[] = [
       "AI Agents",
       "Next.js"
     ],
+    "bannerImage": "/banners/test-drive-qwen-local.png",
     "status": "published"
   },
   {
