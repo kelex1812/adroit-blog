@@ -180,7 +180,7 @@ export default async function SeriesPage({ params }: Props) {
                   onGradient
                 />
                 {catalogCourse?.course.audience && (
-                  <span className="inline-flex items-center font-mono text-[10.5px] font-bold uppercase tracking-[0.06em] px-2.5 py-1 rounded-full border text-white/90 bg-white/15 border-white/25 backdrop-blur-sm">
+                  <span className="inline-flex items-center font-mono text-[10.5px] font-bold uppercase tracking-[0.06em] px-2.5 py-1 rounded-full border text-white bg-black/55 border-white/25 backdrop-blur-sm">
                     {catalogCourse.course.audience}
                   </span>
                 )}

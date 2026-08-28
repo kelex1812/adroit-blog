@@ -4,6 +4,25 @@ All notable changes to the Adroit Consulting Blog project will be documented in 
 
 ## [Unreleased]
 
+### Fix: Learn v2 onGradient DifficultyPill + audience chip contrast — WCAG 1.4.3 (t_3c85cbc2)
+
+**What** — Replaced the translucent-white overlay on the v2 course-outline
+gradient band with a dark overlay for the difficulty pill and audience chip.
+
+- `src/components/Learn/DifficultyPill.tsx` — `onGradient` class changed from
+  `text-white/90 bg-white/15 border-white/25` to
+  `text-white bg-black/55 border-white/25` (backdrop-blur kept).
+- `src/app/learn/[series]/page.tsx` — audience chip span, same class string change.
+
+**Why** — The white-on-white pill/chip over the course-outline gradient rendered at
+1.80–4.25:1 effective contrast, below the 4.5:1 WCAG 1.4.3 required for 10.5px bold
+text (a11y audit t_c1e76ada, HIGH). The dark `bg-black/55` overlay — already used by
+the passing PathCard pills — yields 8.18–14.23:1 across all 10 gradient stops (both
+themes). Non-gradient DifficultyPill `STYLES` untouched; no other Learn v2 surface changed.
+
+**Known issues** — None. tsc, lint, build clean; 297 tests pass (41 files).
+
+
 ### Feature: Learn Platform v2 — org-as-data, unified catalog contract, course profile, hub restructure, completion foundation (t_73759dd5)
 
 **What** — Rebuilt the Learn catalog on a once-and-done, scalable structure
