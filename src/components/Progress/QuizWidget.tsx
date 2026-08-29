@@ -148,20 +148,20 @@ export default function QuizWidget({
   // server rendered HTML didn't match the client" error for returning users.
   if (!hydrated) {
     return (
-      <div className="mt-8 max-w-[640px] rounded-[20px] border border-gray-200 bg-white p-7 shadow-sm">
+      <div className="mt-8 max-w-[640px] rounded-[20px] border border-gray-200 bg-white p-7 shadow-sm dark:border-[var(--border-default)] dark:bg-[var(--surface-card)]">
         <div className="flex items-center gap-2 font-mono text-[11px] font-bold text-red uppercase tracking-[0.08em] mb-1.5">
           <span className="w-[3px] h-3 rounded-sm bg-red" />
           {kicker}
         </div>
-        <div className="h-4 w-1/3 rounded bg-gray-100 animate-pulse mb-4" />
-        <div className="h-4 w-full rounded bg-gray-100 animate-pulse mb-2" />
-        <div className="h-4 w-5/6 rounded bg-gray-100 animate-pulse mb-6" />
+        <div className="h-4 w-1/3 rounded bg-gray-100 animate-pulse mb-4 dark:bg-[var(--surface-sunken)]" />
+        <div className="h-4 w-full rounded bg-gray-100 animate-pulse mb-2 dark:bg-[var(--surface-sunken)]" />
+        <div className="h-4 w-5/6 rounded bg-gray-100 animate-pulse mb-6 dark:bg-[var(--surface-sunken)]" />
         <div className="flex flex-col gap-2.5 mb-5">
           {[0, 1, 2, 3].map((i) => (
-            <div key={i} className="h-12 rounded-[14px] bg-gray-100 animate-pulse" />
+            <div key={i} className="h-12 rounded-[14px] bg-gray-100 animate-pulse dark:bg-[var(--surface-sunken)]" />
           ))}
         </div>
-        <div className="h-11 w-2/3 rounded-xl bg-gray-100 animate-pulse" />
+        <div className="h-11 w-2/3 rounded-xl bg-gray-100 animate-pulse dark:bg-[var(--surface-sunken)]" />
         <span className="sr-only">Loading quiz…</span>
       </div>
     );
@@ -311,7 +311,7 @@ export default function QuizWidget({
   ) {
     return (
       <div className="mt-8 max-w-[640px]">
-        <div className="rounded-[20px] border border-gray-200 bg-white p-8 text-center shadow-sm">
+        <div className="rounded-[20px] border border-gray-200 bg-white p-8 text-center shadow-sm dark:border-[var(--border-default)] dark:bg-[var(--surface-card)]">
           {/* Score ring */}
           <h2 className="sr-only">Quiz results</h2>
           <div className="relative w-32 h-32 mx-auto mb-4">
@@ -350,7 +350,7 @@ export default function QuizWidget({
           {typeof passThreshold === "number" && (
             <div
               className={`inline-flex items-center gap-2 font-mono text-[12px] font-bold px-4 py-1.5 rounded-full mb-4 ${
-                passed ? "bg-emerald/10 text-emerald-800" : "bg-[#FDE8EB] text-red-dark"
+                passed ? "bg-emerald/10 text-emerald-800 dark:bg-emerald/15 dark:text-emerald-300" : "bg-[#FDE8EB] text-red-dark dark:bg-red/15 dark:text-red-300"
               }`}
             >
               {passed ? (
@@ -399,7 +399,7 @@ export default function QuizWidget({
               return (
                 <div
                   key={i}
-                  className="flex items-start gap-2.5 py-2.5 border-b border-gray-100 text-[12.5px] last:border-0"
+                  className="flex items-start gap-2.5 py-2.5 border-b border-gray-100 text-[12.5px] last:border-0 dark:border-[var(--border-subtle)]"
                 >
                   <svg
                     aria-hidden="true"
@@ -429,7 +429,7 @@ export default function QuizWidget({
             {backHref && (
               <Link
                 href={backHref}
-                className="flex-1 h-11 rounded-xl border-[1.5px] border-gray-200 bg-white text-gray-600 text-[13.5px] font-bold no-underline flex items-center justify-center cursor-pointer hover:border-navy hover:text-navy active:scale-[0.98] transition-all duration-150"
+                className="flex-1 h-11 rounded-xl border-[1.5px] border-gray-200 bg-white text-gray-600 text-[13.5px] font-bold no-underline flex items-center justify-center cursor-pointer hover:border-navy hover:text-navy active:scale-[0.98] transition-all duration-150 dark:border-[var(--border-default)] dark:bg-[var(--surface-card)] dark:hover:border-[var(--ink-primary)] dark:hover:text-[var(--ink-primary)]"
               >
                 {backLabel}
               </Link>
@@ -494,7 +494,7 @@ export default function QuizWidget({
     .join(". ");
 
   return (
-    <div className="mt-8 max-w-[640px] rounded-[20px] border border-gray-200 bg-white p-7 shadow-sm">
+    <div className="mt-8 max-w-[640px] rounded-[20px] border border-gray-200 bg-white p-7 shadow-sm dark:border-[var(--border-default)] dark:bg-[var(--surface-card)]">
       {/* Kicker */}
       <div className="flex items-center gap-2 font-mono text-[11px] font-bold text-red uppercase tracking-[0.08em] mb-1.5">
         <span className="w-[3px] h-3 rounded-sm bg-red" />
@@ -522,7 +522,7 @@ export default function QuizWidget({
                   ? correct
                     ? "bg-green-500"
                     : "bg-red"
-                  : "bg-gray-200"
+                  : "bg-gray-200 dark:bg-[var(--border-subtle)]"
               }`}
             />
           );
@@ -536,7 +536,7 @@ export default function QuizWidget({
           className="flex items-center gap-4 -mt-2 mb-5 font-mono text-[10px] font-medium text-gray-500"
         >
           <span className="inline-flex items-center gap-1.5">
-            <span className="inline-flex items-center justify-center w-3.5 h-3.5 rounded-full border-[1.5px] border-green-500 text-green-700 text-[9px] font-bold leading-none">
+            <span className="inline-flex items-center justify-center w-3.5 h-3.5 rounded-full border-[1.5px] border-green-500 text-green-700 text-[9px] font-bold leading-none dark:text-green-300">
               ✓
             </span>
             correct
@@ -548,7 +548,7 @@ export default function QuizWidget({
             incorrect
           </span>
           <span className="inline-flex items-center gap-1.5">
-            <span className="inline-flex items-center justify-center w-3.5 h-3.5 rounded-full border-[1.5px] border-gray-300" />
+            <span className="inline-flex items-center justify-center w-3.5 h-3.5 rounded-full border-[1.5px] border-gray-300 dark:border-[var(--border-strong)]" />
             unanswered
           </span>
         </div>
@@ -569,31 +569,31 @@ export default function QuizWidget({
           const isCorrectOption = i === answerIndex;
           const showTag = isAnswered && (isCorrectOption || isSelected);
 
-          let borderClass = "border-gray-200 bg-white hover:border-navy/40 hover:bg-navy/[0.02]";
-          let radioClass = "border-gray-300";
+          let borderClass = "border-gray-200 bg-white hover:border-navy/40 hover:bg-navy/[0.02] dark:border-[var(--border-default)] dark:bg-[var(--surface-card)] dark:hover:border-[var(--accent-hover)] dark:hover:bg-[var(--surface-card-soft)]";
+          let radioClass = "border-gray-300 dark:border-[var(--border-strong)]";
           let radioFill = "";
           let textClass = "text-gray-700";
 
           if (isAnswered) {
             if (isCorrectOption) {
-              borderClass = "border-green-500 bg-green-50";
+              borderClass = "border-green-500 bg-green-50 dark:bg-green-500/15";
               radioClass = "border-green-500 bg-green-500";
               radioFill = "bg-white";
-              textClass = "text-green-800";
+              textClass = "text-green-800 dark:text-green-300";
             } else if (isSelected && !isCorrectOption) {
-              borderClass = "border-red bg-[#FDE8EB]";
+              borderClass = "border-red bg-[#FDE8EB] dark:bg-red/15";
               radioClass = "border-red bg-red";
               radioFill = "bg-white";
-              textClass = "text-red-800";
+              textClass = "text-red-800 dark:text-red-300";
             } else if (isSelected) {
-              borderClass = "border-green-500 bg-white";
+              borderClass = "border-green-500 bg-white dark:bg-[var(--surface-card)]";
               radioClass = "border-green-500";
               radioFill = "";
               textClass = "text-gray-700";
             }
           } else if (isSelected) {
-            borderClass = "border-navy bg-navy/[0.03]";
-            radioClass = "border-navy";
+            borderClass = "border-navy bg-navy/[0.03] dark:border-[var(--accent)] dark:bg-[var(--surface-card-soft)]";
+            radioClass = "border-navy dark:border-[var(--accent)]";
             radioFill = "bg-navy";
             textClass = "text-gray-700";
           }
@@ -640,8 +640,8 @@ export default function QuizWidget({
           role="status"
           className={`reveal-up rounded-[14px] border p-[18px] mb-5 text-[13px] leading-relaxed ${
             isCorrect
-              ? "border-green-200 bg-green-50 text-green-800"
-              : "border-red/20 bg-red/5 text-gray-600"
+              ? "border-green-200 bg-green-50 text-green-800 dark:border-green-500/30 dark:bg-green-500/15 dark:text-green-300"
+              : "border-red/20 bg-red/5 text-gray-600 dark:border-red/40 dark:bg-red/10 dark:text-[var(--ink-body)]"
           }`}
         >
           <div className="font-mono text-[10px] font-bold text-gray-500 uppercase tracking-[0.08em] mb-1.5">

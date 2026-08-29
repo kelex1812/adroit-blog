@@ -30,7 +30,7 @@ export default function LessonQuiz({
   backHref,
 }: LessonQuizProps) {
   return (
-    <section aria-label="Practice questions" className="mt-11 border-t border-gray-200 pt-7">
+    <section aria-label="Practice questions" className="mt-11 border-t border-gray-200 pt-7 dark:border-[var(--border-default)]">
       <div className="max-w-[640px]">
         {/* Section rule + mono header */}
         <div className="flex items-center gap-2 font-mono text-[11px] font-bold text-red uppercase tracking-[0.08em] mb-1.5">
