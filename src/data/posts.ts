@@ -2,6 +2,30 @@ import { BlogPost } from "./types";
 
 export const posts: BlogPost[] = [
   {
+    "slug": "production-rag-retrieval-quality-2026",
+    "title": "The Retrieval Is the Bug: What Breaks in Production RAG",
+    "excerpt": "The model isn't why your RAG system degrades in production. Retrieval is. Chunking, hybrid search, reranking, and separate retrieval metrics are the fix.",
+    "category": "AI & Consulting",
+    "categoryColor": "ai",
+    "categoryGradient": "from-amber to-amber-dark",
+    "date": "August 29, 2026",
+    "author": "Adroit Consulting",
+    "authorInitials": "AC",
+    "readTime": "9",
+    "featured": false,
+    "tags": [
+      "RAG",
+      "Retrieval",
+      "Chunking",
+      "Hybrid Search",
+      "Reranking",
+      "RAG Evaluation",
+      "AI Infrastructure"
+    ],
+    "bannerImage": "/banners/production-rag-retrieval-quality-2026.png",
+    "status": "published"
+  },
+  {
     "slug": "agent-tool-attack-surface-2026",
     "title": "MCP Security in 2026: The Tool-Layer Attack Surface",
     "excerpt": "Tool poisoning, rug pulls, and shadow servers: agent security moved from the prompt to the tool layer. The 2026 MCP data and a layered defense that survives it.",
