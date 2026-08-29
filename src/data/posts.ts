@@ -2,6 +2,30 @@ import { BlogPost } from "./types";
 
 export const posts: BlogPost[] = [
   {
+    "slug": "merge-queue-trunk-based-2026",
+    "title": "The Merge Queue Ended the Rebase Storm",
+    "excerpt": "When CI passes on every pull request but main still breaks, you have hit a green-green conflict. Merge queues close that gap. Here is how they work and when you need one.",
+    "category": "AI & Consulting",
+    "categoryColor": "ai",
+    "categoryGradient": "from-amber to-amber-dark",
+    "date": "August 29, 2026",
+    "author": "Adroit Consulting",
+    "authorInitials": "AC",
+    "readTime": "11 min read",
+    "featured": false,
+    "tags": [
+      "DevOps",
+      "CI/CD",
+      "Merge Queue",
+      "Trunk-Based Development",
+      "Developer Productivity",
+      "GitHub",
+      "GitLab"
+    ],
+    "bannerImage": "/banners/merge-queue-trunk-based-2026.png",
+    "status": "published"
+  },
+  {
     "slug": "production-rag-retrieval-quality-2026",
     "title": "The Retrieval Is the Bug: What Breaks in Production RAG",
     "excerpt": "The model isn't why your RAG system degrades in production. Retrieval is. Chunking, hybrid search, reranking, and separate retrieval metrics are the fix.",

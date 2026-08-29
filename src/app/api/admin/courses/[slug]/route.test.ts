@@ -122,3 +122,94 @@ describe("PATCH /api/admin/courses/[slug] — price-change audit (t_10214e52)", 
     expect(auditInserts.some((a) => (a as { action: string }).action === "course.price_change")).toBe(false);
   });
 });
+
+describe("PATCH /api/admin/courses/[slug] — Learn v2 profile round-trip (t_f94e01d5)", () => {
+  it("persists org + profile fields and writes a course.profile_change audit row", async () => {
+    admin();
+    // Capture the update() payload so we can assert what reached the DB.
+    let updatePayload: Record<string, unknown> | null = null;
+    const fromCourses = {
+      select: () => ({
+        eq: () => ({ maybeSingle: async () => ({ data: existing, error: null }) }),
+      }),
+      update: (updates: Record<string, unknown>) => {
+        updatePayload = updates;
+        return {
+          eq: () => ({
+            select: () => ({ single: async () => ({ data: { ...existing, ...updates }, error: null }) }),
+          }),
+        };
+      },
+    };
+    const auditInserts: unknown[] = [];
+    mocks.service.from.mockImplementation((table: string) => {
+      if (table === "courses") return fromCourses;
+      if (table === "admin_audit_log") {
+        return {
+          insert: async (row: unknown) => {
+            auditInserts.push(row);
+            return { error: null };
+          },
+        };
+      }
+      return {};
+    });
+
+    const res = await PATCH(
+      req({
+        section_id: "sec-1",
+        group_id: "grp-1",
+        track: "hermes-consultant",
+        level: 2,
+        sort_order: 20,
+        difficulty: "Intermediate",
+        recommended_background: "Completion of Level 1.",
+        audience: "Working practitioners",
+        learning_outcomes: ["Run a full engagement", "Estimate multi-week delivery"],
+        course_tags: ["Consulting", "Delivery"],
+      }),
+      { params: Promise.resolve({ slug: "my-course" }) },
+    );
+    expect(res.status).toBe(200);
+    // Every Learn v2 field reached the DB update payload.
+    expect(updatePayload).toMatchObject({
+      section_id: "sec-1",
+      group_id: "grp-1",
+      track: "hermes-consultant",
+      level: 2,
+      sort_order: 20,
+      difficulty: "Intermediate",
+      recommended_background: "Completion of Level 1.",
+      audience: "Working practitioners",
+      learning_outcomes: ["Run a full engagement", "Estimate multi-week delivery"],
+      course_tags: ["Consulting", "Delivery"],
+    });
+    // One aggregated audit row names the changed profile fields (ADR-208/205).
+    const profileAudit = auditInserts.find(
+      (a) => (a as { action: string }).action === "course.profile_change",
+    );
+    expect(profileAudit).toBeTruthy();
+    const details = (profileAudit as { details: Record<string, { from: unknown; to: unknown }> }).details;
+    expect(details).toHaveProperty("level");
+    expect(details).toHaveProperty("learning_outcomes");
+    expect(details).toHaveProperty("course_tags");
+    expect(details["level"]).toEqual({ from: null, to: 2 });
+  });
+
+  it("rejects invalid difficulty / level / tags", async () => {
+    admin();
+    wire(existing);
+    const badDiff = await PATCH(req({ difficulty: "Expert" }), {
+      params: Promise.resolve({ slug: "my-course" }),
+    });
+    expect(badDiff.status).toBe(400);
+    const badLevel = await PATCH(req({ level: 2.5 }), {
+      params: Promise.resolve({ slug: "my-course" }),
+    });
+    expect(badLevel.status).toBe(400);
+    const badTags = await PATCH(req({ course_tags: [123] }), {
+      params: Promise.resolve({ slug: "my-course" }),
+    });
+    expect(badTags.status).toBe(400);
+  });
+});

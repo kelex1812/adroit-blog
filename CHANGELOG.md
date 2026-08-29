@@ -4,6 +4,45 @@ All notable changes to the Adroit Consulting Blog project will be documented in 
 
 ## [Unreleased]
 
+### Learn v2 completion: provision Hermes L2/L3, populate course profiles, admin back-nav (t_f94e01d5)
+
+**What** — Closed three phase-audit gaps (G2/G4/G5) against the live DB + admin UI.
+
+- **G2 (provision):** added live `courses` rows for `hermes-consultant-intermediate`
+  (L2) and `hermes-consultant-advanced` (L3) — they had content/series.json/lessons
+  but no row, so they never rendered. Set org to mirror migration 009's backfill
+  (tracks section + hermes-consultant-track group, track `hermes-consultant`,
+  level 2/3, sort_order 20/30, difficulty Intermediate/Advanced),
+  `access_model='granted'` (matches the stealth-granted Hermes track), status live.
+  Also seeded `course_prerequisites` (L2 requires L1; L3 requires L2) — migration 8d
+  was a no-op because L2/L3 didn't exist yet.
+- **G4 (profile prose):** populated `recommended_background`, `audience`,
+  `learning_outcomes`, `course_tags` for all seven live courses, derived from each
+  series' description/lessons (no invented facts).
+- **G5 (admin back-nav):** added a sidebar "Back to site" link (→ `/`) in
+  `src/components/Admin/AdminShell.tsx` (navy/white tokens, NOT a modal).
+
+Changed files:
+- `scripts/provision-learn-v2-completion.js` — idempotent service-client backfill
+  (runs the same `@supabase/supabase-js` service role path as the admin routes).
+- `scripts/inspect-learn-catalog.py` — read-only DB state inspector (audit aid).
+- `src/components/Admin/AdminShell.tsx` — sidebar back-nav link.
+- `src/components/Learn/LearnHub.tsx` — exported `groupOrder` (Level N ordering).
+
+**Why** — L2/L3 had no courses row so the Hermes 3-level track rendered as a single
+Level-1 card; profile prose was empty everywhere (migration 009 only backfilled org +
+difficulty); admins had no way to leave /admin for the public site.
+
+**Verification** — `scripts/inspect-learn-catalog.py` confirms all 7 courses live with
+org + profile filled and 2 prerequisite rows seeded. Live `/learn` renders the
+Certifications + Learning Paths sections (Hermes track is stealth-granted, hidden from
+guests by design). `/learn/salesforce-architect` outline renders difficulty/audience/
+outcomes/tags. tsc, lint (0 errors), build clean; 303 tests pass (43 files) including
+new AdminShell back-nav, LearnHub Level-ordering, and admin course profile round-trip
+tests.
+
+**Known issues** — None.
+
 ### Fix: Learn v2 onGradient DifficultyPill + audience chip contrast — WCAG 1.4.3 (t_3c85cbc2)
 
 **What** — Replaced the translucent-white overlay on the v2 course-outline

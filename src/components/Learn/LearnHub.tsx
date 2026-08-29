@@ -33,7 +33,7 @@ export interface LearnHubProps {
 }
 
 /** Order within a group: level asc (null last), then sort_order. */
-function groupOrder(a: LearnCardSeries, b: LearnCardSeries): number {
+export function groupOrder(a: LearnCardSeries, b: LearnCardSeries): number {
   const la = a.level ?? Number.MAX_SAFE_INTEGER;
   const lb = b.level ?? Number.MAX_SAFE_INTEGER;
   if (la !== lb) return la - lb;
