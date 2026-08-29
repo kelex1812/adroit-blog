@@ -41,9 +41,12 @@ export default function CourseProfileDialog({
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
 
-  // Local form state, initialized from the course row.
-  const [sectionId, setSectionId] = useState<string>("");
-  const [groupId, setGroupId] = useState<string>("");
+  // Local form state, initialized from the course row. section/group MUST
+  // seed from the stored course.section_id/group_id — initializing to "" left
+  // the dropdowns blank and the Group list empty (filtered against ""), so a
+  // course's existing org never showed. (Chris report, 2026-08-29.)
+  const [sectionId, setSectionId] = useState<string>(course.section_id ?? "");
+  const [groupId, setGroupId] = useState<string>(course.group_id ?? "");
   const [track, setTrack] = useState<string>(course.track ?? "");
   const [level, setLevel] = useState<string>(
     course.level != null ? String(course.level) : "",
