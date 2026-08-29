@@ -47,6 +47,30 @@ export interface CourseRow {
   launched_at: string | null;
   created_at: string;
   updated_at: string;
+  /* ---- Learn Platform v2 (migration 009) — org + profile as data ----
+     Optional because pre-009 rows/columns may be absent and existing test
+     fixtures build CourseRow literals without them. Use `?? null` when
+     reading. The unified CatalogCourse type carries the guaranteed shape. */
+  /** FK → catalog_sections.id; NULL = uncategorized (hidden from public org view). */
+  section_id?: string | null;
+  /** FK → catalog_groups.id; NULL = standalone under the section. */
+  group_id?: string | null;
+  /** Track slug this course belongs to (e.g. "hermes-consultant"); NULL = standalone. */
+  track?: string | null;
+  /** Level within a track (1|2|3); NULL = standalone / Learning Path. */
+  level?: number | null;
+  /** Order within group/track; default 0. */
+  sort_order?: number | null;
+  /** Catalog-wide difficulty scale (plan §3c); NULL = not authored. */
+  difficulty?: Difficulty | null;
+  /** Human-readable "what level of knowledge helps" prose (plan §3c). */
+  recommended_background?: string | null;
+  /** Who it's for: Consultants, Developers, PMs, Cert candidates, Business Users. */
+  audience?: string | null;
+  /** 2-4 "what you'll be able to do after" strings (jsonb array). */
+  learning_outcomes?: string[] | null;
+  /** Course-level tags, distinct from per-lesson tags (text[]). */
+  course_tags?: string[] | null;
 }
 
 /** `user_roles` row. */
@@ -248,3 +272,182 @@ export interface PaywallView {
   peekLessonSlug: string | null;
   options: PaywallAccessOption[];
 }
+
+/* ------------------------------------------------------------------ */
+/*  Learn Platform v2 — unified catalog contract (migration 009)       */
+/*  Owned by brainiac (arch task t_e6b81ca5). Steel imports from here. */
+/*  Mirrors: docs/system-architecture-learn-v2.html + docs/009-learn-  */
+/*  catalog.sql. DO NOT EDIT directly — reopen the arch task.          */
+/* ------------------------------------------------------------------ */
+
+/** Catalog-wide difficulty scale (plan §3c) — on EVERY course. */
+export type Difficulty = "Beginner" | "Intermediate" | "Advanced";
+
+/** `catalog_sections` row — top-level Learn sections. */
+export interface CatalogSection {
+  id: string;
+  slug: string;
+  name: string;
+  sort_order: number;
+  created_at: string;
+}
+
+/** `catalog_groups` row — a vendor/family group under a section. */
+export interface CatalogGroup {
+  id: string;
+  section_id: string;
+  slug: string;
+  name: string;
+  sort_order: number;
+  created_at: string;
+}
+
+/** `course_prerequisites` row — structured "this course requires course X". */
+export interface CoursePrerequisiteRow {
+  id: string;
+  course_id: string;
+  required_course_id: string;
+  sort_order: number;
+  created_at: string;
+}
+
+/** A course this course requires — joined name + slug for the outline. */
+export interface PrerequisiteCourse {
+  /** series_slug of the required course (for the link). */
+  series_slug: string;
+  /** Display name of the required course. */
+  name: string;
+}
+
+/** `completion_events` row — append-only completion foundation (ADR-211). */
+export interface CompletionEventRow {
+  id: number;
+  user_id: string;
+  course_id: string | null;
+  event_type: "lesson" | "course";
+  lesson: number | null;
+  lesson_slug: string | null;
+  completed_at: string;
+}
+
+/**
+ * UNIFIED CATALOG COURSE (ADR-210) — the ONE shape every surface consumes:
+ * hub, cards, paywall, admin, sitemap, APIs. Merges DB-derived org/profile/
+ * access fields with content-derived display fields (series.json + lesson
+ * files). No drift — a course is always built through buildCatalogCourse().
+ */
+export interface CatalogCourse {
+  /* ---- DB-derived (courses + catalog_sections/groups + prerequisites) ---- */
+  course: CourseRow;
+  /** Joined section (may be null for uncategorized). */
+  section: CatalogSection | null;
+  /** Joined group (may be null for a standalone course). */
+  group: CatalogGroup | null;
+  /** Structured prerequisites (plan §3c) — auto-renders the outline section. */
+  prerequisites: PrerequisiteCourse[];
+  /** Next course id derived from track/level/sort_order (ADR-212); null = last. */
+  nextCourseId: string | null;
+  /* ---- content-derived (series.json + lesson files) ---- */
+  /** Display name (series.json); fallback: humanized series_slug. */
+  name: string;
+  /** One-line description (series.json); fallback: "". */
+  description: string;
+  /** Tailwind gradient classes (series.json). */
+  gradient: string;
+  /** Published lesson count. */
+  lessonCount: number;
+  /** Total (incl. unpublished) lesson count. */
+  totalLessons: number;
+  /* ---- access (from the access seam) ---- */
+  visible: boolean;
+  canAccess: boolean;
+}
+
+/** Sections + groups a catalog surface needs for bucketing. */
+export interface CatalogOrganization {
+  sections: CatalogSection[];
+  groups: CatalogGroup[];
+}
+
+/** The next-course seam (ADR-212) — what to take next on a course surface. */
+export interface CatalogNextCourse {
+  /** course_id of the next course; null when this is the last in the track. */
+  nextCourseId: string | null;
+  /** True when the current user has completed every prerequisite (V2 "ready"). */
+  prerequisitesMet: boolean;
+}
+
+/** Progress/rank derivation input — completion events for one user. */
+export interface CompletionInput {
+  /** The user's completion_events (RLS-scoped to owner). */
+  events: CompletionEventRow[];
+  /** Track membership per course_id (course_id → track slug). */
+  courseTracks: Record<string, string>;
+  now: string;
+}
+
+/** Derived progress/rank helpers (plan §3f) — pure, unit-testable, no DB cols. */
+export interface DerivedProgress {
+  /** Distinct lessons completed. */
+  lessonsCompleted: number;
+  /** Distinct courses completed (all their lessons done). */
+  coursesCompleted: number;
+  /** Distinct tracks completed (every course in the track done). */
+  tracksCompleted: number;
+  /** Current streak in whole days (≥1 consecutive day with a completion). */
+  streakDays: number;
+  /** Longest streak in whole days. */
+  longestStreakDays: number;
+  /** Min→max span across a course's events, in days (null if <2 events). */
+  timeToCompleteDays: number | null;
+}
+
+/** Catalog surface → the user may see + their access per unified course. */
+export interface CatalogForUserV2Result {
+  courses: CatalogCourse[];
+  isAdmin: boolean;
+}
+
+/* ------------------------------------------------------------------ */
+/*  Admin — Learn v2 course profile + org form fields                  */
+/* ------------------------------------------------------------------ */
+
+/** Admin course mutation body (US-009 + Learn v2 profile/org fields). */
+export interface AdminCourseUpdateRequest {
+  status?: CourseStatus;
+  access_model?: AccessModel;
+  price_cents?: number | null;
+  /* ---- Learn v2 (migration 009) ---- */
+  section_id?: string | null;
+  group_id?: string | null;
+  track?: string | null;
+  level?: number | null;
+  sort_order?: number | null;
+  difficulty?: Difficulty | null;
+  recommended_background?: string | null;
+  audience?: string | null;
+  learning_outcomes?: string[] | null;
+  course_tags?: string[] | null;
+}
+
+/** Admin profile upsert for catalog sections (US-009, Learn v2). */
+export interface AdminSectionUpsertRequest {
+  slug: string;
+  name: string;
+  sort_order?: number;
+}
+
+/** Admin profile upsert for catalog groups (US-009, Learn v2). */
+export interface AdminGroupUpsertRequest {
+  section_id: string;
+  slug: string;
+  name: string;
+  sort_order?: number;
+}
+
+/** Admin prerequisite mutation (US-009, Learn v2). */
+export interface AdminPrerequisiteRequest {
+  courseId: string;
+  requiredCourseIds: string[];
+}
+

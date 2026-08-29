@@ -7,8 +7,6 @@ const fullSeries: LearningSeries = {
   slug: "salesforce-architect",
   name: "Salesforce Architect Path",
   description: "A structured path to the Salesforce Architect certification.",
-  group: "Salesforce Certifications",
-  subgroup: "Developer",
   gradient: "from-sky to-blue-600",
   totalLessons: 42,
   lessons: [
@@ -47,11 +45,15 @@ describe("toLearnCardSeries (guest payload hardening t_3dbf4826)", () => {
     expect(card.description).toBe(
       "A structured path to the Salesforce Architect certification.",
     );
-    expect(card.group).toBe("Salesforce Certifications");
-    expect(card.subgroup).toBe("Developer");
     expect(card.gradient).toBe("from-sky to-blue-600");
     expect(card.lessonCount).toBe(2);
     expect(card.totalLessons).toBe(42);
+    // Content-derived series carry no org (ADR-207) — the hub page fills these
+    // from the DB-backed CatalogCourse, so toLearnCardSeries leaves them null.
+    expect(card.section).toBeNull();
+    expect(card.group).toBeNull();
+    expect(card.track).toBeNull();
+    expect(card.level).toBeNull();
 
     // Guests never receive lesson slugs (SeriesProgress is signed-in only).
     expect(card.lessonSlugs).toEqual([]);

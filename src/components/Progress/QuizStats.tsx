@@ -87,7 +87,7 @@ export default function QuizStats({
   if (!hydrated || attempts === 0) return null;
 
   const tone = onGradient
-    ? "text-white/85 bg-white/15 backdrop-blur-sm px-2.5 py-1 rounded-full"
+    ? "text-white bg-black/55 backdrop-blur-sm px-2.5 py-1 rounded-full"
     : "text-gray-500";
 
   const content = (

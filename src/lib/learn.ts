@@ -53,14 +53,21 @@ export function toLearnCardSeries(
     slug: s.slug,
     name: s.name,
     description: s.description,
-    group: s.group,
-    subgroup: s.subgroup,
     gradient: s.gradient,
     lessonCount: s.lessons.length,
     totalLessons: s.totalLessons,
     lessonSlugs: opts.includeLessonSlugs
       ? s.lessons.map((l) => l.slug)
       : [],
+    // Content-derived series carry NO org (ADR-207) — the hub page populates
+    // these from the DB-backed CatalogCourse via buildCatalogCourse.
+    section: null,
+    group: null,
+    track: null,
+    level: null,
+    sortOrder: null,
+    difficulty: null,
+    canAccess: false,
   };
 }
 

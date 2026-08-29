@@ -157,8 +157,10 @@ function buildSeries(seriesSlug, dir) {
     slug: seriesSlug,
     name: cfg.name || known.name || humanize(seriesSlug),
     description: cfg.description ?? known.description ?? "",
-    group: cfg.group || undefined,
-    subgroup: cfg.subgroup || undefined,
+    // Org (group/subgroup/section/track/level/sort_order) is NO LONGER read
+    // from series.json — it lives in the DB (catalog_sections/groups + courses
+    // columns, migration 009, ADR-206/207). series.json is display-only:
+    // name/description/gradient. The Learn hub buckets from DB rows.
     gradient: cfg.gradient || known.gradient || FALLBACK_GRADIENT,
     lessons: sorted,
     totalLessons,

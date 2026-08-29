@@ -344,6 +344,9 @@ function fakeLoader(over: Partial<PlatformDataLoader> = {}): PlatformDataLoader 
     getRole: vi.fn().mockResolvedValue(null),
     getActiveEntitlements: vi.fn().mockResolvedValue([]),
     getActiveSubscriptions: vi.fn().mockResolvedValue([]),
+    getSections: vi.fn().mockResolvedValue([]),
+    getGroups: vi.fn().mockResolvedValue([]),
+    getPrerequisites: vi.fn().mockResolvedValue([]),
     ...over,
   };
 }

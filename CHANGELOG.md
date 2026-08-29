@@ -4,6 +4,102 @@ All notable changes to the Adroit Consulting Blog project will be documented in 
 
 ## [Unreleased]
 
+### Fix: Learn v2 onGradient DifficultyPill + audience chip contrast — WCAG 1.4.3 (t_3c85cbc2)
+
+**What** — Replaced the translucent-white overlay on the v2 course-outline
+gradient band with a dark overlay for the difficulty pill and audience chip.
+
+- `src/components/Learn/DifficultyPill.tsx` — `onGradient` class changed from
+  `text-white/90 bg-white/15 border-white/25` to
+  `text-white bg-black/55 border-white/25` (backdrop-blur kept).
+- `src/app/learn/[series]/page.tsx` — audience chip span, same class string change.
+
+**Why** — The white-on-white pill/chip over the course-outline gradient rendered at
+1.80–4.25:1 effective contrast, below the 4.5:1 WCAG 1.4.3 required for 10.5px bold
+text (a11y audit t_c1e76ada, HIGH). The dark `bg-black/55` overlay — already used by
+the passing PathCard pills — yields 8.18–14.23:1 across all 10 gradient stops (both
+themes). Non-gradient DifficultyPill `STYLES` untouched; no other Learn v2 surface changed.
+
+**Known issues** — None. tsc, lint, build clean; 297 tests pass (41 files).
+
+
+### Fix: Learn v2 gradient band sibling elements contrast — WCAG 1.4.3 (t_c5203795)
+
+**What** — Extended the dark-overlay treatment from d2c3e3b to the four remaining
+translucent-white sibling elements on the course-outline gradient band
+(`/learn/[series]`): series label chip, band description, and the onGradient
+CertReadiness + QuizStats strips.
+
+- `src/app/learn/[series]/page.tsx` — label chip `bg-white/20` → `bg-black/55`;
+  band description `text-white/80` (no bg) → `text-white` on a `bg-black/55`
+  `backdrop-blur-sm rounded-xl px-4 py-3` panel.
+- `src/components/Progress/CertReadiness.tsx` — onGradient tone
+  `text-white/85 bg-white/15` → `text-white bg-black/55`.
+- `src/components/Progress/QuizStats.tsx` — onGradient tone
+  `text-white/85 bg-white/15` → `text-white bg-black/55`.
+
+**Why** — The four pre-existing v1 elements (commit 45e4d0d) sat on the same gradient
+band at 1.74–1.85:1 effective contrast at the amber endpoint, failing WCAG 1.4.3
+4.5:1 (a11y checker review t_876d5028, MEDIUM). All four now use the byte-identical
+`text-white bg-black/55 backdrop-blur-sm` pattern proven in d2c3e3b (and the passing
+PathCard pills), yielding 8.16–14.22:1 across all 10 gradient endpoints + navy
+fallback, both themes.
+
+**Known issues** — None. tsc, lint, build clean; non-onGradient variants of
+CertReadiness/QuizStats untouched.
+
+
+### Feature: Learn Platform v2 — org-as-data, unified catalog contract, course profile, hub restructure, completion foundation (t_73759dd5)
+
+**What** — Rebuilt the Learn catalog on a once-and-done, scalable structure
+(approved plan: `~/.hermes/plans/hermes-consultant-track-intermediate-advanced.md`,
+arch: `docs/system-architecture-learn-v2.md`, migration `docs/009-learn-catalog.sql`).
+
+- **Organization as data (ADR-206/207)** — new `catalog_sections` (Certifications /
+  Tracks / Learning Paths) + `catalog_groups` (Salesforce Certifications, Hermes
+  Consultant Track) tables. `courses` gains 11 org/profile columns (`section_id`,
+  `group_id`, `track`, `level`, `sort_order`, `difficulty`, `recommended_background`,
+  `audience`, `learning_outcomes`, `course_tags`) — ALL nullable for backward
+  compat, with an idempotent seed/backfill. The old `bucketOf()` regex + content
+  `group`/`subgroup` are gone; `series.json` is display-only (name/description/
+  gradient). New cert vendor/track = one DB row, zero code change.
+- **Unified catalog contract (ADR-210)** — new `src/lib/catalog.ts`:
+  `buildCatalogCourse` merges DB org/profile/access + content display + lesson
+  counts + structured prerequisites + derived next-course into ONE `CatalogCourse`;
+  `getCatalogForUserV2` composes the access seam + content + org for every surface.
+- **Course profile (ADR-208/209)** — `course_prerequisites` self-referencing join;
+  the course outline renders a Prerequisites section (structured + recommended
+  background), difficulty pill, audience, learning outcomes, tags, and a next-course
+  callout. `PrerequisitesSection` + `DifficultyPill` components (kara design tokens).
+- **Tracks + next-course seam (ADR-212)** — pure `getNextCourse` (Level N ordering)
+  + `prerequisitesMet` helpers, unit-testable without a DB.
+- **Learn hub restructure** — `/learn` buckets purely from section/group rows,
+  groups tracks under their group with Level N ordering, and adds client search +
+  section/group filter chips (`LearnHub`/`LearnFilters` rewritten, `bucketOf` removed).
+- **Completion foundation (ADR-211)** — new `completion_events` append-only table;
+  `POST /api/progress/lesson` appends a lesson event (and a course event on the last
+  lesson); `src/lib/completion.ts` derives `deriveProgress` (lessons/courses/tracks
+  completed, streaks, time-to-complete). Visual Constellations/Chronicle = V2.
+- **Admin** — course form gains an "Edit profile" dialog (`CourseProfileDialog`) for
+  org/profile/prerequisite fields; PATCH `/api/admin/courses/[slug]` extended with
+  org/profile fields; new section/group upsert routes + prerequisite mutation route;
+  every mutation audits `course.profile_change` (ADR-205).
+- **Security (RLS)** — catalog_sections/groups/course_prerequisites SELECT public,
+  write admin-only; completion_events insert-own only (append-only, no update/delete);
+  existing courses RLS covers the new columns. Blog article gating untouched.
+
+**Why** — the prior regex + series.json group/subgroup split doesn't scale to new cert
+vendors/tracks and let hub/paywall/admin/sitemap drift apart. Org + profile as DB rows,
+one merged contract, and an immutable completion log give the platform a stable base for
+the Hermes Consultant Track (L1→L2→L3) and the V2 achievement system.
+
+**Known issues** — Migration 009 must be applied (`supabase db push`) before the v2 org
+surfaces populate; until then `/learn` renders a graceful empty state. Content team
+should author `recommended_background`/`difficulty`/`audience`/`outcomes`/`tags` via the
+admin form (org fields) — `series.json` keeps only display. 297 tests pass (build + lint
+clean).
+
+
 ### Fix: /api/admin/users 500 — auth schema not exposed to PostgREST (t_48183726)
 
 **What** — Admin user reads no longer hit the `auth` schema through PostgREST

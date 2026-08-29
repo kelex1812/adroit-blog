@@ -5,6 +5,7 @@ import { useAdminCourses } from "@/lib/hooks/useAdminCourses";
 import { StatusBadge } from "@/components/Catalog/StatusBadge";
 import { AccessModelChip } from "@/components/Catalog/AccessModelChip";
 import { LaunchDialog } from "@/components/Admin/LaunchDialog";
+import CourseProfileDialog from "@/components/Admin/CourseProfileDialog";
 import type {
   AccessModel,
   CourseRow,
@@ -32,6 +33,7 @@ export default function AdminCoursesPage() {
   const [saving, setSaving] = useState<string | null>(null);
   const [toast, setToast] = useState<string | null>(null);
   const [launching, setLaunching] = useState<CourseRow | null>(null);
+  const [editing, setEditing] = useState<CourseRow | null>(null);
 
   async function onStatusChange(slug: string, status: CourseStatus) {
     setSaving(slug);
@@ -191,12 +193,20 @@ export default function AdminCoursesPage() {
                     <button
                       type="button"
                       onClick={() => setLaunching(course)}
-                      className="rounded-md text-white text-[11.5px] font-semibold px-3 py-1.5 hover:opacity-90"
+                      className="rounded-md text-white text-[11.5px] font-semibold px-3 py-1.5 mr-2 hover:opacity-90"
                       style={{ background: "var(--color-red)" }}
                     >
                       Launch →
                     </button>
                   )}
+                  <button
+                    type="button"
+                    onClick={() => setEditing(course)}
+                    className="rounded-md border px-3 py-1.5 text-[11.5px] font-semibold text-[var(--ink-primary)] hover:bg-[var(--surface-sunken)]"
+                    style={{ borderColor: "var(--admin-table-border)" }}
+                  >
+                    Edit profile
+                  </button>
                 </td>
               </tr>
             ))}
@@ -212,6 +222,16 @@ export default function AdminCoursesPage() {
             setLaunching(null);
             void refresh();
           }}
+          onToast={(msg) => setToast(msg)}
+        />
+      )}
+
+      {editing && (
+        <CourseProfileDialog
+          course={editing}
+          allCourses={rows.map((r) => r.course)}
+          onClose={() => setEditing(null)}
+          onSaved={() => void refresh()}
           onToast={(msg) => setToast(msg)}
         />
       )}
