@@ -69,8 +69,17 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
             </div>
           ))}
         </nav>
-        <div className="px-5 py-4 border-t border-white/10 text-[11px] font-mono text-white/50">
-          /admin
+        <div className="px-5 py-4 border-t border-white/10 flex flex-col gap-3">
+          <Link
+            href="/"
+            className="inline-flex items-center gap-2 text-[12.5px] font-semibold no-underline text-white/75 hover:text-white transition-colors"
+          >
+            <span aria-hidden className="text-white/50">
+              &larr;
+            </span>
+            Back to site
+          </Link>
+          <div className="font-mono text-[11px] text-white/50">/admin</div>
         </div>
       </aside>
 
