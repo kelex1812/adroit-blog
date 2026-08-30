@@ -28,6 +28,35 @@ was already effectively dark there).
 Changed files:
 - `src/app/globals.css` — new `.paywall-panel` rule (additive).
 
+### Fix a11y: Paywall AVAILABLE accent-label contrast on navy panel (t_919cfc83)
+
+**What** — The `AVAILABLE` access-option label on the locked-paywall panel no
+longer uses the global `--accent` (red `#C8102E`, 2.28:1 on the navy panel —
+below WCAG AA). Added a panel-scoped token `--paywall-accent: #f47385` to
+`src/app/globals.css` and pointed the label at it in
+`src/components/Catalog/Paywall.tsx`.
+
+**Why** — In Light mode `--accent` is `var(--color-red)` = `#C8102E`, which is
+too dark to read on the deep-navy panel (`--paywall-panel` = `#0F2242`, dark in
+both modes). `#f47385` (the existing dark-mode `--accent-hover` lighter red)
+yields 5.75:1 on pure navy and 4.88:1 on the actual option-row surface
+(`bg-white/[0.06]` over navy → ~#1D2F4D) — above the WCAG 2.2 AA 4.5:1 floor for
+11px bold text. Note: the checker's proposed `#f05066` only clears AA on pure
+navy (4.55:1) but drops to ~3.9:1 on the option-row background, so it was
+rejected in favor of the lighter `#f47385`.
+
+**Known Issues** — None. Panel background, white text, and the informational
+row's muted tone are unchanged (all already passed). The panel is dark navy in
+both modes, so the token is defined once on `:root` with no light/dark split.
+Added `src/components/Catalog/Paywall.a11y.test.tsx` as a regression guard.
+
+Changed files:
+- `src/app/globals.css` — new `--paywall-accent` token (additive).
+- `src/components/Catalog/Paywall.tsx` — `text-[var(--accent)]` →
+  `text-[var(--paywall-accent)]` on the `AVAILABLE` span.
+- `src/components/Catalog/Paywall.a11y.test.tsx` — new render test asserting the
+  label uses the paywall-scoped token.
+
 ### Learn v2 completion: provision Hermes L2/L3, populate course profiles, admin back-nav (t_f94e01d5)
 
 **What** — Closed three phase-audit gaps (G2/G4/G5) against the live DB + admin UI.
