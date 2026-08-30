@@ -162,6 +162,27 @@
 }
 
 /* ─────────────────────────────────────────────
+   PAYWALL PANEL (Decide/Learn locked surface)
+   Deep-navy panel + red glow so white text is
+   legible in BOTH light and dark mode. Rule was
+   missing from the app (only shipped in the
+   un-imported design file); component hard-codes
+   text-white, so without a dark bg the locked
+   paywall was white-on-white in Light mode.
+   ───────────────────────────────────────────── */
+
+.paywall-panel {
+  position: relative;
+  overflow: hidden;
+  border-radius: 18px;
+  background: var(--paywall-panel);
+  color: var(--color-off-white);
+  box-shadow: var(--paywall-glow);
+}
+/* Red radial glow is already painted by the Paywall component's
+   inline aria-hidden div (Paywall.tsx), so no ::after is needed. */
+
+/* ─────────────────────────────────────────────
    BASE LAYOUT
    ───────────────────────────────────────────── */
 
