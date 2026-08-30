@@ -37,6 +37,8 @@ MCP itself is framed as a safety mechanism. Structured tool calls replace unstru
 
 That does not make it a no-op. The security boundary now includes the AI client on the other end, and that is where the new risk lives, which I will get to in the pitfalls section.
 
+![Permission flow: an external client authenticates with the mcp_api OAuth scope, the hosted server runs each transaction as the authenticated user, existing CRUD, field-level security, and sharing rules apply, the requesting user lands in the audit trail, and the MCP scope does not unlock the REST API](</diagrams/salesforce-mcp-hosting-ga-2026/3-permission-flow.png>)
+
 ## What the GA actually exposes
 
 The hosted server is not a single thing. You get prebuilt standard servers and you get custom servers, and the two cover different jobs.
@@ -58,6 +60,8 @@ Salesforce's own getting-started path claims under thirty minutes, and it is gen
 The recommended first move is the `platform/sobject-reads` server in a sandbox. It is read-only, so it is risk-free, and it proves the whole loop before you expose anything that writes [^1]. The docs split cleanly by role: Salesforce Help for admin setup, the developer docs for the technical reference and client connection, and a community wiki for patterns and design rationale [^1].
 
 The tool list view matters. When you add tools to a custom server, you are curating a surface, not flipping on your whole org. Picking specific Apex actions and flows rather than broad SObject access is the difference between an agent that does one thing well and an agent with a write path to everything. Treat the tool list like an API you are publishing, because that is exactly what it is.
+
+![Tool surface curation: a custom server publishes specific Apex actions, flows, named queries, agents, and prompt templates, each annotated read-only or destructive, instead of exposing broad SObject access and a write path to everything](</diagrams/salesforce-mcp-hosting-ga-2026/4-tool-surface.png>)
 
 ## The outbound direction, and its current limits
 
