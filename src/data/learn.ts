@@ -8,6 +8,83 @@ import { LearnLesson, LearningSeries } from "./types";
 /** All series, sorted by newest lesson date DESC (ties → slug asc). Empty dirs included with lessons: []. */
 export const learnSeries: LearningSeries[] = [
   {
+    "slug": "hermes-consultant",
+    "name": "Hermes Agent Consultant",
+    "description": "A ~30-lesson path to becoming an agent-implementation consultant: scoping, implementation craft, delivery practice, and the business of consulting. Platform-agnostic skills with Hermes Agent as the working example.",
+    "gradient": "from-teal to-emerald-600",
+    "lessons": [
+      {
+        "slug": "what-an-agent-implementation-consultant-does",
+        "title": "Lesson 1: What an Agent-Implementation Consultant Actually Does",
+        "series": "hermes-consultant",
+        "lesson": 1,
+        "excerpt": "The agent-implementation consultant arc in one lesson: what an engagement looks like, what you actually deliver, and why this is not the same job as building agents for yourself.",
+        "date": "August 26, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "9 min read",
+        "tags": [
+          "Learn",
+          "Hermes Agent",
+          "Consulting",
+          "AI"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "the-consulting-engagement-lifecycle",
+        "title": "Lesson 2: The Consulting Engagement Lifecycle",
+        "series": "hermes-consultant",
+        "lesson": 2,
+        "excerpt": "The five-phase arc that every engagement runs: discover, design, implement, handover, support. What each phase produces, the exit test that lets you leave it, and where engagements quietly die.",
+        "date": "August 27, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "10 min read",
+        "tags": [
+          "Learn",
+          "Hermes Agent",
+          "Consulting",
+          "AI"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "discovery-and-scoping",
+        "title": "Lesson 3: Discovery and Scoping: Listening Before Proposing",
+        "series": "hermes-consultant",
+        "lesson": 3,
+        "excerpt": "The craft of discovery: who to talk to, what to watch, which questions surface the real problem, and how to write a problem statement the client agrees with before you propose any solution.",
+        "date": "August 28, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "11 min read",
+        "tags": [
+          "Learn",
+          "Hermes Agent",
+          "Consulting",
+          "AI"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "framing-value-and-roi",
+        "title": "Lesson 4: Framing Value and ROI: How to Talk to a Buyer, Not a Builder",
+        "series": "hermes-consultant",
+        "lesson": 4,
+        "excerpt": "The craft of turning what an agent does into a number a buyer can defend: how to measure value honestly, build ROI math that survives scrutiny, and talk outcomes instead of features to the person who signs the check.",
+        "date": "August 29, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "12 min read",
+        "tags": [
+          "Learn",
+          "Hermes Agent",
+          "Consulting",
+          "AI"
+        ],
+        "status": "published"
+      }
+    ],
+    "totalLessons": 4
+  },
+  {
     "slug": "agentic-ai",
     "name": "Agentic AI Implementation Path",
     "description": "From single-agent prototypes to multi-agent orchestration, a practitioner's curriculum for shipping agentic systems.",
@@ -668,66 +745,6 @@ export const learnSeries: LearningSeries[] = [
       }
     ],
     "totalLessons": 13
-  },
-  {
-    "slug": "hermes-consultant",
-    "name": "Hermes Agent Consultant",
-    "description": "A ~30-lesson path to becoming an agent-implementation consultant: scoping, implementation craft, delivery practice, and the business of consulting. Platform-agnostic skills with Hermes Agent as the working example.",
-    "gradient": "from-teal to-emerald-600",
-    "lessons": [
-      {
-        "slug": "what-an-agent-implementation-consultant-does",
-        "title": "Lesson 1: What an Agent-Implementation Consultant Actually Does",
-        "series": "hermes-consultant",
-        "lesson": 1,
-        "excerpt": "The agent-implementation consultant arc in one lesson: what an engagement looks like, what you actually deliver, and why this is not the same job as building agents for yourself.",
-        "date": "August 26, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "9 min read",
-        "tags": [
-          "Learn",
-          "Hermes Agent",
-          "Consulting",
-          "AI"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "the-consulting-engagement-lifecycle",
-        "title": "Lesson 2: The Consulting Engagement Lifecycle",
-        "series": "hermes-consultant",
-        "lesson": 2,
-        "excerpt": "The five-phase arc that every engagement runs: discover, design, implement, handover, support. What each phase produces, the exit test that lets you leave it, and where engagements quietly die.",
-        "date": "August 27, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "10 min read",
-        "tags": [
-          "Learn",
-          "Hermes Agent",
-          "Consulting",
-          "AI"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "discovery-and-scoping",
-        "title": "Lesson 3: Discovery and Scoping: Listening Before Proposing",
-        "series": "hermes-consultant",
-        "lesson": 3,
-        "excerpt": "The craft of discovery: who to talk to, what to watch, which questions surface the real problem, and how to write a problem statement the client agrees with before you propose any solution.",
-        "date": "August 28, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "11 min read",
-        "tags": [
-          "Learn",
-          "Hermes Agent",
-          "Consulting",
-          "AI"
-        ],
-        "status": "published"
-      }
-    ],
-    "totalLessons": 3
   },
   {
     "slug": "hermes-consultant-advanced",
@@ -1598,14 +1615,46 @@ export const learnSeries: LearningSeries[] = [
           "OmniScripts"
         ],
         "status": "published"
+      },
+      {
+        "slug": "day-21-os-6-omniscript-best-practices",
+        "title": "OmniStudio OS-6: OmniScript Best Practices",
+        "series": "omni-studio-cert",
+        "lesson": 21,
+        "excerpt": "Build OmniScripts that survive contact with users and production. Compose from child scripts instead of one giant flow, name elements as if they were JSON keys (because they are), test every branch in debug mode before publish, and push heavy orchestration into Integration Procedures.",
+        "date": "August 30, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "9 min read",
+        "tags": [
+          "OmniStudio",
+          "OmniScripts"
+        ],
+        "status": "published"
       }
     ],
-    "totalLessons": 20
+    "totalLessons": 21
   }
 ];
 
 /** Flat list of every lesson, NEWEST FIRST (for sitemap, nav, flat lookups). */
 export const learnLessons: LearnLesson[] = [
+  {
+    "slug": "framing-value-and-roi",
+    "title": "Lesson 4: Framing Value and ROI: How to Talk to a Buyer, Not a Builder",
+    "series": "hermes-consultant",
+    "lesson": 4,
+    "excerpt": "The craft of turning what an agent does into a number a buyer can defend: how to measure value honestly, build ROI math that survives scrutiny, and talk outcomes instead of features to the person who signs the check.",
+    "date": "August 29, 2026",
+    "author": "Adroit Consulting",
+    "readTime": "12 min read",
+    "tags": [
+      "Learn",
+      "Hermes Agent",
+      "Consulting",
+      "AI"
+    ],
+    "status": "published"
+  },
   {
     "slug": "human-in-the-loop-approvals-interrupts-escalation-kill-switches",
     "title": "Lesson 25: Human-in-the-Loop, Approvals, Interrupts, Escalation, and Kill Switches",
@@ -2093,6 +2142,21 @@ export const learnLessons: LearnLesson[] = [
     "date": "August 22, 2026",
     "author": "Adroit Consulting",
     "readTime": "5 min read",
+    "tags": [
+      "OmniStudio",
+      "OmniScripts"
+    ],
+    "status": "published"
+  },
+  {
+    "slug": "day-21-os-6-omniscript-best-practices",
+    "title": "OmniStudio OS-6: OmniScript Best Practices",
+    "series": "omni-studio-cert",
+    "lesson": 21,
+    "excerpt": "Build OmniScripts that survive contact with users and production. Compose from child scripts instead of one giant flow, name elements as if they were JSON keys (because they are), test every branch in debug mode before publish, and push heavy orchestration into Integration Procedures.",
+    "date": "August 30, 2026",
+    "author": "Adroit Consulting",
+    "readTime": "9 min read",
     "tags": [
       "OmniStudio",
       "OmniScripts"
