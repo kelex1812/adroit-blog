@@ -7,6 +7,12 @@ The **Adroit Consulting site** — a [Next.js](https://nextjs.org) (App Router) 
 - **Project board:** [Adroit Consulting Site](https://github.com/users/kelex1812/projects/1) (GitHub Projects)
 
 > The production domain `adroit.io/blog` is intentionally not wired until launch. The site is staged on the private Vercel deployment.
+## What's New
+
+### Paywall panel Light-mode contrast fix (2026-08-30) — 2026-08-30
+
+Course-locked Paywall now renders as a dark navy panel with readable white text in Light mode (was white-on-light). Ships the .paywall-panel rule in globals.css reusing existing tokens, plus the follow-up accent-label contrast fix (4.88-5.75:1 AA).
+
 
 ## Stack
 
