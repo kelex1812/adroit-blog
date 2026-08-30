@@ -26,6 +26,29 @@ export const posts: BlogPost[] = [
     "status": "published"
   },
   {
+    "slug": "retrospective-follow-through-2026",
+    "title": "The Retro Isn't Failing at Reflection. It's Follow-Through.",
+    "excerpt": "Most teams implement a fraction of what retrospectives produce, and AI widens the gap. Treat the retro like a delivery: fewer, owned, reviewable experiments.",
+    "category": "Project Management",
+    "categoryColor": "pm",
+    "categoryGradient": "from-teal to-teal-dark",
+    "date": "August 30, 2026",
+    "author": "Adroit Consulting",
+    "authorInitials": "AC",
+    "readTime": "9 min read",
+    "featured": false,
+    "tags": [
+      "Project Management",
+      "Agile",
+      "Retrospective",
+      "Continuous Improvement",
+      "Delivery",
+      "Scrum"
+    ],
+    "bannerImage": "/banners/retrospective-follow-through-2026.png",
+    "status": "published"
+  },
+  {
     "slug": "merge-queue-trunk-based-2026",
     "title": "The Merge Queue Ended the Rebase Storm",
     "excerpt": "When CI passes on every pull request but main still breaks, you have hit a green-green conflict. Merge queues close that gap. Here is how they work and when you need one.",
