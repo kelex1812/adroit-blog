@@ -2,6 +2,30 @@ import { BlogPost } from "./types";
 
 export const posts: BlogPost[] = [
   {
+    "slug": "form-ux-design-2026",
+    "title": "Every Form Is a Funnel: Form UX in 2026",
+    "excerpt": "Most forms fail in the same documented ways. The anatomy of a form that converts, inline validation done right, and validation state as a design-system concern.",
+    "category": "UI/UX",
+    "categoryColor": "ux",
+    "categoryGradient": "from-violet to-violet-dark",
+    "date": "August 30, 2026",
+    "author": "Adroit Consulting",
+    "authorInitials": "AC",
+    "readTime": "11 min read",
+    "featured": false,
+    "tags": [
+      "Form UX",
+      "Interface Patterns",
+      "Design Systems",
+      "Accessibility",
+      "Web Forms",
+      "Inline Validation",
+      "Design Engineering"
+    ],
+    "bannerImage": "/banners/form-ux-design-2026.png",
+    "status": "published"
+  },
+  {
     "slug": "merge-queue-trunk-based-2026",
     "title": "The Merge Queue Ended the Rebase Storm",
     "excerpt": "When CI passes on every pull request but main still breaks, you have hit a green-green conflict. Merge queues close that gap. Here is how they work and when you need one.",
