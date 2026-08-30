@@ -12,6 +12,7 @@
 import { NextResponse } from "next/server";
 import { accessSeam, getAccessUserId } from "@/lib/access";
 import { getSupabaseServiceClient } from "@/lib/supabase/service";
+import type { SubscriptionRow } from "@/shared/contracts-course-catalog";
 
 /** Resolve the current admin from the session cookie. Non-admin / guest → false. */
 export async function isCurrentUserAdmin(): Promise<boolean> {
@@ -47,6 +48,25 @@ export function forbidden(): NextResponse {
 
 export function notFoundJson(): NextResponse {
   return NextResponse.json({ error: "Not found" }, { status: 404 });
+}
+
+/**
+ * The user's subscription that currently grants access (status active/trialing
+ * AND not past its period end), or null. Mirrors the access seam's
+ * activeSubGrantsAccess semantics so the admin matrix agrees with the
+ * learner-facing access decision. Self-contained (no access.ts import) so
+ * admin route tests can mock the access seam independently.
+ */
+export function activeSubscriptionOf(
+  subs: SubscriptionRow[],
+  now: string,
+): SubscriptionRow | null {
+  for (const sub of subs) {
+    if (sub.status !== "active" && sub.status !== "trialing") continue;
+    if (sub.current_period_end && sub.current_period_end <= now) continue;
+    return sub;
+  }
+  return null;
 }
 
 /**

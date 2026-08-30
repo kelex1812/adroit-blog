@@ -46,14 +46,21 @@ function admin() {
   mocks.isAdmin.mockResolvedValue(true);
 }
 
-/** Public-table reads: user_roles → rows, user_profiles → rows. */
-function wirePublic(roles: { user_id: string; role: string }[], profiles: { user_id: string; display_name: string | null }[]) {
+/** Public-table reads: user_roles → rows, user_profiles → rows, subscriptions → rows. */
+function wirePublic(
+  roles: { user_id: string; role: string }[],
+  profiles: { user_id: string; display_name: string | null }[],
+  subs: { user_id: string; plan: string; status: string; current_period_end: string | null }[] = [],
+) {
   mocks.service.from.mockImplementation((table: string) => {
     if (table === "user_roles") {
       return { select: async () => ({ data: roles, error: null }) };
     }
     if (table === "user_profiles") {
       return { select: async () => ({ data: profiles, error: null }) };
+    }
+    if (table === "subscriptions") {
+      return { select: async () => ({ data: subs, error: null }) };
     }
     return { select: async () => ({ data: [], error: null }) };
   });
@@ -128,5 +135,39 @@ describe("GET /api/admin/users — GoTrue auth source (t_48183726)", () => {
     wirePublic([], []);
     const res = await GET(req());
     expect(res.status).toBe(500);
+  });
+
+  it("surfaces the active subscription per user (matrix S indicator)", async () => {
+    admin();
+    mocks.listAuthUsers.mockResolvedValue([
+      { id: "u-sub", email: "sub@adroit.io" },
+      { id: "u-expired", email: "expired@adroit.io" },
+      { id: "u-none", email: "none@adroit.io" },
+    ]);
+    wirePublic(
+      [],
+      [],
+      [
+        { user_id: "u-sub", plan: "learn", status: "active", current_period_end: "2999-01-01T00:00:00.000Z" },
+        { user_id: "u-expired", plan: "learn", status: "active", current_period_end: "2000-01-01T00:00:00.000Z" },
+        { user_id: "u-expired", plan: "learn", status: "canceled", current_period_end: null },
+      ],
+    );
+    const res = await GET(req());
+    expect(res.status).toBe(200);
+    const json = await res.json();
+    const rows = json.data as {
+      user_id: string;
+      subscription: { plan: string; status: string } | null;
+    }[];
+    // Active, in-future subscription → surfaced.
+    expect(rows.find((r) => r.user_id === "u-sub")?.subscription).toMatchObject({
+      plan: "learn",
+      status: "active",
+    });
+    // Only canceled/expired rows → null.
+    expect(rows.find((r) => r.user_id === "u-expired")?.subscription).toBeNull();
+    // No rows → null.
+    expect(rows.find((r) => r.user_id === "u-none")?.subscription).toBeNull();
   });
 });

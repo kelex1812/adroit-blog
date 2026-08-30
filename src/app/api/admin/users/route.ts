@@ -4,11 +4,12 @@
  * Contract: AdminUserListRow.
  */
 import { NextRequest, NextResponse } from "next/server";
-import { requireAdminApi } from "@/lib/admin";
+import { activeSubscriptionOf, requireAdminApi } from "@/lib/admin";
 import { getSupabaseServiceClient } from "@/lib/supabase/service";
 import { listAuthUsers } from "@/lib/supabase/auth-admin";
 import type {
   AdminUserListRow,
+  SubscriptionRow,
   UserRole,
 } from "@/shared/contracts-course-catalog";
 
@@ -21,14 +22,19 @@ export async function GET(req: NextRequest) {
   try {
     const service = getSupabaseServiceClient();
     // Auth users come from the GoTrue Admin API (the `auth` schema is not
-    // exposed to PostgREST — PGRST205). Roles/profiles are public tables.
-    const [authUsers, rolesRes, profilesRes] = await Promise.all([
+    // exposed to PostgREST — PGRST205). Roles/profiles/subscriptions are
+    // public tables.
+    const [authUsers, rolesRes, profilesRes, subsRes] = await Promise.all([
       listAuthUsers(),
       service.from("user_roles").select("user_id, role"),
       service.from("user_profiles").select("user_id, display_name"),
+      service.from("subscriptions").select(
+        "user_id, id, plan, status, current_period_end, created_at",
+      ),
     ]);
     if (rolesRes.error) throw rolesRes.error;
     if (profilesRes.error) throw profilesRes.error;
+    if (subsRes.error) throw subsRes.error;
 
     const roleByUser = new Map<string, UserRole>();
     for (const r of (rolesRes.data ?? []) as { user_id: string; role: UserRole }[]) {
@@ -41,6 +47,13 @@ export async function GET(req: NextRequest) {
     }[]) {
       nameByUser.set(p.user_id, p.display_name);
     }
+    const subsByUser = new Map<string, SubscriptionRow[]>();
+    for (const s of (subsRes.data ?? []) as SubscriptionRow[]) {
+      const list = subsByUser.get(s.user_id) ?? [];
+      list.push(s);
+      subsByUser.set(s.user_id, list);
+    }
+    const now = new Date().toISOString();
 
     const rows: AdminUserListRow[] = authUsers
       .map((u) => ({
@@ -49,6 +62,7 @@ export async function GET(req: NextRequest) {
         display_name: nameByUser.get(u.id) ?? null,
         role: roleByUser.get(u.id) ?? ("member" as UserRole),
         entitlements: {},
+        subscription: activeSubscriptionOf(subsByUser.get(u.id) ?? [], now),
       }))
       .filter((u) => {
         if (!q) return true;
