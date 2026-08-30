@@ -121,7 +121,7 @@
   --admin-table-border: #E5E7EB;
 
   /* 4. Paywall (Decide/Learn) */
-  --paywall-panel: #0F2242;
+  --paywall-panel: var(--color-navy-light);  /* lighter navy in-brand; keeps white text + red accent >=AA */
   --paywall-accent: #f47385; /* lighter red ≥4.5:1 on navy row bg (WCAG 1.4.3) */
   --paywall-glow: 0 0 0 1px rgba(200, 16, 46, 0.14),
                   0 24px 48px -16px rgba(200, 16, 46, 0.30);
