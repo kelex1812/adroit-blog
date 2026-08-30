@@ -66,7 +66,7 @@ export default function Paywall({
                   {opt.label}
                 </span>
                 {opt.actionable ? (
-                  <span className="font-mono text-[11px] font-bold uppercase tracking-[0.05em] text-[var(--accent)]">
+                  <span className="font-mono text-[11px] font-bold uppercase tracking-[0.05em] text-[var(--paywall-accent)]">
                     Available
                   </span>
                 ) : (
