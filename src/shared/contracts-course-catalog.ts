@@ -209,7 +209,7 @@ export interface AdminCourseListRow {
   activeEntitlementCount: number;
 }
 
-/** Admin user list row (US-010) — role + entitlements for the matrix. */
+/** Admin user list row (US-010) — role + entitlements + subscription for the matrix. */
 export interface AdminUserListRow {
   user_id: string;
   email: string;
@@ -217,6 +217,12 @@ export interface AdminUserListRow {
   role: UserRole;
   /** Active entitlements keyed by course_id → source. */
   entitlements: Record<string, EntitlementSource>;
+  /**
+   * The user's subscription row that currently grants access (active/trialing,
+   * not past its period end), or null when none. Read-only display — billing
+   * writes are out of scope (ADR-204, billing on hold).
+   */
+  subscription: SubscriptionRow | null;
 }
 
 /** Grant/revoke request (US-012). */

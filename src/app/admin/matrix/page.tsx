@@ -26,6 +26,9 @@ const SOURCE_LABEL: Record<EntitlementSource, string> = {
   "one-time": "P",
 };
 
+/** Course access models a subscription satisfies (subscription or sub-or-one-time). */
+const SUB_GATED_MODELS = new Set(["subscription", "sub-or-one-time"]);
+
 /**
  * /admin/matrix (US-014) — user × course access matrix. Each cell shows the
  * entitlement source (G=granted, P=one-time) or is empty when none active.
@@ -64,7 +67,8 @@ export default function AdminMatrixPage() {
         Access Matrix
       </h1>
       <p className="text-[13px] text-[var(--ink-muted)] mb-5">
-        G = admin grant · P = one-time purchase · empty = no active access
+        G = admin grant · P = one-time purchase · S = active subscription ·
+        empty = no active access
       </p>
 
       <div className="rounded-xl border overflow-x-auto" style={{ borderColor: "var(--admin-table-border)" }}>
@@ -85,21 +89,40 @@ export default function AdminMatrixPage() {
           <tbody>
             {users.map((u) => {
               const ent = details[u.user_id]?.entitlements ?? u.entitlements;
+              const sub =
+                details[u.user_id]?.subscription ?? u.subscription;
               return (
                 <tr key={u.user_id} className="text-[13.5px]" style={{ borderTop: "1px solid var(--admin-table-border)" }}>
                   <td className="px-4 py-3">
-                    <span className="font-semibold text-[var(--ink-primary)]">
-                      {u.display_name ?? u.email}
-                    </span>
+                    <div className="flex items-center gap-2">
+                      <span className="font-semibold text-[var(--ink-primary)]">
+                        {u.display_name ?? u.email}
+                      </span>
+                      {sub && (
+                        <span
+                          className="inline-flex items-center px-1.5 rounded-full font-mono text-[10px] font-bold uppercase tracking-wide"
+                          style={{
+                            backgroundColor: "rgba(16,185,129,0.16)",
+                            color: "var(--am-sub-text, #059669)",
+                          }}
+                          title={`Active ${sub.status} subscription · ${sub.plan}`}
+                        >
+                          Sub
+                        </span>
+                      )}
+                    </div>
                     <div className="font-mono text-[11px] text-[var(--ink-muted)]">
                       {u.email}
                     </div>
                   </td>
                   {courses.map(({ course }) => {
                     const src = ent[course.id];
-                    return (
-                      <td key={course.id} className="px-3 py-3 text-center">
-                        {src ? (
+                    // A subscription satisfies subscription / sub-or-one-time
+                    // models — surface it distinctly from G/P entitlements.
+                    const subGrants = sub && SUB_GATED_MODELS.has(course.access_model);
+                    if (src) {
+                      return (
+                        <td key={course.id} className="px-3 py-3 text-center">
                           <span
                             className="inline-flex items-center justify-center w-6 h-6 rounded-full font-mono text-[11px] font-bold"
                             style={{
@@ -111,11 +134,30 @@ export default function AdminMatrixPage() {
                           >
                             {SOURCE_LABEL[src]}
                           </span>
-                        ) : (
-                          <span className="inline-block w-6 h-6 text-center text-[12px] text-[var(--ink-faint)]">
-                            —
+                        </td>
+                      );
+                    }
+                    if (subGrants) {
+                      return (
+                        <td key={course.id} className="px-3 py-3 text-center">
+                          <span
+                            className="inline-flex items-center justify-center w-6 h-6 rounded-full font-mono text-[11px] font-bold"
+                            style={{
+                              backgroundColor: "rgba(16,185,129,0.16)",
+                              color: "var(--am-sub-text, #059669)",
+                            }}
+                            title={`Active ${sub!.status} subscription`}
+                          >
+                            S
                           </span>
-                        )}
+                        </td>
+                      );
+                    }
+                    return (
+                      <td key={course.id} className="px-3 py-3 text-center">
+                        <span className="inline-block w-6 h-6 text-center text-[12px] text-[var(--ink-faint)]">
+                          —
+                        </span>
                       </td>
                     );
                   })}

@@ -4,12 +4,13 @@
  * Contract: AdminUserListRow (entitlements populated).
  */
 import { NextResponse } from "next/server";
-import { requireAdminApi, notFoundJson } from "@/lib/admin";
+import { activeSubscriptionOf, requireAdminApi, notFoundJson } from "@/lib/admin";
 import { getSupabaseServiceClient } from "@/lib/supabase/service";
 import { getAuthUser } from "@/lib/supabase/auth-admin";
 import type {
   AdminUserListRow,
   EntitlementSource,
+  SubscriptionRow,
   UserRole,
 } from "@/shared/contracts-course-catalog";
 
@@ -24,7 +25,7 @@ export async function GET(_req: Request, { params }: Params) {
     const service = getSupabaseServiceClient();
     // Auth user comes from the GoTrue Admin API (`auth` schema not exposed to
     // PostgREST). null → 404 (matches old `.maybeSingle()` semantics).
-    const [user, roleRes, profileRes, entRes] = await Promise.all([
+    const [user, roleRes, profileRes, entRes, subRes] = await Promise.all([
       getAuthUser(id),
       service
         .from("user_roles")
@@ -41,6 +42,10 @@ export async function GET(_req: Request, { params }: Params) {
         .select("course_id, source")
         .eq("user_id", id)
         .is("revoked_at", null),
+      service
+        .from("subscriptions")
+        .select("id, plan, status, current_period_end, created_at")
+        .eq("user_id", id),
     ]);
     if (!user) return notFoundJson();
 
@@ -52,6 +57,11 @@ export async function GET(_req: Request, { params }: Params) {
       entitlements[e.course_id] = e.source;
     }
 
+    const subscription = activeSubscriptionOf(
+      (subRes.data ?? []) as SubscriptionRow[],
+      new Date().toISOString(),
+    );
+
     const row: AdminUserListRow = {
       user_id: id,
       email: user.email,
@@ -60,6 +70,7 @@ export async function GET(_req: Request, { params }: Params) {
           ?.display_name) ?? null,
       role: ((roleRes.data as { role: UserRole } | null)?.role) ?? "member",
       entitlements,
+      subscription,
     };
     return NextResponse.json({ ok: true, data: row });
   } catch {

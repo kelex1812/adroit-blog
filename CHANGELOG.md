@@ -4,6 +4,47 @@ All notable changes to the Adroit Consulting Blog project will be documented in 
 
 ## [Unreleased]
 
+### Fix: Admin Access Matrix surfaces subscription status (t_32ce7d79)
+
+**What** — The admin Access Matrix (`/admin/matrix`) showed a user as "no
+access" (—) even when they held an active subscription, because it only read
+`user_entitlements` (granted/one-time) and never `subscriptions`. This adds a
+`subscription: SubscriptionRow | null` field to the `AdminUserListRow`
+contract, populates it in both admin user API routes
+(`/api/admin/users` list + `/api/admin/users/[id]` detail) by querying
+`subscriptions` for the user's active/trialing rows, and renders it distinctly
+in the matrix.
+
+- `AdminUserListRow.subscription` is the row that currently grants access
+  (status `active`/`trialing` AND not past `current_period_end` — same
+  semantics as the access seam's `activeSubGrantsAccess`), or `null`.
+- The matrix shows a green **Sub** badge beside the user's name and a green
+  **S** chip in each cell for a `subscription`/`sub-or-one-time` course a
+  subscriber holds — distinct from the rose G/P entitlement chips. The legend
+  now reads "G = admin grant · P = one-time purchase · S = active
+  subscription".
+- New `activeSubscriptionOf()` helper in `src/lib/admin.ts` (self-contained,
+  no `access.ts` dependency so admin route tests can mock the seam).
+
+**Why** — Reported by Chris (2026-08-30): the matrix conflated "no entitlement
+row" with "no access," hiding real subscribers. An admin could not tell a
+subscriber apart from a non-subscriber, so subscription-gated courses looked
+inaccessible.
+
+**Known Issues** — None. Read-only display: no billing writes (billing is
+deliberately on hold per ADR-204). The `subscriptions` table is empty today
+(no Stripe webhook wired), so the S indicator is exercised via tests until
+billing lands.
+
+Changed files:
+- `src/shared/contracts-course-catalog.ts` — `AdminUserListRow.subscription`.
+- `src/lib/admin.ts` — `activeSubscriptionOf()` helper.
+- `src/app/api/admin/users/route.ts` — query + populate subscriptions.
+- `src/app/api/admin/users/[id]/route.ts` — query + populate subscriptions.
+- `src/app/admin/matrix/page.tsx` — Sub badge + S chip + legend.
+- Tests: `users/route.test.ts`, `users/[id]/route.test.ts` (new),
+  `admin/matrix/page.test.tsx` (new).
+
 ### Fix: Paywall panel white-on-light in Light mode — WCAG contrast (t_8f63198c)
 
 **What** — Added the missing `.paywall-panel` rule to `src/app/globals.css`.
