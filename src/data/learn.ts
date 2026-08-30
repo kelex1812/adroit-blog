@@ -8,83 +8,6 @@ import { LearnLesson, LearningSeries } from "./types";
 /** All series, sorted by newest lesson date DESC (ties → slug asc). Empty dirs included with lessons: []. */
 export const learnSeries: LearningSeries[] = [
   {
-    "slug": "hermes-consultant",
-    "name": "Hermes Agent Consultant",
-    "description": "A ~30-lesson path to becoming an agent-implementation consultant: scoping, implementation craft, delivery practice, and the business of consulting. Platform-agnostic skills with Hermes Agent as the working example.",
-    "gradient": "from-teal to-emerald-600",
-    "lessons": [
-      {
-        "slug": "what-an-agent-implementation-consultant-does",
-        "title": "Lesson 1: What an Agent-Implementation Consultant Actually Does",
-        "series": "hermes-consultant",
-        "lesson": 1,
-        "excerpt": "The agent-implementation consultant arc in one lesson: what an engagement looks like, what you actually deliver, and why this is not the same job as building agents for yourself.",
-        "date": "August 26, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "9 min read",
-        "tags": [
-          "Learn",
-          "Hermes Agent",
-          "Consulting",
-          "AI"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "the-consulting-engagement-lifecycle",
-        "title": "Lesson 2: The Consulting Engagement Lifecycle",
-        "series": "hermes-consultant",
-        "lesson": 2,
-        "excerpt": "The five-phase arc that every engagement runs: discover, design, implement, handover, support. What each phase produces, the exit test that lets you leave it, and where engagements quietly die.",
-        "date": "August 27, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "10 min read",
-        "tags": [
-          "Learn",
-          "Hermes Agent",
-          "Consulting",
-          "AI"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "discovery-and-scoping",
-        "title": "Lesson 3: Discovery and Scoping: Listening Before Proposing",
-        "series": "hermes-consultant",
-        "lesson": 3,
-        "excerpt": "The craft of discovery: who to talk to, what to watch, which questions surface the real problem, and how to write a problem statement the client agrees with before you propose any solution.",
-        "date": "August 28, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "11 min read",
-        "tags": [
-          "Learn",
-          "Hermes Agent",
-          "Consulting",
-          "AI"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "framing-value-and-roi",
-        "title": "Lesson 4: Framing Value and ROI: How to Talk to a Buyer, Not a Builder",
-        "series": "hermes-consultant",
-        "lesson": 4,
-        "excerpt": "The craft of turning what an agent does into a number a buyer can defend: how to measure value honestly, build ROI math that survives scrutiny, and talk outcomes instead of features to the person who signs the check.",
-        "date": "August 29, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "12 min read",
-        "tags": [
-          "Learn",
-          "Hermes Agent",
-          "Consulting",
-          "AI"
-        ],
-        "status": "published"
-      }
-    ],
-    "totalLessons": 4
-  },
-  {
     "slug": "agentic-ai",
     "name": "Agentic AI Implementation Path",
     "description": "From single-agent prototypes to multi-agent orchestration, a practitioner's curriculum for shipping agentic systems.",
@@ -514,237 +437,137 @@ export const learnSeries: LearningSeries[] = [
           "Safety"
         ],
         "status": "published"
+      },
+      {
+        "slug": "enterprise-deployment-serving-api-design-rate-limits-quotas",
+        "title": "Lesson 26: Enterprise Deployment, Serving, API Design, Rate Limits, and Quotas",
+        "series": "agentic-ai",
+        "lesson": 26,
+        "excerpt": "A working agent is a different thing from an agent many people can use. This lesson puts the three boundaries around it that make the difference: the serving layer that decides how much concurrent work the model can do, the API boundary that gives every consumer one stable interface, and the policy layer of rate limits and quotas that stops a single tenant from overwhelming the hardware or blowing the budget. It works through the numbers you need to size a deployment, and it shows how those three layers meet at the same number.",
+        "date": "August 29, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "16 min read",
+        "tags": [
+          "Learn",
+          "AI",
+          "Agentic",
+          "Deployment"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "cost-control-caching-model-tiers-budget-caps-spend-dashboards",
+        "title": "Lesson 27: Cost Control, Caching, Model Tiers, Budget Caps, and Spend Dashboards",
+        "series": "agentic-ai",
+        "lesson": 27,
+        "excerpt": "A working agent is cheaper to build than to keep. Lesson 26 stopped a single tenant from blowing the monthly bill in an afternoon; this lesson turns the bill itself into a number you manage. It covers the three cost levers in order: caching so you never pay twice for the same answer, model tiers and routing so you only pay frontier prices when a task actually needs them, and budget caps with spend dashboards so a surprise bill becomes an early-warning system instead. A worked example runs the arithmetic on a real agent workload, and the Fortress angle shows a hybrid two-tier stack doing all three at once.",
+        "date": "August 30, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "15 min read",
+        "tags": [
+          "Learn",
+          "AI",
+          "Agentic",
+          "Cost"
+        ],
+        "status": "published"
       }
     ],
-    "totalLessons": 25
+    "totalLessons": 27
   },
   {
-    "slug": "ai-at-work",
-    "name": "AI at Work",
-    "description": "A vendor-agnostic, 30-lesson primer for using AI in day-to-day work: foundations, prompting, productivity, small automations, and team adoption. Company-wide training that works for any team and any AI tool.",
-    "gradient": "from-fuchsia to-purple-600",
+    "slug": "hermes-consultant",
+    "name": "Hermes Agent Consultant",
+    "description": "A ~30-lesson path to becoming an agent-implementation consultant: scoping, implementation craft, delivery practice, and the business of consulting. Platform-agnostic skills with Hermes Agent as the working example.",
+    "gradient": "from-teal to-emerald-600",
     "lessons": [
       {
-        "slug": "what-ai-actually-is",
-        "title": "Lesson 1: What AI Actually Is",
-        "series": "ai-at-work",
+        "slug": "what-an-agent-implementation-consultant-does",
+        "title": "Lesson 1: What an Agent-Implementation Consultant Actually Does",
+        "series": "hermes-consultant",
         "lesson": 1,
-        "excerpt": "The words around AI are doing more confusing than clarifying. This lesson separates the four that trip up most people: models vs automation, chatbots vs tools, plus why 'LLM' and 'generative AI' are not synonyms.",
-        "date": "August 16, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "8 min read",
-        "tags": [
-          "Learn",
-          "AI",
-          "Workplace",
-          "Foundations"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "how-ai-thinks",
-        "title": "Lesson 2: How AI Thinks in Plain Language",
-        "series": "ai-at-work",
-        "lesson": 2,
-        "excerpt": "The tools you use every day do not read like you do. They read text in chunks called tokens, predict the next chunk over and over, and can only see a limited slice of the conversation at once. This lesson explains those three ideas and what they mean for how you prompt.",
-        "date": "August 17, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "8 min read",
-        "tags": [
-          "Learn",
-          "AI",
-          "Workplace",
-          "Foundations"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "hallucinations-what-they-are-and-how-to-catch-them",
-        "title": "Lesson 3: Hallucinations, and How to Catch Them",
-        "series": "ai-at-work",
-        "lesson": 3,
-        "excerpt": "AI tools make things up, and they do it in a confident voice. This lesson explains what a hallucination actually is, why a next-word predictor produces them, and the practical habits for catching them before they reach your work.",
-        "date": "August 18, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "8 min read",
-        "tags": [
-          "Learn",
-          "AI",
-          "Workplace",
-          "Foundations"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "what-ai-is-genuinely-good-at-and-where-it-fails",
-        "title": "Lesson 4: What AI Is Genuinely Good At, and Where It Fails",
-        "series": "ai-at-work",
-        "lesson": 4,
-        "excerpt": "AI tools are not good at everything, and pretending they are is how people get burned. This lesson gives you a clean dividing line between the work AI genuinely helps with and the work you should keep, backed by what the research actually shows.",
-        "date": "August 19, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "9 min read",
-        "tags": [
-          "Learn",
-          "AI",
-          "Workplace",
-          "Foundations"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "data-safety-what-you-can-and-cannot-put-in",
-        "title": "Lesson 5: Data Safety: What You Can and Cannot Put Into an AI Tool",
-        "series": "ai-at-work",
-        "lesson": 5,
-        "excerpt": "Know what belongs in an AI tool before you paste. Off-limits categories, consumer versus enterprise, and habits that protect client data.",
-        "date": "August 20, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "8 min read",
-        "tags": [
-          "Learn",
-          "AI",
-          "Data Safety"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "ai-literacy-judging-ai-output",
-        "title": "Lesson 6: AI Literacy: Judging AI Output the Way You'd Judge a Colleague's Work",
-        "series": "ai-at-work",
-        "lesson": 6,
-        "excerpt": "The skill that makes every other AI skill safe: read AI output like a draft from a helpful but fallible colleague, then check it before you trust it.",
-        "date": "August 21, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "9 min read",
-        "tags": [
-          "Learn",
-          "AI",
-          "AI Literacy"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "anatomy-of-a-good-prompt-role-task-context-format",
-        "title": "Lesson 7: Anatomy of a Good Prompt: Role, Task, Context, and Format",
-        "series": "ai-at-work",
-        "lesson": 7,
-        "excerpt": "A good prompt is not a wish, it is a brief. This lesson breaks the brief into its four parts: the role you want the tool to play, the task you want done, the context it needs, and the format you want back. Learn the anatomy and you get sharper output from the first try.",
-        "date": "August 22, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "9 min read",
-        "tags": [
-          "Learn",
-          "AI",
-          "Workplace",
-          "Prompting"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "iteration-as-a-skill-refine-rephrase-ask-for-alternatives",
-        "title": "Lesson 8: Iteration as a Skill: Refine, Rephrase, and Ask for Alternatives",
-        "series": "ai-at-work",
-        "lesson": 8,
-        "excerpt": "The first answer is almost never the final one. The real skill is treating the conversation like a conversation: refine what is close, rephrase what misfires, and ask for alternatives when you are stuck. This lesson makes that loop deliberate.",
-        "date": "August 23, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "9 min read",
-        "tags": [
-          "Learn",
-          "AI",
-          "Workplace",
-          "Iteration"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "fixing-the-failure-modes-vague-asks-invented-facts-and-wrong-formats",
-        "title": "Lesson 9: Fixing the Failure Modes: Vague Asks, Invented Facts, and Wrong Formats",
-        "series": "ai-at-work",
-        "lesson": 9,
-        "excerpt": "When AI output misses, the cause is almost always one of three things: you asked vaguely, it invented a fact, or you never said what shape the answer should take. This lesson teaches you to name the failure mode and apply the fix that actually addresses it.",
-        "date": "August 24, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "9 min read",
-        "tags": [
-          "Learn",
-          "AI",
-          "Workplace",
-          "Prompting"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "turning-a-one-off-prompt-into-a-reusable-template",
-        "title": "Lesson 10: Turning a One-Off Prompt into a Reusable Template",
-        "series": "ai-at-work",
-        "lesson": 10,
-        "excerpt": "You have a prompt that nailed it once. Now you retype the same shape every week with small changes. This lesson teaches you to notice the parts that stay the same and the parts that change, and to lock the stable ones into a reusable template so you stop rewriting the whole thing each time.",
-        "date": "August 25, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "9 min read",
-        "tags": [
-          "Learn",
-          "AI",
-          "Workplace",
-          "Prompting"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "writing-and-communication-drafts-emails-summaries-and-tone-shifts",
-        "title": "Lesson 11: Writing and Communication: Drafts, Emails, Summaries, and Tone Shifts",
-        "series": "ai-at-work",
-        "lesson": 11,
-        "excerpt": "Most of your workday is words: emails, drafts, summaries, and the tone of all of it. AI is the fastest first-draft writer you will ever hire, and it is built for exactly this. This lesson teaches you to use it well without letting it speak for you, by bringing the facts, checking the output, and keeping your voice.",
+        "excerpt": "The agent-implementation consultant arc in one lesson: what an engagement looks like, what you actually deliver, and why this is not the same job as building agents for yourself.",
         "date": "August 26, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "9 min read",
+        "tags": [
+          "Learn",
+          "Hermes Agent",
+          "Consulting",
+          "AI"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "the-consulting-engagement-lifecycle",
+        "title": "Lesson 2: The Consulting Engagement Lifecycle",
+        "series": "hermes-consultant",
+        "lesson": 2,
+        "excerpt": "The five-phase arc that every engagement runs: discover, design, implement, handover, support. What each phase produces, the exit test that lets you leave it, and where engagements quietly die.",
+        "date": "August 27, 2026",
         "author": "Adroit Consulting",
         "readTime": "10 min read",
         "tags": [
           "Learn",
-          "AI",
-          "Workplace",
-          "Communication"
+          "Hermes Agent",
+          "Consulting",
+          "AI"
         ],
         "status": "published"
       },
       {
-        "slug": "editing-and-reviewing-ai-writing-human-in-the-loop",
-        "title": "Lesson 12: Editing and Reviewing AI's Writing: Human-in-the-Loop",
-        "series": "ai-at-work",
-        "lesson": 12,
-        "excerpt": "AI drafts fast. You are the reason the draft is safe to ship. This lesson is the difference between editing (fixing what is there) and reviewing (checking it before it goes anywhere), and why keeping yourself in the loop is the whole job.",
-        "date": "August 27, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "9 min read",
-        "tags": [
-          "Learn",
-          "AI",
-          "Workplace",
-          "Editing"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "research-and-synthesis-reading-comparing-extracting",
-        "title": "Lesson 13: Research and Synthesis: Reading, Comparing, and Extracting the Useful Bit",
-        "series": "ai-at-work",
-        "lesson": 13,
-        "excerpt": "You have sources to read, compare, and pull the useful bit out of. An AI tool can do that reading for you, but only if you feed it the right documents and keep each claim traceable. This lesson is the front end of a task: research and synthesis without importing the tool's errors.",
+        "slug": "discovery-and-scoping",
+        "title": "Lesson 3: Discovery and Scoping: Listening Before Proposing",
+        "series": "hermes-consultant",
+        "lesson": 3,
+        "excerpt": "The craft of discovery: who to talk to, what to watch, which questions surface the real problem, and how to write a problem statement the client agrees with before you propose any solution.",
         "date": "August 28, 2026",
         "author": "Adroit Consulting",
-        "readTime": "9 min read",
+        "readTime": "11 min read",
         "tags": [
           "Learn",
-          "AI",
-          "Workplace",
-          "Research"
+          "Hermes Agent",
+          "Consulting",
+          "AI"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "framing-value-and-roi",
+        "title": "Lesson 4: Framing Value and ROI: How to Talk to a Buyer, Not a Builder",
+        "series": "hermes-consultant",
+        "lesson": 4,
+        "excerpt": "The craft of turning what an agent does into a number a buyer can defend: how to measure value honestly, build ROI math that survives scrutiny, and talk outcomes instead of features to the person who signs the check.",
+        "date": "August 29, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "12 min read",
+        "tags": [
+          "Learn",
+          "Hermes Agent",
+          "Consulting",
+          "AI"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "stakeholder-mapping",
+        "title": "Lesson 5: Stakeholder Mapping: Who Has to Say Yes, and Who Has to Live With It",
+        "series": "hermes-consultant",
+        "lesson": 5,
+        "excerpt": "The craft of mapping every stakeholder an agent implementation touches: users, owners, IT, and compliance. Who must approve the deployment, who has to work with it every day, and how to win both before you build.",
+        "date": "August 30, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "11 min read",
+        "tags": [
+          "Learn",
+          "Hermes Agent",
+          "Consulting",
+          "AI"
         ],
         "status": "published"
       }
     ],
-    "totalLessons": 13
+    "totalLessons": 5
   },
   {
     "slug": "hermes-consultant-advanced",
@@ -785,9 +608,43 @@ export const learnSeries: LearningSeries[] = [
           "AI"
         ],
         "status": "published"
+      },
+      {
+        "slug": "architecture-at-organizational-scale",
+        "title": "Lesson 3: Architecture at Organizational Scale",
+        "series": "hermes-consultant-advanced",
+        "lesson": 3,
+        "excerpt": "The jump from running agents to running a fleet of them. How to design for many agents at once: the orchestration patterns that keep work moving, the governance layer that keeps it safe, and why control replaces heroics as the unit of success.",
+        "date": "August 29, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "13 min read",
+        "tags": [
+          "Learn",
+          "Hermes Agent",
+          "Consulting",
+          "AI"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "design-authority",
+        "title": "Lesson 4: Design Authority",
+        "series": "hermes-consultant-advanced",
+        "lesson": 4,
+        "excerpt": "The layer that keeps a growing practice coherent. What design authority is, why a system of many agents drifts without it, how to set standards that actually get followed, and how to run design reviews that are gates, not rubber stamps.",
+        "date": "August 30, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "13 min read",
+        "tags": [
+          "Learn",
+          "Hermes Agent",
+          "Consulting",
+          "AI"
+        ],
+        "status": "published"
       }
     ],
-    "totalLessons": 2
+    "totalLessons": 4
   },
   {
     "slug": "hermes-consultant-intermediate",
@@ -828,9 +685,367 @@ export const learnSeries: LearningSeries[] = [
           "AI"
         ],
         "status": "published"
+      },
+      {
+        "slug": "production-routing-evals-guardrails",
+        "title": "Lesson 3: Advanced Hermes Configuration: Model Routing, Evals, and Guardrails in Production",
+        "series": "hermes-consultant-intermediate",
+        "lesson": 3,
+        "excerpt": "When the agent leaves the sandbox and runs at real volume in front of a client, three decisions decide whether it holds up: which model runs which task, how you prove the output is still correct, and how you keep the guardrails you documented actually enforced. This lesson teaches all three.",
+        "date": "August 29, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "14 min read",
+        "tags": [
+          "Learn",
+          "Hermes Agent",
+          "Consulting",
+          "AI"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "reusable-delivery-toolkit-skill-packaging",
+        "title": "Lesson 4: Building a Reusable Delivery Toolkit: Skill Packaging Done Right",
+        "series": "hermes-consultant-intermediate",
+        "lesson": 4,
+        "excerpt": "The difference between a consultant who solves one client's problem and one who compounds every engagement into the next: turning the working capture discipline, eval suite, and guardrail set from Lessons 2 and 3 into packaged, loadable skills another consultant can run without relearning them.",
+        "date": "August 30, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "14 min read",
+        "tags": [
+          "Learn",
+          "Hermes Agent",
+          "Consulting",
+          "AI"
+        ],
+        "status": "published"
       }
     ],
-    "totalLessons": 2
+    "totalLessons": 4
+  },
+  {
+    "slug": "omni-studio-cert",
+    "name": "OmniStudio Developer Certification",
+    "description": "A 46-requirement deep dive for the Salesforce Certified OmniStudio Developer exam. One official exam-guide requirement per day, with config walkthroughs, exam traps, and practice questions.",
+    "gradient": "from-red to-rose-600",
+    "lessons": [
+      {
+        "slug": "day-01-f1-omnistudio-solution-and-industry-use-cases",
+        "title": "OmniStudio F-1: OmniStudio Solution & Industry Use Cases",
+        "series": "omni-studio-cert",
+        "lesson": 1,
+        "excerpt": "Describe the OmniStudio solution as it applies to common customer use case scenarios in different industries (telco, energy, healthcare, public sector, etc.). Day 1 of the 46-requirement OmniStudio Developer exam prep.",
+        "date": "August 03, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "6 min read",
+        "tags": [
+          "OmniStudio",
+          "OmniStudio Fundamentals"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "day-02-f2-project-needs-requirements-assumptions-risks-const",
+        "title": "OmniStudio F-2: Project Needs: Requirements, Assumptions, Risks, Constraints",
+        "series": "omni-studio-cert",
+        "lesson": 2,
+        "excerpt": "Determine a project's needs by evaluating a customer's requirements, assumptions, risks, and constraints. Day 2 of the 46-requirement OmniStudio Developer exam prep.",
+        "date": "August 04, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "6 min read",
+        "tags": [
+          "OmniStudio",
+          "OmniStudio Fundamentals"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "day-03-f3-managed-package-vs-standard-runtime-upgrades",
+        "title": "OmniStudio F-3: Managed Package vs Standard Runtime; Upgrades",
+        "series": "omni-studio-cert",
+        "lesson": 3,
+        "excerpt": "Explain Managed Package Runtime vs. Standard Runtime, Automatic Upgrades, and Manual Intervention Upgrade. Day 3 of the 46-requirement OmniStudio Developer exam prep.",
+        "date": "August 05, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "6 min read",
+        "tags": [
+          "OmniStudio",
+          "OmniStudio Fundamentals"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "day-04-f4-licensing-permission-set-licenses-permission-sets",
+        "title": "OmniStudio F-4: Licensing, Permission Set Licenses & Permission Sets",
+        "series": "omni-studio-cert",
+        "lesson": 4,
+        "excerpt": "Explain OmniStudio license requirements, Permission Set licenses and Permission Sets. Day 4 of the 46-requirement OmniStudio Developer exam prep.",
+        "date": "August 06, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "6 min read",
+        "tags": [
+          "OmniStudio",
+          "OmniStudio Fundamentals"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "day-05-f5-implementation-toolchain-sfcli-vbt-migration",
+        "title": "OmniStudio F-5: Implementation Toolchain: SFCLI, VBT, Migration",
+        "series": "omni-studio-cert",
+        "lesson": 5,
+        "excerpt": "Describe the tools required to complete the end-to-end implementation process (SFCLI, VBT, Migration, etc.). Day 5 of the 46-requirement OmniStudio Developer exam prep.",
+        "date": "August 07, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "6 min read",
+        "tags": [
+          "OmniStudio",
+          "OmniStudio Fundamentals"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "day-06-f-6-testing-versioning-cloning",
+        "title": "OmniStudio F-6: Testing, Versioning & Cloning Components",
+        "series": "omni-studio-cert",
+        "lesson": 6,
+        "excerpt": "Explain testing, versioning, and cloning through OmniStudio components. This covers save vs. publish, cloning workflows, and version snapshots for deployment.",
+        "date": "August 8, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "10 min read",
+        "tags": [
+          "OmniStudio",
+          "OmniStudio Fundamentals"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "day-07-fc-1-flexcard-data-sources-testing-json",
+        "title": "OmniStudio FC-1: FlexCard Data Sources & Testing JSON",
+        "series": "omni-studio-cert",
+        "lesson": 7,
+        "excerpt": "Configure data sources such as SOQL, Data Mapper, Integration Procedure, Custom, etc. and test resulting JSON structure.",
+        "date": "August 9, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "8 min read",
+        "tags": [
+          "OmniStudio",
+          "FlexCards"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "day-08-fc-2-single-multi-level-cards-layouts-repeaters",
+        "title": "OmniStudio FC-2: Single/Multi-Level Cards, Layouts & Repeaters",
+        "series": "omni-studio-cert",
+        "lesson": 8,
+        "excerpt": "Construct single and multi-level FlexCards, organizing data using layouts, and repeaters.",
+        "date": "August 10, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "6 min read",
+        "tags": [
+          "OmniStudio",
+          "FlexCards"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "day-09-fc-3-binding-components-configuring-properties",
+        "title": "OmniStudio FC-3: Binding Components & Configuring Properties",
+        "series": "omni-studio-cert",
+        "lesson": 9,
+        "excerpt": "Bind essential components to construct FlexCards and configure their properties.",
+        "date": "August 11, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "6 min read",
+        "tags": [
+          "OmniStudio",
+          "FlexCards"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "day-10-fc-4-complex-card-actions-launch-fire-update",
+        "title": "OmniStudio FC-4: Complex Card Actions (Launch, Fire, Update)",
+        "series": "omni-studio-cert",
+        "lesson": 10,
+        "excerpt": "Define and implement complex card actions, including launching OmniScripts, firing events, and updating other components.",
+        "date": "August 12, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "6 min read",
+        "tags": [
+          "OmniStudio",
+          "FlexCards"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "day-11-fc-5-advanced-flexcard-properties",
+        "title": "OmniStudio FC-5: Advanced FlexCard Properties",
+        "series": "omni-studio-cert",
+        "lesson": 11,
+        "excerpt": "Configure advanced FlexCard properties: Event Listeners, Session Variables, Public Attributes, multi-language, child FlexCards, and custom LWC integration.",
+        "date": "August 13, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "6 min read",
+        "tags": [
+          "OmniStudio",
+          "FlexCards"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "day-12-fc-6-flexcard-styling-themes",
+        "title": "OmniStudio FC-6: FlexCard Styling & Themes",
+        "series": "omni-studio-cert",
+        "lesson": 12,
+        "excerpt": "Control FlexCard appearance two ways: element-level inline styling for one-off tweaks and shared themes for consistent branding.",
+        "date": "August 14, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "5 min read",
+        "tags": [
+          "OmniStudio",
+          "FlexCards"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "day-13-fc-7-conditional-rendering-with-states",
+        "title": "OmniStudio FC-7: Conditional Rendering with States",
+        "series": "omni-studio-cert",
+        "lesson": 13,
+        "excerpt": "Use FlexCard states and element-level conditions to show, hide, or restyle content when expressions against card data evaluate true.",
+        "date": "August 15, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "5 min read",
+        "tags": [
+          "OmniStudio",
+          "FlexCards"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "day-14-fc-8-embedding-flexcards-across-channels",
+        "title": "OmniStudio FC-8: Embedding FlexCards Across Channels",
+        "series": "omni-studio-cert",
+        "lesson": 14,
+        "excerpt": "Embed one FlexCard definition across Lightning pages, Experience Cloud sites, OmniScripts, and mobile, and design it for reuse with public attributes.",
+        "date": "August 16, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "5 min read",
+        "tags": [
+          "OmniStudio",
+          "FlexCards"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "day-15-fc-9-flexcard-best-practices",
+        "title": "OmniStudio FC-9: FlexCard Best Practices",
+        "series": "omni-studio-cert",
+        "lesson": 15,
+        "excerpt": "Validate your JSON, keep data sources lean, test every state and channel, and respect FLS. That combination is what separates a card that survives production from one that goes blank.",
+        "date": "August 17, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "5 min read",
+        "tags": [
+          "OmniStudio",
+          "FlexCards"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "day-16-os-1-omniscript-elements-dynamic-interactions",
+        "title": "OmniStudio OS-1: OmniScript Elements & Dynamic Interactions",
+        "series": "omni-studio-cert",
+        "lesson": 16,
+        "excerpt": "OmniScripts are guided journeys built from named elements that all land in one data JSON. If you understand that JSON contract, formulas, actions, and debugging all follow. If you don't, nothing else works.",
+        "date": "August 18, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "6 min read",
+        "tags": [
+          "OmniStudio",
+          "OmniScripts"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "day-17-os-2-child-omniscripts-flexcards-custom-lwcs",
+        "title": "OmniStudio OS-2: Child OmniScripts, FlexCards & Custom LWCs",
+        "series": "omni-studio-cert",
+        "lesson": 17,
+        "excerpt": "Child OmniScripts handle reuse, FlexCards handle display, and custom LWCs handle custom UI. Pick the right embed for the job, wire its data back into the script JSON, and complex flows compose cleanly.",
+        "date": "August 19, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "5 min read",
+        "tags": [
+          "OmniStudio",
+          "OmniScripts"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "day-18-os-3-omniscript-styling-themes",
+        "title": "OmniStudio OS-3: OmniScript Styling & Themes",
+        "series": "omni-studio-cert",
+        "lesson": 18,
+        "excerpt": "Themes define the design system across OmniScripts; element-level styling handles one-off exceptions. Use the theme as the source of truth, override sparingly, and verify responsive widths on desktop and mobile.",
+        "date": "August 20, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "5 min read",
+        "tags": [
+          "OmniStudio",
+          "OmniScripts"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "day-19-os-4-advanced-omniscript-properties",
+        "title": "OmniStudio OS-4: Advanced OmniScript Properties",
+        "series": "omni-studio-cert",
+        "lesson": 19,
+        "excerpt": "Configure the advanced properties that carry an OmniScript beyond a bare flow: multi-language translations, Save Options for draft-and-resume, Knowledge Articles for in-flow help, and the Messaging Framework for SMS and email. Match the property to the scenario.",
+        "date": "August 21, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "5 min read",
+        "tags": [
+          "OmniStudio",
+          "OmniScripts"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "day-20-os-5-embedding-omniscripts-across-channels",
+        "title": "OmniStudio OS-5: Embedding OmniScripts Across Channels",
+        "series": "omni-studio-cert",
+        "lesson": 20,
+        "excerpt": "One OmniScript definition embeds across Lightning pages, Experience Cloud, mobile, and web. Pass record context so it opens pre-populated, drop it in via the auto-generated LWC wrapper, and verify context per channel.",
+        "date": "August 22, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "5 min read",
+        "tags": [
+          "OmniStudio",
+          "OmniScripts"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "day-21-os-6-omniscript-best-practices",
+        "title": "OmniStudio OS-6: OmniScript Best Practices",
+        "series": "omni-studio-cert",
+        "lesson": 21,
+        "excerpt": "Build OmniScripts that survive contact with users and production. Compose from child scripts instead of one giant flow, name elements as if they were JSON keys (because they are), test every branch in debug mode before publish, and push heavy orchestration into Integration Procedures.",
+        "date": "August 30, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "9 min read",
+        "tags": [
+          "OmniStudio",
+          "OmniScripts"
+        ],
+        "status": "published"
+      }
+    ],
+    "totalLessons": 21
   },
   {
     "slug": "salesforce-architect",
@@ -1306,338 +1521,412 @@ export const learnSeries: LearningSeries[] = [
           "Caching"
         ],
         "status": "published"
-      }
-    ],
-    "totalLessons": 25
-  },
-  {
-    "slug": "omni-studio-cert",
-    "name": "OmniStudio Developer Certification",
-    "description": "A 46-requirement deep dive for the Salesforce Certified OmniStudio Developer exam. One official exam-guide requirement per day, with config walkthroughs, exam traps, and practice questions.",
-    "gradient": "from-red to-rose-600",
-    "lessons": [
-      {
-        "slug": "day-01-f1-omnistudio-solution-and-industry-use-cases",
-        "title": "OmniStudio F-1: OmniStudio Solution & Industry Use Cases",
-        "series": "omni-studio-cert",
-        "lesson": 1,
-        "excerpt": "Describe the OmniStudio solution as it applies to common customer use case scenarios in different industries (telco, energy, healthcare, public sector, etc.). Day 1 of the 46-requirement OmniStudio Developer exam prep.",
-        "date": "August 03, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "6 min read",
-        "tags": [
-          "OmniStudio",
-          "OmniStudio Fundamentals"
-        ],
-        "status": "published"
       },
       {
-        "slug": "day-02-f2-project-needs-requirements-assumptions-risks-const",
-        "title": "OmniStudio F-2: Project Needs: Requirements, Assumptions, Risks, Constraints",
-        "series": "omni-studio-cert",
-        "lesson": 2,
-        "excerpt": "Determine a project's needs by evaluating a customer's requirements, assumptions, risks, and constraints. Day 2 of the 46-requirement OmniStudio Developer exam prep.",
-        "date": "August 04, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "6 min read",
-        "tags": [
-          "OmniStudio",
-          "OmniStudio Fundamentals"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "day-03-f3-managed-package-vs-standard-runtime-upgrades",
-        "title": "OmniStudio F-3: Managed Package vs Standard Runtime; Upgrades",
-        "series": "omni-studio-cert",
-        "lesson": 3,
-        "excerpt": "Explain Managed Package Runtime vs. Standard Runtime, Automatic Upgrades, and Manual Intervention Upgrade. Day 3 of the 46-requirement OmniStudio Developer exam prep.",
-        "date": "August 05, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "6 min read",
-        "tags": [
-          "OmniStudio",
-          "OmniStudio Fundamentals"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "day-04-f4-licensing-permission-set-licenses-permission-sets",
-        "title": "OmniStudio F-4: Licensing, Permission Set Licenses & Permission Sets",
-        "series": "omni-studio-cert",
-        "lesson": 4,
-        "excerpt": "Explain OmniStudio license requirements, Permission Set licenses and Permission Sets. Day 4 of the 46-requirement OmniStudio Developer exam prep.",
-        "date": "August 06, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "6 min read",
-        "tags": [
-          "OmniStudio",
-          "OmniStudio Fundamentals"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "day-05-f5-implementation-toolchain-sfcli-vbt-migration",
-        "title": "OmniStudio F-5: Implementation Toolchain: SFCLI, VBT, Migration",
-        "series": "omni-studio-cert",
-        "lesson": 5,
-        "excerpt": "Describe the tools required to complete the end-to-end implementation process (SFCLI, VBT, Migration, etc.). Day 5 of the 46-requirement OmniStudio Developer exam prep.",
-        "date": "August 07, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "6 min read",
-        "tags": [
-          "OmniStudio",
-          "OmniStudio Fundamentals"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "day-06-f-6-testing-versioning-cloning",
-        "title": "OmniStudio F-6: Testing, Versioning & Cloning Components",
-        "series": "omni-studio-cert",
-        "lesson": 6,
-        "excerpt": "Explain testing, versioning, and cloning through OmniStudio components. This covers save vs. publish, cloning workflows, and version snapshots for deployment.",
-        "date": "August 8, 2026",
+        "slug": "enterprise-rest-api-design-versioning-pagination-bulk-best-practices",
+        "title": "Lesson 26: Enterprise REST API Design: Versioning, Pagination, Bulk, and Best Practices",
+        "series": "salesforce-architect",
+        "lesson": 26,
+        "excerpt": "The design layer under every REST integration: how Salesforce versions its API, how to page through large result sets without breaking, when bulk writes beat synchronous calls, and the habits that keep an integration alive for years.",
+        "date": "August 30, 2026",
         "author": "Adroit Consulting",
         "readTime": "10 min read",
         "tags": [
-          "OmniStudio",
-          "OmniStudio Fundamentals"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "day-07-fc-1-flexcard-data-sources-testing-json",
-        "title": "OmniStudio FC-1: FlexCard Data Sources & Testing JSON",
-        "series": "omni-studio-cert",
-        "lesson": 7,
-        "excerpt": "Configure data sources such as SOQL, Data Mapper, Integration Procedure, Custom, etc. and test resulting JSON structure.",
-        "date": "August 9, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "8 min read",
-        "tags": [
-          "OmniStudio",
-          "FlexCards"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "day-08-fc-2-single-multi-level-cards-layouts-repeaters",
-        "title": "OmniStudio FC-2: Single/Multi-Level Cards, Layouts & Repeaters",
-        "series": "omni-studio-cert",
-        "lesson": 8,
-        "excerpt": "Construct single and multi-level FlexCards, organizing data using layouts, and repeaters.",
-        "date": "August 10, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "6 min read",
-        "tags": [
-          "OmniStudio",
-          "FlexCards"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "day-09-fc-3-binding-components-configuring-properties",
-        "title": "OmniStudio FC-3: Binding Components & Configuring Properties",
-        "series": "omni-studio-cert",
-        "lesson": 9,
-        "excerpt": "Bind essential components to construct FlexCards and configure their properties.",
-        "date": "August 11, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "6 min read",
-        "tags": [
-          "OmniStudio",
-          "FlexCards"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "day-10-fc-4-complex-card-actions-launch-fire-update",
-        "title": "OmniStudio FC-4: Complex Card Actions (Launch, Fire, Update)",
-        "series": "omni-studio-cert",
-        "lesson": 10,
-        "excerpt": "Define and implement complex card actions, including launching OmniScripts, firing events, and updating other components.",
-        "date": "August 12, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "6 min read",
-        "tags": [
-          "OmniStudio",
-          "FlexCards"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "day-11-fc-5-advanced-flexcard-properties",
-        "title": "OmniStudio FC-5: Advanced FlexCard Properties",
-        "series": "omni-studio-cert",
-        "lesson": 11,
-        "excerpt": "Configure advanced FlexCard properties: Event Listeners, Session Variables, Public Attributes, multi-language, child FlexCards, and custom LWC integration.",
-        "date": "August 13, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "6 min read",
-        "tags": [
-          "OmniStudio",
-          "FlexCards"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "day-12-fc-6-flexcard-styling-themes",
-        "title": "OmniStudio FC-6: FlexCard Styling & Themes",
-        "series": "omni-studio-cert",
-        "lesson": 12,
-        "excerpt": "Control FlexCard appearance two ways: element-level inline styling for one-off tweaks and shared themes for consistent branding.",
-        "date": "August 14, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "5 min read",
-        "tags": [
-          "OmniStudio",
-          "FlexCards"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "day-13-fc-7-conditional-rendering-with-states",
-        "title": "OmniStudio FC-7: Conditional Rendering with States",
-        "series": "omni-studio-cert",
-        "lesson": 13,
-        "excerpt": "Use FlexCard states and element-level conditions to show, hide, or restyle content when expressions against card data evaluate true.",
-        "date": "August 15, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "5 min read",
-        "tags": [
-          "OmniStudio",
-          "FlexCards"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "day-14-fc-8-embedding-flexcards-across-channels",
-        "title": "OmniStudio FC-8: Embedding FlexCards Across Channels",
-        "series": "omni-studio-cert",
-        "lesson": 14,
-        "excerpt": "Embed one FlexCard definition across Lightning pages, Experience Cloud sites, OmniScripts, and mobile, and design it for reuse with public attributes.",
-        "date": "August 16, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "5 min read",
-        "tags": [
-          "OmniStudio",
-          "FlexCards"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "day-15-fc-9-flexcard-best-practices",
-        "title": "OmniStudio FC-9: FlexCard Best Practices",
-        "series": "omni-studio-cert",
-        "lesson": 15,
-        "excerpt": "Validate your JSON, keep data sources lean, test every state and channel, and respect FLS. That combination is what separates a card that survives production from one that goes blank.",
-        "date": "August 17, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "5 min read",
-        "tags": [
-          "OmniStudio",
-          "FlexCards"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "day-16-os-1-omniscript-elements-dynamic-interactions",
-        "title": "OmniStudio OS-1: OmniScript Elements & Dynamic Interactions",
-        "series": "omni-studio-cert",
-        "lesson": 16,
-        "excerpt": "OmniScripts are guided journeys built from named elements that all land in one data JSON. If you understand that JSON contract, formulas, actions, and debugging all follow. If you don't, nothing else works.",
-        "date": "August 18, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "6 min read",
-        "tags": [
-          "OmniStudio",
-          "OmniScripts"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "day-17-os-2-child-omniscripts-flexcards-custom-lwcs",
-        "title": "OmniStudio OS-2: Child OmniScripts, FlexCards & Custom LWCs",
-        "series": "omni-studio-cert",
-        "lesson": 17,
-        "excerpt": "Child OmniScripts handle reuse, FlexCards handle display, and custom LWCs handle custom UI. Pick the right embed for the job, wire its data back into the script JSON, and complex flows compose cleanly.",
-        "date": "August 19, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "5 min read",
-        "tags": [
-          "OmniStudio",
-          "OmniScripts"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "day-18-os-3-omniscript-styling-themes",
-        "title": "OmniStudio OS-3: OmniScript Styling & Themes",
-        "series": "omni-studio-cert",
-        "lesson": 18,
-        "excerpt": "Themes define the design system across OmniScripts; element-level styling handles one-off exceptions. Use the theme as the source of truth, override sparingly, and verify responsive widths on desktop and mobile.",
-        "date": "August 20, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "5 min read",
-        "tags": [
-          "OmniStudio",
-          "OmniScripts"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "day-19-os-4-advanced-omniscript-properties",
-        "title": "OmniStudio OS-4: Advanced OmniScript Properties",
-        "series": "omni-studio-cert",
-        "lesson": 19,
-        "excerpt": "Configure the advanced properties that carry an OmniScript beyond a bare flow: multi-language translations, Save Options for draft-and-resume, Knowledge Articles for in-flow help, and the Messaging Framework for SMS and email. Match the property to the scenario.",
-        "date": "August 21, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "5 min read",
-        "tags": [
-          "OmniStudio",
-          "OmniScripts"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "day-20-os-5-embedding-omniscripts-across-channels",
-        "title": "OmniStudio OS-5: Embedding OmniScripts Across Channels",
-        "series": "omni-studio-cert",
-        "lesson": 20,
-        "excerpt": "One OmniScript definition embeds across Lightning pages, Experience Cloud, mobile, and web. Pass record context so it opens pre-populated, drop it in via the auto-generated LWC wrapper, and verify context per channel.",
-        "date": "August 22, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "5 min read",
-        "tags": [
-          "OmniStudio",
-          "OmniScripts"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "day-21-os-6-omniscript-best-practices",
-        "title": "OmniStudio OS-6: OmniScript Best Practices",
-        "series": "omni-studio-cert",
-        "lesson": 21,
-        "excerpt": "Build OmniScripts that survive contact with users and production. Compose from child scripts instead of one giant flow, name elements as if they were JSON keys (because they are), test every branch in debug mode before publish, and push heavy orchestration into Integration Procedures.",
-        "date": "August 30, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "9 min read",
-        "tags": [
-          "OmniStudio",
-          "OmniScripts"
+          "Learn",
+          "Salesforce",
+          "Architect",
+          "Integration",
+          "REST"
         ],
         "status": "published"
       }
     ],
-    "totalLessons": 21
+    "totalLessons": 26
+  },
+  {
+    "slug": "ai-at-work",
+    "name": "AI at Work",
+    "description": "A vendor-agnostic, 30-lesson primer for using AI in day-to-day work: foundations, prompting, productivity, small automations, and team adoption. Company-wide training that works for any team and any AI tool.",
+    "gradient": "from-fuchsia to-purple-600",
+    "lessons": [
+      {
+        "slug": "what-ai-actually-is",
+        "title": "Lesson 1: What AI Actually Is",
+        "series": "ai-at-work",
+        "lesson": 1,
+        "excerpt": "The words around AI are doing more confusing than clarifying. This lesson separates the four that trip up most people: models vs automation, chatbots vs tools, plus why 'LLM' and 'generative AI' are not synonyms.",
+        "date": "August 16, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "8 min read",
+        "tags": [
+          "Learn",
+          "AI",
+          "Workplace",
+          "Foundations"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "how-ai-thinks",
+        "title": "Lesson 2: How AI Thinks in Plain Language",
+        "series": "ai-at-work",
+        "lesson": 2,
+        "excerpt": "The tools you use every day do not read like you do. They read text in chunks called tokens, predict the next chunk over and over, and can only see a limited slice of the conversation at once. This lesson explains those three ideas and what they mean for how you prompt.",
+        "date": "August 17, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "8 min read",
+        "tags": [
+          "Learn",
+          "AI",
+          "Workplace",
+          "Foundations"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "hallucinations-what-they-are-and-how-to-catch-them",
+        "title": "Lesson 3: Hallucinations, and How to Catch Them",
+        "series": "ai-at-work",
+        "lesson": 3,
+        "excerpt": "AI tools make things up, and they do it in a confident voice. This lesson explains what a hallucination actually is, why a next-word predictor produces them, and the practical habits for catching them before they reach your work.",
+        "date": "August 18, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "8 min read",
+        "tags": [
+          "Learn",
+          "AI",
+          "Workplace",
+          "Foundations"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "what-ai-is-genuinely-good-at-and-where-it-fails",
+        "title": "Lesson 4: What AI Is Genuinely Good At, and Where It Fails",
+        "series": "ai-at-work",
+        "lesson": 4,
+        "excerpt": "AI tools are not good at everything, and pretending they are is how people get burned. This lesson gives you a clean dividing line between the work AI genuinely helps with and the work you should keep, backed by what the research actually shows.",
+        "date": "August 19, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "9 min read",
+        "tags": [
+          "Learn",
+          "AI",
+          "Workplace",
+          "Foundations"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "data-safety-what-you-can-and-cannot-put-in",
+        "title": "Lesson 5: Data Safety: What You Can and Cannot Put Into an AI Tool",
+        "series": "ai-at-work",
+        "lesson": 5,
+        "excerpt": "Know what belongs in an AI tool before you paste. Off-limits categories, consumer versus enterprise, and habits that protect client data.",
+        "date": "August 20, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "8 min read",
+        "tags": [
+          "Learn",
+          "AI",
+          "Data Safety"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "ai-literacy-judging-ai-output",
+        "title": "Lesson 6: AI Literacy: Judging AI Output the Way You'd Judge a Colleague's Work",
+        "series": "ai-at-work",
+        "lesson": 6,
+        "excerpt": "The skill that makes every other AI skill safe: read AI output like a draft from a helpful but fallible colleague, then check it before you trust it.",
+        "date": "August 21, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "9 min read",
+        "tags": [
+          "Learn",
+          "AI",
+          "AI Literacy"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "anatomy-of-a-good-prompt-role-task-context-format",
+        "title": "Lesson 7: Anatomy of a Good Prompt: Role, Task, Context, and Format",
+        "series": "ai-at-work",
+        "lesson": 7,
+        "excerpt": "A good prompt is not a wish, it is a brief. This lesson breaks the brief into its four parts: the role you want the tool to play, the task you want done, the context it needs, and the format you want back. Learn the anatomy and you get sharper output from the first try.",
+        "date": "August 22, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "9 min read",
+        "tags": [
+          "Learn",
+          "AI",
+          "Workplace",
+          "Prompting"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "iteration-as-a-skill-refine-rephrase-ask-for-alternatives",
+        "title": "Lesson 8: Iteration as a Skill: Refine, Rephrase, and Ask for Alternatives",
+        "series": "ai-at-work",
+        "lesson": 8,
+        "excerpt": "The first answer is almost never the final one. The real skill is treating the conversation like a conversation: refine what is close, rephrase what misfires, and ask for alternatives when you are stuck. This lesson makes that loop deliberate.",
+        "date": "August 23, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "9 min read",
+        "tags": [
+          "Learn",
+          "AI",
+          "Workplace",
+          "Iteration"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "fixing-the-failure-modes-vague-asks-invented-facts-and-wrong-formats",
+        "title": "Lesson 9: Fixing the Failure Modes: Vague Asks, Invented Facts, and Wrong Formats",
+        "series": "ai-at-work",
+        "lesson": 9,
+        "excerpt": "When AI output misses, the cause is almost always one of three things: you asked vaguely, it invented a fact, or you never said what shape the answer should take. This lesson teaches you to name the failure mode and apply the fix that actually addresses it.",
+        "date": "August 24, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "9 min read",
+        "tags": [
+          "Learn",
+          "AI",
+          "Workplace",
+          "Prompting"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "turning-a-one-off-prompt-into-a-reusable-template",
+        "title": "Lesson 10: Turning a One-Off Prompt into a Reusable Template",
+        "series": "ai-at-work",
+        "lesson": 10,
+        "excerpt": "You have a prompt that nailed it once. Now you retype the same shape every week with small changes. This lesson teaches you to notice the parts that stay the same and the parts that change, and to lock the stable ones into a reusable template so you stop rewriting the whole thing each time.",
+        "date": "August 25, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "9 min read",
+        "tags": [
+          "Learn",
+          "AI",
+          "Workplace",
+          "Prompting"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "writing-and-communication-drafts-emails-summaries-and-tone-shifts",
+        "title": "Lesson 11: Writing and Communication: Drafts, Emails, Summaries, and Tone Shifts",
+        "series": "ai-at-work",
+        "lesson": 11,
+        "excerpt": "Most of your workday is words: emails, drafts, summaries, and the tone of all of it. AI is the fastest first-draft writer you will ever hire, and it is built for exactly this. This lesson teaches you to use it well without letting it speak for you, by bringing the facts, checking the output, and keeping your voice.",
+        "date": "August 26, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "10 min read",
+        "tags": [
+          "Learn",
+          "AI",
+          "Workplace",
+          "Communication"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "editing-and-reviewing-ai-writing-human-in-the-loop",
+        "title": "Lesson 12: Editing and Reviewing AI's Writing: Human-in-the-Loop",
+        "series": "ai-at-work",
+        "lesson": 12,
+        "excerpt": "AI drafts fast. You are the reason the draft is safe to ship. This lesson is the difference between editing (fixing what is there) and reviewing (checking it before it goes anywhere), and why keeping yourself in the loop is the whole job.",
+        "date": "August 27, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "9 min read",
+        "tags": [
+          "Learn",
+          "AI",
+          "Workplace",
+          "Editing"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "research-and-synthesis-reading-comparing-extracting",
+        "title": "Lesson 13: Research and Synthesis: Reading, Comparing, and Extracting the Useful Bit",
+        "series": "ai-at-work",
+        "lesson": 13,
+        "excerpt": "You have sources to read, compare, and pull the useful bit out of. An AI tool can do that reading for you, but only if you feed it the right documents and keep each claim traceable. This lesson is the front end of a task: research and synthesis without importing the tool's errors.",
+        "date": "August 28, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "9 min read",
+        "tags": [
+          "Learn",
+          "AI",
+          "Workplace",
+          "Research"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "spreadsheets-and-data-analysis-cleaning-formulas",
+        "title": "Lesson 14: Spreadsheets and Data: Analysis, Cleaning, and Formulas",
+        "series": "ai-at-work",
+        "lesson": 14,
+        "excerpt": "Most of us live in spreadsheets, and most spreadsheet work is cleaning up messy data before it will tell you anything. An AI tool can tidy your data, write the formulas you cannot remember, and point at the pattern you missed, as long as you check its work against the cells.",
+        "date": "August 29, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "10 min read",
+        "tags": [
+          "Learn",
+          "AI",
+          "Workplace",
+          "Data"
+        ],
+        "status": "published"
+      }
+    ],
+    "totalLessons": 14
   }
 ];
 
 /** Flat list of every lesson, NEWEST FIRST (for sitemap, nav, flat lookups). */
 export const learnLessons: LearnLesson[] = [
+  {
+    "slug": "cost-control-caching-model-tiers-budget-caps-spend-dashboards",
+    "title": "Lesson 27: Cost Control, Caching, Model Tiers, Budget Caps, and Spend Dashboards",
+    "series": "agentic-ai",
+    "lesson": 27,
+    "excerpt": "A working agent is cheaper to build than to keep. Lesson 26 stopped a single tenant from blowing the monthly bill in an afternoon; this lesson turns the bill itself into a number you manage. It covers the three cost levers in order: caching so you never pay twice for the same answer, model tiers and routing so you only pay frontier prices when a task actually needs them, and budget caps with spend dashboards so a surprise bill becomes an early-warning system instead. A worked example runs the arithmetic on a real agent workload, and the Fortress angle shows a hybrid two-tier stack doing all three at once.",
+    "date": "August 30, 2026",
+    "author": "Adroit Consulting",
+    "readTime": "15 min read",
+    "tags": [
+      "Learn",
+      "AI",
+      "Agentic",
+      "Cost"
+    ],
+    "status": "published"
+  },
+  {
+    "slug": "stakeholder-mapping",
+    "title": "Lesson 5: Stakeholder Mapping: Who Has to Say Yes, and Who Has to Live With It",
+    "series": "hermes-consultant",
+    "lesson": 5,
+    "excerpt": "The craft of mapping every stakeholder an agent implementation touches: users, owners, IT, and compliance. Who must approve the deployment, who has to work with it every day, and how to win both before you build.",
+    "date": "August 30, 2026",
+    "author": "Adroit Consulting",
+    "readTime": "11 min read",
+    "tags": [
+      "Learn",
+      "Hermes Agent",
+      "Consulting",
+      "AI"
+    ],
+    "status": "published"
+  },
+  {
+    "slug": "design-authority",
+    "title": "Lesson 4: Design Authority",
+    "series": "hermes-consultant-advanced",
+    "lesson": 4,
+    "excerpt": "The layer that keeps a growing practice coherent. What design authority is, why a system of many agents drifts without it, how to set standards that actually get followed, and how to run design reviews that are gates, not rubber stamps.",
+    "date": "August 30, 2026",
+    "author": "Adroit Consulting",
+    "readTime": "13 min read",
+    "tags": [
+      "Learn",
+      "Hermes Agent",
+      "Consulting",
+      "AI"
+    ],
+    "status": "published"
+  },
+  {
+    "slug": "reusable-delivery-toolkit-skill-packaging",
+    "title": "Lesson 4: Building a Reusable Delivery Toolkit: Skill Packaging Done Right",
+    "series": "hermes-consultant-intermediate",
+    "lesson": 4,
+    "excerpt": "The difference between a consultant who solves one client's problem and one who compounds every engagement into the next: turning the working capture discipline, eval suite, and guardrail set from Lessons 2 and 3 into packaged, loadable skills another consultant can run without relearning them.",
+    "date": "August 30, 2026",
+    "author": "Adroit Consulting",
+    "readTime": "14 min read",
+    "tags": [
+      "Learn",
+      "Hermes Agent",
+      "Consulting",
+      "AI"
+    ],
+    "status": "published"
+  },
+  {
+    "slug": "day-21-os-6-omniscript-best-practices",
+    "title": "OmniStudio OS-6: OmniScript Best Practices",
+    "series": "omni-studio-cert",
+    "lesson": 21,
+    "excerpt": "Build OmniScripts that survive contact with users and production. Compose from child scripts instead of one giant flow, name elements as if they were JSON keys (because they are), test every branch in debug mode before publish, and push heavy orchestration into Integration Procedures.",
+    "date": "August 30, 2026",
+    "author": "Adroit Consulting",
+    "readTime": "9 min read",
+    "tags": [
+      "OmniStudio",
+      "OmniScripts"
+    ],
+    "status": "published"
+  },
+  {
+    "slug": "enterprise-rest-api-design-versioning-pagination-bulk-best-practices",
+    "title": "Lesson 26: Enterprise REST API Design: Versioning, Pagination, Bulk, and Best Practices",
+    "series": "salesforce-architect",
+    "lesson": 26,
+    "excerpt": "The design layer under every REST integration: how Salesforce versions its API, how to page through large result sets without breaking, when bulk writes beat synchronous calls, and the habits that keep an integration alive for years.",
+    "date": "August 30, 2026",
+    "author": "Adroit Consulting",
+    "readTime": "10 min read",
+    "tags": [
+      "Learn",
+      "Salesforce",
+      "Architect",
+      "Integration",
+      "REST"
+    ],
+    "status": "published"
+  },
+  {
+    "slug": "enterprise-deployment-serving-api-design-rate-limits-quotas",
+    "title": "Lesson 26: Enterprise Deployment, Serving, API Design, Rate Limits, and Quotas",
+    "series": "agentic-ai",
+    "lesson": 26,
+    "excerpt": "A working agent is a different thing from an agent many people can use. This lesson puts the three boundaries around it that make the difference: the serving layer that decides how much concurrent work the model can do, the API boundary that gives every consumer one stable interface, and the policy layer of rate limits and quotas that stops a single tenant from overwhelming the hardware or blowing the budget. It works through the numbers you need to size a deployment, and it shows how those three layers meet at the same number.",
+    "date": "August 29, 2026",
+    "author": "Adroit Consulting",
+    "readTime": "16 min read",
+    "tags": [
+      "Learn",
+      "AI",
+      "Agentic",
+      "Deployment"
+    ],
+    "status": "published"
+  },
+  {
+    "slug": "spreadsheets-and-data-analysis-cleaning-formulas",
+    "title": "Lesson 14: Spreadsheets and Data: Analysis, Cleaning, and Formulas",
+    "series": "ai-at-work",
+    "lesson": 14,
+    "excerpt": "Most of us live in spreadsheets, and most spreadsheet work is cleaning up messy data before it will tell you anything. An AI tool can tidy your data, write the formulas you cannot remember, and point at the pattern you missed, as long as you check its work against the cells.",
+    "date": "August 29, 2026",
+    "author": "Adroit Consulting",
+    "readTime": "10 min read",
+    "tags": [
+      "Learn",
+      "AI",
+      "Workplace",
+      "Data"
+    ],
+    "status": "published"
+  },
   {
     "slug": "framing-value-and-roi",
     "title": "Lesson 4: Framing Value and ROI: How to Talk to a Buyer, Not a Builder",
@@ -1647,6 +1936,40 @@ export const learnLessons: LearnLesson[] = [
     "date": "August 29, 2026",
     "author": "Adroit Consulting",
     "readTime": "12 min read",
+    "tags": [
+      "Learn",
+      "Hermes Agent",
+      "Consulting",
+      "AI"
+    ],
+    "status": "published"
+  },
+  {
+    "slug": "architecture-at-organizational-scale",
+    "title": "Lesson 3: Architecture at Organizational Scale",
+    "series": "hermes-consultant-advanced",
+    "lesson": 3,
+    "excerpt": "The jump from running agents to running a fleet of them. How to design for many agents at once: the orchestration patterns that keep work moving, the governance layer that keeps it safe, and why control replaces heroics as the unit of success.",
+    "date": "August 29, 2026",
+    "author": "Adroit Consulting",
+    "readTime": "13 min read",
+    "tags": [
+      "Learn",
+      "Hermes Agent",
+      "Consulting",
+      "AI"
+    ],
+    "status": "published"
+  },
+  {
+    "slug": "production-routing-evals-guardrails",
+    "title": "Lesson 3: Advanced Hermes Configuration: Model Routing, Evals, and Guardrails in Production",
+    "series": "hermes-consultant-intermediate",
+    "lesson": 3,
+    "excerpt": "When the agent leaves the sandbox and runs at real volume in front of a client, three decisions decide whether it holds up: which model runs which task, how you prove the output is still correct, and how you keep the guardrails you documented actually enforced. This lesson teaches all three.",
+    "date": "August 29, 2026",
+    "author": "Adroit Consulting",
+    "readTime": "14 min read",
     "tags": [
       "Learn",
       "Hermes Agent",
@@ -2142,21 +2465,6 @@ export const learnLessons: LearnLesson[] = [
     "date": "August 22, 2026",
     "author": "Adroit Consulting",
     "readTime": "5 min read",
-    "tags": [
-      "OmniStudio",
-      "OmniScripts"
-    ],
-    "status": "published"
-  },
-  {
-    "slug": "day-21-os-6-omniscript-best-practices",
-    "title": "OmniStudio OS-6: OmniScript Best Practices",
-    "series": "omni-studio-cert",
-    "lesson": 21,
-    "excerpt": "Build OmniScripts that survive contact with users and production. Compose from child scripts instead of one giant flow, name elements as if they were JSON keys (because they are), test every branch in debug mode before publish, and push heavy orchestration into Integration Procedures.",
-    "date": "August 30, 2026",
-    "author": "Adroit Consulting",
-    "readTime": "9 min read",
     "tags": [
       "OmniStudio",
       "OmniScripts"
