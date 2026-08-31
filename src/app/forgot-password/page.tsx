@@ -85,7 +85,7 @@ function ForgotPasswordForm() {
                 If an account exists for <b className="text-gray-800 dark:text-[var(--ink-body)]">{email.trim()}</b>,
                 we&rsquo;ve sent a reset link. Please allow a few minutes for it to arrive.
               </p>
-              <p className="text-[12px] text-gray-400 leading-relaxed dark:text-[var(--ink-faint)]">
+              <p className="text-[12px] text-gray-500 leading-relaxed dark:text-[var(--ink-faint)]">
                 Didn&rsquo;t get it? Check your spam folder, or{" "}
                 <button
                   onClick={() => setSubmitted(false)}
@@ -149,11 +149,11 @@ function ForgotPasswordForm() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   aria-describedby="emailHint"
-                  className="h-11 rounded-xl border border-gray-200 bg-white px-4 text-[14px] text-gray-800 placeholder:text-gray-500 focus:outline-none focus:border-navy focus:ring-2 focus:ring-red/30 transition-colors duration-150 dark:border-[var(--border-default)] dark:bg-[var(--surface-sunken)] dark:text-[var(--ink-body)] dark:placeholder:text-[var(--ink-muted)]"
+                  className="h-11 rounded-xl border border-gray-200 bg-white px-4 text-[14px] text-gray-800 placeholder:text-gray-500 focus:border-navy transition-colors duration-150 dark:border-[var(--border-default)] dark:bg-[var(--surface-sunken)] dark:text-[var(--ink-body)] dark:placeholder:text-[var(--ink-muted)]"
                   placeholder="you@company.com"
                 />
               </label>
-              <p id="emailHint" className="text-[11.5px] text-gray-400 -mt-2 dark:text-[var(--ink-faint)]">
+              <p id="emailHint" className="text-[11.5px] text-gray-500 -mt-2 dark:text-[var(--ink-faint)]">
                 We&rsquo;ll only use this to send your reset link.
               </p>
               <button
