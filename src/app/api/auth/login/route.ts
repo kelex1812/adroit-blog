@@ -8,6 +8,7 @@
  */
 import { NextRequest, NextResponse } from "next/server";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
+import { buildAuthRedirect } from "@/lib/auth-emails";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -33,7 +34,11 @@ export async function POST(req: NextRequest) {
     const supabase = await getSupabaseServerClient();
 
     if (mode === "signup") {
-      const { error } = await supabase.auth.signUp({ email, password });
+      const { error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: { emailRedirectTo: buildAuthRedirect("/blog") },
+      });
       if (error) {
         return NextResponse.json({ error: error.message }, { status: 400 });
       }
