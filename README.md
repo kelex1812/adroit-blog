@@ -9,6 +9,9 @@ The **Adroit Consulting site** — a [Next.js](https://nextjs.org) (App Router) 
 > The production domain `adroit.io/blog` is intentionally not wired until launch. The site is staged on the private Vercel deployment.
 ## What's New
 
+### A11Y fix: focus indicators + hint-text contrast on auth forms (v1.0) — 2026-08-31
+
+The password-reset flow's auth forms (forgot-password, reset-password, login) now meet WCAG accessibility standards. Two a11y audit findings were fixed: (1) WCAG 2.4.7 Focus Visible (HIGH) - removed focus:outline-none from the five text inputs so keyboard focus shows a visible brand-red ring; and (2) WCAG 1.4.3 Contrast (MEDIUM) - raised hint text from text-gray-400 to text-gray-500 so helper text passes WCAG AA on white. Purely presentational Tailwind class edits; no auth logic, data, or API changes. All three audits (a11y/lara, QA/zod, security/val-el) PASS; 384 tests green.
 ### Password Reset flow (2026-08-31)
 
 The Adroit Academy now has a full password-reset flow. Users request a secure, one-time reset link from `/forgot-password` (valid for 30 minutes and enumeration-safe, so it never reveals whether an account exists); a valid link opens the new-password form to set a new password. The flow is backed by enumeration-safe request, authenticated update, and resend-confirmation API routes plus a Supabase recovery-code callback. The reset page gates server-side before rendering markup: a guest with no valid reset session is redirected to `/login?next=/reset-password`, and expired/invalid links show a `role=alert` error with a "Request a new link" action and zero password inputs (flow t_e25638b3; gate fix t_13982e68, PR #172).
