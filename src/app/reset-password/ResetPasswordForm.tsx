@@ -174,7 +174,7 @@ export default function ResetPasswordForm() {
                   minLength={6}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="h-11 rounded-xl border border-gray-200 bg-white px-4 text-[14px] text-gray-800 placeholder:text-gray-500 focus:outline-none focus:border-navy focus:ring-2 focus:ring-red/30 transition-colors duration-150 dark:border-[var(--border-default)] dark:bg-[var(--surface-sunken)] dark:text-[var(--ink-body)] dark:placeholder:text-[var(--ink-muted)]"
+                  className="h-11 rounded-xl border border-gray-200 bg-white px-4 text-[14px] text-gray-800 placeholder:text-gray-500 focus:border-navy transition-colors duration-150 dark:border-[var(--border-default)] dark:bg-[var(--surface-sunken)] dark:text-[var(--ink-body)] dark:placeholder:text-[var(--ink-muted)]"
                   placeholder="••••••••"
                 />
               </label>
@@ -188,11 +188,11 @@ export default function ResetPasswordForm() {
                   minLength={6}
                   value={confirm}
                   onChange={(e) => setConfirm(e.target.value)}
-                  className="h-11 rounded-xl border border-gray-200 bg-white px-4 text-[14px] text-gray-800 placeholder:text-gray-500 focus:outline-none focus:border-navy focus:ring-2 focus:ring-red/30 transition-colors duration-150 dark:border-[var(--border-default)] dark:bg-[var(--surface-sunken)] dark:text-[var(--ink-body)] dark:placeholder:text-[var(--ink-muted)]"
+                  className="h-11 rounded-xl border border-gray-200 bg-white px-4 text-[14px] text-gray-800 placeholder:text-gray-500 focus:border-navy transition-colors duration-150 dark:border-[var(--border-default)] dark:bg-[var(--surface-sunken)] dark:text-[var(--ink-body)] dark:placeholder:text-[var(--ink-muted)]"
                   placeholder="••••••••"
                 />
               </label>
-              <p className="text-[11.5px] text-gray-400 -mt-2 dark:text-[var(--ink-faint)]">
+              <p className="text-[11.5px] text-gray-500 -mt-2 dark:text-[var(--ink-faint)]">
                 At least 6 characters, and make sure both match.
               </p>
               <button

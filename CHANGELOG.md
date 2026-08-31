@@ -4,6 +4,30 @@ All notable changes to the Adroit Consulting Blog project will be documented in 
 
 ## [Unreleased]
 
+### Fix: a11y focus indicator + hint contrast on auth forms (t_56d7e63f)
+
+**What** — Fixed the two a11y findings from the password-reset flow review
+(t_e25638b3 / lara):
+
+1. **WCAG 2.4.7 Focus Visible (HIGH)** — Removed `focus:outline-none` (and
+   the non-rendering `focus:ring-2 focus:ring-red/30`) from the text inputs on
+   `/forgot-password`, `/reset-password`, and `/login`. The inputs now fall
+   through to the site-wide `:focus-visible { outline: 2px solid
+   var(--focus-ring) }` rule, so keyboard focus shows the brand red-light
+   ring (verified live). `focus:border-navy` is kept as the mouse-focus cue.
+2. **WCAG 1.4.3 Contrast (MEDIUM)** — Raised hint text from `text-gray-400`
+   (#9CA3AF, 2.54:1) to `text-gray-500` (#6B7280, 4.83:1) on the
+   forgot-password email hint, the "Didn't get it?" confirmation line, and
+   the reset-password "At least 6 characters…" hint.
+
+**Why** — `focus:outline-none` (specificity 0,2,0) was overriding the global
+`*:focus-visible` outline (0,1,0) while the intended Tailwind ring did not
+render, leaving inputs with no visible keyboard focus indicator; and the
+gray-400 hint text failed AA 4.5:1 on white.
+
+**Known issues** — None. 382 tests pass (59 files); `tsc --noEmit` clean;
+`npm run build` GREEN; lint 0 errors (1 pre-existing MDXArticle warning).
+
 ### Fix: server-side auth gate on /reset-password (t_13982e68)
 
 **What** — Converted `/reset-password` from a client-gated page into a
