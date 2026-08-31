@@ -37,6 +37,14 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "courseId required" }, { status: 400 });
   }
 
+  // Additive source support (Access Panel "Grant one-time" / "Adjust"):
+  // default granted, allow one-time. The GrantEntitlementRequest contract is
+  // unchanged — the handler reads the optional field defensively.
+  const source =
+    (body as unknown as { source?: string }).source === "one-time"
+      ? "one-time"
+      : "granted";
+
   const service = getSupabaseServiceClient();
   try {
     const [user, courseRes] = await Promise.all([
@@ -52,7 +60,7 @@ export async function POST(req: NextRequest) {
       {
         user_id: body.userId,
         course_id: body.courseId,
-        source: "granted",
+        source,
         grant_note: note,
         granted_by: gate.userId,
         revoked_at: null,
@@ -66,7 +74,7 @@ export async function POST(req: NextRequest) {
       action: "entitlement.grant",
       targetType: "entitlement",
       targetId: `${body.userId}:${body.courseId}`,
-      details: { note },
+      details: { note, source },
     });
 
     return NextResponse.json({ ok: true, data: { granted: true } });

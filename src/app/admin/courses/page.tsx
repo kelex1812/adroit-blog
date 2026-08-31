@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 import { useAdminCourses } from "@/lib/hooks/useAdminCourses";
 import { StatusBadge } from "@/components/Catalog/StatusBadge";
@@ -199,6 +200,13 @@ export default function AdminCoursesPage() {
                       Launch →
                     </button>
                   )}
+                  <Link
+                    href={`/learn/${course.series_slug}/preview`}
+                    className="inline-flex items-center gap-1 rounded-md border px-3 py-1.5 text-[11.5px] font-semibold no-underline text-[var(--ink-muted)] hover:text-[var(--ink-primary)] hover:bg-[var(--surface-sunken)] mr-2"
+                    style={{ borderColor: "var(--admin-table-border)" }}
+                  >
+                    Preview first lesson <span aria-hidden>&rarr;</span>
+                  </Link>
                   <button
                     type="button"
                     onClick={() => setEditing(course)}

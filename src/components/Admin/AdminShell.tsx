@@ -9,18 +9,21 @@ import { usePathname } from "next/navigation";
  * red active-nav rule, dense tables. Non-admins never reach this shell — the
  * layout guard 404s before rendering (US-016).
  *
- * v4 (t_0ed19ad0): added an Overview (dashboard) nav + Analytics; Courses is
- * now /admin/courses (the dashboard is the /admin landing).
+ * v5 (t_888621eb): nav regrouped by admin job per the Admin Experience
+ * Redesign — ACCESS (Overview/People/Courses) · CONTENT (Catalog) · SYSTEM
+ * (Analytics/Audit/Offers). The Access Matrix page is killed (ADR-222); its
+ * job is absorbed into People + Access·Courses sharing the AccessGrid.
  */
 type NavSection = { section?: string; href: string; label: string; exact?: boolean };
 
 const NAV: NavSection[] = [
-  { href: "/admin", label: "Dashboard", exact: true },
-  { section: "Management", href: "/admin/courses", label: "Courses" },
-  { href: "/admin/users", label: "Users" },
-  { href: "/admin/matrix", label: "Access Matrix" },
+  { section: "Access", href: "/admin", label: "Overview", exact: true },
+  { href: "/admin/users", label: "People" },
+  { href: "/admin/access/courses", label: "Courses" },
+  { section: "Content", href: "/admin/courses", label: "Catalog" },
   { section: "System", href: "/admin/analytics", label: "Analytics" },
   { href: "/admin/audit", label: "Audit Log" },
+  { href: "/admin/offers", label: "Offers · Coupons" },
 ];
 
 export function AdminShell({ children }: { children: React.ReactNode }) {
@@ -86,7 +89,7 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
       <div className="flex-1 min-w-0 flex flex-col">
         <div className="h-16 flex items-center px-6 border-b bg-[var(--color-off-white)] dark:bg-[var(--surface-page)]" style={{ borderBottom: "1px solid var(--admin-table-border)" }}>
           <span className="font-mono text-[11px] font-bold uppercase tracking-[0.08em] text-[var(--admin-table-head)]">
-            Course Catalog &amp; Entitlements
+            Course Catalog &amp; Access Control
           </span>
         </div>
         <main id="main" className="flex-1 px-6 py-6">

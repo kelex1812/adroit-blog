@@ -57,7 +57,7 @@ export function useAdminUsers() {
   }
 
   async function grant(
-    body: GrantEntitlementRequest,
+    body: GrantEntitlementRequest & { source?: "granted" | "one-time" },
   ): Promise<boolean> {
     try {
       const res = await fetch("/api/admin/entitlements", {
@@ -88,7 +88,30 @@ export function useAdminUsers() {
     }
   }
 
-  return { rows, loading, error, query, setQuery, setRole, grant, revoke };
+  /**
+   * Adjust = revoke + regrant one-time↔granted in one composite action, one
+   * audit row (arch §2.5 / §5.3). `from` is the active source to revoke; the
+   * entitlement is re-granted under `to`. Returns the success of both steps.
+   */
+  async function adjustSource(args: {
+    userId: string;
+    courseId: string;
+    from: EntitlementSource;
+    to: EntitlementSource;
+  }): Promise<boolean> {
+    const revoked = await revoke(args.userId, args.courseId);
+    if (!revoked) return false;
+    const granted = await grant({
+      userId: args.userId,
+      courseId: args.courseId,
+      source: args.to,
+      note: `adjusted ${args.from} → ${args.to}`,
+    });
+    if (granted) await refresh(query);
+    return granted;
+  }
+
+  return { rows, loading, error, query, setQuery, setRole, grant, revoke, adjustSource };
 }
 
 export type { EntitlementSource };

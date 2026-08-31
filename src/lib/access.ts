@@ -113,6 +113,73 @@ export function courseGrantsAccess(
   }
 }
 
+/** Five-state effective-access model (ADR-220) — the honest matrix. */
+export type EffectiveAccessState =
+  | "granted"
+  | "one-time"
+  | "subscribed"
+  | "free"
+  | "none";
+
+/** Effective-access chip label + single-letter grid variant. */
+export const EFFECTIVE_ACCESS_META: Record<
+  EffectiveAccessState,
+  { label: string; letter: string }
+> = {
+  granted: { label: "Granted", letter: "G" },
+  "one-time": { label: "One-time", letter: "O" },
+  subscribed: { label: "Subscribed", letter: "S" },
+  free: { label: "Free", letter: "F" },
+  none: { label: "None", letter: "—" },
+};
+
+/**
+ * Pure five-state resolver (ADR-220). Resolves every user × course pair to
+ * EXACTLY ONE of granted/one-time/subscribed/free/none, computed from the same
+ * seam inputs the learner gate uses (course model + entitlements + subs), so
+ * the admin surface and the gate never disagree. Never "empty = no access".
+ *
+ * Resolution order (authoritative): non-live/no-row → none; free → free;
+ * granted entitlement → granted; one-time entitlement → one-time; an active
+ * subscription grants via courseGrantsAccess → subscribed; else → none.
+ * Admin-granted beats a subscription for the same course (granted > one-time
+ * > subscribed > free > none).
+ */
+export function effectiveAccessState(input: {
+  course: CourseRow | null;
+  /** Active (non-revoked) entitlements. */
+  entitlements: UserEntitlementRow[];
+  /** The user's subscriptions (any status). */
+  subscriptions: SubscriptionRow[];
+  now: string;
+}): EffectiveAccessState {
+  const { course, entitlements, subscriptions, now } = input;
+  // Display lens resolves against the live model (arch §2.3 rule 1): a
+  // pending/archived/missing course shows as `none` on the live-only grid.
+  if (!course || course.status !== "live") return "none";
+  if (course.access_model === "free") return "free";
+  if (hasGrantedEntitlementFor(course.id, entitlements)) return "granted";
+  if (
+    entitlements.some(
+      (e) => e.source === "one-time" && e.course_id === course.id,
+    )
+  ) {
+    return "one-time";
+  }
+  if (
+    courseGrantsAccess(
+      course.access_model,
+      entitlements,
+      subscriptions,
+      now,
+      course.id,
+    )
+  ) {
+    return "subscribed";
+  }
+  return "none";
+}
+
 /** Pure single-course decision — the heart of the seam. */
 export function decideCourseAccessFromInput(
   input: {

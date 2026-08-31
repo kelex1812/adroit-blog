@@ -11,6 +11,7 @@ import {
   courseGrantsAccess,
   createAccessSeam,
   decideCourseAccessFromInput,
+  effectiveAccessState,
   type PlatformDataLoader,
 } from "@/lib/access";
 import type {
@@ -252,6 +253,129 @@ describe("courseGrantsAccess", () => {
     // The loader filters revoked_at IS NULL; here we just confirm granted model
     // depends purely on the entitlement array passed in.
     expect(courseGrantsAccess("granted", [], [], NOW, "c1")).toBe(false);
+  });
+});
+
+describe("effectiveAccessState (ADR-220 five-state resolver)", () => {
+  it("missing or non-live course → none", () => {
+    expect(
+      effectiveAccessState({ course: null, entitlements: [], subscriptions: [], now: NOW }),
+    ).toBe("none");
+    for (const status of ["pending", "archived"] as const) {
+      expect(
+        effectiveAccessState({
+          course: course({ status }),
+          entitlements: [entitlement()],
+          subscriptions: [sub()],
+          now: NOW,
+        }),
+      ).toBe("none");
+    }
+  });
+
+  it("free model → free for everyone", () => {
+    expect(
+      effectiveAccessState({
+        course: course({ access_model: "free" }),
+        entitlements: [],
+        subscriptions: [],
+        now: NOW,
+      }),
+    ).toBe("free");
+  });
+
+  it("granted entitlement → granted", () => {
+    expect(
+      effectiveAccessState({
+        course: course({ access_model: "granted" }),
+        entitlements: [entitlement({ source: "granted" })],
+        subscriptions: [],
+        now: NOW,
+      }),
+    ).toBe("granted");
+  });
+
+  it("one-time entitlement → one-time", () => {
+    expect(
+      effectiveAccessState({
+        course: course({ access_model: "one-time" }),
+        entitlements: [entitlement({ source: "one-time" })],
+        subscriptions: [],
+        now: NOW,
+      }),
+    ).toBe("one-time");
+  });
+
+  it("subscription grants access → subscribed (subscription + sub-or-one-time models)", () => {
+    for (const access_model of ["subscription", "sub-or-one-time"] as const) {
+      expect(
+        effectiveAccessState({
+          course: course({ access_model }),
+          entitlements: [],
+          subscriptions: [sub()],
+          now: NOW,
+        }),
+      ).toBe("subscribed");
+    }
+  });
+
+  it("canceled / past_due / expired subscription → none (does not grant)", () => {
+    const c = course({ access_model: "subscription" });
+    for (const status of ["canceled", "past_due"] as const) {
+      expect(
+        effectiveAccessState({ course: c, entitlements: [], subscriptions: [sub({ status })], now: NOW }),
+      ).toBe("none");
+    }
+    expect(
+      effectiveAccessState({
+        course: c,
+        entitlements: [],
+        subscriptions: [sub({ current_period_end: "2020-01-01T00:00:00.000Z" })],
+        now: NOW,
+      }),
+    ).toBe("none");
+  });
+
+  it("precedence: granted beats a subscription for the same course", () => {
+    const c = course({ access_model: "sub-or-one-time" });
+    expect(
+      effectiveAccessState({
+        course: c,
+        entitlements: [entitlement({ source: "granted" })],
+        subscriptions: [sub()],
+        now: NOW,
+      }),
+    ).toBe("granted");
+    expect(
+      effectiveAccessState({
+        course: c,
+        entitlements: [entitlement({ source: "one-time" })],
+        subscriptions: [sub()],
+        now: NOW,
+      }),
+    ).toBe("one-time");
+  });
+
+  it("no path → none (never 'empty = no access' ambiguity)", () => {
+    expect(
+      effectiveAccessState({
+        course: course({ access_model: "subscription" }),
+        entitlements: [],
+        subscriptions: [],
+        now: NOW,
+      }),
+    ).toBe("none");
+  });
+
+  it("entitlement for a DIFFERENT course is ignored", () => {
+    expect(
+      effectiveAccessState({
+        course: course({ access_model: "granted" }),
+        entitlements: [entitlement({ source: "granted", course_id: "other" })],
+        subscriptions: [],
+        now: NOW,
+      }),
+    ).toBe("none");
   });
 });
 
