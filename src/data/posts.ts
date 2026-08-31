@@ -2,6 +2,29 @@ import { BlogPost } from "./types";
 
 export const posts: BlogPost[] = [
   {
+    "slug": "agent-memory-context-engineering-2026",
+    "title": "Your Agent Isn't Forgetting. Its Memory Architecture Is.",
+    "excerpt": "Your agent isn't forgetting. Contradicting itself mid-task is the context window being used as storage, not model degradation.",
+    "category": "AI & Consulting",
+    "categoryColor": "ai",
+    "categoryGradient": "from-amber to-amber-dark",
+    "date": "August 31, 2026",
+    "author": "Adroit Consulting",
+    "authorInitials": "AC",
+    "readTime": "10",
+    "featured": false,
+    "tags": [
+      "AI Agents",
+      "Agent Memory",
+      "Context Engineering",
+      "Multi-Agent",
+      "LLM Infrastructure",
+      "Persistent Memory"
+    ],
+    "bannerImage": "/banners/agent-memory-context-engineering-2026.png",
+    "status": "published"
+  },
+  {
     "slug": "form-ux-design-2026",
     "title": "Every Form Is a Funnel: Form UX in 2026",
     "excerpt": "Most forms fail in the same documented ways. The anatomy of a form that converts, inline validation done right, and validation state as a design-system concern.",
