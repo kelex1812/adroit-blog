@@ -9,6 +9,10 @@ The **Adroit Consulting site** — a [Next.js](https://nextjs.org) (App Router) 
 > The production domain `adroit.io/blog` is intentionally not wired until launch. The site is staged on the private Vercel deployment.
 ## What's New
 
+### /reset-password no longer leaks the new-password form to guests (2026-08-31)
+
+The password-reset new-password page is now gated server-side before any markup renders. Visitors without a valid reset session are redirected to `/login?next=/reset-password`, and expired/invalid reset links show a `role=alert` error message with a "Request a new link" action instead of password fields. This closes the SSR leak where the raw new-password form HTML was served to any unauthenticated visitor. Security headers (CSP, HSTS, X-Frame-Options DENY) verified on the route.
+
 ### Paywall panel Light-mode contrast fix (2026-08-30) — 2026-08-30
 
 Course-locked Paywall now renders as a dark navy panel with readable white text in Light mode (was white-on-light). Ships the .paywall-panel rule in globals.css reusing existing tokens, plus the follow-up accent-label contrast fix (4.88-5.75:1 AA).
