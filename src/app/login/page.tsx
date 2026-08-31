@@ -29,12 +29,14 @@ function LoginForm() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [info, setInfo] = useState<string | null>(null);
+  const [unconfirmed, setUnconfirmed] = useState(false);
   const [isPending, startTransition] = useTransition();
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setError(null);
     setInfo(null);
+    setUnconfirmed(false);
 
     startTransition(async () => {
       try {
@@ -46,7 +48,16 @@ function LoginForm() {
         const data = (await res.json()) as { status?: string; error?: string; message?: string };
 
         if (!res.ok) {
-          setError(data.error ?? "Sign in failed. Please try again.");
+          // Friendly unconfirmed-email error (US-5): Supabase returns a 401
+          // with a message containing "confirm" for an unconfirmed account.
+          if (mode === "signin" && /confirm/i.test(data.error ?? "")) {
+            setUnconfirmed(true);
+            setError(
+              "Your email hasn’t been confirmed yet. Check your inbox for the confirmation link, or resend it below.",
+            );
+          } else {
+            setError(data.error ?? "Sign in failed. Please try again.");
+          }
           return;
         }
 
@@ -60,6 +71,23 @@ function LoginForm() {
         notifyAuthChanged();
         router.push(next);
         router.refresh();
+      } catch {
+        setError("Network error. Please try again.");
+      }
+    });
+  }
+
+  function handleResend() {
+    startTransition(async () => {
+      try {
+        await fetch("/api/auth/resend-confirmation", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email }),
+        });
+        setInfo("If that account needs confirmation, we’ve sent a new link. Please allow a few minutes for it to arrive.");
+        setUnconfirmed(false);
+        setError(null);
       } catch {
         setError("Network error. Please try again.");
       }
@@ -95,8 +123,20 @@ function LoginForm() {
                 className="rounded-xl border border-red/25 bg-red/5 px-4 py-3 text-[12.5px] text-red-dark mb-4 dark:bg-red/10 dark:text-[var(--accent-hover)]"
               >
                 {error}
+                {unconfirmed && (
+                  <div className="mt-2">
+                    <button
+                      onClick={handleResend}
+                      disabled={isPending}
+                      className="font-semibold text-navy underline underline-offset-2 decoration-red/40 hover:decoration-red cursor-pointer bg-none border-none text-[12.5px]"
+                    >
+                      Resend confirmation email
+                    </button>
+                  </div>
+                )}
               </div>
             )}
+
             {info && (
               <div
                 role="status"
@@ -137,6 +177,17 @@ function LoginForm() {
                   placeholder="••••••••"
                 />
               </label>
+
+              {mode === "signin" && (
+                <div className="flex justify-end -mt-2">
+                  <Link
+                    href="/forgot-password"
+                    className="text-[12px] font-medium text-gray-500 no-underline hover:text-navy transition-colors duration-150"
+                  >
+                    Forgot password?
+                  </Link>
+                </div>
+              )}
 
               <button
                 type="submit"

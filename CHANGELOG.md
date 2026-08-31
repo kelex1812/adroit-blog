@@ -4,6 +4,45 @@ All notable changes to the Adroit Consulting Blog project will be documented in 
 
 ## [Unreleased]
 
+### Feature: Password reset flow (t_e25638b3)
+
+**What** — Full password-reset flow per the architecture doc
+(`docs/password-reset-architecture.md`) and Kara's mockups
+(`design/mockups/password-reset/`): enumeration-safe request route,
+authed update route, resend-confirmation route, Supabase recovery-code
+callback, plus `/forgot-password` and `/reset-password` pages and
+login-page additions.
+
+- **`POST /api/auth/reset-password/request`** — enumeration-safe
+  (AC-1.2/1.7): returns the SAME generic success message whether or not
+  the email is registered, malformed, rate-limited, or Supabase fails.
+  Rate-limited per-IP (AC-1.5) and origin-checked (AC-1.6).
+- **`POST /api/auth/reset-password/update`** — requires an active
+  session (guest → 401); password must be ≥ 6 chars.
+- **`POST /api/auth/resend-confirmation`** — ADR-PWR-4: lives only in
+  the login unconfirmed-email error state; generic, non-enumerating.
+- **`GET /auth/callback`** — exchanges the recovery code for a session
+  (HttpOnly cookie via SSR client), sanitizes `next` (CWE-601, AC-2.3),
+  and maps expired/used/invalid codes to `/reset-password?error=…`
+  (AC-2.4/2.5, ADR-PWR-3). Never a 500.
+- **`/forgot-password`** and **`/reset-password`** pages — match the
+  login editorial auth language (mono kicker, navy button, red focus
+  ring, dark-mode aware); noindex metadata; reset page is auth-gated
+  (guest → `/login?next=/reset-password`).
+- **Login page** — "Forgot password?" link, unconfirmed-email error +
+  resend action, and signUp `redirectTo` via `buildAuthRedirect`.
+- **`src/lib/auth-emails.ts`** — single `buildAuthRedirect` helper
+  enforcing ADR-PWR-1: every auth-email `redirectTo` points at the live
+  origin (`<siteConfig.url>/auth/callback?next=…`), never localhost.
+
+**Why** — Users had no way to recover a forgotten password, and the
+signup confirmation email linked to an unreachable localhost origin
+(the natalie incident). This closes the account-recovery gap and
+hardens the auth-email redirects.
+
+**Known issues** — None. 21 new unit tests cover the request/update/
+callback routes and `buildAuthRedirect` (378 total, all passing).
+
 ### Fix: Light-mode access-chip text WCAG AA contrast (t_5d3bf5a1)
 
 **What** — In light mode, the five-state `EffectiveAccessChip` text color
