@@ -9,8 +9,24 @@
  */
 import { NextRequest, NextResponse } from "next/server";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
+import { checkRateLimit, getClientIp, checkOrigin } from "@/lib/api-security";
 
 export async function POST(req: NextRequest) {
+  // Cross-origin POST protection (CWE-352), mirroring the request route.
+  const originError = checkOrigin(req);
+  if (originError) {
+    return NextResponse.json({ error: "Forbidden origin" }, { status: 403 });
+  }
+
+  // Rate limit BEFORE parsing/validating so a flood of malformed requests is
+  // also throttled (CWE-307).
+  if (!checkRateLimit(getClientIp(req))) {
+    return NextResponse.json(
+      { error: "Too many attempts. Please try again later." },
+      { status: 429 },
+    );
+  }
+
   let password = "";
   try {
     const body = (await req.json()) as { password?: unknown };

@@ -11,7 +11,12 @@ const { mocks } = vi.hoisted(() => {
   const getSupabaseServerClient = vi.fn();
   const getUser = vi.fn();
   const updateUser = vi.fn();
-  return { mocks: { getSupabaseServerClient, getUser, updateUser } };
+  const checkRateLimit = vi.fn();
+  const getClientIp = vi.fn();
+  const checkOrigin = vi.fn();
+  return {
+    mocks: { getSupabaseServerClient, getUser, updateUser, checkRateLimit, getClientIp, checkOrigin },
+  };
 });
 
 vi.mock("@/lib/supabase/server", () => ({
@@ -20,12 +25,23 @@ vi.mock("@/lib/supabase/server", () => ({
   }),
 }));
 
+vi.mock("@/lib/api-security", () => ({
+  checkRateLimit: mocks.checkRateLimit,
+  getClientIp: mocks.getClientIp,
+  checkOrigin: mocks.checkOrigin,
+}));
+
 import { POST } from "./route";
 
-function req(body: unknown): NextRequest {
+function req(body: unknown, origin?: string): NextRequest {
+  const headers: Record<string, string> = {
+    "content-type": "application/json",
+    "x-forwarded-for": "10.0.0.1",
+  };
+  if (origin) headers["origin"] = origin;
   return new NextRequest("http://localhost:3000/api/auth/reset-password/update", {
     method: "POST",
-    headers: { "content-type": "application/json" },
+    headers,
     body: typeof body === "string" ? body : JSON.stringify(body),
   });
 }
@@ -38,6 +54,9 @@ beforeEach(() => {
   vi.clearAllMocks();
   authed();
   mocks.updateUser.mockResolvedValue({ error: null });
+  mocks.checkOrigin.mockReturnValue(null);
+  mocks.checkRateLimit.mockReturnValue(true);
+  mocks.getClientIp.mockReturnValue("10.0.0.1");
 });
 
 describe("POST /api/auth/reset-password/update (t_e25638b3)", () => {
@@ -74,5 +93,23 @@ describe("POST /api/auth/reset-password/update (t_e25638b3)", () => {
     expect(res.status).toBe(400);
     const body = await res.json();
     expect(body.error).toBe("Password too weak");
+  });
+
+  it("rejects a rate-limited request with 429 (CWE-307)", async () => {
+    mocks.checkRateLimit.mockReturnValue(false);
+    const res = await POST(req({ password: "new-password-123" }));
+    expect(res.status).toBe(429);
+    const body = await res.json();
+    expect(body.error).toBe("Too many attempts. Please try again later.");
+    expect(mocks.updateUser).not.toHaveBeenCalled();
+  });
+
+  it("rejects a cross-origin POST with 403 (CWE-352)", async () => {
+    mocks.checkOrigin.mockReturnValue("Forbidden origin");
+    const res = await POST(req({ password: "new-password-123" }, "https://evil.example"));
+    expect(res.status).toBe(403);
+    const body = await res.json();
+    expect(body.error).toBe("Forbidden origin");
+    expect(mocks.updateUser).not.toHaveBeenCalled();
   });
 });
