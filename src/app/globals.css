@@ -165,15 +165,15 @@
      Five-state effective-access chips + governance signals + preview-
      first-lesson strip. Nothing here replaces a shipped token. */
   /* 1. Effective-access five-state chips */
-  --access-granted: var(--am-granted);
+  --access-granted: var(--am-granted-text);
   --access-granted-bg: var(--am-granted-text);
-  --access-one-time: var(--am-one-time);
+  --access-one-time: var(--am-one-time-text);
   --access-one-time-bg: var(--am-one-time-text);
-  --access-subscribed: var(--am-subscription);
+  --access-subscribed: var(--am-subscription-text);
   --access-subscribed-bg: var(--am-subscription-text);
-  --access-free: var(--am-free);
+  --access-free: var(--am-free-text);
   --access-free-bg: var(--am-free-text);
-  --access-none: #6B7280;
+  --access-none: #374151;
   --access-none-bg: #F3F4F6;
 
   /* 2. Operate surface */
@@ -799,6 +799,10 @@ html.dark {
   --admin-menu-tint: rgba(200, 16, 46, 0.18);
 
   /* Admin Experience Redesign dark remap (kara t_19aaee7f) */
+  --access-granted: var(--am-granted);
+  --access-one-time: var(--am-one-time);
+  --access-subscribed: var(--am-subscription);
+  --access-free: var(--am-free);
   --access-none: #9CA3AF;
   --access-none-bg: rgba(156, 163, 175, 0.14);
   --gov-sub-trialing: #38BDF8;

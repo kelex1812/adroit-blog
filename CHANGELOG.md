@@ -4,6 +4,28 @@ All notable changes to the Adroit Consulting Blog project will be documented in 
 
 ## [Unreleased]
 
+### Fix: Light-mode access-chip text WCAG AA contrast (t_5d3bf5a1)
+
+**What** — In light mode, the five-state `EffectiveAccessChip` text color
+(and the access-matrix legend / one-time badge that share the same
+`--access-*` tokens) failed WCAG AA 4.5:1 on their tinted backgrounds:
+free 2.45:1, one-time 3.25:1, granted 3.89:1, none 4.39:1 (only
+subscribed 4.75:1 passed).
+
+**Why** — `--access-{state}` mapped to the strong access hue
+(`var(--am-*)`), which reads as accent-tint, not text, on the 12%/14%
+tint surfaces.
+
+**Fix** — In `:root` (light), `--access-{state}` now maps to the
+already-defined darker `--am-*-text` variants: #0369A1 (free),
+#115E59 (one-time), #9F1239 (granted), #5B21B6 (subscribed), and
+#374151 (none). Verified contrast on both the pill (12% tint) and cell
+(14% tint) surfaces: **5.14–9.37:1 — all PASS AA 4.5:1**. Dark mode is
+unchanged: `html.dark` re-maps the colored access tokens back to the
+strong `var(--am-*)` hues exactly as before, so dark contrast (5.26–7.39:1)
+is untouched. Only `src/app/globals.css` changed; `src/shared/` is
+byte-identical.
+
 ### Build: Admin Experience Redesign (t_888621eb)
 
 **What** — Production build of the Admin Experience Redesign to the arch
