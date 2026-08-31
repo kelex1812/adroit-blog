@@ -18,6 +18,7 @@ interface PathCardProps {
 export default function PathCard({ series, gate, loginNext }: PathCardProps) {
   const empty = series.lessonCount === 0;
   const isGuest = gate === "guest-locked";
+  const isSignedInLocked = !isGuest && !series.canAccess && !empty;
   const loginHref = `/login?next=${encodeURIComponent(loginNext ?? `/learn/${series.slug}`)}`;
 
   const band = (
@@ -114,6 +115,18 @@ export default function PathCard({ series, gate, loginNext }: PathCardProps) {
             <div className="mt-2.5">
               <QuizStats seriesSlug={series.slug} as="span" />
             </div>
+            {/* Signed-in but locked: subtle "Preview first lesson →" affordance
+                (ADR-221). Granted users are redirected to the real lesson, so
+                the link is never harmful. */}
+            {isSignedInLocked && (
+              <Link
+                href={`/learn/${series.slug}/preview`}
+                className="mt-3 inline-flex items-center gap-1.5 text-[12px] font-semibold no-underline hover:underline"
+                style={{ color: "var(--accent, #C8102E)" }}
+              >
+                Preview first lesson <span aria-hidden>&rarr;</span>
+              </Link>
+            )}
           </div>
         )}
       </div>

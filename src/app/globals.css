@@ -160,6 +160,44 @@
   --admin-launch-ok: var(--color-emerald);
   --admin-launch-warn: var(--color-amber);
   --admin-launch-danger: var(--color-red-dark);
+
+  /* ── ADMIN EXPERIENCE REDESIGN (kara t_19aaee7f) — ADDITIVE ──────
+     Five-state effective-access chips + governance signals + preview-
+     first-lesson strip. Nothing here replaces a shipped token. */
+  /* 1. Effective-access five-state chips */
+  --access-granted: var(--am-granted);
+  --access-granted-bg: var(--am-granted-text);
+  --access-one-time: var(--am-one-time);
+  --access-one-time-bg: var(--am-one-time-text);
+  --access-subscribed: var(--am-subscription);
+  --access-subscribed-bg: var(--am-subscription-text);
+  --access-free: var(--am-free);
+  --access-free-bg: var(--am-free-text);
+  --access-none: #6B7280;
+  --access-none-bg: #F3F4F6;
+
+  /* 2. Operate surface */
+  --admin-panel-bg: var(--surface-card, #FFFFFF);
+  --admin-panel-border: var(--admin-table-border);
+  --admin-panel-head: var(--admin-table-head);
+  --admin-chip-size: 26px;
+  --admin-access-subline: var(--ink-faint);
+
+  /* 3. Governance overview signals */
+  --gov-sub-active: var(--signal-done);
+  --gov-sub-trialing: #0EA5E9;
+  --gov-sub-past-due: var(--signal-warn);
+  --gov-sub-canceled: #6B7280;
+  --gov-gap-callout-bg: #FFF7ED;
+  --gov-gap-callout-border: #FCD34D;
+  --gov-gap-callout-ink: #92400E;
+
+  /* 4. Preview-first-lesson strip (Decide/Learn) */
+  --preview-strip: var(--signal-warn);
+  --preview-strip-bg: #FEF3C7;
+  --preview-strip-ink: #92400E;
+  --preview-lock-seam: linear-gradient(180deg, transparent, var(--surface-page));
+  --preview-lock-opacity: 0.45;
 }
 
 /* ─────────────────────────────────────────────
@@ -759,6 +797,17 @@ html.dark {
   --analytics-good: #34D399;
   --analytics-zero: var(--color-gray-600);
   --admin-menu-tint: rgba(200, 16, 46, 0.18);
+
+  /* Admin Experience Redesign dark remap (kara t_19aaee7f) */
+  --access-none: #9CA3AF;
+  --access-none-bg: rgba(156, 163, 175, 0.14);
+  --gov-sub-trialing: #38BDF8;
+  --gov-sub-canceled: #9CA3AF;
+  --gov-gap-callout-bg: rgba(245, 158, 11, 0.12);
+  --gov-gap-callout-border: rgba(245, 158, 11, 0.30);
+  --gov-gap-callout-ink: #FBBF24;
+  --preview-strip-bg: rgba(245, 158, 11, 0.14);
+  --preview-strip-ink: #FBBF24;
 }
 
 /* Dark focus ring — accent-hover #f47385 clears 6.3:1 on the dark page surface

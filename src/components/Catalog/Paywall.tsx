@@ -80,10 +80,10 @@ export default function Paywall({
 
           {view.peekLessonSlug ? (
             <Link
-              href={`/learn/${seriesSlug}/${view.peekLessonSlug}`}
+              href={`/learn/${seriesSlug}/preview`}
               className="inline-flex items-center gap-1.5 text-[13px] font-semibold text-white/80 no-underline hover:text-white transition-colors"
             >
-              Preview this course
+              Preview first lesson
               <span aria-hidden>&rarr;</span>
             </Link>
           ) : null}

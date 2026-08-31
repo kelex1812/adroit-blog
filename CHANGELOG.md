@@ -4,6 +4,85 @@ All notable changes to the Adroit Consulting Blog project will be documented in 
 
 ## [Unreleased]
 
+### Build: Admin Experience Redesign (t_888621eb)
+
+**What** — Production build of the Admin Experience Redesign to the arch
+contract (t_d1f9fb17) + Kara's execution mockups. The admin surface is
+reorganized by admin job and the access model is made honest.
+
+- **Admin IA rework** — `AdminShell` nav regrouped: **Access**
+  (Overview/People/Courses) · **Content** (Catalog) · **System**
+  (Analytics/Audit/Offers). The standalone Access Matrix page (`/admin/matrix`)
+  is **killed** (ADR-222); its job is absorbed into the People + Access·Courses
+  lenses sharing the new `AccessGrid`.
+- **Five-state effective-access model (ADR-220)** — a pure `effectiveAccessState()`
+  resolver in `src/lib/access.ts` turns every user × course into exactly one of
+  granted/one-time/subscribed/free/none (computed from the same seam inputs the
+  learner gate uses — never "empty = no access"). `EffectiveAccessState` +
+  `EFFECTIVE_ACCESS_META` are defined in `access.ts` (the arch contract's §2.3
+  code block); the brainiac-owned contracts file was **not** edited per the
+  scope guard.
+- **Access Overview** (`/admin`) — governance health: pending-launch banner,
+  effective-access coverage (the honest five-state bar), subscriber pulse by
+  `subscriptions.status` with the honest "0 subscribers — billing on hold"
+  empty state, entitlements per course, recent admin activity, and an
+  access-gap callout when a live course has a high none-ratio.
+- **Access People** (`/admin/users`) — person-first `AccessPanel`: searchable
+  roster + detail panel, five-state chips per course, inline grant granted /
+  grant one-time / revoke / adjust, per-user subscription panel (honest empty
+  today), role select.
+- **Access Courses** (`/admin/access/courses`, new) — course-first
+  `RosterPanel`: course selector, who-has-access roster with effective-access
+  chips, bulk grant/revoke, and the shared `AccessGrid`.
+- **Preview-first-lesson flow (ADR-221, the critical fix)** — new read-only
+  route `/learn/[series]/preview` renders lesson 1 for a `paywall` user and
+  redirects granted/admin users to the real lesson. The Paywall link is
+  reworded to **"Preview first lesson →"** and points at the preview route
+  (breaking the old infinite loop). Amber preview strip + readable excerpt +
+  locked seam + "Unlock full course →" CTA that returns to the Paywall access
+  options. `PathCard` shows a subtle preview link on signed-in locked cards;
+  the admin Catalog gains a per-row preview link.
+- **Consolidated accessor endpoint (ADR-223)** — `GET /api/admin/access/effective`
+  returns courses + users + resolved five-state matrix + subscriber pulse in one
+  round-trip (reuses PR #170's `AdminUserListRow.subscription`, no duplication).
+- **Billing/coupons/trials (ADR-224)** — design affordances only: `/admin/offers`
+  is a static "Coming with billing" placeholder; no Stripe, no schema migration,
+  no write path. `POST /entitlements` accepts an additive optional `source`
+  (default granted, allow one-time) and the bulk route gained a `DELETE`
+  (bulk soft-revoke), both read-only-beyond-`user_entitlements`.
+
+**Why** — The v4 admin dashboard + G/P-only matrix did not reflect real access
+(no subscription awareness, "empty = no access" ambiguity), and the Paywall's
+"Preview this course" button linked to the first lesson which re-rendered the
+paywall (infinite loop — the button did nothing). The redesign ships the honest
+five-state model, a person-first + course-first lens, and a working
+preview-first-lesson flow.
+
+**Known Issues** — `preview` is a reserved lesson slug (a future lesson slugged
+`preview` would be shadowed by the static segment — accepted per ADR-221).
+`EffectiveAccessState` lives in `access.ts` rather than the brainiac-owned
+contracts file (brainiac did not deliver the additive type; flag to arch if it
+should move). The `subscriptions` table is empty today, so subscriber chips and
+the pulse are exercised via tests until billing lands.
+
+Changed files (build):
+- `src/lib/access.ts`, `src/lib/access.test.ts`
+- `src/lib/hooks/useAdminAccessEffective.ts`, `src/lib/hooks/useAdminUsers.ts`
+- `src/components/Admin/EffectiveAccessChip.tsx` (+ test),
+  `AccessGrid.tsx` (+ test), `AccessPanel.tsx`, `RosterPanel.tsx`,
+  `AdminShell.tsx` (+ test)
+- `src/components/Learn/PreviewFirstLesson.tsx`, `src/components/Learn/PathCard.tsx` (+ test)
+- `src/components/Catalog/Paywall.tsx` (+ test)
+- `src/app/api/admin/access/effective/route.ts` (+ test),
+  `src/app/api/admin/entitlements/route.ts`, `src/app/api/admin/entitlements/bulk/route.ts`
+- `src/app/admin/page.tsx` (+ test), `src/app/admin/users/page.tsx` (+ test),
+  `src/app/admin/access/courses/page.tsx` (+ test), `src/app/admin/offers/page.tsx`,
+  `src/app/admin/courses/page.tsx`
+- `src/app/learn/[series]/preview/page.tsx` (+ test)
+- `src/app/globals.css` (additive admin-experience tokens)
+- Deleted: `src/app/admin/matrix/page.tsx`, `src/app/admin/matrix/page.test.tsx`
+
+
 ### Fix: Admin Access Matrix surfaces subscription status (t_32ce7d79)
 
 **What** — The admin Access Matrix (`/admin/matrix`) showed a user as "no
