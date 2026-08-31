@@ -4,6 +4,35 @@ All notable changes to the Adroit Consulting Blog project will be documented in 
 
 ## [Unreleased]
 
+### Fix: server-side auth gate on /reset-password (t_13982e68)
+
+**What** — Converted `/reset-password` from a client-gated page into a
+**server component** that closes the SSR HTML leak of the new-password
+form to guests (a11y/SEO finding t_4fbc8f48).
+
+- `page.tsx` is now a server component. It reads the `error` query param,
+  renders the expired/invalid "request a new link" state (role=alert) for
+  **any** visitor BEFORE the session gate (so guests with a dead code still
+  see it), then gates the form server-side: no session ⇒
+  `redirect("/login?next=/reset-password")`; the form markup is never
+  emitted to guests.
+- Moved the client form into `ResetPasswordForm.tsx` (new-password + confirm
+  inputs, inline validation, POST update, success "Continue to blog"). Its
+  `useAuth` check stays as a defensive backstop only.
+- Added `page.test.tsx` covering the gate: authed → form renders; guest →
+  redirect (no form); guest + `error=expired|invalid` → role=alert state
+  reachable without a session check and without form markup.
+
+**Why** — The previous client-only gate initialized with `isLoading=true`,
+so SSR always rendered the full new-password form into the HTML payload for
+any guest before the client-side redirect fired, violating the build
+requirement "Guest vs authed gating on /reset-password (no HTML leak of
+sensitive state to guests)."
+
+**Known issues** — None. The authed form path is covered by unit test (live
+verification requires a real recovery-code exchange, which needs a Supabase
+email round-trip).
+
 ### Feature: Password reset flow (t_e25638b3)
 
 **What** — Full password-reset flow per the architecture doc
