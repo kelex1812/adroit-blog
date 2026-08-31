@@ -4,6 +4,27 @@ All notable changes to the Adroit Consulting Blog project will be documented in 
 
 ## [Unreleased]
 
+### Fix: security hardening of /api/auth/reset-password/update (t_81dd7f16)
+
+**What** — Defense-in-depth hardening of the password-update endpoint,
+closing the two non-blocking gaps flagged by security audit t_e88d6247:
+
+1. **CWE-307 rate limiting** — Added `checkRateLimit(getClientIp(req))` at the
+   top of `POST`, before body parsing/validation so malformed floods are also
+   throttled. On limit, returns `429 { error: "Too many attempts. Please try
+   again later." }`.
+2. **CWE-352 origin check** — Added `checkOrigin(req)` mirroring the request
+   route. On failure, returns `403 { error: "Forbidden origin" }`.
+
+Both reuse the existing shared helpers in `src/lib/api-security.ts`.
+
+**Why** — The audit marked both checklist items unmet on `/update` (the
+request route had them). Not exploitable today (SameSite=Lax session cookie +
+auth gate → guest 401), but the contract requires the defences.
+
+**Known issues** — None. 384 tests pass (59 files; +2 new cases for 429 and
+403); lint 0 errors (1 pre-existing MDXArticle warning); `npm run build` GREEN.
+
 ### Fix: a11y focus indicator + hint contrast on auth forms (t_56d7e63f)
 
 **What** — Fixed the two a11y findings from the password-reset flow review
