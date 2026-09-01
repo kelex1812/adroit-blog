@@ -23,6 +23,30 @@ export const posts: BlogPost[] = [
     "status": "published"
   },
   {
+    "slug": "salesforce-integration-seams-2026",
+    "title": "The Seams Are the System: Wiring the 2026 Salesforce Stack",
+    "excerpt": "The seams between Salesforce layers, identity, events, and actions, are where Summer '26 lands hardest and where most teams are underprepared.",
+    "category": "Salesforce",
+    "categoryColor": "sf",
+    "categoryGradient": "from-sky to-sky-dark",
+    "date": "September 01, 2026",
+    "author": "Adroit Consulting",
+    "authorInitials": "AC",
+    "readTime": "11 min read",
+    "featured": false,
+    "tags": [
+      "Salesforce",
+      "Flow",
+      "Agentforce",
+      "Data Cloud",
+      "Experience Cloud",
+      "Apex",
+      "Integration"
+    ],
+    "bannerImage": "/banners/salesforce-integration-seams-2026.png",
+    "status": "published"
+  },
+  {
     "slug": "agent-memory-context-engineering-2026",
     "title": "Your Agent Isn't Forgetting. Its Memory Architecture Is.",
     "excerpt": "Your agent isn't forgetting. Contradicting itself mid-task is the context window being used as storage, not model degradation.",
