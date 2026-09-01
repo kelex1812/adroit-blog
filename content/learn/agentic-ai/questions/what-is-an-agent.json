@@ -17,10 +17,10 @@
     {
       "question": "Which statement best reflects the lesson’s guidance?",
       "options": [
-        "This lesson is the foundation: three definitions that will organize everything after it, a decision rule for picking the right one, and a worked example from a real production pipeline.",
-        "Start with the cleanest mental model, from Anthropic's \"Building Effective Agents,\" the most-cited engineering post on this exact question.",
+        "The lesson cautions against this in every real-world case.",
+        "The lesson recommends treating output as final without review.",
         "\"Agent\" is the most abused word in enterprise AI right now.",
-        "Before this track can teach you to build agentic systems, it has to teach you what one is."
+        "\"Agent\" is not the most abused word in enterprise AI right now."
       ],
       "correct_answer_index": 2,
       "explanation": "\"Agent\" is the most abused word in enterprise AI right now."
@@ -28,13 +28,13 @@
     {
       "question": "Which conclusion does the lesson support?",
       "options": [
-        "Before this track can teach you to build agentic systems, it has to teach you what one is.",
-        "\"Autonomous software systems that perceive, reason, and act in digital environments to achieve goals on behalf of human principals, with capabilities for tool use, economic transactions, and strategic interaction.\"",
-        "\"Agent\" is the most abused word in enterprise AI right now.",
-        "This lesson is the foundation: three definitions that will organize everything after it, a decision rule for picking the right one, and a worked example from a real production pipeline."
+        "Strip away the marketing and an agent is not one tight loop.",
+        "The lesson recommends treating output as final without review.",
+        "The lesson says the opposite: this should always be avoided.",
+        "Strip away the marketing and an agent is one tight loop."
       ],
-      "correct_answer_index": 1,
-      "explanation": "\"Autonomous software systems that perceive, reason, and act in digital environments to achieve goals on behalf of human principals, with capabilities for tool use, economic transactions, and strategic interaction.\""
+      "correct_answer_index": 3,
+      "explanation": "Strip away the marketing and an agent is one tight loop."
     }
   ]
 }

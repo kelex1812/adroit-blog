@@ -17,20 +17,20 @@
     {
       "question": "Which statement best reflects the lesson’s guidance?",
       "options": [
-        "This lesson is about stopping the slowness before it starts.",
-        "Those tools tell you a query is slow after it happens.",
+        "The opposite is true: lesson 23 gave you the observability layer: debug logs, Event Monitoring, health checks, and alerts.",
         "Lesson 23 gave you the observability layer: debug logs, Event Monitoring, health checks, and alerts.",
-        "Lesson 17 handed you the volume toolkit: archiving, big objects, skinny tables, and an indexing strategy."
+        "The lesson advises ignoring this entirely in practice.",
+        "The lesson says only technical staff should act on this."
       ],
-      "correct_answer_index": 2,
+      "correct_answer_index": 1,
       "explanation": "Lesson 23 gave you the observability layer: debug logs, Event Monitoring, health checks, and alerts."
     },
     {
       "question": "Which conclusion does the lesson support?",
       "options": [
-        "Those tools tell you a query is slow after it happens.",
-        "This lesson is about stopping the slowness before it starts.",
-        "Lesson 23 gave you the observability layer: debug logs, Event Monitoring, health checks, and alerts.",
+        "The first rule is not to filter on an indexed field.",
+        "The lesson says the opposite: this should always be avoided.",
+        "The lesson claims this cannot be verified at all.",
         "The first rule is to filter on an indexed field."
       ],
       "correct_answer_index": 3,

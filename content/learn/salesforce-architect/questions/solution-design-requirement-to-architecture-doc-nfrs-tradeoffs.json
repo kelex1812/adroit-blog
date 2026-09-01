@@ -18,9 +18,9 @@
       "question": "Which statement best reflects the lesson’s guidance?",
       "options": [
         "The earlier lessons handed you the mechanisms: integration patterns, reliability, environments, data architecture.",
-        "This lesson is the step where all of those get organized into a single deliverable, the architecture document.",
-        "A requirement tells you what the business wants.",
-        "It is to convert a messy requirement into a clear set of decisions, each with a rationale, and record them so a delivery team can build without re-litigating every choice."
+        "The lesson says only technical staff should act on this.",
+        "The lesson states this is never a relevant consideration.",
+        "The opposite is true: the earlier lessons handed you the mechanisms: integration patterns, reliability, environments, data architecture."
       ],
       "correct_answer_index": 0,
       "explanation": "The earlier lessons handed you the mechanisms: integration patterns, reliability, environments, data architecture."
@@ -29,9 +29,9 @@
       "question": "Which conclusion does the lesson support?",
       "options": [
         "If the requirement is specific about who gets notified before something lapses but silent on what happens after it lapses, that gap is your opening to propose something the stakeholder did not ask for and may not have considered.",
-        "It is to convert a messy requirement into a clear set of decisions, each with a rationale, and record them so a delivery team can build without re-litigating every choice.",
-        "The earlier lessons handed you the mechanisms: integration patterns, reliability, environments, data architecture.",
-        "This lesson is the step where all of those get organized into a single deliverable, the architecture document."
+        "If the requirement is not specific about who gets notified before something lapses but silent on what happens after it lapses, that gap is your opening to propose something the stakeholder did not ask for and may not have considered.",
+        "The lesson states this is never a relevant consideration.",
+        "The lesson says only technical staff should act on this."
       ],
       "correct_answer_index": 0,
       "explanation": "If the requirement is specific about who gets notified before something lapses but silent on what happens after it lapses, that gap is your opening to propose something the stakeholder did not ask for and may not have considered."

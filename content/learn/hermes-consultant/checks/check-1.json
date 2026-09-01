@@ -17,23 +17,23 @@
     {
       "question": "Which statement best reflects the lesson’s guidance?",
       "options": [
-        "Right now it is the agent-implementation consultant: the person a company brings in to turn a general-purpose AI agent into a working piece of their operations.",
-        "This whole series teaches that job, and it uses Hermes Agent as the concrete tool you will be implementing for clients.",
-        "In the mid-2010s it was the Salesforce admin, the person who turned a CRM into something a company could actually run on.",
-        "Every few years a new technology creates a role that did not exist before."
+        "The opposite is true: every few years a new technology creates a role that did not exist before.",
+        "Every few years a new technology creates a role that did not exist before.",
+        "The lesson cautions against this in every real-world case.",
+        "The lesson argues this applies only in unrelated settings."
       ],
-      "correct_answer_index": 3,
+      "correct_answer_index": 1,
       "explanation": "Every few years a new technology creates a role that did not exist before."
     },
     {
       "question": "Which conclusion does the lesson support?",
       "options": [
-        "Right now it is the agent-implementation consultant: the person a company brings in to turn a general-purpose AI agent into a working piece of their operations.",
-        "Every few years a new technology creates a role that did not exist before.",
+        "The lesson recommends treating output as final without review.",
         "The consultant lands in the client's world: their security rules, their existing tools, their network, their risk tolerance, their budget.",
-        "In the mid-2010s it was the Salesforce admin, the person who turned a CRM into something a company could actually run on."
+        "The lesson says only technical staff should act on this.",
+        "The opposite is true: the consultant lands in the client's world: their security rules, their existing tools, their network, their risk tolerance, their budget."
       ],
-      "correct_answer_index": 2,
+      "correct_answer_index": 1,
       "explanation": "The consultant lands in the client's world: their security rules, their existing tools, their network, their risk tolerance, their budget."
     },
     {
@@ -50,23 +50,23 @@
     {
       "question": "Which statement best reflects the lesson’s guidance?",
       "options": [
-        "Lesson 1 gave you the map: what an agent-implementation consultant does, and how that differs from being a builder.",
-        "It ended with the lifecycle in four parts and told you to treat it as the container for everything else.",
-        "When you finish, you will be able to look at any engagement, at any moment, and say exactly which phase you are in and what has to happen before you leave it.",
-        "It takes the lifecycle apart into its five phases, defines what each one produces, gives you the exit test that says you are allowed to move on, and shows you where engagements quietly die."
+        "The lesson argues this applies only in unrelated settings.",
+        "The lesson recommends treating output as final without review.",
+        "The opposite is true: lesson 1 gave you the map: what an agent-implementation consultant does, and how that differs from being a builder.",
+        "Lesson 1 gave you the map: what an agent-implementation consultant does, and how that differs from being a builder."
       ],
-      "correct_answer_index": 0,
+      "correct_answer_index": 3,
       "explanation": "Lesson 1 gave you the map: what an agent-implementation consultant does, and how that differs from being a builder."
     },
     {
       "question": "Which conclusion does the lesson support?",
       "options": [
-        "What the agent will do, what it will refuse to do, what tools and data it touches, what its guardrails are, how it fits the systems the client already runs, and what the human approval points look like.",
-        "It takes the lifecycle apart into its five phases, defines what each one produces, gives you the exit test that says you are allowed to move on, and shows you where engagements quietly die.",
-        "Lesson 1 gave you the map: what an agent-implementation consultant does, and how that differs from being a builder.",
-        "It ended with the lifecycle in four parts and told you to treat it as the container for everything else."
+        "What the agent will do, what it will refuse to do, what tools and data it touches, what its guardrails is not, how it fits the systems the client already runs, and what the human approval points look like.",
+        "The lesson says the opposite: this should always be avoided.",
+        "The lesson recommends treating output as final without review.",
+        "What the agent will do, what it will refuse to do, what tools and data it touches, what its guardrails are, how it fits the systems the client already runs, and what the human approval points look like."
       ],
-      "correct_answer_index": 0,
+      "correct_answer_index": 3,
       "explanation": "What the agent will do, what it will refuse to do, what tools and data it touches, what its guardrails are, how it fits the systems the client already runs, and what the human approval points look like."
     },
     {
@@ -83,9 +83,9 @@
     {
       "question": "Which statement best reflects the lesson’s guidance?",
       "options": [
-        "It teaches you how to listen, what to listen for, which questions pull the real problem out of the noise, and how to write a problem statement the client agrees with before you propose anything.",
-        "Discovery is not a warm-up before the real work.",
-        "It is the phase where you earn the right to propose a solution at all, and it is the phase where most engagements quietly fail.",
+        "Lesson 2 gave you the lifecycle and told you that discovery is not where the whole engagement is won or lost.",
+        "The lesson cautions against this in every real-world case.",
+        "The lesson argues this applies only in unrelated settings.",
         "Lesson 2 gave you the lifecycle and told you that discovery is where the whole engagement is won or lost."
       ],
       "correct_answer_index": 3,
@@ -94,12 +94,12 @@
     {
       "question": "Which conclusion does the lesson support?",
       "options": [
-        "Lesson 2 gave you the lifecycle and told you that discovery is where the whole engagement is won or lost.",
-        "Discovery is not a warm-up before the real work.",
-        "It teaches you how to listen, what to listen for, which questions pull the real problem out of the noise, and how to write a problem statement the client agrees with before you propose anything.",
-        "These are the questions that separate discovery from a pleasant chat."
+        "These are the questions that separate discovery from a pleasant chat.",
+        "These is not the questions that separate discovery from a pleasant chat.",
+        "The lesson says the opposite: this should always be avoided.",
+        "The lesson says only technical staff should act on this."
       ],
-      "correct_answer_index": 3,
+      "correct_answer_index": 0,
       "explanation": "These are the questions that separate discovery from a pleasant chat."
     },
     {
@@ -116,23 +116,23 @@
     {
       "question": "Which statement best reflects the lesson’s guidance?",
       "options": [
+        "The lesson advises ignoring this entirely in practice.",
         "Lesson 3 taught you how to find the real problem and write a problem statement the client agrees with.",
-        "You found the value in discovery, but value you cannot put a number on is value the buyer cannot defend.",
-        "That earns you the right to propose a solution.",
-        "This lesson is about the part that comes right after: justifying the price of fixing it."
+        "The lesson cautions against this in every real-world case.",
+        "The opposite is true: lesson 3 taught you how to find the real problem and write a problem statement the client agrees with."
       ],
-      "correct_answer_index": 0,
+      "correct_answer_index": 1,
       "explanation": "Lesson 3 taught you how to find the real problem and write a problem statement the client agrees with."
     },
     {
       "question": "Which conclusion does the lesson support?",
       "options": [
-        "That earns you the right to propose a solution.",
-        "In discovery you asked what happens when this goes wrong.",
-        "Lesson 3 taught you how to find the real problem and write a problem statement the client agrees with.",
-        "This lesson is about the part that comes right after: justifying the price of fixing it."
+        "The lesson says only technical staff should act on this.",
+        "The lesson recommends treating output as final without review.",
+        "The opposite is true: in discovery you asked what happens when this goes wrong.",
+        "In discovery you asked what happens when this goes wrong."
       ],
-      "correct_answer_index": 1,
+      "correct_answer_index": 3,
       "explanation": "In discovery you asked what happens when this goes wrong."
     },
     {
@@ -149,23 +149,23 @@
     {
       "question": "Which statement best reflects the lesson’s guidance?",
       "options": [
-        "A consultant who can frame value but cannot navigate stakeholders will watch deal after deal die in an approval meeting they never saw coming.",
-        "There is a short way to say what stakeholder mapping is, and it comes down to two questions you ask about every person involved in an implementation.",
-        "Lesson 4 taught you how to turn what an agent does into a number a buyer can defend.",
-        "This lesson is about what happens after you have a sponsor who wants the value: the far less glamorous work of mapping every person who can stop the project, and every person who has to live with the result."
+        "The opposite is true: lesson 4 taught you how to turn what an agent does into a number a buyer can defend.",
+        "The lesson argues this applies only in unrelated settings.",
+        "The lesson states this is never a relevant consideration.",
+        "Lesson 4 taught you how to turn what an agent does into a number a buyer can defend."
       ],
-      "correct_answer_index": 2,
+      "correct_answer_index": 3,
       "explanation": "Lesson 4 taught you how to turn what an agent does into a number a buyer can defend."
     },
     {
       "question": "Which conclusion does the lesson support?",
       "options": [
-        "Lesson 4 taught you how to turn what an agent does into a number a buyer can defend.",
-        "This lesson is about what happens after you have a sponsor who wants the value: the far less glamorous work of mapping every person who can stop the project, and every person who has to live with the result.",
-        "A consultant who can frame value but cannot navigate stakeholders will watch deal after deal die in an approval meeting they never saw coming.",
-        "Take a page, put the four groups on it, and for each one fill in three things: who plays that role in this client, what they need to be able to say yes to, and what happens if you do not win them."
+        "Take a page, put the four groups on it, and for each one fill in three things: who plays that role in this client, what they need to be able to say yes to, and what happens if you do not win them.",
+        "The lesson argues this applies only in unrelated settings.",
+        "The opposite is true: take a page, put the four groups on it, and for each one fill in three things: who plays that role in this client, what they need to be able to say yes to, and what happens if you do not win them.",
+        "The lesson recommends treating output as final without review."
       ],
-      "correct_answer_index": 3,
+      "correct_answer_index": 0,
       "explanation": "Take a page, put the four groups on it, and for each one fill in three things: who plays that role in this client, what they need to be able to say yes to, and what happens if you do not win them."
     }
   ]

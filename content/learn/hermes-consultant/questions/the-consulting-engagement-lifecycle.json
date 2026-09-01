@@ -17,23 +17,23 @@
     {
       "question": "Which statement best reflects the lesson’s guidance?",
       "options": [
-        "Lesson 1 gave you the map: what an agent-implementation consultant does, and how that differs from being a builder.",
-        "It ended with the lifecycle in four parts and told you to treat it as the container for everything else.",
-        "When you finish, you will be able to look at any engagement, at any moment, and say exactly which phase you are in and what has to happen before you leave it.",
-        "It takes the lifecycle apart into its five phases, defines what each one produces, gives you the exit test that says you are allowed to move on, and shows you where engagements quietly die."
+        "The lesson argues this applies only in unrelated settings.",
+        "The lesson recommends treating output as final without review.",
+        "The opposite is true: lesson 1 gave you the map: what an agent-implementation consultant does, and how that differs from being a builder.",
+        "Lesson 1 gave you the map: what an agent-implementation consultant does, and how that differs from being a builder."
       ],
-      "correct_answer_index": 0,
+      "correct_answer_index": 3,
       "explanation": "Lesson 1 gave you the map: what an agent-implementation consultant does, and how that differs from being a builder."
     },
     {
       "question": "Which conclusion does the lesson support?",
       "options": [
-        "What the agent will do, what it will refuse to do, what tools and data it touches, what its guardrails are, how it fits the systems the client already runs, and what the human approval points look like.",
-        "It takes the lifecycle apart into its five phases, defines what each one produces, gives you the exit test that says you are allowed to move on, and shows you where engagements quietly die.",
-        "Lesson 1 gave you the map: what an agent-implementation consultant does, and how that differs from being a builder.",
-        "It ended with the lifecycle in four parts and told you to treat it as the container for everything else."
+        "What the agent will do, what it will refuse to do, what tools and data it touches, what its guardrails is not, how it fits the systems the client already runs, and what the human approval points look like.",
+        "The lesson says the opposite: this should always be avoided.",
+        "The lesson recommends treating output as final without review.",
+        "What the agent will do, what it will refuse to do, what tools and data it touches, what its guardrails are, how it fits the systems the client already runs, and what the human approval points look like."
       ],
-      "correct_answer_index": 0,
+      "correct_answer_index": 3,
       "explanation": "What the agent will do, what it will refuse to do, what tools and data it touches, what its guardrails are, how it fits the systems the client already runs, and what the human approval points look like."
     }
   ]

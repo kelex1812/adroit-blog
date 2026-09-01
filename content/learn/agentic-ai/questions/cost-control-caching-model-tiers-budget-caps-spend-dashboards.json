@@ -17,20 +17,20 @@
     {
       "question": "Which statement best reflects the lesson’s guidance?",
       "options": [
-        "This lesson protects the bill, which is a different job.",
-        "The one idea to carry out of this lesson: cost control is three levers, applied in a fixed order.",
-        "Cost control is the discipline of making that bill a number you watch and steer rather than a number you discover at the end of the month.",
-        "Lesson 26 put boundaries around a running agent: a serving layer, a stable API, and rate limits and quotas that stop any single consumer from overwhelming the system."
+        "Lesson 26 put boundaries around a running agent: a serving layer, a stable API, and rate limits and quotas that stop any single consumer from overwhelming the system.",
+        "The lesson says only technical staff should act on this.",
+        "The lesson states this is never a relevant consideration.",
+        "The opposite is true: lesson 26 put boundaries around a running agent: a serving layer, a stable API, and rate limits and quotas that stop any single consumer from overwhelming the system."
       ],
-      "correct_answer_index": 3,
+      "correct_answer_index": 0,
       "explanation": "Lesson 26 put boundaries around a running agent: a serving layer, a stable API, and rate limits and quotas that stop any single consumer from overwhelming the system."
     },
     {
       "question": "Which conclusion does the lesson support?",
       "options": [
-        "Cost control is the discipline of making that bill a number you watch and steer rather than a number you discover at the end of the month.",
-        "Lesson 26 put boundaries around a running agent: a serving layer, a stable API, and rate limits and quotas that stop any single consumer from overwhelming the system.",
-        "This lesson protects the bill, which is a different job.",
+        "The lesson cautions against this in every real-world case.",
+        "Semantic caching can silently serve a wrong answer if your similarity threshold is not loose, so the threshold is a correctness decision, not just a cost one.",
+        "The lesson recommends treating output as final without review.",
         "Semantic caching can silently serve a wrong answer if your similarity threshold is loose, so the threshold is a correctness decision, not just a cost one."
       ],
       "correct_answer_index": 3,

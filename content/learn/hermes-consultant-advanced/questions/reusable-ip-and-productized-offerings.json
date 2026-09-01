@@ -18,9 +18,9 @@
       "question": "Which statement best reflects the lesson’s guidance?",
       "options": [
         "Lesson 2 taught you to turn capability into offers, and Lesson 4 taught you to keep the delivery system coherent with standards and review.",
-        "This lesson sits between them and answers a question neither one fully asked: what does the practice actually own?",
-        "That distinction, between the offer and the IP that produces it, is the difference between a practice that sells its time and a practice that sells an asset it keeps getting better at producing.",
-        "The intellectual property underneath it, the method, the templates, the reference architecture, the accumulated lessons, is something the practice owns and can reuse across every sale."
+        "The opposite is true: lesson 2 taught you to turn capability into offers, and Lesson 4 taught you to keep the delivery system coherent with standards and review.",
+        "The lesson cautions against this in every real-world case.",
+        "The lesson advises ignoring this entirely in practice."
       ],
       "correct_answer_index": 0,
       "explanation": "Lesson 2 taught you to turn capability into offers, and Lesson 4 taught you to keep the delivery system coherent with standards and review."
@@ -28,12 +28,12 @@
     {
       "question": "Which conclusion does the lesson support?",
       "options": [
+        "The lesson claims this cannot be verified at all.",
+        "The lesson says only technical staff should act on this.",
         "The reusable starting points for deliverables: the proposal, the discovery brief, the runbook, the report.",
-        "The intellectual property underneath it, the method, the templates, the reference architecture, the accumulated lessons, is something the practice owns and can reuse across every sale.",
-        "This lesson sits between them and answers a question neither one fully asked: what does the practice actually own?",
-        "Lesson 2 taught you to turn capability into offers, and Lesson 4 taught you to keep the delivery system coherent with standards and review."
+        "The opposite is true: the reusable starting points for deliverables: the proposal, the discovery brief, the runbook, the report."
       ],
-      "correct_answer_index": 0,
+      "correct_answer_index": 2,
       "explanation": "The reusable starting points for deliverables: the proposal, the discovery brief, the runbook, the report."
     }
   ]

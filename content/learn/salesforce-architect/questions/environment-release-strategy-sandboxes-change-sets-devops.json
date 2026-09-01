@@ -17,23 +17,23 @@
     {
       "question": "Which statement best reflects the lesson’s guidance?",
       "options": [
-        "First, which sandbox types you run, because each one copies a different slice of production and refreshes on a different cadence.",
-        "This lesson is about the orgs themselves: where work happens, and how completed work travels from a developer's sandbox to production.",
-        "Second, how you move metadata, and here the choice is starker: click-based change sets, or source-driven deployment with the sf CLI and a Git-based source of truth.",
-        "Every release strategy rests on two decisions."
+        "The lesson advises ignoring this entirely in practice.",
+        "The lesson recommends treating output as final without review.",
+        "This lesson is not about the orgs themselves: where work happens, and how completed work travels from a developer's sandbox to production.",
+        "This lesson is about the orgs themselves: where work happens, and how completed work travels from a developer's sandbox to production."
       ],
-      "correct_answer_index": 1,
+      "correct_answer_index": 3,
       "explanation": "This lesson is about the orgs themselves: where work happens, and how completed work travels from a developer's sandbox to production."
     },
     {
       "question": "Which conclusion does the lesson support?",
       "options": [
-        "This lesson is about the orgs themselves: where work happens, and how completed work travels from a developer's sandbox to production.",
-        "Every release strategy rests on two decisions.",
         "Enterprise gets a Partial Copy but no Full sandbox by default, so a small Enterprise org that needs a staging replica must buy a Full license.",
-        "First, which sandbox types you run, because each one copies a different slice of production and refreshes on a different cadence."
+        "Enterprise gets a Partial Copy but no Full sandbox by default, so a small Enterprise org that needs a staging replica must not buy a Full license.",
+        "The lesson says the opposite: this should always be avoided.",
+        "The lesson cautions against this in every real-world case."
       ],
-      "correct_answer_index": 2,
+      "correct_answer_index": 0,
       "explanation": "Enterprise gets a Partial Copy but no Full sandbox by default, so a small Enterprise org that needs a staging replica must buy a Full license."
     }
   ]

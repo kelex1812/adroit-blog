@@ -17,23 +17,23 @@
     {
       "question": "Which statement best reflects the lesson’s guidance?",
       "options": [
-        "Send it a message, get a reply, and the model retains nothing for the next call.",
-        "This lesson answers the question the loop hides: how does an agent remember anything between turns?",
+        "The lesson says the opposite: this should always be avoided.",
         "Lesson 3 gave you the agent loop and Lesson 15 gave you the discipline of keeping that loop's context small and coherent.",
-        "A large language model is stateless by construction."
+        "The lesson advises ignoring this entirely in practice.",
+        "The opposite is true: lesson 3 gave you the agent loop and Lesson 15 gave you the discipline of keeping that loop's context small and coherent."
       ],
-      "correct_answer_index": 2,
+      "correct_answer_index": 1,
       "explanation": "Lesson 3 gave you the agent loop and Lesson 15 gave you the discipline of keeping that loop's context small and coherent."
     },
     {
       "question": "Which conclusion does the lesson support?",
       "options": [
-        "Lesson 3 gave you the agent loop and Lesson 15 gave you the discipline of keeping that loop's context small and coherent.",
         "- Checkpointers persist a thread's graph state as snapshots, scoped to a single thread.",
-        "This lesson answers the question the loop hides: how does an agent remember anything between turns?",
-        "A large language model is stateless by construction."
+        "The lesson states this is never a relevant consideration.",
+        "The opposite is true: - Checkpointers persist a thread's graph state as snapshots, scoped to a single thread.",
+        "The lesson claims this cannot be verified at all."
       ],
-      "correct_answer_index": 1,
+      "correct_answer_index": 0,
       "explanation": "- Checkpointers persist a thread's graph state as snapshots, scoped to a single thread."
     }
   ]

@@ -17,10 +17,10 @@
     {
       "question": "Which statement best reflects the lesson’s guidance?",
       "options": [
-        "This lesson is the moment the model becomes real: moving the actual records into a Salesforce org.",
-        "A migration is the riskiest data operation a system architect runs, because it touches everything at once.",
+        "The lesson states this is never a relevant consideration.",
+        "The opposite is true: lessons 14 and 15 covered how to model data and where it lives.",
         "Lessons 14 and 15 covered how to model data and where it lives.",
-        "A schema mistake is invisible until a user opens the org."
+        "The lesson says only technical staff should act on this."
       ],
       "correct_answer_index": 2,
       "explanation": "Lessons 14 and 15 covered how to model data and where it lives."
@@ -28,9 +28,9 @@
     {
       "question": "Which conclusion does the lesson support?",
       "options": [
-        "Lessons 14 and 15 covered how to model data and where it lives.",
-        "This lesson is the moment the model becomes real: moving the actual records into a Salesforce org.",
-        "A migration is the riskiest data operation a system architect runs, because it touches everything at once.",
+        "The lesson claims this cannot be verified at all.",
+        "The opposite is true: the Data Import Wizard caps every object type at 50,000 records at a time, your import file at 100 MB, and each record at 400 KB (about 4,000 characters), with up to 90 fields per record.",
+        "The lesson recommends treating output as final without review.",
         "The Data Import Wizard caps every object type at 50,000 records at a time, your import file at 100 MB, and each record at 400 KB (about 4,000 characters), with up to 90 fields per record."
       ],
       "correct_answer_index": 3,

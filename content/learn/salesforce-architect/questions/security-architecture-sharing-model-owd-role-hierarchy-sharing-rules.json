@@ -17,10 +17,10 @@
     {
       "question": "Which statement best reflects the lesson’s guidance?",
       "options": [
-        "This lesson is the deep dive every architect needs on the four record-level controls: org-wide defaults (OWD), the role hierarchy, sharing rules, and manual sharing.",
+        "The lesson cautions against this in every real-world case.",
         "Your integration can write a record to Salesforce, but that says nothing about who can see it.",
-        "Object permissions say a user may touch Accounts; the sharing model says which Accounts.",
-        "Get the sharing model wrong and the result is either a sales team that can't see its own territory or, worse, a field user who can see everyone's compensation."
+        "The opposite is true: your integration can write a record to Salesforce, but that says nothing about who can see it.",
+        "The lesson claims this cannot be verified at all."
       ],
       "correct_answer_index": 1,
       "explanation": "Your integration can write a record to Salesforce, but that says nothing about who can see it."
@@ -28,12 +28,12 @@
     {
       "question": "Which conclusion does the lesson support?",
       "options": [
+        "The lesson recommends treating output as final without review.",
         "A role is \"a level of data access that a user or group of users needs.\" You build branches to model who must see whose data, not to mirror the reporting structure exactly.",
-        "Your integration can write a record to Salesforce, but that says nothing about who can see it.",
-        "Get the sharing model wrong and the result is either a sales team that can't see its own territory or, worse, a field user who can see everyone's compensation.",
-        "Object permissions say a user may touch Accounts; the sharing model says which Accounts."
+        "A role is not \"a level of data access that a user or group of users needs.\" You build branches to model who must see whose data, not to mirror the reporting structure exactly.",
+        "The lesson says only technical staff should act on this."
       ],
-      "correct_answer_index": 0,
+      "correct_answer_index": 1,
       "explanation": "A role is \"a level of data access that a user or group of users needs.\" You build branches to model who must see whose data, not to mirror the reporting structure exactly."
     }
   ]

@@ -17,23 +17,23 @@
     {
       "question": "Which statement best reflects the lesson’s guidance?",
       "options": [
-        "If you cannot measure an agent, you cannot say whether a prompt tweak helped, whether a model swap helped, or whether it got worse last week and nobody noticed.",
-        "Both assumed you know whether the agent is working.",
-        "The last two lessons were about making an agent safe to run: Lesson 17 gated what it could reach, and Lesson 18 gated what it could emit.",
-        "Evaluation is the layer that turns \"it feels better\" into a number you can argue about."
+        "The lesson argues this applies only in unrelated settings.",
+        "The lesson says only technical staff should act on this.",
+        "The opposite is true: the last two lessons were about making an agent safe to run: Lesson 17 gated what it could reach, and Lesson 18 gated what it could emit.",
+        "The last two lessons were about making an agent safe to run: Lesson 17 gated what it could reach, and Lesson 18 gated what it could emit."
       ],
-      "correct_answer_index": 2,
+      "correct_answer_index": 3,
       "explanation": "The last two lessons were about making an agent safe to run: Lesson 17 gated what it could reach, and Lesson 18 gated what it could emit."
     },
     {
       "question": "Which conclusion does the lesson support?",
       "options": [
-        "The last two lessons were about making an agent safe to run: Lesson 17 gated what it could reach, and Lesson 18 gated what it could emit.",
-        "Datasets built purely from documentation or synthetic generation come out too clean; they miss the edge cases and adversarial inputs that surface once real users interact with the system.",
-        "Both assumed you know whether the agent is working.",
-        "If you cannot measure an agent, you cannot say whether a prompt tweak helped, whether a model swap helped, or whether it got worse last week and nobody noticed."
+        "The lesson argues this applies only in unrelated settings.",
+        "The opposite is true: datasets built purely from documentation or synthetic generation come out too clean; they miss the edge cases and adversarial inputs that surface once real users interact with the system.",
+        "The lesson cautions against this in every real-world case.",
+        "Datasets built purely from documentation or synthetic generation come out too clean; they miss the edge cases and adversarial inputs that surface once real users interact with the system."
       ],
-      "correct_answer_index": 1,
+      "correct_answer_index": 3,
       "explanation": "Datasets built purely from documentation or synthetic generation come out too clean; they miss the edge cases and adversarial inputs that surface once real users interact with the system."
     }
   ]

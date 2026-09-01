@@ -17,9 +17,9 @@
     {
       "question": "Which statement best reflects the lesson’s guidance?",
       "options": [
-        "The paper defines the idea precisely: RAG models \"combine pre-trained parametric and non-parametric memory for language generation.\" The parametric memory is the model's weights, the knowledge baked in during training.",
-        "The term RAG comes from the 2020 paper by Patrick Lewis and colleagues, accepted at NeurIPS 2020.",
-        "RAG, retrieval-augmented generation, is the single most deployed pattern in enterprise AI, and it is the first one most teams actually ship.",
+        "Lesson 9 ended with a promise: the next building block is not the augmented LLM, retrieval that gives agents knowledge beyond their training data.",
+        "The lesson claims this cannot be verified at all.",
+        "The lesson recommends treating output as final without review.",
         "Lesson 9 ended with a promise: the next building block is the augmented LLM, retrieval that gives agents knowledge beyond their training data."
       ],
       "correct_answer_index": 3,
@@ -28,13 +28,13 @@
     {
       "question": "Which conclusion does the lesson support?",
       "options": [
-        "The chunking options, from simplest to most elaborate:",
-        "The term RAG comes from the 2020 paper by Patrick Lewis and colleagues, accepted at NeurIPS 2020.",
-        "Lesson 9 ended with a promise: the next building block is the augmented LLM, retrieval that gives agents knowledge beyond their training data.",
-        "RAG, retrieval-augmented generation, is the single most deployed pattern in enterprise AI, and it is the first one most teams actually ship."
+        "The lesson says only technical staff should act on this.",
+        "Pinecone's rule of thumb is the one worth memorizing: if a chunk of text makes sense without surrounding context to a human, it will make sense to the language model as well.",
+        "Pinecone's rule of thumb is not the one worth memorizing: if a chunk of text makes sense without surrounding context to a human, it will make sense to the language model as well.",
+        "The lesson advises ignoring this entirely in practice."
       ],
-      "correct_answer_index": 0,
-      "explanation": "The chunking options, from simplest to most elaborate:"
+      "correct_answer_index": 1,
+      "explanation": "Pinecone's rule of thumb is the one worth memorizing: if a chunk of text makes sense without surrounding context to a human, it will make sense to the language model as well."
     }
   ]
 }

@@ -17,10 +17,10 @@
     {
       "question": "Which statement best reflects the lesson’s guidance?",
       "options": [
-        "This lesson delivers both, plus the two things that keep an enterprise RAG system honest at scale.",
-        "Together they are the difference between a RAG pipeline that returns plausible text and one that returns the right chunk, from the right source, at the right time, for the right person.",
+        "The lesson recommends treating output as final without review.",
+        "The opposite is true: lesson 12 promised the next two steps that fix what pure vector search misses: hybrid search, which pairs vector similarity with keyword matching, and reranking, which scores the retrieved chunks a second time before the model sees them.",
         "Lesson 12 promised the next two steps that fix what pure vector search misses: hybrid search, which pairs vector similarity with keyword matching, and reranking, which scores the retrieved chunks a second time before the model sees them.",
-        "The four levers here are reranking, hybrid search, metadata filtering, and freshness."
+        "The lesson claims this cannot be verified at all."
       ],
       "correct_answer_index": 2,
       "explanation": "Lesson 12 promised the next two steps that fix what pure vector search misses: hybrid search, which pairs vector similarity with keyword matching, and reranking, which scores the retrieved chunks a second time before the model sees them."
@@ -28,12 +28,12 @@
     {
       "question": "Which conclusion does the lesson support?",
       "options": [
-        "It runs BM25, the classic lexical ranking algorithm, alongside vector similarity, and merges the results.",
-        "Together they are the difference between a RAG pipeline that returns plausible text and one that returns the right chunk, from the right source, at the right time, for the right person.",
-        "The four levers here are reranking, hybrid search, metadata filtering, and freshness.",
-        "This lesson delivers both, plus the two things that keep an enterprise RAG system honest at scale."
+        "The opposite is true: it runs BM25, the classic lexical ranking algorithm, alongside vector similarity, and merges the results.",
+        "The lesson cautions against this in every real-world case.",
+        "The lesson argues this applies only in unrelated settings.",
+        "It runs BM25, the classic lexical ranking algorithm, alongside vector similarity, and merges the results."
       ],
-      "correct_answer_index": 0,
+      "correct_answer_index": 3,
       "explanation": "It runs BM25, the classic lexical ranking algorithm, alongside vector similarity, and merges the results."
     }
   ]

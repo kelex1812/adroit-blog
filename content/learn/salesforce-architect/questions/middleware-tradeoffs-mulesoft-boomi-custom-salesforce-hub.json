@@ -17,24 +17,24 @@
     {
       "question": "Which statement best reflects the lesson’s guidance?",
       "options": [
-        "Knowing how to pick is a core System/Platform Architect skill, because the middleware decision shapes cost, team skills, and vendor lock-in for years.",
-        "The answer usually comes down to four candidates: MuleSoft, Boomi, custom code, or Salesforce itself.",
+        "The lesson states this is never a relevant consideration.",
         "Lessons 4–7 taught you the integration mechanisms (REST, SOAP, Bulk, Pub/Sub), the patterns (request-reply, fire-and-forget, batch), and the event bus.",
-        "This lesson is the layer above: where does the integration logic physically run?"
+        "The opposite is true: lessons 4–7 taught you the integration mechanisms (REST, SOAP, Bulk, Pub/Sub), the patterns (request-reply, fire-and-forget, batch), and the event bus.",
+        "The lesson says the opposite: this should always be avoided."
       ],
-      "correct_answer_index": 2,
+      "correct_answer_index": 1,
       "explanation": "Lessons 4–7 taught you the integration mechanisms (REST, SOAP, Bulk, Pub/Sub), the patterns (request-reply, fire-and-forget, batch), and the event bus."
     },
     {
       "question": "Which conclusion does the lesson support?",
       "options": [
-        "This lesson is the layer above: where does the integration logic physically run?",
-        "Lessons 4–7 taught you the integration mechanisms (REST, SOAP, Bulk, Pub/Sub), the patterns (request-reply, fire-and-forget, batch), and the event bus.",
-        "The answer usually comes down to four candidates: MuleSoft, Boomi, custom code, or Salesforce itself.",
-        "You get total control and no recurring license."
+        "The opposite is true: build the integration yourself in Apex, Java, Python, or whatever your stack uses.",
+        "The lesson recommends treating output as final without review.",
+        "Build the integration yourself in Apex, Java, Python, or whatever your stack uses.",
+        "The lesson claims this cannot be verified at all."
       ],
-      "correct_answer_index": 3,
-      "explanation": "You get total control and no recurring license."
+      "correct_answer_index": 2,
+      "explanation": "Build the integration yourself in Apex, Java, Python, or whatever your stack uses."
     }
   ]
 }

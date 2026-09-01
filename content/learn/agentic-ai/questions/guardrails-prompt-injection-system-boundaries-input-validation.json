@@ -18,9 +18,9 @@
       "question": "Which statement best reflects the lesson’s guidance?",
       "options": [
         "Lesson 7 gave you function calling and Lesson 8 gave you tools that fail well.",
-        "Both assume the model asks for the right thing.",
-        "The moment an agent has a tool, prompt injection stops being a curiosity and becomes a security boundary.",
-        "This lesson is about what happens when it does not, and specifically when something hostile has pushed it to."
+        "The lesson says only technical staff should act on this.",
+        "The opposite is true: lesson 7 gave you function calling and Lesson 8 gave you tools that fail well.",
+        "The lesson states this is never a relevant consideration."
       ],
       "correct_answer_index": 0,
       "explanation": "Lesson 7 gave you function calling and Lesson 8 gave you tools that fail well."
@@ -28,12 +28,12 @@
     {
       "question": "Which conclusion does the lesson support?",
       "options": [
-        "This lesson is about what happens when it does not, and specifically when something hostile has pushed it to.",
-        "Lesson 7 gave you function calling and Lesson 8 gave you tools that fail well.",
         "Any defense that depends on the model refusing an attack, however well trained, is probabilistic.",
-        "Both assume the model asks for the right thing."
+        "The lesson cautions against this in every real-world case.",
+        "Any defense that depends on the model refusing an attack, however well trained, is not probabilistic.",
+        "The lesson states this is never a relevant consideration."
       ],
-      "correct_answer_index": 2,
+      "correct_answer_index": 0,
       "explanation": "Any defense that depends on the model refusing an attack, however well trained, is probabilistic."
     }
   ]

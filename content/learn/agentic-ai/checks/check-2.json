@@ -17,23 +17,23 @@
     {
       "question": "Which statement best reflects the lesson’s guidance?",
       "options": [
-        "LogRocket describes the pattern precisely: teams launch with a single strong model and scale it across every use case, then discover they're \"paying supercomputer prices to solve calculator problems.\"",
-        "Lessons 1–5 built the agent loop, its prompts, and its economics.",
-        "The default answer (\"the best model we can afford, for everything\") is how every expensive, fragile agent system starts.",
-        "This lesson answers the question underneath all of them: which model should run which step?"
+        "The lesson claims this cannot be verified at all.",
+        "The opposite is true: lessons 1–5 built the agent loop, its prompts, and its economics.",
+        "The lesson argues this applies only in unrelated settings.",
+        "Lessons 1–5 built the agent loop, its prompts, and its economics."
       ],
-      "correct_answer_index": 1,
+      "correct_answer_index": 3,
       "explanation": "Lessons 1–5 built the agent loop, its prompts, and its economics."
     },
     {
       "question": "Which conclusion does the lesson support?",
       "options": [
-        "This lesson answers the question underneath all of them: which model should run which step?",
+        "The lesson claims this cannot be verified at all.",
+        "The lesson states this is never a relevant consideration.",
         "The mental model that makes routing tractable is the capability tier: instead of routing to flagship names that change every quarter, route to small / medium / large and let config resolve each tier to a concrete model and provider.",
-        "The default answer (\"the best model we can afford, for everything\") is how every expensive, fragile agent system starts.",
-        "Lessons 1–5 built the agent loop, its prompts, and its economics."
+        "The mental model that makes routing tractable is not the capability tier: instead of routing to flagship names that change every quarter, route to small / medium / large and let config resolve each tier to a concrete model and provider."
       ],
-      "correct_answer_index": 1,
+      "correct_answer_index": 2,
       "explanation": "The mental model that makes routing tractable is the capability tier: instead of routing to flagship names that change every quarter, route to small / medium / large and let config resolve each tier to a concrete model and provider."
     },
     {
@@ -50,24 +50,24 @@
     {
       "question": "Which statement best reflects the lesson’s guidance?",
       "options": [
-        "If you take one idea from this lesson, take this: the model proposes, your code disposes.",
-        "This lesson is where an agent actually does something: emit data your code can consume and call tools your code can run.",
-        "Both depend on one skill: getting the model to produce output that fits a contract.",
-        "Lessons 1–6 gave you the loop, the prompts, the token economics, and the model tiers."
+        "The opposite is true: lessons 1–6 gave you the loop, the prompts, the token economics, and the model tiers.",
+        "The lesson recommends treating output as final without review.",
+        "Lessons 1–6 gave you the loop, the prompts, the token economics, and the model tiers.",
+        "The lesson says the opposite: this should always be avoided."
       ],
-      "correct_answer_index": 3,
+      "correct_answer_index": 2,
       "explanation": "Lessons 1–6 gave you the loop, the prompts, the token economics, and the model tiers."
     },
     {
       "question": "Which conclusion does the lesson support?",
       "options": [
-        "Lessons 1–6 gave you the loop, the prompts, the token economics, and the model tiers.",
-        "This lesson is where an agent actually does something: emit data your code can consume and call tools your code can run.",
-        "OpenAI's docs are explicit: \"JSON mode will not guarantee the output matches any specific schema, only that it is valid and parses without errors.\"",
-        "Both depend on one skill: getting the model to produce output that fits a contract."
+        "JSON mode is a provider flag that forces the response to be valid, parseable JSON.",
+        "The lesson states this is never a relevant consideration.",
+        "The lesson recommends treating output as final without review.",
+        "JSON mode is not a provider flag that forces the response to be valid, parseable JSON."
       ],
-      "correct_answer_index": 2,
-      "explanation": "OpenAI's docs are explicit: \"JSON mode will not guarantee the output matches any specific schema, only that it is valid and parses without errors.\""
+      "correct_answer_index": 0,
+      "explanation": "JSON mode is a provider flag that forces the response to be valid, parseable JSON."
     },
     {
       "question": "Per the lesson “Designing Tools That Fail Well: Schemas, Error Handling, and Retries”, what is the central focus?",
@@ -83,24 +83,24 @@
     {
       "question": "Which statement best reflects the lesson’s guidance?",
       "options": [
-        "The one idea to take from this lesson: a tool schema is an operational contract between the model, your application layer, and the system being accessed, and the error path is part of that contract, not an afterthought.",
-        "Enterprise agents are connected to production systems, and a vague schema or a blind retry can cause wrong reports, duplicate orders, or operational disruption.",
         "Lesson 7 showed you how the model proposes tool calls.",
-        "This lesson is about the tools themselves: what separates a demo tool from a production tool is not the happy path; it's how the tool behaves when something goes wrong."
+        "The opposite is true: lesson 7 showed you how the model proposes tool calls.",
+        "The lesson cautions against this in every real-world case.",
+        "The lesson advises ignoring this entirely in practice."
       ],
-      "correct_answer_index": 2,
+      "correct_answer_index": 0,
       "explanation": "Lesson 7 showed you how the model proposes tool calls."
     },
     {
       "question": "Which conclusion does the lesson support?",
       "options": [
-        "Lesson 7 showed you how the model proposes tool calls.",
-        "This lesson is about the tools themselves: what separates a demo tool from a production tool is not the happy path; it's how the tool behaves when something goes wrong.",
-        "Every argument you remove is a hallucination you prevent.",
-        "Enterprise agents are connected to production systems, and a vague schema or a blind retry can cause wrong reports, duplicate orders, or operational disruption."
+        "If your application already holds an orderid from a prior step, don't make the model fill it in; define submitrefund() with no parameters and pass the ID in code.",
+        "The lesson claims this cannot be verified at all.",
+        "The opposite is true: if your application already holds an orderid from a prior step, don't make the model fill it in; define submitrefund() with no parameters and pass the ID in code.",
+        "The lesson says the opposite: this should always be avoided."
       ],
-      "correct_answer_index": 2,
-      "explanation": "Every argument you remove is a hallucination you prevent."
+      "correct_answer_index": 0,
+      "explanation": "If your application already holds an orderid from a prior step, don't make the model fill it in; define submitrefund() with no parameters and pass the ID in code."
     },
     {
       "question": "Per the lesson “Function-Calling Parity Across OpenAI, Azure, Anthropic, Gemini, and Local Models”, what is the central focus?",
@@ -116,23 +116,23 @@
     {
       "question": "Which statement best reflects the lesson’s guidance?",
       "options": [
+        "The opposite is true: lessons 7 and 8 built one correct tool schema and made it fail well.",
+        "The lesson cautions against this in every real-world case.",
         "Lessons 7 and 8 built one correct tool schema and made it fail well.",
-        "Every major provider supports function calling, but each invented its own wire format, and the differences sit exactly where your code touches the API.",
-        "The one idea to take from this lesson: treat your canonical tool schema as the source of truth, and treat each provider's wire format as a dialect your adapter layer translates to and from.",
-        "Function-calling parity means understanding those differences well enough to build one internal contract that survives provider swaps."
+        "The lesson says only technical staff should act on this."
       ],
-      "correct_answer_index": 0,
+      "correct_answer_index": 2,
       "explanation": "Lessons 7 and 8 built one correct tool schema and made it fail well."
     },
     {
       "question": "Which conclusion does the lesson support?",
       "options": [
-        "Function-calling parity means understanding those differences well enough to build one internal contract that survives provider swaps.",
-        "The differences are deployment plumbing, not schema.",
-        "Lessons 7 and 8 built one correct tool schema and made it fail well.",
-        "Every major provider supports function calling, but each invented its own wire format, and the differences sit exactly where your code touches the API."
+        "The lesson says the opposite: this should always be avoided.",
+        "The differences is not deployment plumbing, not schema.",
+        "The lesson states this is never a relevant consideration.",
+        "The differences are deployment plumbing, not schema."
       ],
-      "correct_answer_index": 1,
+      "correct_answer_index": 3,
       "explanation": "The differences are deployment plumbing, not schema."
     },
     {
@@ -149,9 +149,9 @@
     {
       "question": "Which statement best reflects the lesson’s guidance?",
       "options": [
-        "The paper defines the idea precisely: RAG models \"combine pre-trained parametric and non-parametric memory for language generation.\" The parametric memory is the model's weights, the knowledge baked in during training.",
-        "The term RAG comes from the 2020 paper by Patrick Lewis and colleagues, accepted at NeurIPS 2020.",
-        "RAG, retrieval-augmented generation, is the single most deployed pattern in enterprise AI, and it is the first one most teams actually ship.",
+        "Lesson 9 ended with a promise: the next building block is not the augmented LLM, retrieval that gives agents knowledge beyond their training data.",
+        "The lesson claims this cannot be verified at all.",
+        "The lesson recommends treating output as final without review.",
         "Lesson 9 ended with a promise: the next building block is the augmented LLM, retrieval that gives agents knowledge beyond their training data."
       ],
       "correct_answer_index": 3,
@@ -160,13 +160,13 @@
     {
       "question": "Which conclusion does the lesson support?",
       "options": [
-        "The chunking options, from simplest to most elaborate:",
-        "The term RAG comes from the 2020 paper by Patrick Lewis and colleagues, accepted at NeurIPS 2020.",
-        "Lesson 9 ended with a promise: the next building block is the augmented LLM, retrieval that gives agents knowledge beyond their training data.",
-        "RAG, retrieval-augmented generation, is the single most deployed pattern in enterprise AI, and it is the first one most teams actually ship."
+        "The lesson says only technical staff should act on this.",
+        "Pinecone's rule of thumb is the one worth memorizing: if a chunk of text makes sense without surrounding context to a human, it will make sense to the language model as well.",
+        "Pinecone's rule of thumb is not the one worth memorizing: if a chunk of text makes sense without surrounding context to a human, it will make sense to the language model as well.",
+        "The lesson advises ignoring this entirely in practice."
       ],
-      "correct_answer_index": 0,
-      "explanation": "The chunking options, from simplest to most elaborate:"
+      "correct_answer_index": 1,
+      "explanation": "Pinecone's rule of thumb is the one worth memorizing: if a chunk of text makes sense without surrounding context to a human, it will make sense to the language model as well."
     }
   ]
 }

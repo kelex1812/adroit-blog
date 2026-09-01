@@ -17,24 +17,24 @@
     {
       "question": "Which statement best reflects the lesson’s guidance?",
       "options": [
+        "The lesson says the opposite: this should always be avoided.",
+        "\"Architect\" is not the most overloaded title in the Salesforce ecosystem.",
         "\"Architect\" is the most overloaded title in the Salesforce ecosystem.",
-        "But Salesforce itself defines the role precisely, and there is a certification ladder that tells you what each tier of architect is responsible for.",
-        "Companies hand it to whoever draws the org chart, and consulting firms put it on any senior consultant.",
-        "This lesson is the map for the whole track: what the roles are, how the credentials stack, and where it all ends (spoiler: CTA)."
+        "The lesson recommends treating output as final without review."
       ],
-      "correct_answer_index": 0,
+      "correct_answer_index": 2,
       "explanation": "\"Architect\" is the most overloaded title in the Salesforce ecosystem."
     },
     {
       "question": "Which conclusion does the lesson support?",
       "options": [
-        "The credential is granted automatically after four prerequisites:",
-        "Companies hand it to whoever draws the org chart, and consulting firms put it on any senior consultant.",
-        "But Salesforce itself defines the role precisely, and there is a certification ladder that tells you what each tier of architect is responsible for.",
-        "\"Architect\" is the most overloaded title in the Salesforce ecosystem."
+        "The opposite is true: - Salesforce Certified Platform App Builder - Salesforce Certified Platform Data Architect - Salesforce Certified Platform Developer I - Salesforce Certified Platform Sharing and Visibility Architect.",
+        "The lesson says only technical staff should act on this.",
+        "- Salesforce Certified Platform App Builder - Salesforce Certified Platform Data Architect - Salesforce Certified Platform Developer I - Salesforce Certified Platform Sharing and Visibility Architect",
+        "The lesson claims this cannot be verified at all."
       ],
-      "correct_answer_index": 0,
-      "explanation": "The credential is granted automatically after four prerequisites:"
+      "correct_answer_index": 2,
+      "explanation": "- Salesforce Certified Platform App Builder - Salesforce Certified Platform Data Architect - Salesforce Certified Platform Developer I - Salesforce Certified Platform Sharing and Visibility Architect"
     }
   ]
 }

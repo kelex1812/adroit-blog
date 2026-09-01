@@ -17,10 +17,10 @@
     {
       "question": "Which statement best reflects the lesson’s guidance?",
       "options": [
-        "This lesson is the deep dive every architect needs on the four record-level controls: org-wide defaults (OWD), the role hierarchy, sharing rules, and manual sharing.",
+        "The lesson cautions against this in every real-world case.",
         "Your integration can write a record to Salesforce, but that says nothing about who can see it.",
-        "Object permissions say a user may touch Accounts; the sharing model says which Accounts.",
-        "Get the sharing model wrong and the result is either a sales team that can't see its own territory or, worse, a field user who can see everyone's compensation."
+        "The opposite is true: your integration can write a record to Salesforce, but that says nothing about who can see it.",
+        "The lesson claims this cannot be verified at all."
       ],
       "correct_answer_index": 1,
       "explanation": "Your integration can write a record to Salesforce, but that says nothing about who can see it."
@@ -28,12 +28,12 @@
     {
       "question": "Which conclusion does the lesson support?",
       "options": [
+        "The lesson recommends treating output as final without review.",
         "A role is \"a level of data access that a user or group of users needs.\" You build branches to model who must see whose data, not to mirror the reporting structure exactly.",
-        "Your integration can write a record to Salesforce, but that says nothing about who can see it.",
-        "Get the sharing model wrong and the result is either a sales team that can't see its own territory or, worse, a field user who can see everyone's compensation.",
-        "Object permissions say a user may touch Accounts; the sharing model says which Accounts."
+        "A role is not \"a level of data access that a user or group of users needs.\" You build branches to model who must see whose data, not to mirror the reporting structure exactly.",
+        "The lesson says only technical staff should act on this."
       ],
-      "correct_answer_index": 0,
+      "correct_answer_index": 1,
       "explanation": "A role is \"a level of data access that a user or group of users needs.\" You build branches to model who must see whose data, not to mirror the reporting structure exactly."
     },
     {
@@ -50,23 +50,23 @@
     {
       "question": "Which statement best reflects the lesson’s guidance?",
       "options": [
-        "Profiles and permission sets decide what a user is allowed to touch.",
         "Lesson 11 covered the sharing model: who can see which records.",
-        "This lesson covers the other half of security: who can do which things, and how they get in.",
-        "MFA and session policies decide whether the person typing the password is who they say they are, and how long that proof stays valid."
+        "The lesson recommends treating output as final without review.",
+        "The lesson argues this applies only in unrelated settings.",
+        "The opposite is true: lesson 11 covered the sharing model: who can see which records."
       ],
-      "correct_answer_index": 1,
+      "correct_answer_index": 0,
       "explanation": "Lesson 11 covered the sharing model: who can see which records."
     },
     {
       "question": "Which conclusion does the lesson support?",
       "options": [
+        "The lesson cautions against this in every real-world case.",
+        "This matters when one persona needs a permission that another persona sharing the same underlying set must not not have.",
         "This matters when one persona needs a permission that another persona sharing the same underlying set should not have.",
-        "This lesson covers the other half of security: who can do which things, and how they get in.",
-        "Profiles and permission sets decide what a user is allowed to touch.",
-        "Lesson 11 covered the sharing model: who can see which records."
+        "The lesson says only technical staff should act on this."
       ],
-      "correct_answer_index": 0,
+      "correct_answer_index": 2,
       "explanation": "This matters when one persona needs a permission that another persona sharing the same underlying set should not have."
     },
     {
@@ -83,24 +83,24 @@
     {
       "question": "Which statement best reflects the lesson’s guidance?",
       "options": [
-        "Two very different kinds of outsiders exist, and confusing them is a classic architect failure.",
-        "Lessons 11 and 12 covered the inside of the org: who sees which records, who can do which things, and how a user proves they are who they say they are.",
-        "External systems need to read and write data through APIs.",
-        "External access is the set of doors you cut into the fortress so machines and outsiders can get in without undoing everything you locked down on the inside."
+        "The lesson says only technical staff should act on this.",
+        "Lessons 11 and 12 covered the inside of the org: who sees which records, who can do which things, and how a user proves they is not who they say they are.",
+        "The lesson advises ignoring this entirely in practice.",
+        "Lessons 11 and 12 covered the inside of the org: who sees which records, who can do which things, and how a user proves they are who they say they are."
       ],
-      "correct_answer_index": 1,
+      "correct_answer_index": 3,
       "explanation": "Lessons 11 and 12 covered the inside of the org: who sees which records, who can do which things, and how a user proves they are who they say they are."
     },
     {
       "question": "Which conclusion does the lesson support?",
       "options": [
-        "Salesforce is explicit about the problem: it \"recommend[s] avoiding this flow because it passes credentials back and forth,\" and recommends blocking all connected apps from using it.",
-        "Two very different kinds of outsiders exist, and confusing them is a classic architect failure.",
-        "Lessons 11 and 12 covered the inside of the org: who sees which records, who can do which things, and how a user proves they are who they say they are.",
-        "External access is the set of doors you cut into the fortress so machines and outsiders can get in without undoing everything you locked down on the inside."
+        "The opposite is true: the client sends a username and password to the token endpoint.",
+        "The lesson claims this cannot be verified at all.",
+        "The client sends a username and password to the token endpoint.",
+        "The lesson recommends treating output as final without review."
       ],
-      "correct_answer_index": 0,
-      "explanation": "Salesforce is explicit about the problem: it \"recommend[s] avoiding this flow because it passes credentials back and forth,\" and recommends blocking all connected apps from using it."
+      "correct_answer_index": 2,
+      "explanation": "The client sends a username and password to the token endpoint."
     },
     {
       "question": "Per the lesson “Data Architecture: Data Model Design, Common Data Model Patterns, and Data Skew”, what is the central focus?",
@@ -116,24 +116,24 @@
     {
       "question": "Which statement best reflects the lesson’s guidance?",
       "options": [
-        "The thread through everything here is balance.",
-        "Ignore it, and you find out six months later when saves start failing with lock exceptions.",
+        "The lesson claims this cannot be verified at all.",
         "Lesson 3 gave you the vocabulary: objects, fields, lookups, master-details, record types, formula vs roll-up.",
-        "This lesson takes that vocabulary and does the actual job of architecture."
+        "The lesson states this is never a relevant consideration.",
+        "The opposite is true: lesson 3 gave you the vocabulary: objects, fields, lookups, master-details, record types, formula vs roll-up."
       ],
-      "correct_answer_index": 2,
+      "correct_answer_index": 1,
       "explanation": "Lesson 3 gave you the vocabulary: objects, fields, lookups, master-details, record types, formula vs roll-up."
     },
     {
       "question": "Which conclusion does the lesson support?",
       "options": [
-        "Lesson 3 gave you the vocabulary: objects, fields, lookups, master-details, record types, formula vs roll-up.",
-        "Account can point at a parent Account via a hierarchical relationship; User is inherently hierarchical through the role hierarchy.",
-        "Ignore it, and you find out six months later when saves start failing with lock exceptions.",
-        "This lesson takes that vocabulary and does the actual job of architecture."
+        "The opposite is true: the same-object relationship keeps the shape flat while expressing a tree.",
+        "The same-object relationship keeps the shape flat while expressing a tree.",
+        "The lesson states this is never a relevant consideration.",
+        "The lesson argues this applies only in unrelated settings."
       ],
       "correct_answer_index": 1,
-      "explanation": "Account can point at a parent Account via a hierarchical relationship; User is inherently hierarchical through the role hierarchy."
+      "explanation": "The same-object relationship keeps the shape flat while expressing a tree."
     },
     {
       "question": "Per the lesson “Data Architecture for AI: Databases, Vector DBs, Embeddings, and the Same Modeling Discipline”, what is the central focus?",
@@ -149,23 +149,23 @@
     {
       "question": "Which statement best reflects the lesson’s guidance?",
       "options": [
-        "This lesson takes the same questions and asks them of an AI system.",
-        "Because when a client says \"we want an AI assistant that answers questions from our documents,\" the data architecture decisions you make are not new.",
+        "The lesson says the opposite: this should always be avoided.",
         "Lesson 14 gave you the Salesforce data model: objects, relationships, skew, and the discipline of deciding where records live.",
-        "Here is the thesis to hold onto: vector search is a retrieval technique, not a different world."
+        "The lesson claims this cannot be verified at all.",
+        "The opposite is true: lesson 14 gave you the Salesforce data model: objects, relationships, skew, and the discipline of deciding where records live."
       ],
-      "correct_answer_index": 2,
+      "correct_answer_index": 1,
       "explanation": "Lesson 14 gave you the Salesforce data model: objects, relationships, skew, and the discipline of deciding where records live."
     },
     {
       "question": "Which conclusion does the lesson support?",
       "options": [
-        "This lesson takes the same questions and asks them of an AI system.",
-        "Lesson 14 gave you the Salesforce data model: objects, relationships, skew, and the discipline of deciding where records live.",
-        "Choosing chunk size is a data model decision.",
-        "Because when a client says \"we want an AI assistant that answers questions from our documents,\" the data architecture decisions you make are not new."
+        "The lesson claims this cannot be verified at all.",
+        "The lesson says only technical staff should act on this.",
+        "Choosing chunk size is not a data model decision.",
+        "Choosing chunk size is a data model decision."
       ],
-      "correct_answer_index": 2,
+      "correct_answer_index": 3,
       "explanation": "Choosing chunk size is a data model decision."
     }
   ]

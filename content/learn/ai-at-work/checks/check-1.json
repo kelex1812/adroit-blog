@@ -84,7 +84,7 @@
       "question": "Which is one shape a hallucination takes?",
       "options": [
         "Answers always shorter than requested",
-        "Invented facts and fabricated sources",
+        "Hallucinations can take the form of invented facts and fabricated sources.",
         "Consistently correct answers",
         "Refusals to answer"
       ],

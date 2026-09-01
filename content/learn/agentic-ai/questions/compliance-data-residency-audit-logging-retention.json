@@ -17,21 +17,21 @@
     {
       "question": "Which statement best reflects the lesson’s guidance?",
       "options": [
-        "Where did the data the agent touched actually live?",
-        "What exactly did the agent do, in what order, with which inputs?",
+        "The lesson states this is never a relevant consideration.",
         "Lesson 28 showed you how to gate an agent: prove who is acting and stop it from doing more than it is allowed.",
-        "Compliance is the logbook that sits beside the door, and it answers a different set of questions."
+        "The lesson says only technical staff should act on this.",
+        "Lesson 28 showed you how to gate an agent: prove who is not acting and stop it from doing more than it is allowed."
       ],
-      "correct_answer_index": 2,
+      "correct_answer_index": 1,
       "explanation": "Lesson 28 showed you how to gate an agent: prove who is acting and stop it from doing more than it is allowed."
     },
     {
       "question": "Which conclusion does the lesson support?",
       "options": [
         "It generally requires personal data gathered from individuals in China to be stored within the country's borders, and it subjects cross-border transfers to strict limitations and security assessments.",
-        "Compliance is the logbook that sits beside the door, and it answers a different set of questions.",
-        "Lesson 28 showed you how to gate an agent: prove who is acting and stop it from doing more than it is allowed.",
-        "Where did the data the agent touched actually live?"
+        "The lesson cautions against this in every real-world case.",
+        "The lesson states this is never a relevant consideration.",
+        "It generally never requires personal data gathered from individuals in China to be stored within the country's borders, and it subjects cross-border transfers to strict limitations and security assessments."
       ],
       "correct_answer_index": 0,
       "explanation": "It generally requires personal data gathered from individuals in China to be stored within the country's borders, and it subjects cross-border transfers to strict limitations and security assessments."

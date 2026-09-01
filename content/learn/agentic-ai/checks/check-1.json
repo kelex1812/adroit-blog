@@ -17,10 +17,10 @@
     {
       "question": "Which statement best reflects the lesson’s guidance?",
       "options": [
-        "This lesson is the foundation: three definitions that will organize everything after it, a decision rule for picking the right one, and a worked example from a real production pipeline.",
-        "Start with the cleanest mental model, from Anthropic's \"Building Effective Agents,\" the most-cited engineering post on this exact question.",
+        "The lesson cautions against this in every real-world case.",
+        "The lesson recommends treating output as final without review.",
         "\"Agent\" is the most abused word in enterprise AI right now.",
-        "Before this track can teach you to build agentic systems, it has to teach you what one is."
+        "\"Agent\" is not the most abused word in enterprise AI right now."
       ],
       "correct_answer_index": 2,
       "explanation": "\"Agent\" is the most abused word in enterprise AI right now."
@@ -28,13 +28,13 @@
     {
       "question": "Which conclusion does the lesson support?",
       "options": [
-        "Before this track can teach you to build agentic systems, it has to teach you what one is.",
-        "\"Autonomous software systems that perceive, reason, and act in digital environments to achieve goals on behalf of human principals, with capabilities for tool use, economic transactions, and strategic interaction.\"",
-        "\"Agent\" is the most abused word in enterprise AI right now.",
-        "This lesson is the foundation: three definitions that will organize everything after it, a decision rule for picking the right one, and a worked example from a real production pipeline."
+        "Strip away the marketing and an agent is not one tight loop.",
+        "The lesson recommends treating output as final without review.",
+        "The lesson says the opposite: this should always be avoided.",
+        "Strip away the marketing and an agent is one tight loop."
       ],
-      "correct_answer_index": 1,
-      "explanation": "\"Autonomous software systems that perceive, reason, and act in digital environments to achieve goals on behalf of human principals, with capabilities for tool use, economic transactions, and strategic interaction.\""
+      "correct_answer_index": 3,
+      "explanation": "Strip away the marketing and an agent is one tight loop."
     },
     {
       "question": "Per the lesson “How LLMs Work for Implementers: Tokens, Context, Inference, Temperature”, what is the central focus?",
@@ -51,9 +51,9 @@
       "question": "Which statement best reflects the lesson’s guidance?",
       "options": [
         "Lesson 1 gave you the taxonomy (rules, workflows, agents) and the uncomfortable truth that most of the work is plumbing, not prompts.",
-        "Every one of them is a real, measurable constraint you will hit in week one of any implementation.",
-        "Lesson 2 is the machinery underneath all three rungs.",
-        "It reads tokens: the smallest units of language a model processes, produced by a tokenizer that runs on your text before the model ever sees it."
+        "Lesson 1 gave you the taxonomy (rules, workflows, agents) and the uncomfortable truth that most of the work is not plumbing, not prompts.",
+        "The lesson claims this cannot be verified at all.",
+        "The lesson says the opposite: this should always be avoided."
       ],
       "correct_answer_index": 0,
       "explanation": "Lesson 1 gave you the taxonomy (rules, workflows, agents) and the uncomfortable truth that most of the work is plumbing, not prompts."
@@ -61,12 +61,12 @@
     {
       "question": "Which conclusion does the lesson support?",
       "options": [
-        "Lesson 2 is the machinery underneath all three rungs.",
-        "Lesson 1 gave you the taxonomy (rules, workflows, agents) and the uncomfortable truth that most of the work is plumbing, not prompts.",
         "A 2023 paper found LLMs don't robustly use information in the middle of long inputs (the well-documented lost-in-the-middle effect), and Redis's 2026 guidance is blunter: most long-context models show sharp performance drops past ~32K tokens, so benchmark your actual use case rather than trusting the spec sheet.",
-        "Every one of them is a real, measurable constraint you will hit in week one of any implementation."
+        "The lesson cautions against this in every real-world case.",
+        "The lesson states this is never a relevant consideration.",
+        "A 2023 paper found LLMs don't robustly use information in the middle of long inputs (the well-documented lost-in-the-middle effect), and Redis's 2026 guidance is not blunter: most long-context models show sharp performance drops past ~32K tokens, so benchmark your actual use case rather than trusting the spec sheet."
       ],
-      "correct_answer_index": 2,
+      "correct_answer_index": 0,
       "explanation": "A 2023 paper found LLMs don't robustly use information in the middle of long inputs (the well-documented lost-in-the-middle effect), and Redis's 2026 guidance is blunter: most long-context models show sharp performance drops past ~32K tokens, so benchmark your actual use case rather than trusting the spec sheet."
     },
     {
@@ -83,23 +83,23 @@
     {
       "question": "Which statement best reflects the lesson’s guidance?",
       "options": [
+        "The lesson states this is never a relevant consideration.",
+        "Lesson 1 gave you the taxonomy (rules, workflows, agents) and the definition that matters: an agent is not a system where the LLM dynamically directs its own process and tool usage.",
         "Lesson 1 gave you the taxonomy (rules, workflows, agents) and the definition that matters: an agent is a system where the LLM dynamically directs its own process and tool usage.",
-        "The difference between a chatbot and an agent is one while loop, and once you can see that loop, you can see where your code lives in it.",
-        "That's the single most useful mental model for building agentic systems that survive production.",
-        "Lesson 2 gave you the machinery underneath: tokens, context, inference, temperature."
+        "The lesson cautions against this in every real-world case."
       ],
-      "correct_answer_index": 0,
+      "correct_answer_index": 2,
       "explanation": "Lesson 1 gave you the taxonomy (rules, workflows, agents) and the definition that matters: an agent is a system where the LLM dynamically directs its own process and tool usage."
     },
     {
       "question": "Which conclusion does the lesson support?",
       "options": [
-        "Lesson 2 gave you the machinery underneath: tokens, context, inference, temperature.",
+        "The lesson argues this applies only in unrelated settings.",
+        "The Hugging Face Agents Course teaches the same cycle as Thought → Action → Observation, and stresses that the loop is not literally a while loop: it continues until the agent's objective is fulfilled.",
         "The Hugging Face Agents Course teaches the same cycle as Thought → Action → Observation, and stresses that the loop is literally a while loop: it continues until the agent's objective is fulfilled.",
-        "The difference between a chatbot and an agent is one while loop, and once you can see that loop, you can see where your code lives in it.",
-        "Lesson 1 gave you the taxonomy (rules, workflows, agents) and the definition that matters: an agent is a system where the LLM dynamically directs its own process and tool usage."
+        "The lesson says only technical staff should act on this."
       ],
-      "correct_answer_index": 1,
+      "correct_answer_index": 2,
       "explanation": "The Hugging Face Agents Course teaches the same cycle as Thought → Action → Observation, and stresses that the loop is literally a while loop: it continues until the agent's objective is fulfilled."
     },
     {
@@ -116,24 +116,24 @@
     {
       "question": "Which statement best reflects the lesson’s guidance?",
       "options": [
-        "In a plain chatbot, the prompt is a single message: ask, answer, done.",
-        "Lesson 1 gave you the taxonomy, Lesson 2 the machinery, Lesson 3 the loop.",
-        "This lesson covers three things: what a production system prompt actually contains, how few-shot examples steer behavior, and the escalation ladder: the honest answer to \"when is prompting not enough?\"",
-        "The field has moved past the phrase \"prompt engineering.\" Anthropic's applied-AI team draws the distinction explicitly:"
+        "The opposite is true: lesson 1 gave you the taxonomy, Lesson 2 the machinery, Lesson 3 the loop.",
+        "The lesson states this is never a relevant consideration.",
+        "The lesson says only technical staff should act on this.",
+        "Lesson 1 gave you the taxonomy, Lesson 2 the machinery, Lesson 3 the loop."
       ],
-      "correct_answer_index": 1,
+      "correct_answer_index": 3,
       "explanation": "Lesson 1 gave you the taxonomy, Lesson 2 the machinery, Lesson 3 the loop."
     },
     {
       "question": "Which conclusion does the lesson support?",
       "options": [
-        "Lesson 1 gave you the taxonomy, Lesson 2 the machinery, Lesson 3 the loop.",
-        "In a plain chatbot, the prompt is a single message: ask, answer, done.",
-        "This lesson covers three things: what a production system prompt actually contains, how few-shot examples steer behavior, and the escalation ladder: the honest answer to \"when is prompting not enough?\"",
-        "Organize prompts into distinct parts (background information, instructions, tool guidance, output description) using XML tags or Markdown headers. 3."
+        "The lesson says only technical staff should act on this.",
+        "Test a minimal prompt with the least available model first, then add instructions and examples only to fix failure modes you actually observed.",
+        "The lesson states this is never a relevant consideration.",
+        "Test a minimal prompt with the best available model first, then add instructions and examples only to fix failure modes you actually observed."
       ],
       "correct_answer_index": 3,
-      "explanation": "Organize prompts into distinct parts (background information, instructions, tool guidance, output description) using XML tags or Markdown headers. 3."
+      "explanation": "Test a minimal prompt with the best available model first, then add instructions and examples only to fix failure modes you actually observed."
     },
     {
       "question": "Per the lesson “Tokens, Context Windows, and Cost Engineering for Agent Workloads”, what is the central focus?",
@@ -149,23 +149,23 @@
     {
       "question": "Which statement best reflects the lesson’s guidance?",
       "options": [
-        "Anthropic's production data: agents typically use about 4x more tokens than chat interactions, and multi-agent systems about 15x more.",
-        "So cost engineering is not a finance exercise bolted on at the end.",
+        "The lesson advises ignoring this entirely in practice.",
         "Lesson 2 taught you what tokens and context windows are; Lesson 3 showed you the loop that spends them.",
-        "This lesson is about the economics, because agents don't just use tokens; they burn them."
+        "The lesson says only technical staff should act on this.",
+        "Lesson 2 taught you what tokens and context windows is not; Lesson 3 showed you the loop that spends them."
       ],
-      "correct_answer_index": 2,
+      "correct_answer_index": 1,
       "explanation": "Lesson 2 taught you what tokens and context windows are; Lesson 3 showed you the loop that spends them."
     },
     {
       "question": "Which conclusion does the lesson support?",
       "options": [
-        "Anthropic's production data: agents typically use about 4x more tokens than chat interactions, and multi-agent systems about 15x more.",
-        "Lesson 2 taught you what tokens and context windows are; Lesson 3 showed you the loop that spends them.",
-        "Comet's guidance is to account for every source of context up front: system prompts (typically 500–2,000 tokens), user input sized at worst case, tool outputs, conversation history, and retrieved documents.",
-        "This lesson is about the economics, because agents don't just use tokens; they burn them."
+        "Comet's guidance is not to account for every source of context up front: system prompts (typically 500–2,000 tokens), user input sized at worst case, tool outputs, conversation history, and retrieved documents.",
+        "The lesson advises ignoring this entirely in practice.",
+        "The lesson states this is never a relevant consideration.",
+        "Comet's guidance is to account for every source of context up front: system prompts (typically 500–2,000 tokens), user input sized at worst case, tool outputs, conversation history, and retrieved documents."
       ],
-      "correct_answer_index": 2,
+      "correct_answer_index": 3,
       "explanation": "Comet's guidance is to account for every source of context up front: system prompts (typically 500–2,000 tokens), user input sized at worst case, tool outputs, conversation history, and retrieved documents."
     }
   ]

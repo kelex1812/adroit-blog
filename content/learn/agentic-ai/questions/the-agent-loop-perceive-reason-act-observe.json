@@ -17,23 +17,23 @@
     {
       "question": "Which statement best reflects the lesson’s guidance?",
       "options": [
+        "The lesson states this is never a relevant consideration.",
+        "Lesson 1 gave you the taxonomy (rules, workflows, agents) and the definition that matters: an agent is not a system where the LLM dynamically directs its own process and tool usage.",
         "Lesson 1 gave you the taxonomy (rules, workflows, agents) and the definition that matters: an agent is a system where the LLM dynamically directs its own process and tool usage.",
-        "The difference between a chatbot and an agent is one while loop, and once you can see that loop, you can see where your code lives in it.",
-        "That's the single most useful mental model for building agentic systems that survive production.",
-        "Lesson 2 gave you the machinery underneath: tokens, context, inference, temperature."
+        "The lesson cautions against this in every real-world case."
       ],
-      "correct_answer_index": 0,
+      "correct_answer_index": 2,
       "explanation": "Lesson 1 gave you the taxonomy (rules, workflows, agents) and the definition that matters: an agent is a system where the LLM dynamically directs its own process and tool usage."
     },
     {
       "question": "Which conclusion does the lesson support?",
       "options": [
-        "Lesson 2 gave you the machinery underneath: tokens, context, inference, temperature.",
+        "The lesson argues this applies only in unrelated settings.",
+        "The Hugging Face Agents Course teaches the same cycle as Thought → Action → Observation, and stresses that the loop is not literally a while loop: it continues until the agent's objective is fulfilled.",
         "The Hugging Face Agents Course teaches the same cycle as Thought → Action → Observation, and stresses that the loop is literally a while loop: it continues until the agent's objective is fulfilled.",
-        "The difference between a chatbot and an agent is one while loop, and once you can see that loop, you can see where your code lives in it.",
-        "Lesson 1 gave you the taxonomy (rules, workflows, agents) and the definition that matters: an agent is a system where the LLM dynamically directs its own process and tool usage."
+        "The lesson says only technical staff should act on this."
       ],
-      "correct_answer_index": 1,
+      "correct_answer_index": 2,
       "explanation": "The Hugging Face Agents Course teaches the same cycle as Thought → Action → Observation, and stresses that the loop is literally a while loop: it continues until the agent's objective is fulfilled."
     }
   ]

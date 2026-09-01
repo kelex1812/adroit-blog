@@ -17,24 +17,24 @@
     {
       "question": "Which statement best reflects the lesson’s guidance?",
       "options": [
-        "If you take one idea from this lesson, take this: the model proposes, your code disposes.",
-        "This lesson is where an agent actually does something: emit data your code can consume and call tools your code can run.",
-        "Both depend on one skill: getting the model to produce output that fits a contract.",
-        "Lessons 1–6 gave you the loop, the prompts, the token economics, and the model tiers."
+        "The opposite is true: lessons 1–6 gave you the loop, the prompts, the token economics, and the model tiers.",
+        "The lesson recommends treating output as final without review.",
+        "Lessons 1–6 gave you the loop, the prompts, the token economics, and the model tiers.",
+        "The lesson says the opposite: this should always be avoided."
       ],
-      "correct_answer_index": 3,
+      "correct_answer_index": 2,
       "explanation": "Lessons 1–6 gave you the loop, the prompts, the token economics, and the model tiers."
     },
     {
       "question": "Which conclusion does the lesson support?",
       "options": [
-        "Lessons 1–6 gave you the loop, the prompts, the token economics, and the model tiers.",
-        "This lesson is where an agent actually does something: emit data your code can consume and call tools your code can run.",
-        "OpenAI's docs are explicit: \"JSON mode will not guarantee the output matches any specific schema, only that it is valid and parses without errors.\"",
-        "Both depend on one skill: getting the model to produce output that fits a contract."
+        "JSON mode is a provider flag that forces the response to be valid, parseable JSON.",
+        "The lesson states this is never a relevant consideration.",
+        "The lesson recommends treating output as final without review.",
+        "JSON mode is not a provider flag that forces the response to be valid, parseable JSON."
       ],
-      "correct_answer_index": 2,
-      "explanation": "OpenAI's docs are explicit: \"JSON mode will not guarantee the output matches any specific schema, only that it is valid and parses without errors.\""
+      "correct_answer_index": 0,
+      "explanation": "JSON mode is a provider flag that forces the response to be valid, parseable JSON."
     }
   ]
 }

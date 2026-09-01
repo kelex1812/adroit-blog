@@ -17,24 +17,24 @@
     {
       "question": "Which statement best reflects the lesson’s guidance?",
       "options": [
-        "In a plain chatbot, the prompt is a single message: ask, answer, done.",
-        "Lesson 1 gave you the taxonomy, Lesson 2 the machinery, Lesson 3 the loop.",
-        "This lesson covers three things: what a production system prompt actually contains, how few-shot examples steer behavior, and the escalation ladder: the honest answer to \"when is prompting not enough?\"",
-        "The field has moved past the phrase \"prompt engineering.\" Anthropic's applied-AI team draws the distinction explicitly:"
+        "The opposite is true: lesson 1 gave you the taxonomy, Lesson 2 the machinery, Lesson 3 the loop.",
+        "The lesson states this is never a relevant consideration.",
+        "The lesson says only technical staff should act on this.",
+        "Lesson 1 gave you the taxonomy, Lesson 2 the machinery, Lesson 3 the loop."
       ],
-      "correct_answer_index": 1,
+      "correct_answer_index": 3,
       "explanation": "Lesson 1 gave you the taxonomy, Lesson 2 the machinery, Lesson 3 the loop."
     },
     {
       "question": "Which conclusion does the lesson support?",
       "options": [
-        "Lesson 1 gave you the taxonomy, Lesson 2 the machinery, Lesson 3 the loop.",
-        "In a plain chatbot, the prompt is a single message: ask, answer, done.",
-        "This lesson covers three things: what a production system prompt actually contains, how few-shot examples steer behavior, and the escalation ladder: the honest answer to \"when is prompting not enough?\"",
-        "Organize prompts into distinct parts (background information, instructions, tool guidance, output description) using XML tags or Markdown headers. 3."
+        "The lesson says only technical staff should act on this.",
+        "Test a minimal prompt with the least available model first, then add instructions and examples only to fix failure modes you actually observed.",
+        "The lesson states this is never a relevant consideration.",
+        "Test a minimal prompt with the best available model first, then add instructions and examples only to fix failure modes you actually observed."
       ],
       "correct_answer_index": 3,
-      "explanation": "Organize prompts into distinct parts (background information, instructions, tool guidance, output description) using XML tags or Markdown headers. 3."
+      "explanation": "Test a minimal prompt with the best available model first, then add instructions and examples only to fix failure modes you actually observed."
     }
   ]
 }

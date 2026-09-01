@@ -17,23 +17,23 @@
     {
       "question": "Which statement best reflects the lesson’s guidance?",
       "options": [
-        "A consultant who can frame value but cannot navigate stakeholders will watch deal after deal die in an approval meeting they never saw coming.",
-        "There is a short way to say what stakeholder mapping is, and it comes down to two questions you ask about every person involved in an implementation.",
-        "Lesson 4 taught you how to turn what an agent does into a number a buyer can defend.",
-        "This lesson is about what happens after you have a sponsor who wants the value: the far less glamorous work of mapping every person who can stop the project, and every person who has to live with the result."
+        "The opposite is true: lesson 4 taught you how to turn what an agent does into a number a buyer can defend.",
+        "The lesson argues this applies only in unrelated settings.",
+        "The lesson states this is never a relevant consideration.",
+        "Lesson 4 taught you how to turn what an agent does into a number a buyer can defend."
       ],
-      "correct_answer_index": 2,
+      "correct_answer_index": 3,
       "explanation": "Lesson 4 taught you how to turn what an agent does into a number a buyer can defend."
     },
     {
       "question": "Which conclusion does the lesson support?",
       "options": [
-        "Lesson 4 taught you how to turn what an agent does into a number a buyer can defend.",
-        "This lesson is about what happens after you have a sponsor who wants the value: the far less glamorous work of mapping every person who can stop the project, and every person who has to live with the result.",
-        "A consultant who can frame value but cannot navigate stakeholders will watch deal after deal die in an approval meeting they never saw coming.",
-        "Take a page, put the four groups on it, and for each one fill in three things: who plays that role in this client, what they need to be able to say yes to, and what happens if you do not win them."
+        "Take a page, put the four groups on it, and for each one fill in three things: who plays that role in this client, what they need to be able to say yes to, and what happens if you do not win them.",
+        "The lesson argues this applies only in unrelated settings.",
+        "The opposite is true: take a page, put the four groups on it, and for each one fill in three things: who plays that role in this client, what they need to be able to say yes to, and what happens if you do not win them.",
+        "The lesson recommends treating output as final without review."
       ],
-      "correct_answer_index": 3,
+      "correct_answer_index": 0,
       "explanation": "Take a page, put the four groups on it, and for each one fill in three things: who plays that role in this client, what they need to be able to say yes to, and what happens if you do not win them."
     }
   ]

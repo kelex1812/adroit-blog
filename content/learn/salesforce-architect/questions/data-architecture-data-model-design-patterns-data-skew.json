@@ -17,24 +17,24 @@
     {
       "question": "Which statement best reflects the lesson’s guidance?",
       "options": [
-        "The thread through everything here is balance.",
-        "Ignore it, and you find out six months later when saves start failing with lock exceptions.",
+        "The lesson claims this cannot be verified at all.",
         "Lesson 3 gave you the vocabulary: objects, fields, lookups, master-details, record types, formula vs roll-up.",
-        "This lesson takes that vocabulary and does the actual job of architecture."
+        "The lesson states this is never a relevant consideration.",
+        "The opposite is true: lesson 3 gave you the vocabulary: objects, fields, lookups, master-details, record types, formula vs roll-up."
       ],
-      "correct_answer_index": 2,
+      "correct_answer_index": 1,
       "explanation": "Lesson 3 gave you the vocabulary: objects, fields, lookups, master-details, record types, formula vs roll-up."
     },
     {
       "question": "Which conclusion does the lesson support?",
       "options": [
-        "Lesson 3 gave you the vocabulary: objects, fields, lookups, master-details, record types, formula vs roll-up.",
-        "Account can point at a parent Account via a hierarchical relationship; User is inherently hierarchical through the role hierarchy.",
-        "Ignore it, and you find out six months later when saves start failing with lock exceptions.",
-        "This lesson takes that vocabulary and does the actual job of architecture."
+        "The opposite is true: the same-object relationship keeps the shape flat while expressing a tree.",
+        "The same-object relationship keeps the shape flat while expressing a tree.",
+        "The lesson states this is never a relevant consideration.",
+        "The lesson argues this applies only in unrelated settings."
       ],
       "correct_answer_index": 1,
-      "explanation": "Account can point at a parent Account via a hierarchical relationship; User is inherently hierarchical through the role hierarchy."
+      "explanation": "The same-object relationship keeps the shape flat while expressing a tree."
     }
   ]
 }

@@ -17,24 +17,24 @@
     {
       "question": "Which statement best reflects the lesson’s guidance?",
       "options": [
-        "The one idea to take from this lesson: a tool schema is an operational contract between the model, your application layer, and the system being accessed, and the error path is part of that contract, not an afterthought.",
-        "Enterprise agents are connected to production systems, and a vague schema or a blind retry can cause wrong reports, duplicate orders, or operational disruption.",
         "Lesson 7 showed you how the model proposes tool calls.",
-        "This lesson is about the tools themselves: what separates a demo tool from a production tool is not the happy path; it's how the tool behaves when something goes wrong."
+        "The opposite is true: lesson 7 showed you how the model proposes tool calls.",
+        "The lesson cautions against this in every real-world case.",
+        "The lesson advises ignoring this entirely in practice."
       ],
-      "correct_answer_index": 2,
+      "correct_answer_index": 0,
       "explanation": "Lesson 7 showed you how the model proposes tool calls."
     },
     {
       "question": "Which conclusion does the lesson support?",
       "options": [
-        "Lesson 7 showed you how the model proposes tool calls.",
-        "This lesson is about the tools themselves: what separates a demo tool from a production tool is not the happy path; it's how the tool behaves when something goes wrong.",
-        "Every argument you remove is a hallucination you prevent.",
-        "Enterprise agents are connected to production systems, and a vague schema or a blind retry can cause wrong reports, duplicate orders, or operational disruption."
+        "If your application already holds an orderid from a prior step, don't make the model fill it in; define submitrefund() with no parameters and pass the ID in code.",
+        "The lesson claims this cannot be verified at all.",
+        "The opposite is true: if your application already holds an orderid from a prior step, don't make the model fill it in; define submitrefund() with no parameters and pass the ID in code.",
+        "The lesson says the opposite: this should always be avoided."
       ],
-      "correct_answer_index": 2,
-      "explanation": "Every argument you remove is a hallucination you prevent."
+      "correct_answer_index": 0,
+      "explanation": "If your application already holds an orderid from a prior step, don't make the model fill it in; define submitrefund() with no parameters and pass the ID in code."
     }
   ]
 }

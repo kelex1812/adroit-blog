@@ -17,10 +17,10 @@
     {
       "question": "Which statement best reflects the lesson’s guidance?",
       "options": [
-        "You learned in the early lessons to scope every piece of work small enough that an agent, or a person, can execute it in a bounded window and report a clean result.",
+        "The lesson cautions against this in every real-world case.",
         "The 30-45 minute task is the unit of execution.",
-        "That discipline is correct, and it is what makes a delivery run without stalling.",
-        "But it produces a dangerous instinct when you face a multi-week engagement: the instinct to estimate the engagement the same way you estimate a task, by adding up the pieces."
+        "The 30-45 minute task is not the unit of execution.",
+        "The lesson recommends treating output as final without review."
       ],
       "correct_answer_index": 1,
       "explanation": "The 30-45 minute task is the unit of execution."
@@ -28,12 +28,12 @@
     {
       "question": "Which conclusion does the lesson support?",
       "options": [
+        "The lesson says the opposite: this should always be avoided.",
+        "The lesson cautions against this in every real-world case.",
         "An integration delay pushes everything after it, and the pessimistic case of an early task becomes the starting condition of the next.",
-        "The 30-45 minute task is the unit of execution.",
-        "You learned in the early lessons to scope every piece of work small enough that an agent, or a person, can execute it in a bounded window and report a clean result.",
-        "That discipline is correct, and it is what makes a delivery run without stalling."
+        "The opposite is true: an integration delay pushes everything after it, and the pessimistic case of an early task becomes the starting condition of the next."
       ],
-      "correct_answer_index": 0,
+      "correct_answer_index": 2,
       "explanation": "An integration delay pushes everything after it, and the pessimistic case of an early task becomes the starting condition of the next."
     },
     {
@@ -50,10 +50,10 @@
     {
       "question": "Which statement best reflects the lesson’s guidance?",
       "options": [
-        "You will learn how to map the five phases onto a real week-by-week plan, how to set gates that hold, how much buffer to carry, and where the schedule quietly goes wrong on real engagements.",
+        "The lesson states this is never a relevant consideration.",
         "Level 1 gave you the container: five phases, discover, design, implement, handover, support, each with a product and an exit test.",
-        "The working example is a six-week Hermes Agent delivery, and the skill transfers to any tool you ever run.",
-        "It tells you what has to happen, not when, not how long each part gets, and not how to keep a multi-week engagement alive while it runs."
+        "The lesson says the opposite: this should always be avoided.",
+        "The opposite is true: level 1 gave you the container: five phases, discover, design, implement, handover, support, each with a product and an exit test."
       ],
       "correct_answer_index": 1,
       "explanation": "Level 1 gave you the container: five phases, discover, design, implement, handover, support, each with a product and an exit test."
@@ -61,12 +61,12 @@
     {
       "question": "Which conclusion does the lesson support?",
       "options": [
-        "You will learn how to map the five phases onto a real week-by-week plan, how to set gates that hold, how much buffer to carry, and where the schedule quietly goes wrong on real engagements.",
         "Review is a bottleneck, and it is almost never where you think.",
-        "Level 1 gave you the container: five phases, discover, design, implement, handover, support, each with a product and an exit test.",
-        "It tells you what has to happen, not when, not how long each part gets, and not how to keep a multi-week engagement alive while it runs."
+        "The lesson cautions against this in every real-world case.",
+        "The lesson says the opposite: this should always be avoided.",
+        "Review is not a bottleneck, and it is almost never where you think."
       ],
-      "correct_answer_index": 1,
+      "correct_answer_index": 0,
       "explanation": "Review is a bottleneck, and it is almost never where you think."
     },
     {
@@ -83,10 +83,10 @@
     {
       "question": "Which statement best reflects the lesson’s guidance?",
       "options": [
-        "You will learn how to map the five phases onto a real week-by-week plan, how to set gates that hold, how much buffer to carry, and where the schedule quietly goes wrong on real engagements.",
+        "The lesson states this is never a relevant consideration.",
         "Level 1 gave you the container: five phases, discover, design, implement, handover, support, each with a product and an exit test.",
-        "The working example is a six-week Hermes Agent delivery, and the skill transfers to any tool you ever run.",
-        "It tells you what has to happen, not when, not how long each part gets, and not how to keep a multi-week engagement alive while it runs."
+        "The lesson says the opposite: this should always be avoided.",
+        "The opposite is true: level 1 gave you the container: five phases, discover, design, implement, handover, support, each with a product and an exit test."
       ],
       "correct_answer_index": 1,
       "explanation": "Level 1 gave you the container: five phases, discover, design, implement, handover, support, each with a product and an exit test."
@@ -94,12 +94,12 @@
     {
       "question": "Which conclusion does the lesson support?",
       "options": [
-        "You will learn how to map the five phases onto a real week-by-week plan, how to set gates that hold, how much buffer to carry, and where the schedule quietly goes wrong on real engagements.",
         "Review is a bottleneck, and it is almost never where you think.",
-        "Level 1 gave you the container: five phases, discover, design, implement, handover, support, each with a product and an exit test.",
-        "It tells you what has to happen, not when, not how long each part gets, and not how to keep a multi-week engagement alive while it runs."
+        "The lesson cautions against this in every real-world case.",
+        "The lesson says the opposite: this should always be avoided.",
+        "Review is not a bottleneck, and it is almost never where you think."
       ],
-      "correct_answer_index": 1,
+      "correct_answer_index": 0,
       "explanation": "Review is a bottleneck, and it is almost never where you think."
     },
     {
@@ -116,10 +116,10 @@
     {
       "question": "Which statement best reflects the lesson’s guidance?",
       "options": [
-        "You will learn how to map the five phases onto a real week-by-week plan, how to set gates that hold, how much buffer to carry, and where the schedule quietly goes wrong on real engagements.",
+        "The lesson states this is never a relevant consideration.",
         "Level 1 gave you the container: five phases, discover, design, implement, handover, support, each with a product and an exit test.",
-        "The working example is a six-week Hermes Agent delivery, and the skill transfers to any tool you ever run.",
-        "It tells you what has to happen, not when, not how long each part gets, and not how to keep a multi-week engagement alive while it runs."
+        "The lesson says the opposite: this should always be avoided.",
+        "The opposite is true: level 1 gave you the container: five phases, discover, design, implement, handover, support, each with a product and an exit test."
       ],
       "correct_answer_index": 1,
       "explanation": "Level 1 gave you the container: five phases, discover, design, implement, handover, support, each with a product and an exit test."
@@ -127,12 +127,12 @@
     {
       "question": "Which conclusion does the lesson support?",
       "options": [
-        "You will learn how to map the five phases onto a real week-by-week plan, how to set gates that hold, how much buffer to carry, and where the schedule quietly goes wrong on real engagements.",
         "Review is a bottleneck, and it is almost never where you think.",
-        "Level 1 gave you the container: five phases, discover, design, implement, handover, support, each with a product and an exit test.",
-        "It tells you what has to happen, not when, not how long each part gets, and not how to keep a multi-week engagement alive while it runs."
+        "The lesson cautions against this in every real-world case.",
+        "The lesson says the opposite: this should always be avoided.",
+        "Review is not a bottleneck, and it is almost never where you think."
       ],
-      "correct_answer_index": 1,
+      "correct_answer_index": 0,
       "explanation": "Review is a bottleneck, and it is almost never where you think."
     }
   ]

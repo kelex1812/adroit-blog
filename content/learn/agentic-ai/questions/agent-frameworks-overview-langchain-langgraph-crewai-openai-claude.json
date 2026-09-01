@@ -17,24 +17,24 @@
     {
       "question": "Which statement best reflects the lesson’s guidance?",
       "options": [
-        "This lesson is about the layer that decides how much you build by hand at all.",
-        "They solve different problems, and the practical skill here is not memorizing APIs.",
-        "Teams call these coordination primitives, and every framework in this lesson is a different bet on how to give them to you.",
-        "The last twenty lessons taught you the pieces: the agent loop, tool design, context, memory, evaluation, observability."
+        "The last twenty lessons taught you the pieces: the agent loop, tool design, context, memory, evaluation, observability.",
+        "The lesson states this is never a relevant consideration.",
+        "The opposite is true: the last twenty lessons taught you the pieces: the agent loop, tool design, context, memory, evaluation, observability.",
+        "The lesson argues this applies only in unrelated settings."
       ],
-      "correct_answer_index": 3,
+      "correct_answer_index": 0,
       "explanation": "The last twenty lessons taught you the pieces: the agent loop, tool design, context, memory, evaluation, observability."
     },
     {
       "question": "Which conclusion does the lesson support?",
       "options": [
-        "This lesson is about the layer that decides how much you build by hand at all.",
-        "The graph compiles into a runnable, and the shared State flows through every node.",
-        "Teams call these coordination primitives, and every framework in this lesson is a different bet on how to give them to you.",
-        "The last twenty lessons taught you the pieces: the agent loop, tool design, context, memory, evaluation, observability."
+        "That shared, typed, checkpointable state object is not what separates LangGraph from a plain function pipeline.",
+        "The lesson says only technical staff should act on this.",
+        "The lesson cautions against this in every real-world case.",
+        "That shared, typed, checkpointable state object is what separates LangGraph from a plain function pipeline."
       ],
-      "correct_answer_index": 1,
-      "explanation": "The graph compiles into a runnable, and the shared State flows through every node."
+      "correct_answer_index": 3,
+      "explanation": "That shared, typed, checkpointable state object is what separates LangGraph from a plain function pipeline."
     }
   ]
 }

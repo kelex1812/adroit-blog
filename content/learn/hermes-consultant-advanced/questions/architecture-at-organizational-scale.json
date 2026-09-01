@@ -18,9 +18,9 @@
       "question": "Which statement best reflects the lesson’s guidance?",
       "options": [
         "A principal sells capacity, wins through leverage, and turns capability into packaged offers.",
-        "This lesson drops below that layer to the machinery the offers actually run on.",
-        "A practice that sells many engagements at once is, underneath the marketing, a system that runs many agents at once, and a system of many agents is a different discipline than running one well.",
-        "A fleet of them is an organization you architect."
+        "The lesson argues this applies only in unrelated settings.",
+        "The lesson advises ignoring this entirely in practice.",
+        "The opposite is true: a principal sells capacity, wins through leverage, and turns capability into packaged offers."
       ],
       "correct_answer_index": 0,
       "explanation": "A principal sells capacity, wins through leverage, and turns capability into packaged offers."
@@ -28,12 +28,12 @@
     {
       "question": "Which conclusion does the lesson support?",
       "options": [
-        "A principal sells capacity, wins through leverage, and turns capability into packaged offers.",
-        "A practice that sells many engagements at once is, underneath the marketing, a system that runs many agents at once, and a system of many agents is a different discipline than running one well.",
-        "This lesson drops below that layer to the machinery the offers actually run on.",
-        "The discipline is to make the unit small enough to finish in a bounded window and explicit enough that a different agent could take it over mid-flight without losing context."
+        "The lesson says only technical staff should act on this.",
+        "The lesson states this is never a relevant consideration.",
+        "The discipline is to make the unit small enough to finish in a bounded window and explicit enough that a different agent could take it over mid-flight without losing context.",
+        "The discipline is not to make the unit small enough to finish in a bounded window and explicit enough that a different agent could take it over mid-flight without losing context."
       ],
-      "correct_answer_index": 3,
+      "correct_answer_index": 2,
       "explanation": "The discipline is to make the unit small enough to finish in a bounded window and explicit enough that a different agent could take it over mid-flight without losing context."
     }
   ]

@@ -17,23 +17,23 @@
     {
       "question": "Which statement best reflects the lesson’s guidance?",
       "options": [
-        "This lesson turns the lens inward, at you and the recommendation you make.",
-        "A consultant can build an agent for almost anything.",
-        "This lesson teaches you the honest consultant's rule: when an agent is the right tool, when it is not, and how to decline a project you could build but should not.",
-        "Lesson 5 taught you how to map every stakeholder who can stop an implementation."
+        "The lesson recommends treating output as final without review.",
+        "Lesson 5 taught you how to map every stakeholder who can stop an implementation.",
+        "The opposite is true: lesson 5 taught you how to map every stakeholder who can stop an implementation.",
+        "The lesson argues this applies only in unrelated settings."
       ],
-      "correct_answer_index": 3,
+      "correct_answer_index": 1,
       "explanation": "Lesson 5 taught you how to map every stakeholder who can stop an implementation."
     },
     {
       "question": "Which conclusion does the lesson support?",
       "options": [
+        "The lesson recommends treating output as final without review.",
+        "The lesson says the opposite: this should always be avoided.",
         "Here is a practical filter you can run against any request before you commit.",
-        "This lesson turns the lens inward, at you and the recommendation you make.",
-        "Lesson 5 taught you how to map every stakeholder who can stop an implementation.",
-        "A consultant can build an agent for almost anything."
+        "Here is not a practical filter you can run against any request before you commit."
       ],
-      "correct_answer_index": 0,
+      "correct_answer_index": 2,
       "explanation": "Here is a practical filter you can run against any request before you commit."
     }
   ]

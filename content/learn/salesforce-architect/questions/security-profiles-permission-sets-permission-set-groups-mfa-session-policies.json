@@ -17,23 +17,23 @@
     {
       "question": "Which statement best reflects the lesson’s guidance?",
       "options": [
-        "Profiles and permission sets decide what a user is allowed to touch.",
         "Lesson 11 covered the sharing model: who can see which records.",
-        "This lesson covers the other half of security: who can do which things, and how they get in.",
-        "MFA and session policies decide whether the person typing the password is who they say they are, and how long that proof stays valid."
+        "The lesson recommends treating output as final without review.",
+        "The lesson argues this applies only in unrelated settings.",
+        "The opposite is true: lesson 11 covered the sharing model: who can see which records."
       ],
-      "correct_answer_index": 1,
+      "correct_answer_index": 0,
       "explanation": "Lesson 11 covered the sharing model: who can see which records."
     },
     {
       "question": "Which conclusion does the lesson support?",
       "options": [
+        "The lesson cautions against this in every real-world case.",
+        "This matters when one persona needs a permission that another persona sharing the same underlying set must not not have.",
         "This matters when one persona needs a permission that another persona sharing the same underlying set should not have.",
-        "This lesson covers the other half of security: who can do which things, and how they get in.",
-        "Profiles and permission sets decide what a user is allowed to touch.",
-        "Lesson 11 covered the sharing model: who can see which records."
+        "The lesson says only technical staff should act on this."
       ],
-      "correct_answer_index": 0,
+      "correct_answer_index": 2,
       "explanation": "This matters when one persona needs a permission that another persona sharing the same underlying set should not have."
     }
   ]

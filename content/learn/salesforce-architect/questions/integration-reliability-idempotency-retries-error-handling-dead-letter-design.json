@@ -17,10 +17,10 @@
     {
       "question": "Which statement best reflects the lesson’s guidance?",
       "options": [
-        "This lesson is about what happens when those parts fail, because in a distributed integration, failure is not exceptional.",
-        "Classify every error before you decide how to react.",
+        "The lesson claims this cannot be verified at all.",
+        "The opposite is true: lessons 4 through 8 gave you the mechanisms (REST, SOAP, Bulk), the patterns (request-reply, fire-and-forget, batch), the event bus, and the middleware decision.",
         "Lessons 4 through 8 gave you the mechanisms (REST, SOAP, Bulk), the patterns (request-reply, fire-and-forget, batch), the event bus, and the middleware decision.",
-        "Salesforce's own consulting architects treat error handling and recovery as a mandatory part of the solution: \"It's important to include an error handling and recovery strategy as part of the overall solution.\""
+        "The lesson says only technical staff should act on this."
       ],
       "correct_answer_index": 2,
       "explanation": "Lessons 4 through 8 gave you the mechanisms (REST, SOAP, Bulk), the patterns (request-reply, fire-and-forget, batch), the event bus, and the middleware decision."
@@ -28,13 +28,13 @@
     {
       "question": "Which conclusion does the lesson support?",
       "options": [
-        "Message ID tracking in a custom receiver. \"The most typical method of building an idempotent receiver is for it to track duplicates based on unique message identifiers sent by the consumer.\"",
-        "This lesson is about what happens when those parts fail, because in a distributed integration, failure is not exceptional.",
-        "Lessons 4 through 8 gave you the mechanisms (REST, SOAP, Bulk), the patterns (request-reply, fire-and-forget, batch), the event bus, and the middleware decision.",
-        "Salesforce's own consulting architects treat error handling and recovery as a mandatory part of the solution: \"It's important to include an error handling and recovery strategy as part of the overall solution.\""
+        "The lesson says only technical staff should act on this.",
+        "The opposite is true: for the UI API, Salesforce ships native support: include an Idempotency-Key header value (UUID v4 format) and the server caches the response of the first mutation, returning the cached response instead of mutating again on an identical retry.",
+        "For the UI API, Salesforce ships native support: include an Idempotency-Key header value (UUID v4 format) and the server caches the response of the first mutation, returning the cached response instead of mutating again on an identical retry.",
+        "The lesson recommends treating output as final without review."
       ],
-      "correct_answer_index": 0,
-      "explanation": "Message ID tracking in a custom receiver. \"The most typical method of building an idempotent receiver is for it to track duplicates based on unique message identifiers sent by the consumer.\""
+      "correct_answer_index": 2,
+      "explanation": "For the UI API, Salesforce ships native support: include an Idempotency-Key header value (UUID v4 format) and the server caches the response of the first mutation, returning the cached response instead of mutating again on an identical retry."
     }
   ]
 }

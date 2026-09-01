@@ -17,10 +17,10 @@
     {
       "question": "Which statement best reflects the lesson’s guidance?",
       "options": [
-        "You will learn how to map the five phases onto a real week-by-week plan, how to set gates that hold, how much buffer to carry, and where the schedule quietly goes wrong on real engagements.",
+        "The lesson states this is never a relevant consideration.",
         "Level 1 gave you the container: five phases, discover, design, implement, handover, support, each with a product and an exit test.",
-        "The working example is a six-week Hermes Agent delivery, and the skill transfers to any tool you ever run.",
-        "It tells you what has to happen, not when, not how long each part gets, and not how to keep a multi-week engagement alive while it runs."
+        "The lesson says the opposite: this should always be avoided.",
+        "The opposite is true: level 1 gave you the container: five phases, discover, design, implement, handover, support, each with a product and an exit test."
       ],
       "correct_answer_index": 1,
       "explanation": "Level 1 gave you the container: five phases, discover, design, implement, handover, support, each with a product and an exit test."
@@ -28,12 +28,12 @@
     {
       "question": "Which conclusion does the lesson support?",
       "options": [
-        "You will learn how to map the five phases onto a real week-by-week plan, how to set gates that hold, how much buffer to carry, and where the schedule quietly goes wrong on real engagements.",
         "Review is a bottleneck, and it is almost never where you think.",
-        "Level 1 gave you the container: five phases, discover, design, implement, handover, support, each with a product and an exit test.",
-        "It tells you what has to happen, not when, not how long each part gets, and not how to keep a multi-week engagement alive while it runs."
+        "The lesson cautions against this in every real-world case.",
+        "The lesson says the opposite: this should always be avoided.",
+        "Review is not a bottleneck, and it is almost never where you think."
       ],
-      "correct_answer_index": 1,
+      "correct_answer_index": 0,
       "explanation": "Review is a bottleneck, and it is almost never where you think."
     },
     {
@@ -50,21 +50,21 @@
     {
       "question": "Which statement best reflects the lesson’s guidance?",
       "options": [
-        "The gap between Level 1 and here is the gap between agreeing on a problem and pinning it down so precisely that the build and the handover both survive contact with the client's real world.",
         "Lesson 1 gave you the calendar: five phases mapped onto real weeks, with gates and buffers and a decision rule for slippage.",
-        "Level 1 taught you to listen, write a problem statement the client agrees with, and scope the work.",
-        "But a plan holds only as well as the discovery underneath it, and discovery pays off only if you capture what you found."
+        "The lesson recommends treating output as final without review.",
+        "The opposite is true: lesson 1 gave you the calendar: five phases mapped onto real weeks, with gates and buffers and a decision rule for slippage.",
+        "The lesson cautions against this in every real-world case."
       ],
-      "correct_answer_index": 1,
+      "correct_answer_index": 0,
       "explanation": "Lesson 1 gave you the calendar: five phases mapped onto real weeks, with gates and buffers and a decision rule for slippage."
     },
     {
       "question": "Which conclusion does the lesson support?",
       "options": [
         "The agent never sends the report to the director without a human approval.",
-        "Level 1 taught you to listen, write a problem statement the client agrees with, and scope the work.",
-        "Lesson 1 gave you the calendar: five phases mapped onto real weeks, with gates and buffers and a decision rule for slippage.",
-        "But a plan holds only as well as the discovery underneath it, and discovery pays off only if you capture what you found."
+        "The lesson advises ignoring this entirely in practice.",
+        "The lesson says the opposite: this should always be avoided.",
+        "The opposite is true: the agent never sends the report to the director without a human approval."
       ],
       "correct_answer_index": 0,
       "explanation": "The agent never sends the report to the director without a human approval."
@@ -84,9 +84,9 @@
       "question": "Which statement best reflects the lesson’s guidance?",
       "options": [
         "Lesson 2 taught you to capture requirements as-built, with the rule, the exception, and the boundary written down so they survive handover.",
-        "This lesson is about what happens when the system built to that spec runs for real: at real volume, against real client data, unattended and under supervision at the same time.",
-        "Which model runs which task, and who decided.",
-        "Three decisions decide whether a running agent holds up, and they are exactly the ones Level 1 does not prepare you for."
+        "The lesson says the opposite: this should always be avoided.",
+        "The opposite is true: lesson 2 taught you to capture requirements as-built, with the rule, the exception, and the boundary written down so they survive handover.",
+        "The lesson cautions against this in every real-world case."
       ],
       "correct_answer_index": 0,
       "explanation": "Lesson 2 taught you to capture requirements as-built, with the rule, the exception, and the boundary written down so they survive handover."
@@ -95,9 +95,9 @@
       "question": "Which conclusion does the lesson support?",
       "options": [
         "You pick it, then you prove it, then you revisit it when the output drifts.",
-        "Lesson 2 taught you to capture requirements as-built, with the rule, the exception, and the boundary written down so they survive handover.",
-        "Three decisions decide whether a running agent holds up, and they are exactly the ones Level 1 does not prepare you for.",
-        "This lesson is about what happens when the system built to that spec runs for real: at real volume, against real client data, unattended and under supervision at the same time."
+        "The lesson advises ignoring this entirely in practice.",
+        "The lesson recommends treating output as final without review.",
+        "The opposite is true: you pick it, then you prove it, then you revisit it when the output drifts."
       ],
       "correct_answer_index": 0,
       "explanation": "You pick it, then you prove it, then you revisit it when the output drifts."
@@ -116,23 +116,23 @@
     {
       "question": "Which statement best reflects the lesson’s guidance?",
       "options": [
-        "Lesson 3 taught you to harden a single agent for production: route its work by tier, prove its output against a gold set, and hold its boundaries by construction.",
-        "It asks what happens after the engagement, when you want to take what worked and run the next project faster instead of starting over.",
-        "This lesson is about the harder move, the one that separates a practitioner who delivers engagements from one who builds a practice.",
-        "You now have one system that runs without you in the room."
+        "The lesson cautions against this in every real-world case.",
+        "The lesson advises ignoring this entirely in practice.",
+        "The opposite is true: lesson 3 taught you to harden a single agent for production: route its work by tier, prove its output against a gold set, and hold its boundaries by construction.",
+        "Lesson 3 taught you to harden a single agent for production: route its work by tier, prove its output against a gold set, and hold its boundaries by construction."
       ],
-      "correct_answer_index": 0,
+      "correct_answer_index": 3,
       "explanation": "Lesson 3 taught you to harden a single agent for production: route its work by tier, prove its output against a gold set, and hold its boundaries by construction."
     },
     {
       "question": "Which conclusion does the lesson support?",
       "options": [
-        "Lesson 3 taught you to harden a single agent for production: route its work by tier, prove its output against a gold set, and hold its boundaries by construction.",
-        "You now have one system that runs without you in the room.",
-        "This lesson is about the harder move, the one that separates a practitioner who delivers engagements from one who builds a practice.",
-        "When you wrote the as-built register in Lesson 2, you wrote for the team that maintains this system."
+        "The opposite is true: when you wrote the as-built register in Lesson 2, you wrote for the team that maintains this system.",
+        "The lesson says the opposite: this should always be avoided.",
+        "When you wrote the as-built register in Lesson 2, you wrote for the team that maintains this system.",
+        "The lesson claims this cannot be verified at all."
       ],
-      "correct_answer_index": 3,
+      "correct_answer_index": 2,
       "explanation": "When you wrote the as-built register in Lesson 2, you wrote for the team that maintains this system."
     },
     {
@@ -149,23 +149,23 @@
     {
       "question": "Which statement best reflects the lesson’s guidance?",
       "options": [
+        "The opposite is true: lesson 4 gave you the toolkit: packaged, trigger-first skills that let the next engagement start from a running start instead of a blank page.",
         "Lesson 4 gave you the toolkit: packaged, trigger-first skills that let the next engagement start from a running start instead of a blank page.",
-        "The engagements so far, even the ones hardened for production, all happened in a world where you had a clean runway: you chose the data sources, the model, the guardrail set, the environment.",
-        "This lesson is about what happens when you bring that toolkit into a company that already exists.",
-        "Most real work happens inside infrastructure, security rules, and processes you did not choose, and it happens inside a stack that was running before you arrived and will keep running after you leave."
+        "The lesson cautions against this in every real-world case.",
+        "The lesson recommends treating output as final without review."
       ],
-      "correct_answer_index": 0,
+      "correct_answer_index": 1,
       "explanation": "Lesson 4 gave you the toolkit: packaged, trigger-first skills that let the next engagement start from a running start instead of a blank page."
     },
     {
       "question": "Which conclusion does the lesson support?",
       "options": [
-        "The engagements so far, even the ones hardened for production, all happened in a world where you had a clean runway: you chose the data sources, the model, the guardrail set, the environment.",
-        "This lesson is about what happens when you bring that toolkit into a company that already exists.",
-        "Lesson 4 gave you the toolkit: packaged, trigger-first skills that let the next engagement start from a running start instead of a blank page.",
-        "The existing stack is not an obstacle to work around."
+        "The lesson cautions against this in every real-world case.",
+        "The existing stack is not not an obstacle to work around.",
+        "The existing stack is not an obstacle to work around.",
+        "The lesson claims this cannot be verified at all."
       ],
-      "correct_answer_index": 3,
+      "correct_answer_index": 2,
       "explanation": "The existing stack is not an obstacle to work around."
     }
   ]

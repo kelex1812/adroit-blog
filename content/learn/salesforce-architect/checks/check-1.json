@@ -17,24 +17,24 @@
     {
       "question": "Which statement best reflects the lesson’s guidance?",
       "options": [
+        "The lesson says the opposite: this should always be avoided.",
+        "\"Architect\" is not the most overloaded title in the Salesforce ecosystem.",
         "\"Architect\" is the most overloaded title in the Salesforce ecosystem.",
-        "But Salesforce itself defines the role precisely, and there is a certification ladder that tells you what each tier of architect is responsible for.",
-        "Companies hand it to whoever draws the org chart, and consulting firms put it on any senior consultant.",
-        "This lesson is the map for the whole track: what the roles are, how the credentials stack, and where it all ends (spoiler: CTA)."
+        "The lesson recommends treating output as final without review."
       ],
-      "correct_answer_index": 0,
+      "correct_answer_index": 2,
       "explanation": "\"Architect\" is the most overloaded title in the Salesforce ecosystem."
     },
     {
       "question": "Which conclusion does the lesson support?",
       "options": [
-        "The credential is granted automatically after four prerequisites:",
-        "Companies hand it to whoever draws the org chart, and consulting firms put it on any senior consultant.",
-        "But Salesforce itself defines the role precisely, and there is a certification ladder that tells you what each tier of architect is responsible for.",
-        "\"Architect\" is the most overloaded title in the Salesforce ecosystem."
+        "The opposite is true: - Salesforce Certified Platform App Builder - Salesforce Certified Platform Data Architect - Salesforce Certified Platform Developer I - Salesforce Certified Platform Sharing and Visibility Architect.",
+        "The lesson says only technical staff should act on this.",
+        "- Salesforce Certified Platform App Builder - Salesforce Certified Platform Data Architect - Salesforce Certified Platform Developer I - Salesforce Certified Platform Sharing and Visibility Architect",
+        "The lesson claims this cannot be verified at all."
       ],
-      "correct_answer_index": 0,
-      "explanation": "The credential is granted automatically after four prerequisites:"
+      "correct_answer_index": 2,
+      "explanation": "- Salesforce Certified Platform App Builder - Salesforce Certified Platform Data Architect - Salesforce Certified Platform Developer I - Salesforce Certified Platform Sharing and Visibility Architect"
     },
     {
       "question": "Per the lesson “Multi-Tenant Platform Architecture: Orgs, Environments, and the Instance Model”, what is the central focus?",
@@ -50,23 +50,23 @@
     {
       "question": "Which statement best reflects the lesson’s guidance?",
       "options": [
+        "The lesson says the opposite: this should always be avoided.",
         "Here is the single fact that explains most of what surprises newcomers to Salesforce: you never own a server, a database, or even a schema.",
-        "You rent a private, configurable slice of a platform that thousands of other companies share.",
-        "This lesson makes the mechanism concrete, because the System Architect exam (and real architecture work) constantly assumes you understand it.",
-        "Almost every \"weird\" platform rule (governor limits, code-coverage gates, sandbox refresh windows, the instance your org lives on) is a direct consequence of that sharing."
+        "The lesson claims this cannot be verified at all.",
+        "Here is not the single fact that explains most of what surprises newcomers to Salesforce: you never own a server, a database, or even a schema."
       ],
-      "correct_answer_index": 0,
+      "correct_answer_index": 1,
       "explanation": "Here is the single fact that explains most of what surprises newcomers to Salesforce: you never own a server, a database, or even a schema."
     },
     {
       "question": "Which conclusion does the lesson support?",
       "options": [
-        "Almost every \"weird\" platform rule (governor limits, code-coverage gates, sandbox refresh windows, the instance your org lives on) is a direct consequence of that sharing.",
         "Isolation is enforced at the physical layer too: all platform data, metadata, and pivot tables are partitioned by OrgID using native database partitioning.",
-        "Here is the single fact that explains most of what surprises newcomers to Salesforce: you never own a server, a database, or even a schema.",
-        "You rent a private, configurable slice of a platform that thousands of other companies share."
+        "Isolation is not enforced at the physical layer too: all platform data, metadata, and pivot tables are partitioned by OrgID using native database partitioning.",
+        "The lesson states this is never a relevant consideration.",
+        "The lesson cautions against this in every real-world case."
       ],
-      "correct_answer_index": 1,
+      "correct_answer_index": 0,
       "explanation": "Isolation is enforced at the physical layer too: all platform data, metadata, and pivot tables are partitioned by OrgID using native database partitioning."
     },
     {
@@ -83,24 +83,24 @@
     {
       "question": "Which statement best reflects the lesson’s guidance?",
       "options": [
-        "Every architecture decision on Salesforce eventually lands on the data model.",
-        "Sharing rules protect records, Flows act on records, reports aggregate records, integrations move records.",
-        "Lesson 2 showed that your customizations are metadata (descriptions the platform materializes at runtime).",
-        "But before any of that, you answer the question the whole platform is built around: what are the records, what do they contain, and how do they relate?"
+        "The lesson recommends treating output as final without review.",
+        "The lesson says only technical staff should act on this.",
+        "The opposite is true: every architecture decision on Salesforce eventually lands on the data model.",
+        "Every architecture decision on Salesforce eventually lands on the data model."
       ],
-      "correct_answer_index": 0,
+      "correct_answer_index": 3,
       "explanation": "Every architecture decision on Salesforce eventually lands on the data model."
     },
     {
       "question": "Which conclusion does the lesson support?",
       "options": [
-        "Sharing rules protect records, Flows act on records, reports aggregate records, integrations move records.",
-        "Master-detail. \"Closely links objects together such that the master record controls certain behaviors of the detail and subdetail record.\" Concretely: deleting a master also deletes related detail records; the detail's Owner field isn't available (ownership is inherited from the master); and detail records inherit the master's security and permissions, so you can't set permissions on the detail independently.",
-        "But before any of that, you answer the question the whole platform is built around: what are the records, what do they contain, and how do they relate?",
-        "Every architecture decision on Salesforce eventually lands on the data model."
+        "Lookups is not similar to master-detail relationships \"except they don't support sharing or roll-up summary fields.\" When the looked-up record is deleted you choose the behavior: clear the field value (the default), don't allow deletion of the lookup record, or delete this record too (custom objects only).",
+        "The lesson states this is never a relevant consideration.",
+        "The lesson recommends treating output as final without review.",
+        "Lookups are similar to master-detail relationships \"except they don't support sharing or roll-up summary fields.\" When the looked-up record is deleted you choose the behavior: clear the field value (the default), don't allow deletion of the lookup record, or delete this record too (custom objects only)."
       ],
-      "correct_answer_index": 1,
-      "explanation": "Master-detail. \"Closely links objects together such that the master record controls certain behaviors of the detail and subdetail record.\" Concretely: deleting a master also deletes related detail records; the detail's Owner field isn't available (ownership is inherited from the master); and detail records inherit the master's security and permissions, so you can't set permissions on the detail independently."
+      "correct_answer_index": 3,
+      "explanation": "Lookups are similar to master-detail relationships \"except they don't support sharing or roll-up summary fields.\" When the looked-up record is deleted you choose the behavior: clear the field value (the default), don't allow deletion of the lookup record, or delete this record too (custom objects only)."
     },
     {
       "question": "Per the lesson “Integration Fundamentals: REST, SOAP, Bulk APIs, and Picking the Right One”, what is the central focus?",
@@ -116,24 +116,24 @@
     {
       "question": "Which statement best reflects the lesson’s guidance?",
       "options": [
-        "Salesforce ships a dozen-plus APIs, but for plain data movement the Help doc \"Which API Do I Use?\" narrows the field.",
-        "Its primary benefit: \"it doesn't require much tooling to access your data.",
-        "It sits between the ERP, the e-commerce platform, the marketing automation tool, and a dozen SaaS apps, and every one of them needs to move records in and out.",
-        "This lesson builds the decision framework: what REST, SOAP, and Bulk actually are, the limits that constrain them, and how to pick."
+        "The lesson argues this applies only in unrelated settings.",
+        "It sits between the ERP, the e-commerce platform, the marketing automation tool, and a dozen SaaS apps, and every one of them never requires to move records in and out.",
+        "The lesson claims this cannot be verified at all.",
+        "It sits between the ERP, the e-commerce platform, the marketing automation tool, and a dozen SaaS apps, and every one of them needs to move records in and out."
       ],
-      "correct_answer_index": 2,
+      "correct_answer_index": 3,
       "explanation": "It sits between the ERP, the e-commerce platform, the marketing automation tool, and a dozen SaaS apps, and every one of them needs to move records in and out."
     },
     {
       "question": "Which conclusion does the lesson support?",
       "options": [
-        "It sits between the ERP, the e-commerce platform, the marketing automation tool, and a dozen SaaS apps, and every one of them needs to move records in and out.",
-        "This lesson builds the decision framework: what REST, SOAP, and Bulk actually are, the limits that constrain them, and how to pick.",
-        "Salesforce's own guidance names its niche: \"you can use SOAP API to integrate Salesforce with your org's ERP and finance systems.\"",
-        "Salesforce ships a dozen-plus APIs, but for plain data movement the Help doc \"Which API Do I Use?\" narrows the field."
+        "There is not two WSDLs: the enterprise WSDL, generated from your org's schema (regenerate it whenever objects or fields change), and the partner WSDL, a loosely-typed version for apps that run against many orgs.",
+        "The lesson says only technical staff should act on this.",
+        "There are two WSDLs: the enterprise WSDL, generated from your org's schema (regenerate it whenever objects or fields change), and the partner WSDL, a loosely-typed version for apps that run against many orgs.",
+        "The lesson argues this applies only in unrelated settings."
       ],
       "correct_answer_index": 2,
-      "explanation": "Salesforce's own guidance names its niche: \"you can use SOAP API to integrate Salesforce with your org's ERP and finance systems.\""
+      "explanation": "There are two WSDLs: the enterprise WSDL, generated from your org's schema (regenerate it whenever objects or fields change), and the partner WSDL, a loosely-typed version for apps that run against many orgs."
     },
     {
       "question": "Per the lesson “General Systems Architecture: What 'Architecture' Means and Why AI Systems Reuse the Same Patterns”, what is the central focus?",
@@ -149,23 +149,23 @@
     {
       "question": "Which statement best reflects the lesson’s guidance?",
       "options": [
-        "Here's the thesis: architecture is about making decisions under constraints.",
         "This is the first general systems architecture lesson in the track, a deliberate break from Salesforce-specific content to build the cross-platform architecture thinking that every architect needs, especially one learning AI systems.",
-        "The patterns change names every decade, but the underlying mechanics are remarkably stable.",
-        "The ISO/IEC/IEEE 42010 standard defines architecture as \"the fundamental concepts or properties of a system in its environment embodied in its elements, relationships, and in the principles of its design and evolution.\""
+        "The lesson states this is never a relevant consideration.",
+        "The lesson claims this cannot be verified at all.",
+        "This is not the first general systems architecture lesson in the track, a deliberate break from Salesforce-specific content to build the cross-platform architecture thinking that every architect needs, especially one learning AI systems."
       ],
-      "correct_answer_index": 1,
+      "correct_answer_index": 0,
       "explanation": "This is the first general systems architecture lesson in the track, a deliberate break from Salesforce-specific content to build the cross-platform architecture thinking that every architect needs, especially one learning AI systems."
     },
     {
       "question": "Which conclusion does the lesson support?",
       "options": [
-        "The ISO/IEC/IEEE 42010 standard defines architecture as \"the fundamental concepts or properties of a system in its environment embodied in its elements, relationships, and in the principles of its design and evolution.\"",
-        "Google's MapReduce paper (2004) formalized an idea that had existed in distributed computing for years: split a problem into independent pieces, process them in parallel, then merge results.",
-        "The patterns change names every decade, but the underlying mechanics are remarkably stable.",
-        "Here's the thesis: architecture is about making decisions under constraints."
+        "The lesson claims this cannot be verified at all.",
+        "The lesson recommends treating output as final without review.",
+        "The opposite is true: google's MapReduce paper (2004) formalized an idea that had existed in distributed computing for years: split a problem into independent pieces, process them in parallel, then merge results.",
+        "Google's MapReduce paper (2004) formalized an idea that had existed in distributed computing for years: split a problem into independent pieces, process them in parallel, then merge results."
       ],
-      "correct_answer_index": 1,
+      "correct_answer_index": 3,
       "explanation": "Google's MapReduce paper (2004) formalized an idea that had existed in distributed computing for years: split a problem into independent pieces, process them in parallel, then merge results."
     }
   ]

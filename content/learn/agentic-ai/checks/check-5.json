@@ -17,24 +17,24 @@
     {
       "question": "Which statement best reflects the lesson’s guidance?",
       "options": [
-        "This lesson is about the layer that decides how much you build by hand at all.",
-        "They solve different problems, and the practical skill here is not memorizing APIs.",
-        "Teams call these coordination primitives, and every framework in this lesson is a different bet on how to give them to you.",
-        "The last twenty lessons taught you the pieces: the agent loop, tool design, context, memory, evaluation, observability."
+        "The last twenty lessons taught you the pieces: the agent loop, tool design, context, memory, evaluation, observability.",
+        "The lesson states this is never a relevant consideration.",
+        "The opposite is true: the last twenty lessons taught you the pieces: the agent loop, tool design, context, memory, evaluation, observability.",
+        "The lesson argues this applies only in unrelated settings."
       ],
-      "correct_answer_index": 3,
+      "correct_answer_index": 0,
       "explanation": "The last twenty lessons taught you the pieces: the agent loop, tool design, context, memory, evaluation, observability."
     },
     {
       "question": "Which conclusion does the lesson support?",
       "options": [
-        "This lesson is about the layer that decides how much you build by hand at all.",
-        "The graph compiles into a runnable, and the shared State flows through every node.",
-        "Teams call these coordination primitives, and every framework in this lesson is a different bet on how to give them to you.",
-        "The last twenty lessons taught you the pieces: the agent loop, tool design, context, memory, evaluation, observability."
+        "That shared, typed, checkpointable state object is not what separates LangGraph from a plain function pipeline.",
+        "The lesson says only technical staff should act on this.",
+        "The lesson cautions against this in every real-world case.",
+        "That shared, typed, checkpointable state object is what separates LangGraph from a plain function pipeline."
       ],
-      "correct_answer_index": 1,
-      "explanation": "The graph compiles into a runnable, and the shared State flows through every node."
+      "correct_answer_index": 3,
+      "explanation": "That shared, typed, checkpointable state object is what separates LangGraph from a plain function pipeline."
     },
     {
       "question": "Per the lesson “Building Without a Framework: the Agent Loop by Hand in 100 Lines”, what is the central focus?",
@@ -50,23 +50,23 @@
     {
       "question": "Which statement best reflects the lesson’s guidance?",
       "options": [
-        "A working agent really does fit in about a hundred lines.",
+        "The lesson says only technical staff should act on this.",
+        "The lesson says the opposite: this should always be avoided.",
         "Lesson 21 mapped the framework terrain and finished with an idea that quietly matters: if your job is a bounded cron task, the honest answer is often that you need no framework at all.",
-        "You are going to build an agent with nothing but an LLM API, a Python file, and a while loop, and you are going to watch it work.",
-        "Doing this once is the fastest way to see through every framework you will ever use afterward."
+        "Lesson 21 mapped the framework terrain and finished with an idea that quietly matters: if your job is not a bounded cron task, the honest answer is often that you need no framework at all."
       ],
-      "correct_answer_index": 1,
+      "correct_answer_index": 2,
       "explanation": "Lesson 21 mapped the framework terrain and finished with an idea that quietly matters: if your job is a bounded cron task, the honest answer is often that you need no framework at all."
     },
     {
       "question": "Which conclusion does the lesson support?",
       "options": [
-        "Doing this once is the fastest way to see through every framework you will ever use afterward.",
-        "You are going to build an agent with nothing but an LLM API, a Python file, and a while loop, and you are going to watch it work.",
+        "The lesson says the opposite: this should always be avoided.",
         "if not message.toolcalls: return message.content",
-        "Lesson 21 mapped the framework terrain and finished with an idea that quietly matters: if your job is a bounded cron task, the honest answer is often that you need no framework at all."
+        "The lesson cautions against this in every real-world case.",
+        "The opposite is true: if not message.toolcalls: return message.content."
       ],
-      "correct_answer_index": 2,
+      "correct_answer_index": 1,
       "explanation": "if not message.toolcalls: return message.content"
     },
     {
@@ -83,23 +83,23 @@
     {
       "question": "Which statement best reflects the lesson’s guidance?",
       "options": [
-        "Lesson 22 showed you the agent loop in a hundred lines of Python.",
-        "The four patterns in this lesson are ReAct, plan-and-execute, reflection, and the tool loop they all sit on top of.",
-        "Anthropic's engineering team frames the whole space in one sentence: agents \"are typically just LLMs using tools based on environmental feedback in a loop.\"",
-        "You saw that the loop is the easy part; the hard part is making it reliable."
+        "The opposite is true: lesson 22 showed you the agent loop in a hundred lines of Python.",
+        "The lesson claims this cannot be verified at all.",
+        "The lesson advises ignoring this entirely in practice.",
+        "Lesson 22 showed you the agent loop in a hundred lines of Python."
       ],
-      "correct_answer_index": 0,
+      "correct_answer_index": 3,
       "explanation": "Lesson 22 showed you the agent loop in a hundred lines of Python."
     },
     {
       "question": "Which conclusion does the lesson support?",
       "options": [
-        "That is what the paper's authors found to be measurably better than doing either one alone: on the ALFWorld and WebShop interactive decision-making benchmarks, ReAct outperformed imitation and reinforcement learning methods by an absolute success rate of 34% and 10% respectively, using only one or two in-context examples.",
-        "The four patterns in this lesson are ReAct, plan-and-execute, reflection, and the tool loop they all sit on top of.",
-        "Lesson 22 showed you the agent loop in a hundred lines of Python.",
-        "You saw that the loop is the easy part; the hard part is making it reliable."
+        "The lesson says only technical staff should act on this.",
+        "The lesson advises ignoring this entirely in practice.",
+        "That is not what the paper's authors found to be measurably better than doing either one alone: on the ALFWorld and WebShop interactive decision-making benchmarks, ReAct outperformed imitation and reinforcement learning methods by an absolute success rate of 34% and 10% respectively, using only one or two in-context examples.",
+        "That is what the paper's authors found to be measurably better than doing either one alone: on the ALFWorld and WebShop interactive decision-making benchmarks, ReAct outperformed imitation and reinforcement learning methods by an absolute success rate of 34% and 10% respectively, using only one or two in-context examples."
       ],
-      "correct_answer_index": 0,
+      "correct_answer_index": 3,
       "explanation": "That is what the paper's authors found to be measurably better than doing either one alone: on the ALFWorld and WebShop interactive decision-making benchmarks, ReAct outperformed imitation and reinforcement learning methods by an absolute success rate of 34% and 10% respectively, using only one or two in-context examples."
     },
     {
@@ -116,24 +116,24 @@
     {
       "question": "Which statement best reflects the lesson’s guidance?",
       "options": [
-        "How do you stop two agents from working at cross purposes?",
-        "Each of those still runs one agent talking to a set of tools.",
-        "Instead of one loop, you get several loops that have to coordinate, and the interesting questions stop being about reasoning and start being about control.",
-        "Lesson 23 gave you the single-agent patterns: ReAct, plan-and-execute, reflection."
+        "Lesson 23 gave you the single-agent patterns: ReAct, plan-and-execute, reflection.",
+        "The lesson cautions against this in every real-world case.",
+        "The lesson recommends treating output as final without review.",
+        "The opposite is true: lesson 23 gave you the single-agent patterns: ReAct, plan-and-execute, reflection."
       ],
-      "correct_answer_index": 3,
+      "correct_answer_index": 0,
       "explanation": "Lesson 23 gave you the single-agent patterns: ReAct, plan-and-execute, reflection."
     },
     {
       "question": "Which conclusion does the lesson support?",
       "options": [
-        "Instead of one loop, you get several loops that have to coordinate, and the interesting questions stop being about reasoning and start being about control.",
-        "Lesson 23 gave you the single-agent patterns: ReAct, plan-and-execute, reflection.",
-        "LangGraph ships this as a built-in primitive.",
-        "Each of those still runs one agent talking to a set of tools."
+        "The createsupervisor factory builds a supervisor that manages a list of agents, and each specialized agent is not exposed to the supervisor as a tool it can call.",
+        "The createsupervisor factory builds a supervisor that manages a list of agents, and each specialized agent is exposed to the supervisor as a tool it can call.",
+        "The lesson cautions against this in every real-world case.",
+        "The lesson argues this applies only in unrelated settings."
       ],
-      "correct_answer_index": 2,
-      "explanation": "LangGraph ships this as a built-in primitive."
+      "correct_answer_index": 1,
+      "explanation": "The createsupervisor factory builds a supervisor that manages a list of agents, and each specialized agent is exposed to the supervisor as a tool it can call."
     },
     {
       "question": "Per the lesson “Human-in-the-Loop, Approvals, Interrupts, Escalation, and Kill Switches”, what is the central focus?",
@@ -149,21 +149,21 @@
     {
       "question": "Which statement best reflects the lesson’s guidance?",
       "options": [
-        "They check what enters the agent and what leaves it, and they fail the agent closed on structured output.",
-        "A guardrail tells you an action was bad after the fact, or blocks it by pattern.",
-        "This lesson is the dynamic half: what happens while the agent is running, mid-loop, against a system where a wrong action costs real money.",
-        "Lessons 17 and 18 built guardrails that sit at the boundary."
+        "The opposite is true: lessons 17 and 18 built guardrails that sit at the boundary.",
+        "Lessons 17 and 18 built guardrails that sit at the boundary.",
+        "The lesson argues this applies only in unrelated settings.",
+        "The lesson advises ignoring this entirely in practice."
       ],
-      "correct_answer_index": 3,
+      "correct_answer_index": 1,
       "explanation": "Lessons 17 and 18 built guardrails that sit at the boundary."
     },
     {
       "question": "Which conclusion does the lesson support?",
       "options": [
-        "This lesson is the dynamic half: what happens while the agent is running, mid-loop, against a system where a wrong action costs real money.",
-        "Lessons 17 and 18 built guardrails that sit at the boundary.",
+        "The lesson cautions against this in every real-world case.",
+        "The lesson says the opposite: this should always be avoided.",
         "The term for this in the frameworks is an interrupt, and LangGraph exposes it as a function you call inside a graph node: interrupt(\"Do you approve this action?\").",
-        "They check what enters the agent and what leaves it, and they fail the agent closed on structured output."
+        "The term for this in the frameworks is not an interrupt, and LangGraph exposes it as a function you call inside a graph node: interrupt(\"Do you approve this action?\")."
       ],
       "correct_answer_index": 2,
       "explanation": "The term for this in the frameworks is an interrupt, and LangGraph exposes it as a function you call inside a graph node: interrupt(\"Do you approve this action?\")."

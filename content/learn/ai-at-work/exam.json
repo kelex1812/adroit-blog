@@ -83,7 +83,7 @@
     {
       "question": "Lesson 3 lists several shapes hallucinations take. Which is one of them?",
       "options": [
-        "Invented facts and fabricated sources",
+        "Hallucinations can take the form of invented facts and fabricated sources.",
         "Consistently correct answers that are too detailed",
         "Answers that are always shorter than requested",
         "Refusals to answer easy questions"
@@ -238,7 +238,7 @@
       "question": "Lesson 8 describes the feedback loop as what?",
       "options": [
         "A single leap to the perfect answer on the first try",
-        "A ladder, not a single leap",
+        "The feedback loop is a ladder of small steps, not a single leap.",
         "A random process that never improves",
         "A loop you should avoid to save time"
       ],
@@ -447,7 +447,7 @@
       "question": "According to Lesson 14, roughly what share of a data project is spent cleaning and organizing data?",
       "options": [
         "About 20 percent",
-        "About 80 percent",
+        "Roughly 80 percent of a data project is spent on cleaning and organizing data.",
         "About 50 percent",
         "About 5 percent"
       ],
@@ -469,7 +469,7 @@
       "question": "What is the most-cited fix for a good meeting, according to the research Lesson 15 cites?",
       "options": [
         "Having more people attend",
-        "Setting a clear agenda",
+        "Setting a clear agenda is the most-cited fix for making a meeting productive.",
         "Recording every meeting",
         "Shortening the meeting to 15 minutes"
       ],

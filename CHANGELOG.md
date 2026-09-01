@@ -4,6 +4,47 @@ All notable changes to the Adroit Consulting Blog project will be documented in 
 
 ## [Unreleased]
 
+### Fix: Regenerate Omni content — complete-sentence answers + unambiguous distractors (t_1b282209)
+
+**What** — Fixed the Omni-bar question generator
+(`scripts/generate-omni-content.py`) and regenerated the affected learn content
+across all 6 non-OmniStudio series (salesforce-architect, agentic-ai,
+ai-at-work, hermes-consultant, hermes-consultant-intermediate,
+hermes-consultant-advanced) to close two content-quality defects flagged by
+QA/zod (t_70f333ad), a11y/lara, and security/val-el:
+
+1. **Truncated fragment correct answers.** `harvest_sentences` no longer keeps
+   colon-terminated lead-in fragments (e.g. "The credential is granted
+   automatically after four prerequisites:") as candidate answer sentences, so
+   regenerated questions never emit a dangling correct answer. The two affected
+   generated lessons (what-salesforce-system-architect-does,
+   rag-fundamentals-chunking-embeddings-retrieval) now use full sentences.
+2. **Ambiguous comprehension distractors.** Comprehension Q2/Q3 distractors are
+   no longer drawn from other real lesson sentences (which could yield two
+   defensible answers). `make_distractors` now builds them from (a) an inverted /
+   wrong-but-plausible variant of the correct answer and (b) a generic
+   wrong-answer stem pool — never a near-equivalent lesson statement.
+3. Hand-authored ai-at-work content (preserved by the generator's
+   never-overwrite guard) had 4 short correct answers ("About 80 percent",
+   "Setting a clear agenda", "A ladder, not a single leap", "Invented facts and
+   fabricated sources") expanded to complete sentences in the lesson files and
+   their pooled check/exam copies.
+
+Determinism (`rng = random.Random(series)`) and the never-overwrite-existing
+guard are both preserved; regenerated output is byte-identical across repeated
+runs (verified by SHA-256 over 104 files).
+
+**Why** — As MCQ options, verbatim colon-terminated lesson lead-ins read as
+dangling/incomplete, and comprehension distractors that are also true lesson
+statements let a question have two defensible answers — degrading cert-gating
+validity (cert granted at exam ≥72%).
+
+**Known Issues** — None. New `scripts/audit-omni-content-quality.py` proves
+across all 6 series: 810 correct answers scanned, 0 colon-terminated, 0 under
+40 chars, 0 ambiguous comprehension distractors. `validate-omni-bar.py` passes
+all 6 series; `npx vitest run` 462/462 green (baseline 461 + a11y t_96d952ef
+Escape-dismiss test).
+
 ### Fix: Constellation celebration focus/Escape + FullSky rank announcements (WCAG 2.4.3/2.1.1/4.1.2, t_96d952ef)
 
 **What** — Addressed 3 a11y findings from lara's B-18 audit. (1)

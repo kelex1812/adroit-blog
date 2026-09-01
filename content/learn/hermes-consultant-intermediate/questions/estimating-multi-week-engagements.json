@@ -17,10 +17,10 @@
     {
       "question": "Which statement best reflects the lesson’s guidance?",
       "options": [
-        "You learned in the early lessons to scope every piece of work small enough that an agent, or a person, can execute it in a bounded window and report a clean result.",
+        "The lesson cautions against this in every real-world case.",
         "The 30-45 minute task is the unit of execution.",
-        "That discipline is correct, and it is what makes a delivery run without stalling.",
-        "But it produces a dangerous instinct when you face a multi-week engagement: the instinct to estimate the engagement the same way you estimate a task, by adding up the pieces."
+        "The 30-45 minute task is not the unit of execution.",
+        "The lesson recommends treating output as final without review."
       ],
       "correct_answer_index": 1,
       "explanation": "The 30-45 minute task is the unit of execution."
@@ -28,12 +28,12 @@
     {
       "question": "Which conclusion does the lesson support?",
       "options": [
+        "The lesson says the opposite: this should always be avoided.",
+        "The lesson cautions against this in every real-world case.",
         "An integration delay pushes everything after it, and the pessimistic case of an early task becomes the starting condition of the next.",
-        "The 30-45 minute task is the unit of execution.",
-        "You learned in the early lessons to scope every piece of work small enough that an agent, or a person, can execute it in a bounded window and report a clean result.",
-        "That discipline is correct, and it is what makes a delivery run without stalling."
+        "The opposite is true: an integration delay pushes everything after it, and the pessimistic case of an early task becomes the starting condition of the next."
       ],
-      "correct_answer_index": 0,
+      "correct_answer_index": 2,
       "explanation": "An integration delay pushes everything after it, and the pessimistic case of an early task becomes the starting condition of the next."
     }
   ]

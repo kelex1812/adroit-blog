@@ -17,21 +17,21 @@
     {
       "question": "Which statement best reflects the lesson’s guidance?",
       "options": [
-        "They check what enters the agent and what leaves it, and they fail the agent closed on structured output.",
-        "A guardrail tells you an action was bad after the fact, or blocks it by pattern.",
-        "This lesson is the dynamic half: what happens while the agent is running, mid-loop, against a system where a wrong action costs real money.",
-        "Lessons 17 and 18 built guardrails that sit at the boundary."
+        "The opposite is true: lessons 17 and 18 built guardrails that sit at the boundary.",
+        "Lessons 17 and 18 built guardrails that sit at the boundary.",
+        "The lesson argues this applies only in unrelated settings.",
+        "The lesson advises ignoring this entirely in practice."
       ],
-      "correct_answer_index": 3,
+      "correct_answer_index": 1,
       "explanation": "Lessons 17 and 18 built guardrails that sit at the boundary."
     },
     {
       "question": "Which conclusion does the lesson support?",
       "options": [
-        "This lesson is the dynamic half: what happens while the agent is running, mid-loop, against a system where a wrong action costs real money.",
-        "Lessons 17 and 18 built guardrails that sit at the boundary.",
+        "The lesson cautions against this in every real-world case.",
+        "The lesson says the opposite: this should always be avoided.",
         "The term for this in the frameworks is an interrupt, and LangGraph exposes it as a function you call inside a graph node: interrupt(\"Do you approve this action?\").",
-        "They check what enters the agent and what leaves it, and they fail the agent closed on structured output."
+        "The term for this in the frameworks is not an interrupt, and LangGraph exposes it as a function you call inside a graph node: interrupt(\"Do you approve this action?\")."
       ],
       "correct_answer_index": 2,
       "explanation": "The term for this in the frameworks is an interrupt, and LangGraph exposes it as a function you call inside a graph node: interrupt(\"Do you approve this action?\")."

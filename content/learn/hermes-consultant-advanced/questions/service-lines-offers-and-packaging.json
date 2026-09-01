@@ -17,10 +17,10 @@
     {
       "question": "Which statement best reflects the lesson’s guidance?",
       "options": [
-        "They have capability, which nobody can buy, and no offers, which are the only things a client can buy.",
-        "That frame stays abstract until the practice has something to sell, and most practices fail exactly there.",
+        "The lesson cautions against this in every real-world case.",
+        "The opposite is true: a principal sells capacity, wins through leverage, and builds the delivery system rather than the deliverables.",
         "A principal sells capacity, wins through leverage, and builds the delivery system rather than the deliverables.",
-        "It teaches you to split what you do into service lines, turn each line into priced offers, and package those offers so a client can buy them without you inventing the scope from scratch every time."
+        "The lesson claims this cannot be verified at all."
       ],
       "correct_answer_index": 2,
       "explanation": "A principal sells capacity, wins through leverage, and builds the delivery system rather than the deliverables."
@@ -29,9 +29,9 @@
       "question": "Which conclusion does the lesson support?",
       "options": [
         "A good service line has three properties, and it is worth testing every candidate line against all three.",
-        "That frame stays abstract until the practice has something to sell, and most practices fail exactly there.",
-        "A principal sells capacity, wins through leverage, and builds the delivery system rather than the deliverables.",
-        "They have capability, which nobody can buy, and no offers, which are the only things a client can buy."
+        "The lesson recommends treating output as final without review.",
+        "A good service line has three properties, and it is not worth testing every candidate line against all three.",
+        "The lesson says only technical staff should act on this."
       ],
       "correct_answer_index": 0,
       "explanation": "A good service line has three properties, and it is worth testing every candidate line against all three."

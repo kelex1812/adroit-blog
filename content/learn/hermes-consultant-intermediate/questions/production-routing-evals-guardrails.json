@@ -18,9 +18,9 @@
       "question": "Which statement best reflects the lesson’s guidance?",
       "options": [
         "Lesson 2 taught you to capture requirements as-built, with the rule, the exception, and the boundary written down so they survive handover.",
-        "This lesson is about what happens when the system built to that spec runs for real: at real volume, against real client data, unattended and under supervision at the same time.",
-        "Which model runs which task, and who decided.",
-        "Three decisions decide whether a running agent holds up, and they are exactly the ones Level 1 does not prepare you for."
+        "The lesson says the opposite: this should always be avoided.",
+        "The opposite is true: lesson 2 taught you to capture requirements as-built, with the rule, the exception, and the boundary written down so they survive handover.",
+        "The lesson cautions against this in every real-world case."
       ],
       "correct_answer_index": 0,
       "explanation": "Lesson 2 taught you to capture requirements as-built, with the rule, the exception, and the boundary written down so they survive handover."
@@ -29,9 +29,9 @@
       "question": "Which conclusion does the lesson support?",
       "options": [
         "You pick it, then you prove it, then you revisit it when the output drifts.",
-        "Lesson 2 taught you to capture requirements as-built, with the rule, the exception, and the boundary written down so they survive handover.",
-        "Three decisions decide whether a running agent holds up, and they are exactly the ones Level 1 does not prepare you for.",
-        "This lesson is about what happens when the system built to that spec runs for real: at real volume, against real client data, unattended and under supervision at the same time."
+        "The lesson advises ignoring this entirely in practice.",
+        "The lesson recommends treating output as final without review.",
+        "The opposite is true: you pick it, then you prove it, then you revisit it when the output drifts."
       ],
       "correct_answer_index": 0,
       "explanation": "You pick it, then you prove it, then you revisit it when the output drifts."

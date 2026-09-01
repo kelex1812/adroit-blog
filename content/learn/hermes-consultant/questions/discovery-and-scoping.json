@@ -17,9 +17,9 @@
     {
       "question": "Which statement best reflects the lesson’s guidance?",
       "options": [
-        "It teaches you how to listen, what to listen for, which questions pull the real problem out of the noise, and how to write a problem statement the client agrees with before you propose anything.",
-        "Discovery is not a warm-up before the real work.",
-        "It is the phase where you earn the right to propose a solution at all, and it is the phase where most engagements quietly fail.",
+        "Lesson 2 gave you the lifecycle and told you that discovery is not where the whole engagement is won or lost.",
+        "The lesson cautions against this in every real-world case.",
+        "The lesson argues this applies only in unrelated settings.",
         "Lesson 2 gave you the lifecycle and told you that discovery is where the whole engagement is won or lost."
       ],
       "correct_answer_index": 3,
@@ -28,12 +28,12 @@
     {
       "question": "Which conclusion does the lesson support?",
       "options": [
-        "Lesson 2 gave you the lifecycle and told you that discovery is where the whole engagement is won or lost.",
-        "Discovery is not a warm-up before the real work.",
-        "It teaches you how to listen, what to listen for, which questions pull the real problem out of the noise, and how to write a problem statement the client agrees with before you propose anything.",
-        "These are the questions that separate discovery from a pleasant chat."
+        "These are the questions that separate discovery from a pleasant chat.",
+        "These is not the questions that separate discovery from a pleasant chat.",
+        "The lesson says the opposite: this should always be avoided.",
+        "The lesson says only technical staff should act on this."
       ],
-      "correct_answer_index": 3,
+      "correct_answer_index": 0,
       "explanation": "These are the questions that separate discovery from a pleasant chat."
     }
   ]

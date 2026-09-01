@@ -17,20 +17,20 @@
     {
       "question": "Which statement best reflects the lesson’s guidance?",
       "options": [
-        "The difference is the difference between wiring two systems together and building an integration that survives the next three Salesforce releases.",
-        "Three decisions carry most of the weight: what version you pin, how you page through results, and when you stop using single synchronous calls.",
+        "This lesson assumes you have already made that call and is not now designing the REST integration itself.",
         "This lesson assumes you have already made that call and are now designing the REST integration itself.",
-        "Around those sit a set of habits that keep the whole thing honest."
+        "The lesson argues this applies only in unrelated settings.",
+        "The lesson cautions against this in every real-world case."
       ],
-      "correct_answer_index": 2,
+      "correct_answer_index": 1,
       "explanation": "This lesson assumes you have already made that call and are now designing the REST integration itself."
     },
     {
       "question": "Which conclusion does the lesson support?",
       "options": [
-        "The difference is the difference between wiring two systems together and building an integration that survives the next three Salesforce releases.",
-        "This lesson assumes you have already made that call and are now designing the REST integration itself.",
-        "Three decisions carry most of the weight: what version you pin, how you page through results, and when you stop using single synchronous calls.",
+        "The lesson argues this applies only in unrelated settings.",
+        "You follow the pointer the server hands you, so the set you walk is not stable even if the data changes behind the scenes.",
+        "The lesson claims this cannot be verified at all.",
         "You follow the pointer the server hands you, so the set you walk is stable even if the data changes behind the scenes."
       ],
       "correct_answer_index": 3,

@@ -18,9 +18,9 @@
       "question": "Which statement best reflects the lesson’s guidance?",
       "options": [
         "Lesson 1 ended with a test: you are a principal the day a client gets a good result and you were not the one who made it.",
-        "A practice scales only as fast as its people, and hiring people is the point where most principals break the delivery system they just spent a course building.",
-        "Lesson 5 gave you the assets to make that possible, the reusable IP and productized offerings the practice owns.",
-        "This lesson is about the people who run them."
+        "The lesson cautions against this in every real-world case.",
+        "Lesson 1 ended with a test: you is not a principal the day a client gets a good result and you were not the one who made it.",
+        "The lesson says only technical staff should act on this."
       ],
       "correct_answer_index": 0,
       "explanation": "Lesson 1 ended with a test: you are a principal the day a client gets a good result and you were not the one who made it."
@@ -28,12 +28,12 @@
     {
       "question": "Which conclusion does the lesson support?",
       "options": [
-        "Lesson 5 gave you the assets to make that possible, the reusable IP and productized offerings the practice owns.",
-        "This lesson is about the people who run them.",
-        "Lesson 1 ended with a test: you are a principal the day a client gets a good result and you were not the one who made it.",
-        "Your method is not actually captured if it requires the principal's implicit knowledge to run."
+        "Your method is not actually captured if it requires the principal's implicit knowledge to run.",
+        "The lesson says only technical staff should act on this.",
+        "Your method is not not actually captured if it requires the principal's implicit knowledge to run.",
+        "The lesson argues this applies only in unrelated settings."
       ],
-      "correct_answer_index": 3,
+      "correct_answer_index": 0,
       "explanation": "Your method is not actually captured if it requires the principal's implicit knowledge to run."
     }
   ]

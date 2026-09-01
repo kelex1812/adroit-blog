@@ -17,23 +17,23 @@
     {
       "question": "Which statement best reflects the lesson’s guidance?",
       "options": [
-        "A working agent really does fit in about a hundred lines.",
+        "The lesson says only technical staff should act on this.",
+        "The lesson says the opposite: this should always be avoided.",
         "Lesson 21 mapped the framework terrain and finished with an idea that quietly matters: if your job is a bounded cron task, the honest answer is often that you need no framework at all.",
-        "You are going to build an agent with nothing but an LLM API, a Python file, and a while loop, and you are going to watch it work.",
-        "Doing this once is the fastest way to see through every framework you will ever use afterward."
+        "Lesson 21 mapped the framework terrain and finished with an idea that quietly matters: if your job is not a bounded cron task, the honest answer is often that you need no framework at all."
       ],
-      "correct_answer_index": 1,
+      "correct_answer_index": 2,
       "explanation": "Lesson 21 mapped the framework terrain and finished with an idea that quietly matters: if your job is a bounded cron task, the honest answer is often that you need no framework at all."
     },
     {
       "question": "Which conclusion does the lesson support?",
       "options": [
-        "Doing this once is the fastest way to see through every framework you will ever use afterward.",
-        "You are going to build an agent with nothing but an LLM API, a Python file, and a while loop, and you are going to watch it work.",
+        "The lesson says the opposite: this should always be avoided.",
         "if not message.toolcalls: return message.content",
-        "Lesson 21 mapped the framework terrain and finished with an idea that quietly matters: if your job is a bounded cron task, the honest answer is often that you need no framework at all."
+        "The lesson cautions against this in every real-world case.",
+        "The opposite is true: if not message.toolcalls: return message.content."
       ],
-      "correct_answer_index": 2,
+      "correct_answer_index": 1,
       "explanation": "if not message.toolcalls: return message.content"
     }
   ]

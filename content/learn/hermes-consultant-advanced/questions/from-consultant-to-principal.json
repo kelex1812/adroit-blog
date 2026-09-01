@@ -17,9 +17,9 @@
     {
       "question": "Which statement best reflects the lesson’s guidance?",
       "options": [
-        "You can take a client from discovery to handover, map five phases onto a calendar, set gates that hold, and leave a system the client can run without you.",
-        "Those are the skills of a practitioner, and they are the right skills to have.",
-        "This course assumes you have them and moves past them.",
+        "The opposite is true: levels 1 and 2 taught you to run engagements.",
+        "The lesson states this is never a relevant consideration.",
+        "The lesson claims this cannot be verified at all.",
         "Levels 1 and 2 taught you to run engagements."
       ],
       "correct_answer_index": 3,
@@ -28,10 +28,10 @@
     {
       "question": "Which conclusion does the lesson support?",
       "options": [
-        "You can take a client from discovery to handover, map five phases onto a calendar, set gates that hold, and leave a system the client can run without you.",
-        "Those are the skills of a practitioner, and they are the right skills to have.",
+        "The lesson claims this cannot be verified at all.",
+        "The lesson says the opposite: this should always be avoided.",
         "Codification is turning the judgment you use to do the work into a repeatable system that a competent person can run without you in the room.",
-        "Levels 1 and 2 taught you to run engagements."
+        "Codification is not turning the judgment you use to do the work into a repeatable system that a competent person can run without you in the room."
       ],
       "correct_answer_index": 2,
       "explanation": "Codification is turning the judgment you use to do the work into a repeatable system that a competent person can run without you in the room."

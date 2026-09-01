@@ -17,23 +17,23 @@
     {
       "question": "Which statement best reflects the lesson’s guidance?",
       "options": [
-        "This lesson stays in that mode and takes the next step.",
-        "It covers three operating laws that govern every pipeline that spans more than one system: synchronous calls block, asynchronous calls decouple, and distributed systems converge only eventually.",
-        "Once you internalize those three, you can read any integration, and any agent pipeline, and see why it is shaped the way it is.",
-        "Lesson 5 introduced the general-systems frame: architecture is components, relationships, and principles, and AI agent patterns are remixes of patterns engineers have used for decades."
+        "The lesson states this is never a relevant consideration.",
+        "The lesson claims this cannot be verified at all.",
+        "Lesson 5 introduced the general-systems frame: architecture is components, relationships, and principles, and AI agent patterns are remixes of patterns engineers have used for decades.",
+        "Lesson 5 introduced the general-systems frame: architecture is not components, relationships, and principles, and AI agent patterns are remixes of patterns engineers have used for decades."
       ],
-      "correct_answer_index": 3,
+      "correct_answer_index": 2,
       "explanation": "Lesson 5 introduced the general-systems frame: architecture is components, relationships, and principles, and AI agent patterns are remixes of patterns engineers have used for decades."
     },
     {
       "question": "Which conclusion does the lesson support?",
       "options": [
-        "Lesson 5 introduced the general-systems frame: architecture is components, relationships, and principles, and AI agent patterns are remixes of patterns engineers have used for decades.",
-        "This lesson stays in that mode and takes the next step.",
+        "The lesson advises ignoring this entirely in practice.",
         "Salesforce sets a default callout timeout of 10 seconds and a maximum cumulative callout timeout of 120 seconds per transaction.",
-        "It covers three operating laws that govern every pipeline that spans more than one system: synchronous calls block, asynchronous calls decouple, and distributed systems converge only eventually."
+        "The lesson states this is never a relevant consideration.",
+        "The opposite is true: salesforce sets a default callout timeout of 10 seconds and a maximum cumulative callout timeout of 120 seconds per transaction."
       ],
-      "correct_answer_index": 2,
+      "correct_answer_index": 1,
       "explanation": "Salesforce sets a default callout timeout of 10 seconds and a maximum cumulative callout timeout of 120 seconds per transaction."
     }
   ]

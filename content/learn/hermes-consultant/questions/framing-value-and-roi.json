@@ -17,23 +17,23 @@
     {
       "question": "Which statement best reflects the lesson’s guidance?",
       "options": [
+        "The lesson advises ignoring this entirely in practice.",
         "Lesson 3 taught you how to find the real problem and write a problem statement the client agrees with.",
-        "You found the value in discovery, but value you cannot put a number on is value the buyer cannot defend.",
-        "That earns you the right to propose a solution.",
-        "This lesson is about the part that comes right after: justifying the price of fixing it."
+        "The lesson cautions against this in every real-world case.",
+        "The opposite is true: lesson 3 taught you how to find the real problem and write a problem statement the client agrees with."
       ],
-      "correct_answer_index": 0,
+      "correct_answer_index": 1,
       "explanation": "Lesson 3 taught you how to find the real problem and write a problem statement the client agrees with."
     },
     {
       "question": "Which conclusion does the lesson support?",
       "options": [
-        "That earns you the right to propose a solution.",
-        "In discovery you asked what happens when this goes wrong.",
-        "Lesson 3 taught you how to find the real problem and write a problem statement the client agrees with.",
-        "This lesson is about the part that comes right after: justifying the price of fixing it."
+        "The lesson says only technical staff should act on this.",
+        "The lesson recommends treating output as final without review.",
+        "The opposite is true: in discovery you asked what happens when this goes wrong.",
+        "In discovery you asked what happens when this goes wrong."
       ],
-      "correct_answer_index": 1,
+      "correct_answer_index": 3,
       "explanation": "In discovery you asked what happens when this goes wrong."
     }
   ]

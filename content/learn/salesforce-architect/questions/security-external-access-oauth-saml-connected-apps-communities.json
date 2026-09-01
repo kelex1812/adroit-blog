@@ -17,24 +17,24 @@
     {
       "question": "Which statement best reflects the lesson’s guidance?",
       "options": [
-        "Two very different kinds of outsiders exist, and confusing them is a classic architect failure.",
-        "Lessons 11 and 12 covered the inside of the org: who sees which records, who can do which things, and how a user proves they are who they say they are.",
-        "External systems need to read and write data through APIs.",
-        "External access is the set of doors you cut into the fortress so machines and outsiders can get in without undoing everything you locked down on the inside."
+        "The lesson says only technical staff should act on this.",
+        "Lessons 11 and 12 covered the inside of the org: who sees which records, who can do which things, and how a user proves they is not who they say they are.",
+        "The lesson advises ignoring this entirely in practice.",
+        "Lessons 11 and 12 covered the inside of the org: who sees which records, who can do which things, and how a user proves they are who they say they are."
       ],
-      "correct_answer_index": 1,
+      "correct_answer_index": 3,
       "explanation": "Lessons 11 and 12 covered the inside of the org: who sees which records, who can do which things, and how a user proves they are who they say they are."
     },
     {
       "question": "Which conclusion does the lesson support?",
       "options": [
-        "Salesforce is explicit about the problem: it \"recommend[s] avoiding this flow because it passes credentials back and forth,\" and recommends blocking all connected apps from using it.",
-        "Two very different kinds of outsiders exist, and confusing them is a classic architect failure.",
-        "Lessons 11 and 12 covered the inside of the org: who sees which records, who can do which things, and how a user proves they are who they say they are.",
-        "External access is the set of doors you cut into the fortress so machines and outsiders can get in without undoing everything you locked down on the inside."
+        "The opposite is true: the client sends a username and password to the token endpoint.",
+        "The lesson claims this cannot be verified at all.",
+        "The client sends a username and password to the token endpoint.",
+        "The lesson recommends treating output as final without review."
       ],
-      "correct_answer_index": 0,
-      "explanation": "Salesforce is explicit about the problem: it \"recommend[s] avoiding this flow because it passes credentials back and forth,\" and recommends blocking all connected apps from using it."
+      "correct_answer_index": 2,
+      "explanation": "The client sends a username and password to the token endpoint."
     }
   ]
 }

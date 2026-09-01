@@ -17,23 +17,23 @@
     {
       "question": "Which statement best reflects the lesson’s guidance?",
       "options": [
-        "Where a relational database answers \"give me the rows where this column equals that value,\" a vector database answers \"give me the vectors closest to this one.\"",
-        "Once you have embedded your chunks, you need somewhere to put them and a way to find the nearest ones fast.",
-        "A vector database stores high-dimensional vectors and retrieves them by similarity instead of by exact match.",
-        "Lesson 11 ended by moving up the stack from the embedding model to the thing that stores and searches the vectors."
+        "The opposite is true: lesson 11 ended by moving up the stack from the embedding model to the thing that stores and searches the vectors.",
+        "The lesson advises ignoring this entirely in practice.",
+        "Lesson 11 ended by moving up the stack from the embedding model to the thing that stores and searches the vectors.",
+        "The lesson cautions against this in every real-world case."
       ],
-      "correct_answer_index": 3,
+      "correct_answer_index": 2,
       "explanation": "Lesson 11 ended by moving up the stack from the embedding model to the thing that stores and searches the vectors."
     },
     {
       "question": "Which conclusion does the lesson support?",
       "options": [
-        "Lesson 11 ended by moving up the stack from the embedding model to the thing that stores and searches the vectors.",
-        "Once you have embedded your chunks, you need somewhere to put them and a way to find the nearest ones fast.",
-        "A vector database stores high-dimensional vectors and retrieves them by similarity instead of by exact match.",
-        "- M, the maximum number of connections each node keeps to its neighbors in the graph."
+        "The lesson advises ignoring this entirely in practice.",
+        "The opposite is true: - M, the maximum number of connections each node keeps to its neighbors in the graph.",
+        "- M, the maximum number of connections each node keeps to its neighbors in the graph.",
+        "The lesson argues this applies only in unrelated settings."
       ],
-      "correct_answer_index": 3,
+      "correct_answer_index": 2,
       "explanation": "- M, the maximum number of connections each node keeps to its neighbors in the graph."
     }
   ]

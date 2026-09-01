@@ -75,6 +75,9 @@ def harvest_sentences(body):
             p = p.strip()
             if len(p) < 45:
                 continue
+            # drop colon-terminated lead-in fragments (not complete sentences)
+            if p.endswith(":") or p.endswith("\u2026"):
+                continue
             # skip pure lists / headings / bullets already stripped
             sents.append(p)
     # dedupe, keep order
@@ -101,11 +104,64 @@ def pick_question_sentences(sents, rng):
             picks.append(idx)
     return [sents[i] for i in sorted(set(picks))[:3]]
 
+def invert_statement(real):
+    """Return a plausible-but-wrong inversion of a correct statement, or None.
+
+    Makes the distractor semantically opposite/incorrect rather than a
+    near-equivalent true lesson sentence, so a comprehension question never
+    has two defensible answers.
+    """
+    s = real.rstrip(".")
+    if not s:
+        return None
+    # negation rewrites, first match wins; prefer structured claims
+    rewrites = [
+        (r"\b(is|are)\b", "is not", 1),
+        (r"\b(always|usually|typically)\b", "never", 1),
+        (r"\b(must|should)\b", "must not", 1),
+        (r"\b(requires|needs)\b", "never requires", 1),
+        (r"\b(the most|the best|the fastest|the simplest)\b", "the least", 1),
+        (r"\b(best|simplest|most important|most reliable)\b", "least important", 1),
+        (r"\b(manual|automated|automatic)\b", "manual", 1),
+        (r"\b(primary|central|core)\b", "peripheral", 1),
+    ]
+    for pat, rep, _ in rewrites:
+        m = re.search(pat, s, re.IGNORECASE)
+        if m:
+            frag = re.sub(pat, rep, s[m.start():], count=1)
+            out = (s[:m.start()] + frag).strip()
+            if len(out) >= 40 and not out.endswith(":"):
+                return out + "."
+    # fallback: wrap with a clearly-wrong framing
+    if len(s) >= 40:
+        return "The opposite is true: " + s[0].lower() + s[1:] + "."
+    return None
+
 def make_distractors(real, other_sents, rng):
-    """Build 3 plausible-but-wrong distractors from other lesson sentences
-    (or generic distractors as fallback)."""
+    """Build 3 plausible-but-wrong distractors that are NOT near-equivalent
+    lesson statements (avoids two-defensible-answers ambiguity). Order:
+    inverted-but-wrong variants, generic wrong-answer stems, and only as a
+    last resort a lesson sentence from a DIFFERENT lesson (other_sents).
+    """
     distractors = []
-    # generic wrong-answer stems
+    seen = set()
+
+    def add(o):
+        o = o.strip()
+        if (o and o != real and len(o) >= 40 and o not in seen
+                and not o.endswith(":")):
+            distractors.append(o)
+            seen.add(o)
+
+    # (a) inverted / wrong-but-plausible variants of the correct answer
+    for _ in range(3):
+        inv = invert_statement(real)
+        if inv is None:
+            break
+        add(inv)
+        break  # only one inverted variant per question keeps distractors clean
+
+    # (b) generic wrong-answer stems
     generic = [
         "The lesson says the opposite: this should always be avoided.",
         "The lesson advises ignoring this entirely in practice.",
@@ -113,21 +169,15 @@ def make_distractors(real, other_sents, rng):
         "The lesson recommends treating output as final without review.",
         "The lesson says only technical staff should act on this.",
         "The lesson claims this cannot be verified at all.",
+        "The lesson argues this applies only in unrelated settings.",
+        "The lesson cautions against this in every real-world case.",
     ]
     rng.shuffle(generic)
-    for o in other_sents:
-        if o == real:
-            continue
-        if len(o) < 45 or len(o) > 220:
-            continue
-        distractors.append(o)
-        if len(distractors) >= 3:
-            break
     for g in generic:
+        add(g)
         if len(distractors) >= 3:
             break
-        if g != real:
-            distractors.append(g)
+
     return distractors[:3]
 
 def make_questions(series, slug, title, excerpt, sents, rng):

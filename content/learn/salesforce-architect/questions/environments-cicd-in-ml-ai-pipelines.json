@@ -17,23 +17,23 @@
     {
       "question": "Which statement best reflects the lesson’s guidance?",
       "options": [
-        "The environment vocabulary and the release mechanics carry over.",
-        "This lesson takes that same discipline and moves it to machine learning and AI systems.",
-        "Lesson 19 gave you the environment and release playbook for a Salesforce org: sandbox types, change sets versus source-driven deployment, and the path a change travels before it reaches production.",
-        "What changes is the artifact you are shipping."
+        "The lesson argues this applies only in unrelated settings.",
+        "The lesson claims this cannot be verified at all.",
+        "The opposite is true: lesson 19 gave you the environment and release playbook for a Salesforce org: sandbox types, change sets versus source-driven deployment, and the path a change travels before it reaches production.",
+        "Lesson 19 gave you the environment and release playbook for a Salesforce org: sandbox types, change sets versus source-driven deployment, and the path a change travels before it reaches production."
       ],
-      "correct_answer_index": 2,
+      "correct_answer_index": 3,
       "explanation": "Lesson 19 gave you the environment and release playbook for a Salesforce org: sandbox types, change sets versus source-driven deployment, and the path a change travels before it reaches production."
     },
     {
       "question": "Which conclusion does the lesson support?",
       "options": [
-        "The environment vocabulary and the release mechanics carry over.",
-        "Lesson 19 gave you the environment and release playbook for a Salesforce org: sandbox types, change sets versus source-driven deployment, and the path a change travels before it reaches production.",
-        "This lesson takes that same discipline and moves it to machine learning and AI systems.",
-        "It is iterative and fast to explore with, but nothing about it is repeatable or safe to release at scale."
+        "The lesson says only technical staff should act on this.",
+        "The lesson argues this applies only in unrelated settings.",
+        "It is iterative and fast to explore with, but nothing about it is repeatable or safe to release at scale.",
+        "It is not iterative and fast to explore with, but nothing about it is repeatable or safe to release at scale."
       ],
-      "correct_answer_index": 3,
+      "correct_answer_index": 2,
       "explanation": "It is iterative and fast to explore with, but nothing about it is repeatable or safe to release at scale."
     }
   ]

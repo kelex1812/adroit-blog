@@ -17,23 +17,23 @@
     {
       "question": "Which statement best reflects the lesson’s guidance?",
       "options": [
-        "Here's the thesis: architecture is about making decisions under constraints.",
         "This is the first general systems architecture lesson in the track, a deliberate break from Salesforce-specific content to build the cross-platform architecture thinking that every architect needs, especially one learning AI systems.",
-        "The patterns change names every decade, but the underlying mechanics are remarkably stable.",
-        "The ISO/IEC/IEEE 42010 standard defines architecture as \"the fundamental concepts or properties of a system in its environment embodied in its elements, relationships, and in the principles of its design and evolution.\""
+        "The lesson states this is never a relevant consideration.",
+        "The lesson claims this cannot be verified at all.",
+        "This is not the first general systems architecture lesson in the track, a deliberate break from Salesforce-specific content to build the cross-platform architecture thinking that every architect needs, especially one learning AI systems."
       ],
-      "correct_answer_index": 1,
+      "correct_answer_index": 0,
       "explanation": "This is the first general systems architecture lesson in the track, a deliberate break from Salesforce-specific content to build the cross-platform architecture thinking that every architect needs, especially one learning AI systems."
     },
     {
       "question": "Which conclusion does the lesson support?",
       "options": [
-        "The ISO/IEC/IEEE 42010 standard defines architecture as \"the fundamental concepts or properties of a system in its environment embodied in its elements, relationships, and in the principles of its design and evolution.\"",
-        "Google's MapReduce paper (2004) formalized an idea that had existed in distributed computing for years: split a problem into independent pieces, process them in parallel, then merge results.",
-        "The patterns change names every decade, but the underlying mechanics are remarkably stable.",
-        "Here's the thesis: architecture is about making decisions under constraints."
+        "The lesson claims this cannot be verified at all.",
+        "The lesson recommends treating output as final without review.",
+        "The opposite is true: google's MapReduce paper (2004) formalized an idea that had existed in distributed computing for years: split a problem into independent pieces, process them in parallel, then merge results.",
+        "Google's MapReduce paper (2004) formalized an idea that had existed in distributed computing for years: split a problem into independent pieces, process them in parallel, then merge results."
       ],
-      "correct_answer_index": 1,
+      "correct_answer_index": 3,
       "explanation": "Google's MapReduce paper (2004) formalized an idea that had existed in distributed computing for years: split a problem into independent pieces, process them in parallel, then merge results."
     }
   ]

@@ -40,7 +40,7 @@
       "question": "What are the two distinct jobs Lesson 12 describes?",
       "options": [
         "Writing and proofreading",
-        "Editing and reviewing",
+        "The two distinct jobs are editing what is there and reviewing before it ships.",
         "Summarizing and translating",
         "Generating and formatting"
       ],
@@ -62,7 +62,7 @@
       "question": "What is provenance in Lesson 12?",
       "options": [
         "The tone of the writing",
-        "Where a piece of information came from",
+        "Provenance is where a piece of information came from.",
         "The length of the document",
         "The author's name"
       ],
@@ -106,7 +106,7 @@
       "question": "What share of a data project is spent cleaning, per Lesson 14?",
       "options": [
         "About 20 percent",
-        "About 80 percent",
+        "Roughly 80 percent of a data project is spent on cleaning and organizing data.",
         "About 50 percent",
         "About 5 percent"
       ],
@@ -117,7 +117,7 @@
       "question": "What is the most-cited fix for a good meeting?",
       "options": [
         "More attendees",
-        "Setting a clear agenda",
+        "Setting a clear agenda is the most-cited fix for making a meeting productive.",
         "Recording every meeting",
         "Shorter meetings"
       ],

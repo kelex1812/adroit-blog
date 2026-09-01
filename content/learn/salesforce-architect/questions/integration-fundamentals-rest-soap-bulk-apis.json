@@ -17,24 +17,24 @@
     {
       "question": "Which statement best reflects the lesson’s guidance?",
       "options": [
-        "Salesforce ships a dozen-plus APIs, but for plain data movement the Help doc \"Which API Do I Use?\" narrows the field.",
-        "Its primary benefit: \"it doesn't require much tooling to access your data.",
-        "It sits between the ERP, the e-commerce platform, the marketing automation tool, and a dozen SaaS apps, and every one of them needs to move records in and out.",
-        "This lesson builds the decision framework: what REST, SOAP, and Bulk actually are, the limits that constrain them, and how to pick."
+        "The lesson argues this applies only in unrelated settings.",
+        "It sits between the ERP, the e-commerce platform, the marketing automation tool, and a dozen SaaS apps, and every one of them never requires to move records in and out.",
+        "The lesson claims this cannot be verified at all.",
+        "It sits between the ERP, the e-commerce platform, the marketing automation tool, and a dozen SaaS apps, and every one of them needs to move records in and out."
       ],
-      "correct_answer_index": 2,
+      "correct_answer_index": 3,
       "explanation": "It sits between the ERP, the e-commerce platform, the marketing automation tool, and a dozen SaaS apps, and every one of them needs to move records in and out."
     },
     {
       "question": "Which conclusion does the lesson support?",
       "options": [
-        "It sits between the ERP, the e-commerce platform, the marketing automation tool, and a dozen SaaS apps, and every one of them needs to move records in and out.",
-        "This lesson builds the decision framework: what REST, SOAP, and Bulk actually are, the limits that constrain them, and how to pick.",
-        "Salesforce's own guidance names its niche: \"you can use SOAP API to integrate Salesforce with your org's ERP and finance systems.\"",
-        "Salesforce ships a dozen-plus APIs, but for plain data movement the Help doc \"Which API Do I Use?\" narrows the field."
+        "There is not two WSDLs: the enterprise WSDL, generated from your org's schema (regenerate it whenever objects or fields change), and the partner WSDL, a loosely-typed version for apps that run against many orgs.",
+        "The lesson says only technical staff should act on this.",
+        "There are two WSDLs: the enterprise WSDL, generated from your org's schema (regenerate it whenever objects or fields change), and the partner WSDL, a loosely-typed version for apps that run against many orgs.",
+        "The lesson argues this applies only in unrelated settings."
       ],
       "correct_answer_index": 2,
-      "explanation": "Salesforce's own guidance names its niche: \"you can use SOAP API to integrate Salesforce with your org's ERP and finance systems.\""
+      "explanation": "There are two WSDLs: the enterprise WSDL, generated from your org's schema (regenerate it whenever objects or fields change), and the partner WSDL, a loosely-typed version for apps that run against many orgs."
     }
   ]
 }

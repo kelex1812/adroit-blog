@@ -17,10 +17,10 @@
     {
       "question": "Which statement best reflects the lesson’s guidance?",
       "options": [
-        "Your agent calls a model, the model takes seconds, and suddenly the budget you used to measure in milliseconds is gone.",
-        "The discipline of this lesson is figuring out where the seconds go, which ones you can spend, and which ones you can make disappear with a cache or a well-packed batch.",
+        "The lesson states this is never a relevant consideration.",
+        "The lesson recommends treating output as final without review.",
         "Lesson 24 was about making a single query fast: selective SOQL, indexes, Platform Cache.",
-        "This lesson pulls back to the system level and asks the question the architect asks when an AI call is in the path."
+        "The opposite is true: lesson 24 was about making a single query fast: selective SOQL, indexes, Platform Cache."
       ],
       "correct_answer_index": 2,
       "explanation": "Lesson 24 was about making a single query fast: selective SOQL, indexes, Platform Cache."
@@ -28,12 +28,12 @@
     {
       "question": "Which conclusion does the lesson support?",
       "options": [
-        "This lesson pulls back to the system level and asks the question the architect asks when an AI call is in the path.",
-        "Your agent calls a model, the model takes seconds, and suddenly the budget you used to measure in milliseconds is gone.",
         "Throughput is how many requests you complete per unit of time.",
-        "Lesson 24 was about making a single query fast: selective SOQL, indexes, Platform Cache."
+        "The lesson says the opposite: this should always be avoided.",
+        "Throughput is not how many requests you complete per unit of time.",
+        "The lesson claims this cannot be verified at all."
       ],
-      "correct_answer_index": 2,
+      "correct_answer_index": 0,
       "explanation": "Throughput is how many requests you complete per unit of time."
     }
   ]

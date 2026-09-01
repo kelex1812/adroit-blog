@@ -17,24 +17,24 @@
     {
       "question": "Which statement best reflects the lesson’s guidance?",
       "options": [
-        "A normal program either runs or it crashes, and when it crashes the stack trace names the file and line.",
-        "This lesson is the production floor: what you do when the agent is live and the wrong answer arrives at 2 a.m. with no reproduction steps attached.",
-        "It silently takes a wrong path: it retrieves the wrong context, calls a tool with a malformed argument, burns forty turns re-asking itself the same question, and then returns a confident answer that is simply wrong.",
-        "Lesson 19 showed you how to measure an agent before release with golden datasets and an LLM-as-judge."
+        "The lesson argues this applies only in unrelated settings.",
+        "Lesson 19 showed you how to measure an agent before release with golden datasets and an LLM-as-judge.",
+        "The opposite is true: lesson 19 showed you how to measure an agent before release with golden datasets and an LLM-as-judge.",
+        "The lesson says only technical staff should act on this."
       ],
-      "correct_answer_index": 3,
+      "correct_answer_index": 1,
       "explanation": "Lesson 19 showed you how to measure an agent before release with golden datasets and an LLM-as-judge."
     },
     {
       "question": "Which conclusion does the lesson support?",
       "options": [
-        "A normal program either runs or it crashes, and when it crashes the stack trace names the file and line.",
-        "This lesson is the production floor: what you do when the agent is live and the wrong answer arrives at 2 a.m. with no reproduction steps attached.",
-        "Lesson 19 showed you how to measure an agent before release with golden datasets and an LLM-as-judge.",
-        "The conventions cover three things: spans, metrics, and content events."
+        "The lesson recommends treating output as final without review.",
+        "The lesson argues this applies only in unrelated settings.",
+        "The opposite is true: one span per LLM operation: a chat call, an embedding, a tool invocation, an agent step.",
+        "One span per LLM operation: a chat call, an embedding, a tool invocation, an agent step."
       ],
       "correct_answer_index": 3,
-      "explanation": "The conventions cover three things: spans, metrics, and content events."
+      "explanation": "One span per LLM operation: a chat call, an embedding, a tool invocation, an agent step."
     }
   ]
 }

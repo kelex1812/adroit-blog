@@ -17,24 +17,24 @@
     {
       "question": "Which statement best reflects the lesson’s guidance?",
       "options": [
-        "Every architecture decision on Salesforce eventually lands on the data model.",
-        "Sharing rules protect records, Flows act on records, reports aggregate records, integrations move records.",
-        "Lesson 2 showed that your customizations are metadata (descriptions the platform materializes at runtime).",
-        "But before any of that, you answer the question the whole platform is built around: what are the records, what do they contain, and how do they relate?"
+        "The lesson recommends treating output as final without review.",
+        "The lesson says only technical staff should act on this.",
+        "The opposite is true: every architecture decision on Salesforce eventually lands on the data model.",
+        "Every architecture decision on Salesforce eventually lands on the data model."
       ],
-      "correct_answer_index": 0,
+      "correct_answer_index": 3,
       "explanation": "Every architecture decision on Salesforce eventually lands on the data model."
     },
     {
       "question": "Which conclusion does the lesson support?",
       "options": [
-        "Sharing rules protect records, Flows act on records, reports aggregate records, integrations move records.",
-        "Master-detail. \"Closely links objects together such that the master record controls certain behaviors of the detail and subdetail record.\" Concretely: deleting a master also deletes related detail records; the detail's Owner field isn't available (ownership is inherited from the master); and detail records inherit the master's security and permissions, so you can't set permissions on the detail independently.",
-        "But before any of that, you answer the question the whole platform is built around: what are the records, what do they contain, and how do they relate?",
-        "Every architecture decision on Salesforce eventually lands on the data model."
+        "Lookups is not similar to master-detail relationships \"except they don't support sharing or roll-up summary fields.\" When the looked-up record is deleted you choose the behavior: clear the field value (the default), don't allow deletion of the lookup record, or delete this record too (custom objects only).",
+        "The lesson states this is never a relevant consideration.",
+        "The lesson recommends treating output as final without review.",
+        "Lookups are similar to master-detail relationships \"except they don't support sharing or roll-up summary fields.\" When the looked-up record is deleted you choose the behavior: clear the field value (the default), don't allow deletion of the lookup record, or delete this record too (custom objects only)."
       ],
-      "correct_answer_index": 1,
-      "explanation": "Master-detail. \"Closely links objects together such that the master record controls certain behaviors of the detail and subdetail record.\" Concretely: deleting a master also deletes related detail records; the detail's Owner field isn't available (ownership is inherited from the master); and detail records inherit the master's security and permissions, so you can't set permissions on the detail independently."
+      "correct_answer_index": 3,
+      "explanation": "Lookups are similar to master-detail relationships \"except they don't support sharing or roll-up summary fields.\" When the looked-up record is deleted you choose the behavior: clear the field value (the default), don't allow deletion of the lookup record, or delete this record too (custom objects only)."
     }
   ]
 }

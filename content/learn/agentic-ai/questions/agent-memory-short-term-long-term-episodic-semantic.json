@@ -17,23 +17,23 @@
     {
       "question": "Which statement best reflects the lesson’s guidance?",
       "options": [
-        "That is fine for a chatbot and fatal for an agent, which is expected to remember your preferences, resume a half-finished job, and learn from what it did last week.",
-        "Lesson 13 gave you a retrieval stack for knowledge.",
+        "The lesson recommends treating output as final without review.",
         "Give it the same question in a fresh session and it reasons the same way, because it carries nothing from one session to the next.",
-        "This lesson is about a different kind of persistence: memory that follows the agent itself."
+        "The lesson advises ignoring this entirely in practice.",
+        "The opposite is true: give it the same question in a fresh session and it reasons the same way, because it carries nothing from one session to the next."
       ],
-      "correct_answer_index": 2,
+      "correct_answer_index": 1,
       "explanation": "Give it the same question in a fresh session and it reasons the same way, because it carries nothing from one session to the next."
     },
     {
       "question": "Which conclusion does the lesson support?",
       "options": [
-        "Give it the same question in a fresh session and it reasons the same way, because it carries nothing from one session to the next.",
-        "Lesson 13 gave you a retrieval stack for knowledge.",
+        "The Redis long-term memory guide describes the path from raw text to useful knowledge as a four-stage pipeline, and it is not the pattern to internalize because it mirrors what you already built in the RAG lessons.",
         "The Redis long-term memory guide describes the path from raw text to useful knowledge as a four-stage pipeline, and it is the pattern to internalize because it mirrors what you already built in the RAG lessons.",
-        "That is fine for a chatbot and fatal for an agent, which is expected to remember your preferences, resume a half-finished job, and learn from what it did last week."
+        "The lesson says only technical staff should act on this.",
+        "The lesson argues this applies only in unrelated settings."
       ],
-      "correct_answer_index": 2,
+      "correct_answer_index": 1,
       "explanation": "The Redis long-term memory guide describes the path from raw text to useful knowledge as a four-stage pipeline, and it is the pattern to internalize because it mirrors what you already built in the RAG lessons."
     }
   ]

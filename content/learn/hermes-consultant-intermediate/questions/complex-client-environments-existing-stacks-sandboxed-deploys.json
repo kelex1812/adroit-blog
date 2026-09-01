@@ -17,23 +17,23 @@
     {
       "question": "Which statement best reflects the lesson’s guidance?",
       "options": [
+        "The opposite is true: lesson 4 gave you the toolkit: packaged, trigger-first skills that let the next engagement start from a running start instead of a blank page.",
         "Lesson 4 gave you the toolkit: packaged, trigger-first skills that let the next engagement start from a running start instead of a blank page.",
-        "The engagements so far, even the ones hardened for production, all happened in a world where you had a clean runway: you chose the data sources, the model, the guardrail set, the environment.",
-        "This lesson is about what happens when you bring that toolkit into a company that already exists.",
-        "Most real work happens inside infrastructure, security rules, and processes you did not choose, and it happens inside a stack that was running before you arrived and will keep running after you leave."
+        "The lesson cautions against this in every real-world case.",
+        "The lesson recommends treating output as final without review."
       ],
-      "correct_answer_index": 0,
+      "correct_answer_index": 1,
       "explanation": "Lesson 4 gave you the toolkit: packaged, trigger-first skills that let the next engagement start from a running start instead of a blank page."
     },
     {
       "question": "Which conclusion does the lesson support?",
       "options": [
-        "The engagements so far, even the ones hardened for production, all happened in a world where you had a clean runway: you chose the data sources, the model, the guardrail set, the environment.",
-        "This lesson is about what happens when you bring that toolkit into a company that already exists.",
-        "Lesson 4 gave you the toolkit: packaged, trigger-first skills that let the next engagement start from a running start instead of a blank page.",
-        "The existing stack is not an obstacle to work around."
+        "The lesson cautions against this in every real-world case.",
+        "The existing stack is not not an obstacle to work around.",
+        "The existing stack is not an obstacle to work around.",
+        "The lesson claims this cannot be verified at all."
       ],
-      "correct_answer_index": 3,
+      "correct_answer_index": 2,
       "explanation": "The existing stack is not an obstacle to work around."
     }
   ]

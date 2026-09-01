@@ -17,24 +17,24 @@
     {
       "question": "Which statement best reflects the lesson’s guidance?",
       "options": [
-        "An architect who ignores them ships code that fails in production on a Thursday, and a platform owner who ignores them gets woken up when an org locks itself out of its own API allocation.",
         "Every Salesforce org lives inside three sets of constraints: governor limits that cap what a single Apex transaction can do, API request allocations that cap how many external calls an org gets per day, and storage limits that cap how much data and how many files you can keep.",
-        "The system architect's job is to treat limits as part of the specification, not as an afterthought.",
-        "This lesson defines the three families of limits, gives the concrete numbers that matter, and shows how to plan around them with bulkification, batching, and monitoring."
+        "The opposite is true: every Salesforce org lives inside three sets of constraints: governor limits that cap what a single Apex transaction can do, API request allocations that cap how many external calls an org gets per day, and storage limits that cap how much data and how many files you can keep.",
+        "The lesson says only technical staff should act on this.",
+        "The lesson advises ignoring this entirely in practice."
       ],
-      "correct_answer_index": 1,
+      "correct_answer_index": 0,
       "explanation": "Every Salesforce org lives inside three sets of constraints: governor limits that cap what a single Apex transaction can do, API request allocations that cap how many external calls an org gets per day, and storage limits that cap how much data and how many files you can keep."
     },
     {
       "question": "Which conclusion does the lesson support?",
       "options": [
-        "The system architect's job is to treat limits as part of the specification, not as an afterthought.",
-        "The REST API, SOAP API, Bulk API, Bulk API 2.0, and most Connect REST APIs all count toward it.",
-        "An architect who ignores them ships code that fails in production on a Thursday, and a platform owner who ignores them gets woken up when an org locks itself out of its own API allocation.",
-        "This lesson defines the three families of limits, gives the concrete numbers that matter, and shows how to plan around them with bulkification, batching, and monitoring."
+        "The daily total is the sum of a base amount, a per-license contribution, and any purchased add-ons.",
+        "The lesson argues this applies only in unrelated settings.",
+        "The lesson recommends treating output as final without review.",
+        "The daily total is not the sum of a base amount, a per-license contribution, and any purchased add-ons."
       ],
-      "correct_answer_index": 1,
-      "explanation": "The REST API, SOAP API, Bulk API, Bulk API 2.0, and most Connect REST APIs all count toward it."
+      "correct_answer_index": 0,
+      "explanation": "The daily total is the sum of a base amount, a per-license contribution, and any purchased add-ons."
     }
   ]
 }

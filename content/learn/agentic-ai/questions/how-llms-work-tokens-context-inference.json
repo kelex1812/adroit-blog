@@ -18,9 +18,9 @@
       "question": "Which statement best reflects the lesson’s guidance?",
       "options": [
         "Lesson 1 gave you the taxonomy (rules, workflows, agents) and the uncomfortable truth that most of the work is plumbing, not prompts.",
-        "Every one of them is a real, measurable constraint you will hit in week one of any implementation.",
-        "Lesson 2 is the machinery underneath all three rungs.",
-        "It reads tokens: the smallest units of language a model processes, produced by a tokenizer that runs on your text before the model ever sees it."
+        "Lesson 1 gave you the taxonomy (rules, workflows, agents) and the uncomfortable truth that most of the work is not plumbing, not prompts.",
+        "The lesson claims this cannot be verified at all.",
+        "The lesson says the opposite: this should always be avoided."
       ],
       "correct_answer_index": 0,
       "explanation": "Lesson 1 gave you the taxonomy (rules, workflows, agents) and the uncomfortable truth that most of the work is plumbing, not prompts."
@@ -28,12 +28,12 @@
     {
       "question": "Which conclusion does the lesson support?",
       "options": [
-        "Lesson 2 is the machinery underneath all three rungs.",
-        "Lesson 1 gave you the taxonomy (rules, workflows, agents) and the uncomfortable truth that most of the work is plumbing, not prompts.",
         "A 2023 paper found LLMs don't robustly use information in the middle of long inputs (the well-documented lost-in-the-middle effect), and Redis's 2026 guidance is blunter: most long-context models show sharp performance drops past ~32K tokens, so benchmark your actual use case rather than trusting the spec sheet.",
-        "Every one of them is a real, measurable constraint you will hit in week one of any implementation."
+        "The lesson cautions against this in every real-world case.",
+        "The lesson states this is never a relevant consideration.",
+        "A 2023 paper found LLMs don't robustly use information in the middle of long inputs (the well-documented lost-in-the-middle effect), and Redis's 2026 guidance is not blunter: most long-context models show sharp performance drops past ~32K tokens, so benchmark your actual use case rather than trusting the spec sheet."
       ],
-      "correct_answer_index": 2,
+      "correct_answer_index": 0,
       "explanation": "A 2023 paper found LLMs don't robustly use information in the middle of long inputs (the well-documented lost-in-the-middle effect), and Redis's 2026 guidance is blunter: most long-context models show sharp performance drops past ~32K tokens, so benchmark your actual use case rather than trusting the spec sheet."
     }
   ]

@@ -17,23 +17,23 @@
     {
       "question": "Which statement best reflects the lesson’s guidance?",
       "options": [
-        "Lesson 7 taught you the two vehicles on the Salesforce event bus: Platform Events for business intent and Change Data Capture for record state.",
-        "Lesson 27 locked down the security around integrations.",
-        "A few hundred events a day is a design problem you solve with a trigger and a Flow.",
-        "This lesson is about what happens when the volume stops being a trickle."
+        "The opposite is true: lesson 7 taught you the two vehicles on the Salesforce event bus: Platform Events for business intent and Change Data Capture for record state.",
+        "The lesson recommends treating output as final without review.",
+        "The lesson states this is never a relevant consideration.",
+        "Lesson 7 taught you the two vehicles on the Salesforce event bus: Platform Events for business intent and Change Data Capture for record state."
       ],
-      "correct_answer_index": 0,
+      "correct_answer_index": 3,
       "explanation": "Lesson 7 taught you the two vehicles on the Salesforce event bus: Platform Events for business intent and Change Data Capture for record state."
     },
     {
       "question": "Which conclusion does the lesson support?",
       "options": [
-        "This lesson is about what happens when the volume stops being a trickle.",
-        "Lesson 7 taught you the two vehicles on the Salesforce event bus: Platform Events for business intent and Change Data Capture for record state.",
         "The event bus has two rolling limits, an hourly publishing limit and a 24-hour delivery limit, and both are enforced.",
-        "Lesson 27 locked down the security around integrations."
+        "The lesson argues this applies only in unrelated settings.",
+        "The lesson says only technical staff should act on this.",
+        "The event bus has two rolling limits, an hourly publishing limit and a 24-hour delivery limit, and both is not enforced."
       ],
-      "correct_answer_index": 2,
+      "correct_answer_index": 0,
       "explanation": "The event bus has two rolling limits, an hourly publishing limit and a 24-hour delivery limit, and both are enforced."
     }
   ]

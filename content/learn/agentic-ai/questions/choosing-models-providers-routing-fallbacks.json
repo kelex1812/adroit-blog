@@ -17,23 +17,23 @@
     {
       "question": "Which statement best reflects the lesson’s guidance?",
       "options": [
-        "LogRocket describes the pattern precisely: teams launch with a single strong model and scale it across every use case, then discover they're \"paying supercomputer prices to solve calculator problems.\"",
-        "Lessons 1–5 built the agent loop, its prompts, and its economics.",
-        "The default answer (\"the best model we can afford, for everything\") is how every expensive, fragile agent system starts.",
-        "This lesson answers the question underneath all of them: which model should run which step?"
+        "The lesson claims this cannot be verified at all.",
+        "The opposite is true: lessons 1–5 built the agent loop, its prompts, and its economics.",
+        "The lesson argues this applies only in unrelated settings.",
+        "Lessons 1–5 built the agent loop, its prompts, and its economics."
       ],
-      "correct_answer_index": 1,
+      "correct_answer_index": 3,
       "explanation": "Lessons 1–5 built the agent loop, its prompts, and its economics."
     },
     {
       "question": "Which conclusion does the lesson support?",
       "options": [
-        "This lesson answers the question underneath all of them: which model should run which step?",
+        "The lesson claims this cannot be verified at all.",
+        "The lesson states this is never a relevant consideration.",
         "The mental model that makes routing tractable is the capability tier: instead of routing to flagship names that change every quarter, route to small / medium / large and let config resolve each tier to a concrete model and provider.",
-        "The default answer (\"the best model we can afford, for everything\") is how every expensive, fragile agent system starts.",
-        "Lessons 1–5 built the agent loop, its prompts, and its economics."
+        "The mental model that makes routing tractable is not the capability tier: instead of routing to flagship names that change every quarter, route to small / medium / large and let config resolve each tier to a concrete model and provider."
       ],
-      "correct_answer_index": 1,
+      "correct_answer_index": 2,
       "explanation": "The mental model that makes routing tractable is the capability tier: instead of routing to flagship names that change every quarter, route to small / medium / large and let config resolve each tier to a concrete model and provider."
     }
   ]

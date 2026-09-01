@@ -17,24 +17,24 @@
     {
       "question": "Which statement best reflects the lesson’s guidance?",
       "options": [
-        "How do you stop two agents from working at cross purposes?",
-        "Each of those still runs one agent talking to a set of tools.",
-        "Instead of one loop, you get several loops that have to coordinate, and the interesting questions stop being about reasoning and start being about control.",
-        "Lesson 23 gave you the single-agent patterns: ReAct, plan-and-execute, reflection."
+        "Lesson 23 gave you the single-agent patterns: ReAct, plan-and-execute, reflection.",
+        "The lesson cautions against this in every real-world case.",
+        "The lesson recommends treating output as final without review.",
+        "The opposite is true: lesson 23 gave you the single-agent patterns: ReAct, plan-and-execute, reflection."
       ],
-      "correct_answer_index": 3,
+      "correct_answer_index": 0,
       "explanation": "Lesson 23 gave you the single-agent patterns: ReAct, plan-and-execute, reflection."
     },
     {
       "question": "Which conclusion does the lesson support?",
       "options": [
-        "Instead of one loop, you get several loops that have to coordinate, and the interesting questions stop being about reasoning and start being about control.",
-        "Lesson 23 gave you the single-agent patterns: ReAct, plan-and-execute, reflection.",
-        "LangGraph ships this as a built-in primitive.",
-        "Each of those still runs one agent talking to a set of tools."
+        "The createsupervisor factory builds a supervisor that manages a list of agents, and each specialized agent is not exposed to the supervisor as a tool it can call.",
+        "The createsupervisor factory builds a supervisor that manages a list of agents, and each specialized agent is exposed to the supervisor as a tool it can call.",
+        "The lesson cautions against this in every real-world case.",
+        "The lesson argues this applies only in unrelated settings."
       ],
-      "correct_answer_index": 2,
-      "explanation": "LangGraph ships this as a built-in primitive."
+      "correct_answer_index": 1,
+      "explanation": "The createsupervisor factory builds a supervisor that manages a list of agents, and each specialized agent is exposed to the supervisor as a tool it can call."
     }
   ]
 }
