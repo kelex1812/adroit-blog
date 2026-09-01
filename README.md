@@ -9,6 +9,10 @@ The **Adroit Consulting site** — a [Next.js](https://nextjs.org) (App Router) 
 > The production domain `adroit.io/blog` is intentionally not wired until launch. The site is staged on the private Vercel deployment.
 ## What's New
 
+### Password-reset update route hardening: origin check + rate limit (PR #174) — 2026-08-31
+
+The password-reset update API route (`/api/auth/reset-password/update`) now has defense-in-depth hardening that was committed but never shipped. Two guards now run before any request body is parsed: (1) an origin check that rejects cross-origin requests with HTTP 403 (CSRF protection, CWE-352), and (2) a per-IP sliding-window rate limit (30 requests/min) that returns HTTP 429 (brute-force protection, CWE-307). This closes the gap where the hardening existed in code but was not live in production. Verified live: cross-origin POST returns 403, homepage returns 200. All three audits (a11y/lara, QA/zod, security/val-el) PASS; 384 tests green. Risk LOW (defense-in-depth on an auth-gated route, +77/-3 lines across 3 files).
+
 ### A11Y fix: focus indicators + hint-text contrast on auth forms (v1.0) — 2026-08-31
 
 The password-reset flow's auth forms (forgot-password, reset-password, login) now meet WCAG accessibility standards. Two a11y audit findings were fixed: (1) WCAG 2.4.7 Focus Visible (HIGH) - removed focus:outline-none from the five text inputs so keyboard focus shows a visible brand-red ring; and (2) WCAG 1.4.3 Contrast (MEDIUM) - raised hint text from text-gray-400 to text-gray-500 so helper text passes WCAG AA on white. Purely presentational Tailwind class edits; no auth logic, data, or API changes. All three audits (a11y/lara, QA/zod, security/val-el) PASS; 384 tests green.
