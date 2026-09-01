@@ -543,7 +543,7 @@ export default function QuizWidget({
                 answered
                   ? correct
                     ? "bg-green-500"
-                    : "bg-red"
+                    : "bg-red dark:bg-[var(--accent)]"
                   : "bg-gray-200 dark:bg-[var(--border-subtle)]"
               }`}
             />

@@ -42,7 +42,7 @@ export default function ProgressIndicator({
         className="h-1.5 rounded-full overflow-hidden bg-gray-200 dark:bg-[var(--border-default)]"
       >
         <div
-          className="h-full rounded-full bg-red transition-[width] duration-300"
+          className="h-full rounded-full bg-red dark:bg-[var(--accent)] transition-[width] duration-300"
           style={{ width: `${pct}%` }}
         />
       </div>

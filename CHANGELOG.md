@@ -4,6 +4,33 @@ All notable changes to the Adroit Consulting Blog project will be documented in 
 
 ## [Unreleased]
 
+### Fix: dark-mode red progress fill contrast — SeriesProgress & QuizWidget (WCAG 1.4.11, t_0271699e)
+
+**What** — Fixed the WCAG 1.4.11 (non-text/UI-component) contrast failure on red
+progress fills in dark mode. The SeriesProgress "N of M complete" bar
+(`src/components/Progress/ProgressIndicator.tsx`) rendered brand red `#C8102E`
+(`bg-red`, not remapped by the dark palette) on the B-05 darkened track
+`dark:bg-[var(--border-default)]` = `#26324a`, computed **2.18:1** (< 3:1). The
+same class of flaw was present in QuizWidget's red "incorrect" answer segments
+(`bg-red` on `dark:bg-[var(--border-subtle)]` = `#1c2438`, **2.63:1**).
+
+**Why** — The B-05 change darkened the empty track (surface-sunken → border-default)
+for empty-state visibility, which regressed filled-red-on-dark-track contrast.
+Light mode already passed (4.75:1 on `bg-gray-200`).
+
+**Fix** — Applied `dark:bg-[var(--accent)]` to the red fill in both components.
+`--accent` is `#C8102E` in light (identical to `bg-red`, zero light-mode change)
+and remaps to `#f05066` in dark, which clears 3:1:
+- `#f05066` on `#26324a` = **3.69:1** (SeriesProgress track)
+- `#f05066` on `#1c2438` = **4.45:1** (QuizWidget segment track)
+
+The empty track color (`--border-default` / `--border-subtle`) is untouched, so
+B-05 empty-state visibility is preserved. The redundant text label + aria-valuetext
+still accompany the bar. Verified via `scripts/contrast.js`; `access.test.ts`
+31/31 pass, full suite 461/461 pass, ESLint clean.
+
+**Known issues** — None.
+
 ### Build: Course structure to the Omni bar — exams, checks, cert scaffolding for all series (B-25/B-28, t_4204244b)
 
 **What** — Raised every non-OmniStudio learn series to the OmniStudio Cert bar so
