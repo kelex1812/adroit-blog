@@ -8,7 +8,16 @@
  *
  * Mirrors: docs/system-architecture-course-catalog-admin.html (t_22b26cb9)
  * DB source of truth: supabase/migrations/008_course_catalog.sql
+ *
+ * B-19 (t_e9c1c761) — steel WIDENS CompletionEventRow / DerivedProgress per
+ * brainiac's arch (src/shared/contracts-constellations.ts + migration 010).
+ * Additive-only: existing lesson/course rows and consumers are unchanged.
  */
+import type {
+  CompletionEventType,
+  CompletionMetadata,
+  Rank,
+} from "@/shared/contracts-constellations";
 
 /* ------------------------------------------------------------------ */
 /*  Core enums (mirror DB CHECK constraints in migration 008)          */
@@ -330,10 +339,12 @@ export interface CompletionEventRow {
   id: number;
   user_id: string;
   course_id: string | null;
-  event_type: "lesson" | "course";
+  event_type: CompletionEventType;
   lesson: number | null;
   lesson_slug: string | null;
   completed_at: string;
+  /** Optional event envelope: score/tier for quiz/exam/certificate (B-19). */
+  metadata?: CompletionMetadata | null;
 }
 
 /**
@@ -406,6 +417,9 @@ export interface DerivedProgress {
   longestStreakDays: number;
   /** Min→max span across a course's events, in days (null if <2 events). */
   timeToCompleteDays: number | null;
+  /** Current rank (highest reached band). Starseed (index 0) is the floor —
+      even an empty learner is at least starseed, so this is never null. */
+  rank: Rank;
 }
 
 /** Catalog surface → the user may see + their access per unified course. */

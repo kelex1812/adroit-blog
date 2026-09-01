@@ -4,6 +4,53 @@ All notable changes to the Adroit Consulting Blog project will be documented in 
 
 ## [Unreleased]
 
+### Build: Constellations data foundation — widened event log, now-relative streak, derived rank (B-19, t_e9c1c761)
+
+**What** — Laid the data foundation for the Constellations + Chronicle achievement
+system (backlog B-19, per brainiac's arch t_3919afe1): the completion log now
+accepts quiz/exam/certificate events, every write site appends its event, the
+streak bug (`CompletionInput.now` was accepted but unused) is fixed, and rank is
+derived from the event log.
+
+1. **Migration `010_constellation_foundation.sql`** — drops + re-adds the
+   `completion_events.event_type` CHECK to include `quiz`/`exam`/`certificate`,
+   adds an optional `metadata jsonb` envelope (server-derived score/tier, never
+   client-supplied), and a `(user_id, event_type)` kind-index for the chronicle /
+   sky reads. Existing lesson/course rows are unchanged (additive).
+2. **Contract widening (`src/shared/contracts-course-catalog.ts`)** —
+   `CompletionEventRow.event_type` is now the full 5-kind union and gains the
+   optional `metadata` envelope; `DerivedProgress` gains `rank` (starseed floor,
+   never null). Additive — existing consumers compile unchanged.
+3. **Write sites** — `POST /api/progress/quiz/run` appends a `quiz` event for
+   knowledge checks and an `exam` event when a cert-prep exam passes ≥72 (both
+   with the server-graded `{score, correct, total}` envelope; lesson-tier quizzes
+   still flow through the lesson route to avoid double-logging). The certificate
+   page appends exactly one idempotent `certificate` event (per user+course) when
+   eligible, recording `certifiedAt`. All appends are best-effort/idempotent and
+   never block the primary write.
+4. **Streak bug fix (`src/lib/completion.ts`)** — `deriveProgress` now computes
+   the current streak relative to the injected `now`: the streak is only "alive"
+   when the most recent completion day is today or yesterday; otherwise it resets
+   to 0. `longestStreakDays` stays a now-independent historical best.
+5. **Rank derivation (`src/lib/completion.ts`)** — added `RANK_LADDER` (starseed
+   0/0 → wayfarer 5/0 → explorer 20/2 → polestar 50/4 → celestial 100/8) and
+   `deriveRank(lessons, courses)` returning the highest met band + `nextProgressPct`
+   toward the next band (100 at the top). Pure TS, no DB drift (ADR-214).
+6. **Tests** — `src/lib/completion.test.ts` grew 6 cases: streak = 0 when the
+   last event is neither today nor yesterday, streak alive at yesterday, streak
+   counts through today, rank derivation at every band boundary, rank caps at the
+   highest fully-met band (20 lessons + 1 course stays wayfarer), and
+   `nextProgressPct` behavior. Full suite 443/443 passing.
+
+**Why** — B-19 is the prerequisite for the P1/P2 achievement surfaces (B-18):
+without a widened, correctly-derived event log there is no trustworthy streak,
+rank ladder, or Chronicle feed to render.
+
+**Known issues** — None. `npm run build` exits 0, `npm test` 443/443, `tsc
+--noEmit` clean, `eslint` clean (1 pre-existing warning in MDXArticle.tsx). The
+migration must be applied via `supabase db push` before the new event types can
+be inserted in a live database; the code is written to fail softly until then.
+
 ### Fix: SearchOverlay a11y — focus trap, focus restoration, results aria-live (B-21, t_754b2240)
 
 **What** — `src/components/SearchOverlay.tsx` rendered `role="dialog" aria-modal="true"`

@@ -18,8 +18,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
 import { getSupabaseServiceClient } from "@/lib/supabase/service";
-import { resolveQuizByName, scoreQuizAttemptRows } from "@/lib/quiz";
+import { resolveQuizByName, scoreQuizAttemptRows, parseQuizName } from "@/lib/quiz";
 import { denyQuizNotAccessible } from "@/lib/access-gate";
+import { getCourseRowBySlug } from "@/lib/access";
+import { appendCompletionEvent } from "@/lib/completion";
 import {
   checkOrigin,
   checkRateLimit,
@@ -117,6 +119,16 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ status: "error", error: sanitiseDbError(runErr) }, { status: 500 });
     }
 
+    // B-19 completion foundation: append to the immutable completion_events log.
+    //   - a knowledge-check run (`<series>:check:N`) logs a 'quiz' event with the
+    //     server-derived score envelope (F1 — score came from graded attempts).
+    //   - a passed cert-prep exam (`<series>:exam`, score >= 72) logs an 'exam' event.
+    //   - lesson-tier quizzes (`<series>:lesson:<slug>`) are handled by the lesson
+    //     route (POST /api/progress/lesson appends a 'lesson' event) — skip here so
+    //     we don't double-log. Best-effort: the primary quiz_run write already
+    //     succeeded; a log failure must not fail the response (idempotent).
+    await recordCompletionEvents(user.id, body.quizName, attempts);
+
     return NextResponse.json({ status: "ok" });
   } catch {
     return NextResponse.json({ status: "error" }, { status: 500 });
@@ -167,5 +179,63 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ bestScore, attempts: scores.length });
   } catch {
     return NextResponse.json({ bestScore: 0, attempts: 0 });
+  }
+}
+
+/**
+ * B-19 completion foundation append (ADR-211). Logs the quiz/exam event for a
+ * completed quiz run into the immutable completion_events log. Best-effort —
+ * any failure is swallowed so it never breaks the primary quiz_run write.
+ * Both appends are idempotent (appendCompletionEvent skips duplicates).
+ *
+ *  - `<series>:check:N`   → 'quiz' event, metadata { score, correct, total }.
+ *  - `<series>:exam`      → 'exam' event when score >= 72 (passed), same envelope.
+ *  - `<series>:lesson:*`  → skipped (the lesson route logs a 'lesson' event).
+ */
+async function recordCompletionEvents(
+  userId: string,
+  quizName: string,
+  attempts: { score: number; correct: number; total: number },
+): Promise<void> {
+  try {
+    const parsed = parseQuizName(quizName);
+    if (!parsed || parsed.tier === "lesson") return;
+
+    // Resolve the course id for the quiz's series so the event is course-scoped.
+    const courseRow = await getCourseRowBySlug(parsed.series);
+    const courseId = courseRow?.id ?? null;
+    if (!courseId) return;
+
+    if (parsed.tier === "exam") {
+      // Exam event only on a pass (score >= 72); a fail is not a milestone.
+      if (attempts.score >= 72) {
+        await appendCompletionEvent({
+          userId,
+          courseId,
+          eventType: "exam",
+          metadata: {
+            score: attempts.score,
+            correct: attempts.correct,
+            total: attempts.total,
+          },
+        });
+      }
+      return;
+    }
+
+    // Knowledge check (tier === "check") → quiz event.
+    await appendCompletionEvent({
+      userId,
+      courseId,
+      eventType: "quiz",
+      lessonSlug: parsed.id,
+      metadata: {
+        score: attempts.score,
+        correct: attempts.correct,
+        total: attempts.total,
+      },
+    });
+  } catch (err) {
+    console.error("[completion] recordCompletionEvents (quiz/run)", err);
   }
 }

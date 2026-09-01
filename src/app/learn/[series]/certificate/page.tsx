@@ -48,6 +48,7 @@ import {
 import { buildPaywallView } from "@/lib/paywall";
 import { LockedContentPage } from "@/components/Catalog/LockedContentPage";
 import { getLessonsForSeries } from "@/lib/learn";
+import { appendCompletionEvent } from "@/lib/completion";
 
 interface Props {
   params: Promise<{ series: string }>;
@@ -452,6 +453,22 @@ export default async function CertificatePage({ params }: Props) {
 
   // Eligible — printable certificate.
   const completedAtIso = certificateCompletionDate(examRuns) ?? new Date().toISOString();
+
+  // B-19 (ADR-216): append the single, durable 'certificate' event. Idempotent
+  // per (user, course, event_type='certificate') — appendCompletionEvent skips
+  // duplicates so exactly one row is ever logged for this course. Best-effort:
+  // a log failure never blocks the printable certificate. The event's
+  // `certifiedAt` records when eligibility was reached.
+  const certCourse = await getCourseRowBySlug(series);
+  if (certCourse) {
+    await appendCompletionEvent({
+      userId: user!.id,
+      courseId: certCourse.id,
+      eventType: "certificate",
+      metadata: { certifiedAt: completedAtIso },
+    });
+  }
+
   return (
     <div className="min-h-screen flex flex-col">
       <div className="print:hidden">

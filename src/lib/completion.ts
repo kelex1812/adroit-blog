@@ -18,6 +18,12 @@ import type {
   CompletionInput,
   DerivedProgress,
 } from "@/shared/contracts-course-catalog";
+import type {
+  CompletionEventType,
+  CompletionMetadata,
+  Rank,
+  RankBand,
+} from "@/shared/contracts-constellations";
 
 /** "YYYY-MM-DD" from an ISO timestamp. */
 function dayOf(iso: string): string {
@@ -35,6 +41,95 @@ function parseDay(d: string): number {
 function isConsecutiveDay(a: string, b: string): boolean {
   const diff = (parseDay(b) - parseDay(a)) / 86400000;
   return diff === 1;
+}
+
+/**
+ * The constellation rank ladder (ADR-214). Bands are ASCENDING — ladder[0]
+ * is the entry band. A learner's current rank is the highest band whose
+ * thresholds (lessons AND courses) are all met. Pure, deterministic, and
+ * unit-tested — no DB drift (the ladder lives only in code).
+ */
+export const RANK_LADDER: RankBand[] = [
+  {
+    id: "starseed",
+    name: "Starseed",
+    lessonsRequired: 0,
+    coursesRequired: 0,
+    description: "Every journey starts with a single star.",
+  },
+  {
+    id: "wayfarer",
+    name: "Wayfarer",
+    lessonsRequired: 5,
+    coursesRequired: 0,
+    description: "Five lessons — the path is opening up.",
+  },
+  {
+    id: "explorer",
+    name: "Explorer",
+    lessonsRequired: 20,
+    coursesRequired: 2,
+    description: "Two courses charted; the map grows.",
+  },
+  {
+    id: "polestar",
+    name: "Polestar",
+    lessonsRequired: 50,
+    coursesRequired: 4,
+    description: "A steady north star across four courses.",
+  },
+  {
+    id: "celestial",
+    name: "Celestial",
+    lessonsRequired: 100,
+    coursesRequired: 8,
+    description: "Eight courses, one hundred lessons — you own the sky.",
+  },
+];
+
+/**
+ * Derive a learner's current rank from their completion counts. The highest
+ * band whose thresholds (lessons + courses) are met is the current rank;
+ * `nextProgressPct` is 0-100 progress toward the NEXT band (100 at the top).
+ */
+export function deriveRank(
+  lessonsCompleted: number,
+  coursesCompleted: number,
+): Rank {
+  let currentIndex = 0;
+  RANK_LADDER.forEach((band, i) => {
+    if (
+      lessonsCompleted >= band.lessonsRequired &&
+      coursesCompleted >= band.coursesRequired
+    ) {
+      currentIndex = i;
+    }
+  });
+  const current = RANK_LADDER[currentIndex]!;
+  const next = RANK_LADDER[currentIndex + 1];
+
+  let nextProgressPct = 100;
+  if (next) {
+    // Progress toward the next band: average of the two threshold ratios
+    // (lessons and courses), each capped at 100.
+    const lessonPct =
+      next.lessonsRequired > 0
+        ? Math.min(100, (lessonsCompleted / next.lessonsRequired) * 100)
+        : 100;
+    const coursePct =
+      next.coursesRequired > 0
+        ? Math.min(100, (coursesCompleted / next.coursesRequired) * 100)
+        : 100;
+    nextProgressPct = Math.round((lessonPct + coursePct) / 2);
+  }
+
+  return {
+    id: current.id,
+    name: current.name,
+    description: current.description,
+    index: currentIndex,
+    nextProgressPct,
+  };
 }
 
 /**
@@ -76,14 +171,18 @@ export function deriveProgress(input: CompletionInput): DerivedProgress {
     }
   }
 
-  // Streaks over distinct completion days.
+  // Streaks over distinct completion days. The CURRENT streak is relative to
+  // the injected `now` (B-19 bug fix): the streak is only "alive" when the
+  // most recent completion is today or yesterday relative to `now`. If the
+  // last completion is older than that (neither today nor yesterday), the
+  // streak resets to 0 — you've broken the chain.
   const days = Array.from(
     new Set(events.map((e) => dayOf(e.completed_at))),
   ).sort();
   let streakDays = 0;
   let longestStreakDays = 0;
   if (days.length > 0) {
-    // Longest run anywhere.
+    // Longest run anywhere (independent of `now`).
     let run = 1;
     let longest = 1;
     for (let i = 1; i < days.length; i++) {
@@ -95,11 +194,19 @@ export function deriveProgress(input: CompletionInput): DerivedProgress {
       }
     }
     longestStreakDays = longest;
-    // Current streak: consecutive run ending at the most recent completion day.
-    streakDays = 1;
-    for (let i = days.length - 1; i > 0; i--) {
-      if (isConsecutiveDay(days[i - 1], days[i])) streakDays++;
-      else break;
+
+    // Current streak: the consecutive run ending at the most recent completion
+    // day, but ONLY if that day is today or yesterday relative to `now`.
+    const lastDay = days[days.length - 1]!;
+    const today = dayOf(input.now);
+    const sinceLast = (parseDay(today) - parseDay(lastDay)) / 86400000;
+    if (sinceLast <= 1) {
+      // Most recent completion is today or yesterday → count the run backward.
+      streakDays = 1;
+      for (let i = days.length - 1; i > 0; i--) {
+        if (isConsecutiveDay(days[i - 1], days[i])) streakDays++;
+        else break;
+      }
     }
   }
 
@@ -123,21 +230,25 @@ export function deriveProgress(input: CompletionInput): DerivedProgress {
     streakDays,
     longestStreakDays,
     timeToCompleteDays,
+    rank: deriveRank(lessonSlugs.size, coursesCompleted.size),
   };
 }
 
 /**
- * Append a completion event (lesson or course). Idempotent per (user, course,
- * lesson_slug): re-marking an already-logged completion is a no-op — the log
- * stays append-only (ADR-211) without duplicate rows. Best-effort: a failure
- * logs server-side and never throws (the primary lesson write already landed).
+ * Append a completion event (lesson, course, quiz, exam, or certificate).
+ * Idempotent per (user, course, event_type, lesson_slug): re-marking an
+ * already-logged event is a no-op — the log stays append-only (ADR-211)
+ * without duplicate rows. Best-effort: a failure logs server-side and never
+ * throws (the primary write already landed).
  */
 export async function appendCompletionEvent(input: {
   userId: string;
   courseId: string | null;
-  eventType: "lesson" | "course";
+  eventType: CompletionEventType;
   lesson?: number | null;
   lessonSlug?: string | null;
+  /** Optional event envelope: score/tier for quiz/exam/certificate (B-19). */
+  metadata?: CompletionMetadata | null;
 }): Promise<void> {
   try {
     const supabase = await getSupabaseServerClient();
@@ -160,6 +271,7 @@ export async function appendCompletionEvent(input: {
       event_type: input.eventType,
       lesson: input.lesson ?? null,
       lesson_slug: input.lessonSlug ?? null,
+      metadata: input.metadata ?? null,
       completed_at: new Date().toISOString(),
     });
   } catch (err) {
