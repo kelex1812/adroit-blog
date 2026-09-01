@@ -70,11 +70,11 @@ const nextConfig: NextConfig = {
             // rendered from trusted in-repo content.
             value: [
               "default-src 'self'",
-              "img-src 'self' data: blob:",
+              "img-src 'self' data: blob: https://www.google-analytics.com",
               "style-src 'self' 'unsafe-inline'",
               "font-src 'self' data:",
-              "script-src 'self' 'unsafe-inline'",
-              "connect-src 'self' https://*.supabase.co",
+              "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com",
+              "connect-src 'self' https://*.supabase.co https://www.google-analytics.com https://*.google-analytics.com https://analytics.google.com https://*.analytics.google.com https://googleads.g.doubleclick.net",
               "object-src 'none'",
               "frame-ancestors 'none'",
               "base-uri 'self'",

@@ -11,6 +11,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { getSupabaseClient } from "@/lib/supabase/client";
 import { notifyProgressChanged, PROGRESS_CHANGED_EVENT } from "@/lib/progress";
+import { trackLessonComplete } from "@/lib/analytics";
 
 const STORAGE_KEY_PREFIX = "adroit-blog:lesson:";
 
@@ -135,6 +136,8 @@ export function useLessonProgress(lessonSlug: string): UseLessonProgressReturn {
 
     if (newState) {
       markCompleteAPI(lessonSlug);
+      // Progress-funnel analytics (backlog B-06): lesson → quiz → exam → cert.
+      trackLessonComplete(lessonSlug);
     } else {
       unmarkCompleteAPI(lessonSlug);
     }

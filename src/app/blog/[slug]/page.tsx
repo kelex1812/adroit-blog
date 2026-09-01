@@ -37,6 +37,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     path: `/blog/${slug}`,
     publishedTime: post.date,
     tags: post.tags,
+    // Per-post OG image (B-13): use the post's banner when present, else the
+    // site default card — lifts social CTR on shared posts.
+    ogImage: post.bannerImage,
   });
 }
 

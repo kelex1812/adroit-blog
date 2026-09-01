@@ -2,6 +2,7 @@ import { type MetadataRoute } from "next";
 import { posts } from "@/data/posts";
 import { learnLessons, learnSeries } from "@/data/learn";
 import { getCertExam, getKnowledgeChecks } from "@/lib/quiz";
+import { getAllTags } from "@/lib/tags";
 import { siteConfig } from "@/lib/seo";
 
 /**
@@ -48,77 +49,79 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const visibleLesson = (lesson: { series: string; slug: string }) =>
     isLive(lesson.series);
 
-  // Static pages
+  // Static / hub pages — no natural content date, so lastmod is OMITTED
+  // (B-12: omitting lastmod kills per-deploy re-crawl churn; a hub page's
+  // freshness is implied by its children's lastmods).
   const staticPages: MetadataRoute.Sitemap = [
     {
       url: siteConfig.url,
-      lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 1,
     },
     {
       url: `${siteConfig.url}/blog`,
-      lastModified: new Date(),
       changeFrequency: "weekly",
       priority: 0.9,
     },
     {
       url: `${siteConfig.url}/blog/categories`,
-      lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.7,
     },
   ];
 
-  // Blog post pages
+  // Blog post pages — lastmod derived from the post's own publish date.
   const blogPages: MetadataRoute.Sitemap = posts.map((post) => ({
     url: `${blogUrl}/${post.slug}`,
-    lastModified: post.date ? new Date(post.date) : new Date(),
+    ...(post.date ? { lastModified: new Date(post.date) } : {}),
     changeFrequency: "monthly" as const,
     priority: 0.8,
   }));
 
-  // Tag pages
-  const allTags = [...new Set(posts.flatMap((p) => p.tags))];
-  const tagPages: MetadataRoute.Sitemap = allTags.map((tag) => ({
-    url: `${siteConfig.url}/tags/${tag.toLowerCase().replace(/\s+/g, "-")}`,
-    lastModified: new Date(),
-    changeFrequency: "weekly" as const,
-    priority: 0.5,
-  }));
+  // Tag pages — B-15: emit ONLY tags with >=3 posts (176 one-post thin tag
+  // pages dilute crawl budget). Tags have no natural publish date, so lastmod
+  // is omitted; /tags remains the full "browse all tags" disclosure.
+  const tagPages: MetadataRoute.Sitemap = getAllTags()
+    .filter((t) => t.count >= 3)
+    .map((t) => ({
+      url: `${siteConfig.url}/tags/${t.slug}`,
+      changeFrequency: "weekly" as const,
+      priority: 0.5,
+    }));
 
   // Learn hub + series pages (daily content cadence → weekly). Live only (AC-5).
+  // Hub has no natural date (lastmod omitted); each series uses its NEWEST
+  // lesson's date as the content-derived lastmod.
   const learnHubPages: MetadataRoute.Sitemap = [
     {
       url: `${siteConfig.url}/learn`,
-      lastModified: new Date(),
       changeFrequency: "weekly",
       priority: 0.9,
     },
     ...visibleSeries.map((s) => ({
       url: `${siteConfig.url}/learn/${s.slug}`,
-      lastModified: s.lessons[0]?.date ? new Date(s.lessons[0].date) : new Date(),
+      ...(s.lessons[0]?.date ? { lastModified: new Date(s.lessons[0].date) } : {}),
       changeFrequency: "weekly" as const,
       priority: 0.8,
     })),
   ];
 
-  // Learn lesson pages — live courses only (AC-5).
+  // Learn lesson pages — live courses only (AC-5). lastmod from lesson date.
   const learnLessonPages: MetadataRoute.Sitemap = learnLessons
     .filter(visibleLesson)
     .map((lesson) => ({
       url: `${siteConfig.url}/learn/${lesson.series}/${lesson.slug}`,
-      lastModified: lesson.date ? new Date(lesson.date) : new Date(),
+      ...(lesson.date ? { lastModified: new Date(lesson.date) } : {}),
       changeFrequency: "weekly" as const,
       priority: 0.7,
     }));
 
   // Tier quiz pages — knowledge checks + cert exam (legacy series quiz removed,
   // Decision 8). Only series that ship tier files AND are live contribute.
+  // No natural publish date → lastmod omitted (B-12).
   const checkPages: MetadataRoute.Sitemap = visibleSeries.flatMap((s) =>
     getKnowledgeChecks(s.slug).map((c) => ({
       url: `${siteConfig.url}/learn/${s.slug}/check/${c.n}`,
-      lastModified: new Date(),
       changeFrequency: "weekly" as const,
       priority: 0.6,
     })),
@@ -127,7 +130,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     .filter((s) => getCertExam(s.slug) !== null)
     .map((s) => ({
       url: `${siteConfig.url}/learn/${s.slug}/exam`,
-      lastModified: new Date(),
       changeFrequency: "weekly" as const,
       priority: 0.6,
     }));

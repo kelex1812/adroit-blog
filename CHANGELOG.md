@@ -4,6 +4,53 @@ All notable changes to the Adroit Consulting Blog project will be documented in 
 
 ## [Unreleased]
 
+### Feature: GA4 analytics, sitemap hygiene, per-post OG images, /tags nav (t_3bc6e7ad)
+
+**What** — Five backlog items (Wave 1 SEO/analytics quick wins):
+
+1. **B-06 — GA4 analytics funnel wiring.** Added `src/lib/analytics.ts`
+   (env-gated helper) + `src/components/Analytics/AnalyticsInit.tsx` (client
+   gtag.js loader, mounted once in the root layout). Entirely disabled until
+   `NEXT_PUBLIC_GA_MEASUREMENT_ID` is set in the deploy env — the site stays
+   unmeasurable-by-default exactly as the backlog notes; wiring only activates
+   once an ID is supplied. Typed funnel events fire at the four progress
+   stages: `lesson_complete` (useLessonProgress on mark-complete),
+   `quiz_tier_complete` (QuizWidget at results), `exam_complete` (ExamWidget on
+   batch submit, pass/fail + score), `certificate_viewed` (Certificate on
+   mount). CSP in `next.config.ts` updated to allow
+   `https://www.google-analytics.com` (img-src + connect-src) for when an ID is
+   configured. All calls are client-only; server components untouched.
+2. **B-12 — sitemap lastmod hygiene.** `src/app/sitemap.ts` no longer stamps
+   `new Date()` as lastModified on static/hub pages (/, /blog, /blog/categories,
+   /learn, series hubs, check/exam pages) — those now OMIT lastmod, killing
+   per-deploy re-crawl churn. lastmod is retained only where a natural content
+   date exists: blog posts (post.date), lessons (lesson.date), and each series
+   hub (newest lesson date).
+3. **B-15 — sitemap tag filtering.** Tag pages in the sitemap now emit ONLY
+   tags with ≥3 posts (33 of 180+), protecting crawl budget from one-post thin
+   pages. `/tags` remains the full "browse all tags" disclosure.
+4. **B-13 — per-post Open Graph images.** `src/app/blog/[slug]/page.tsx`
+   `generateMetadata` now passes `ogImage: post.bannerImage` to `buildMetadata`,
+   so shared posts use their own `/banners/*.png` artwork instead of the generic
+   card, lifting social CTR. Posts without a banner fall back to the default
+   card (`buildMetadata` already handled the fallback).
+5. **B-14 — /learn + /tags in header nav.** `/learn` was already present; added
+   `/tags` to `Header.tsx` navLinks so tag browsing is reachable from the header
+   (coherent with B-15's disclosure model).
+
+**Why** — These are the remaining SEO/analytics quick wins from the
+consolidated backlog: the site was fully unmeasurable (no analytics), the
+sitemap was forcing crawlers to re-fetch every hub on every deploy, thin tag
+pages were diluting crawl budget, and shared posts were carrying a generic OG
+card instead of their real artwork.
+
+**Known Issues** — GA4 events only fire once `NEXT_PUBLIC_GA_MEASUREMENT_ID` is
+set; until then the loader and all funnel events are silent no-ops (by design).
+The GA measurement ID itself is intentionally NOT committed to `.env.local` /
+the repo — ops must add it to the deploy env. `ExamWidget`'s `exam_complete`
+fires on the submit response before the results phase transition, which is the
+correct single measurement point (double-submit is already guarded).
+
 ### Fix: Branded 404, guest profile teaser, exam-less certificate records, dead-form cleanup (t_40c49bdc)
 
 **What** — Four backlog items (Wave 1 quick wins + trust fixes):

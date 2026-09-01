@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { siteConfig, buildMetadata } from "@/lib/seo";
 import { ThemeProvider } from "@/components/Theme/ThemeProvider";
+import AnalyticsInit from "@/components/Analytics/AnalyticsInit";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -34,6 +35,7 @@ export default function RootLayout({
       </head>
       <body className="min-h-full flex flex-col">
         <ThemeProvider>
+          <AnalyticsInit />
           <a href="#main" className="skip-link">
             Skip to content
           </a>

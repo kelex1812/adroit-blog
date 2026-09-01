@@ -26,6 +26,7 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useQuizProgress } from "@/lib/hooks/useQuizProgress";
+import { trackQuizTierComplete } from "@/lib/analytics";
 
 export interface QuizQuestion {
   question: string;
@@ -109,6 +110,10 @@ export default function QuizWidget({
   // dasharray once the results view mounts — setting the final value at
   // mount meant the CSS transition had no from→to change and never played.
   const [ringFilled, setRingFilled] = useState(false);
+  // Progress-funnel analytics (B-06): fire the quiz-tier event exactly once
+  // per session that reaches results. Ref guard, not state, so a re-render of
+  // the results view can't double-fire.
+  const quizTierFiredRef = useRef(false);
 
   const { progress, hydrated, submitAnswer, resetQuiz } = useQuizProgress(
     quizName,
@@ -139,6 +144,23 @@ export default function QuizWidget({
       return () => cancelAnimationFrame(raf);
     }
   }, [allAnswered, currentQ, questions.length, hydrated, completedThisSession]);
+
+  // Progress-funnel analytics (B-06): fire the quiz-tier event exactly once per
+  // session once the results view is reached (quiz tier in the lesson → quiz →
+  // exam → certificate funnel). Scored from the progress store so a returning
+  // user who sees results directly still registers a complete.
+  useEffect(() => {
+    if (!hydrated || quizTierFiredRef.current) return;
+    const showResults =
+      (allAnswered && !completedThisSession) ||
+      currentQ >= questions.length;
+    if (!showResults) return;
+    const score =
+      progress.total > 0 ? Math.round((progress.correct / progress.total) * 100) : 0;
+    const passed = typeof passThreshold === "number" && score >= passThreshold;
+    quizTierFiredRef.current = true;
+    trackQuizTierComplete({ quizName, score, passed });
+  }, [allAnswered, currentQ, questions.length, hydrated, completedThisSession, progress.correct, progress.total, quizName, passThreshold]);
 
   // Hydration gate (QA F-1): before the stored quiz state has been read
   // after mount, render a placeholder instead of the question/results view.

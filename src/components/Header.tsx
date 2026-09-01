@@ -11,6 +11,7 @@ import { avatarHueClass, initialsFromEmail } from "@/lib/avatar";
 const navLinks = [
   { href: "/blog", label: "Posts" },
   { href: "/blog/categories", label: "Categories" },
+  { href: "/tags", label: "Tags" },
   { href: "/learn", label: "Learn" },
   { href: "https://adroit.io", label: "Adroit.io", external: true },
 ];

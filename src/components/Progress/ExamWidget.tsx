@@ -24,6 +24,7 @@ import type {
   ExamSubmitResult,
   QuizQuestion,
 } from "@/shared/contracts";
+import { trackExamComplete } from "@/lib/analytics";
 
 const EXAM_MINUTES = 105;
 const EXAM_SECONDS = EXAM_MINUTES * 60;
@@ -121,6 +122,9 @@ export default function ExamWidget({
       });
       if (!res.ok) throw new Error(`batch submit ${res.status}`);
       const data = (await res.json()) as ExamSubmitResult;
+      // Progress-funnel analytics (B-06): exam → certificate. Pass verdict is
+      // derived from the server response score (>=72% per exam page header).
+      trackExamComplete({ quizName, score: data.score ?? 0, passed: (data.score ?? 0) >= 72 });
       // Double-submit guard: ignore duplicate responses (client disables the
       // button while in flight, but a stray response must not clobber state).
       if (submittedRef.current && phase !== "results") {

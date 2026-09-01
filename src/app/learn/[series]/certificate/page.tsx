@@ -464,6 +464,7 @@ export default async function CertificatePage({ params }: Props) {
           completedAt={formatCertDate(completedAtIso)}
           examScore={eligibility.examBest}
           totalLessons={eligibility.lessonsTotal}
+          series={s.slug}
         />
       </main>
       <div className="print:hidden">

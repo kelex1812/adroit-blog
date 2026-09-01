@@ -12,6 +12,9 @@
  */
 "use client";
 
+import { useEffect, useRef } from "react";
+import { trackCertificateViewed } from "@/lib/analytics";
+
 interface CertificateProps {
   /** Recipient display name (user full_name / name / email). */
   recipientName: string;
@@ -23,6 +26,8 @@ interface CertificateProps {
   examScore: number;
   /** Planned lesson count (e.g. 46). */
   totalLessons: number;
+  /** Series slug — used for progress-funnel analytics (backlog B-06). */
+  series?: string;
 }
 
 export default function Certificate({
@@ -31,7 +36,17 @@ export default function Certificate({
   completedAt,
   examScore,
   totalLessons,
+  series,
 }: CertificateProps) {
+  const certFiredRef = useRef(false);
+  // Progress-funnel analytics (B-06): certificate is the terminal event of the
+  // lesson → quiz → exam → certificate funnel. Fire once on mount — the page
+  // only renders this component when server-validated eligibility passes.
+  useEffect(() => {
+    if (certFiredRef.current) return;
+    certFiredRef.current = true;
+    trackCertificateViewed({ series: series ?? "", courseName });
+  }, [series, courseName]);
   return (
     <div className="max-w-[960px] mx-auto px-6 pt-10 pb-24">
       {/* ── Page head (hidden on print) ─────────────────────────────── */}
