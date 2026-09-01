@@ -4,6 +4,42 @@ All notable changes to the Adroit Consulting Blog project will be documented in 
 
 ## [Unreleased]
 
+### Fix: Server-render /blog listing + client filter island (B-08, t_f7e84aca)
+
+**What** — Refactored `/blog` from a fully client-rendered page into a
+server component that SSGs the first page, with the interactive filters
+moving into a thin client island:
+
+1. **`src/app/blog/page.tsx` is now a server component.** It imports the
+   `posts` dataset from `@/data/posts` **server-side only** and renders
+   `<BlogListingClient>` (a `"use client"` island) with the posts passed as a
+   serialized RSC prop. Because the page is statically prerendered at build
+   time, the first page of post cards (hero + featured + 8 cards) is present in
+   the initial HTML — post content is no longer rendered only after hydration.
+   This addresses Brainiac findings #3 (client-only shell hurting LCP/INP/CWV,
+   SEO under-render) and #9 (the 48 KB `posts.ts` riding in the client JS
+   bundle): the module is now resolved at build time on the server, not shipped
+   as an executable client chunk.
+2. **New `src/components/BlogListing/BlogListingClient.tsx`.** The client
+   "island" owns all interactive state exactly as before — category pills,
+   read filter (All/Unread/Read), sort toggle (`?sort=oldest`), and
+   pagination — operating on the posts prop. Featured-post hero behavior
+   (shown only on the All Posts + All read view), the read-progress bar, and
+   the guest sign-in prompt are preserved verbatim.
+3. **Bump 4/page → 8/page.** `postsPerPage` moved from 4 to 8.
+
+**Why** — The blog index is the highest-traffic landing page. A client-only
+shell hurt LCP / INP / Core Web Vitals and under-rendered for partial-JS
+crawlers, and it shipped the full 48 KB posts dataset into the client bundle.
+Server-rendering the first page puts content in the SSR HTML and keeps the
+dataset out of the client JS graph while retaining the snappy filter UX.
+
+**Known Issues** — The full `posts` array is still serialized into the RSC
+flight payload (the documented, content-derived alternative to a client bundle
+in Brainiac #9) — the first page renders statically so LCP is unaffected, and
+the executable client JS no longer carries `posts.ts`. No user-visible behavior
+changed.
+
 ### Feature: GA4 analytics, sitemap hygiene, per-post OG images, /tags nav (t_3bc6e7ad)
 
 **What** — Five backlog items (Wave 1 SEO/analytics quick wins):
