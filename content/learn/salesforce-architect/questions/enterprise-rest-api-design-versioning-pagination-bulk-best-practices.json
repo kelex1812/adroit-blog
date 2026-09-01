@@ -6,7 +6,7 @@
     {
       "question": "Per the lesson “Enterprise REST API Design: Versioning, Pagination, Bulk, and Best Practices”, what is the central focus?",
       "options": [
-        "The design layer under every REST integration: how Salesforce versions its API, how to page through large result sets without breaking, when bulk writes beat sy…",
+        "The design layer under every REST integration: how Salesforce versions its API, how to page through large result sets without breaking, when bulk writes beat synchronous calls, and the habits that keep an integration alive for years.",
         "A history of the technology and its vendors",
         "A review of unrelated productivity tools",
         "A summary of corporate policy rules"

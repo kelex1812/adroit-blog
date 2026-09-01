@@ -6,7 +6,7 @@
     {
       "question": "Per the lesson “Observability, Tracing, Logging, and Replay for Agents”, what is the central focus?",
       "options": [
-        "An agent runs several model calls, tool invocations, and retrieval steps inside one request, and when it returns the wrong answer you have no idea which step ca…",
+        "An agent runs several model calls, tool invocations, and retrieval steps inside one request, and when it returns the wrong answer you have no idea which step caused it.",
         "A history of the technology and its vendors",
         "A review of unrelated productivity tools",
         "A summary of corporate policy rules"

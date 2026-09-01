@@ -6,7 +6,7 @@
     {
       "question": "Per the lesson “How LLMs Work for Implementers: Tokens, Context, Inference, Temperature”, what is the central focus?",
       "options": [
-        "The four knobs that decide every LLM bill, latency budget, and reliability call: what tokens actually are, how the context window constrains agents, how inferen…",
+        "The four knobs that decide every LLM bill, latency budget, and reliability call: what tokens actually are, how the context window constrains agents, how inference really runs, and what temperature does and doesn't do.",
         "A history of the technology and its vendors",
         "A review of unrelated productivity tools",
         "A summary of corporate policy rules"

@@ -6,7 +6,7 @@
     {
       "question": "Per the lesson “Enterprise Deployment, Serving, API Design, Rate Limits, and Quotas”, what is the central focus?",
       "options": [
-        "A working agent is a different thing from an agent many people can use. This lesson puts the three boundaries around it that make the difference: the serving la…",
+        "A working agent is a different thing from an agent many people can use.",
         "A history of the technology and its vendors",
         "A review of unrelated productivity tools",
         "A summary of corporate policy rules"

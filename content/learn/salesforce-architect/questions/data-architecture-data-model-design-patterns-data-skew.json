@@ -6,7 +6,7 @@
     {
       "question": "Per the lesson “Data Architecture: Data Model Design, Common Data Model Patterns, and Data Skew”, what is the central focus?",
       "options": [
-        "Data is the load-bearing wall of every org. Designing a data model that scales means deciding where each relationship lives, recognizing the recurring shapes th…",
+        "Data is the load-bearing wall of every org. Designing a data model that scales means deciding where each relationship lives, recognizing the recurring shapes that solve real problems, and keeping the load off any single parent record or owner.",
         "A history of the technology and its vendors",
         "A review of unrelated productivity tools",
         "A summary of corporate policy rules"

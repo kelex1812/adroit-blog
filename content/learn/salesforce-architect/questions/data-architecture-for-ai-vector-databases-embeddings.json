@@ -6,7 +6,7 @@
     {
       "question": "Per the lesson “Data Architecture for AI: Databases, Vector DBs, Embeddings, and the Same Modeling Discipline”, what is the central focus?",
       "options": [
-        "The data side of AI systems. Embeddings, vector databases, chunking, and why the modeling discipline from a Salesforce data model (records, relationships, sourc…",
+        "The data side of AI systems. Embeddings, vector databases, chunking, and why the modeling discipline from a Salesforce data model (records, relationships, source of truth, scale) carries over unchanged when the storage engine becomes a vector store.",
         "A history of the technology and its vendors",
         "A review of unrelated productivity tools",
         "A summary of corporate policy rules"

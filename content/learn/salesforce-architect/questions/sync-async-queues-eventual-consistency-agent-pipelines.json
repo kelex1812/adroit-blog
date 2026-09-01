@@ -6,7 +6,7 @@
     {
       "question": "Per the lesson “Sync vs Async, Queues, and Eventual Consistency: The Laws That Shape Agent Pipelines”, what is the central focus?",
       "options": [
-        "The three operating laws that govern any pipeline spanning more than one system: synchronous calls block, asynchronous calls decouple, and distributed systems s…",
+        "The three operating laws that govern any pipeline spanning more than one system: synchronous calls block, asynchronous calls decouple, and distributed systems settle into eventual consistency.",
         "A history of the technology and its vendors",
         "A review of unrelated productivity tools",
         "A summary of corporate policy rules"

@@ -6,7 +6,7 @@
     {
       "question": "Per the lesson “Integration Patterns: Request-Reply, Fire-and-Forget, and Batch (Inbound & Outbound)”, what is the central focus?",
       "options": [
-        "The three archetype integration patterns every Salesforce architect must recognize (request-reply, fire-and-forget, and batch data synchronization), plus the se…",
+        "The three archetype integration patterns every Salesforce architect must recognize (request-reply, fire-and-forget, and batch data synchronization), plus the selection matrix, the limits that shape each choice, and a worked example that combines all three.",
         "A history of the technology and its vendors",
         "A review of unrelated productivity tools",
         "A summary of corporate policy rules"
@@ -39,7 +39,7 @@
     {
       "question": "Per the lesson “Event-Driven Integration: Platform Events + Change Data Capture”, what is the central focus?",
       "options": [
-        "The Salesforce event bus, Platform Events vs. Change Data Capture: when to publish business intent vs. record state, how to consume on- and off-platform, and th…",
+        "The Salesforce event bus, Platform Events vs. Change Data Capture: when to publish business intent vs. record state, how to consume on- and off-platform, and the hard truth about ordering, replay, and allocations.",
         "A history of the technology and its vendors",
         "A review of unrelated productivity tools",
         "A summary of corporate policy rules"
@@ -72,7 +72,7 @@
     {
       "question": "Per the lesson “Middleware Tradeoffs: MuleSoft vs Boomi vs Custom (and When Salesforce Is the Hub)”, what is the central focus?",
       "options": [
-        "How to choose the integration layer: MuleSoft's API-led pro-code platform, Boomi's low-code iPaaS, hand-rolled custom code, and the decision matrix for when Sal…",
+        "How to choose the integration layer: MuleSoft's API-led pro-code platform, Boomi's low-code iPaaS, hand-rolled custom code, and the decision matrix for when Salesforce itself should be the hub instead of any middleware at all.",
         "A history of the technology and its vendors",
         "A review of unrelated productivity tools",
         "A summary of corporate policy rules"
@@ -105,7 +105,7 @@
     {
       "question": "Per the lesson “Integration Reliability: Idempotency, Retries, Error Handling, and Dead-Letter Design”, what is the central focus?",
       "options": [
-        "The reliability toolkit every integration needs: idempotency keys and message IDs so retries are safe, the transient vs. poisoned error taxonomy, bounded retry …",
+        "The reliability toolkit every integration needs: idempotency keys and message IDs so retries are safe, the transient vs.",
         "A history of the technology and its vendors",
         "A review of unrelated productivity tools",
         "A summary of corporate policy rules"
@@ -138,7 +138,7 @@
     {
       "question": "Per the lesson “Sync vs Async, Queues, and Eventual Consistency: The Laws That Shape Agent Pipelines”, what is the central focus?",
       "options": [
-        "The three operating laws that govern any pipeline spanning more than one system: synchronous calls block, asynchronous calls decouple, and distributed systems s…",
+        "The three operating laws that govern any pipeline spanning more than one system: synchronous calls block, asynchronous calls decouple, and distributed systems settle into eventual consistency.",
         "A history of the technology and its vendors",
         "A review of unrelated productivity tools",
         "A summary of corporate policy rules"

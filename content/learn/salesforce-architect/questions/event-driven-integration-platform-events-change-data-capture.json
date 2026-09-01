@@ -6,7 +6,7 @@
     {
       "question": "Per the lesson “Event-Driven Integration: Platform Events + Change Data Capture”, what is the central focus?",
       "options": [
-        "The Salesforce event bus, Platform Events vs. Change Data Capture: when to publish business intent vs. record state, how to consume on- and off-platform, and th…",
+        "The Salesforce event bus, Platform Events vs. Change Data Capture: when to publish business intent vs. record state, how to consume on- and off-platform, and the hard truth about ordering, replay, and allocations.",
         "A history of the technology and its vendors",
         "A review of unrelated productivity tools",
         "A summary of corporate policy rules"

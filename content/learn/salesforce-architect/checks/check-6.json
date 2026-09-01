@@ -6,7 +6,7 @@
     {
       "question": "Per the lesson “Enterprise REST API Design: Versioning, Pagination, Bulk, and Best Practices”, what is the central focus?",
       "options": [
-        "The design layer under every REST integration: how Salesforce versions its API, how to page through large result sets without breaking, when bulk writes beat sy…",
+        "The design layer under every REST integration: how Salesforce versions its API, how to page through large result sets without breaking, when bulk writes beat synchronous calls, and the habits that keep an integration alive for years.",
         "A history of the technology and its vendors",
         "A review of unrelated productivity tools",
         "A summary of corporate policy rules"
@@ -39,7 +39,7 @@
     {
       "question": "Per the lesson “Integration Security: Named Credentials, JWT, Certificates, and IP Allowlisting”, what is the central focus?",
       "options": [
-        "The security layer under every integration: named credentials that keep endpoints and secrets out of code, JWT bearer for server-to-server auth, certificates fo…",
+        "The security layer under every integration: named credentials that keep endpoints and secrets out of code, JWT bearer for server-to-server auth, certificates for signing and mutual TLS, and IP allowlisting as the last fence that says who is even allowed to knock.",
         "A history of the technology and its vendors",
         "A review of unrelated productivity tools",
         "A summary of corporate policy rules"
@@ -72,7 +72,7 @@
     {
       "question": "Per the lesson “High-Volume Event Patterns: Streaming, Pacing, and Platform Event Limits”, what is the central focus?",
       "options": [
-        "What changes when event volume stops being a trickle and becomes a flood: streaming with the Pub/Sub API, pacing publish rates against rolling limits, and the p…",
+        "What changes when event volume stops being a trickle and becomes a flood: streaming with the Pub/Sub API, pacing publish rates against rolling limits, and the platform event allocations that decide whether your bus survives the day.",
         "A history of the technology and its vendors",
         "A review of unrelated productivity tools",
         "A summary of corporate policy rules"

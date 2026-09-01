@@ -6,7 +6,7 @@
     {
       "question": "Per the lesson “Security, Part 2: Profiles, Permission Sets, Permission Set Groups, MFA, and Session Policies”, what is the central focus?",
       "options": [
-        "Who can do what in an org. The move from profile-led to permission-set-led access, what a permission set group bundles together, the 2026 MFA enforcement that n…",
+        "Who can do what in an org. The move from profile-led to permission-set-led access, what a permission set group bundles together, the 2026 MFA enforcement that now touches every login, and the session policies that decide how long a session lives.",
         "A history of the technology and its vendors",
         "A review of unrelated productivity tools",
         "A summary of corporate policy rules"

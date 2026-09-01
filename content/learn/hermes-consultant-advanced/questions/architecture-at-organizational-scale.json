@@ -6,7 +6,7 @@
     {
       "question": "Per the lesson “Architecture at Organizational Scale”, what is the central focus?",
       "options": [
-        "The jump from running agents to running a fleet of them. How to design for many agents at once: the orchestration patterns that keep work moving, the governance…",
+        "The jump from running agents to running a fleet of them. How to design for many agents at once: the orchestration patterns that keep work moving, the governance layer that keeps it safe, and why control replaces heroics as the unit of success.",
         "A history of the technology and its vendors",
         "A review of unrelated productivity tools",
         "A summary of corporate policy rules"

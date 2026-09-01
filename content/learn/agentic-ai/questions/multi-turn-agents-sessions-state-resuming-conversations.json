@@ -6,7 +6,7 @@
     {
       "question": "Per the lesson “Multi-Turn Agents: Sessions, State, and Resuming Conversations”, what is the central focus?",
       "options": [
-        "An LLM is stateless: every call forgets the one before it, so multi-turn behavior has to be built, not assumed. This lesson defines the session, the state it ca…",
+        "An LLM is stateless: every call forgets the one before it, so multi-turn behavior has to be built, not assumed.",
         "A history of the technology and its vendors",
         "A review of unrelated productivity tools",
         "A summary of corporate policy rules"

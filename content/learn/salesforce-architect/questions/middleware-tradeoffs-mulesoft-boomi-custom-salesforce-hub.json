@@ -6,7 +6,7 @@
     {
       "question": "Per the lesson “Middleware Tradeoffs: MuleSoft vs Boomi vs Custom (and When Salesforce Is the Hub)”, what is the central focus?",
       "options": [
-        "How to choose the integration layer: MuleSoft's API-led pro-code platform, Boomi's low-code iPaaS, hand-rolled custom code, and the decision matrix for when Sal…",
+        "How to choose the integration layer: MuleSoft's API-led pro-code platform, Boomi's low-code iPaaS, hand-rolled custom code, and the decision matrix for when Salesforce itself should be the hub instead of any middleware at all.",
         "A history of the technology and its vendors",
         "A review of unrelated productivity tools",
         "A summary of corporate policy rules"

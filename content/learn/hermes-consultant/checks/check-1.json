@@ -6,7 +6,7 @@
     {
       "question": "Per the lesson “What an Agent-Implementation Consultant Actually Does”, what is the central focus?",
       "options": [
-        "The agent-implementation consultant arc in one lesson: what an engagement looks like, what you actually deliver, and why this is not the same job as building ag…",
+        "The agent-implementation consultant arc in one lesson: what an engagement looks like, what you actually deliver, and why this is not the same job as building agents for yourself.",
         "A history of the technology and its vendors",
         "A review of unrelated productivity tools",
         "A summary of corporate policy rules"
@@ -39,7 +39,7 @@
     {
       "question": "Per the lesson “The Consulting Engagement Lifecycle”, what is the central focus?",
       "options": [
-        "The five-phase arc that every engagement runs: discover, design, implement, handover, support. What each phase produces, the exit test that lets you leave it, a…",
+        "The five-phase arc that every engagement runs: discover, design, implement, handover, support. What each phase produces, the exit test that lets you leave it, and where engagements quietly die.",
         "A history of the technology and its vendors",
         "A review of unrelated productivity tools",
         "A summary of corporate policy rules"
@@ -72,7 +72,7 @@
     {
       "question": "Per the lesson “Discovery and Scoping: Listening Before Proposing”, what is the central focus?",
       "options": [
-        "The craft of discovery: who to talk to, what to watch, which questions surface the real problem, and how to write a problem statement the client agrees with bef…",
+        "The craft of discovery: who to talk to, what to watch, which questions surface the real problem, and how to write a problem statement the client agrees with before you propose any solution.",
         "A history of the technology and its vendors",
         "A review of unrelated productivity tools",
         "A summary of corporate policy rules"
@@ -105,7 +105,7 @@
     {
       "question": "Per the lesson “Framing Value and ROI: How to Talk to a Buyer, Not a Builder”, what is the central focus?",
       "options": [
-        "The craft of turning what an agent does into a number a buyer can defend: how to measure value honestly, build ROI math that survives scrutiny, and talk outcome…",
+        "The craft of turning what an agent does into a number a buyer can defend: how to measure value honestly, build ROI math that survives scrutiny, and talk outcomes instead of features to the person who signs the check.",
         "A history of the technology and its vendors",
         "A review of unrelated productivity tools",
         "A summary of corporate policy rules"
@@ -138,7 +138,7 @@
     {
       "question": "Per the lesson “Stakeholder Mapping: Who Has to Say Yes, and Who Has to Live With It”, what is the central focus?",
       "options": [
-        "The craft of mapping every stakeholder an agent implementation touches: users, owners, IT, and compliance. Who must approve the deployment, who has to work with…",
+        "The craft of mapping every stakeholder an agent implementation touches: users, owners, IT, and compliance. Who must approve the deployment, who has to work with it every day, and how to win both before you build.",
         "A history of the technology and its vendors",
         "A review of unrelated productivity tools",
         "A summary of corporate policy rules"

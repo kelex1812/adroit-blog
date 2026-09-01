@@ -6,7 +6,7 @@
     {
       "question": "Per the lesson “Solution Design: Turning a Requirement Into an Architecture Document (NFRs and Tradeoffs)”, what is the central focus?",
       "options": [
-        "How a requirement becomes an architecture document: separating the business why from the what and the how, writing measurable non-functional requirements using …",
+        "How a requirement becomes an architecture document: separating the business why from the what and the how, writing measurable non-functional requirements using the Salesforce Well-Architected framework (Trusted, Easy, Adaptable), resolving design tradeoffs explicitly, and recording each decision with its rationale so the delivery team can build without re-litigating every choice.",
         "A history of the technology and its vendors",
         "A review of unrelated productivity tools",
         "A summary of corporate policy rules"
@@ -39,7 +39,7 @@
     {
       "question": "Per the lesson “Architecture Review: Design Reviews, Decision Records, and How to Say No”, what is the central focus?",
       "options": [
-        "The review discipline that keeps architecture coherent as the org grows: design review as a forum, not a gate, the ADR as durable decision memory, and how to de…",
+        "The review discipline that keeps architecture coherent as the org grows: design review as a forum, not a gate, the ADR as durable decision memory, and how to decline a bad how without rejecting the person behind it.",
         "A history of the technology and its vendors",
         "A review of unrelated productivity tools",
         "A summary of corporate policy rules"
@@ -72,7 +72,7 @@
     {
       "question": "Per the lesson “Error Handling and Monitoring: Debug Logs, Event Monitoring, Health Checks, and Alerts”, what is the central focus?",
       "options": [
-        "The observability layer of a Salesforce org: debug logs and trace flags when a transaction misbehaves, Event Monitoring when you need who, what, and when across…",
+        "The observability layer of a Salesforce org: debug logs and trace flags when a transaction misbehaves, Event Monitoring when you need who, what, and when across the whole org, health checks for the security baseline and the platform status, and the alerting that turns all of it into action instead of archaeology.",
         "A history of the technology and its vendors",
         "A review of unrelated productivity tools",
         "A summary of corporate policy rules"
@@ -105,7 +105,7 @@
     {
       "question": "Per the lesson “Performance: Query Optimization, Selective SOQL, Indexes, and Caching”, what is the central focus?",
       "options": [
-        "How a query becomes fast: the selectivity thresholds the optimizer uses to decide whether an index is worth it, how to write SOQL that the optimizer will actual…",
+        "How a query becomes fast: the selectivity thresholds the optimizer uses to decide whether an index is worth it, how to write SOQL that the optimizer will actually treat well, how to measure and index, and Platform Cache as the lever that skips the query entirely.",
         "A history of the technology and its vendors",
         "A review of unrelated productivity tools",
         "A summary of corporate policy rules"
@@ -138,7 +138,7 @@
     {
       "question": "Per the lesson “Performance Engineering for AI: Latency Budgets, Caching, Throughput, and Batching”, what is the central focus?",
       "options": [
-        "Performance stops being about one query and becomes a system-wide budget the moment AI is in the path. This lesson covers latency budgets, the difference betwee…",
+        "Performance stops being about one query and becomes a system-wide budget the moment AI is in the path. This lesson covers latency budgets, the difference between throughput and latency, the batch that makes LLM inference affordable, and the caches that skip work entirely.",
         "A history of the technology and its vendors",
         "A review of unrelated productivity tools",
         "A summary of corporate policy rules"

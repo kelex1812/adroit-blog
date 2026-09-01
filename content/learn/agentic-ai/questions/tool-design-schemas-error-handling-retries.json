@@ -6,7 +6,7 @@
     {
       "question": "Per the lesson “Designing Tools That Fail Well: Schemas, Error Handling, and Retries”, what is the central focus?",
       "options": [
-        "A tool is an operational contract, not an API wrapper. This lesson covers the five-part anatomy of a production tool, structured error schemas the model can act…",
+        "A tool is an operational contract, not an API wrapper. This lesson covers the five-part anatomy of a production tool, structured error schemas the model can act on, and retry discipline (backoff with jitter, idempotency keys, and retry budgets), so agents survive failures without corrupting state.",
         "A history of the technology and its vendors",
         "A review of unrelated productivity tools",
         "A summary of corporate policy rules"

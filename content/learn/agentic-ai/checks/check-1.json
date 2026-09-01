@@ -6,7 +6,7 @@
     {
       "question": "Per the lesson “What an Agent Actually Is (LLMs vs Rules vs Workflows)”, what is the central focus?",
       "options": [
-        "The definitions that matter for the whole track: what separates a rules system, an LLM workflow, and a true agent, plus how to tell which one you're actually bu…",
+        "The definitions that matter for the whole track: what separates a rules system, an LLM workflow, and a true agent, plus how to tell which one you're actually building.",
         "A history of the technology and its vendors",
         "A review of unrelated productivity tools",
         "A summary of corporate policy rules"
@@ -39,7 +39,7 @@
     {
       "question": "Per the lesson “How LLMs Work for Implementers: Tokens, Context, Inference, Temperature”, what is the central focus?",
       "options": [
-        "The four knobs that decide every LLM bill, latency budget, and reliability call: what tokens actually are, how the context window constrains agents, how inferen…",
+        "The four knobs that decide every LLM bill, latency budget, and reliability call: what tokens actually are, how the context window constrains agents, how inference really runs, and what temperature does and doesn't do.",
         "A history of the technology and its vendors",
         "A review of unrelated productivity tools",
         "A summary of corporate policy rules"
@@ -72,7 +72,7 @@
     {
       "question": "Per the lesson “The Agent Loop: Perceive, Reason, Act, Observe, and Where Your Code Lives”, what is the central focus?",
       "options": [
-        "The one while loop that turns a language model into an agent: the five stages of the loop, the pseudocode that runs underneath every framework, and exactly whic…",
+        "The one while loop that turns a language model into an agent: the five stages of the loop, the pseudocode that runs underneath every framework, and exactly which parts of it are your code versus the runtime's.",
         "A history of the technology and its vendors",
         "A review of unrelated productivity tools",
         "A summary of corporate policy rules"
@@ -105,7 +105,7 @@
     {
       "question": "Per the lesson “Prompting for Agents: System Prompts, Few-Shot, and When Prompts Aren't Enough”, what is the central focus?",
       "options": [
-        "In an agent, the prompt isn't a single message; it's the constitution the loop obeys on every iteration. The anatomy of a production system prompt, how few-shot…",
+        "In an agent, the prompt isn't a single message; it's the constitution the loop obeys on every iteration. The anatomy of a production system prompt, how few-shot examples actually work, and the escalation ladder for when words stop being enough.",
         "A history of the technology and its vendors",
         "A review of unrelated productivity tools",
         "A summary of corporate policy rules"
@@ -138,7 +138,7 @@
     {
       "question": "Per the lesson “Tokens, Context Windows, and Cost Engineering for Agent Workloads”, what is the central focus?",
       "options": [
-        "Agents don't just use tokens; they burn them: roughly 4x a chat conversation, 15x for multi-agent. The four levers that control the bill (budgeting, compression…",
+        "Agents don't just use tokens; they burn them: roughly 4x a chat conversation, 15x for multi-agent. The four levers that control the bill (budgeting, compression, caching, and model routing), with the math worked out on a real 10-agent pipeline.",
         "A history of the technology and its vendors",
         "A review of unrelated productivity tools",
         "A summary of corporate policy rules"

@@ -6,7 +6,7 @@
     {
       "question": "Per the lesson “High-Volume Event Patterns: Streaming, Pacing, and Platform Event Limits”, what is the central focus?",
       "options": [
-        "What changes when event volume stops being a trickle and becomes a flood: streaming with the Pub/Sub API, pacing publish rates against rolling limits, and the p…",
+        "What changes when event volume stops being a trickle and becomes a flood: streaming with the Pub/Sub API, pacing publish rates against rolling limits, and the platform event allocations that decide whether your bus survives the day.",
         "A history of the technology and its vendors",
         "A review of unrelated productivity tools",
         "A summary of corporate policy rules"

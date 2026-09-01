@@ -6,7 +6,7 @@
     {
       "question": "Per the lesson “Multi-Turn Agents: Sessions, State, and Resuming Conversations”, what is the central focus?",
       "options": [
-        "An LLM is stateless: every call forgets the one before it, so multi-turn behavior has to be built, not assumed. This lesson defines the session, the state it ca…",
+        "An LLM is stateless: every call forgets the one before it, so multi-turn behavior has to be built, not assumed.",
         "A history of the technology and its vendors",
         "A review of unrelated productivity tools",
         "A summary of corporate policy rules"
@@ -39,7 +39,7 @@
     {
       "question": "Per the lesson “Guardrails I: Prompt Injection Defense, System Boundaries, and Input Validation”, what is the central focus?",
       "options": [
-        "Prompt injection tops the OWASP list of LLM risks for a reason: an agent that can act turns a misled model into an unauthorized action. This lesson separates di…",
+        "Prompt injection tops the OWASP list of LLM risks for a reason: an agent that can act turns a misled model into an unauthorized action.",
         "A history of the technology and its vendors",
         "A review of unrelated productivity tools",
         "A summary of corporate policy rules"
@@ -72,7 +72,7 @@
     {
       "question": "Per the lesson “Guardrails II, Output Validation, Allowlists, PII Redaction, and Refusal Paths”, what is the central focus?",
       "options": [
-        "Input guardrails keep an attacker from pushing the agent past its boundary. Output guardrails keep the agent from pushing bad output out the other side: validat…",
+        "Input guardrails keep an attacker from pushing the agent past its boundary. Output guardrails keep the agent from pushing bad output out the other side: validation, allowlists, PII redaction, and refusal paths.",
         "A history of the technology and its vendors",
         "A review of unrelated productivity tools",
         "A summary of corporate policy rules"
@@ -105,7 +105,7 @@
     {
       "question": "Per the lesson “Evaluation: Evals, Golden Datasets, LLM-as-Judge, and When It Lies”, what is the central focus?",
       "options": [
-        "An agent you cannot measure is an agent you cannot trust, and the moment a model changes you have no way to know what you traded away. This lesson walks the eva…",
+        "An agent you cannot measure is an agent you cannot trust, and the moment a model changes you have no way to know what you traded away.",
         "A history of the technology and its vendors",
         "A review of unrelated productivity tools",
         "A summary of corporate policy rules"
@@ -138,7 +138,7 @@
     {
       "question": "Per the lesson “Observability, Tracing, Logging, and Replay for Agents”, what is the central focus?",
       "options": [
-        "An agent runs several model calls, tool invocations, and retrieval steps inside one request, and when it returns the wrong answer you have no idea which step ca…",
+        "An agent runs several model calls, tool invocations, and retrieval steps inside one request, and when it returns the wrong answer you have no idea which step caused it.",
         "A history of the technology and its vendors",
         "A review of unrelated productivity tools",
         "A summary of corporate policy rules"

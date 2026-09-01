@@ -6,7 +6,7 @@
     {
       "question": "Per the lesson “General Systems Architecture: What 'Architecture' Means and Why AI Systems Reuse the Same Patterns”, what is the central focus?",
       "options": [
-        "The foundational concepts of systems architecture (components, interfaces, and design principles) and why every AI agent pattern (sequential, parallel, hierarch…",
+        "The foundational concepts of systems architecture (components, interfaces, and design principles) and why every AI agent pattern (sequential, parallel, hierarchical) is a remix of patterns engineers have known for decades.",
         "A history of the technology and its vendors",
         "A review of unrelated productivity tools",
         "A summary of corporate policy rules"

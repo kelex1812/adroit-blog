@@ -6,7 +6,7 @@
     {
       "question": "Per the lesson “Environment and Release Strategy: Sandbox Types, Change Sets vs DevOps (sf/sfdx)”, what is the central focus?",
       "options": [
-        "Where work happens and how it moves to production. The four sandbox types (Developer, Developer Pro, Partial Copy, Full), what each copies and how often it refr…",
+        "Where work happens and how it moves to production. The four sandbox types (Developer, Developer Pro, Partial Copy, Full), what each copies and how often it refreshes, then the release-mechanism fork: click-based change sets versus source-driven deployment with the sf CLI and a Git-based source of truth, including Salesforce DX and DevOps Center.",
         "A history of the technology and its vendors",
         "A review of unrelated productivity tools",
         "A summary of corporate policy rules"

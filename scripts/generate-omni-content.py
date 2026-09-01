@@ -180,6 +180,34 @@ def make_distractors(real, other_sents, rng):
 
     return distractors[:3]
 
+def excerpt_option(excerpt):
+    """Return a complete-sentence MCQ option from the lesson excerpt.
+
+    Never truncates mid-sentence with a trailing ellipsis (\\u2026), and never
+    returns a dangling <40-char fragment. We cut at a real sentence boundary
+    (., !, ?) nearest the target option length while keeping the option >=40
+    chars; if no such boundary exists, fall back to the full excerpt (which is
+    always a complete sentence)."""
+    if not excerpt:
+        return ""
+    MIN_LEN = 40
+    MAX = 200
+    if len(excerpt) <= MAX:
+        return excerpt
+    # candidate cut points: end of each sentence-ending punctuation
+    bounds = [m.end() for m in re.finditer(r"[.!?](?=\s|$)", excerpt)]
+    # prefer the boundary closest to MAX whose result is >= MIN_LEN
+    best = None
+    for b in bounds:
+        if b < MIN_LEN:
+            continue
+        if best is None or abs(b - MAX) < abs(best - MAX):
+            best = b
+    if best is not None:
+        return excerpt[:best]
+    return excerpt
+
+
 def make_questions(series, slug, title, excerpt, sents, rng):
     qs = []
     topic = title.split(": ", 1)[-1] if ": " in title else title
@@ -187,7 +215,7 @@ def make_questions(series, slug, title, excerpt, sents, rng):
         qs.append({
             "question": f"Per the lesson \u201c{topic}\u201d, what is the central focus?",
             "options": [
-                excerpt[:160] + ("\u2026" if len(excerpt) > 160 else ""),
+                excerpt_option(excerpt),
                 "A history of the technology and its vendors",
                 "A review of unrelated productivity tools",
                 "A summary of corporate policy rules",
@@ -216,7 +244,7 @@ def make_questions(series, slug, title, excerpt, sents, rng):
         qs.append({
             "question": f"According to the lesson \u201c{topic}\u201d, what should a learner take away?",
             "options": [
-                excerpt[:160] + ("\u2026" if len(excerpt) > 160 else "") if excerpt else topic,
+                excerpt_option(excerpt) if excerpt else topic,
                 "That the topic is too complex to use at work",
                 "That memorization replaces understanding",
                 "That only technical staff should apply this",

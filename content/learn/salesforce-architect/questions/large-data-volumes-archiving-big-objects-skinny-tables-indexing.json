@@ -6,7 +6,7 @@
     {
       "question": "Per the lesson “Large Data Volumes: Archiving, Big Objects, Skinny Tables, and Indexing Strategy”, what is the central focus?",
       "options": [
-        "How an org stays fast and inside its storage as volume grows: selectivity and custom indexes, skinny tables for read-heavy hot data, big objects for bulk histor…",
+        "How an org stays fast and inside its storage as volume grows: selectivity and custom indexes, skinny tables for read-heavy hot data, big objects for bulk historical storage, and archiving as the tier that sheds cold data before it drags everything down.",
         "A history of the technology and its vendors",
         "A review of unrelated productivity tools",
         "A summary of corporate policy rules"

@@ -6,7 +6,7 @@
     {
       "question": "Per the lesson “Advanced Hermes Configuration: Model Routing, Evals, and Guardrails in Production”, what is the central focus?",
       "options": [
-        "When the agent leaves the sandbox and runs at real volume in front of a client, three decisions decide whether it holds up: which model runs which task, how you…",
+        "When the agent leaves the sandbox and runs at real volume in front of a client, three decisions decide whether it holds up: which model runs which task, how you prove the output is still correct, and how you keep the guardrails you documented actually enforced.",
         "A history of the technology and its vendors",
         "A review of unrelated productivity tools",
         "A summary of corporate policy rules"

@@ -6,7 +6,7 @@
     {
       "question": "Per the lesson “What an Agent Actually Is (LLMs vs Rules vs Workflows)”, what is the central focus?",
       "options": [
-        "The definitions that matter for the whole track: what separates a rules system, an LLM workflow, and a true agent, plus how to tell which one you're actually bu…",
+        "The definitions that matter for the whole track: what separates a rules system, an LLM workflow, and a true agent, plus how to tell which one you're actually building.",
         "A history of the technology and its vendors",
         "A review of unrelated productivity tools",
         "A summary of corporate policy rules"
@@ -39,7 +39,7 @@
     {
       "question": "Per the lesson “How LLMs Work for Implementers: Tokens, Context, Inference, Temperature”, what is the central focus?",
       "options": [
-        "The four knobs that decide every LLM bill, latency budget, and reliability call: what tokens actually are, how the context window constrains agents, how inferen…",
+        "The four knobs that decide every LLM bill, latency budget, and reliability call: what tokens actually are, how the context window constrains agents, how inference really runs, and what temperature does and doesn't do.",
         "A history of the technology and its vendors",
         "A review of unrelated productivity tools",
         "A summary of corporate policy rules"
@@ -72,7 +72,7 @@
     {
       "question": "Per the lesson “The Agent Loop: Perceive, Reason, Act, Observe, and Where Your Code Lives”, what is the central focus?",
       "options": [
-        "The one while loop that turns a language model into an agent: the five stages of the loop, the pseudocode that runs underneath every framework, and exactly whic…",
+        "The one while loop that turns a language model into an agent: the five stages of the loop, the pseudocode that runs underneath every framework, and exactly which parts of it are your code versus the runtime's.",
         "A history of the technology and its vendors",
         "A review of unrelated productivity tools",
         "A summary of corporate policy rules"
@@ -105,7 +105,7 @@
     {
       "question": "Per the lesson “Prompting for Agents: System Prompts, Few-Shot, and When Prompts Aren't Enough”, what is the central focus?",
       "options": [
-        "In an agent, the prompt isn't a single message; it's the constitution the loop obeys on every iteration. The anatomy of a production system prompt, how few-shot…",
+        "In an agent, the prompt isn't a single message; it's the constitution the loop obeys on every iteration. The anatomy of a production system prompt, how few-shot examples actually work, and the escalation ladder for when words stop being enough.",
         "A history of the technology and its vendors",
         "A review of unrelated productivity tools",
         "A summary of corporate policy rules"
@@ -138,7 +138,7 @@
     {
       "question": "Per the lesson “Tokens, Context Windows, and Cost Engineering for Agent Workloads”, what is the central focus?",
       "options": [
-        "Agents don't just use tokens; they burn them: roughly 4x a chat conversation, 15x for multi-agent. The four levers that control the bill (budgeting, compression…",
+        "Agents don't just use tokens; they burn them: roughly 4x a chat conversation, 15x for multi-agent. The four levers that control the bill (budgeting, compression, caching, and model routing), with the math worked out on a real 10-agent pipeline.",
         "A history of the technology and its vendors",
         "A review of unrelated productivity tools",
         "A summary of corporate policy rules"
@@ -171,7 +171,7 @@
     {
       "question": "Per the lesson “Choosing Models & Providers: Capability Tiers, Routing, and Fallbacks”, what is the central focus?",
       "options": [
-        "The biggest agent-ops mistake is picking one 'best' model and pointing everything at it. This lesson builds the three-tier capability model, the three jobs of a…",
+        "The biggest agent-ops mistake is picking one 'best' model and pointing everything at it. This lesson builds the three-tier capability model, the three jobs of a router, and the fallback chains that keep agents alive when providers fail.",
         "A history of the technology and its vendors",
         "A review of unrelated productivity tools",
         "A summary of corporate policy rules"
@@ -204,7 +204,7 @@
     {
       "question": "Per the lesson “Structured Output: JSON Mode, Function Calling, and Tool Schemas Done Right”, what is the central focus?",
       "options": [
-        "An agent is only as reliable as its data contracts. This lesson builds the structured-output ladder (JSON mode, Structured Outputs, function calling) and the to…",
+        "An agent is only as reliable as its data contracts. This lesson builds the structured-output ladder (JSON mode, Structured Outputs, function calling) and the tool-schema practices that keep tool calls valid, parseable, and safe in production.",
         "A history of the technology and its vendors",
         "A review of unrelated productivity tools",
         "A summary of corporate policy rules"
@@ -237,7 +237,7 @@
     {
       "question": "Per the lesson “Designing Tools That Fail Well: Schemas, Error Handling, and Retries”, what is the central focus?",
       "options": [
-        "A tool is an operational contract, not an API wrapper. This lesson covers the five-part anatomy of a production tool, structured error schemas the model can act…",
+        "A tool is an operational contract, not an API wrapper. This lesson covers the five-part anatomy of a production tool, structured error schemas the model can act on, and retry discipline (backoff with jitter, idempotency keys, and retry budgets), so agents survive failures without corrupting state.",
         "A history of the technology and its vendors",
         "A review of unrelated productivity tools",
         "A summary of corporate policy rules"
@@ -270,7 +270,7 @@
     {
       "question": "Per the lesson “Function-Calling Parity Across OpenAI, Azure, Anthropic, Gemini, and Local Models”, what is the central focus?",
       "options": [
-        "Every frontier provider exposes function calling, but none uses the same wire format. This lesson maps the request and response shapes across OpenAI, Azure, Ant…",
+        "Every frontier provider exposes function calling, but none uses the same wire format.",
         "A history of the technology and its vendors",
         "A review of unrelated productivity tools",
         "A summary of corporate policy rules"
@@ -303,7 +303,7 @@
     {
       "question": "Per the lesson “RAG Fundamentals: Chunking, Embeddings, Retrieval, and Why RAG Is the First Enterprise Pattern”, what is the central focus?",
       "options": [
-        "The pattern that grounds LLMs in your own knowledge: what RAG is and where it came from, why you chunk documents instead of feeding them whole, what embeddings …",
+        "The pattern that grounds LLMs in your own knowledge: what RAG is and where it came from, why you chunk documents instead of feeding them whole, what embeddings actually are, how retrieval ranks chunks, and why RAG became the first pattern enterprises shipped.",
         "A history of the technology and its vendors",
         "A review of unrelated productivity tools",
         "A summary of corporate policy rules"
@@ -336,7 +336,7 @@
     {
       "question": "Per the lesson “Embeddings: Models, Similarity, and When They Fail”, what is the central focus?",
       "options": [
-        "What an embedding actually is, how the popular models differ, why cosine similarity works, and the failure modes that make pure vector search miss the answer: r…",
+        "What an embedding actually is, how the popular models differ, why cosine similarity works, and the failure modes that make pure vector search miss the answer: rare terms, domain jargon, short queries, and model mismatch.",
         "A history of the technology and its vendors",
         "A review of unrelated productivity tools",
         "A summary of corporate policy rules"
@@ -369,7 +369,7 @@
     {
       "question": "Per the lesson “Vector Databases: Pinecone, pgvector, Milvus, Weaviate, and Choosing for Your Workload”, what is the central focus?",
       "options": [
-        "What a vector database actually does, why you need one instead of scanning vectors in memory, the approximate nearest neighbor tradeoff you are making, and how …",
+        "What a vector database actually does, why you need one instead of scanning vectors in memory, the approximate nearest neighbor tradeoff you are making, and how to choose between Pinecone, pgvector, Milvus, and Weaviate for your workload and your team.",
         "A history of the technology and its vendors",
         "A review of unrelated productivity tools",
         "A summary of corporate policy rules"
@@ -402,7 +402,7 @@
     {
       "question": "Per the lesson “RAG Quality: Reranking, Hybrid Search, Metadata Filtering, and Freshness”, what is the central focus?",
       "options": [
-        "The four levers that turn a RAG demo into a system you can trust: reranking to fix top-k precision, hybrid search so exact terms still win, metadata filtering s…",
+        "The four levers that turn a RAG demo into a system you can trust: reranking to fix top-k precision, hybrid search so exact terms still win, metadata filtering so access control and scope survive retrieval, and freshness so the answers do not go stale.",
         "A history of the technology and its vendors",
         "A review of unrelated productivity tools",
         "A summary of corporate policy rules"
@@ -435,7 +435,7 @@
     {
       "question": "Per the lesson “Agent Memory: Short-Term vs Long-Term, Episodic vs Semantic”, what is the central focus?",
       "options": [
-        "An agent with no memory answers the same question the same way forever. This lesson maps the memory taxonomy production systems borrow from cognitive science: t…",
+        "An agent with no memory answers the same question the same way forever.",
         "A history of the technology and its vendors",
         "A review of unrelated productivity tools",
         "A summary of corporate policy rules"
@@ -468,7 +468,7 @@
     {
       "question": "Per the lesson “Context Engineering: What to Include, Trim, Summarize, and Window”, what is the central focus?",
       "options": [
-        "The context window is finite and filling it sloppily degrades your agent before it ever fails. This lesson covers the four ways to keep a long-running loop cohe…",
+        "The context window is finite and filling it sloppily degrades your agent before it ever fails. This lesson covers the four ways to keep a long-running loop coherent: deciding what to include, trimming what stops earning its keep, summarizing what still matters, and windowing what you can drop.",
         "A history of the technology and its vendors",
         "A review of unrelated productivity tools",
         "A summary of corporate policy rules"
@@ -501,7 +501,7 @@
     {
       "question": "Per the lesson “Multi-Turn Agents: Sessions, State, and Resuming Conversations”, what is the central focus?",
       "options": [
-        "An LLM is stateless: every call forgets the one before it, so multi-turn behavior has to be built, not assumed. This lesson defines the session, the state it ca…",
+        "An LLM is stateless: every call forgets the one before it, so multi-turn behavior has to be built, not assumed.",
         "A history of the technology and its vendors",
         "A review of unrelated productivity tools",
         "A summary of corporate policy rules"
@@ -534,7 +534,7 @@
     {
       "question": "Per the lesson “Guardrails I: Prompt Injection Defense, System Boundaries, and Input Validation”, what is the central focus?",
       "options": [
-        "Prompt injection tops the OWASP list of LLM risks for a reason: an agent that can act turns a misled model into an unauthorized action. This lesson separates di…",
+        "Prompt injection tops the OWASP list of LLM risks for a reason: an agent that can act turns a misled model into an unauthorized action.",
         "A history of the technology and its vendors",
         "A review of unrelated productivity tools",
         "A summary of corporate policy rules"
@@ -567,7 +567,7 @@
     {
       "question": "Per the lesson “Guardrails II, Output Validation, Allowlists, PII Redaction, and Refusal Paths”, what is the central focus?",
       "options": [
-        "Input guardrails keep an attacker from pushing the agent past its boundary. Output guardrails keep the agent from pushing bad output out the other side: validat…",
+        "Input guardrails keep an attacker from pushing the agent past its boundary. Output guardrails keep the agent from pushing bad output out the other side: validation, allowlists, PII redaction, and refusal paths.",
         "A history of the technology and its vendors",
         "A review of unrelated productivity tools",
         "A summary of corporate policy rules"
@@ -600,7 +600,7 @@
     {
       "question": "Per the lesson “Evaluation: Evals, Golden Datasets, LLM-as-Judge, and When It Lies”, what is the central focus?",
       "options": [
-        "An agent you cannot measure is an agent you cannot trust, and the moment a model changes you have no way to know what you traded away. This lesson walks the eva…",
+        "An agent you cannot measure is an agent you cannot trust, and the moment a model changes you have no way to know what you traded away.",
         "A history of the technology and its vendors",
         "A review of unrelated productivity tools",
         "A summary of corporate policy rules"
@@ -633,7 +633,7 @@
     {
       "question": "Per the lesson “Observability, Tracing, Logging, and Replay for Agents”, what is the central focus?",
       "options": [
-        "An agent runs several model calls, tool invocations, and retrieval steps inside one request, and when it returns the wrong answer you have no idea which step ca…",
+        "An agent runs several model calls, tool invocations, and retrieval steps inside one request, and when it returns the wrong answer you have no idea which step caused it.",
         "A history of the technology and its vendors",
         "A review of unrelated productivity tools",
         "A summary of corporate policy rules"

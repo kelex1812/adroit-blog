@@ -6,7 +6,7 @@
     {
       "question": "Per the lesson “Building Without a Framework: the Agent Loop by Hand in 100 Lines”, what is the central focus?",
       "options": [
-        "Lesson 21 ended on a quiet note: sometimes you don't need a framework at all. This lesson makes that concrete. You write the loop yourself, in roughly a hundred…",
+        "Lesson 21 ended on a quiet note: sometimes you don't need a framework at all. This lesson makes that concrete. You write the loop yourself, in roughly a hundred lines, with nothing but an LLM API and a while loop.",
         "A history of the technology and its vendors",
         "A review of unrelated productivity tools",
         "A summary of corporate policy rules"

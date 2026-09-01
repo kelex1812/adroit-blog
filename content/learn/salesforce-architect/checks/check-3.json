@@ -6,7 +6,7 @@
     {
       "question": "Per the lesson “Security Architecture: The Sharing Model, OWD, Role Hierarchy, Sharing Rules, and Manual Sharing”, what is the central focus?",
       "options": [
-        "Who can see a given record? The four record-level controls that answer it: org-wide defaults, the role hierarchy, sharing rules, and manual sharing. How they la…",
+        "Who can see a given record? The four record-level controls that answer it: org-wide defaults, the role hierarchy, sharing rules, and manual sharing. How they layer, how they only ever open access, and why 'most permissive wins' is the whole game.",
         "A history of the technology and its vendors",
         "A review of unrelated productivity tools",
         "A summary of corporate policy rules"
@@ -39,7 +39,7 @@
     {
       "question": "Per the lesson “Security, Part 2: Profiles, Permission Sets, Permission Set Groups, MFA, and Session Policies”, what is the central focus?",
       "options": [
-        "Who can do what in an org. The move from profile-led to permission-set-led access, what a permission set group bundles together, the 2026 MFA enforcement that n…",
+        "Who can do what in an org. The move from profile-led to permission-set-led access, what a permission set group bundles together, the 2026 MFA enforcement that now touches every login, and the session policies that decide how long a session lives.",
         "A history of the technology and its vendors",
         "A review of unrelated productivity tools",
         "A summary of corporate policy rules"
@@ -72,7 +72,7 @@
     {
       "question": "Per the lesson “Security, Part 3: External Access, OAuth, SAML/SSO, Connected Apps, and Communities”, what is the central focus?",
       "options": [
-        "How outside systems and outside people get in. OAuth flows for machine access, SAML single sign-on for employee logins, connected apps as the doorway, and Exper…",
+        "How outside systems and outside people get in. OAuth flows for machine access, SAML single sign-on for employee logins, connected apps as the doorway, and Experience Cloud communities as the portal where customers and partners authenticate without touching your internal identity system.",
         "A history of the technology and its vendors",
         "A review of unrelated productivity tools",
         "A summary of corporate policy rules"
@@ -105,7 +105,7 @@
     {
       "question": "Per the lesson “Data Architecture: Data Model Design, Common Data Model Patterns, and Data Skew”, what is the central focus?",
       "options": [
-        "Data is the load-bearing wall of every org. Designing a data model that scales means deciding where each relationship lives, recognizing the recurring shapes th…",
+        "Data is the load-bearing wall of every org. Designing a data model that scales means deciding where each relationship lives, recognizing the recurring shapes that solve real problems, and keeping the load off any single parent record or owner.",
         "A history of the technology and its vendors",
         "A review of unrelated productivity tools",
         "A summary of corporate policy rules"
@@ -138,7 +138,7 @@
     {
       "question": "Per the lesson “Data Architecture for AI: Databases, Vector DBs, Embeddings, and the Same Modeling Discipline”, what is the central focus?",
       "options": [
-        "The data side of AI systems. Embeddings, vector databases, chunking, and why the modeling discipline from a Salesforce data model (records, relationships, sourc…",
+        "The data side of AI systems. Embeddings, vector databases, chunking, and why the modeling discipline from a Salesforce data model (records, relationships, source of truth, scale) carries over unchanged when the storage engine becomes a vector store.",
         "A history of the technology and its vendors",
         "A review of unrelated productivity tools",
         "A summary of corporate policy rules"

@@ -6,7 +6,7 @@
     {
       "question": "Per the lesson “Guardrails I: Prompt Injection Defense, System Boundaries, and Input Validation”, what is the central focus?",
       "options": [
-        "Prompt injection tops the OWASP list of LLM risks for a reason: an agent that can act turns a misled model into an unauthorized action. This lesson separates di…",
+        "Prompt injection tops the OWASP list of LLM risks for a reason: an agent that can act turns a misled model into an unauthorized action.",
         "A history of the technology and its vendors",
         "A review of unrelated productivity tools",
         "A summary of corporate policy rules"

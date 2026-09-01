@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
-"""Proof script for Omni content-quality follow-up (t_1b282209).
+"""Proof script for Omni content-quality follow-up (t_1b282209 / t_bcb71c5a).
 
 Counts, across every question/check/exam JSON in the 6 non-OmniStudio learn
 series:
   1. correct answers that are colon-terminated (dangling lead-in fragments)
   2. correct answers shorter than 40 characters (incomplete fragments)
-  3. comprehension questions whose distractor is a real lesson statement
+  3. correct answers ending in a Unicode ellipsis '\\u2026' (mid-sentence
+     truncation of the lesson excerpt)
+  4. comprehension questions whose distractor is a real lesson statement
      (near-equivalent -> two-defensible-answers ambiguity)
 
 Exits 0 only if ALL counts are zero. Print a machine-readable summary.
@@ -55,7 +57,7 @@ def norm(s):
     return re.sub(r"[^a-z0-9 ]", "", s.lower()).strip()
 
 def main():
-    colon = short = ambiguous = total = 0
+    colon = short = ellipsis = ambiguous = total = 0
     problems = []
     for series in SERIES:
         base = os.path.join(LEARN, series)
@@ -78,6 +80,8 @@ def main():
                     ans = opts[ci].rstrip()
                     if ans.endswith(":"):
                         colon += 1; problems.append(f"COLON {rel} q{i}: {ans[:50]!r}")
+                    if ans.endswith("\u2026"):
+                        ellipsis += 1; problems.append(f"ELLIPSIS {rel} q{i}: {ans[:60]!r}")
                     if len(ans) < MIN_LEN:
                         short += 1; problems.append(f"SHORT {rel} q{i} ({len(ans)}): {ans[:50]!r}")
                     # ambiguity: distractor near-equal to a real lesson sentence?
@@ -97,7 +101,8 @@ def main():
                                 problems.append(
                                     f"AMBIG {rel} q{i}: distractor {j} is a real lesson sentence: {o[:50]!r}")
     print(f"series={len(SERIES)} correct_answers_scanned={total}")
-    print(f"colon_terminated={colon} short_lt{MIN_LEN}={short} ambiguous_comprehension_distractor={ambiguous}")
+    print(f"colon_terminated={colon} short_lt{MIN_LEN}={short} "
+          f"ellipsis_terminated={ellipsis} ambiguous_comprehension_distractor={ambiguous}")
     if problems:
         print("PROBLEMS:")
         for p in problems:

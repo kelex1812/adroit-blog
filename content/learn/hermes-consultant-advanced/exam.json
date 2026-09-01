@@ -6,7 +6,7 @@
     {
       "question": "Per the lesson “From Consultant to Principal”, what is the central focus?",
       "options": [
-        "The shift that defines a principal: from selling your own skill to building a delivery system. Why the unit of output changes, how leverage replaces hours, and …",
+        "The shift that defines a principal: from selling your own skill to building a delivery system. Why the unit of output changes, how leverage replaces hours, and what you have to stop doing to operate at scale.",
         "A history of the technology and its vendors",
         "A review of unrelated productivity tools",
         "A summary of corporate policy rules"
@@ -39,7 +39,7 @@
     {
       "question": "Per the lesson “Service Lines, Offers, and Packaging”, what is the central focus?",
       "options": [
-        "How a practice turns capability into something a client can actually buy. The difference between a service line and an offer, why packaging is the principal's r…",
+        "How a practice turns capability into something a client can actually buy. The difference between a service line and an offer, why packaging is the principal's real product work, and how productization fixes the worst economics in consulting.",
         "A history of the technology and its vendors",
         "A review of unrelated productivity tools",
         "A summary of corporate policy rules"
@@ -72,7 +72,7 @@
     {
       "question": "Per the lesson “Architecture at Organizational Scale”, what is the central focus?",
       "options": [
-        "The jump from running agents to running a fleet of them. How to design for many agents at once: the orchestration patterns that keep work moving, the governance…",
+        "The jump from running agents to running a fleet of them. How to design for many agents at once: the orchestration patterns that keep work moving, the governance layer that keeps it safe, and why control replaces heroics as the unit of success.",
         "A history of the technology and its vendors",
         "A review of unrelated productivity tools",
         "A summary of corporate policy rules"
@@ -105,7 +105,7 @@
     {
       "question": "Per the lesson “Design Authority”, what is the central focus?",
       "options": [
-        "The layer that keeps a growing practice coherent. What design authority is, why a system of many agents drifts without it, how to set standards that actually ge…",
+        "The layer that keeps a growing practice coherent. What design authority is, why a system of many agents drifts without it, how to set standards that actually get followed, and how to run design reviews that are gates, not rubber stamps.",
         "A history of the technology and its vendors",
         "A review of unrelated productivity tools",
         "A summary of corporate policy rules"
@@ -138,7 +138,7 @@
     {
       "question": "Per the lesson “Building Reusable IP and Productized Offerings”, what is the central focus?",
       "options": [
-        "The difference between an offer and the intellectual property underneath it, why IP is the asset that compounds, and how to turn a repeatable delivery method in…",
+        "The difference between an offer and the intellectual property underneath it, why IP is the asset that compounds, and how to turn a repeatable delivery method into a productized offering the practice owns and can sell again without reinventing the scope.",
         "A history of the technology and its vendors",
         "A review of unrelated productivity tools",
         "A summary of corporate policy rules"
@@ -171,7 +171,7 @@
     {
       "question": "Per the lesson “Hiring, Onboarding, and Running a Team of Consultants”, what is the central focus?",
       "options": [
-        "The principal hires for the delivery system, not for a role they used to fill. How to staff against a captured method, onboard people onto it with a measurable …",
+        "The principal hires for the delivery system, not for a role they used to fill. How to staff against a captured method, onboard people onto it with a measurable exit gate, and run a team so quality stays a property of the system instead of a bet on any single person.",
         "A history of the technology and its vendors",
         "A review of unrelated productivity tools",
         "A summary of corporate policy rules"
@@ -204,7 +204,7 @@
     {
       "question": "Per the lesson “From Consultant to Principal”, what is the central focus?",
       "options": [
-        "The shift that defines a principal: from selling your own skill to building a delivery system. Why the unit of output changes, how leverage replaces hours, and …",
+        "The shift that defines a principal: from selling your own skill to building a delivery system. Why the unit of output changes, how leverage replaces hours, and what you have to stop doing to operate at scale.",
         "A history of the technology and its vendors",
         "A review of unrelated productivity tools",
         "A summary of corporate policy rules"

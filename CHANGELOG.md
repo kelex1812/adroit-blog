@@ -4,6 +4,38 @@ All notable changes to the Adroit Consulting Blog project will be documented in 
 
 ## [Unreleased]
 
+### Fix: Remove ellipsis-truncated central-focus answers across all 5 generated Omni series (t_bcb71c5a)
+
+**What** — a11y/lara's re-audit (t_df970416) found 215 correct answers across
+the 5 generated series still ended in a mid-sentence Unicode ellipsis `\u2026`.
+Root cause: `scripts/generate-omni-content.py` truncated the lesson excerpt
+with `excerpt[:160] + "\u2026"` for the "central focus" question (and its
+fallback takeaway variant). That truncation is now removed.
+
+**Why** — truncated mid-sentence fragment answers are incomplete/dangling and
+read poorly as MCQ options; the parent task (t_1b282209) fixed colon- and
+short-answer fragments but not this ellipsis class. The audit's
+`audit-omni-content-quality.py` also never checked for `\u2026`, so the defect
+went undetected.
+
+**How** — added `excerpt_option()` to the generator: it returns the full
+excerpt when it fits a sane option length, otherwise cuts at the real sentence
+boundary (`. ! ?`) nearest 200 chars while keeping the option >=40 chars (so no
+short-fragment regression), never appending `\u2026`. Regenerated the 5
+generated series (salesforce-architect, agentic-ai, hermes-consultant,
+hermes-consultant-intermediate, hermes-consultant-advanced) by wiping
+questions/checks/exam and re-running the generator (deterministic, rng seed
+unchanged). ai-at-work is hand-authored and untouched. Extended
+`audit-omni-content-quality.py` to count `\u2026`-terminated correct answers.
+
+**Verification** — `audit-omni-content-quality.py`: 810 correct answers,
+0 colon / 0 short<40 / 0 ellipsis / 0 ambiguous (PASS). Independent probe:
+0 `\u2026` across all 4572 options / 1143 answers. `validate-omni-bar.py`:
+all 6 series OK. Determinism: SHA-256 over 176 generated files identical across
+two wipe+regenerate runs. Content-only change (no TS/JS touched).
+
+**Known issues** — none.
+
 ### Fix: Regenerate Omni content — complete-sentence answers + unambiguous distractors (t_1b282209)
 
 **What** — Fixed the Omni-bar question generator

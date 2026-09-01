@@ -6,7 +6,7 @@
     {
       "question": "Per the lesson “Performance: Query Optimization, Selective SOQL, Indexes, and Caching”, what is the central focus?",
       "options": [
-        "How a query becomes fast: the selectivity thresholds the optimizer uses to decide whether an index is worth it, how to write SOQL that the optimizer will actual…",
+        "How a query becomes fast: the selectivity thresholds the optimizer uses to decide whether an index is worth it, how to write SOQL that the optimizer will actually treat well, how to measure and index, and Platform Cache as the lever that skips the query entirely.",
         "A history of the technology and its vendors",
         "A review of unrelated productivity tools",
         "A summary of corporate policy rules"

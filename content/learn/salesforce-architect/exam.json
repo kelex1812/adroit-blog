@@ -39,7 +39,7 @@
     {
       "question": "Per the lesson “Multi-Tenant Platform Architecture: Orgs, Environments, and the Instance Model”, what is the central focus?",
       "options": [
-        "Why every Salesforce org rents a slice of a shared platform: multi-tenancy, metadata-driven design, the instance model, and the sandbox environments that keep D…",
+        "Why every Salesforce org rents a slice of a shared platform: multi-tenancy, metadata-driven design, the instance model, and the sandbox environments that keep Dev/QA/UAT/Prod safe.",
         "A history of the technology and its vendors",
         "A review of unrelated productivity tools",
         "A summary of corporate policy rules"
@@ -72,7 +72,7 @@
     {
       "question": "Per the lesson “Core Building Blocks: Objects, Fields, Relationships, Record Types, and Formula vs Roll-Up”, what is the central focus?",
       "options": [
-        "The architect's canvas: standard and custom objects, field types, lookup vs master-detail relationships, record types for process variation, and when to compute…",
+        "The architect's canvas: standard and custom objects, field types, lookup vs master-detail relationships, record types for process variation, and when to compute with a formula field vs a roll-up summary.",
         "A history of the technology and its vendors",
         "A review of unrelated productivity tools",
         "A summary of corporate policy rules"
@@ -105,7 +105,7 @@
     {
       "question": "Per the lesson “Integration Fundamentals: REST, SOAP, Bulk APIs, and Picking the Right One”, what is the central focus?",
       "options": [
-        "The System Architect's home turf: when to call Salesforce with REST, when to reach for SOAP, when to hand it a CSV via Bulk API 2.0, and the request limits that…",
+        "The System Architect's home turf: when to call Salesforce with REST, when to reach for SOAP, when to hand it a CSV via Bulk API 2.0, and the request limits that make the choice matter.",
         "A history of the technology and its vendors",
         "A review of unrelated productivity tools",
         "A summary of corporate policy rules"
@@ -138,7 +138,7 @@
     {
       "question": "Per the lesson “General Systems Architecture: What 'Architecture' Means and Why AI Systems Reuse the Same Patterns”, what is the central focus?",
       "options": [
-        "The foundational concepts of systems architecture (components, interfaces, and design principles) and why every AI agent pattern (sequential, parallel, hierarch…",
+        "The foundational concepts of systems architecture (components, interfaces, and design principles) and why every AI agent pattern (sequential, parallel, hierarchical) is a remix of patterns engineers have known for decades.",
         "A history of the technology and its vendors",
         "A review of unrelated productivity tools",
         "A summary of corporate policy rules"
@@ -171,7 +171,7 @@
     {
       "question": "Per the lesson “Integration Patterns: Request-Reply, Fire-and-Forget, and Batch (Inbound & Outbound)”, what is the central focus?",
       "options": [
-        "The three archetype integration patterns every Salesforce architect must recognize (request-reply, fire-and-forget, and batch data synchronization), plus the se…",
+        "The three archetype integration patterns every Salesforce architect must recognize (request-reply, fire-and-forget, and batch data synchronization), plus the selection matrix, the limits that shape each choice, and a worked example that combines all three.",
         "A history of the technology and its vendors",
         "A review of unrelated productivity tools",
         "A summary of corporate policy rules"
@@ -204,7 +204,7 @@
     {
       "question": "Per the lesson “Event-Driven Integration: Platform Events + Change Data Capture”, what is the central focus?",
       "options": [
-        "The Salesforce event bus, Platform Events vs. Change Data Capture: when to publish business intent vs. record state, how to consume on- and off-platform, and th…",
+        "The Salesforce event bus, Platform Events vs. Change Data Capture: when to publish business intent vs. record state, how to consume on- and off-platform, and the hard truth about ordering, replay, and allocations.",
         "A history of the technology and its vendors",
         "A review of unrelated productivity tools",
         "A summary of corporate policy rules"
@@ -237,7 +237,7 @@
     {
       "question": "Per the lesson “Middleware Tradeoffs: MuleSoft vs Boomi vs Custom (and When Salesforce Is the Hub)”, what is the central focus?",
       "options": [
-        "How to choose the integration layer: MuleSoft's API-led pro-code platform, Boomi's low-code iPaaS, hand-rolled custom code, and the decision matrix for when Sal…",
+        "How to choose the integration layer: MuleSoft's API-led pro-code platform, Boomi's low-code iPaaS, hand-rolled custom code, and the decision matrix for when Salesforce itself should be the hub instead of any middleware at all.",
         "A history of the technology and its vendors",
         "A review of unrelated productivity tools",
         "A summary of corporate policy rules"
@@ -270,7 +270,7 @@
     {
       "question": "Per the lesson “Integration Reliability: Idempotency, Retries, Error Handling, and Dead-Letter Design”, what is the central focus?",
       "options": [
-        "The reliability toolkit every integration needs: idempotency keys and message IDs so retries are safe, the transient vs. poisoned error taxonomy, bounded retry …",
+        "The reliability toolkit every integration needs: idempotency keys and message IDs so retries are safe, the transient vs.",
         "A history of the technology and its vendors",
         "A review of unrelated productivity tools",
         "A summary of corporate policy rules"
@@ -303,7 +303,7 @@
     {
       "question": "Per the lesson “Sync vs Async, Queues, and Eventual Consistency: The Laws That Shape Agent Pipelines”, what is the central focus?",
       "options": [
-        "The three operating laws that govern any pipeline spanning more than one system: synchronous calls block, asynchronous calls decouple, and distributed systems s…",
+        "The three operating laws that govern any pipeline spanning more than one system: synchronous calls block, asynchronous calls decouple, and distributed systems settle into eventual consistency.",
         "A history of the technology and its vendors",
         "A review of unrelated productivity tools",
         "A summary of corporate policy rules"
@@ -336,7 +336,7 @@
     {
       "question": "Per the lesson “Security Architecture: The Sharing Model, OWD, Role Hierarchy, Sharing Rules, and Manual Sharing”, what is the central focus?",
       "options": [
-        "Who can see a given record? The four record-level controls that answer it: org-wide defaults, the role hierarchy, sharing rules, and manual sharing. How they la…",
+        "Who can see a given record? The four record-level controls that answer it: org-wide defaults, the role hierarchy, sharing rules, and manual sharing. How they layer, how they only ever open access, and why 'most permissive wins' is the whole game.",
         "A history of the technology and its vendors",
         "A review of unrelated productivity tools",
         "A summary of corporate policy rules"
@@ -369,7 +369,7 @@
     {
       "question": "Per the lesson “Security, Part 2: Profiles, Permission Sets, Permission Set Groups, MFA, and Session Policies”, what is the central focus?",
       "options": [
-        "Who can do what in an org. The move from profile-led to permission-set-led access, what a permission set group bundles together, the 2026 MFA enforcement that n…",
+        "Who can do what in an org. The move from profile-led to permission-set-led access, what a permission set group bundles together, the 2026 MFA enforcement that now touches every login, and the session policies that decide how long a session lives.",
         "A history of the technology and its vendors",
         "A review of unrelated productivity tools",
         "A summary of corporate policy rules"
@@ -402,7 +402,7 @@
     {
       "question": "Per the lesson “Security, Part 3: External Access, OAuth, SAML/SSO, Connected Apps, and Communities”, what is the central focus?",
       "options": [
-        "How outside systems and outside people get in. OAuth flows for machine access, SAML single sign-on for employee logins, connected apps as the doorway, and Exper…",
+        "How outside systems and outside people get in. OAuth flows for machine access, SAML single sign-on for employee logins, connected apps as the doorway, and Experience Cloud communities as the portal where customers and partners authenticate without touching your internal identity system.",
         "A history of the technology and its vendors",
         "A review of unrelated productivity tools",
         "A summary of corporate policy rules"
@@ -435,7 +435,7 @@
     {
       "question": "Per the lesson “Data Architecture: Data Model Design, Common Data Model Patterns, and Data Skew”, what is the central focus?",
       "options": [
-        "Data is the load-bearing wall of every org. Designing a data model that scales means deciding where each relationship lives, recognizing the recurring shapes th…",
+        "Data is the load-bearing wall of every org. Designing a data model that scales means deciding where each relationship lives, recognizing the recurring shapes that solve real problems, and keeping the load off any single parent record or owner.",
         "A history of the technology and its vendors",
         "A review of unrelated productivity tools",
         "A summary of corporate policy rules"
@@ -468,7 +468,7 @@
     {
       "question": "Per the lesson “Data Architecture for AI: Databases, Vector DBs, Embeddings, and the Same Modeling Discipline”, what is the central focus?",
       "options": [
-        "The data side of AI systems. Embeddings, vector databases, chunking, and why the modeling discipline from a Salesforce data model (records, relationships, sourc…",
+        "The data side of AI systems. Embeddings, vector databases, chunking, and why the modeling discipline from a Salesforce data model (records, relationships, source of truth, scale) carries over unchanged when the storage engine becomes a vector store.",
         "A history of the technology and its vendors",
         "A review of unrelated productivity tools",
         "A summary of corporate policy rules"
@@ -501,7 +501,7 @@
     {
       "question": "Per the lesson “Data Migration Strategy: ETL vs ELT, Tools, Validation, Cutover, and Rollback”, what is the central focus?",
       "options": [
-        "The full migration lifecycle: ETL vs ELT, the Salesforce tool options (Data Import Wizard vs Data Loader vs enterprise ETL), dependency-ordered loading with ext…",
+        "The full migration lifecycle: ETL vs ELT, the Salesforce tool options (Data Import Wizard vs Data Loader vs enterprise ETL), dependency-ordered loading with external IDs, validation by record count and spot check, and the cutover and rollback plan that keeps a bad load from becoming a disaster.",
         "A history of the technology and its vendors",
         "A review of unrelated productivity tools",
         "A summary of corporate policy rules"
@@ -534,7 +534,7 @@
     {
       "question": "Per the lesson “Large Data Volumes: Archiving, Big Objects, Skinny Tables, and Indexing Strategy”, what is the central focus?",
       "options": [
-        "How an org stays fast and inside its storage as volume grows: selectivity and custom indexes, skinny tables for read-heavy hot data, big objects for bulk histor…",
+        "How an org stays fast and inside its storage as volume grows: selectivity and custom indexes, skinny tables for read-heavy hot data, big objects for bulk historical storage, and archiving as the tier that sheds cold data before it drags everything down.",
         "A history of the technology and its vendors",
         "A review of unrelated productivity tools",
         "A summary of corporate policy rules"
@@ -600,7 +600,7 @@
     {
       "question": "Per the lesson “Environment and Release Strategy: Sandbox Types, Change Sets vs DevOps (sf/sfdx)”, what is the central focus?",
       "options": [
-        "Where work happens and how it moves to production. The four sandbox types (Developer, Developer Pro, Partial Copy, Full), what each copies and how often it refr…",
+        "Where work happens and how it moves to production. The four sandbox types (Developer, Developer Pro, Partial Copy, Full), what each copies and how often it refreshes, then the release-mechanism fork: click-based change sets versus source-driven deployment with the sf CLI and a Git-based source of truth, including Salesforce DX and DevOps Center.",
         "A history of the technology and its vendors",
         "A review of unrelated productivity tools",
         "A summary of corporate policy rules"
@@ -633,7 +633,7 @@
     {
       "question": "Per the lesson “General Systems Architecture: Environments and CI/CD in ML and AI Pipelines”, what is the central focus?",
       "options": [
-        "The same environment-and-release discipline from Lesson 19, applied to machine learning and AI systems. Why the ML artifact is more than code (code, data, and m…",
+        "The same environment-and-release discipline from Lesson 19, applied to machine learning and AI systems.",
         "A history of the technology and its vendors",
         "A review of unrelated productivity tools",
         "A summary of corporate policy rules"

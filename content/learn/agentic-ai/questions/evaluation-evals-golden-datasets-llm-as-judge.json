@@ -6,7 +6,7 @@
     {
       "question": "Per the lesson “Evaluation: Evals, Golden Datasets, LLM-as-Judge, and When It Lies”, what is the central focus?",
       "options": [
-        "An agent you cannot measure is an agent you cannot trust, and the moment a model changes you have no way to know what you traded away. This lesson walks the eva…",
+        "An agent you cannot measure is an agent you cannot trust, and the moment a model changes you have no way to know what you traded away.",
         "A history of the technology and its vendors",
         "A review of unrelated productivity tools",
         "A summary of corporate policy rules"

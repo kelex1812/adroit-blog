@@ -6,7 +6,7 @@
     {
       "question": "Per the lesson “Choosing Models & Providers: Capability Tiers, Routing, and Fallbacks”, what is the central focus?",
       "options": [
-        "The biggest agent-ops mistake is picking one 'best' model and pointing everything at it. This lesson builds the three-tier capability model, the three jobs of a…",
+        "The biggest agent-ops mistake is picking one 'best' model and pointing everything at it. This lesson builds the three-tier capability model, the three jobs of a router, and the fallback chains that keep agents alive when providers fail.",
         "A history of the technology and its vendors",
         "A review of unrelated productivity tools",
         "A summary of corporate policy rules"

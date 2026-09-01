@@ -6,7 +6,7 @@
     {
       "question": "Per the lesson “Frameworks overview - LangChain, LangGraph, CrewAI, OpenAI Agents SDK, Claude Agent SDK”, what is the central focus?",
       "options": [
-        "By now you can build a single agent: a model, a loop, some tools. The hard part is deciding what holds the pieces together when the work grows. This lesson surv…",
+        "By now you can build a single agent: a model, a loop, some tools. The hard part is deciding what holds the pieces together when the work grows.",
         "A history of the technology and its vendors",
         "A review of unrelated productivity tools",
         "A summary of corporate policy rules"
@@ -39,7 +39,7 @@
     {
       "question": "Per the lesson “Building Without a Framework: the Agent Loop by Hand in 100 Lines”, what is the central focus?",
       "options": [
-        "Lesson 21 ended on a quiet note: sometimes you don't need a framework at all. This lesson makes that concrete. You write the loop yourself, in roughly a hundred…",
+        "Lesson 21 ended on a quiet note: sometimes you don't need a framework at all. This lesson makes that concrete. You write the loop yourself, in roughly a hundred lines, with nothing but an LLM API and a while loop.",
         "A history of the technology and its vendors",
         "A review of unrelated productivity tools",
         "A summary of corporate policy rules"
@@ -72,7 +72,7 @@
     {
       "question": "Per the lesson “Agent Patterns: ReAct, Plan-and-Execute, Reflection, and Tool Loops”, what is the central focus?",
       "options": [
-        "Lesson 22 built the loop by hand. This lesson gives that loop its names. You learn the four patterns that dominate real agent work: ReAct (reason and act interl…",
+        "Lesson 22 built the loop by hand. This lesson gives that loop its names. You learn the four patterns that dominate real agent work: ReAct (reason and act interleaved), plan-and-execute (plan first, then execute), reflection (evaluate and revise), and the tool loop they all run on, plus when each one earns its complexity.",
         "A history of the technology and its vendors",
         "A review of unrelated productivity tools",
         "A summary of corporate policy rules"
@@ -105,7 +105,7 @@
     {
       "question": "Per the lesson “Multi-Agent Systems: Orchestrator-Worker, Supervisor, and Debate”, what is the central focus?",
       "options": [
-        "Lesson 23 taught you the single-agent patterns. This lesson puts several agents in one system. You learn the three coordination shapes that dominate real multi-…",
+        "Lesson 23 taught you the single-agent patterns. This lesson puts several agents in one system.",
         "A history of the technology and its vendors",
         "A review of unrelated productivity tools",
         "A summary of corporate policy rules"
@@ -138,7 +138,7 @@
     {
       "question": "Per the lesson “Human-in-the-Loop, Approvals, Interrupts, Escalation, and Kill Switches”, what is the central focus?",
       "options": [
-        "An agent that can act on its own against a system that matters needs a person in the loop. This lesson builds the control layer: approvals that gate a single ri…",
+        "An agent that can act on its own against a system that matters needs a person in the loop.",
         "A history of the technology and its vendors",
         "A review of unrelated productivity tools",
         "A summary of corporate policy rules"

@@ -6,7 +6,7 @@
     {
       "question": "Per the lesson “Context Engineering: What to Include, Trim, Summarize, and Window”, what is the central focus?",
       "options": [
-        "The context window is finite and filling it sloppily degrades your agent before it ever fails. This lesson covers the four ways to keep a long-running loop cohe…",
+        "The context window is finite and filling it sloppily degrades your agent before it ever fails. This lesson covers the four ways to keep a long-running loop coherent: deciding what to include, trimming what stops earning its keep, summarizing what still matters, and windowing what you can drop.",
         "A history of the technology and its vendors",
         "A review of unrelated productivity tools",
         "A summary of corporate policy rules"

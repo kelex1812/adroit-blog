@@ -6,7 +6,7 @@
     {
       "question": "Per the lesson “Integration Reliability: Idempotency, Retries, Error Handling, and Dead-Letter Design”, what is the central focus?",
       "options": [
-        "The reliability toolkit every integration needs: idempotency keys and message IDs so retries are safe, the transient vs. poisoned error taxonomy, bounded retry …",
+        "The reliability toolkit every integration needs: idempotency keys and message IDs so retries are safe, the transient vs.",
         "A history of the technology and its vendors",
         "A review of unrelated productivity tools",
         "A summary of corporate policy rules"

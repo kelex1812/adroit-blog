@@ -6,7 +6,7 @@
     {
       "question": "Per the lesson “Data Migration Strategy: ETL vs ELT, Tools, Validation, Cutover, and Rollback”, what is the central focus?",
       "options": [
-        "The full migration lifecycle: ETL vs ELT, the Salesforce tool options (Data Import Wizard vs Data Loader vs enterprise ETL), dependency-ordered loading with ext…",
+        "The full migration lifecycle: ETL vs ELT, the Salesforce tool options (Data Import Wizard vs Data Loader vs enterprise ETL), dependency-ordered loading with external IDs, validation by record count and spot check, and the cutover and rollback plan that keeps a bad load from becoming a disaster.",
         "A history of the technology and its vendors",
         "A review of unrelated productivity tools",
         "A summary of corporate policy rules"

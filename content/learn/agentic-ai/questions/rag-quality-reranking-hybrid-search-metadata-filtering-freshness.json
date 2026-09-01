@@ -6,7 +6,7 @@
     {
       "question": "Per the lesson “RAG Quality: Reranking, Hybrid Search, Metadata Filtering, and Freshness”, what is the central focus?",
       "options": [
-        "The four levers that turn a RAG demo into a system you can trust: reranking to fix top-k precision, hybrid search so exact terms still win, metadata filtering s…",
+        "The four levers that turn a RAG demo into a system you can trust: reranking to fix top-k precision, hybrid search so exact terms still win, metadata filtering so access control and scope survive retrieval, and freshness so the answers do not go stale.",
         "A history of the technology and its vendors",
         "A review of unrelated productivity tools",
         "A summary of corporate policy rules"
