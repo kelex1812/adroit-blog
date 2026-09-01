@@ -4,6 +4,37 @@ All notable changes to the Adroit Consulting Blog project will be documented in 
 
 ## [Unreleased]
 
+### Fix: slash-tag slugs UI/UX → ui-ux, CI/CD → ci-cd (B-22, t_87e3f9a3)
+
+**What** — Canonical tags `UI/UX` and `CI/CD` previously slugified to
+multi-segment URLs (`ui/ux`, `ci/cd`) that can never match the single-segment
+`/tags/[tag]` route, so every chip linking to them (and the sitemap entries)
+returned HTTP 404.
+
+1. **Both slugifiers now strip non-word characters.** `src/lib/tag-vocab.ts`
+   (`slugOf`) and `src/lib/tags.ts` (`getAllTags`) changed
+   `tag.toLowerCase().replace(/\s+/g, "-")` to
+   `tag.toLowerCase().replace(/[^\w]+/g, "-")`, so `UI/UX → ui-ux`,
+   `CI/CD → ci-cd`, and every tag maps to a single URL segment.
+2. **Propagation is automatic** — `getAllTagSlugs()` → `generateStaticParams`
+   and the sitemap both derive from `getAllTags`/`getAllTagSlugs`, so static
+   params and sitemap now emit `ui-ux`/`ci-cd` and no longer emit the
+   slash-slugs.
+3. **Verification** — `/tags/ui-ux` and `/tags/ci-cd` return 200 with the
+   canonical definition rendered; `/tags/ui/ux` and `/tags/ci/cd` return 404
+   consistently (they never resolved before). Added regression tests asserting
+   no slug contains `/` and `UI/UX`/`CI/CD` map to `ui-ux`/`ci-cd`.
+4. **Ride-along** — canonicalized lesson 29's `Compliance` tag → `Security`
+   (frontmatter + `src/data/learn.ts`) so the `tag-vocab-check.js` gate stays
+   at 40 canonical / 0 non-canonical (regression from parallel commit 4bead5f).
+
+**Why** — The slash-slugs were a hard 404 on a live route, breaking tag
+navigation and sitemap integrity for two canonical topics.
+
+**Known issues** — The old `/tags/ui/ux` and `/tags/ci/cd` URLs 404 (rather
+than 301-redirecting to the new slugs). They never served content, so 404 is
+accepted; a redirect could be added later if inbound links matter.
+
 ### Fix: /blog post cards truly rendered in the initial HTML — thread searchParams server-side (t_8c96daf5)
 
 **What** — Eliminated the client-side-rendering bailout that kept B-08's post
