@@ -6,6 +6,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { useAuth, notifyAuthChanged } from "@/lib/hooks/useAuth";
 import AvatarMenu from "@/components/AvatarMenu";
 import ThemeToggle from "@/components/Theme/ThemeToggle";
+import SearchOverlay from "@/components/SearchOverlay";
 import { avatarHueClass, initialsFromEmail } from "@/lib/avatar";
 
 const navLinks = [
@@ -96,6 +97,7 @@ export default function Header() {
             ),
           )}
           <div className="flex items-center gap-4 pl-2 border-l border-[var(--border-subtle)]">
+            <SearchOverlay />
             <ThemeToggle authed={!!user} iconOnly />
             <Link
               href="https://adroit.io/contact"
@@ -155,7 +157,8 @@ export default function Header() {
               </Link>
             ),
           )}
-          <div className="py-2 border-b border-[var(--border-subtle)]">
+          <div className="py-2 border-b border-[var(--border-subtle)] flex items-center gap-3">
+            <SearchOverlay />
             <ThemeToggle authed={!!user} compact />
           </div>
           {!isLoading && !user && (

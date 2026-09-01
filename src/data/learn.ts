@@ -23,10 +23,9 @@ export const learnSeries: LearningSeries[] = [
         "author": "Adroit Consulting",
         "readTime": "9 min read",
         "tags": [
-          "Learn",
-          "Hermes Agent",
+          "AI Agents",
           "Consulting",
-          "AI"
+          "LLMs"
         ],
         "status": "published"
       },
@@ -40,10 +39,9 @@ export const learnSeries: LearningSeries[] = [
         "author": "Adroit Consulting",
         "readTime": "10 min read",
         "tags": [
-          "Learn",
-          "Hermes Agent",
+          "AI Agents",
           "Consulting",
-          "AI"
+          "LLMs"
         ],
         "status": "published"
       },
@@ -57,10 +55,9 @@ export const learnSeries: LearningSeries[] = [
         "author": "Adroit Consulting",
         "readTime": "11 min read",
         "tags": [
-          "Learn",
-          "Hermes Agent",
+          "AI Agents",
           "Consulting",
-          "AI"
+          "LLMs"
         ],
         "status": "published"
       },
@@ -74,10 +71,9 @@ export const learnSeries: LearningSeries[] = [
         "author": "Adroit Consulting",
         "readTime": "12 min read",
         "tags": [
-          "Learn",
-          "Hermes Agent",
+          "AI Agents",
           "Consulting",
-          "AI"
+          "LLMs"
         ],
         "status": "published"
       },
@@ -91,10 +87,9 @@ export const learnSeries: LearningSeries[] = [
         "author": "Adroit Consulting",
         "readTime": "11 min read",
         "tags": [
-          "Learn",
-          "Hermes Agent",
+          "AI Agents",
           "Consulting",
-          "AI"
+          "LLMs"
         ],
         "status": "published"
       },
@@ -108,10 +103,9 @@ export const learnSeries: LearningSeries[] = [
         "author": "Adroit Consulting",
         "readTime": "12 min read",
         "tags": [
-          "Learn",
-          "Hermes Agent",
+          "AI Agents",
           "Consulting",
-          "AI"
+          "LLMs"
         ],
         "status": "published"
       },
@@ -125,10 +119,9 @@ export const learnSeries: LearningSeries[] = [
         "author": "Adroit Consulting",
         "readTime": "11 min read",
         "tags": [
-          "Learn",
-          "Hermes Agent",
+          "AI Agents",
           "Consulting",
-          "AI"
+          "LLMs"
         ],
         "status": "published"
       }
@@ -151,10 +144,9 @@ export const learnSeries: LearningSeries[] = [
         "author": "Adroit Consulting",
         "readTime": "11 min read",
         "tags": [
-          "Learn",
-          "Hermes Agent",
+          "AI Agents",
           "Consulting",
-          "AI"
+          "LLMs"
         ],
         "status": "published"
       },
@@ -168,10 +160,9 @@ export const learnSeries: LearningSeries[] = [
         "author": "Adroit Consulting",
         "readTime": "12 min read",
         "tags": [
-          "Learn",
-          "Hermes Agent",
+          "AI Agents",
           "Consulting",
-          "AI"
+          "LLMs"
         ],
         "status": "published"
       },
@@ -185,10 +176,9 @@ export const learnSeries: LearningSeries[] = [
         "author": "Adroit Consulting",
         "readTime": "14 min read",
         "tags": [
-          "Learn",
-          "Hermes Agent",
+          "AI Agents",
           "Consulting",
-          "AI"
+          "LLMs"
         ],
         "status": "published"
       },
@@ -202,10 +192,9 @@ export const learnSeries: LearningSeries[] = [
         "author": "Adroit Consulting",
         "readTime": "14 min read",
         "tags": [
-          "Learn",
-          "Hermes Agent",
+          "AI Agents",
           "Consulting",
-          "AI"
+          "LLMs"
         ],
         "status": "published"
       },
@@ -219,10 +208,9 @@ export const learnSeries: LearningSeries[] = [
         "author": "Adroit Consulting",
         "readTime": "15 min read",
         "tags": [
-          "Learn",
-          "Hermes Agent",
+          "AI Agents",
           "Consulting",
-          "AI"
+          "LLMs"
         ],
         "status": "published"
       },
@@ -236,10 +224,9 @@ export const learnSeries: LearningSeries[] = [
         "author": "Adroit Consulting",
         "readTime": "15 min read",
         "tags": [
-          "Learn",
-          "Hermes Agent",
+          "AI Agents",
           "Consulting",
-          "AI"
+          "LLMs"
         ],
         "status": "published"
       }
@@ -262,8 +249,7 @@ export const learnSeries: LearningSeries[] = [
         "author": "Adroit Consulting",
         "readTime": "6 min read",
         "tags": [
-          "OmniStudio",
-          "OmniStudio Fundamentals"
+          "OmniStudio"
         ],
         "status": "published"
       },
@@ -277,8 +263,7 @@ export const learnSeries: LearningSeries[] = [
         "author": "Adroit Consulting",
         "readTime": "6 min read",
         "tags": [
-          "OmniStudio",
-          "OmniStudio Fundamentals"
+          "OmniStudio"
         ],
         "status": "published"
       },
@@ -292,8 +277,7 @@ export const learnSeries: LearningSeries[] = [
         "author": "Adroit Consulting",
         "readTime": "6 min read",
         "tags": [
-          "OmniStudio",
-          "OmniStudio Fundamentals"
+          "OmniStudio"
         ],
         "status": "published"
       },
@@ -307,8 +291,7 @@ export const learnSeries: LearningSeries[] = [
         "author": "Adroit Consulting",
         "readTime": "6 min read",
         "tags": [
-          "OmniStudio",
-          "OmniStudio Fundamentals"
+          "OmniStudio"
         ],
         "status": "published"
       },
@@ -322,8 +305,7 @@ export const learnSeries: LearningSeries[] = [
         "author": "Adroit Consulting",
         "readTime": "6 min read",
         "tags": [
-          "OmniStudio",
-          "OmniStudio Fundamentals"
+          "OmniStudio"
         ],
         "status": "published"
       },
@@ -337,8 +319,7 @@ export const learnSeries: LearningSeries[] = [
         "author": "Adroit Consulting",
         "readTime": "10 min read",
         "tags": [
-          "OmniStudio",
-          "OmniStudio Fundamentals"
+          "OmniStudio"
         ],
         "status": "published"
       },
@@ -352,8 +333,7 @@ export const learnSeries: LearningSeries[] = [
         "author": "Adroit Consulting",
         "readTime": "8 min read",
         "tags": [
-          "OmniStudio",
-          "FlexCards"
+          "OmniStudio"
         ],
         "status": "published"
       },
@@ -367,8 +347,7 @@ export const learnSeries: LearningSeries[] = [
         "author": "Adroit Consulting",
         "readTime": "6 min read",
         "tags": [
-          "OmniStudio",
-          "FlexCards"
+          "OmniStudio"
         ],
         "status": "published"
       },
@@ -382,8 +361,7 @@ export const learnSeries: LearningSeries[] = [
         "author": "Adroit Consulting",
         "readTime": "6 min read",
         "tags": [
-          "OmniStudio",
-          "FlexCards"
+          "OmniStudio"
         ],
         "status": "published"
       },
@@ -397,8 +375,7 @@ export const learnSeries: LearningSeries[] = [
         "author": "Adroit Consulting",
         "readTime": "6 min read",
         "tags": [
-          "OmniStudio",
-          "FlexCards"
+          "OmniStudio"
         ],
         "status": "published"
       },
@@ -412,8 +389,7 @@ export const learnSeries: LearningSeries[] = [
         "author": "Adroit Consulting",
         "readTime": "6 min read",
         "tags": [
-          "OmniStudio",
-          "FlexCards"
+          "OmniStudio"
         ],
         "status": "published"
       },
@@ -427,8 +403,7 @@ export const learnSeries: LearningSeries[] = [
         "author": "Adroit Consulting",
         "readTime": "5 min read",
         "tags": [
-          "OmniStudio",
-          "FlexCards"
+          "OmniStudio"
         ],
         "status": "published"
       },
@@ -442,8 +417,7 @@ export const learnSeries: LearningSeries[] = [
         "author": "Adroit Consulting",
         "readTime": "5 min read",
         "tags": [
-          "OmniStudio",
-          "FlexCards"
+          "OmniStudio"
         ],
         "status": "published"
       },
@@ -457,8 +431,7 @@ export const learnSeries: LearningSeries[] = [
         "author": "Adroit Consulting",
         "readTime": "5 min read",
         "tags": [
-          "OmniStudio",
-          "FlexCards"
+          "OmniStudio"
         ],
         "status": "published"
       },
@@ -472,8 +445,7 @@ export const learnSeries: LearningSeries[] = [
         "author": "Adroit Consulting",
         "readTime": "5 min read",
         "tags": [
-          "OmniStudio",
-          "FlexCards"
+          "OmniStudio"
         ],
         "status": "published"
       },
@@ -487,8 +459,7 @@ export const learnSeries: LearningSeries[] = [
         "author": "Adroit Consulting",
         "readTime": "6 min read",
         "tags": [
-          "OmniStudio",
-          "OmniScripts"
+          "OmniStudio"
         ],
         "status": "published"
       },
@@ -502,8 +473,7 @@ export const learnSeries: LearningSeries[] = [
         "author": "Adroit Consulting",
         "readTime": "5 min read",
         "tags": [
-          "OmniStudio",
-          "OmniScripts"
+          "OmniStudio"
         ],
         "status": "published"
       },
@@ -517,8 +487,7 @@ export const learnSeries: LearningSeries[] = [
         "author": "Adroit Consulting",
         "readTime": "5 min read",
         "tags": [
-          "OmniStudio",
-          "OmniScripts"
+          "OmniStudio"
         ],
         "status": "published"
       },
@@ -532,8 +501,7 @@ export const learnSeries: LearningSeries[] = [
         "author": "Adroit Consulting",
         "readTime": "5 min read",
         "tags": [
-          "OmniStudio",
-          "OmniScripts"
+          "OmniStudio"
         ],
         "status": "published"
       },
@@ -547,8 +515,7 @@ export const learnSeries: LearningSeries[] = [
         "author": "Adroit Consulting",
         "readTime": "5 min read",
         "tags": [
-          "OmniStudio",
-          "OmniScripts"
+          "OmniStudio"
         ],
         "status": "published"
       },
@@ -562,8 +529,7 @@ export const learnSeries: LearningSeries[] = [
         "author": "Adroit Consulting",
         "readTime": "9 min read",
         "tags": [
-          "OmniStudio",
-          "OmniScripts"
+          "OmniStudio"
         ],
         "status": "published"
       },
@@ -578,7 +544,7 @@ export const learnSeries: LearningSeries[] = [
         "readTime": "11 min read",
         "tags": [
           "OmniStudio",
-          "Integration Procedures"
+          "Integration"
         ],
         "status": "published"
       },
@@ -593,7 +559,7 @@ export const learnSeries: LearningSeries[] = [
         "readTime": "12 min read",
         "tags": [
           "OmniStudio",
-          "Integration Procedures"
+          "Integration"
         ],
         "status": "published"
       }
@@ -616,10 +582,9 @@ export const learnSeries: LearningSeries[] = [
         "author": "Adroit Consulting",
         "readTime": "8 min read",
         "tags": [
-          "Learn",
           "Salesforce",
-          "Architect",
-          "Certifications"
+          "Architecture",
+          "OmniStudio"
         ],
         "status": "published"
       },
@@ -633,10 +598,8 @@ export const learnSeries: LearningSeries[] = [
         "author": "Adroit Consulting",
         "readTime": "8 min read",
         "tags": [
-          "Learn",
           "Salesforce",
-          "Architect",
-          "Multi-Tenancy"
+          "Architecture"
         ],
         "status": "published"
       },
@@ -650,10 +613,9 @@ export const learnSeries: LearningSeries[] = [
         "author": "Adroit Consulting",
         "readTime": "8 min read",
         "tags": [
-          "Learn",
           "Salesforce",
-          "Architect",
-          "Data Model"
+          "Architecture",
+          "Data"
         ],
         "status": "published"
       },
@@ -667,9 +629,8 @@ export const learnSeries: LearningSeries[] = [
         "author": "Adroit Consulting",
         "readTime": "9 min read",
         "tags": [
-          "Learn",
           "Salesforce",
-          "Architect",
+          "Architecture",
           "Integration"
         ],
         "status": "published"
@@ -684,11 +645,8 @@ export const learnSeries: LearningSeries[] = [
         "author": "Adroit Consulting",
         "readTime": "9 min read",
         "tags": [
-          "Learn",
-          "Architect",
-          "Systems Architecture",
-          "AI Patterns",
-          "General"
+          "Architecture",
+          "AI at Work"
         ],
         "status": "published"
       },
@@ -702,11 +660,9 @@ export const learnSeries: LearningSeries[] = [
         "author": "Adroit Consulting",
         "readTime": "9 min read",
         "tags": [
-          "Learn",
           "Salesforce",
-          "Architect",
-          "Integration",
-          "Integration Patterns"
+          "Architecture",
+          "Integration"
         ],
         "status": "published"
       },
@@ -720,12 +676,10 @@ export const learnSeries: LearningSeries[] = [
         "author": "Adroit Consulting",
         "readTime": "8 min read",
         "tags": [
-          "Learn",
           "Salesforce",
-          "Architect",
+          "Architecture",
           "Integration",
-          "Platform Events",
-          "Change Data Capture"
+          "Data"
         ],
         "status": "published"
       },
@@ -739,11 +693,10 @@ export const learnSeries: LearningSeries[] = [
         "author": "Adroit Consulting",
         "readTime": "9 min read",
         "tags": [
-          "Learn",
           "Salesforce",
-          "Architect",
+          "Architecture",
           "Integration",
-          "Middleware"
+          "Platform Engineering"
         ],
         "status": "published"
       },
@@ -757,12 +710,10 @@ export const learnSeries: LearningSeries[] = [
         "author": "Adroit Consulting",
         "readTime": "9 min read",
         "tags": [
-          "Learn",
           "Salesforce",
-          "Architect",
+          "Architecture",
           "Integration",
-          "Reliability",
-          "Error Handling"
+          "Reliability"
         ],
         "status": "published"
       },
@@ -776,13 +727,10 @@ export const learnSeries: LearningSeries[] = [
         "author": "Adroit Consulting",
         "readTime": "9 min read",
         "tags": [
-          "Learn",
-          "Architect",
-          "Systems Architecture",
-          "Asynchronous",
-          "Queues",
-          "Eventual Consistency",
-          "AI"
+          "Architecture",
+          "Integration",
+          "Reliability",
+          "LLMs"
         ],
         "status": "published"
       },
@@ -796,11 +744,9 @@ export const learnSeries: LearningSeries[] = [
         "author": "Adroit Consulting",
         "readTime": "10 min read",
         "tags": [
-          "Learn",
           "Salesforce",
-          "Architect",
-          "Security",
-          "Sharing"
+          "Architecture",
+          "Security"
         ],
         "status": "published"
       },
@@ -814,11 +760,9 @@ export const learnSeries: LearningSeries[] = [
         "author": "Adroit Consulting",
         "readTime": "10 min read",
         "tags": [
-          "Learn",
           "Salesforce",
-          "Architect",
-          "Security",
-          "Permissions"
+          "Architecture",
+          "Security"
         ],
         "status": "published"
       },
@@ -832,14 +776,9 @@ export const learnSeries: LearningSeries[] = [
         "author": "Adroit Consulting",
         "readTime": "11 min read",
         "tags": [
-          "Learn",
           "Salesforce",
-          "Architect",
-          "Security",
-          "Identity",
-          "OAuth",
-          "SAML",
-          "Communities"
+          "Architecture",
+          "Security"
         ],
         "status": "published"
       },
@@ -853,11 +792,9 @@ export const learnSeries: LearningSeries[] = [
         "author": "Adroit Consulting",
         "readTime": "11 min read",
         "tags": [
-          "Learn",
           "Salesforce",
-          "Architect",
-          "Data Model",
-          "Data Architecture"
+          "Architecture",
+          "Data"
         ],
         "status": "published"
       },
@@ -871,11 +808,10 @@ export const learnSeries: LearningSeries[] = [
         "author": "Adroit Consulting",
         "readTime": "10 min read",
         "tags": [
-          "Learn",
-          "Architect",
-          "Data Architecture",
-          "AI",
-          "Vector Database"
+          "Architecture",
+          "Data",
+          "LLMs",
+          "RAG"
         ],
         "status": "published"
       },
@@ -889,12 +825,9 @@ export const learnSeries: LearningSeries[] = [
         "author": "Adroit Consulting",
         "readTime": "9 min read",
         "tags": [
-          "Learn",
           "Salesforce",
-          "Architect",
-          "Data Migration",
-          "ETL",
-          "ELT"
+          "Architecture",
+          "Data"
         ],
         "status": "published"
       },
@@ -908,12 +841,10 @@ export const learnSeries: LearningSeries[] = [
         "author": "Adroit Consulting",
         "readTime": "10 min read",
         "tags": [
-          "Learn",
           "Salesforce",
-          "Architect",
-          "Large Data Volumes",
-          "Big Objects",
-          "Indexing"
+          "Architecture",
+          "Data",
+          "RAG"
         ],
         "status": "published"
       },
@@ -927,10 +858,8 @@ export const learnSeries: LearningSeries[] = [
         "author": "Adroit Consulting",
         "readTime": "12 min read",
         "tags": [
-          "Learn",
           "Salesforce",
-          "Architect",
-          "Limits"
+          "Architecture"
         ],
         "status": "published"
       },
@@ -944,13 +873,10 @@ export const learnSeries: LearningSeries[] = [
         "author": "Adroit Consulting",
         "readTime": "10 min read",
         "tags": [
-          "Learn",
           "Salesforce",
-          "Architect",
-          "Sandboxes",
-          "Change Sets",
-          "DevOps",
-          "Salesforce DX"
+          "Architecture",
+          "Delivery",
+          "DevOps"
         ],
         "status": "published"
       },
@@ -964,14 +890,11 @@ export const learnSeries: LearningSeries[] = [
         "author": "Adroit Consulting",
         "readTime": "11 min read",
         "tags": [
-          "Learn",
-          "Architect",
-          "MLOps",
+          "Architecture",
+          "AI Infrastructure",
           "CI/CD",
-          "Environments",
-          "Model Registry",
-          "Agentic AI",
-          "General"
+          "Delivery",
+          "AI Agents"
         ],
         "status": "published"
       },
@@ -985,12 +908,8 @@ export const learnSeries: LearningSeries[] = [
         "author": "Adroit Consulting",
         "readTime": "10 min read",
         "tags": [
-          "Learn",
           "Salesforce",
-          "Architect",
-          "Solution Design",
-          "NFRs",
-          "Architecture Documentation"
+          "Architecture"
         ],
         "status": "published"
       },
@@ -1004,11 +923,8 @@ export const learnSeries: LearningSeries[] = [
         "author": "Adroit Consulting",
         "readTime": "10 min read",
         "tags": [
-          "Learn",
           "Salesforce",
-          "Architect",
-          "Architecture Review",
-          "Decision Records",
+          "Architecture",
           "Governance"
         ],
         "status": "published"
@@ -1023,13 +939,10 @@ export const learnSeries: LearningSeries[] = [
         "author": "Adroit Consulting",
         "readTime": "11 min read",
         "tags": [
-          "Learn",
           "Salesforce",
-          "Architect",
-          "Monitoring",
-          "Error Handling",
-          "Event Monitoring",
-          "Debug Logs"
+          "Architecture",
+          "Observability",
+          "Reliability"
         ],
         "status": "published"
       },
@@ -1043,13 +956,10 @@ export const learnSeries: LearningSeries[] = [
         "author": "Adroit Consulting",
         "readTime": "11 min read",
         "tags": [
-          "Learn",
           "Salesforce",
-          "Architect",
+          "Architecture",
           "Performance",
-          "SOQL",
-          "Indexes",
-          "Platform Cache"
+          "RAG"
         ],
         "status": "published"
       },
@@ -1063,15 +973,9 @@ export const learnSeries: LearningSeries[] = [
         "author": "Adroit Consulting",
         "readTime": "11 min read",
         "tags": [
-          "Learn",
-          "Architect",
-          "Systems Architecture",
+          "Architecture",
           "Performance",
-          "AI",
-          "Latency",
-          "Throughput",
-          "Batching",
-          "Caching"
+          "LLMs"
         ],
         "status": "published"
       },
@@ -1085,11 +989,9 @@ export const learnSeries: LearningSeries[] = [
         "author": "Adroit Consulting",
         "readTime": "10 min read",
         "tags": [
-          "Learn",
           "Salesforce",
-          "Architect",
-          "Integration",
-          "REST"
+          "Architecture",
+          "Integration"
         ],
         "status": "published"
       },
@@ -1103,14 +1005,11 @@ export const learnSeries: LearningSeries[] = [
         "author": "Adroit Consulting",
         "readTime": "11 min read",
         "tags": [
-          "Learn",
           "Salesforce",
-          "Architect",
+          "Architecture",
           "Integration",
           "Security",
-          "Named Credentials",
-          "JWT",
-          "Certificates"
+          "OmniStudio"
         ],
         "status": "published"
       },
@@ -1124,14 +1023,11 @@ export const learnSeries: LearningSeries[] = [
         "author": "Adroit Consulting",
         "readTime": "11 min read",
         "tags": [
-          "Learn",
           "Salesforce",
-          "Architect",
+          "Architecture",
           "Integration",
-          "Platform Events",
-          "Streaming",
-          "Pub/Sub API",
-          "Pacing"
+          "Web Development",
+          "Project Management"
         ],
         "status": "published"
       }
@@ -1154,10 +1050,9 @@ export const learnSeries: LearningSeries[] = [
         "author": "Adroit Consulting",
         "readTime": "9 min read",
         "tags": [
-          "Learn",
-          "AI",
-          "Agentic",
-          "Foundations"
+          "LLMs",
+          "AI Agents",
+          "Salesforce"
         ],
         "status": "published"
       },
@@ -1171,10 +1066,9 @@ export const learnSeries: LearningSeries[] = [
         "author": "Adroit Consulting",
         "readTime": "9 min read",
         "tags": [
-          "Learn",
-          "AI",
-          "Agentic",
-          "Foundations"
+          "LLMs",
+          "AI Agents",
+          "Salesforce"
         ],
         "status": "published"
       },
@@ -1188,10 +1082,9 @@ export const learnSeries: LearningSeries[] = [
         "author": "Adroit Consulting",
         "readTime": "9 min read",
         "tags": [
-          "Learn",
-          "AI",
-          "Agentic",
-          "Foundations"
+          "LLMs",
+          "AI Agents",
+          "Salesforce"
         ],
         "status": "published"
       },
@@ -1205,10 +1098,9 @@ export const learnSeries: LearningSeries[] = [
         "author": "Adroit Consulting",
         "readTime": "10 min read",
         "tags": [
-          "Learn",
-          "AI",
-          "Agentic",
-          "Prompting"
+          "LLMs",
+          "AI Agents",
+          "Prompt Engineering"
         ],
         "status": "published"
       },
@@ -1222,10 +1114,9 @@ export const learnSeries: LearningSeries[] = [
         "author": "Adroit Consulting",
         "readTime": "9 min read",
         "tags": [
-          "Learn",
-          "AI",
-          "Agentic",
-          "Cost"
+          "LLMs",
+          "AI Agents",
+          "Performance"
         ],
         "status": "published"
       },
@@ -1239,10 +1130,8 @@ export const learnSeries: LearningSeries[] = [
         "author": "Adroit Consulting",
         "readTime": "8 min read",
         "tags": [
-          "Learn",
-          "AI",
-          "Agentic",
-          "Models"
+          "LLMs",
+          "AI Agents"
         ],
         "status": "published"
       },
@@ -1256,10 +1145,8 @@ export const learnSeries: LearningSeries[] = [
         "author": "Adroit Consulting",
         "readTime": "8 min read",
         "tags": [
-          "Learn",
-          "AI",
-          "Agentic",
-          "Tools"
+          "LLMs",
+          "AI Agents"
         ],
         "status": "published"
       },
@@ -1273,10 +1160,8 @@ export const learnSeries: LearningSeries[] = [
         "author": "Adroit Consulting",
         "readTime": "9 min read",
         "tags": [
-          "Learn",
-          "AI",
-          "Agentic",
-          "Tools"
+          "LLMs",
+          "AI Agents"
         ],
         "status": "published"
       },
@@ -1290,10 +1175,8 @@ export const learnSeries: LearningSeries[] = [
         "author": "Adroit Consulting",
         "readTime": "9 min read",
         "tags": [
-          "Learn",
-          "AI",
-          "Agentic",
-          "Tools"
+          "LLMs",
+          "AI Agents"
         ],
         "status": "published"
       },
@@ -1307,9 +1190,8 @@ export const learnSeries: LearningSeries[] = [
         "author": "Adroit Consulting",
         "readTime": "10 min read",
         "tags": [
-          "Learn",
-          "AI",
-          "Agentic",
+          "LLMs",
+          "AI Agents",
           "RAG"
         ],
         "status": "published"
@@ -1324,10 +1206,9 @@ export const learnSeries: LearningSeries[] = [
         "author": "Adroit Consulting",
         "readTime": "10 min read",
         "tags": [
-          "Learn",
-          "AI",
-          "Agentic",
-          "Embeddings"
+          "LLMs",
+          "AI Agents",
+          "RAG"
         ],
         "status": "published"
       },
@@ -1341,10 +1222,9 @@ export const learnSeries: LearningSeries[] = [
         "author": "Adroit Consulting",
         "readTime": "10 min read",
         "tags": [
-          "Learn",
-          "AI",
-          "Agentic",
-          "Vector Databases"
+          "LLMs",
+          "AI Agents",
+          "RAG"
         ],
         "status": "published"
       },
@@ -1358,9 +1238,8 @@ export const learnSeries: LearningSeries[] = [
         "author": "Adroit Consulting",
         "readTime": "12 min read",
         "tags": [
-          "Learn",
-          "AI",
-          "Agentic",
+          "LLMs",
+          "AI Agents",
           "RAG"
         ],
         "status": "published"
@@ -1375,10 +1254,8 @@ export const learnSeries: LearningSeries[] = [
         "author": "Adroit Consulting",
         "readTime": "10 min read",
         "tags": [
-          "Learn",
-          "AI",
-          "Agentic",
-          "Memory"
+          "LLMs",
+          "AI Agents"
         ],
         "status": "published"
       },
@@ -1392,10 +1269,9 @@ export const learnSeries: LearningSeries[] = [
         "author": "Adroit Consulting",
         "readTime": "10 min read",
         "tags": [
-          "Learn",
-          "AI",
-          "Agentic",
-          "Context"
+          "LLMs",
+          "AI Agents",
+          "Prompt Engineering"
         ],
         "status": "published"
       },
@@ -1409,10 +1285,9 @@ export const learnSeries: LearningSeries[] = [
         "author": "Adroit Consulting",
         "readTime": "11 min read",
         "tags": [
-          "Learn",
-          "AI",
-          "Agentic",
-          "Sessions"
+          "LLMs",
+          "AI Agents",
+          "Salesforce"
         ],
         "status": "published"
       },
@@ -1426,9 +1301,8 @@ export const learnSeries: LearningSeries[] = [
         "author": "Adroit Consulting",
         "readTime": "11 min read",
         "tags": [
-          "Learn",
-          "AI",
-          "Agentic",
+          "LLMs",
+          "AI Agents",
           "Security"
         ],
         "status": "published"
@@ -1443,9 +1317,8 @@ export const learnSeries: LearningSeries[] = [
         "author": "Adroit Consulting",
         "readTime": "13 min read",
         "tags": [
-          "Learn",
-          "AI",
-          "Agentic",
+          "LLMs",
+          "AI Agents",
           "Security"
         ],
         "status": "published"
@@ -1460,10 +1333,8 @@ export const learnSeries: LearningSeries[] = [
         "author": "Adroit Consulting",
         "readTime": "14 min read",
         "tags": [
-          "Learn",
-          "AI",
-          "Agentic",
-          "Evaluation"
+          "LLMs",
+          "AI Agents"
         ],
         "status": "published"
       },
@@ -1477,9 +1348,8 @@ export const learnSeries: LearningSeries[] = [
         "author": "Adroit Consulting",
         "readTime": "15 min read",
         "tags": [
-          "Learn",
-          "AI",
-          "Agentic",
+          "LLMs",
+          "AI Agents",
           "Observability"
         ],
         "status": "published"
@@ -1494,10 +1364,9 @@ export const learnSeries: LearningSeries[] = [
         "author": "Adroit Consulting",
         "readTime": "16 min read",
         "tags": [
-          "Learn",
-          "AI",
-          "Agentic",
-          "Frameworks"
+          "LLMs",
+          "AI Agents",
+          "Architecture"
         ],
         "status": "published"
       },
@@ -1511,10 +1380,9 @@ export const learnSeries: LearningSeries[] = [
         "author": "Adroit Consulting",
         "readTime": "14 min read",
         "tags": [
-          "Learn",
-          "AI",
-          "Agentic",
-          "Frameworks"
+          "LLMs",
+          "AI Agents",
+          "Architecture"
         ],
         "status": "published"
       },
@@ -1528,10 +1396,9 @@ export const learnSeries: LearningSeries[] = [
         "author": "Adroit Consulting",
         "readTime": "10 min read",
         "tags": [
-          "Learn",
-          "AI",
-          "Agentic",
-          "Patterns"
+          "LLMs",
+          "AI Agents",
+          "Architecture"
         ],
         "status": "published"
       },
@@ -1545,10 +1412,8 @@ export const learnSeries: LearningSeries[] = [
         "author": "Adroit Consulting",
         "readTime": "11 min read",
         "tags": [
-          "Learn",
-          "AI",
-          "Agentic",
-          "Multi-agent"
+          "LLMs",
+          "AI Agents"
         ],
         "status": "published"
       },
@@ -1562,10 +1427,9 @@ export const learnSeries: LearningSeries[] = [
         "author": "Adroit Consulting",
         "readTime": "14 min read",
         "tags": [
-          "Learn",
-          "AI",
-          "Agentic",
-          "Safety"
+          "LLMs",
+          "AI Agents",
+          "Security"
         ],
         "status": "published"
       },
@@ -1579,10 +1443,9 @@ export const learnSeries: LearningSeries[] = [
         "author": "Adroit Consulting",
         "readTime": "16 min read",
         "tags": [
-          "Learn",
-          "AI",
-          "Agentic",
-          "Deployment"
+          "LLMs",
+          "AI Agents",
+          "Delivery"
         ],
         "status": "published"
       },
@@ -1596,10 +1459,9 @@ export const learnSeries: LearningSeries[] = [
         "author": "Adroit Consulting",
         "readTime": "15 min read",
         "tags": [
-          "Learn",
-          "AI",
-          "Agentic",
-          "Cost"
+          "LLMs",
+          "AI Agents",
+          "Performance"
         ],
         "status": "published"
       },
@@ -1613,9 +1475,8 @@ export const learnSeries: LearningSeries[] = [
         "author": "Adroit Consulting",
         "readTime": "11 min read",
         "tags": [
-          "Learn",
-          "AI",
-          "Agentic",
+          "LLMs",
+          "AI Agents",
           "Security"
         ],
         "status": "published"
@@ -1639,10 +1500,9 @@ export const learnSeries: LearningSeries[] = [
         "author": "Adroit Consulting",
         "readTime": "8 min read",
         "tags": [
-          "Learn",
-          "AI",
-          "Workplace",
-          "Foundations"
+          "LLMs",
+          "AI at Work",
+          "Salesforce"
         ],
         "status": "published"
       },
@@ -1656,10 +1516,9 @@ export const learnSeries: LearningSeries[] = [
         "author": "Adroit Consulting",
         "readTime": "8 min read",
         "tags": [
-          "Learn",
-          "AI",
-          "Workplace",
-          "Foundations"
+          "LLMs",
+          "AI at Work",
+          "Salesforce"
         ],
         "status": "published"
       },
@@ -1673,10 +1532,9 @@ export const learnSeries: LearningSeries[] = [
         "author": "Adroit Consulting",
         "readTime": "8 min read",
         "tags": [
-          "Learn",
-          "AI",
-          "Workplace",
-          "Foundations"
+          "LLMs",
+          "AI at Work",
+          "Salesforce"
         ],
         "status": "published"
       },
@@ -1690,10 +1548,9 @@ export const learnSeries: LearningSeries[] = [
         "author": "Adroit Consulting",
         "readTime": "9 min read",
         "tags": [
-          "Learn",
-          "AI",
-          "Workplace",
-          "Foundations"
+          "LLMs",
+          "AI at Work",
+          "Salesforce"
         ],
         "status": "published"
       },
@@ -1707,9 +1564,8 @@ export const learnSeries: LearningSeries[] = [
         "author": "Adroit Consulting",
         "readTime": "8 min read",
         "tags": [
-          "Learn",
-          "AI",
-          "Data Safety"
+          "LLMs",
+          "Security"
         ],
         "status": "published"
       },
@@ -1723,9 +1579,8 @@ export const learnSeries: LearningSeries[] = [
         "author": "Adroit Consulting",
         "readTime": "9 min read",
         "tags": [
-          "Learn",
-          "AI",
-          "AI Literacy"
+          "LLMs",
+          "AI at Work"
         ],
         "status": "published"
       },
@@ -1739,10 +1594,9 @@ export const learnSeries: LearningSeries[] = [
         "author": "Adroit Consulting",
         "readTime": "9 min read",
         "tags": [
-          "Learn",
-          "AI",
-          "Workplace",
-          "Prompting"
+          "LLMs",
+          "AI at Work",
+          "Prompt Engineering"
         ],
         "status": "published"
       },
@@ -1756,10 +1610,9 @@ export const learnSeries: LearningSeries[] = [
         "author": "Adroit Consulting",
         "readTime": "9 min read",
         "tags": [
-          "Learn",
-          "AI",
-          "Workplace",
-          "Iteration"
+          "LLMs",
+          "AI at Work",
+          "Agile"
         ],
         "status": "published"
       },
@@ -1773,10 +1626,9 @@ export const learnSeries: LearningSeries[] = [
         "author": "Adroit Consulting",
         "readTime": "9 min read",
         "tags": [
-          "Learn",
-          "AI",
-          "Workplace",
-          "Prompting"
+          "LLMs",
+          "AI at Work",
+          "Prompt Engineering"
         ],
         "status": "published"
       },
@@ -1790,10 +1642,9 @@ export const learnSeries: LearningSeries[] = [
         "author": "Adroit Consulting",
         "readTime": "9 min read",
         "tags": [
-          "Learn",
-          "AI",
-          "Workplace",
-          "Prompting"
+          "LLMs",
+          "AI at Work",
+          "Prompt Engineering"
         ],
         "status": "published"
       },
@@ -1807,10 +1658,9 @@ export const learnSeries: LearningSeries[] = [
         "author": "Adroit Consulting",
         "readTime": "10 min read",
         "tags": [
-          "Learn",
-          "AI",
-          "Workplace",
-          "Communication"
+          "LLMs",
+          "AI at Work",
+          "Consulting"
         ],
         "status": "published"
       },
@@ -1824,10 +1674,9 @@ export const learnSeries: LearningSeries[] = [
         "author": "Adroit Consulting",
         "readTime": "9 min read",
         "tags": [
-          "Learn",
-          "AI",
-          "Workplace",
-          "Editing"
+          "LLMs",
+          "AI at Work",
+          "UI/UX"
         ],
         "status": "published"
       },
@@ -1841,10 +1690,9 @@ export const learnSeries: LearningSeries[] = [
         "author": "Adroit Consulting",
         "readTime": "9 min read",
         "tags": [
-          "Learn",
-          "AI",
-          "Workplace",
-          "Research"
+          "LLMs",
+          "AI at Work",
+          "UI/UX"
         ],
         "status": "published"
       },
@@ -1858,9 +1706,8 @@ export const learnSeries: LearningSeries[] = [
         "author": "Adroit Consulting",
         "readTime": "10 min read",
         "tags": [
-          "Learn",
-          "AI",
-          "Workplace",
+          "LLMs",
+          "AI at Work",
           "Data"
         ],
         "status": "published"
@@ -1875,10 +1722,9 @@ export const learnSeries: LearningSeries[] = [
         "author": "Adroit Consulting",
         "readTime": "10 min read",
         "tags": [
-          "Learn",
-          "AI",
-          "Workplace",
-          "Meetings"
+          "LLMs",
+          "AI at Work",
+          "Project Management"
         ],
         "status": "published"
       },
@@ -1892,10 +1738,9 @@ export const learnSeries: LearningSeries[] = [
         "author": "Adroit Consulting",
         "readTime": "10 min read",
         "tags": [
-          "Learn",
-          "AI",
-          "Workplace",
-          "Problem-Solving"
+          "LLMs",
+          "AI at Work",
+          "Consulting"
         ],
         "status": "published"
       }
@@ -1918,10 +1763,9 @@ export const learnSeries: LearningSeries[] = [
         "author": "Adroit Consulting",
         "readTime": "12 min read",
         "tags": [
-          "Learn",
-          "Hermes Agent",
+          "AI Agents",
           "Consulting",
-          "AI"
+          "LLMs"
         ],
         "status": "published"
       },
@@ -1935,10 +1779,9 @@ export const learnSeries: LearningSeries[] = [
         "author": "Adroit Consulting",
         "readTime": "13 min read",
         "tags": [
-          "Learn",
-          "Hermes Agent",
+          "AI Agents",
           "Consulting",
-          "AI"
+          "LLMs"
         ],
         "status": "published"
       },
@@ -1952,10 +1795,9 @@ export const learnSeries: LearningSeries[] = [
         "author": "Adroit Consulting",
         "readTime": "13 min read",
         "tags": [
-          "Learn",
-          "Hermes Agent",
+          "AI Agents",
           "Consulting",
-          "AI"
+          "LLMs"
         ],
         "status": "published"
       },
@@ -1969,10 +1811,9 @@ export const learnSeries: LearningSeries[] = [
         "author": "Adroit Consulting",
         "readTime": "13 min read",
         "tags": [
-          "Learn",
-          "Hermes Agent",
+          "AI Agents",
           "Consulting",
-          "AI"
+          "LLMs"
         ],
         "status": "published"
       },
@@ -1986,10 +1827,9 @@ export const learnSeries: LearningSeries[] = [
         "author": "Adroit Consulting",
         "readTime": "13 min read",
         "tags": [
-          "Learn",
-          "Hermes Agent",
+          "AI Agents",
           "Consulting",
-          "AI"
+          "LLMs"
         ],
         "status": "published"
       }
@@ -2010,10 +1850,9 @@ export const learnLessons: LearnLesson[] = [
     "author": "Adroit Consulting",
     "readTime": "11 min read",
     "tags": [
-      "Learn",
-      "Hermes Agent",
+      "AI Agents",
       "Consulting",
-      "AI"
+      "LLMs"
     ],
     "status": "published"
   },
@@ -2027,10 +1866,9 @@ export const learnLessons: LearnLesson[] = [
     "author": "Adroit Consulting",
     "readTime": "15 min read",
     "tags": [
-      "Learn",
-      "Hermes Agent",
+      "AI Agents",
       "Consulting",
-      "AI"
+      "LLMs"
     ],
     "status": "published"
   },
@@ -2045,7 +1883,7 @@ export const learnLessons: LearnLesson[] = [
     "readTime": "12 min read",
     "tags": [
       "OmniStudio",
-      "Integration Procedures"
+      "Integration"
     ],
     "status": "published"
   },
@@ -2059,14 +1897,11 @@ export const learnLessons: LearnLesson[] = [
     "author": "Adroit Consulting",
     "readTime": "11 min read",
     "tags": [
-      "Learn",
       "Salesforce",
-      "Architect",
+      "Architecture",
       "Integration",
-      "Platform Events",
-      "Streaming",
-      "Pub/Sub API",
-      "Pacing"
+      "Web Development",
+      "Project Management"
     ],
     "status": "published"
   },
@@ -2080,9 +1915,8 @@ export const learnLessons: LearnLesson[] = [
     "author": "Adroit Consulting",
     "readTime": "11 min read",
     "tags": [
-      "Learn",
-      "AI",
-      "Agentic",
+      "LLMs",
+      "AI Agents",
       "Security"
     ],
     "status": "published"
@@ -2097,10 +1931,9 @@ export const learnLessons: LearnLesson[] = [
     "author": "Adroit Consulting",
     "readTime": "10 min read",
     "tags": [
-      "Learn",
-      "AI",
-      "Workplace",
-      "Problem-Solving"
+      "LLMs",
+      "AI at Work",
+      "Consulting"
     ],
     "status": "published"
   },
@@ -2114,10 +1947,9 @@ export const learnLessons: LearnLesson[] = [
     "author": "Adroit Consulting",
     "readTime": "12 min read",
     "tags": [
-      "Learn",
-      "Hermes Agent",
+      "AI Agents",
       "Consulting",
-      "AI"
+      "LLMs"
     ],
     "status": "published"
   },
@@ -2131,10 +1963,9 @@ export const learnLessons: LearnLesson[] = [
     "author": "Adroit Consulting",
     "readTime": "13 min read",
     "tags": [
-      "Learn",
-      "Hermes Agent",
+      "AI Agents",
       "Consulting",
-      "AI"
+      "LLMs"
     ],
     "status": "published"
   },
@@ -2148,10 +1979,9 @@ export const learnLessons: LearnLesson[] = [
     "author": "Adroit Consulting",
     "readTime": "15 min read",
     "tags": [
-      "Learn",
-      "Hermes Agent",
+      "AI Agents",
       "Consulting",
-      "AI"
+      "LLMs"
     ],
     "status": "published"
   },
@@ -2166,7 +1996,7 @@ export const learnLessons: LearnLesson[] = [
     "readTime": "11 min read",
     "tags": [
       "OmniStudio",
-      "Integration Procedures"
+      "Integration"
     ],
     "status": "published"
   },
@@ -2180,14 +2010,11 @@ export const learnLessons: LearnLesson[] = [
     "author": "Adroit Consulting",
     "readTime": "11 min read",
     "tags": [
-      "Learn",
       "Salesforce",
-      "Architect",
+      "Architecture",
       "Integration",
       "Security",
-      "Named Credentials",
-      "JWT",
-      "Certificates"
+      "OmniStudio"
     ],
     "status": "published"
   },
@@ -2201,10 +2028,9 @@ export const learnLessons: LearnLesson[] = [
     "author": "Adroit Consulting",
     "readTime": "15 min read",
     "tags": [
-      "Learn",
-      "AI",
-      "Agentic",
-      "Cost"
+      "LLMs",
+      "AI Agents",
+      "Performance"
     ],
     "status": "published"
   },
@@ -2218,10 +2044,9 @@ export const learnLessons: LearnLesson[] = [
     "author": "Adroit Consulting",
     "readTime": "10 min read",
     "tags": [
-      "Learn",
-      "AI",
-      "Workplace",
-      "Meetings"
+      "LLMs",
+      "AI at Work",
+      "Project Management"
     ],
     "status": "published"
   },
@@ -2235,10 +2060,9 @@ export const learnLessons: LearnLesson[] = [
     "author": "Adroit Consulting",
     "readTime": "11 min read",
     "tags": [
-      "Learn",
-      "Hermes Agent",
+      "AI Agents",
       "Consulting",
-      "AI"
+      "LLMs"
     ],
     "status": "published"
   },
@@ -2252,10 +2076,9 @@ export const learnLessons: LearnLesson[] = [
     "author": "Adroit Consulting",
     "readTime": "13 min read",
     "tags": [
-      "Learn",
-      "Hermes Agent",
+      "AI Agents",
       "Consulting",
-      "AI"
+      "LLMs"
     ],
     "status": "published"
   },
@@ -2269,10 +2092,9 @@ export const learnLessons: LearnLesson[] = [
     "author": "Adroit Consulting",
     "readTime": "14 min read",
     "tags": [
-      "Learn",
-      "Hermes Agent",
+      "AI Agents",
       "Consulting",
-      "AI"
+      "LLMs"
     ],
     "status": "published"
   },
@@ -2286,8 +2108,7 @@ export const learnLessons: LearnLesson[] = [
     "author": "Adroit Consulting",
     "readTime": "9 min read",
     "tags": [
-      "OmniStudio",
-      "OmniScripts"
+      "OmniStudio"
     ],
     "status": "published"
   },
@@ -2301,11 +2122,9 @@ export const learnLessons: LearnLesson[] = [
     "author": "Adroit Consulting",
     "readTime": "10 min read",
     "tags": [
-      "Learn",
       "Salesforce",
-      "Architect",
-      "Integration",
-      "REST"
+      "Architecture",
+      "Integration"
     ],
     "status": "published"
   },
@@ -2319,10 +2138,9 @@ export const learnLessons: LearnLesson[] = [
     "author": "Adroit Consulting",
     "readTime": "16 min read",
     "tags": [
-      "Learn",
-      "AI",
-      "Agentic",
-      "Deployment"
+      "LLMs",
+      "AI Agents",
+      "Delivery"
     ],
     "status": "published"
   },
@@ -2336,9 +2154,8 @@ export const learnLessons: LearnLesson[] = [
     "author": "Adroit Consulting",
     "readTime": "10 min read",
     "tags": [
-      "Learn",
-      "AI",
-      "Workplace",
+      "LLMs",
+      "AI at Work",
       "Data"
     ],
     "status": "published"
@@ -2353,10 +2170,9 @@ export const learnLessons: LearnLesson[] = [
     "author": "Adroit Consulting",
     "readTime": "12 min read",
     "tags": [
-      "Learn",
-      "Hermes Agent",
+      "AI Agents",
       "Consulting",
-      "AI"
+      "LLMs"
     ],
     "status": "published"
   },
@@ -2370,10 +2186,9 @@ export const learnLessons: LearnLesson[] = [
     "author": "Adroit Consulting",
     "readTime": "13 min read",
     "tags": [
-      "Learn",
-      "Hermes Agent",
+      "AI Agents",
       "Consulting",
-      "AI"
+      "LLMs"
     ],
     "status": "published"
   },
@@ -2387,10 +2202,9 @@ export const learnLessons: LearnLesson[] = [
     "author": "Adroit Consulting",
     "readTime": "14 min read",
     "tags": [
-      "Learn",
-      "Hermes Agent",
+      "AI Agents",
       "Consulting",
-      "AI"
+      "LLMs"
     ],
     "status": "published"
   },
@@ -2404,10 +2218,9 @@ export const learnLessons: LearnLesson[] = [
     "author": "Adroit Consulting",
     "readTime": "14 min read",
     "tags": [
-      "Learn",
-      "AI",
-      "Agentic",
-      "Safety"
+      "LLMs",
+      "AI Agents",
+      "Security"
     ],
     "status": "published"
   },
@@ -2421,10 +2234,9 @@ export const learnLessons: LearnLesson[] = [
     "author": "Adroit Consulting",
     "readTime": "9 min read",
     "tags": [
-      "Learn",
-      "AI",
-      "Workplace",
-      "Research"
+      "LLMs",
+      "AI at Work",
+      "UI/UX"
     ],
     "status": "published"
   },
@@ -2438,10 +2250,9 @@ export const learnLessons: LearnLesson[] = [
     "author": "Adroit Consulting",
     "readTime": "11 min read",
     "tags": [
-      "Learn",
-      "Hermes Agent",
+      "AI Agents",
       "Consulting",
-      "AI"
+      "LLMs"
     ],
     "status": "published"
   },
@@ -2455,10 +2266,9 @@ export const learnLessons: LearnLesson[] = [
     "author": "Adroit Consulting",
     "readTime": "13 min read",
     "tags": [
-      "Learn",
-      "Hermes Agent",
+      "AI Agents",
       "Consulting",
-      "AI"
+      "LLMs"
     ],
     "status": "published"
   },
@@ -2472,10 +2282,9 @@ export const learnLessons: LearnLesson[] = [
     "author": "Adroit Consulting",
     "readTime": "12 min read",
     "tags": [
-      "Learn",
-      "Hermes Agent",
+      "AI Agents",
       "Consulting",
-      "AI"
+      "LLMs"
     ],
     "status": "published"
   },
@@ -2489,15 +2298,9 @@ export const learnLessons: LearnLesson[] = [
     "author": "Adroit Consulting",
     "readTime": "11 min read",
     "tags": [
-      "Learn",
-      "Architect",
-      "Systems Architecture",
+      "Architecture",
       "Performance",
-      "AI",
-      "Latency",
-      "Throughput",
-      "Batching",
-      "Caching"
+      "LLMs"
     ],
     "status": "published"
   },
@@ -2511,10 +2314,8 @@ export const learnLessons: LearnLesson[] = [
     "author": "Adroit Consulting",
     "readTime": "11 min read",
     "tags": [
-      "Learn",
-      "AI",
-      "Agentic",
-      "Multi-agent"
+      "LLMs",
+      "AI Agents"
     ],
     "status": "published"
   },
@@ -2528,10 +2329,9 @@ export const learnLessons: LearnLesson[] = [
     "author": "Adroit Consulting",
     "readTime": "9 min read",
     "tags": [
-      "Learn",
-      "AI",
-      "Workplace",
-      "Editing"
+      "LLMs",
+      "AI at Work",
+      "UI/UX"
     ],
     "status": "published"
   },
@@ -2545,10 +2345,9 @@ export const learnLessons: LearnLesson[] = [
     "author": "Adroit Consulting",
     "readTime": "10 min read",
     "tags": [
-      "Learn",
-      "Hermes Agent",
+      "AI Agents",
       "Consulting",
-      "AI"
+      "LLMs"
     ],
     "status": "published"
   },
@@ -2562,10 +2361,9 @@ export const learnLessons: LearnLesson[] = [
     "author": "Adroit Consulting",
     "readTime": "12 min read",
     "tags": [
-      "Learn",
-      "Hermes Agent",
+      "AI Agents",
       "Consulting",
-      "AI"
+      "LLMs"
     ],
     "status": "published"
   },
@@ -2579,10 +2377,9 @@ export const learnLessons: LearnLesson[] = [
     "author": "Adroit Consulting",
     "readTime": "11 min read",
     "tags": [
-      "Learn",
-      "Hermes Agent",
+      "AI Agents",
       "Consulting",
-      "AI"
+      "LLMs"
     ],
     "status": "published"
   },
@@ -2596,13 +2393,10 @@ export const learnLessons: LearnLesson[] = [
     "author": "Adroit Consulting",
     "readTime": "11 min read",
     "tags": [
-      "Learn",
       "Salesforce",
-      "Architect",
+      "Architecture",
       "Performance",
-      "SOQL",
-      "Indexes",
-      "Platform Cache"
+      "RAG"
     ],
     "status": "published"
   },
@@ -2616,10 +2410,9 @@ export const learnLessons: LearnLesson[] = [
     "author": "Adroit Consulting",
     "readTime": "10 min read",
     "tags": [
-      "Learn",
-      "AI",
-      "Agentic",
-      "Patterns"
+      "LLMs",
+      "AI Agents",
+      "Architecture"
     ],
     "status": "published"
   },
@@ -2633,10 +2426,9 @@ export const learnLessons: LearnLesson[] = [
     "author": "Adroit Consulting",
     "readTime": "10 min read",
     "tags": [
-      "Learn",
-      "AI",
-      "Workplace",
-      "Communication"
+      "LLMs",
+      "AI at Work",
+      "Consulting"
     ],
     "status": "published"
   },
@@ -2650,10 +2442,9 @@ export const learnLessons: LearnLesson[] = [
     "author": "Adroit Consulting",
     "readTime": "9 min read",
     "tags": [
-      "Learn",
-      "Hermes Agent",
+      "AI Agents",
       "Consulting",
-      "AI"
+      "LLMs"
     ],
     "status": "published"
   },
@@ -2667,13 +2458,10 @@ export const learnLessons: LearnLesson[] = [
     "author": "Adroit Consulting",
     "readTime": "11 min read",
     "tags": [
-      "Learn",
       "Salesforce",
-      "Architect",
-      "Monitoring",
-      "Error Handling",
-      "Event Monitoring",
-      "Debug Logs"
+      "Architecture",
+      "Observability",
+      "Reliability"
     ],
     "status": "published"
   },
@@ -2687,10 +2475,9 @@ export const learnLessons: LearnLesson[] = [
     "author": "Adroit Consulting",
     "readTime": "14 min read",
     "tags": [
-      "Learn",
-      "AI",
-      "Agentic",
-      "Frameworks"
+      "LLMs",
+      "AI Agents",
+      "Architecture"
     ],
     "status": "published"
   },
@@ -2704,10 +2491,9 @@ export const learnLessons: LearnLesson[] = [
     "author": "Adroit Consulting",
     "readTime": "9 min read",
     "tags": [
-      "Learn",
-      "AI",
-      "Workplace",
-      "Prompting"
+      "LLMs",
+      "AI at Work",
+      "Prompt Engineering"
     ],
     "status": "published"
   },
@@ -2721,11 +2507,8 @@ export const learnLessons: LearnLesson[] = [
     "author": "Adroit Consulting",
     "readTime": "10 min read",
     "tags": [
-      "Learn",
       "Salesforce",
-      "Architect",
-      "Architecture Review",
-      "Decision Records",
+      "Architecture",
       "Governance"
     ],
     "status": "published"
@@ -2740,10 +2523,9 @@ export const learnLessons: LearnLesson[] = [
     "author": "Adroit Consulting",
     "readTime": "16 min read",
     "tags": [
-      "Learn",
-      "AI",
-      "Agentic",
-      "Frameworks"
+      "LLMs",
+      "AI Agents",
+      "Architecture"
     ],
     "status": "published"
   },
@@ -2757,10 +2539,9 @@ export const learnLessons: LearnLesson[] = [
     "author": "Adroit Consulting",
     "readTime": "9 min read",
     "tags": [
-      "Learn",
-      "AI",
-      "Workplace",
-      "Prompting"
+      "LLMs",
+      "AI at Work",
+      "Prompt Engineering"
     ],
     "status": "published"
   },
@@ -2774,12 +2555,8 @@ export const learnLessons: LearnLesson[] = [
     "author": "Adroit Consulting",
     "readTime": "10 min read",
     "tags": [
-      "Learn",
       "Salesforce",
-      "Architect",
-      "Solution Design",
-      "NFRs",
-      "Architecture Documentation"
+      "Architecture"
     ],
     "status": "published"
   },
@@ -2793,9 +2570,8 @@ export const learnLessons: LearnLesson[] = [
     "author": "Adroit Consulting",
     "readTime": "15 min read",
     "tags": [
-      "Learn",
-      "AI",
-      "Agentic",
+      "LLMs",
+      "AI Agents",
       "Observability"
     ],
     "status": "published"
@@ -2810,10 +2586,9 @@ export const learnLessons: LearnLesson[] = [
     "author": "Adroit Consulting",
     "readTime": "9 min read",
     "tags": [
-      "Learn",
-      "AI",
-      "Workplace",
-      "Iteration"
+      "LLMs",
+      "AI at Work",
+      "Agile"
     ],
     "status": "published"
   },
@@ -2827,14 +2602,11 @@ export const learnLessons: LearnLesson[] = [
     "author": "Adroit Consulting",
     "readTime": "11 min read",
     "tags": [
-      "Learn",
-      "Architect",
-      "MLOps",
+      "Architecture",
+      "AI Infrastructure",
       "CI/CD",
-      "Environments",
-      "Model Registry",
-      "Agentic AI",
-      "General"
+      "Delivery",
+      "AI Agents"
     ],
     "status": "published"
   },
@@ -2848,10 +2620,8 @@ export const learnLessons: LearnLesson[] = [
     "author": "Adroit Consulting",
     "readTime": "14 min read",
     "tags": [
-      "Learn",
-      "AI",
-      "Agentic",
-      "Evaluation"
+      "LLMs",
+      "AI Agents"
     ],
     "status": "published"
   },
@@ -2865,10 +2635,9 @@ export const learnLessons: LearnLesson[] = [
     "author": "Adroit Consulting",
     "readTime": "9 min read",
     "tags": [
-      "Learn",
-      "AI",
-      "Workplace",
-      "Prompting"
+      "LLMs",
+      "AI at Work",
+      "Prompt Engineering"
     ],
     "status": "published"
   },
@@ -2882,8 +2651,7 @@ export const learnLessons: LearnLesson[] = [
     "author": "Adroit Consulting",
     "readTime": "5 min read",
     "tags": [
-      "OmniStudio",
-      "OmniScripts"
+      "OmniStudio"
     ],
     "status": "published"
   },
@@ -2897,13 +2665,10 @@ export const learnLessons: LearnLesson[] = [
     "author": "Adroit Consulting",
     "readTime": "10 min read",
     "tags": [
-      "Learn",
       "Salesforce",
-      "Architect",
-      "Sandboxes",
-      "Change Sets",
-      "DevOps",
-      "Salesforce DX"
+      "Architecture",
+      "Delivery",
+      "DevOps"
     ],
     "status": "published"
   },
@@ -2917,9 +2682,8 @@ export const learnLessons: LearnLesson[] = [
     "author": "Adroit Consulting",
     "readTime": "13 min read",
     "tags": [
-      "Learn",
-      "AI",
-      "Agentic",
+      "LLMs",
+      "AI Agents",
       "Security"
     ],
     "status": "published"
@@ -2934,9 +2698,8 @@ export const learnLessons: LearnLesson[] = [
     "author": "Adroit Consulting",
     "readTime": "9 min read",
     "tags": [
-      "Learn",
-      "AI",
-      "AI Literacy"
+      "LLMs",
+      "AI at Work"
     ],
     "status": "published"
   },
@@ -2950,8 +2713,7 @@ export const learnLessons: LearnLesson[] = [
     "author": "Adroit Consulting",
     "readTime": "5 min read",
     "tags": [
-      "OmniStudio",
-      "OmniScripts"
+      "OmniStudio"
     ],
     "status": "published"
   },
@@ -2965,10 +2727,8 @@ export const learnLessons: LearnLesson[] = [
     "author": "Adroit Consulting",
     "readTime": "12 min read",
     "tags": [
-      "Learn",
       "Salesforce",
-      "Architect",
-      "Limits"
+      "Architecture"
     ],
     "status": "published"
   },
@@ -2982,9 +2742,8 @@ export const learnLessons: LearnLesson[] = [
     "author": "Adroit Consulting",
     "readTime": "11 min read",
     "tags": [
-      "Learn",
-      "AI",
-      "Agentic",
+      "LLMs",
+      "AI Agents",
       "Security"
     ],
     "status": "published"
@@ -2999,9 +2758,8 @@ export const learnLessons: LearnLesson[] = [
     "author": "Adroit Consulting",
     "readTime": "8 min read",
     "tags": [
-      "Learn",
-      "AI",
-      "Data Safety"
+      "LLMs",
+      "Security"
     ],
     "status": "published"
   },
@@ -3015,8 +2773,7 @@ export const learnLessons: LearnLesson[] = [
     "author": "Adroit Consulting",
     "readTime": "5 min read",
     "tags": [
-      "OmniStudio",
-      "OmniScripts"
+      "OmniStudio"
     ],
     "status": "published"
   },
@@ -3030,12 +2787,10 @@ export const learnLessons: LearnLesson[] = [
     "author": "Adroit Consulting",
     "readTime": "10 min read",
     "tags": [
-      "Learn",
       "Salesforce",
-      "Architect",
-      "Large Data Volumes",
-      "Big Objects",
-      "Indexing"
+      "Architecture",
+      "Data",
+      "RAG"
     ],
     "status": "published"
   },
@@ -3049,10 +2804,9 @@ export const learnLessons: LearnLesson[] = [
     "author": "Adroit Consulting",
     "readTime": "11 min read",
     "tags": [
-      "Learn",
-      "AI",
-      "Agentic",
-      "Sessions"
+      "LLMs",
+      "AI Agents",
+      "Salesforce"
     ],
     "status": "published"
   },
@@ -3066,10 +2820,9 @@ export const learnLessons: LearnLesson[] = [
     "author": "Adroit Consulting",
     "readTime": "9 min read",
     "tags": [
-      "Learn",
-      "AI",
-      "Workplace",
-      "Foundations"
+      "LLMs",
+      "AI at Work",
+      "Salesforce"
     ],
     "status": "published"
   },
@@ -3083,8 +2836,7 @@ export const learnLessons: LearnLesson[] = [
     "author": "Adroit Consulting",
     "readTime": "5 min read",
     "tags": [
-      "OmniStudio",
-      "OmniScripts"
+      "OmniStudio"
     ],
     "status": "published"
   },
@@ -3098,12 +2850,9 @@ export const learnLessons: LearnLesson[] = [
     "author": "Adroit Consulting",
     "readTime": "9 min read",
     "tags": [
-      "Learn",
       "Salesforce",
-      "Architect",
-      "Data Migration",
-      "ETL",
-      "ELT"
+      "Architecture",
+      "Data"
     ],
     "status": "published"
   },
@@ -3117,10 +2866,9 @@ export const learnLessons: LearnLesson[] = [
     "author": "Adroit Consulting",
     "readTime": "10 min read",
     "tags": [
-      "Learn",
-      "AI",
-      "Agentic",
-      "Context"
+      "LLMs",
+      "AI Agents",
+      "Prompt Engineering"
     ],
     "status": "published"
   },
@@ -3134,10 +2882,9 @@ export const learnLessons: LearnLesson[] = [
     "author": "Adroit Consulting",
     "readTime": "8 min read",
     "tags": [
-      "Learn",
-      "AI",
-      "Workplace",
-      "Foundations"
+      "LLMs",
+      "AI at Work",
+      "Salesforce"
     ],
     "status": "published"
   },
@@ -3151,8 +2898,7 @@ export const learnLessons: LearnLesson[] = [
     "author": "Adroit Consulting",
     "readTime": "6 min read",
     "tags": [
-      "OmniStudio",
-      "OmniScripts"
+      "OmniStudio"
     ],
     "status": "published"
   },
@@ -3166,11 +2912,10 @@ export const learnLessons: LearnLesson[] = [
     "author": "Adroit Consulting",
     "readTime": "10 min read",
     "tags": [
-      "Learn",
-      "Architect",
-      "Data Architecture",
-      "AI",
-      "Vector Database"
+      "Architecture",
+      "Data",
+      "LLMs",
+      "RAG"
     ],
     "status": "published"
   },
@@ -3184,10 +2929,8 @@ export const learnLessons: LearnLesson[] = [
     "author": "Adroit Consulting",
     "readTime": "10 min read",
     "tags": [
-      "Learn",
-      "AI",
-      "Agentic",
-      "Memory"
+      "LLMs",
+      "AI Agents"
     ],
     "status": "published"
   },
@@ -3201,10 +2944,9 @@ export const learnLessons: LearnLesson[] = [
     "author": "Adroit Consulting",
     "readTime": "8 min read",
     "tags": [
-      "Learn",
-      "AI",
-      "Workplace",
-      "Foundations"
+      "LLMs",
+      "AI at Work",
+      "Salesforce"
     ],
     "status": "published"
   },
@@ -3218,8 +2960,7 @@ export const learnLessons: LearnLesson[] = [
     "author": "Adroit Consulting",
     "readTime": "5 min read",
     "tags": [
-      "OmniStudio",
-      "FlexCards"
+      "OmniStudio"
     ],
     "status": "published"
   },
@@ -3233,11 +2974,9 @@ export const learnLessons: LearnLesson[] = [
     "author": "Adroit Consulting",
     "readTime": "11 min read",
     "tags": [
-      "Learn",
       "Salesforce",
-      "Architect",
-      "Data Model",
-      "Data Architecture"
+      "Architecture",
+      "Data"
     ],
     "status": "published"
   },
@@ -3251,9 +2990,8 @@ export const learnLessons: LearnLesson[] = [
     "author": "Adroit Consulting",
     "readTime": "12 min read",
     "tags": [
-      "Learn",
-      "AI",
-      "Agentic",
+      "LLMs",
+      "AI Agents",
       "RAG"
     ],
     "status": "published"
@@ -3268,10 +3006,9 @@ export const learnLessons: LearnLesson[] = [
     "author": "Adroit Consulting",
     "readTime": "8 min read",
     "tags": [
-      "Learn",
-      "AI",
-      "Workplace",
-      "Foundations"
+      "LLMs",
+      "AI at Work",
+      "Salesforce"
     ],
     "status": "published"
   },
@@ -3285,8 +3022,7 @@ export const learnLessons: LearnLesson[] = [
     "author": "Adroit Consulting",
     "readTime": "5 min read",
     "tags": [
-      "OmniStudio",
-      "FlexCards"
+      "OmniStudio"
     ],
     "status": "published"
   },
@@ -3300,14 +3036,9 @@ export const learnLessons: LearnLesson[] = [
     "author": "Adroit Consulting",
     "readTime": "11 min read",
     "tags": [
-      "Learn",
       "Salesforce",
-      "Architect",
-      "Security",
-      "Identity",
-      "OAuth",
-      "SAML",
-      "Communities"
+      "Architecture",
+      "Security"
     ],
     "status": "published"
   },
@@ -3321,10 +3052,9 @@ export const learnLessons: LearnLesson[] = [
     "author": "Adroit Consulting",
     "readTime": "10 min read",
     "tags": [
-      "Learn",
-      "AI",
-      "Agentic",
-      "Vector Databases"
+      "LLMs",
+      "AI Agents",
+      "RAG"
     ],
     "status": "published"
   },
@@ -3338,8 +3068,7 @@ export const learnLessons: LearnLesson[] = [
     "author": "Adroit Consulting",
     "readTime": "5 min read",
     "tags": [
-      "OmniStudio",
-      "FlexCards"
+      "OmniStudio"
     ],
     "status": "published"
   },
@@ -3353,11 +3082,9 @@ export const learnLessons: LearnLesson[] = [
     "author": "Adroit Consulting",
     "readTime": "10 min read",
     "tags": [
-      "Learn",
       "Salesforce",
-      "Architect",
-      "Security",
-      "Permissions"
+      "Architecture",
+      "Security"
     ],
     "status": "published"
   },
@@ -3371,10 +3098,9 @@ export const learnLessons: LearnLesson[] = [
     "author": "Adroit Consulting",
     "readTime": "10 min read",
     "tags": [
-      "Learn",
-      "AI",
-      "Agentic",
-      "Embeddings"
+      "LLMs",
+      "AI Agents",
+      "RAG"
     ],
     "status": "published"
   },
@@ -3388,8 +3114,7 @@ export const learnLessons: LearnLesson[] = [
     "author": "Adroit Consulting",
     "readTime": "5 min read",
     "tags": [
-      "OmniStudio",
-      "FlexCards"
+      "OmniStudio"
     ],
     "status": "published"
   },
@@ -3403,11 +3128,9 @@ export const learnLessons: LearnLesson[] = [
     "author": "Adroit Consulting",
     "readTime": "10 min read",
     "tags": [
-      "Learn",
       "Salesforce",
-      "Architect",
-      "Security",
-      "Sharing"
+      "Architecture",
+      "Security"
     ],
     "status": "published"
   },
@@ -3421,9 +3144,8 @@ export const learnLessons: LearnLesson[] = [
     "author": "Adroit Consulting",
     "readTime": "10 min read",
     "tags": [
-      "Learn",
-      "AI",
-      "Agentic",
+      "LLMs",
+      "AI Agents",
       "RAG"
     ],
     "status": "published"
@@ -3438,8 +3160,7 @@ export const learnLessons: LearnLesson[] = [
     "author": "Adroit Consulting",
     "readTime": "6 min read",
     "tags": [
-      "OmniStudio",
-      "FlexCards"
+      "OmniStudio"
     ],
     "status": "published"
   },
@@ -3453,13 +3174,10 @@ export const learnLessons: LearnLesson[] = [
     "author": "Adroit Consulting",
     "readTime": "9 min read",
     "tags": [
-      "Learn",
-      "Architect",
-      "Systems Architecture",
-      "Asynchronous",
-      "Queues",
-      "Eventual Consistency",
-      "AI"
+      "Architecture",
+      "Integration",
+      "Reliability",
+      "LLMs"
     ],
     "status": "published"
   },
@@ -3473,10 +3191,8 @@ export const learnLessons: LearnLesson[] = [
     "author": "Adroit Consulting",
     "readTime": "9 min read",
     "tags": [
-      "Learn",
-      "AI",
-      "Agentic",
-      "Tools"
+      "LLMs",
+      "AI Agents"
     ],
     "status": "published"
   },
@@ -3490,8 +3206,7 @@ export const learnLessons: LearnLesson[] = [
     "author": "Adroit Consulting",
     "readTime": "6 min read",
     "tags": [
-      "OmniStudio",
-      "FlexCards"
+      "OmniStudio"
     ],
     "status": "published"
   },
@@ -3505,12 +3220,10 @@ export const learnLessons: LearnLesson[] = [
     "author": "Adroit Consulting",
     "readTime": "9 min read",
     "tags": [
-      "Learn",
       "Salesforce",
-      "Architect",
+      "Architecture",
       "Integration",
-      "Reliability",
-      "Error Handling"
+      "Reliability"
     ],
     "status": "published"
   },
@@ -3524,10 +3237,8 @@ export const learnLessons: LearnLesson[] = [
     "author": "Adroit Consulting",
     "readTime": "9 min read",
     "tags": [
-      "Learn",
-      "AI",
-      "Agentic",
-      "Tools"
+      "LLMs",
+      "AI Agents"
     ],
     "status": "published"
   },
@@ -3541,8 +3252,7 @@ export const learnLessons: LearnLesson[] = [
     "author": "Adroit Consulting",
     "readTime": "6 min read",
     "tags": [
-      "OmniStudio",
-      "FlexCards"
+      "OmniStudio"
     ],
     "status": "published"
   },
@@ -3556,11 +3266,10 @@ export const learnLessons: LearnLesson[] = [
     "author": "Adroit Consulting",
     "readTime": "9 min read",
     "tags": [
-      "Learn",
       "Salesforce",
-      "Architect",
+      "Architecture",
       "Integration",
-      "Middleware"
+      "Platform Engineering"
     ],
     "status": "published"
   },
@@ -3574,10 +3283,8 @@ export const learnLessons: LearnLesson[] = [
     "author": "Adroit Consulting",
     "readTime": "8 min read",
     "tags": [
-      "Learn",
-      "AI",
-      "Agentic",
-      "Tools"
+      "LLMs",
+      "AI Agents"
     ],
     "status": "published"
   },
@@ -3591,8 +3298,7 @@ export const learnLessons: LearnLesson[] = [
     "author": "Adroit Consulting",
     "readTime": "6 min read",
     "tags": [
-      "OmniStudio",
-      "FlexCards"
+      "OmniStudio"
     ],
     "status": "published"
   },
@@ -3606,12 +3312,10 @@ export const learnLessons: LearnLesson[] = [
     "author": "Adroit Consulting",
     "readTime": "8 min read",
     "tags": [
-      "Learn",
       "Salesforce",
-      "Architect",
+      "Architecture",
       "Integration",
-      "Platform Events",
-      "Change Data Capture"
+      "Data"
     ],
     "status": "published"
   },
@@ -3625,10 +3329,8 @@ export const learnLessons: LearnLesson[] = [
     "author": "Adroit Consulting",
     "readTime": "8 min read",
     "tags": [
-      "Learn",
-      "AI",
-      "Agentic",
-      "Models"
+      "LLMs",
+      "AI Agents"
     ],
     "status": "published"
   },
@@ -3642,8 +3344,7 @@ export const learnLessons: LearnLesson[] = [
     "author": "Adroit Consulting",
     "readTime": "8 min read",
     "tags": [
-      "OmniStudio",
-      "FlexCards"
+      "OmniStudio"
     ],
     "status": "published"
   },
@@ -3657,11 +3358,9 @@ export const learnLessons: LearnLesson[] = [
     "author": "Adroit Consulting",
     "readTime": "9 min read",
     "tags": [
-      "Learn",
       "Salesforce",
-      "Architect",
-      "Integration",
-      "Integration Patterns"
+      "Architecture",
+      "Integration"
     ],
     "status": "published"
   },
@@ -3675,10 +3374,9 @@ export const learnLessons: LearnLesson[] = [
     "author": "Adroit Consulting",
     "readTime": "9 min read",
     "tags": [
-      "Learn",
-      "AI",
-      "Agentic",
-      "Cost"
+      "LLMs",
+      "AI Agents",
+      "Performance"
     ],
     "status": "published"
   },
@@ -3692,8 +3390,7 @@ export const learnLessons: LearnLesson[] = [
     "author": "Adroit Consulting",
     "readTime": "10 min read",
     "tags": [
-      "OmniStudio",
-      "OmniStudio Fundamentals"
+      "OmniStudio"
     ],
     "status": "published"
   },
@@ -3707,11 +3404,8 @@ export const learnLessons: LearnLesson[] = [
     "author": "Adroit Consulting",
     "readTime": "9 min read",
     "tags": [
-      "Learn",
-      "Architect",
-      "Systems Architecture",
-      "AI Patterns",
-      "General"
+      "Architecture",
+      "AI at Work"
     ],
     "status": "published"
   },
@@ -3725,10 +3419,9 @@ export const learnLessons: LearnLesson[] = [
     "author": "Adroit Consulting",
     "readTime": "10 min read",
     "tags": [
-      "Learn",
-      "AI",
-      "Agentic",
-      "Prompting"
+      "LLMs",
+      "AI Agents",
+      "Prompt Engineering"
     ],
     "status": "published"
   },
@@ -3742,8 +3435,7 @@ export const learnLessons: LearnLesson[] = [
     "author": "Adroit Consulting",
     "readTime": "6 min read",
     "tags": [
-      "OmniStudio",
-      "OmniStudio Fundamentals"
+      "OmniStudio"
     ],
     "status": "published"
   },
@@ -3757,9 +3449,8 @@ export const learnLessons: LearnLesson[] = [
     "author": "Adroit Consulting",
     "readTime": "9 min read",
     "tags": [
-      "Learn",
       "Salesforce",
-      "Architect",
+      "Architecture",
       "Integration"
     ],
     "status": "published"
@@ -3774,10 +3465,9 @@ export const learnLessons: LearnLesson[] = [
     "author": "Adroit Consulting",
     "readTime": "9 min read",
     "tags": [
-      "Learn",
-      "AI",
-      "Agentic",
-      "Foundations"
+      "LLMs",
+      "AI Agents",
+      "Salesforce"
     ],
     "status": "published"
   },
@@ -3791,8 +3481,7 @@ export const learnLessons: LearnLesson[] = [
     "author": "Adroit Consulting",
     "readTime": "6 min read",
     "tags": [
-      "OmniStudio",
-      "OmniStudio Fundamentals"
+      "OmniStudio"
     ],
     "status": "published"
   },
@@ -3806,10 +3495,9 @@ export const learnLessons: LearnLesson[] = [
     "author": "Adroit Consulting",
     "readTime": "8 min read",
     "tags": [
-      "Learn",
       "Salesforce",
-      "Architect",
-      "Data Model"
+      "Architecture",
+      "Data"
     ],
     "status": "published"
   },
@@ -3823,10 +3511,9 @@ export const learnLessons: LearnLesson[] = [
     "author": "Adroit Consulting",
     "readTime": "9 min read",
     "tags": [
-      "Learn",
-      "AI",
-      "Agentic",
-      "Foundations"
+      "LLMs",
+      "AI Agents",
+      "Salesforce"
     ],
     "status": "published"
   },
@@ -3840,8 +3527,7 @@ export const learnLessons: LearnLesson[] = [
     "author": "Adroit Consulting",
     "readTime": "6 min read",
     "tags": [
-      "OmniStudio",
-      "OmniStudio Fundamentals"
+      "OmniStudio"
     ],
     "status": "published"
   },
@@ -3855,10 +3541,8 @@ export const learnLessons: LearnLesson[] = [
     "author": "Adroit Consulting",
     "readTime": "8 min read",
     "tags": [
-      "Learn",
       "Salesforce",
-      "Architect",
-      "Multi-Tenancy"
+      "Architecture"
     ],
     "status": "published"
   },
@@ -3872,10 +3556,9 @@ export const learnLessons: LearnLesson[] = [
     "author": "Adroit Consulting",
     "readTime": "9 min read",
     "tags": [
-      "Learn",
-      "AI",
-      "Agentic",
-      "Foundations"
+      "LLMs",
+      "AI Agents",
+      "Salesforce"
     ],
     "status": "published"
   },
@@ -3889,8 +3572,7 @@ export const learnLessons: LearnLesson[] = [
     "author": "Adroit Consulting",
     "readTime": "6 min read",
     "tags": [
-      "OmniStudio",
-      "OmniStudio Fundamentals"
+      "OmniStudio"
     ],
     "status": "published"
   },
@@ -3904,10 +3586,9 @@ export const learnLessons: LearnLesson[] = [
     "author": "Adroit Consulting",
     "readTime": "8 min read",
     "tags": [
-      "Learn",
       "Salesforce",
-      "Architect",
-      "Certifications"
+      "Architecture",
+      "OmniStudio"
     ],
     "status": "published"
   },
@@ -3921,8 +3602,7 @@ export const learnLessons: LearnLesson[] = [
     "author": "Adroit Consulting",
     "readTime": "6 min read",
     "tags": [
-      "OmniStudio",
-      "OmniStudio Fundamentals"
+      "OmniStudio"
     ],
     "status": "published"
   }

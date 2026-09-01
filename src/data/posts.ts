@@ -17,8 +17,7 @@ export const posts: BlogPost[] = [
       "React",
       "Next.js",
       "Web Development",
-      "Performance",
-      "Hooks"
+      "Performance"
     ],
     "bannerImage": "/banners/react-19-2-activity-useeffectevent.png",
     "status": "published"
@@ -37,11 +36,8 @@ export const posts: BlogPost[] = [
     "featured": false,
     "tags": [
       "AI Agents",
-      "Agent Memory",
-      "Context Engineering",
-      "Multi-Agent",
-      "LLM Infrastructure",
-      "Persistent Memory"
+      "Prompt Engineering",
+      "AI Infrastructure"
     ],
     "bannerImage": "/banners/agent-memory-context-engineering-2026.png",
     "status": "published"
@@ -59,13 +55,10 @@ export const posts: BlogPost[] = [
     "readTime": "11 min read",
     "featured": false,
     "tags": [
-      "Form UX",
-      "Interface Patterns",
+      "UI/UX",
       "Design Systems",
       "Accessibility",
-      "Web Forms",
-      "Inline Validation",
-      "Design Engineering"
+      "Web Development"
     ],
     "bannerImage": "/banners/form-ux-design-2026.png",
     "status": "published"
@@ -85,10 +78,7 @@ export const posts: BlogPost[] = [
     "tags": [
       "Project Management",
       "Agile",
-      "Retrospective",
-      "Continuous Improvement",
-      "Delivery",
-      "Scrum"
+      "Delivery"
     ],
     "bannerImage": "/banners/retrospective-follow-through-2026.png",
     "status": "published"
@@ -108,11 +98,7 @@ export const posts: BlogPost[] = [
     "tags": [
       "DevOps",
       "CI/CD",
-      "Merge Queue",
-      "Trunk-Based Development",
-      "Developer Productivity",
-      "GitHub",
-      "GitLab"
+      "Platform Engineering"
     ],
     "bannerImage": "/banners/merge-queue-trunk-based-2026.png",
     "status": "published"
@@ -131,11 +117,6 @@ export const posts: BlogPost[] = [
     "featured": false,
     "tags": [
       "RAG",
-      "Retrieval",
-      "Chunking",
-      "Hybrid Search",
-      "Reranking",
-      "RAG Evaluation",
       "AI Infrastructure"
     ],
     "bannerImage": "/banners/production-rag-retrieval-quality-2026.png",
@@ -156,10 +137,7 @@ export const posts: BlogPost[] = [
     "tags": [
       "AI Agents",
       "MCP",
-      "Security",
-      "Prompt Injection",
-      "Tool Poisoning",
-      "Agentic AI"
+      "Security"
     ],
     "bannerImage": "/banners/agent-tool-attack-surface-2026.png",
     "status": "published"
@@ -181,9 +159,7 @@ export const posts: BlogPost[] = [
       "Observability",
       "Security",
       "Kubernetes",
-      "eBPF",
-      "Cilium",
-      "Tetragon"
+      "Platform Engineering"
     ],
     "bannerImage": "/banners/ebpf-kubernetes-observability-security-2026.png",
     "status": "published"
@@ -202,8 +178,6 @@ export const posts: BlogPost[] = [
     "featured": false,
     "tags": [
       "Salesforce",
-      "Agentforce",
-      "Experience Cloud",
       "AI Agents",
       "Data Cloud"
     ],
@@ -224,9 +198,6 @@ export const posts: BlogPost[] = [
     "featured": false,
     "tags": [
       "React",
-      "React Compiler",
-      "useMemo",
-      "useCallback",
       "Performance",
       "Web Development"
     ],
@@ -247,11 +218,10 @@ export const posts: BlogPost[] = [
     "featured": false,
     "tags": [
       "Project Management",
-      "Definition of Done",
       "Agile",
       "Delivery",
       "AI Agents",
-      "Quality",
+      "Testing",
       "Consulting"
     ],
     "bannerImage": "/banners/definition-of-done-ai-agents-2026.png",
@@ -270,13 +240,8 @@ export const posts: BlogPost[] = [
     "readTime": "9 min read",
     "featured": false,
     "tags": [
-      "Visual Regression Testing",
-      "Design Tokens",
+      "Testing",
       "Design Systems",
-      "Component Libraries",
-      "Design Engineering",
-      "Playwright",
-      "Storybook",
       "UI/UX"
     ],
     "bannerImage": "/banners/visual-regression-testing-design-systems-2026.png",
@@ -297,11 +262,9 @@ export const posts: BlogPost[] = [
     "tags": [
       "DevOps",
       "Observability",
-      "OpenTelemetry",
       "AI Agents",
-      "LLM",
-      "Telemetry",
-      "Cross-Pillar"
+      "LLMs",
+      "Architecture"
     ],
     "bannerImage": "/banners/ai-agent-observability-opentelemetry-2026.png",
     "status": "published"
@@ -320,11 +283,9 @@ export const posts: BlogPost[] = [
     "featured": false,
     "tags": [
       "AI Agents",
-      "Multi-Agent Systems",
       "Reliability",
       "Orchestration",
-      "Failure Modes",
-      "Production"
+      "Delivery"
     ],
     "bannerImage": "/banners/multi-agent-failure-structural-2026.png",
     "status": "published"
@@ -343,8 +304,6 @@ export const posts: BlogPost[] = [
     "featured": false,
     "tags": [
       "Salesforce",
-      "Agentforce",
-      "Multi-Agent Orchestration",
       "AI Agents",
       "Orchestration"
     ],
@@ -364,11 +323,9 @@ export const posts: BlogPost[] = [
     "readTime": "8 min read",
     "featured": false,
     "tags": [
-      "Supabase",
-      "TypeScript",
       "Web Development",
+      "TypeScript",
       "MCP",
-      "Postgres",
       "AI Agents"
     ],
     "bannerImage": "/banners/supabase-agent-skills-2026.png",
@@ -388,8 +345,7 @@ export const posts: BlogPost[] = [
     "featured": false,
     "tags": [
       "Web Development",
-      "Qwen",
-      "Local Models",
+      "AI Infrastructure",
       "AI Agents",
       "Next.js"
     ],
@@ -410,7 +366,6 @@ export const posts: BlogPost[] = [
     "featured": false,
     "tags": [
       "Project Management",
-      "PM Tooling",
       "AI Agents",
       "Agile",
       "Consulting",
@@ -432,14 +387,10 @@ export const posts: BlogPost[] = [
     "readTime": "10 min read",
     "featured": false,
     "tags": [
-      "Dark Mode",
+      "UI/UX",
       "Accessibility",
-      "Design Tokens",
-      "WCAG",
-      "Interface Patterns",
       "Design Systems",
-      "CSS",
-      "UI/UX"
+      "Web Development"
     ],
     "bannerImage": "/banners/dark-mode-accessibility-2026.png",
     "status": "published"
@@ -457,13 +408,10 @@ export const posts: BlogPost[] = [
     "readTime": "13 min read",
     "featured": false,
     "tags": [
-      "Generative UI",
+      "AI at Work",
       "Design Systems",
-      "Design Engineering",
-      "Agentic UI",
-      "A2UI",
-      "Interface Patterns",
-      "AI"
+      "UI/UX",
+      "LLMs"
     ],
     "bannerImage": "/banners/generative-ui-runtime-interfaces-2026.png",
     "status": "published"
@@ -482,7 +430,6 @@ export const posts: BlogPost[] = [
     "featured": false,
     "tags": [
       "Project Management",
-      "Stakeholder Management",
       "Delivery",
       "Agile",
       "AI Agents",
@@ -505,11 +452,10 @@ export const posts: BlogPost[] = [
     "featured": false,
     "tags": [
       "AI Agents",
-      "LLM Evals",
+      "LLMs",
       "Observability",
-      "Regression Testing",
-      "Multi-Agent Systems",
-      "Production"
+      "Testing",
+      "Delivery"
     ],
     "bannerImage": "/banners/agent-trajectory-evals-2026.png",
     "status": "published"
@@ -528,12 +474,9 @@ export const posts: BlogPost[] = [
     "featured": false,
     "tags": [
       "DevOps",
-      "FinOps",
-      "GPU",
-      "LLM Inference",
-      "Cost Optimization",
-      "Kubernetes",
-      "Model Serving"
+      "Performance",
+      "AI Infrastructure",
+      "Kubernetes"
     ],
     "bannerImage": "/banners/gpu-finops-ai-cost-allocation-2026.png",
     "status": "published"
@@ -553,9 +496,8 @@ export const posts: BlogPost[] = [
     "tags": [
       "Salesforce",
       "Apex",
-      "Summer '26",
-      "security",
-      "Agentforce"
+      "Security",
+      "AI Agents"
     ],
     "bannerImage": "/banners/apex-summer-26-security-v67-migration.png",
     "status": "published"
@@ -575,8 +517,6 @@ export const posts: BlogPost[] = [
     "tags": [
       "React",
       "Next.js",
-      "Server Actions",
-      "Mutations",
       "Web Development"
     ],
     "bannerImage": "/banners/react-server-actions-mutations-2026.png",
@@ -596,13 +536,7 @@ export const posts: BlogPost[] = [
     "featured": false,
     "tags": [
       "Design Systems",
-      "Headless UI",
-      "Component Libraries",
-      "Radix",
-      "Base UI",
-      "shadcn/ui",
-      "React Aria",
-      "Design Engineering"
+      "UI/UX"
     ],
     "bannerImage": "/banners/headless-ui-component-libraries-2026.png",
     "status": "published"
@@ -622,10 +556,7 @@ export const posts: BlogPost[] = [
     "tags": [
       "Project Management",
       "Agile",
-      "Scrum",
-      "Sprint Review",
       "AI Agents",
-      "Stakeholder Management",
       "Delivery"
     ],
     "bannerImage": "/banners/scrum-ceremonies-ai-agents-2026.png",
@@ -645,11 +576,9 @@ export const posts: BlogPost[] = [
     "featured": false,
     "tags": [
       "AI Agents",
-      "A2A",
       "MCP",
-      "Multi-Agent Systems",
       "Orchestration",
-      "Interoperability"
+      "Integration"
     ],
     "bannerImage": "/banners/a2a-agent-coordination-2026.png",
     "status": "published"
@@ -668,10 +597,6 @@ export const posts: BlogPost[] = [
     "featured": false,
     "tags": [
       "DevOps",
-      "Infrastructure as Code",
-      "OpenTofu",
-      "Terraform",
-      "IaC",
       "Platform Engineering"
     ],
     "bannerImage": "/banners/opentofu-vs-terraform-2026.png",
@@ -692,9 +617,8 @@ export const posts: BlogPost[] = [
     "tags": [
       "Salesforce",
       "MCP",
-      "Agentforce",
-      "Data 360",
-      "AI Agents"
+      "AI Agents",
+      "Data"
     ],
     "bannerImage": "/banners/salesforce-mcp-hosting-ga-2026.png",
     "status": "published"
@@ -713,11 +637,7 @@ export const posts: BlogPost[] = [
     "featured": false,
     "tags": [
       "Web Development",
-      "SSE",
-      "WebSockets",
-      "Real-Time",
-      "Streaming",
-      "AI"
+      "LLMs"
     ],
     "bannerImage": "/banners/sse-vs-websockets-2026.png",
     "status": "published"
@@ -735,13 +655,10 @@ export const posts: BlogPost[] = [
     "readTime": "10 min read",
     "featured": false,
     "tags": [
-      "UX Research",
-      "AI",
-      "User Research",
-      "Synthetic Users",
-      "Discovery",
-      "Design Research",
-      "ResearchOps"
+      "UI/UX",
+      "LLMs",
+      "Testing",
+      "Consulting"
     ],
     "bannerImage": "/banners/ai-in-ux-research-2026.png",
     "status": "published"
@@ -760,11 +677,9 @@ export const posts: BlogPost[] = [
     "featured": false,
     "tags": [
       "Project Management",
-      "Requirements",
-      "AI",
+      "LLMs",
       "Delivery",
-      "Agile",
-      "Spec-Driven Development"
+      "Agile"
     ],
     "bannerImage": "/banners/ai-requirements-bottleneck-2026.png",
     "status": "published"
@@ -784,11 +699,8 @@ export const posts: BlogPost[] = [
     "tags": [
       "DevOps",
       "Kubernetes",
-      "LLM Serving",
-      "Inference",
-      "Gateway API",
-      "vLLM",
-      "SGLang"
+      "AI Infrastructure",
+      "Platform Engineering"
     ],
     "bannerImage": "/banners/kubernetes-llm-serving-2026.png",
     "status": "published"
@@ -807,11 +719,8 @@ export const posts: BlogPost[] = [
     "featured": false,
     "tags": [
       "MCP",
-      "Model Context Protocol",
       "AI Agents",
-      "Agentic AI",
-      "LLM Tool Integration",
-      "Production Patterns"
+      "Reliability"
     ],
     "bannerImage": "/banners/mcp-stateless-2026-07-28-production-agents.png",
     "status": "published"
@@ -830,10 +739,8 @@ export const posts: BlogPost[] = [
     "featured": false,
     "tags": [
       "Salesforce",
-      "Data 360",
-      "Data Cloud",
-      "Identity Resolution",
-      "CDP"
+      "Data",
+      "Data Cloud"
     ],
     "bannerImage": "/banners/data-360-implementation-patterns.png",
     "status": "published"
@@ -851,12 +758,10 @@ export const posts: BlogPost[] = [
     "readTime": "8 min read",
     "featured": false,
     "tags": [
-      "Supabase",
-      "BigQuery",
       "Web Development",
+      "Data",
       "TypeScript",
-      "Real-time",
-      "CDC"
+      "Data Cloud"
     ],
     "bannerImage": "/banners/supabase-pipelines-cdc-bigquery.png",
     "status": "published"
@@ -875,10 +780,9 @@ export const posts: BlogPost[] = [
     "featured": false,
     "tags": [
       "Project Management",
-      "Estimation",
       "Agile",
-      "AI",
-      "Flow Metrics",
+      "LLMs",
+      "Flow",
       "Delivery"
     ],
     "bannerImage": "/banners/estimation-after-ai-2026.png",
@@ -897,13 +801,10 @@ export const posts: BlogPost[] = [
     "readTime": "11 min read",
     "featured": false,
     "tags": [
-      "Figma",
-      "MCP",
-      "Design-to-Code",
       "Design Systems",
+      "MCP",
       "UI/UX",
-      "Design Engineering",
-      "Code Connect"
+      "Platform Engineering"
     ],
     "bannerImage": "/banners/figma-mcp-design-to-code-2026.png",
     "status": "published"
@@ -922,10 +823,6 @@ export const posts: BlogPost[] = [
     "featured": false,
     "tags": [
       "AI Agents",
-      "Agent Frameworks",
-      "LangGraph",
-      "CrewAI",
-      "Microsoft Agent Framework",
       "Orchestration"
     ],
     "bannerImage": "/banners/agent-framework-decision-2026.png",
@@ -946,10 +843,7 @@ export const posts: BlogPost[] = [
     "tags": [
       "DevOps",
       "Platform Engineering",
-      "Crossplane",
-      "Kubernetes",
-      "Control Plane",
-      "Infrastructure as Code"
+      "Kubernetes"
     ],
     "bannerImage": "/banners/control-planes-infrastructure-delivery-2026.png",
     "status": "published"
@@ -968,10 +862,9 @@ export const posts: BlogPost[] = [
     "featured": false,
     "tags": [
       "Salesforce",
-      "Agentforce",
-      "Data 360",
-      "Testing Center",
-      "AI Agents"
+      "AI Agents",
+      "Data",
+      "Testing"
     ],
     "bannerImage": "/banners/agentforce-production-implementation-patterns.png",
     "status": "published"
@@ -991,7 +884,6 @@ export const posts: BlogPost[] = [
     "tags": [
       "Next.js",
       "React",
-      "Server Components",
       "Performance",
       "Web Development"
     ],
@@ -1012,10 +904,8 @@ export const posts: BlogPost[] = [
     "featured": false,
     "tags": [
       "Project Management",
-      "Complexity",
+      "Architecture",
       "Agile",
-      "Estimation",
-      "Cynefin",
       "Delivery"
     ],
     "bannerImage": "/banners/complicated-vs-complex-delivery-diagnostic.png",
@@ -1035,12 +925,9 @@ export const posts: BlogPost[] = [
     "featured": false,
     "tags": [
       "Design Systems",
-      "Design Tokens",
-      "DTCG",
       "UI/UX",
-      "Figma",
       "Accessibility",
-      "W3C"
+      "Web Development"
     ],
     "bannerImage": "/banners/token-first-design-systems-2026.png",
     "status": "published"
@@ -1060,7 +947,6 @@ export const posts: BlogPost[] = [
     "tags": [
       "AI Agents",
       "Salesforce",
-      "Agentforce",
       "Automation"
     ],
     "bannerImage": "/banners/ai-agents-salesforce.png",
@@ -1079,9 +965,9 @@ export const posts: BlogPost[] = [
     "readTime": "8 min read",
     "featured": true,
     "tags": [
-      "AI Strategy",
+      "AI at Work",
       "Digital Transformation",
-      "Business Growth"
+      "Consulting"
     ],
     "bannerImage": "/banners/ai-strategy-2026.png",
     "status": "published"
@@ -1101,7 +987,7 @@ export const posts: BlogPost[] = [
     "tags": [
       "Digital Transformation",
       "AI Agents",
-      "Composable Architecture",
+      "Architecture",
       "Data",
       "Enterprise"
     ],
@@ -1123,9 +1009,8 @@ export const posts: BlogPost[] = [
     "tags": [
       "Accessibility",
       "Design Systems",
-      "EAA",
-      "WCAG",
-      "Compliance"
+      "Integration",
+      "Security"
     ],
     "bannerImage": "/banners/eaa-2027-accessibility-deadline.png",
     "status": "published"
@@ -1144,8 +1029,8 @@ export const posts: BlogPost[] = [
     "featured": false,
     "tags": [
       "Salesforce",
-      "Agentforce",
-      "Flow Orchestration",
+      "AI Agents",
+      "Flow",
       "Automation"
     ],
     "bannerImage": "/banners/flow-orchestrates-agentforce.png",
@@ -1165,10 +1050,8 @@ export const posts: BlogPost[] = [
     "featured": false,
     "tags": [
       "Project Management",
-      "Complexity",
-      "PMI",
-      "Delivery",
-      "Stakeholder Management"
+      "Architecture",
+      "Delivery"
     ],
     "bannerImage": "/banners/pmi-pulse-complexity-2026.png",
     "status": "published"
@@ -1187,7 +1070,7 @@ export const posts: BlogPost[] = [
     "featured": false,
     "tags": [
       "Salesforce",
-      "Flow Automation",
+      "Flow",
       "Apex"
     ],
     "bannerImage": "/banners/salesforce-flow-patterns.png",
@@ -1248,7 +1131,7 @@ export const posts: BlogPost[] = [
     "readTime": "9 min read",
     "featured": false,
     "tags": [
-      "State of the Stack",
+      "Architecture",
       "AI Agents",
       "Next.js",
       "Salesforce",
@@ -1272,11 +1155,8 @@ export const posts: BlogPost[] = [
     "featured": false,
     "tags": [
       "AI Agents",
-      "Agent Identity",
-      "Authentication",
-      "IAM",
-      "MCP",
-      "AI Security"
+      "Security",
+      "MCP"
     ],
     "bannerImage": "/banners/ai-agent-identity-2026.png",
     "status": "published"
@@ -1295,10 +1175,8 @@ export const posts: BlogPost[] = [
     "featured": false,
     "tags": [
       "DevOps",
-      "GitHub Actions",
       "CI/CD",
-      "Supply Chain Security",
-      "DevSecOps"
+      "Security"
     ],
     "bannerImage": "/banners/github-actions-supply-chain-security-2026.png",
     "status": "published"
@@ -1318,9 +1196,7 @@ export const posts: BlogPost[] = [
     "tags": [
       "Salesforce",
       "Data Cloud",
-      "Experience Cloud",
-      "Agentforce",
-      "Personalization"
+      "AI Agents"
     ],
     "bannerImage": "/banners/experience-cloud-data-cloud-personalization-pattern.png",
     "status": "published"
@@ -1338,8 +1214,6 @@ export const posts: BlogPost[] = [
     "readTime": "6 min read",
     "featured": false,
     "tags": [
-      "Supabase",
-      "Realtime",
       "Web Development",
       "TypeScript"
     ],
@@ -1362,8 +1236,8 @@ export const posts: BlogPost[] = [
       "CI/CD",
       "AI Agents",
       "DevOps",
-      "Code Review",
-      "AI-Generated Code"
+      "Delivery",
+      "AI at Work"
     ],
     "bannerImage": "/banners/category-ai.png",
     "status": "published"
@@ -1381,10 +1255,9 @@ export const posts: BlogPost[] = [
     "readTime": "8 min read",
     "featured": false,
     "tags": [
-      "LLM Infrastructure",
-      "Model Serving",
+      "AI Infrastructure",
       "DevOps",
-      "TCO"
+      "Performance"
     ],
     "bannerImage": "/banners/category-ai.png",
     "status": "published"
@@ -1403,10 +1276,7 @@ export const posts: BlogPost[] = [
     "featured": false,
     "tags": [
       "AI Agents",
-      "Multi-Agent Orchestration",
-      "Agentforce",
-      "Agentic AI",
-      "Production Patterns"
+      "Reliability"
     ],
     "bannerImage": "/banners/category-ai.png",
     "status": "published"
@@ -1426,8 +1296,7 @@ export const posts: BlogPost[] = [
     "tags": [
       "TypeScript",
       "Web Development",
-      "Performance",
-      "Compilers"
+      "Performance"
     ],
     "bannerImage": "/banners/category-react.png",
     "status": "published"
@@ -1446,9 +1315,8 @@ export const posts: BlogPost[] = [
     "featured": false,
     "tags": [
       "Salesforce",
-      "Summer '26",
       "Flow",
-      "Agentforce"
+      "AI Agents"
     ],
     "bannerImage": "/banners/category-sf.png",
     "status": "published"

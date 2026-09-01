@@ -4,6 +4,48 @@ All notable changes to the Adroit Consulting Blog project will be documented in 
 
 ## [Unreleased]
 
+### Feature: Post→Learn funnel, site search, canonical tag vocabulary (B-20, B-21, B-22, t_ca624544)
+
+**What** — Three Phase-3 content/conversion features:
+
+1. **B-20 — Post → Learn funnel + related posts.** New `src/components/BlogPost/KeepLearning.tsx`
+   renders at the bottom of every blog post:
+   - A context-aware "Keep learning" pitch card mapping the post's category to a
+     recommended Learn series with a one-line reason (`src/lib/funnel.ts`
+     `CATEGORY_FUNNEL`), reusing the hub `PathCard` component — the same card
+     /learn renders, so the pitch never diverges from the hub. Unmapped
+     categories render no card (no forced mismatch).
+   - A related-posts row (same category, 3 `PostCard`s, "More in <category>").
+
+2. **B-21 — Client-side site search.** New `src/components/SearchOverlay.tsx` —
+   a self-contained search icon + full-screen overlay opened from the header
+   (desktop + mobile). `src/lib/search.ts` builds a grouped index over the
+   static `posts.ts` + `learn.ts` datasets (no backend), matching by
+   title/excerpt/tags/category with diacritic-folding; results group under
+   Posts / Series / Lessons. Escape closes, body scroll locks, clicking a
+   result navigates and resets.
+
+3. **B-22 — Canonical tag vocabulary.** Curated `src/lib/tag-vocab.ts` — 40
+   canonical tags each with a short definition (surfaced on `/tags/[tag]`
+   pages). `scripts/apply-tag-vocab.js` merges every synonym across blog + learn
+   content frontmatter into a canonical tag (281 distinct tags → 40); a
+   `tag-vocab-check.js` guard verifies zero non-canonical tags remain. Data
+   regenerated via `npm run prebuild`. Companion to B-15 (thin-tag sitemap
+   hygiene): with the vocabulary collapsed, per-tag pages are meaningful.
+
+**Why** — The funnel turns a post's authority into a natural next step into the
+Learn curriculum (the Phase-3 flagship conversion hook). Search makes 64 posts
++ 113 lessons browseable that were otherwise only reachable by navigation.
+The tag vocabulary fixes the fragmented 281-tag taxonomy so tags and per-tag
+pages are useful editorial surfaces instead of a long tail of thin pages.
+
+**Known Issues** — The search overlay imports the full static `posts.ts`
+(~48 KB) + `learn.ts` into the client bundle when the header renders, partially
+reversing B-08's client-bundle goal for pages carrying the header — an accepted
+trade-off for client-side search (the two datasets are static imports; the
+overlay mounts lazily on open). The `/tags/[tag]` definition is server-rendered;
+the page keeps its pre-existing `useSearchParams` Suspense fallback.
+
 ### Fix: Server-render /blog listing + client filter island (B-08, t_f7e84aca)
 
 **What** — Refactored `/blog` from a fully client-rendered page into a

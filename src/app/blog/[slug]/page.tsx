@@ -8,6 +8,7 @@ import BackLink from "@/components/BackLink";
 import ReadingProgress from "@/components/BlogPost/ReadingProgress";
 import ShareBar from "@/components/BlogPost/ShareBar";
 import PostNavigation from "@/components/BlogPost/PostNavigation";
+import KeepLearning from "@/components/BlogPost/KeepLearning";
 import BannerImage from "@/components/BlogListing/BannerImage";
 import { Tag } from "@/components/Tag";
 import { buildMetadata } from "@/lib/seo";
@@ -155,6 +156,9 @@ export default async function BlogPostPage({ params }: Props) {
 
         {/* Next/Prev */}
         <PostNavigation prev={prev} next={next} />
+
+        {/* B-20 — Post → Learn funnel + related posts */}
+        <KeepLearning post={post} allPosts={posts} />
       </main>
 
       <Footer />

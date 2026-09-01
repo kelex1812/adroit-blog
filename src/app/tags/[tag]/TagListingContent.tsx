@@ -10,6 +10,7 @@ import FeaturedPost from "@/components/BlogListing/FeaturedPost";
 import SortToggle from "@/components/BlogListing/SortToggle";
 import { sortPosts } from "@/lib/sort";
 import type { TagInfo } from "@/lib/tags";
+import { getTagDefinition } from "@/lib/tag-vocab";
 
 function TagPageContent({ tagInfo }: { tagInfo: TagInfo }) {
   const searchParams = useSearchParams();
@@ -38,6 +39,11 @@ function TagPageContent({ tagInfo }: { tagInfo: TagInfo }) {
           <h1 className="text-[clamp(2rem,4.5vw,2.75rem)] font-extrabold text-navy tracking-[-0.03em] leading-[1.05] mb-3 bg-gradient-to-r from-navy to-navy-light dark:from-slate-100 dark:to-slate-300 bg-clip-text text-transparent">
             {tagInfo.tag}
           </h1>
+          {getTagDefinition(tagInfo.tag) && (
+            <p className="text-[0.95rem] text-gray-500 dark:text-[var(--ink-muted)] max-w-[560px] leading-relaxed mb-3">
+              {getTagDefinition(tagInfo.tag)?.definition}
+            </p>
+          )}
           <div className="flex flex-wrap items-center justify-between gap-3">
             <p className="text-[1.0625rem] text-gray-500 max-w-[560px] leading-relaxed">
               {tagInfo.count} {tagInfo.count === 1 ? "post" : "posts"} tagged
