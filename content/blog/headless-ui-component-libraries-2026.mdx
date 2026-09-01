@@ -31,7 +31,7 @@ The crucial practical point: picking shadcn/ui does not let you skip the primiti
 
 ## The primitive layer split
 
-This is the actual 2026 story. Radix became the default primitive layer through most of the 2020s. It was created by the team behind Modulz, and when WorkOS acquired Modulz, Radix and its maintainers moved to WorkOS.[^3] In production, Radix is everywhere: the GreatFrontEnd 2026 guide notes it is battle-tested across thousands of production applications, and it underpins a huge share of the modern React ecosystem through both direct use and shadcn/ui.[^1]
+This is the actual 2026 story. Radix became the default primitive layer through most of the 2020s. It was created by the team behind Modulz, and when WorkOS acquired Modulz, Radix and its maintainers moved to WorkOS.[^3] In production, Radix is everywhere: the GreatFrontEnd 2026 guide calls it the original primitive library and notes its reach through shadcn/ui, with @radix-ui/react-slot alone at roughly 131M weekly downloads.[^1] The HeroUI 2026 roundup adds that Radix primitives are battle-tested across thousands of production applications through both direct usage and shadcn/ui.[^4]
 
 The catch is maintenance velocity. Since the WorkOS acquisition, updates on some of the more complex components have slowed. The commonly cited laggards are Combobox and multi-select, primitives many product teams need that Radix has not shipped at the pace teams want. In practical terms, Radix is stable, but stable has started to read as frozen.[^2] The HeroUI 2026 roundup puts the worry plainly: with the original Radix team's focus shifted toward Base UI, the long-term maintenance status of the Radix primitives is an open question.[^4]
 
@@ -53,6 +53,8 @@ The late-2025 headline is that shadcn/ui now supports both Radix and Base UI as 
 
 For teams running a design system, this fork reshapes three decisions.
 
+![Radix vs Base UI comparison: WorkOS-maintained and stable but slowed versus MUI-maintained and actively shipping, with Base UI adding Combobox and Autocomplete and a render composition prop where Radix uses asChild](</diagrams/headless-ui-component-libraries-2026/3-radix-vs-base-ui.png>)
+
 The first is the greenfield default. For a new product app where you want full design control on top of accessible primitives without writing that logic yourself, and you are already using Tailwind, shadcn/ui on Base UI is now the sensible starting point. You get the copy-in ownership model, free accessibility, and a bet on the library that is actively shipping rather than the one that has plateaued.[^2] The GreatFrontEnd guidance agrees: Base UI is the safer long-term pick for anyone who wants the most actively maintained primitive layer, and it is the clear answer if you have hit a Radix limitation like the missing Combobox.[^1]
 
 The second is the existing-codebase rule. If you are already deep in a Radix codebase, do not migrate because Base UI is trendy. Radix in production today is fine; it works, and the migration cost across a mature system is real even when the API is close. The people writing "just switch" guides are usually talking about small or greenfield projects. A mature design system should only move if a specific missing primitive, like Combobox, is forcing a workaround that costs more than the migration.[^2]
@@ -60,6 +62,8 @@ The second is the existing-codebase rule. If you are already deep in a Radix cod
 The third is the accessibility-requirement case. If your product must meet WAI-ARIA conformance as a hard requirement, government or enterprise work, or you serve a global audience needing RTL and locale-aware components, the strongest answer is React Aria's hooks-first model, even though it means more code per component. That is the trade to make when conformance is a contract, not a nice-to-have.[^1]
 
 ## When you actually migrate
+
+![Migrate, stay, or reach for React Aria: stay put if you are already deep in Radix unless a missing primitive costs more than the migration, start from shadcn/ui on Base UI for greenfield or a Radix limitation, and use React Aria when accessibility conformance is a hard requirement](</diagrams/headless-ui-component-libraries-2026/4-migrate-vs-stay.png>)
 
 If you do move from Radix to Base UI, the path is short because the API is close. Component-by-component, swap the import path and change the composition prop from `asChild` to the `render` prop, which accepts either an element or a function for full control.[^2] Grep first for hand-rolled Combobox or multi-select components you built on top of Radix because it lacked them; those are exactly the primitives Base UI ships natively and the reason you are moving. Make the layer choice a written convention before components proliferate, the same governance discipline we covered in our [token-first design systems piece](/blog/token-first-design-systems-2026), applied to the component layer instead of the token graph.
 
