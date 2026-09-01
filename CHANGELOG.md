@@ -4,6 +4,36 @@ All notable changes to the Adroit Consulting Blog project will be documented in 
 
 ## [Unreleased]
 
+### Fix: SearchOverlay a11y — focus trap, focus restoration, results aria-live (B-21, t_754b2240)
+
+**What** — `src/components/SearchOverlay.tsx` rendered `role="dialog" aria-modal="true"`
+but did not contain keyboard focus (Tab escaped behind the modal to the page),
+did not return focus to the "Search site" trigger when closed, and never
+announced dynamic results to screen readers. All three a11y findings from lara
+(t_47bcb823, WCAG 2.4.3 + 4.1.3) are now fixed.
+
+1. **Focus trap (HIGH, WCAG 2.4.3)** — a `keydown` handler on the dialog wraps
+   Tab/Shift+Tab between the first and last focusable element inside it, and a
+   `focusin` guard pulls focus back into the input if it ever leaks behind the
+   modal. Focus can no longer reach the ~65 page elements behind the overlay.
+2. **Focus restoration (MEDIUM, WCAG 2.4.3)** — the trigger button now holds a
+   `ref`; on every close path (Escape, backdrop click, result selection via
+   `go()`) focus returns to the "Search site" trigger after the dialog unmounts.
+   Guarded by `hasOpenedRef` so the initial mount doesn't steal page focus.
+3. **Results aria-live (MEDIUM, WCAG 4.1.3 / 3.2.2)** — the results region is
+   now `role="status" aria-live="polite"` with an sr-only count line, so typing
+   announces "N results for Q" / "No results for Q" to screen readers.
+4. **Tests** — added `src/components/SearchOverlay.test.tsx` (8 cases): dialog
+   opens as a proper modal, input auto-focus, Tab/Shift+Tab wrap, focus
+   restoration on Escape + backdrop click, live region announces result count
+   and no-results, and result selection navigates + clears the query.
+
+**Why** — the search overlay is a keyboard-user and screen-reader blocker
+without these; it failed the a11y audit for B-21.
+
+**Known issues** — None. Full suite 436/436 passing; `eslint` and `tsc --noEmit`
+clean.
+
 ### Fix: slash-tag slugs UI/UX → ui-ux, CI/CD → ci-cd (B-22, t_87e3f9a3)
 
 **What** — Canonical tags `UI/UX` and `CI/CD` previously slugified to
