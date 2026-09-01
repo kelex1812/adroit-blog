@@ -5,6 +5,14 @@
  * The blog listing renders cards in a loop, so hooks can't be called
  * there directly — this per-card component is the hook boundary
  * (design brief §4.1 read/unread dimming).
+ *
+ * SSR/layout-shift note (B-08 fix, t_66f1d65c): the full PostCard is ALWAYS
+ * rendered — never a skeleton gated on `isLoading`. `useReadProgress`
+ * initializes `isRead` to `false` on both the server render and the client's
+ * first paint, so the post content (title, excerpt, image, meta) is present
+ * in the initial SSR HTML and hydrates without mismatch. Read-dimming and the
+ * check badge are a client-only progressive enhancement that applies after
+ * hydration once the read state resolves.
  */
 "use client";
 
@@ -18,20 +26,7 @@ interface PostCardWithReadProps {
 
 export default function PostCardWithRead({ post }: PostCardWithReadProps) {
   // Canonical read key matches MarkAsRead: `blog/<slug>`
-  const { isRead, isLoading } = useReadProgress(`blog/${post.slug}`, "blog");
-
-  if (isLoading) {
-    return (
-      <div className="rounded-xl border border-gray-200 bg-white overflow-hidden">
-        <div className="h-[100px] md:h-[140px] bg-gray-100 animate-pulse" />
-        <div className="p-4 space-y-2">
-          <div className="h-3 bg-gray-100 animate-pulse rounded" />
-          <div className="h-4 w-3/4 bg-gray-100 animate-pulse rounded" />
-          <div className="h-3 w-full bg-gray-100 animate-pulse rounded" />
-        </div>
-      </div>
-    );
-  }
+  const { isRead } = useReadProgress(`blog/${post.slug}`, "blog");
 
   return <PostCard post={post} read={isRead} />;
 }

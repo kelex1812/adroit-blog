@@ -18,6 +18,7 @@ import Link from "next/link";
 import type { BlogPost } from "@/data/types";
 import FeaturedPost from "@/components/BlogListing/FeaturedPost";
 import PostCardWithRead from "@/components/BlogListing/PostCardWithRead";
+import BlogListingStaticFallback from "@/components/BlogListing/BlogListingStaticFallback";
 import ReadFilter, { type ReadFilterValue } from "@/components/BlogListing/ReadFilter";
 import SortToggle from "@/components/BlogListing/SortToggle";
 import { sortPosts, type SortOrder } from "@/lib/sort";
@@ -327,11 +328,7 @@ function BlogListingContent({ posts }: BlogListingClientProps) {
 export default function BlogListingClient({ posts }: BlogListingClientProps) {
   return (
     <Suspense
-      fallback={
-        <div className="flex items-center justify-center py-24">
-          <div className="text-gray-500 text-sm">Loading posts...</div>
-        </div>
-      }
+      fallback={<BlogListingStaticFallback posts={posts} />}
     >
       <BlogListingContent posts={posts} />
     </Suspense>

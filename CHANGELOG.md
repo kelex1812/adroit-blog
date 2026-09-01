@@ -4,6 +4,41 @@ All notable changes to the Adroit Consulting Blog project will be documented in 
 
 ## [Unreleased]
 
+### Fix: /blog 8-card grid now statically rendered in initial HTML (SSR/CWV, t_66f1d65c)
+
+**What** — Two related changes so the first page of blog post cards is present in the
+initial HTML (not skeletons, not a "Loading posts…" fallback):
+
+1. **`PostCardWithRead` no longer gates on `isLoading`.** It always renders the full
+   `PostCard`. `useReadProgress` initializes `isRead` to `false` on both the server
+   render and the client's first paint, so the card content (title, excerpt, image,
+   meta) is in the initial SSR HTML and hydrates without mismatch. Read-dimming and
+   the check badge remain a client-only progressive enhancement applied after
+   hydration. (This is the root cause lara flagged: `isLoading` starts `true` and kept
+   the card in an `animate-pulse` skeleton during SSR.)
+2. **Static Suspense fallback for `BlogListingContent`.** `BlogListingContent` calls
+   `useSearchParams()`, which during static prerendering forces the client tree up to
+   the nearest Suspense boundary to be client-rendered — the prerendered `blog.html`
+   previously contained only the `"Loading posts…"` fallback with zero cards. New
+   `BlogListingStaticFallback` renders the real default first page (featured hero +
+   8 cards, newest-first, page 1) from the server-serialized `posts` prop, with no
+   hooks/localStorage/auth. It is now the inner Suspense fallback, so the static
+   document carries the actual card content and the interactive island replaces it
+   after hydration with a stable layout.
+
+**Why** — B-08 claimed "first page of post cards statically rendered at build time /
+post content present in initial HTML" for the LCP/INP/CWV goal, but `curl` and the
+prerendered `blog.html` showed the fallback/skeleton instead of the 8 card titles.
+
+**Verification** — `curl -s <prod>/blog` and the prerendered `.next/server/app/blog.html`
+now contain all 8 post-card `<h3>` titles; `animate-pulse` in the grid drops to ~0
+(only the decorative Featured badge pulse remains). Live browser renders the 8 cards
+with titles and no "Loading posts" flash. `npx vitest run`: 425 passed (2 new in
+`PostCardWithRead.test.tsx` guarding the no-skeleton behaviour). `tsc --noEmit` clean.
+
+**Known Issues** — None. `BlogListingStaticFallback` mirrors the default filter state;
+the interactive island still owns URL-param filtering/sort/pagination after hydration.
+
 ### Feature: Post→Learn funnel, site search, canonical tag vocabulary (B-20, B-21, B-22, t_ca624544)
 
 **What** — Three Phase-3 content/conversion features:
