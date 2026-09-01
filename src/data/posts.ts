@@ -2,6 +2,28 @@ import { BlogPost } from "./types";
 
 export const posts: BlogPost[] = [
   {
+    "slug": "react-19-2-activity-useeffectevent",
+    "title": "React 19.2: Activity, useEffectEvent, and Perf Tracks",
+    "excerpt": "React 19.2 ships three primitives that retire three workarounds: hiding without unmounting, clean effects, and real DevTools traces.",
+    "category": "React & Web Dev",
+    "categoryColor": "react",
+    "categoryGradient": "from-emerald to-emerald-dark",
+    "date": "September 01, 2026",
+    "author": "Adroit Consulting",
+    "authorInitials": "AC",
+    "readTime": "12",
+    "featured": false,
+    "tags": [
+      "React",
+      "Next.js",
+      "Web Development",
+      "Performance",
+      "Hooks"
+    ],
+    "bannerImage": "/banners/react-19-2-activity-useeffectevent.png",
+    "status": "published"
+  },
+  {
     "slug": "agent-memory-context-engineering-2026",
     "title": "Your Agent Isn't Forgetting. Its Memory Architecture Is.",
     "excerpt": "Your agent isn't forgetting. Contradicting itself mid-task is the context window being used as storage, not model degradation.",
