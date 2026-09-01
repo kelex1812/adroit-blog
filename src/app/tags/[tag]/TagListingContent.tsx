@@ -2,19 +2,31 @@
 
 import { Suspense } from "react";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import PostCard from "@/components/BlogListing/PostCard";
 import FeaturedPost from "@/components/BlogListing/FeaturedPost";
 import SortToggle from "@/components/BlogListing/SortToggle";
-import { sortPosts } from "@/lib/sort";
+import { sortPosts, type SortOrder } from "@/lib/sort";
 import type { TagInfo } from "@/lib/tags";
 import { getTagDefinition } from "@/lib/tag-vocab";
 
 function TagPageContent({ tagInfo }: { tagInfo: TagInfo }) {
   const searchParams = useSearchParams();
+  const router = useRouter();
   const sortOrder = searchParams.get("sort") === "oldest" ? "oldest" : "newest";
+
+  function handleSortChange(order: SortOrder) {
+    const params = new URLSearchParams(searchParams.toString());
+    if (order === "newest") {
+      params.delete("sort");
+    } else {
+      params.set("sort", order);
+    }
+    const qs = params.toString();
+    router.replace(qs ? `?${qs}` : "?", { scroll: false });
+  }
 
   const sorted = sortPosts(tagInfo.posts, sortOrder);
   const featured = sorted.find((p) => p.featured);
@@ -49,7 +61,7 @@ function TagPageContent({ tagInfo }: { tagInfo: TagInfo }) {
               {tagInfo.count} {tagInfo.count === 1 ? "post" : "posts"} tagged
               with this topic.
             </p>
-            <SortToggle compact />
+            <SortToggle compact sort={sortOrder} onChange={handleSortChange} />
           </div>
         </div>
 

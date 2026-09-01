@@ -1,32 +1,26 @@
 "use client";
 
-import { useRouter, useSearchParams } from "next/navigation";
 import type { SortOrder } from "@/lib/sort";
 
 /**
- * Newest | Oldest sort toggle. Reads/writes `?sort=` URL param so the
- * choice is shareable and survives refresh. Default (no param) = newest.
+ * Newest | Oldest sort toggle.
+ *
+ * Controlled component: the parent owns the `?sort=` URL param and passes the
+ * current `sort` value plus an `onChange` callback. This keeps the component
+ * free of `useSearchParams()`, so it never triggers a client-side-rendering
+ * bailout inside a statically rendered tree (the /blog SSR/CWV fix).
  */
 interface SortToggleProps {
+  sort: SortOrder;
+  onChange: (order: SortOrder) => void;
   compact?: boolean;
 }
 
-export default function SortToggle({ compact = false }: SortToggleProps) {
-  const searchParams = useSearchParams();
-  const router = useRouter();
-  const sort = (searchParams.get("sort") as SortOrder) || "newest";
-
-  function setSort(order: SortOrder) {
-    const params = new URLSearchParams(searchParams.toString());
-    if (order === "newest") {
-      params.delete("sort");
-    } else {
-      params.set("sort", order);
-    }
-    const qs = params.toString();
-    router.replace(qs ? `?${qs}` : "?", { scroll: false });
-  }
-
+export default function SortToggle({
+  sort,
+  onChange,
+  compact = false,
+}: SortToggleProps) {
   return (
     <div
       className={`inline-flex items-center rounded-full border border-gray-200 bg-white p-0.5 ${
@@ -34,7 +28,7 @@ export default function SortToggle({ compact = false }: SortToggleProps) {
       } font-semibold`}
     >
       <button
-        onClick={() => setSort("newest")}
+        onClick={() => onChange("newest")}
         aria-pressed={sort === "newest"}
         className={`px-3 py-1 rounded-full cursor-pointer transition-all duration-150 active:scale-[0.98] ${
           sort === "newest"
@@ -45,7 +39,7 @@ export default function SortToggle({ compact = false }: SortToggleProps) {
         Newest
       </button>
       <button
-        onClick={() => setSort("oldest")}
+        onClick={() => onChange("oldest")}
         aria-pressed={sort === "oldest"}
         className={`px-3 py-1 rounded-full cursor-pointer transition-all duration-150 active:scale-[0.98] ${
           sort === "oldest"

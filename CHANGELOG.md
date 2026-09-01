@@ -4,6 +4,56 @@ All notable changes to the Adroit Consulting Blog project will be documented in 
 
 ## [Unreleased]
 
+### Fix: /blog post cards truly rendered in the initial HTML — thread searchParams server-side (t_8c96daf5)
+
+**What** — Eliminated the client-side-rendering bailout that kept B-08's post
+cards out of the initial HTML despite the earlier "SSR" claims:
+
+1. **Thread `searchParams` from the server page into the island as a plain
+   prop.** `src/app/blog/page.tsx` now awaits its `searchParams` prop and passes
+   it to `<BlogListingClient>`; the island reads `category`/`sort`/`read` from
+   that prop instead of calling `useSearchParams()`. Calling `useSearchParams()`
+   inside a Suspense island is what made Next.js emit
+   `BAILOUT_TO_CLIENT_SIDE_RENDERING` during static generation, leaving only a
+   "Loading posts…" fallback (zero post cards) in the static HTML — LCP still
+   depended on hydration.
+2. **`SortToggle` is now a controlled component.** It previously called
+   `useSearchParams()` itself (the same bailout source); it now takes `sort` +
+   `onChange` props. Its other consumer, `/tags/[tag]`, passes its own derived
+   `sortOrder` plus a `router.replace` handler, so tag-page sorting is unchanged.
+3. **Removed the `BlogListingStaticFallback` workaround** (from t_66f1d65c) and
+   the now-unnecessary Suspense wrappers. With no component calling
+   `useSearchParams()`, the island renders fully on the server and the real
+   first page (featured hero + 8 cards) is in the initial HTML — no fallback
+   needed. `sort`/`read` filter state is now component state seeded from the
+   prop (the prop is intentionally non-reactive), so interactions behave as
+   before.
+
+**Why** — B-08's stated goal was post content present in the initial HTML to
+fix LCP/INP/CWV. QA (t_07aa5423) proved the production HTML contained 0
+post-card anchors plus `data-dgst="BAILOUT_TO_CLIENT_SIDE_RENDERING"` and called
+out the CHANGELOG's false "content is in initial HTML" claims. Reading
+`searchParams` is a request-time API, so `/blog` is now **dynamically rendered**
+(server-rendered per request) rather than statically prerendered — the CWV goal
+(content in the initial HTML for every request) is met; it is no longer served
+from a build-time static file.
+
+**Verification** — Production `next build` + `next start`: `curl /blog` returns
+HTTP 200 with 9 unique post-card `<a href="/blog/<slug>">` anchors in the raw
+HTML, **0** `BAILOUT_TO_CLIENT_SIDE_RENDERING`, and **0** "Loading posts…"
+fallback. Deep-link filtering is server-rendered (`?category=sf` → 8 Salesforce
+posts, featured hero absent; `?sort=oldest` reorders). Browser-verified:
+category pill → `?category=react` shows the 8 React cards; an empty category
+shows the correct empty state; default `/blog` shows all 9. `tsc --noEmit`
+clean; 427 tests pass (BlogListingClient tests updated to the threaded-prop API;
+2 obsolete `BlogListingStaticFallback` tests removed). `posts.ts` stays out of
+the client JS bundle.
+
+**Known Issues** — `/blog` is dynamically rendered (request-time), so it is no
+longer CDN-cacheable as a build-time static file; the content-in-initial-HTML
+CWV benefit is preserved. The full `posts` array is still serialized into the
+RSC flight payload (the documented trade-off from Brainiac #9).
+
 ### Fix: /blog 8-card grid now statically rendered in initial HTML (SSR/CWV, t_66f1d65c)
 
 **What** — Two related changes so the first page of blog post cards is present in the
@@ -36,8 +86,12 @@ now contain all 8 post-card `<h3>` titles; `animate-pulse` in the grid drops to 
 with titles and no "Loading posts" flash. `npx vitest run`: 425 passed (2 new in
 `PostCardWithRead.test.tsx` guarding the no-skeleton behaviour). `tsc --noEmit` clean.
 
-**Known Issues** — None. `BlogListingStaticFallback` mirrors the default filter state;
-the interactive island still owns URL-param filtering/sort/pagination after hydration.
+**Known Issues** — **Superseded by t_8c96daf5** (see entry above): the
+`BlogListingStaticFallback` approach here was a workaround for the
+`useSearchParams()` bailout and has been replaced by threading `searchParams`
+server-side into the island as a plain prop. The fallback component and this
+entry's mechanism are removed; that server-threading fix is what actually puts
+the first page of cards in the initial HTML.
 
 ### Feature: Post→Learn funnel, site search, canonical tag vocabulary (B-20, B-21, B-22, t_ca624544)
 
@@ -90,13 +144,13 @@ moving into a thin client island:
 1. **`src/app/blog/page.tsx` is now a server component.** It imports the
    `posts` dataset from `@/data/posts` **server-side only** and renders
    `<BlogListingClient>` (a `"use client"` island) with the posts passed as a
-   serialized RSC prop. Because the page is statically prerendered at build
-   time, the first page of post cards (hero + featured + 8 cards) is present in
-   the initial HTML — post content is no longer rendered only after hydration.
-   This addresses Brainiac findings #3 (client-only shell hurting LCP/INP/CWV,
-   SEO under-render) and #9 (the 48 KB `posts.ts` riding in the client JS
-   bundle): the module is now resolved at build time on the server, not shipped
-   as an executable client chunk.
+   serialized RSC prop. This addresses Brainiac findings #3 (client-only shell
+   hurting LCP/INP/CWV, SEO under-render) and #9 (the 48 KB `posts.ts` riding in
+   the client JS bundle): the module is now resolved on the server, not shipped
+   as an executable client chunk. (The original text here claimed the first page
+   was "statically prerendered … present in the initial HTML" — that proved
+   FALSE: `useSearchParams()` inside the island bailed the tree out to
+   client-side rendering. Corrected by t_8c96daf5; see entry above.)
 2. **New `src/components/BlogListing/BlogListingClient.tsx`.** The client
    "island" owns all interactive state exactly as before — category pills,
    read filter (All/Unread/Read), sort toggle (`?sort=oldest`), and
@@ -113,9 +167,11 @@ dataset out of the client JS graph while retaining the snappy filter UX.
 
 **Known Issues** — The full `posts` array is still serialized into the RSC
 flight payload (the documented, content-derived alternative to a client bundle
-in Brainiac #9) — the first page renders statically so LCP is unaffected, and
-the executable client JS no longer carries `posts.ts`. No user-visible behavior
-changed.
+in Brainiac #9), and the executable client JS no longer carries `posts.ts`.
+(The original "first page renders statically so LCP is unaffected" sentence was
+false — QA showed the cards only rendered after hydration. The LCP/CWV goal was
+met by t_8c96daf5, which threads `searchParams` server-side so the first page is
+in the initial HTML; see entry above.)
 
 ### Feature: GA4 analytics, sitemap hygiene, per-post OG images, /tags nav (t_3bc6e7ad)
 

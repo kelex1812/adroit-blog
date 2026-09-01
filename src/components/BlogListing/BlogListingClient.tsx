@@ -3,22 +3,27 @@
 /**
  * BlogListingClient — the interactive blog listing "island".
  *
- * B-08 (ride-along): the /blog route is now a server component that SSGs the
- * first page and imports the 48 KB `posts.ts` dataset server-side only, keeping
- * it out of the client JS bundle. This component is the thin client island on
- * top: it receives the full `BlogPost[]` as a serialized RSC prop and owns the
- * interactive state (category pills, read filter, sort toggle, pagination),
- * preserving the snappy filter UX. The first page of cards is still server-
- * rendered to static HTML at build time, so post content is present in the
- * initial document (fixes LCP / INP / CWV, Brainiac #3 + #9).
+ * B-08 (ride-along): the /blog route is a server component that resolves the
+ * 48 KB `posts.ts` dataset server-side only, keeping it out of the client JS
+ * bundle, and passes it here as a serialized RSC prop. The page also threads
+ * the URL `searchParams` into this island as a plain prop, so the island does
+ * NOT call `useSearchParams()` — that call was what forced the client tree up
+ * to the nearest Suspense boundary to be client-rendered during static
+ * prerendering (BAILOUT_TO_CLIENT_SIDE_RENDERING), leaving only a "Loading
+ * posts…" fallback in the initial HTML. With the params threaded as props, the
+ * island renders fully on the server: the first page of post cards is present
+ * in the initial document (fixes LCP / INP / CWV, Brainiac #3 + #9).
+ *
+ * This component owns the interactive state (category pills, read filter, sort
+ * toggle, pagination) and writes `?category=` / `?read=` / `?sort=` back to the
+ * URL via `router.replace` so filter choices stay shareable and survive refresh.
  */
-import { Suspense, useMemo, useState } from "react";
-import { useSearchParams, useRouter } from "next/navigation";
+import { useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import type { BlogPost } from "@/data/types";
 import FeaturedPost from "@/components/BlogListing/FeaturedPost";
 import PostCardWithRead from "@/components/BlogListing/PostCardWithRead";
-import BlogListingStaticFallback from "@/components/BlogListing/BlogListingStaticFallback";
 import ReadFilter, { type ReadFilterValue } from "@/components/BlogListing/ReadFilter";
 import SortToggle from "@/components/BlogListing/SortToggle";
 import { sortPosts, type SortOrder } from "@/lib/sort";
@@ -37,28 +42,57 @@ const categories = [
   { key: "pm", label: "Project Management" },
 ];
 
+/** The server-threaded page `searchParams` shape (values may be repeated). */
+type SearchParams = { [key: string]: string | string[] | undefined };
+
+/** Read a single value for a key (first value when repeated). */
+function getParam(searchParams: SearchParams, key: string): string | null {
+  const v = searchParams[key];
+  if (v === undefined) return null;
+  return Array.isArray(v) ? v[0] : v;
+}
+
+/** Rebuild a URLSearchParams preserving every param (used when rewriting the URL). */
+function toSearchParams(searchParams: SearchParams): URLSearchParams {
+  const usp = new URLSearchParams();
+  for (const [key, value] of Object.entries(searchParams)) {
+    if (value === undefined) continue;
+    if (Array.isArray(value)) value.forEach((v) => usp.append(key, v));
+    else usp.append(key, value);
+  }
+  return usp;
+}
+
 interface BlogListingClientProps {
   /** Full published post dataset, server-serialized into the RSC payload. */
   posts: BlogPost[];
+  /** URL query params threaded from the server page (non-reactive by design). */
+  searchParams: SearchParams;
 }
 
-function BlogListingContent({ posts }: BlogListingClientProps) {
-  const searchParams = useSearchParams();
+function BlogListingContent({
+  posts,
+  searchParams,
+}: BlogListingClientProps) {
   const router = useRouter();
-  const categoryFromUrl = searchParams.get("category") || "all";
+
+  const categoryFromUrl = getParam(searchParams, "category") || "all";
   const normalized =
     categories.some((c) => c.key === categoryFromUrl) ? categoryFromUrl : "all";
   const [activeCategory, setActiveCategory] = useState(normalized);
   const [currentPage, setCurrentPage] = useState(1);
   // B-08: bump 4/page -> 8/page.
   const postsPerPage = 8;
-  const sortOrder: SortOrder =
-    searchParams.get("sort") === "oldest" ? "oldest" : "newest";
+
+  const [sortOrder, setSortOrder] = useState<SortOrder>(
+    getParam(searchParams, "sort") === "oldest" ? "oldest" : "newest",
+  );
 
   // Read filter from ?read=all|unread|read (design brief §4.2)
-  const readParam = searchParams.get("read");
-  const readFilter: ReadFilterValue =
-    readParam === "unread" || readParam === "read" ? readParam : "all";
+  const readParam = getParam(searchParams, "read");
+  const [readFilter, setReadFilter] = useState<ReadFilterValue>(
+    readParam === "unread" || readParam === "read" ? readParam : "all",
+  );
 
   const filtered = posts.filter((post) => {
     if (activeCategory === "all") return true;
@@ -94,7 +128,7 @@ function BlogListingContent({ posts }: BlogListingClientProps) {
   function handleCategoryClick(key: string) {
     setActiveCategory(key);
     setCurrentPage(1);
-    const params = new URLSearchParams(searchParams.toString());
+    const params = toSearchParams(searchParams);
     if (key === "all") {
       params.delete("category");
     } else {
@@ -105,12 +139,25 @@ function BlogListingContent({ posts }: BlogListingClientProps) {
   }
 
   function handleReadFilterChange(value: ReadFilterValue) {
+    setReadFilter(value);
     setCurrentPage(1);
-    const params = new URLSearchParams(searchParams.toString());
+    const params = toSearchParams(searchParams);
     if (value === "all") {
       params.delete("read");
     } else {
       params.set("read", value);
+    }
+    const qs = params.toString();
+    router.replace(qs ? `/blog?${qs}` : "/blog", { scroll: false });
+  }
+
+  function handleSortChange(order: SortOrder) {
+    setSortOrder(order);
+    const params = toSearchParams(searchParams);
+    if (order === "newest") {
+      params.delete("sort");
+    } else {
+      params.set("sort", order);
     }
     const qs = params.toString();
     router.replace(qs ? `/blog?${qs}` : "/blog", { scroll: false });
@@ -202,7 +249,7 @@ function BlogListingContent({ posts }: BlogListingClientProps) {
                 value={readFilter}
                 onChange={handleReadFilterChange}
               />
-              <SortToggle />
+              <SortToggle sort={sortOrder} onChange={handleSortChange} />
             </div>
           </div>
         </div>
@@ -325,12 +372,9 @@ function BlogListingContent({ posts }: BlogListingClientProps) {
   );
 }
 
-export default function BlogListingClient({ posts }: BlogListingClientProps) {
-  return (
-    <Suspense
-      fallback={<BlogListingStaticFallback posts={posts} />}
-    >
-      <BlogListingContent posts={posts} />
-    </Suspense>
-  );
+export default function BlogListingClient({
+  posts,
+  searchParams,
+}: BlogListingClientProps) {
+  return <BlogListingContent posts={posts} searchParams={searchParams} />;
 }

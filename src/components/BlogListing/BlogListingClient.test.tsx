@@ -3,9 +3,10 @@
  *
  * Verifies the refactored client island still behaves like the original
  * listing: posts render from the server-serialized `posts` prop, pagination
- * runs at 8/page (bumped from 4), category pills filter, and the featured post
- * hero shows only on the "All Posts" view. Network hooks (progress/auth) are
- * mocked so the test exercises pure listing logic.
+ * runs at 8/page (bumped from 4), category pills filter, the featured post
+ * hero shows only on the "All Posts" view, and the server-threaded
+ * `searchParams` prop initializes category/sort/read. Network hooks
+ * (progress/auth) are mocked so the test exercises pure listing logic.
  */
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, screen } from "@testing-library/react";
@@ -13,10 +14,9 @@ import userEvent from "@testing-library/user-event";
 import type { BlogPost } from "@/data/types";
 import BlogListingClient from "./BlogListingClient";
 
-const paramsMock = vi.fn();
+type SearchParams = { [key: string]: string | string[] | undefined };
 
 vi.mock("next/navigation", () => ({
-  useSearchParams: () => paramsMock(),
   useRouter: () => ({ replace: vi.fn() }),
 }));
 
@@ -79,6 +79,10 @@ const posts: BlogPost[] = [
   ...Array.from({ length: 9 }, (_, i) => makePost(i + 1)),
 ];
 
+function renderListing(searchParams: SearchParams = {}) {
+  return render(<BlogListingClient posts={posts} searchParams={searchParams} />);
+}
+
 /** All rendered card links to a numbered post (excludes the featured hero). */
 function cardLinks() {
   return screen
@@ -90,11 +94,11 @@ function cardLinks() {
 
 describe("BlogListingClient (t_f7e84aca)", () => {
   beforeEach(() => {
-    paramsMock.mockReturnValue(new URLSearchParams());
+    // No persistent state needed between tests; each render passes its own props.
   });
 
   it("renders the first page of cards at 8/page", () => {
-    render(<BlogListingClient posts={posts} />);
+    renderListing();
     // 9 non-featured posts -> 8 on page 1 (bumped from 4), pagination visible.
     expect(cardLinks()).toHaveLength(8);
     expect(screen.getByRole("button", { name: "Next page" })).toBeInTheDocument();
@@ -106,7 +110,7 @@ describe("BlogListingClient (t_f7e84aca)", () => {
 
   it("hides the featured hero outside the All Posts view", async () => {
     const user = userEvent.setup();
-    render(<BlogListingClient posts={posts} />);
+    renderListing();
     expect(
       screen.getByRole("link", { name: /Featured headline post/i }),
     ).toBeInTheDocument();
@@ -120,7 +124,7 @@ describe("BlogListingClient (t_f7e84aca)", () => {
 
   it("filters cards by category via the pills", async () => {
     const user = userEvent.setup();
-    render(<BlogListingClient posts={posts} />);
+    renderListing();
     await user.click(screen.getByRole("button", { name: /React & Web Dev/i }));
     const links = cardLinks();
     expect(links.length).toBeGreaterThan(0);
@@ -132,16 +136,50 @@ describe("BlogListingClient (t_f7e84aca)", () => {
   });
 
   it("shows pagination controls when more than one page exists", () => {
-    render(<BlogListingClient posts={posts} />);
+    renderListing();
     expect(
       screen.getByRole("navigation", { name: "Pagination" }),
     ).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Page 2" })).toBeInTheDocument();
   });
 
-  it("honors ?sort=oldest from the URL", () => {
-    paramsMock.mockReturnValue(new URLSearchParams("sort=oldest"));
-    render(<BlogListingClient posts={posts} />);
+  it("honors ?sort=oldest threaded from the server as a prop", () => {
+    renderListing({ sort: "oldest" });
+    // Oldest-first ordering puts the highest-numbered post first; cards render.
     expect(cardLinks()).toHaveLength(8);
+    expect(screen.getByRole("button", { name: "Oldest" })).toHaveAttribute(
+      "aria-pressed",
+      "true",
+    );
+  });
+
+  it("initializes the active category from the threaded searchParams prop", async () => {
+    const user = userEvent.setup();
+    // Select "React & Web Dev" deep-link; featured hero (ai) must be absent.
+    renderListing({ category: "react" });
+    expect(
+      screen.queryByRole("link", { name: /Featured headline post/i }),
+    ).toBeNull();
+    expect(screen.getByRole("button", { name: /React & Web Dev/i })).toHaveAttribute(
+      "aria-pressed",
+      "true",
+    );
+    // Category still switches interactively from a deep-linked start.
+    await user.click(screen.getByRole("button", { name: /Salesforce/i }));
+    expect(screen.getByRole("button", { name: /Salesforce/i })).toHaveAttribute(
+      "aria-pressed",
+      "true",
+    );
+  });
+
+  it("falls back to All Posts when a threaded category param is unknown", () => {
+    renderListing({ category: "not-a-real-category" });
+    expect(
+      screen.getByRole("link", { name: /Featured headline post/i }),
+    ).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /All Posts/i })).toHaveAttribute(
+      "aria-pressed",
+      "true",
+    );
   });
 });
