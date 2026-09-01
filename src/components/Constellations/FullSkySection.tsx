@@ -37,7 +37,10 @@ export function FullSkySection({ sky }: FullSkySectionProps) {
           <h1 className="text-[clamp(2.4rem,5vw,3.5rem)] font-extrabold leading-none tracking-[-0.03em] text-[var(--sky-ink)]">
             {stats.rank?.name ?? "Starseed"}
           </h1>
-          <span className="cx-rank-display text-[clamp(1.6rem,3.5vw,2.4rem)] font-medium">
+          <span
+            aria-hidden="true"
+            className="cx-rank-display text-[clamp(1.6rem,3.5vw,2.4rem)] font-medium"
+          >
             {stats.rank?.name ?? "Starseed"}
           </span>
         </div>
@@ -112,10 +115,24 @@ export function FullSkySection({ sky }: FullSkySectionProps) {
                     }`}
                   >
                     {band.name}
-                    {isCurrent ? <span className="ml-1.5 text-[var(--constellation-star-lit)]">· you</span> : null}
+                    {isCurrent ? (
+                      <span
+                        role="img"
+                        aria-label="Current rank"
+                        className="ml-1.5 text-[var(--constellation-star-lit)]"
+                      >
+                        <span aria-hidden="true">· you</span>
+                      </span>
+                    ) : null}
                   </span>
                   {reached && !isCurrent ? (
-                    <span className="ml-auto font-mono text-[10px] text-[var(--sky-ink-muted)]">✓</span>
+                    <span
+                      role="img"
+                      aria-label="Reached"
+                      className="ml-auto font-mono text-[10px] text-[var(--sky-ink-muted)]"
+                    >
+                      <span aria-hidden="true">✓</span>
+                    </span>
                   ) : null}
                 </li>
               );

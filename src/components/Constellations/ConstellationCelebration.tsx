@@ -7,8 +7,11 @@
  *
  * Trigger: the local lesson-completion flag flipping to true + a
  * PROGRESS_CHANGED_EVENT broadcast (the same seam every progress hook uses).
- * Auto-dismisses (~3s) or on click / Escape. Reduced motion flattens to a
- * static confirmation. Guests are skipped (no persistent completion).
+ * Auto-dismisses (~3s), on click, or on Escape. Rendered as a transient
+ * `role="status"` / `aria-live="polite"` region (not a modal dialog) because
+ * it is auto-dismissing and non-interactive — no focus trap/restore needed.
+ * Reduced motion flattens to a static confirmation. Guests are skipped (no
+ * persistent completion).
  */
 "use client";
 
@@ -82,13 +85,22 @@ export function ConstellationCelebration({
     };
   }, [lessonSlug, show]);
 
+  // Escape dismisses the celebration while it is visible.
+  useEffect(() => {
+    if (!visible) return;
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setVisible(false);
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [visible]);
+
   if (!visible) return null;
 
   return (
     <div
-      role="dialog"
-      aria-modal="false"
-      aria-label="Lesson complete"
+      role="status"
+      aria-live="polite"
       className="fixed inset-0 z-[70] flex items-center justify-center bg-[rgba(6,15,31,0.72)] backdrop-blur-[2px]"
       data-testid="constellation-celebration"
       onClick={() => setVisible(false)}

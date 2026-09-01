@@ -53,13 +53,13 @@ describe("ConstellationCelebration", () => {
   it("shows the ignition overlay when the lesson completes locally", async () => {
     render(<ConstellationCelebration {...baseProps} />);
     // Hidden until the completion flag flips.
-    expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+    expect(screen.queryByRole("status")).not.toBeInTheDocument();
 
     localStorage.setItem(lessonKey(baseProps.lessonSlug), "true");
     fireEvent(window, new CustomEvent(PROGRESS_CHANGED_EVENT));
 
     await waitFor(() =>
-      expect(screen.getByRole("dialog")).toBeInTheDocument(),
+      expect(screen.getByRole("status")).toBeInTheDocument(),
     );
     expect(screen.getByText(/3\/8/)).toBeInTheDocument();
     expect(screen.getByText(/Intro to Agents — lit/i)).toBeInTheDocument();
@@ -77,13 +77,25 @@ describe("ConstellationCelebration", () => {
     fireEvent(window, new CustomEvent(PROGRESS_CHANGED_EVENT));
 
     await waitFor(() =>
-      expect(screen.getByRole("dialog")).toBeInTheDocument(),
+      expect(screen.getByRole("status")).toBeInTheDocument(),
     );
     expect(screen.getByText(/Constellation complete/i)).toBeInTheDocument();
   });
 
   it("renders nothing when the flag never flips (no premature pop)", () => {
     render(<ConstellationCelebration {...baseProps} />);
-    expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+    expect(screen.queryByRole("status")).not.toBeInTheDocument();
+  });
+
+  it("dismisses on Escape", async () => {
+    render(<ConstellationCelebration {...baseProps} />);
+    localStorage.setItem(lessonKey(baseProps.lessonSlug), "true");
+    fireEvent(window, new CustomEvent(PROGRESS_CHANGED_EVENT));
+
+    await waitFor(() =>
+      expect(screen.getByRole("status")).toBeInTheDocument(),
+    );
+    fireEvent.keyDown(window, { key: "Escape" });
+    expect(screen.queryByRole("status")).not.toBeInTheDocument();
   });
 });

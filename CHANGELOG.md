@@ -4,6 +4,32 @@ All notable changes to the Adroit Consulting Blog project will be documented in 
 
 ## [Unreleased]
 
+### Fix: Constellation celebration focus/Escape + FullSky rank announcements (WCAG 2.4.3/2.1.1/4.1.2, t_96d952ef)
+
+**What** — Addressed 3 a11y findings from lara's B-18 audit. (1)
+`ConstellationCelebration` no longer renders as a `role="dialog"`/`aria-modal="false"`
+overlay with no focus management; since it is auto-dismissing (~3.2s) and
+non-interactive, it is now a transient `role="status"` / `aria-live="polite"`
+region — no focus trap/restore needed (recommended remediation). Added the
+missing `onKeyDown` Escape dismiss handler (the file comment claimed Escape but
+no handler existed); the comment now documents actual behavior. (2)
+`FullSkySection` rank name was announced twice (duplicated in the h1 and the
+adjacent `span.cx-rank-display`) — the decorative duplicate span is now
+`aria-hidden="true"`. (3) The rank-ladder indicators — `· you` (current rank)
+and `✓` (reached) — had no accessible text; both are now `role="img"` spans with
+`aria-label="Current rank"` / `aria-label="Reached"` and their decorative
+glyphs marked `aria-hidden`.
+
+**Why** — Screen readers announced the celebration as a modal dialog that could
+not be dismissed by Escape and offered no focus handling (WCAG 2.4.3 Focus Order,
+2.1.1 Keyboard, 2.2.1 Timing Adjustable); the rank name read twice and the bare
+glyphs ("check mark") conveyed no meaning (WCAG 4.1.2 Name/Role/Value). The
+status-region approach is the right semantic for a transient, non-interactive
+auto-dismissing toast-style celebration.
+
+**Known Issues** — None. Existing tests updated (`dialog` role → `status`) and a
+new Escape-dismiss test added (462 passing).
+
 ### Fix: dark-mode red progress fill contrast — SeriesProgress & QuizWidget (WCAG 1.4.11, t_0271699e)
 
 **What** — Fixed the WCAG 1.4.11 (non-text/UI-component) contrast failure on red
