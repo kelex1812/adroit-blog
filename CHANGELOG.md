@@ -4,6 +4,56 @@ All notable changes to the Adroit Consulting Blog project will be documented in 
 
 ## [Unreleased]
 
+### Build: Constellations + Chronicle surfaces — star ignition, series outline, profile full sky, certificate celebration (B-18, t_c72908a6)
+
+**What** — Implemented the B-18 achievement surfaces on top of the B-19 data
+foundation, per brainiac's contracts (`src/shared/contracts-constellations.ts`)
+and kara's design spec + tokens (`design/t_65e26fdd/`). The star-ignition
+"Decide/Learn" moment, the series-outline constellation, the profile full-sky
+hero + Chronicle feed, and the certificate celebration.
+
+1. **Lesson-complete achievement (star ignition)** — `LessonCelebration` →
+   `ConstellationCelebration`: a transient centered overlay fires when a lesson
+   is marked complete (PROGRESS_CHANGED_EVENT / storage seams). Icy-blue→red
+   star pop (`check-pop` spring + one-shot flare), live streak chip
+   (`StreakCounter`), `{lit}/{total}` progress. On course-complete it pulses
+   the constellation and reads "Constellation complete." Auto-dismisses (~3s)
+   or on click/Escape; honors `prefers-reduced-motion`. Authed users only
+   (guests have no persistent completion state).
+2. **Series outline + hub preview** — `SeriesConstellation` renders a connected
+   star rail beside the syllabus on `/learn/[series]` (lit/current/locked
+   states, mono counter, guest = locked shape + no labels); `PathConstellation`
+   adds a compact light star-dot preview + `{lit}/{total}` into the hub
+   PathCard gradient band.
+3. **Profile full sky** — `FullSkySection` is the `/profile` hero: sky canvas
+   (gradient + starfield + vignette), editorial serif rank headline, real
+   stat strip (courses / lessons / streak / tracks), rank-ladder rung list, and
+   the Chronicle narrative feed (`ChronicleFeed`, newest-first, emerald markers,
+   red-star glyph + score suffix for certificate/quiz/exam). Guests get
+   `LockedSkyTeaser` (locked sky + single sign-in CTA).
+4. **Certificate celebration** — `CertificateCelebration` renders a lit-star
+   pulse above the printable certificate on `/learn/[series]/certificate`.
+
+**Build plumbing** — `src/lib/sky.ts` (pure builders), `src/lib/sky-server.ts`
+(server loaders → ProfileSky/AchievementStats), `src/app/api/progress/achievement`
+(GET stats route), `src/shared/rank-ladder.ts` (RANK_LADDER/deriveRank moved to a
+client-safe module, re-exported from completion.ts for backward compat),
+`src/lib/hooks/useAchievement.ts`, `src/app/constellations.css` (+@import in
+globals, Newsreader font loaded in layout).
+
+**Why** — Turns the abstract completion log into visible, motivating progression:
+every lesson lights a star, series chart a constellation, and the profile
+becomes a "full sky" record — the signature achievement experience in the B-18
+brief.
+
+**Known issues** — `SeriesConstellation`/full-sky constellation sets use the
+series' published lessons for the star field (content `.mdx` slugs); the
+generator's per-lesson `questions/*.json` planned set is used only as a fallback
+when no published lessons exist, so unpublished-but-planned lessons are not
+counted in the star totals on these content-dir series. Constellation visual
+states are correct for authed + guest; the live streak in the pop reflects the
+post-write value via `GET /api/progress/achievement`.
+
 ### Build: Constellations data foundation — widened event log, now-relative streak, derived rank (B-19, t_e9c1c761)
 
 **What** — Laid the data foundation for the Constellations + Chronicle achievement

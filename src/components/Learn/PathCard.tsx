@@ -4,6 +4,7 @@ import { seriesShortLabel } from "@/lib/learn-client";
 import SeriesProgress from "@/components/Progress/SeriesProgress";
 import QuizStats from "@/components/Progress/QuizStats";
 import DifficultyPill from "./DifficultyPill";
+import PathConstellation from "@/components/Constellations/PathConstellation";
 import type { CardGateState } from "@/shared/contracts-account";
 
 interface PathCardProps {
@@ -63,6 +64,11 @@ export default function PathCard({ series, gate, loginNext }: PathCardProps) {
         <span className="absolute top-3.5 right-4 bg-black/55 backdrop-blur-sm px-2.5 py-1 rounded-full text-[10.5px] font-bold text-white font-mono z-10">
           {series.lessonCount} / {series.totalLessons} lessons
         </span>
+        {/* Constellation + Chronicle (B-18): compact star preview in the band.
+            Signed-in shows real progress; guests get the locked shape. */}
+        <div className="absolute bottom-3.5 right-5 z-10">
+          <PathConstellation series={series} isGuest={isGuest} />
+        </div>
       </div>
 
       {/* Body */}

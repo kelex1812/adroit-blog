@@ -28,6 +28,9 @@ import { StatusBadge } from "@/components/Catalog/StatusBadge";
 import { AccessModelChip } from "@/components/Catalog/AccessModelChip";
 import DifficultyPill from "@/components/Learn/DifficultyPill";
 import PrerequisitesSection from "@/components/Learn/PrerequisitesSection";
+import SeriesConstellation from "@/components/Constellations/SeriesConstellation";
+import { loadSeriesConstellation } from "@/lib/sky-server";
+import { getSupabaseServerClient } from "@/lib/supabase/server";
 
 interface Props {
   params: Promise<{ series: string }>;
@@ -130,6 +133,29 @@ export default async function SeriesPage({ params }: Props) {
       })),
     },
   };
+
+  // Constellation + Chronicle (B-18): the series' planned star field beside
+  // the syllabus. Authed users see per-lesson progress (lit/locked from their
+  // completion rows); guests see the locked/available shape (no labels).
+  const supabase = await getSupabaseServerClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  const isAuthed = Boolean(user);
+  const completedRows = isAuthed
+    ? await supabase
+        .from("lesson_completion")
+        .select("lesson_slug")
+        .eq("user_id", user!.id)
+    : null;
+  const completedSlugs = new Set(
+    (completedRows?.data ?? []).map((r) => r.lesson_slug as string),
+  );
+  const constellation = await loadSeriesConstellation({
+    seriesSlug: series,
+    name: s.name,
+    gradient: s.gradient,
+    courseId: courseRow?.id ?? series,
+    completedSlugs,
+  });
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -282,17 +308,28 @@ export default async function SeriesPage({ params }: Props) {
           </div>
         )}
 
-        {/* Syllabus — lesson-number order (ADR-105), client sort + hide-completed */}
+        {/* Syllabus — lesson-number order (ADR-105), client sort + hide-completed.
+            Constellation (B-18) rendered beside it for authed users + guests. */}
         <div className="max-w-[1120px] mx-auto px-6 py-8 pb-4">
           {baseLessons.length > 0 ? (
-            <Suspense fallback={null}>
-              <SeriesSyllabus
-                lessons={baseLessons}
-                totalLessons={total}
-                published={published}
-                upcoming={upcoming}
-              />
-            </Suspense>
+            <div className="grid gap-10 md:grid-cols-[1fr_auto] md:items-start">
+              <Suspense fallback={null}>
+                <SeriesSyllabus
+                  lessons={baseLessons}
+                  totalLessons={total}
+                  published={published}
+                  upcoming={upcoming}
+                />
+              </Suspense>
+              {constellation ? (
+                <aside className="md:sticky md:top-6 w-full md:w-[240px] rounded-2xl border border-[var(--border-default)] bg-[var(--surface-card-soft)] p-5">
+                  <SeriesConstellation
+                    constellation={constellation}
+                    isGuest={!isAuthed}
+                  />
+                </aside>
+              ) : null}
+            </div>
           ) : (
             <EmptyState />
           )}

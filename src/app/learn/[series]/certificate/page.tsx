@@ -49,6 +49,8 @@ import { buildPaywallView } from "@/lib/paywall";
 import { LockedContentPage } from "@/components/Catalog/LockedContentPage";
 import { getLessonsForSeries } from "@/lib/learn";
 import { appendCompletionEvent } from "@/lib/completion";
+import CertificateCelebration from "@/components/Constellations/CertificateCelebration";
+import { loadSeriesConstellation, loadAchievementStats } from "@/lib/sky-server";
 
 interface Props {
   params: Promise<{ series: string }>;
@@ -469,12 +471,32 @@ export default async function CertificatePage({ params }: Props) {
     });
   }
 
+  // Constellation + Chronicle (B-18): celebration above the printable sheet.
+  const constellation = await loadSeriesConstellation({
+    seriesSlug: series,
+    name: certificateCourseName(series, s.name),
+    gradient: s.gradient,
+    courseId: certCourse?.id ?? series,
+    completedSlugs: new Set<string>(completedLessonSlugs),
+  });
+  const streakDays = (await loadAchievementStats(user!.id).catch(() => null))?.streakDays ?? 0;
+
   return (
     <div className="min-h-screen flex flex-col">
       <div className="print:hidden">
         <Header />
       </div>
       <main id="main" className="flex-1">
+        <div className="max-w-[640px] mx-auto px-6 pt-10">
+          {constellation ? (
+            <CertificateCelebration
+              seriesSlug={series}
+              courseName={certificateCourseName(series, s.name)}
+              constellation={constellation}
+              streakDays={streakDays}
+            />
+          ) : null}
+        </div>
         <Certificate
           recipientName={certificateRecipientName(user!)}
           courseName={certificateCourseName(series, s.name)}

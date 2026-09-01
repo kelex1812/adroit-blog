@@ -36,7 +36,24 @@ vi.mock("@/components/Profile/ProfileForm", () => ({ default: () => <div data-te
 vi.mock("@/components/Profile/CertificateSection", () => ({
   default: () => <div data-testid="cert-section" />,
 }));
-vi.mock("@/components/Profile/GuestProfileTeaser", () => ({
+vi.mock("@/lib/sky-server", () => ({
+  loadProfileSky: () =>
+    Promise.resolve({
+      constellations: [],
+      events: [],
+      chronicle: [],
+      rank: { id: "starseed", lessons: 0, courses: 0 },
+      streakDays: 0,
+      longestStreakDays: 0,
+      coursesCompleted: 0,
+      tracksCompleted: 0,
+      nextProgressPct: 0,
+    }),
+}));
+vi.mock("@/components/Constellations/FullSkySection", () => ({
+  default: () => <div data-testid="full-sky" />,
+}));
+vi.mock("@/components/Constellations/LockedSkyTeaser", () => ({
   default: () => (
     <main data-testid="guest-teaser">
       <a data-testid="guest-cta" href="/login?next=/profile">

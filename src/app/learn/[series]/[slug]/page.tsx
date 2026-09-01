@@ -28,6 +28,9 @@ import MDXArticle from "@/components/MDX/MDXArticle";
 import Paywall from "@/components/Catalog/Paywall";
 import { accessSeam, getAccessUserId, getCourseRowBySlug } from "@/lib/access";
 import { buildPaywallView } from "@/lib/paywall";
+import { loadSeriesConstellation } from "@/lib/sky-server";
+import LessonCelebration from "@/components/Constellations/LessonCelebration";
+import type { ConstellationState } from "@/shared/contracts-constellations";
 
 interface Props {
   params: Promise<{ series: string; slug: string }>;
@@ -111,6 +114,30 @@ export default async function LessonPage({ params }: Props) {
         <Footer />
       </div>
     );
+  }
+
+  // Constellation + Chronicle (B-18): the series' planned star field for the
+  // lesson-complete celebration. Authed users only — guests get no persistent
+  // completion state, so no celebration. The celebration's lit-count is the
+  // post-write value (current lesson counted) so the pop reads correctly the
+  // moment the user marks complete.
+  let constellationState: ConstellationState | null = null;
+  if (isAuthed) {
+    const completedRows = await supabase
+      .from("lesson_completion")
+      .select("lesson_slug")
+      .eq("user_id", user!.id);
+    const completed = new Set(
+      (completedRows.data ?? []).map((r) => r.lesson_slug as string),
+    );
+    completed.add(slug); // this lesson just completed in the client flow
+    constellationState = await loadSeriesConstellation({
+      seriesSlug: series,
+      name: seriesInfo.name,
+      gradient: seriesInfo.gradient,
+      courseId: (await getCourseRowBySlug(series))?.id ?? series,
+      completedSlugs: completed,
+    });
   }
 
 
@@ -227,6 +254,22 @@ export default async function LessonPage({ params }: Props) {
 
         {/* Prev/Next within series (authored sequence) */}
         <LessonNavigation lessons={lessons} currentSlug={slug} />
+
+        {/* Constellation + Chronicle (B-18): star-ignition celebration on
+            lesson completion. Authed only (guests have no persistent
+            completion state). Mounted regardless of scroll so the pop fires
+            the moment the user marks the lesson complete. */}
+        {isAuthed && constellationState ? (
+          <LessonCelebration
+            seriesSlug={series}
+            courseName={seriesInfo.name}
+            lessonSlug={slug}
+            lessonLabel={lesson.title}
+            litStars={constellationState.litStars}
+            totalStars={constellationState.totalStars}
+            courseJustCompleted={constellationState.complete}
+          />
+        ) : null}
 
         <script
           type="application/ld+json"

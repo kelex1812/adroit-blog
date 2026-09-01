@@ -13,8 +13,10 @@ import Footer from "@/components/Footer";
 import StubBadge from "@/components/StubBadge";
 import ProfileForm from "@/components/Profile/ProfileForm";
 import CertificateSection from "@/components/Profile/CertificateSection";
-import GuestProfileTeaser from "@/components/Profile/GuestProfileTeaser";
+import LockedSkyTeaser from "@/components/Constellations/LockedSkyTeaser";
+import FullSkySection from "@/components/Constellations/FullSkySection";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
+import { loadProfileSky } from "@/lib/sky-server";
 import { avatarHueClass, initialsFromEmail } from "@/lib/avatar";
 import { buildMetadata } from "@/lib/seo";
 import type { UserProfile } from "@/shared/contracts-account";
@@ -33,9 +35,9 @@ export default async function ProfilePage() {
     data: { user },
   } = await supabase.auth.getUser();
 
-  // Guest → locked-preview value demo (backlog B-09 / constellation "locked
-  // sky" teaser) instead of a redirect wall. One real CTA to /login?next=/profile.
-  if (!user) return <GuestProfileTeaser />;
+  // Guest → locked-sky value preview (B-18 LockedSkyTeaser) instead of a
+  // redirect wall. One real CTA to /login?next=/profile.
+  if (!user) return <LockedSkyTeaser />;
 
   const email = user.email ?? "";
 
@@ -70,10 +72,16 @@ export default async function ProfilePage() {
     ? (profile.displayName.trim().split(/\s+/).filter(Boolean).slice(0, 2).map((w) => w[0]).join("").toUpperCase() || "A")
     : initialsFromEmail(email);
 
+  // Constellation + Chronicle (B-18): full-sky hero — the hero IS the starfield.
+  // Loads completion events → rank/streak/stats + every course constellation.
+  const sky = await loadProfileSky(user.id);
+
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
       <main id="main" className="flex-1">
+        {/* Sky hero */}
+        <FullSkySection sky={sky} />
         <div className="max-w-[640px] mx-auto px-6 py-14">
           <div className="inline-flex items-center gap-2 font-mono text-[11px] font-semibold text-[var(--accent)] uppercase tracking-[0.08em] mb-2">
             <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent)]" />

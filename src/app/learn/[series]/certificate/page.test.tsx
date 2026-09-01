@@ -104,6 +104,14 @@ vi.mock("@/components/Progress/GuestCTA", () => ({
   ),
 }));
 
+vi.mock("@/lib/sky-server", () => ({
+  loadSeriesConstellation: () => null,
+  loadAchievementStats: () => Promise.resolve({ streakDays: 0 }),
+}));
+vi.mock("@/components/Constellations/CertificateCelebration", () => ({
+  default: () => <div data-testid="certificate-celebration" />,
+}));
+
 import Page from "./page";
 
 const series = (over: Record<string, unknown> = {}) => ({
