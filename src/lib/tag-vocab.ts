@@ -19,7 +19,9 @@ export interface TagDefinition {
 
 /** Slugify a tag the same way src/lib/tags.ts does. */
 function slugOf(tag: string): string {
-  return tag.toLowerCase().replace(/\s+/g, "-");
+  // Strip all non-word chars (spaces, slashes, ampersands, etc.) so single
+  // and multi-word tags always produce a single URL segment (B-22: UI/UX→ui-ux).
+  return tag.toLowerCase().replace(/[^\w]+/g, "-");
 }
 
 const RAW_DEFINITIONS: Array<[string, string]> = [

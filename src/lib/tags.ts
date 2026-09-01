@@ -30,7 +30,9 @@ export function getAllTags(): TagInfo[] {
   return Array.from(map.entries())
     .map(([tag, taggedPosts]) => ({
       tag,
-      slug: tag.toLowerCase().replace(/\s+/g, "-"),
+      // Strip all non-word chars (spaces, slashes, etc.) so every tag maps to
+      // a single URL segment — matches src/lib/tag-vocab.ts slugOf (B-22: UI/UX→ui-ux).
+      slug: tag.toLowerCase().replace(/[^\w]+/g, "-"),
       count: taggedPosts.length,
       posts: taggedPosts,
     }))
