@@ -183,36 +183,6 @@ export default function CategoriesPage() {
             ))}
           </div>
         </div>
-
-        {/* Subscribe CTA */}
-        <div className="max-w-[1120px] mx-auto px-6 pb-10">
-          <div className="bg-navy rounded-xl p-8 md:p-10 text-center relative overflow-hidden">
-            <div
-              className="absolute inset-0"
-              style={{
-                background:
-                  "radial-gradient(circle at 50% 0%, rgba(200,16,46,0.12) 0%, transparent 60%)",
-              }}
-            />
-            <h3 className="text-white text-xl md:text-2xl font-bold mb-2 relative">
-              Subscribe for Updates
-            </h3>
-            <p className="text-white/60 text-sm mb-5 relative max-w-md mx-auto">
-              Get new posts delivered to your inbox. No spam, just insights.
-            </p>
-            <div className="flex gap-2.5 max-w-[440px] mx-auto relative flex-col sm:flex-row">
-              <input
-                type="email"
-                placeholder="your@email.com"
-                aria-label="Email for newsletter"
-                className="flex-1 px-4 py-3 rounded-md border border-white/15 bg-white/8 text-white text-sm font-sans outline-none focus:border-red transition-colors duration-150 placeholder:text-white/35"
-              />
-              <button className="px-6 py-3 bg-red text-white border-none rounded-md text-sm font-semibold font-sans cursor-pointer hover:bg-red-dark transition-colors duration-150 whitespace-nowrap">
-                Subscribe
-              </button>
-            </div>
-          </div>
-        </div>
       </main>
 
       <Footer />

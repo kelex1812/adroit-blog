@@ -6,7 +6,6 @@
  * (lazily upserted by GET /api/profile) and renders ProfileForm (client,
  * edits name/username) + CertificateSection (derived certificates).
  */
-import { redirect } from "next/navigation";
 import type { Metadata } from "next";
 
 import Header from "@/components/Header";
@@ -14,6 +13,7 @@ import Footer from "@/components/Footer";
 import StubBadge from "@/components/StubBadge";
 import ProfileForm from "@/components/Profile/ProfileForm";
 import CertificateSection from "@/components/Profile/CertificateSection";
+import GuestProfileTeaser from "@/components/Profile/GuestProfileTeaser";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
 import { avatarHueClass, initialsFromEmail } from "@/lib/avatar";
 import { buildMetadata } from "@/lib/seo";
@@ -32,7 +32,11 @@ export default async function ProfilePage() {
   const {
     data: { user },
   } = await supabase.auth.getUser();
-  if (!user) redirect("/login?next=/profile");
+
+  // Guest → locked-preview value demo (backlog B-09 / constellation "locked
+  // sky" teaser) instead of a redirect wall. One real CTA to /login?next=/profile.
+  if (!user) return <GuestProfileTeaser />;
+
   const email = user.email ?? "";
 
   // Read the profile row server-side (lazy upsert on first read).

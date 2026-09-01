@@ -4,6 +4,43 @@ All notable changes to the Adroit Consulting Blog project will be documented in 
 
 ## [Unreleased]
 
+### Fix: Branded 404, guest profile teaser, exam-less certificate records, dead-form cleanup (t_40c49bdc)
+
+**What** — Four backlog items (Wave 1 quick wins + trust fixes):
+
+1. **B-03 — branded 404 page.** Added `src/app/not-found.tsx`: a navy/red
+   display moment with three real CTAs — Back to blog (`/blog`), Browse Learn
+   (`/learn`, the hub), and Contact us (`https://adroit.io/contact`) — instead
+   of a bare dead end. 404s are a frequent destination today (6/7 series
+   certificate pages and deep Learn URLs used to 404), so this turns a dead
+   route into a wayfinding moment. Rendered with the site Header/Footer.
+2. **B-09 — guest `/profile` locked-preview teaser.** Replaced the guest
+   hard-redirect on `/profile` with a locked-preview value demo
+   (`src/components/Profile/GuestProfileTeaser.tsx`): a constellation "locked
+   sky" teaser showing what the profile offers (progress, certificates,
+   settings) with a single real CTA to `/login?next=/profile`. Authenticated
+   users still get the full profile (ProfileForm + CertificateSection).
+3. **B-07 — exam-less series no longer 404 on their certificate route.**
+   `generateStaticParams` for `/learn/[series]/certificate` now prerenders
+   every series. An exam-less series renders an interim "Completion Record /
+   exam coming soon" state (per D2 — build exams UP, not trim) instead of a
+   bare 404: guests get a `GuestCTA` (certificate tier); signed-in users see
+   their lesson-completion progress against the planned lesson set with a
+   clear "certificate unlocks once the cert prep exam ships" note. Exam-backed
+   series (omni-studio-cert) keep the full certificate flow.
+4. **B-11 — removed both dead newsletter forms.** The non-functional "Stay
+   Updated" form in `src/components/Footer.tsx` and the "Subscribe for
+   Updates" CTA in `src/app/blog/categories/page.tsx` are gone; the footer
+   grid reflows from 4 → 3 columns.
+
+**Why** — 404s were the single most common dead end (every exam-less
+certificate page 404'd); guests hitting `/profile` got redirected to login
+with zero value preview; and two newsletter forms collected nothing but
+errored on submit.
+
+**Known issues** — None. 393 tests pass (62 files; +6 new: 3 certificate-page
+B-07, 2 profile B-09, 1 not-found B-03); lint 0 errors; `npm run build` GREEN.
+
 ### Fix: Learn content truthfulness + progress affordances + Hermes "coming soon" (t_9cd41aaa)
 
 **What** — Four backlog fixes on the Learn Platform v2:

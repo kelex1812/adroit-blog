@@ -56,18 +56,23 @@ interface Props {
 export const dynamic = "force-dynamic";
 
 export async function generateStaticParams() {
-  return learnSeries
-    .filter((s) => getCertExam(s.slug) !== null)
-    .map((s) => ({ series: s.slug }));
+  // Prerender every series' certificate route (exam-less series render the
+  // interim "completion record / exam coming soon" state per backlog B-07 / D2).
+  return learnSeries.map((s) => ({ series: s.slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { series } = await params;
   const s = getSeriesBySlug(series);
-  if (!s || getCertExam(series) === null) return {};
+  if (!s) return {};
+  const hasExam = getCertExam(series) !== null;
   return buildMetadata({
-    title: `Certificate of Completion | ${s.name} | Adroit Learn`,
-    description: `Printable certificate of completion for the ${s.name} course: all lessons completed and the cert prep exam passed at 72% or higher.`,
+    title: hasExam
+      ? `Certificate of Completion | ${s.name} | Adroit Learn`
+      : `Completion Record | ${s.name} | Adroit Learn`,
+    description: hasExam
+      ? `Printable certificate of completion for the ${s.name} course: all lessons completed and the cert prep exam passed at 72% or higher.`
+      : `Course completion record for ${s.name}: track the lessons you've completed. The certificate prep exam for this path is being authored and will unlock a printable certificate.`,
     path: `/learn/${series}/certificate`,
   });
 }
@@ -76,8 +81,11 @@ export default async function CertificatePage({ params }: Props) {
   const { series } = await params;
   const s = getSeriesBySlug(series);
   if (!s) notFound();
-  // Certificate is a tier-course feature — no exam file means no certificate.
-  if (getCertExam(series) === null) notFound();
+
+  // Certificate is a tier-course feature. Exam-less series do NOT 404 (backlog
+  // B-07 / D2): they render an interim "completion record / exam coming soon"
+  // state while the prep exam is authored. Only a missing series 404s.
+  const hasExam = getCertExam(series) !== null;
 
   // Access seam gate (ADR-201): DB-backed status + entitlements. not-launched →
   // 404; paywall → locked-content page (never the cert, never 404).
@@ -97,6 +105,128 @@ export default async function CertificatePage({ params }: Props) {
           peekLessonSlug: lessons[0]?.slug ?? null,
         })}
       />
+    );
+  }
+
+  // Exam-less series → interim "completion record / exam coming soon" state
+  // (backlog B-07 / D2). Keeps the certificate promise visible instead of a
+  // bare 404 while the prep exam is authored.
+  if (!hasExam) {
+    const supabase = await getSupabaseServerClient();
+    const { data: { user } } = await supabase.auth.getUser();
+
+    const lessonSlugs = getSeriesLessonSlugs(series);
+    const totalLessons = lessonSlugs.length || s.totalLessons;
+
+    const completionHead = (
+      <>
+        <Link
+          href={`/learn/${series}`}
+          className="inline-flex items-center gap-1.5 text-gray-500 text-xs font-medium no-underline mb-5 hover:text-navy transition-colors duration-150"
+        >
+          &larr; Back to {s.name}
+        </Link>
+        <div className="flex items-center gap-2 font-mono text-[11.5px] font-bold text-red uppercase tracking-[0.08em] mb-[14px]">
+          <span className="w-[3px] h-3 rounded-sm bg-red" />
+          Completion Record
+        </div>
+        <h1 className="text-[clamp(1.75rem,4vw,2.25rem)] font-extrabold text-navy tracking-[-0.02em] leading-tight mb-3">
+          {s.name} — your progress
+        </h1>
+        <p className="text-[15px] text-gray-500 max-w-[600px] leading-relaxed mb-7">
+          This learning path tracks every lesson you complete. The certificate prep
+          exam is being authored — once it ships, passing it at 72%+ earns your
+          printable certificate of completion.
+        </p>
+      </>
+    );
+
+    if (!user) {
+      return (
+        <div className="min-h-screen flex flex-col">
+          <Header />
+          <main id="main" className="flex-1">
+            <div className="max-w-[720px] mx-auto px-6 pt-10 pb-24">
+              {completionHead}
+              <GuestCTA tier="certificate" ariaLabel="Completion record locked" />
+            </div>
+          </main>
+          <Footer />
+        </div>
+      );
+    }
+
+    // Authed — show lessons completed against the planned lesson set.
+    let completedCount = 0;
+    if (lessonSlugs.length > 0) {
+      const { data } = await supabase
+        .from("lesson_completion")
+        .select("lesson_slug")
+        .eq("user_id", user.id)
+        .in("lesson_slug", lessonSlugs);
+      completedCount = Math.min(
+        new Set((data ?? []).map((r) => (r as { lesson_slug: string }).lesson_slug)).size,
+        totalLessons,
+      );
+    }
+    const allDone = totalLessons > 0 && completedCount >= totalLessons;
+
+    return (
+      <div className="min-h-screen flex flex-col">
+        <Header />
+        <main id="main" className="flex-1">
+          <div className="max-w-[720px] mx-auto px-6 pt-10 pb-24">
+            {completionHead}
+            <div className="max-w-[640px] bg-white border border-gray-200 rounded-2xl p-7 shadow-sm">
+              <div className="flex items-center gap-2 font-mono text-[11px] font-bold text-gray-500 uppercase tracking-[0.09em] mb-2">
+                <span className="w-[3px] h-3 rounded-sm bg-gray-500" />
+                Course completion
+              </div>
+              <h2 className="text-[1.2rem] font-extrabold text-navy tracking-[-0.02em] mb-2">
+                {allDone ? "Path complete — exam coming soon" : `Complete all ${totalLessons} lessons`}
+              </h2>
+              <p className="text-[13.5px] text-gray-600 leading-relaxed mb-[18px]">
+                {allDone
+                  ? "You've finished every lesson in this path. Your certificate unlocks once the cert prep exam is published — check back soon."
+                  : "Finish the remaining lessons to complete this path. Your certificate unlocks once the cert prep exam is published."}
+              </p>
+              <div className="flex items-center gap-2.5 text-[13px] text-gray-600">
+                <span
+                  className={`w-5 h-5 rounded-full flex-shrink-0 flex items-center justify-center ${
+                    allDone ? "bg-[var(--signal-done-bg)] text-[var(--signal-done)]" : "bg-gray-100 text-gray-500"
+                  }`}
+                >
+                  {allDone ? (
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3.4">
+                      <polyline points="20 6 9 17 4 12" />
+                    </svg>
+                  ) : (
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
+                      <line x1="18" y1="6" x2="6" y2="18" />
+                      <line x1="6" y1="6" x2="18" y2="18" />
+                    </svg>
+                  )}
+                </span>
+                <span>All {totalLessons} lessons completed</span>
+                <span className="font-mono text-[11px] text-gray-500 ml-auto">
+                  {completedCount}/{totalLessons}
+                </span>
+              </div>
+              <div className="flex items-center gap-2.5 text-[13px] text-gray-600 mt-3">
+                <span className="w-5 h-5 rounded-full flex-shrink-0 flex items-center justify-center bg-gray-100 text-gray-500">
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
+                    <line x1="18" y1="6" x2="6" y2="18" />
+                    <line x1="6" y1="6" x2="18" y2="18" />
+                  </svg>
+                </span>
+                <span>Cert prep exam (coming soon)</span>
+                <span className="font-mono text-[11px] text-gray-500 ml-auto">Not available</span>
+              </div>
+            </div>
+          </div>
+        </main>
+        <Footer />
+      </div>
     );
   }
 

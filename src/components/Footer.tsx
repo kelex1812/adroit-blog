@@ -4,7 +4,7 @@ export default function Footer() {
   return (
     <footer className="bg-navy-dark text-white/70">
       <div className="max-w-[1120px] mx-auto px-6 pt-12">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mb-10">
           {/* Brand */}
           <div className="sm:col-span-2 lg:col-span-1">
             <div className="flex items-center gap-2 mb-3">
@@ -49,27 +49,6 @@ export default function Footer() {
               <FooterLink href="https://adroit.io/careers">Careers</FooterLink>
               <FooterLink href="https://adroit.io/privacy">Privacy Policy</FooterLink>
             </ul>
-          </div>
-
-          {/* Subscribe */}
-          <div>
-            <h4 className="text-white text-xs font-semibold uppercase tracking-[0.06em] mb-3.5">
-              Stay Updated
-            </h4>
-            <p className="text-xs text-white/50 mb-2.5">
-              Get new posts delivered to your inbox. No spam, just insights.
-            </p>
-            <div className="flex gap-1.5">
-              <input
-                type="email"
-                placeholder="your@email.com"
-                aria-label="Email for newsletter"
-                className="flex-1 px-2.5 py-2 rounded-md border border-white/15 bg-white/8 text-white text-xs font-sans outline-none focus:border-red transition-colors duration-150 placeholder:text-white/50"
-              />
-              <button className="px-3.5 py-2 bg-red text-white border-none rounded-md text-xs font-semibold font-sans cursor-pointer hover:bg-red-dark hover:-translate-y-px transition-all duration-150 whitespace-nowrap">
-                Subscribe
-              </button>
-            </div>
           </div>
         </div>
 
