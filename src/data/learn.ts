@@ -466,7 +466,7 @@ export const learnSeries: LearningSeries[] = [
         "tags": [
           "LLMs",
           "AI Agents",
-          "Compliance",
+          "Security",
           "Governance"
         ],
         "status": "published"
@@ -1869,7 +1869,7 @@ export const learnLessons: LearnLesson[] = [
     "tags": [
       "LLMs",
       "AI Agents",
-      "Compliance",
+      "Security",
       "Governance"
     ],
     "status": "published"
