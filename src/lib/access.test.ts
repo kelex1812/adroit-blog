@@ -384,7 +384,7 @@ describe("effectiveAccessState (ADR-220 five-state resolver)", () => {
 /* ------------------------------------------------------------------ */
 
 describe("buildCatalogEntries", () => {
-  it("live visible to all; pending/archived additionally to admins", () => {
+  it("live visible to all; pending+free renders publicly as coming-soon; archived hidden (B-10/D1)", () => {
     const courses = [
       course({ id: "live", series_slug: "a", status: "live" }),
       course({ id: "pend", series_slug: "b", status: "pending" }),
@@ -398,7 +398,9 @@ describe("buildCatalogEntries", () => {
       now: NOW,
     });
     expect(member.find((e) => e.course.id === "live")?.visible).toBe(true);
-    expect(member.find((e) => e.course.id === "pend")?.visible).toBe(false);
+    // B-10/D1: pending + non-granted access model now shows the public
+    // "coming soon" placeholder instead of being stealth-hidden.
+    expect(member.find((e) => e.course.id === "pend")?.visible).toBe(true);
     expect(member.find((e) => e.course.id === "arch")?.visible).toBe(false);
 
     const admin = buildCatalogEntries({
@@ -454,6 +456,68 @@ describe("buildCatalogEntries", () => {
     });
     expect(entries[0].visible).toBe(false);
     expect(entries[0].canAccess).toBe(false);
+  });
+
+  it("B-10/D1: pending + non-granted access model renders publicly as a coming-soon card (visible, not accessible)", () => {
+    for (const model of [
+      "free",
+      "subscription",
+      "sub-or-one-time",
+      "one-time",
+    ] as const) {
+      const entries = buildCatalogEntries({
+        isAdmin: false,
+        courses: [course({ id: "pend", status: "pending", access_model: model })],
+        entitlements: [],
+        subscriptions: [],
+        now: NOW,
+      });
+      expect(entries[0].visible).toBe(true);
+      expect(entries[0].canAccess).toBe(false); // not live → not accessible
+    }
+  });
+
+  it("B-10/D1: pending + granted stays stealth-hidden from a non-entitled member; visible to a grant-holder and admin", () => {
+    const pendingGranted = course({ id: "pend-granted", status: "pending", access_model: "granted" });
+    const memberNoEnt = buildCatalogEntries({
+      isAdmin: false,
+      courses: [pendingGranted],
+      entitlements: [],
+      subscriptions: [],
+      now: NOW,
+    });
+    expect(memberNoEnt[0].visible).toBe(false);
+
+    const memberWithEnt = buildCatalogEntries({
+      isAdmin: false,
+      courses: [pendingGranted],
+      entitlements: [entitlement({ course_id: "pend-granted", source: "granted" })],
+      subscriptions: [],
+      now: NOW,
+    });
+    expect(memberWithEnt[0].visible).toBe(true);
+
+    const admin = buildCatalogEntries({
+      isAdmin: true,
+      courses: [pendingGranted],
+      entitlements: [],
+      subscriptions: [],
+      now: NOW,
+    });
+    expect(admin[0].visible).toBe(true);
+  });
+
+  it("B-10/D1: archived courses remain hidden from non-admins regardless of access model", () => {
+    for (const model of ["granted", "free"] as const) {
+      const entries = buildCatalogEntries({
+        isAdmin: false,
+        courses: [course({ id: "arch", status: "archived", access_model: model })],
+        entitlements: [],
+        subscriptions: [],
+        now: NOW,
+      });
+      expect(entries[0].visible).toBe(false);
+    }
   });
 });
 

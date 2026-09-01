@@ -28,7 +28,7 @@ export default function MarkComplete({ lessonSlug, label }: MarkCompleteProps) {
       className={`flex-shrink-0 w-12 h-12 rounded-full border-2 flex items-center justify-center transition-all duration-200 cursor-pointer disabled:opacity-50 disabled:cursor-wait active:scale-[0.98] ${
         isCompleted
           ? "check-pop border-green-500 bg-green-500 text-white"
-          : "border-gray-300 bg-white text-transparent hover:border-green-500 dark:bg-[var(--surface-card)] dark:border-[var(--border-default)]"
+          : "border-gray-400 bg-white text-transparent hover:border-green-500 dark:bg-[var(--surface-card)] dark:border-[var(--border-strong)] dark:hover:border-green-500"
       }`}
     >
       <svg

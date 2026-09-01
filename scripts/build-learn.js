@@ -23,7 +23,7 @@ const KNOWN_SERIES = {
   "salesforce-architect": {
     name: "Salesforce System Architect Primer",
     description:
-      "A structured path from Flow fundamentals to platform architecture — 90 lessons on designing Salesforce systems that scale.",
+      "A structured path from Flow fundamentals to platform architecture — practical lessons on designing Salesforce systems that scale.",
     gradient: "from-sky to-blue-600",
   },
   "agentic-ai": {
@@ -108,6 +108,55 @@ function readSeriesJson(dir) {
   }
 }
 
+/**
+ * B-04 lint guard: fail the build if any lesson-count claim in a series
+ * description or lesson excerpt exceeds the number of PUBLISHED lessons.
+ *
+ * Catches regressions like "90-lesson deep dive" on a series that has only
+ * 28 published lessons (the trust/truth fix). Pattern matched: an integer
+ * followed by lesson/lessons/requirement(s)/step(s) — e.g. "30-lesson",
+ * "46-requirement", "~30-lesson", "22 lessons". Deliberately ignores
+ * unrelated numeric claims (dates, token limits like "30,000").
+ */
+const LESSON_COUNT_CLAIM =
+  /(\d+)\s*-?\s*(lesson|lessons|requirement|requirements|step|steps)/gi;
+
+function findOverclaimedCount(text) {
+  if (!text) return null;
+  let m;
+  const re = new RegExp(LESSON_COUNT_CLAIM.source, "gi");
+  let maxClaim = null;
+  while ((m = re.exec(text)) !== null) {
+    const n = parseInt(m[1], 10);
+    // Ignore obviously-unrelated magnitudes (e.g. "30,000" tokens) — a
+    // lesson/requirement series never legitimately claims 4+ digits.
+    if (n >= 1000) continue;
+    if (maxClaim === null || n > maxClaim) maxClaim = n;
+  }
+  return maxClaim;
+}
+
+/** Assert a single series' claims never exceed its published lesson count. */
+function assertNoLessonCountOverpromise(series) {
+  const published = series.lessons.length;
+  const claimed = findOverclaimedCount(series.description);
+  if (claimed !== null && claimed > published) {
+    throw new Error(
+      `[B-04] ${series.slug} description overpromises lessons: claims ${claimed}, only ${published} published. ` +
+        `Fix the copy (adroit-blog discovery/consolidated-backlog.md B-04).`,
+    );
+  }
+  for (const l of series.lessons) {
+    const excerptClaimed = findOverclaimedCount(l.excerpt);
+    if (excerptClaimed !== null && excerptClaimed > published) {
+      throw new Error(
+        `[B-04] ${series.slug}/${l.slug} excerpt overpromises lessons: claims ${excerptClaimed}, only ${published} published. ` +
+          `Fix the copy (discovery/consolidated-backlog.md B-04).`,
+      );
+    }
+  }
+}
+
 function buildSeries(seriesSlug, dir) {
   const cfg = readSeriesJson(dir) || {};
   const known = KNOWN_SERIES[seriesSlug] || {};
@@ -181,6 +230,9 @@ function build() {
   }
 
   const series = dirs.map((slug) => buildSeries(slug, path.join(LEARN_DIR, slug)));
+
+  // B-04 lint guard: fail the build on any lesson-count overpromise.
+  for (const s of series) assertNoLessonCountOverpromise(s);
 
   // Sort series: newest LESSON date DESC (hub PathCards), ties → slug ASC.
   // Empty series sort last.

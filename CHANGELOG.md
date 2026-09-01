@@ -4,6 +4,46 @@ All notable changes to the Adroit Consulting Blog project will be documented in 
 
 ## [Unreleased]
 
+### Fix: Learn content truthfulness + progress affordances + Hermes "coming soon" (t_9cd41aaa)
+
+**What** — Four backlog fixes on the Learn Platform v2:
+
+1. **B-01 — series-hero content metric relabeled.** The `LessonProgress`
+   counter in `src/app/learn/[series]/page.tsx` now reads "N lessons ·
+   published" (a content metric: lessons present vs highest lesson number).
+   It no longer renders a misleading "Lesson N of M" — "N of M complete" is
+   exclusively owned by `SeriesProgress`.
+2. **B-04 — lesson-count overpromises removed + build-time lint guard.** Fixed
+   4 of 7 `content/learn/*/series.json` descriptions and the in-lesson excerpt
+   copy that over-claimed published lesson totals: salesforce-architect
+   ("90-lesson"→28), omni-studio-cert ("46-requirement"→23), ai-at-work
+   ("30-lesson"→16), hermes-consultant ("~30-lesson"→7). Added
+   `assertNoLessonCountOverpromise()` in `scripts/build-learn.js` that fails
+   `npm run build` if any description/excerpt count-claim exceeds the published
+   lesson count for that series.
+3. **B-05 — empty-progress affordances visible in light + dark.** Added
+   dark-mode variants to the empty progress track (`ProgressIndicator`,
+   `SeriesProgress`, `LessonCompleteProgress`, `PostReadProgress` loading
+   states), unchecked `MarkComplete` border, the "Not read yet" empty bar,
+   `CheckCardList` empty check rows, and the locked `ExamCard` status bar /
+   button. Filled state stays red.
+4. **B-10 — Hermes track "coming soon" placeholder rows via the access seam.**
+   Changed `buildCatalogEntries` visibility in `src/lib/access.ts` so a
+   `pending` course now renders publicly as a coming-soon card when its access
+   model is NOT `granted` (D1). A pending-`granted` course stays stealth-hidden
+   from non-entitled members and remains visible to matching grant holders +
+   admins; archived courses stay hidden from non-admins.
+
+**Why** — The series hero double-counted/completed semantics that the progress
+track owns; four series promised lesson totals well beyond what is actually
+published (misleading for subscribers); empty progress affordances were
+invisible on dark surfaces; and the Hermes track seeded `pending` rows never
+surfaced because v4 stealth-hidden every non-live course from non-admins.
+
+**Known issues** — None. 387 tests pass (59 files; +3 access-seam cases for
+B-10/D1, one v4 expectation updated to the B-10 rule); lint 0 errors (1
+pre-existing MDXArticle warning); `npm run build` GREEN (incl. new B-04 guard).
+
 ### Fix: security hardening of /api/auth/reset-password/update (t_81dd7f16)
 
 **What** — Defense-in-depth hardening of the password-update endpoint,

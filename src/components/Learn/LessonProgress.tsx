@@ -7,8 +7,9 @@ interface LessonProgressProps {
 
 /**
  * Signature Learn component (ADR-004): red progress fill on gray track +
- * mono "Lesson N of M" counter. Progress = lessons present vs highest
- * lesson number — a content metric, not user tracking.
+ * mono "{N} lessons · published" counter. Progress = lessons present vs
+ * highest lesson number — a content metric, NOT user completion tracking.
+ * (B-01: "N of M complete" belongs to SeriesProgress, not this label.)
  */
 export default function LessonProgress({
   published,
@@ -42,7 +43,8 @@ export default function LessonProgress({
           onGradient ? "text-white" : "text-gray-500"
         }`}
       >
-        Lesson <b className={onGradient ? "text-white font-bold" : "text-navy font-bold"}>{published}</b> of {total}
+        <b className={onGradient ? "text-white font-bold" : "text-navy font-bold"}>{published}</b>{" "}
+        lesson{published === 1 ? "" : "s"} · published
       </span>
     </div>
   );

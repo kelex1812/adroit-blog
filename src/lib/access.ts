@@ -223,14 +223,23 @@ export function buildCatalogEntries(
 ): CatalogCourseEntry[] {
   return input.courses.map((course) => {
     const visible = input.isAdmin
-      ? true
-      : course.status !== "live"
+      ? true // admin previews pending/archived + reads live
+      : // Non-live courses. ARCHIVED stays hidden from non-admins. PENDING
+        // renders publicly as a "coming soon" placeholder (B-10/D1) — EXCEPT
+        // a pending-GRANTED course, which is stealth-hidden externally and
+        // visible only to a matching grant holder. Pending + any other access
+        // model shows the public placeholder.
+        course.status === "archived"
         ? false
-        : // Stealth-granted (v4): a granted-model course is hidden from the
-          // public catalog unless the user holds a matching granted entitlement.
-          course.access_model === "granted"
-          ? hasGrantedEntitlementFor(course.id, input.entitlements)
-          : true;
+        : course.status === "pending"
+          ? course.access_model === "granted"
+            ? hasGrantedEntitlementFor(course.id, input.entitlements)
+            : true
+          : // Live. Stealth-granted (v4): a granted-model course is hidden
+            // from the public catalog unless the user holds a matching grant.
+            course.access_model === "granted"
+            ? hasGrantedEntitlementFor(course.id, input.entitlements)
+            : true
     const canAccess = input.isAdmin
       ? true // admin previews pending/archived + reads live
       : course.status === "live" &&

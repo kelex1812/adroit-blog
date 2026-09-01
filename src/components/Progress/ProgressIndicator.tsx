@@ -39,7 +39,7 @@ export default function ProgressIndicator({
         aria-valuenow={Math.min(current, total)}
         aria-valuetext={pct > 0 ? `${pct}%` : `${current} of ${total}`}
         aria-label={label || "Progress"}
-        className="h-1.5 rounded-full overflow-hidden bg-gray-200 dark:bg-[var(--surface-sunken)]"
+        className="h-1.5 rounded-full overflow-hidden bg-gray-200 dark:bg-[var(--border-default)]"
       >
         <div
           className="h-full rounded-full bg-red transition-[width] duration-300"

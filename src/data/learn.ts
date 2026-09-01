@@ -10,7 +10,7 @@ export const learnSeries: LearningSeries[] = [
   {
     "slug": "hermes-consultant",
     "name": "Hermes Agent Consultant",
-    "description": "A ~30-lesson path to becoming an agent-implementation consultant: scoping, implementation craft, delivery practice, and the business of consulting. Platform-agnostic skills with Hermes Agent as the working example.",
+    "description": "A path to becoming an agent-implementation consultant: scoping, implementation craft, delivery practice, and the business of consulting. Platform-agnostic skills with Hermes Agent as the working example.",
     "gradient": "from-teal to-emerald-600",
     "lessons": [
       {
@@ -249,7 +249,7 @@ export const learnSeries: LearningSeries[] = [
   {
     "slug": "omni-studio-cert",
     "name": "OmniStudio Developer Certification",
-    "description": "A 46-requirement deep dive for the Salesforce Certified OmniStudio Developer exam. One official exam-guide requirement per day, with config walkthroughs, exam traps, and practice questions.",
+    "description": "A deep dive for the Salesforce Certified OmniStudio Developer exam. One official exam-guide requirement per day, with config walkthroughs, exam traps, and practice questions.",
     "gradient": "from-red to-rose-600",
     "lessons": [
       {
@@ -257,7 +257,7 @@ export const learnSeries: LearningSeries[] = [
         "title": "OmniStudio F-1: OmniStudio Solution & Industry Use Cases",
         "series": "omni-studio-cert",
         "lesson": 1,
-        "excerpt": "Describe the OmniStudio solution as it applies to common customer use case scenarios in different industries (telco, energy, healthcare, public sector, etc.). Day 1 of the 46-requirement OmniStudio Developer exam prep.",
+        "excerpt": "Describe the OmniStudio solution as it applies to common customer use case scenarios in different industries (telco, energy, healthcare, public sector, etc.). Day 1 of the OmniStudio Developer exam prep.",
         "date": "August 03, 2026",
         "author": "Adroit Consulting",
         "readTime": "6 min read",
@@ -272,7 +272,7 @@ export const learnSeries: LearningSeries[] = [
         "title": "OmniStudio F-2: Project Needs: Requirements, Assumptions, Risks, Constraints",
         "series": "omni-studio-cert",
         "lesson": 2,
-        "excerpt": "Determine a project's needs by evaluating a customer's requirements, assumptions, risks, and constraints. Day 2 of the 46-requirement OmniStudio Developer exam prep.",
+        "excerpt": "Determine a project's needs by evaluating a customer's requirements, assumptions, risks, and constraints. Day 2 of the OmniStudio Developer exam prep.",
         "date": "August 04, 2026",
         "author": "Adroit Consulting",
         "readTime": "6 min read",
@@ -287,7 +287,7 @@ export const learnSeries: LearningSeries[] = [
         "title": "OmniStudio F-3: Managed Package vs Standard Runtime; Upgrades",
         "series": "omni-studio-cert",
         "lesson": 3,
-        "excerpt": "Explain Managed Package Runtime vs. Standard Runtime, Automatic Upgrades, and Manual Intervention Upgrade. Day 3 of the 46-requirement OmniStudio Developer exam prep.",
+        "excerpt": "Explain Managed Package Runtime vs. Standard Runtime, Automatic Upgrades, and Manual Intervention Upgrade. Day 3 of the OmniStudio Developer exam prep.",
         "date": "August 05, 2026",
         "author": "Adroit Consulting",
         "readTime": "6 min read",
@@ -302,7 +302,7 @@ export const learnSeries: LearningSeries[] = [
         "title": "OmniStudio F-4: Licensing, Permission Set Licenses & Permission Sets",
         "series": "omni-studio-cert",
         "lesson": 4,
-        "excerpt": "Explain OmniStudio license requirements, Permission Set licenses and Permission Sets. Day 4 of the 46-requirement OmniStudio Developer exam prep.",
+        "excerpt": "Explain OmniStudio license requirements, Permission Set licenses and Permission Sets. Day 4 of the OmniStudio Developer exam prep.",
         "date": "August 06, 2026",
         "author": "Adroit Consulting",
         "readTime": "6 min read",
@@ -317,7 +317,7 @@ export const learnSeries: LearningSeries[] = [
         "title": "OmniStudio F-5: Implementation Toolchain: SFCLI, VBT, Migration",
         "series": "omni-studio-cert",
         "lesson": 5,
-        "excerpt": "Describe the tools required to complete the end-to-end implementation process (SFCLI, VBT, Migration, etc.). Day 5 of the 46-requirement OmniStudio Developer exam prep.",
+        "excerpt": "Describe the tools required to complete the end-to-end implementation process (SFCLI, VBT, Migration, etc.). Day 5 of the OmniStudio Developer exam prep.",
         "date": "August 07, 2026",
         "author": "Adroit Consulting",
         "readTime": "6 min read",
@@ -603,7 +603,7 @@ export const learnSeries: LearningSeries[] = [
   {
     "slug": "salesforce-architect",
     "name": "Salesforce System Architect Primer",
-    "description": "A 90-lesson deep dive into Flow design, Apex patterns, and platform architecture for teams scaling on Salesforce.",
+    "description": "A practical deep dive into Flow design, Apex patterns, and platform architecture for teams scaling on Salesforce.",
     "gradient": "from-sky to-blue-600",
     "lessons": [
       {
@@ -1149,7 +1149,7 @@ export const learnSeries: LearningSeries[] = [
         "title": "Lesson 1: What an Agent Actually Is (LLMs vs Rules vs Workflows)",
         "series": "agentic-ai",
         "lesson": 1,
-        "excerpt": "The definitions that matter for the whole 90-lesson track: what separates a rules system, an LLM workflow, and a true agent, plus how to tell which one you're actually building.",
+        "excerpt": "The definitions that matter for the whole track: what separates a rules system, an LLM workflow, and a true agent, plus how to tell which one you're actually building.",
         "date": "August 04, 2026",
         "author": "Adroit Consulting",
         "readTime": "9 min read",
@@ -1626,7 +1626,7 @@ export const learnSeries: LearningSeries[] = [
   {
     "slug": "ai-at-work",
     "name": "AI at Work",
-    "description": "A vendor-agnostic, 30-lesson primer for using AI in day-to-day work: foundations, prompting, productivity, small automations, and team adoption. Company-wide training that works for any team and any AI tool.",
+    "description": "A vendor-agnostic primer for using AI in day-to-day work: foundations, prompting, productivity, small automations, and team adoption. Company-wide training that works for any team and any AI tool.",
     "gradient": "from-fuchsia to-purple-600",
     "lessons": [
       {
@@ -3737,7 +3737,7 @@ export const learnLessons: LearnLesson[] = [
     "title": "OmniStudio F-5: Implementation Toolchain: SFCLI, VBT, Migration",
     "series": "omni-studio-cert",
     "lesson": 5,
-    "excerpt": "Describe the tools required to complete the end-to-end implementation process (SFCLI, VBT, Migration, etc.). Day 5 of the 46-requirement OmniStudio Developer exam prep.",
+    "excerpt": "Describe the tools required to complete the end-to-end implementation process (SFCLI, VBT, Migration, etc.). Day 5 of the OmniStudio Developer exam prep.",
     "date": "August 07, 2026",
     "author": "Adroit Consulting",
     "readTime": "6 min read",
@@ -3786,7 +3786,7 @@ export const learnLessons: LearnLesson[] = [
     "title": "OmniStudio F-4: Licensing, Permission Set Licenses & Permission Sets",
     "series": "omni-studio-cert",
     "lesson": 4,
-    "excerpt": "Explain OmniStudio license requirements, Permission Set licenses and Permission Sets. Day 4 of the 46-requirement OmniStudio Developer exam prep.",
+    "excerpt": "Explain OmniStudio license requirements, Permission Set licenses and Permission Sets. Day 4 of the OmniStudio Developer exam prep.",
     "date": "August 06, 2026",
     "author": "Adroit Consulting",
     "readTime": "6 min read",
@@ -3835,7 +3835,7 @@ export const learnLessons: LearnLesson[] = [
     "title": "OmniStudio F-3: Managed Package vs Standard Runtime; Upgrades",
     "series": "omni-studio-cert",
     "lesson": 3,
-    "excerpt": "Explain Managed Package Runtime vs. Standard Runtime, Automatic Upgrades, and Manual Intervention Upgrade. Day 3 of the 46-requirement OmniStudio Developer exam prep.",
+    "excerpt": "Explain Managed Package Runtime vs. Standard Runtime, Automatic Upgrades, and Manual Intervention Upgrade. Day 3 of the OmniStudio Developer exam prep.",
     "date": "August 05, 2026",
     "author": "Adroit Consulting",
     "readTime": "6 min read",
@@ -3867,7 +3867,7 @@ export const learnLessons: LearnLesson[] = [
     "title": "Lesson 1: What an Agent Actually Is (LLMs vs Rules vs Workflows)",
     "series": "agentic-ai",
     "lesson": 1,
-    "excerpt": "The definitions that matter for the whole 90-lesson track: what separates a rules system, an LLM workflow, and a true agent, plus how to tell which one you're actually building.",
+    "excerpt": "The definitions that matter for the whole track: what separates a rules system, an LLM workflow, and a true agent, plus how to tell which one you're actually building.",
     "date": "August 04, 2026",
     "author": "Adroit Consulting",
     "readTime": "9 min read",
@@ -3884,7 +3884,7 @@ export const learnLessons: LearnLesson[] = [
     "title": "OmniStudio F-2: Project Needs: Requirements, Assumptions, Risks, Constraints",
     "series": "omni-studio-cert",
     "lesson": 2,
-    "excerpt": "Determine a project's needs by evaluating a customer's requirements, assumptions, risks, and constraints. Day 2 of the 46-requirement OmniStudio Developer exam prep.",
+    "excerpt": "Determine a project's needs by evaluating a customer's requirements, assumptions, risks, and constraints. Day 2 of the OmniStudio Developer exam prep.",
     "date": "August 04, 2026",
     "author": "Adroit Consulting",
     "readTime": "6 min read",
@@ -3916,7 +3916,7 @@ export const learnLessons: LearnLesson[] = [
     "title": "OmniStudio F-1: OmniStudio Solution & Industry Use Cases",
     "series": "omni-studio-cert",
     "lesson": 1,
-    "excerpt": "Describe the OmniStudio solution as it applies to common customer use case scenarios in different industries (telco, energy, healthcare, public sector, etc.). Day 1 of the 46-requirement OmniStudio Developer exam prep.",
+    "excerpt": "Describe the OmniStudio solution as it applies to common customer use case scenarios in different industries (telco, energy, healthcare, public sector, etc.). Day 1 of the OmniStudio Developer exam prep.",
     "date": "August 03, 2026",
     "author": "Adroit Consulting",
     "readTime": "6 min read",
