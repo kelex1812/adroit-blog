@@ -9,6 +9,12 @@ The **Adroit Consulting site** — a [Next.js](https://nextjs.org) (App Router) 
 > The production domain `adroit.io/blog` is intentionally not wired until launch. The site is staged on the private Vercel deployment.
 ## What's New
 
+### SSR /blog listing + client filter island (B-08) — 2026-09-01
+
+The `/blog` index is now a **server-rendered listing** with a thin **client filter island**. `src/app/blog/page.tsx` is a server component that resolves the `posts` dataset server-side and renders the first page (featured hero + 8 post cards + pagination) into the initial HTML — addressing Brainiac findings #3 (client-only shell hurting LCP/INP/CWV and under-rendering for partial-JS crawlers) and #9 (the ~48 KB `posts.ts` riding in the client JS bundle; it is now resolved on the server, not shipped as an executable client chunk). The interactive controls (category pills, All/Unread/Read filter, sort toggle, pagination) live in `src/components/BlogListing/BlogListingClient.tsx`, a `"use client"` island that hydrates on top of the server-rendered content and preserves the featured-post hero, read-progress bar, and guest sign-in prompt. Posts per page bumped 4 → 8.
+
+**Verified live** at https://adroit-blog-two.vercel.app/blog: HTTP 200 with the 8 post cards present in the raw HTML (no `BAILOUT_TO_CLIENT_SIDE_RENDERING`, no "Loading posts…" fallback), and the client filter island mounts and reacts — clicking Unread toggles state, updates the URL to `?read=unread`, and re-renders the list. Zero console/network errors. All three audits (a11y/lara, QA/zod, security/val-el) PASS; 427 tests green.
+
 ### Password-reset update route hardening: origin check + rate limit (PR #174) — 2026-08-31
 
 The password-reset update API route (`/api/auth/reset-password/update`) now has defense-in-depth hardening that was committed but never shipped. Two guards now run before any request body is parsed: (1) an origin check that rejects cross-origin requests with HTTP 403 (CSRF protection, CWE-352), and (2) a per-IP sliding-window rate limit (30 requests/min) that returns HTTP 429 (brute-force protection, CWE-307). This closes the gap where the hardening existed in code but was not live in production. Verified live: cross-origin POST returns 403, homepage returns 200. All three audits (a11y/lara, QA/zod, security/val-el) PASS; 384 tests green. Risk LOW (defense-in-depth on an auth-gated route, +77/-3 lines across 3 files).
