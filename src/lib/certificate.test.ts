@@ -253,7 +253,7 @@ describe("getSeriesLessonSlugs", () => {
   });
 
   it("returns [] for a series without tier questions", () => {
-    expect(getSeriesLessonSlugs("agentic-ai")).toEqual([]);
+    expect(getSeriesLessonSlugs("no-such-series")).toEqual([]);
   });
 
   it("rejects traversal-ish series", () => {

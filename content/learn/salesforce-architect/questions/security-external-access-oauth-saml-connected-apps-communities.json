@@ -1,0 +1,40 @@
+{
+  "quizName": "salesforce-architect:lesson:security-external-access-oauth-saml-connected-apps-communities",
+  "title": "Lesson 13: Security, Part 3: External Access, OAuth, SAML/SSO, Connected Apps, and Communities",
+  "description": "How outside systems and outside people get in. OAuth flows for machine access, SAML single sign-on for employee logins, connected apps as the doorway, and Experience Cloud communities as the portal where customers and partners authenticate without touching your internal identity system.",
+  "questions": [
+    {
+      "question": "Per the lesson “Security, Part 3: External Access, OAuth, SAML/SSO, Connected Apps, and Communities”, what is the central focus?",
+      "options": [
+        "How outside systems and outside people get in. OAuth flows for machine access, SAML single sign-on for employee logins, connected apps as the doorway, and Exper…",
+        "A history of the technology and its vendors",
+        "A review of unrelated productivity tools",
+        "A summary of corporate policy rules"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "The lesson is centered on: How outside systems and outside people get in. OAuth flows for machine access, SAML single sign-on for employee logins, connected apps as the doorway, and Experience Cloud communities as the portal where customers and partners authenticate without touching your internal identity system."
+    },
+    {
+      "question": "Which statement best reflects the lesson’s guidance?",
+      "options": [
+        "Two very different kinds of outsiders exist, and confusing them is a classic architect failure.",
+        "Lessons 11 and 12 covered the inside of the org: who sees which records, who can do which things, and how a user proves they are who they say they are.",
+        "External systems need to read and write data through APIs.",
+        "External access is the set of doors you cut into the fortress so machines and outsiders can get in without undoing everything you locked down on the inside."
+      ],
+      "correct_answer_index": 1,
+      "explanation": "Lessons 11 and 12 covered the inside of the org: who sees which records, who can do which things, and how a user proves they are who they say they are."
+    },
+    {
+      "question": "Which conclusion does the lesson support?",
+      "options": [
+        "Salesforce is explicit about the problem: it \"recommend[s] avoiding this flow because it passes credentials back and forth,\" and recommends blocking all connected apps from using it.",
+        "Two very different kinds of outsiders exist, and confusing them is a classic architect failure.",
+        "Lessons 11 and 12 covered the inside of the org: who sees which records, who can do which things, and how a user proves they are who they say they are.",
+        "External access is the set of doors you cut into the fortress so machines and outsiders can get in without undoing everything you locked down on the inside."
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Salesforce is explicit about the problem: it \"recommend[s] avoiding this flow because it passes credentials back and forth,\" and recommends blocking all connected apps from using it."
+    }
+  ]
+}

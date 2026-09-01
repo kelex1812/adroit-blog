@@ -1,0 +1,40 @@
+{
+  "quizName": "salesforce-architect:lesson:integration-fundamentals-rest-soap-bulk-apis",
+  "title": "Lesson 4: Integration Fundamentals: REST, SOAP, Bulk APIs, and Picking the Right One",
+  "description": "The System Architect's home turf: when to call Salesforce with REST, when to reach for SOAP, when to hand it a CSV via Bulk API 2.0, and the request limits that make the choice matter.",
+  "questions": [
+    {
+      "question": "Per the lesson “Integration Fundamentals: REST, SOAP, Bulk APIs, and Picking the Right One”, what is the central focus?",
+      "options": [
+        "The System Architect's home turf: when to call Salesforce with REST, when to reach for SOAP, when to hand it a CSV via Bulk API 2.0, and the request limits that…",
+        "A history of the technology and its vendors",
+        "A review of unrelated productivity tools",
+        "A summary of corporate policy rules"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "The lesson is centered on: The System Architect's home turf: when to call Salesforce with REST, when to reach for SOAP, when to hand it a CSV via Bulk API 2.0, and the request limits that make the choice matter."
+    },
+    {
+      "question": "Which statement best reflects the lesson’s guidance?",
+      "options": [
+        "Salesforce ships a dozen-plus APIs, but for plain data movement the Help doc \"Which API Do I Use?\" narrows the field.",
+        "Its primary benefit: \"it doesn't require much tooling to access your data.",
+        "It sits between the ERP, the e-commerce platform, the marketing automation tool, and a dozen SaaS apps, and every one of them needs to move records in and out.",
+        "This lesson builds the decision framework: what REST, SOAP, and Bulk actually are, the limits that constrain them, and how to pick."
+      ],
+      "correct_answer_index": 2,
+      "explanation": "It sits between the ERP, the e-commerce platform, the marketing automation tool, and a dozen SaaS apps, and every one of them needs to move records in and out."
+    },
+    {
+      "question": "Which conclusion does the lesson support?",
+      "options": [
+        "It sits between the ERP, the e-commerce platform, the marketing automation tool, and a dozen SaaS apps, and every one of them needs to move records in and out.",
+        "This lesson builds the decision framework: what REST, SOAP, and Bulk actually are, the limits that constrain them, and how to pick.",
+        "Salesforce's own guidance names its niche: \"you can use SOAP API to integrate Salesforce with your org's ERP and finance systems.\"",
+        "Salesforce ships a dozen-plus APIs, but for plain data movement the Help doc \"Which API Do I Use?\" narrows the field."
+      ],
+      "correct_answer_index": 2,
+      "explanation": "Salesforce's own guidance names its niche: \"you can use SOAP API to integrate Salesforce with your org's ERP and finance systems.\""
+    }
+  ]
+}

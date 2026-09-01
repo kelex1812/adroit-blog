@@ -1,0 +1,40 @@
+{
+  "quizName": "salesforce-architect:lesson:error-handling-monitoring-debug-logs-event-monitoring-health-checks-alerts",
+  "title": "Lesson 23: Error Handling and Monitoring: Debug Logs, Event Monitoring, Health Checks, and Alerts",
+  "description": "The observability layer of a Salesforce org: debug logs and trace flags when a transaction misbehaves, Event Monitoring when you need who, what, and when across the whole org, health checks for the security baseline and the platform status, and the alerting that turns all of it into action instead of archaeology.",
+  "questions": [
+    {
+      "question": "Per the lesson “Error Handling and Monitoring: Debug Logs, Event Monitoring, Health Checks, and Alerts”, what is the central focus?",
+      "options": [
+        "The observability layer of a Salesforce org: debug logs and trace flags when a transaction misbehaves, Event Monitoring when you need who, what, and when across…",
+        "A history of the technology and its vendors",
+        "A review of unrelated productivity tools",
+        "A summary of corporate policy rules"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "The lesson is centered on: The observability layer of a Salesforce org: debug logs and trace flags when a transaction misbehaves, Event Monitoring when you need who, what, and when across the whole org, health checks for the security baseline and the platform status, and the alerting that turns all of it into action instead of archaeology."
+    },
+    {
+      "question": "Which statement best reflects the lesson’s guidance?",
+      "options": [
+        "Lesson 9 taught you how to design errors so nothing is silently dropped in an integration: idempotency, bounded retries, dead letters.",
+        "A system can have perfect error handling and still fail your users if nobody can see the failure, attribute it, and act before it becomes an incident.",
+        "Error handling decides what happens when a transaction fails.",
+        "This lesson is the observability side of that same discipline."
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Lesson 9 taught you how to design errors so nothing is silently dropped in an integration: idempotency, bounded retries, dead letters."
+    },
+    {
+      "question": "Which conclusion does the lesson support?",
+      "options": [
+        "A system can have perfect error handling and still fail your users if nobody can see the failure, attribute it, and act before it becomes an incident.",
+        "Lesson 9 taught you how to design errors so nothing is silently dropped in an integration: idempotency, bounded retries, dead letters.",
+        "The warning that follows the limit list is the one that bites production: if a trace flag is enabled on a frequently accessed Apex class, or for a user executing requests often, the request can fail, regardless of window and log size.",
+        "This lesson is the observability side of that same discipline."
+      ],
+      "correct_answer_index": 2,
+      "explanation": "The warning that follows the limit list is the one that bites production: if a trace flag is enabled on a frequently accessed Apex class, or for a user executing requests often, the request can fail, regardless of window and log size."
+    }
+  ]
+}

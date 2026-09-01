@@ -1,0 +1,40 @@
+{
+  "quizName": "hermes-consultant:lesson:when-an-agent-is-the-right-tool",
+  "title": "Lesson 6: When an Agent Is the Right Tool, and When to Say No",
+  "description": "The honest consultant's rule: an agent is not always the right answer, and the consultant who can say no protects both the client's money and their own reputation. How to tell the work an agent should do from the work it should never touch, and how to walk away cleanly.",
+  "questions": [
+    {
+      "question": "Per the lesson “When an Agent Is the Right Tool, and When to Say No”, what is the central focus?",
+      "options": [
+        "The honest consultant's rule: an agent is not always the right answer, and the consultant who can say no protects both the client's money and their own reputati…",
+        "A history of the technology and its vendors",
+        "A review of unrelated productivity tools",
+        "A summary of corporate policy rules"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "The lesson is centered on: The honest consultant's rule: an agent is not always the right answer, and the consultant who can say no protects both the client's money and their own reputation. How to tell the work an agent should do from the work it should never touch, and how to walk away cleanly."
+    },
+    {
+      "question": "Which statement best reflects the lesson’s guidance?",
+      "options": [
+        "This lesson turns the lens inward, at you and the recommendation you make.",
+        "A consultant can build an agent for almost anything.",
+        "This lesson teaches you the honest consultant's rule: when an agent is the right tool, when it is not, and how to decline a project you could build but should not.",
+        "Lesson 5 taught you how to map every stakeholder who can stop an implementation."
+      ],
+      "correct_answer_index": 3,
+      "explanation": "Lesson 5 taught you how to map every stakeholder who can stop an implementation."
+    },
+    {
+      "question": "Which conclusion does the lesson support?",
+      "options": [
+        "Here is a practical filter you can run against any request before you commit.",
+        "This lesson turns the lens inward, at you and the recommendation you make.",
+        "Lesson 5 taught you how to map every stakeholder who can stop an implementation.",
+        "A consultant can build an agent for almost anything."
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Here is a practical filter you can run against any request before you commit."
+    }
+  ]
+}

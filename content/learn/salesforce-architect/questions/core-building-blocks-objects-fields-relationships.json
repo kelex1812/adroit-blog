@@ -1,0 +1,40 @@
+{
+  "quizName": "salesforce-architect:lesson:core-building-blocks-objects-fields-relationships",
+  "title": "Lesson 3: Core Building Blocks: Objects, Fields, Relationships, Record Types, and Formula vs Roll-Up",
+  "description": "The architect's canvas: standard and custom objects, field types, lookup vs master-detail relationships, record types for process variation, and when to compute with a formula field vs a roll-up summary.",
+  "questions": [
+    {
+      "question": "Per the lesson “Core Building Blocks: Objects, Fields, Relationships, Record Types, and Formula vs Roll-Up”, what is the central focus?",
+      "options": [
+        "The architect's canvas: standard and custom objects, field types, lookup vs master-detail relationships, record types for process variation, and when to compute…",
+        "A history of the technology and its vendors",
+        "A review of unrelated productivity tools",
+        "A summary of corporate policy rules"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "The lesson is centered on: The architect's canvas: standard and custom objects, field types, lookup vs master-detail relationships, record types for process variation, and when to compute with a formula field vs a roll-up summary."
+    },
+    {
+      "question": "Which statement best reflects the lesson’s guidance?",
+      "options": [
+        "Every architecture decision on Salesforce eventually lands on the data model.",
+        "Sharing rules protect records, Flows act on records, reports aggregate records, integrations move records.",
+        "Lesson 2 showed that your customizations are metadata (descriptions the platform materializes at runtime).",
+        "But before any of that, you answer the question the whole platform is built around: what are the records, what do they contain, and how do they relate?"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Every architecture decision on Salesforce eventually lands on the data model."
+    },
+    {
+      "question": "Which conclusion does the lesson support?",
+      "options": [
+        "Sharing rules protect records, Flows act on records, reports aggregate records, integrations move records.",
+        "Master-detail. \"Closely links objects together such that the master record controls certain behaviors of the detail and subdetail record.\" Concretely: deleting a master also deletes related detail records; the detail's Owner field isn't available (ownership is inherited from the master); and detail records inherit the master's security and permissions, so you can't set permissions on the detail independently.",
+        "But before any of that, you answer the question the whole platform is built around: what are the records, what do they contain, and how do they relate?",
+        "Every architecture decision on Salesforce eventually lands on the data model."
+      ],
+      "correct_answer_index": 1,
+      "explanation": "Master-detail. \"Closely links objects together such that the master record controls certain behaviors of the detail and subdetail record.\" Concretely: deleting a master also deletes related detail records; the detail's Owner field isn't available (ownership is inherited from the master); and detail records inherit the master's security and permissions, so you can't set permissions on the detail independently."
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "quizName": "agentic-ai:lesson:guardrails-output-validation-allowlists-pii-redaction",
+  "title": "Lesson 18: Guardrails II, Output Validation, Allowlists, PII Redaction, and Refusal Paths",
+  "description": "Input guardrails keep an attacker from pushing the agent past its boundary. Output guardrails keep the agent from pushing bad output out the other side: validation, allowlists, PII redaction, and refusal paths.",
+  "questions": [
+    {
+      "question": "Per the lesson “Guardrails II, Output Validation, Allowlists, PII Redaction, and Refusal Paths”, what is the central focus?",
+      "options": [
+        "Input guardrails keep an attacker from pushing the agent past its boundary. Output guardrails keep the agent from pushing bad output out the other side: validat…",
+        "A history of the technology and its vendors",
+        "A review of unrelated productivity tools",
+        "A summary of corporate policy rules"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "The lesson is centered on: Input guardrails keep an attacker from pushing the agent past its boundary. Output guardrails keep the agent from pushing bad output out the other side: validation, allowlists, PII redaction, and refusal paths."
+    },
+    {
+      "question": "Which statement best reflects the lesson’s guidance?",
+      "options": [
+        "OWASP calls this class of failure improper output handling, and it sits at number five on the 2025 Top 10 for LLM Applications.",
+        "Lesson 17 built the boundary that keeps hostile input from steering your agent: injection defense, containment, least privilege, and input validation.",
+        "The lesson to carry out: treat model output as untrusted data, exactly the way you treat user input, and validate, sanitize, redact, and gate it before it reaches a user or a downstream system.",
+        "Every prompt can be steered, but output is where a wrong answer actually becomes an action, a leak, or a bad decision handed to a human."
+      ],
+      "correct_answer_index": 1,
+      "explanation": "Lesson 17 built the boundary that keeps hostile input from steering your agent: injection defense, containment, least privilege, and input validation."
+    },
+    {
+      "question": "Which conclusion does the lesson support?",
+      "options": [
+        "Every prompt can be steered, but output is where a wrong answer actually becomes an action, a leak, or a bad decision handed to a human.",
+        "The difference is what happens to the thing you did not think of.",
+        "OWASP calls this class of failure improper output handling, and it sits at number five on the 2025 Top 10 for LLM Applications.",
+        "Lesson 17 built the boundary that keeps hostile input from steering your agent: injection defense, containment, least privilege, and input validation."
+      ],
+      "correct_answer_index": 1,
+      "explanation": "The difference is what happens to the thing you did not think of."
+    }
+  ]
+}

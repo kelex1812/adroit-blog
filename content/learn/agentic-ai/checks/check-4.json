@@ -1,0 +1,172 @@
+{
+  "quizName": "agentic-ai:check:4",
+  "title": "Knowledge Check 4: Lessons 16–20",
+  "description": "Pooled check over Lessons 16–20 of the Agentic Ai series. Score 80% or higher to unlock the cert prep exam.",
+  "questions": [
+    {
+      "question": "Per the lesson “Multi-Turn Agents: Sessions, State, and Resuming Conversations”, what is the central focus?",
+      "options": [
+        "An LLM is stateless: every call forgets the one before it, so multi-turn behavior has to be built, not assumed. This lesson defines the session, the state it ca…",
+        "A history of the technology and its vendors",
+        "A review of unrelated productivity tools",
+        "A summary of corporate policy rules"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "The lesson is centered on: An LLM is stateless: every call forgets the one before it, so multi-turn behavior has to be built, not assumed. This lesson defines the session, the state it carries, and the checkpointing that lets an agent resume where it left off: the difference between a thread and a durable store, why the state schema is the real design, and how production systems survive restarts and long conversations."
+    },
+    {
+      "question": "Which statement best reflects the lesson’s guidance?",
+      "options": [
+        "Send it a message, get a reply, and the model retains nothing for the next call.",
+        "This lesson answers the question the loop hides: how does an agent remember anything between turns?",
+        "Lesson 3 gave you the agent loop and Lesson 15 gave you the discipline of keeping that loop's context small and coherent.",
+        "A large language model is stateless by construction."
+      ],
+      "correct_answer_index": 2,
+      "explanation": "Lesson 3 gave you the agent loop and Lesson 15 gave you the discipline of keeping that loop's context small and coherent."
+    },
+    {
+      "question": "Which conclusion does the lesson support?",
+      "options": [
+        "Lesson 3 gave you the agent loop and Lesson 15 gave you the discipline of keeping that loop's context small and coherent.",
+        "- Checkpointers persist a thread's graph state as snapshots, scoped to a single thread.",
+        "This lesson answers the question the loop hides: how does an agent remember anything between turns?",
+        "A large language model is stateless by construction."
+      ],
+      "correct_answer_index": 1,
+      "explanation": "- Checkpointers persist a thread's graph state as snapshots, scoped to a single thread."
+    },
+    {
+      "question": "Per the lesson “Guardrails I: Prompt Injection Defense, System Boundaries, and Input Validation”, what is the central focus?",
+      "options": [
+        "Prompt injection tops the OWASP list of LLM risks for a reason: an agent that can act turns a misled model into an unauthorized action. This lesson separates di…",
+        "A history of the technology and its vendors",
+        "A review of unrelated productivity tools",
+        "A summary of corporate policy rules"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "The lesson is centered on: Prompt injection tops the OWASP list of LLM risks for a reason: an agent that can act turns a misled model into an unauthorized action. This lesson separates direct from indirect injection, explains why input filters and prompt hardening alone will not stop it, and argues that the durable defense lives at the system boundary: least-privilege tools, hard containment on what the agent can reach, and human approval for high-impact actions."
+    },
+    {
+      "question": "Which statement best reflects the lesson’s guidance?",
+      "options": [
+        "Lesson 7 gave you function calling and Lesson 8 gave you tools that fail well.",
+        "Both assume the model asks for the right thing.",
+        "The moment an agent has a tool, prompt injection stops being a curiosity and becomes a security boundary.",
+        "This lesson is about what happens when it does not, and specifically when something hostile has pushed it to."
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Lesson 7 gave you function calling and Lesson 8 gave you tools that fail well."
+    },
+    {
+      "question": "Which conclusion does the lesson support?",
+      "options": [
+        "This lesson is about what happens when it does not, and specifically when something hostile has pushed it to.",
+        "Lesson 7 gave you function calling and Lesson 8 gave you tools that fail well.",
+        "Any defense that depends on the model refusing an attack, however well trained, is probabilistic.",
+        "Both assume the model asks for the right thing."
+      ],
+      "correct_answer_index": 2,
+      "explanation": "Any defense that depends on the model refusing an attack, however well trained, is probabilistic."
+    },
+    {
+      "question": "Per the lesson “Guardrails II, Output Validation, Allowlists, PII Redaction, and Refusal Paths”, what is the central focus?",
+      "options": [
+        "Input guardrails keep an attacker from pushing the agent past its boundary. Output guardrails keep the agent from pushing bad output out the other side: validat…",
+        "A history of the technology and its vendors",
+        "A review of unrelated productivity tools",
+        "A summary of corporate policy rules"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "The lesson is centered on: Input guardrails keep an attacker from pushing the agent past its boundary. Output guardrails keep the agent from pushing bad output out the other side: validation, allowlists, PII redaction, and refusal paths."
+    },
+    {
+      "question": "Which statement best reflects the lesson’s guidance?",
+      "options": [
+        "OWASP calls this class of failure improper output handling, and it sits at number five on the 2025 Top 10 for LLM Applications.",
+        "Lesson 17 built the boundary that keeps hostile input from steering your agent: injection defense, containment, least privilege, and input validation.",
+        "The lesson to carry out: treat model output as untrusted data, exactly the way you treat user input, and validate, sanitize, redact, and gate it before it reaches a user or a downstream system.",
+        "Every prompt can be steered, but output is where a wrong answer actually becomes an action, a leak, or a bad decision handed to a human."
+      ],
+      "correct_answer_index": 1,
+      "explanation": "Lesson 17 built the boundary that keeps hostile input from steering your agent: injection defense, containment, least privilege, and input validation."
+    },
+    {
+      "question": "Which conclusion does the lesson support?",
+      "options": [
+        "Every prompt can be steered, but output is where a wrong answer actually becomes an action, a leak, or a bad decision handed to a human.",
+        "The difference is what happens to the thing you did not think of.",
+        "OWASP calls this class of failure improper output handling, and it sits at number five on the 2025 Top 10 for LLM Applications.",
+        "Lesson 17 built the boundary that keeps hostile input from steering your agent: injection defense, containment, least privilege, and input validation."
+      ],
+      "correct_answer_index": 1,
+      "explanation": "The difference is what happens to the thing you did not think of."
+    },
+    {
+      "question": "Per the lesson “Evaluation: Evals, Golden Datasets, LLM-as-Judge, and When It Lies”, what is the central focus?",
+      "options": [
+        "An agent you cannot measure is an agent you cannot trust, and the moment a model changes you have no way to know what you traded away. This lesson walks the eva…",
+        "A history of the technology and its vendors",
+        "A review of unrelated productivity tools",
+        "A summary of corporate policy rules"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "The lesson is centered on: An agent you cannot measure is an agent you cannot trust, and the moment a model changes you have no way to know what you traded away. This lesson walks the evaluation stack from the bottom up: the golden dataset that anchors everything, the classic metrics that break on open-ended output, the LLM-as-judge technique that replaces them, and the biases that make a judge lie, from position and verbosity preference to rating its own output too high and being misled by a confident wrong answer."
+    },
+    {
+      "question": "Which statement best reflects the lesson’s guidance?",
+      "options": [
+        "If you cannot measure an agent, you cannot say whether a prompt tweak helped, whether a model swap helped, or whether it got worse last week and nobody noticed.",
+        "Both assumed you know whether the agent is working.",
+        "The last two lessons were about making an agent safe to run: Lesson 17 gated what it could reach, and Lesson 18 gated what it could emit.",
+        "Evaluation is the layer that turns \"it feels better\" into a number you can argue about."
+      ],
+      "correct_answer_index": 2,
+      "explanation": "The last two lessons were about making an agent safe to run: Lesson 17 gated what it could reach, and Lesson 18 gated what it could emit."
+    },
+    {
+      "question": "Which conclusion does the lesson support?",
+      "options": [
+        "The last two lessons were about making an agent safe to run: Lesson 17 gated what it could reach, and Lesson 18 gated what it could emit.",
+        "Datasets built purely from documentation or synthetic generation come out too clean; they miss the edge cases and adversarial inputs that surface once real users interact with the system.",
+        "Both assumed you know whether the agent is working.",
+        "If you cannot measure an agent, you cannot say whether a prompt tweak helped, whether a model swap helped, or whether it got worse last week and nobody noticed."
+      ],
+      "correct_answer_index": 1,
+      "explanation": "Datasets built purely from documentation or synthetic generation come out too clean; they miss the edge cases and adversarial inputs that surface once real users interact with the system."
+    },
+    {
+      "question": "Per the lesson “Observability, Tracing, Logging, and Replay for Agents”, what is the central focus?",
+      "options": [
+        "An agent runs several model calls, tool invocations, and retrieval steps inside one request, and when it returns the wrong answer you have no idea which step ca…",
+        "A history of the technology and its vendors",
+        "A review of unrelated productivity tools",
+        "A summary of corporate policy rules"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "The lesson is centered on: An agent runs several model calls, tool invocations, and retrieval steps inside one request, and when it returns the wrong answer you have no idea which step caused it. This lesson builds observability from the bottom up: the trace that records every step as a span, the trace tree that shows how they connect, the OpenTelemetry gen_ai.* conventions that give the telemetry a standard shape, the structured logs that answer 'why' when a trace only shows 'what,' and the replay loop that turns a captured trace back into a repeatable bug you can fix and verify."
+    },
+    {
+      "question": "Which statement best reflects the lesson’s guidance?",
+      "options": [
+        "A normal program either runs or it crashes, and when it crashes the stack trace names the file and line.",
+        "This lesson is the production floor: what you do when the agent is live and the wrong answer arrives at 2 a.m. with no reproduction steps attached.",
+        "It silently takes a wrong path: it retrieves the wrong context, calls a tool with a malformed argument, burns forty turns re-asking itself the same question, and then returns a confident answer that is simply wrong.",
+        "Lesson 19 showed you how to measure an agent before release with golden datasets and an LLM-as-judge."
+      ],
+      "correct_answer_index": 3,
+      "explanation": "Lesson 19 showed you how to measure an agent before release with golden datasets and an LLM-as-judge."
+    },
+    {
+      "question": "Which conclusion does the lesson support?",
+      "options": [
+        "A normal program either runs or it crashes, and when it crashes the stack trace names the file and line.",
+        "This lesson is the production floor: what you do when the agent is live and the wrong answer arrives at 2 a.m. with no reproduction steps attached.",
+        "Lesson 19 showed you how to measure an agent before release with golden datasets and an LLM-as-judge.",
+        "The conventions cover three things: spans, metrics, and content events."
+      ],
+      "correct_answer_index": 3,
+      "explanation": "The conventions cover three things: spans, metrics, and content events."
+    }
+  ]
+}

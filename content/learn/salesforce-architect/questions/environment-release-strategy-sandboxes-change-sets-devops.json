@@ -1,0 +1,40 @@
+{
+  "quizName": "salesforce-architect:lesson:environment-release-strategy-sandboxes-change-sets-devops",
+  "title": "Lesson 19: Environment and Release Strategy: Sandbox Types, Change Sets vs DevOps (sf/sfdx)",
+  "description": "Where work happens and how it moves to production. The four sandbox types (Developer, Developer Pro, Partial Copy, Full), what each copies and how often it refreshes, then the release-mechanism fork: click-based change sets versus source-driven deployment with the sf CLI and a Git-based source of truth, including Salesforce DX and DevOps Center.",
+  "questions": [
+    {
+      "question": "Per the lesson “Environment and Release Strategy: Sandbox Types, Change Sets vs DevOps (sf/sfdx)”, what is the central focus?",
+      "options": [
+        "Where work happens and how it moves to production. The four sandbox types (Developer, Developer Pro, Partial Copy, Full), what each copies and how often it refr…",
+        "A history of the technology and its vendors",
+        "A review of unrelated productivity tools",
+        "A summary of corporate policy rules"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "The lesson is centered on: Where work happens and how it moves to production. The four sandbox types (Developer, Developer Pro, Partial Copy, Full), what each copies and how often it refreshes, then the release-mechanism fork: click-based change sets versus source-driven deployment with the sf CLI and a Git-based source of truth, including Salesforce DX and DevOps Center."
+    },
+    {
+      "question": "Which statement best reflects the lesson’s guidance?",
+      "options": [
+        "First, which sandbox types you run, because each one copies a different slice of production and refreshes on a different cadence.",
+        "This lesson is about the orgs themselves: where work happens, and how completed work travels from a developer's sandbox to production.",
+        "Second, how you move metadata, and here the choice is starker: click-based change sets, or source-driven deployment with the sf CLI and a Git-based source of truth.",
+        "Every release strategy rests on two decisions."
+      ],
+      "correct_answer_index": 1,
+      "explanation": "This lesson is about the orgs themselves: where work happens, and how completed work travels from a developer's sandbox to production."
+    },
+    {
+      "question": "Which conclusion does the lesson support?",
+      "options": [
+        "This lesson is about the orgs themselves: where work happens, and how completed work travels from a developer's sandbox to production.",
+        "Every release strategy rests on two decisions.",
+        "Enterprise gets a Partial Copy but no Full sandbox by default, so a small Enterprise org that needs a staging replica must buy a Full license.",
+        "First, which sandbox types you run, because each one copies a different slice of production and refreshes on a different cadence."
+      ],
+      "correct_answer_index": 2,
+      "explanation": "Enterprise gets a Partial Copy but no Full sandbox by default, so a small Enterprise org that needs a staging replica must buy a Full license."
+    }
+  ]
+}

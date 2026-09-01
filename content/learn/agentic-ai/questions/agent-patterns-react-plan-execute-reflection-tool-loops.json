@@ -1,0 +1,40 @@
+{
+  "quizName": "agentic-ai:lesson:agent-patterns-react-plan-execute-reflection-tool-loops",
+  "title": "Lesson 23: Agent Patterns: ReAct, Plan-and-Execute, Reflection, and Tool Loops",
+  "description": "Lesson 22 built the loop by hand. This lesson gives that loop its names. You learn the four patterns that dominate real agent work: ReAct (reason and act interleaved), plan-and-execute (plan first, then execute), reflection (evaluate and revise), and the tool loop they all run on, plus when each one earns its complexity.",
+  "questions": [
+    {
+      "question": "Per the lesson “Agent Patterns: ReAct, Plan-and-Execute, Reflection, and Tool Loops”, what is the central focus?",
+      "options": [
+        "Lesson 22 built the loop by hand. This lesson gives that loop its names. You learn the four patterns that dominate real agent work: ReAct (reason and act interl…",
+        "A history of the technology and its vendors",
+        "A review of unrelated productivity tools",
+        "A summary of corporate policy rules"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "The lesson is centered on: Lesson 22 built the loop by hand. This lesson gives that loop its names. You learn the four patterns that dominate real agent work: ReAct (reason and act interleaved), plan-and-execute (plan first, then execute), reflection (evaluate and revise), and the tool loop they all run on, plus when each one earns its complexity."
+    },
+    {
+      "question": "Which statement best reflects the lesson’s guidance?",
+      "options": [
+        "Lesson 22 showed you the agent loop in a hundred lines of Python.",
+        "The four patterns in this lesson are ReAct, plan-and-execute, reflection, and the tool loop they all sit on top of.",
+        "Anthropic's engineering team frames the whole space in one sentence: agents \"are typically just LLMs using tools based on environmental feedback in a loop.\"",
+        "You saw that the loop is the easy part; the hard part is making it reliable."
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Lesson 22 showed you the agent loop in a hundred lines of Python."
+    },
+    {
+      "question": "Which conclusion does the lesson support?",
+      "options": [
+        "That is what the paper's authors found to be measurably better than doing either one alone: on the ALFWorld and WebShop interactive decision-making benchmarks, ReAct outperformed imitation and reinforcement learning methods by an absolute success rate of 34% and 10% respectively, using only one or two in-context examples.",
+        "The four patterns in this lesson are ReAct, plan-and-execute, reflection, and the tool loop they all sit on top of.",
+        "Lesson 22 showed you the agent loop in a hundred lines of Python.",
+        "You saw that the loop is the easy part; the hard part is making it reliable."
+      ],
+      "correct_answer_index": 0,
+      "explanation": "That is what the paper's authors found to be measurably better than doing either one alone: on the ALFWorld and WebShop interactive decision-making benchmarks, ReAct outperformed imitation and reinforcement learning methods by an absolute success rate of 34% and 10% respectively, using only one or two in-context examples."
+    }
+  ]
+}

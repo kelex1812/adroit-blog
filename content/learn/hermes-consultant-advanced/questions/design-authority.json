@@ -1,0 +1,40 @@
+{
+  "quizName": "hermes-consultant-advanced:lesson:design-authority",
+  "title": "Lesson 4: Design Authority",
+  "description": "The layer that keeps a growing practice coherent. What design authority is, why a system of many agents drifts without it, how to set standards that actually get followed, and how to run design reviews that are gates, not rubber stamps.",
+  "questions": [
+    {
+      "question": "Per the lesson “Design Authority”, what is the central focus?",
+      "options": [
+        "The layer that keeps a growing practice coherent. What design authority is, why a system of many agents drifts without it, how to set standards that actually ge…",
+        "A history of the technology and its vendors",
+        "A review of unrelated productivity tools",
+        "A summary of corporate policy rules"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "The lesson is centered on: The layer that keeps a growing practice coherent. What design authority is, why a system of many agents drifts without it, how to set standards that actually get followed, and how to run design reviews that are gates, not rubber stamps."
+    },
+    {
+      "question": "Which statement best reflects the lesson’s guidance?",
+      "options": [
+        "It does not answer the third, and the third is the one this lesson is about.",
+        "That architecture answers two questions: how work moves, and who is allowed to touch what.",
+        "A system of many agents, each producing deliverables under its own bounded context, will quickly and quietly drift in a dozen directions unless someone owns the standard of quality and has the authority to enforce it.",
+        "A principal runs a fleet of agents on many engagements at once, orchestrates the work, and governs it with isolation, permission, and audit."
+      ],
+      "correct_answer_index": 3,
+      "explanation": "A principal runs a fleet of agents on many engagements at once, orchestrates the work, and governs it with isolation, permission, and audit."
+    },
+    {
+      "question": "Which conclusion does the lesson support?",
+      "options": [
+        "A principal runs a fleet of agents on many engagements at once, orchestrates the work, and governs it with isolation, permission, and audit.",
+        "It does not answer the third, and the third is the one this lesson is about.",
+        "The property that makes a standard real is that the executor runs it without deciding to.",
+        "That architecture answers two questions: how work moves, and who is allowed to touch what."
+      ],
+      "correct_answer_index": 2,
+      "explanation": "The property that makes a standard real is that the executor runs it without deciding to."
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "quizName": "agentic-ai:lesson:agent-frameworks-overview-langchain-langgraph-crewai-openai-claude",
+  "title": "Lesson 21: Frameworks overview - LangChain, LangGraph, CrewAI, OpenAI Agents SDK, Claude Agent SDK",
+  "description": "By now you can build a single agent: a model, a loop, some tools. The hard part is deciding what holds the pieces together when the work grows. This lesson surveys the five frameworks you will actually meet in the wild, and it is honest about what each one is for. LangChain is an integration ecosystem. LangGraph is a stateful graph runtime for workflows that branch and loop. CrewAI is a role-based layer for teams of agents with jobs and backstories. The OpenAI Agents SDK is a deliberately tiny set of primitives with clean handoffs and guardrails. The Claude Agent SDK gives the agent a computer with built-in file, shell, and edit tools. You will learn the mental model behind each one, see the same small task written in two of them so the difference is concrete, and finish with a decision path for choosing a framework instead of trusting star counts.",
+  "questions": [
+    {
+      "question": "Per the lesson “Frameworks overview - LangChain, LangGraph, CrewAI, OpenAI Agents SDK, Claude Agent SDK”, what is the central focus?",
+      "options": [
+        "By now you can build a single agent: a model, a loop, some tools. The hard part is deciding what holds the pieces together when the work grows. This lesson surv…",
+        "A history of the technology and its vendors",
+        "A review of unrelated productivity tools",
+        "A summary of corporate policy rules"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "The lesson is centered on: By now you can build a single agent: a model, a loop, some tools. The hard part is deciding what holds the pieces together when the work grows. This lesson surveys the five frameworks you will actually meet in the wild, and it is honest about what each one is for. LangChain is an integration ecosystem. LangGraph is a stateful graph runtime for workflows that branch and loop. CrewAI is a role-based layer for teams of agents with jobs and backstories. The OpenAI Agents SDK is a deliberately tiny set of primitives with clean handoffs and guardrails. The Claude Agent SDK gives the agent a computer with built-in file, shell, and edit tools. You will learn the mental model behind each one, see the same small task written in two of them so the difference is concrete, and finish with a decision path for choosing a framework instead of trusting star counts."
+    },
+    {
+      "question": "Which statement best reflects the lesson’s guidance?",
+      "options": [
+        "This lesson is about the layer that decides how much you build by hand at all.",
+        "They solve different problems, and the practical skill here is not memorizing APIs.",
+        "Teams call these coordination primitives, and every framework in this lesson is a different bet on how to give them to you.",
+        "The last twenty lessons taught you the pieces: the agent loop, tool design, context, memory, evaluation, observability."
+      ],
+      "correct_answer_index": 3,
+      "explanation": "The last twenty lessons taught you the pieces: the agent loop, tool design, context, memory, evaluation, observability."
+    },
+    {
+      "question": "Which conclusion does the lesson support?",
+      "options": [
+        "This lesson is about the layer that decides how much you build by hand at all.",
+        "The graph compiles into a runnable, and the shared State flows through every node.",
+        "Teams call these coordination primitives, and every framework in this lesson is a different bet on how to give them to you.",
+        "The last twenty lessons taught you the pieces: the agent loop, tool design, context, memory, evaluation, observability."
+      ],
+      "correct_answer_index": 1,
+      "explanation": "The graph compiles into a runnable, and the shared State flows through every node."
+    }
+  ]
+}

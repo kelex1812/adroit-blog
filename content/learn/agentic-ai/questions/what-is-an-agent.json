@@ -1,0 +1,40 @@
+{
+  "quizName": "agentic-ai:lesson:what-is-an-agent",
+  "title": "Lesson 1: What an Agent Actually Is (LLMs vs Rules vs Workflows)",
+  "description": "The definitions that matter for the whole track: what separates a rules system, an LLM workflow, and a true agent, plus how to tell which one you're actually building.",
+  "questions": [
+    {
+      "question": "Per the lesson “What an Agent Actually Is (LLMs vs Rules vs Workflows)”, what is the central focus?",
+      "options": [
+        "The definitions that matter for the whole track: what separates a rules system, an LLM workflow, and a true agent, plus how to tell which one you're actually bu…",
+        "A history of the technology and its vendors",
+        "A review of unrelated productivity tools",
+        "A summary of corporate policy rules"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "The lesson is centered on: The definitions that matter for the whole track: what separates a rules system, an LLM workflow, and a true agent, plus how to tell which one you're actually building."
+    },
+    {
+      "question": "Which statement best reflects the lesson’s guidance?",
+      "options": [
+        "This lesson is the foundation: three definitions that will organize everything after it, a decision rule for picking the right one, and a worked example from a real production pipeline.",
+        "Start with the cleanest mental model, from Anthropic's \"Building Effective Agents,\" the most-cited engineering post on this exact question.",
+        "\"Agent\" is the most abused word in enterprise AI right now.",
+        "Before this track can teach you to build agentic systems, it has to teach you what one is."
+      ],
+      "correct_answer_index": 2,
+      "explanation": "\"Agent\" is the most abused word in enterprise AI right now."
+    },
+    {
+      "question": "Which conclusion does the lesson support?",
+      "options": [
+        "Before this track can teach you to build agentic systems, it has to teach you what one is.",
+        "\"Autonomous software systems that perceive, reason, and act in digital environments to achieve goals on behalf of human principals, with capabilities for tool use, economic transactions, and strategic interaction.\"",
+        "\"Agent\" is the most abused word in enterprise AI right now.",
+        "This lesson is the foundation: three definitions that will organize everything after it, a decision rule for picking the right one, and a worked example from a real production pipeline."
+      ],
+      "correct_answer_index": 1,
+      "explanation": "\"Autonomous software systems that perceive, reason, and act in digital environments to achieve goals on behalf of human principals, with capabilities for tool use, economic transactions, and strategic interaction.\""
+    }
+  ]
+}

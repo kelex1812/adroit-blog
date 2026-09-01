@@ -1,0 +1,40 @@
+{
+  "quizName": "salesforce-architect:lesson:event-driven-integration-platform-events-change-data-capture",
+  "title": "Lesson 7: Event-Driven Integration: Platform Events + Change Data Capture",
+  "description": "The Salesforce event bus, Platform Events vs. Change Data Capture: when to publish business intent vs. record state, how to consume on- and off-platform, and the hard truth about ordering, replay, and allocations.",
+  "questions": [
+    {
+      "question": "Per the lesson “Event-Driven Integration: Platform Events + Change Data Capture”, what is the central focus?",
+      "options": [
+        "The Salesforce event bus, Platform Events vs. Change Data Capture: when to publish business intent vs. record state, how to consume on- and off-platform, and th…",
+        "A history of the technology and its vendors",
+        "A review of unrelated productivity tools",
+        "A summary of corporate policy rules"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "The lesson is centered on: The Salesforce event bus, Platform Events vs. Change Data Capture: when to publish business intent vs. record state, how to consume on- and off-platform, and the hard truth about ordering, replay, and allocations."
+    },
+    {
+      "question": "Which statement best reflects the lesson’s guidance?",
+      "options": [
+        "Salesforce calls this process integration, \"event-driven integration through the publication and subscription of platform events to other systems.\"",
+        "Event-driven architecture rests on three concepts: the event producer (publishes), the event consumer (subscribes and acts), and the event channel (the distribution vehicle between them).",
+        "Lesson 6 introduced the three outbound archetypes; fire-and-forget was the one where \"the remote system acknowledges receipt, processes asynchronously.\" This lesson opens the hood on that pattern's engine: the Salesforce event bus, and its two flagship vehicles: Platform Events and Change Data Capture (CDC).",
+        "Platform Events, introduced in 2017, let you define a custom event structure (a message with your fields), publish it, and let subscribers react."
+      ],
+      "correct_answer_index": 2,
+      "explanation": "Lesson 6 introduced the three outbound archetypes; fire-and-forget was the one where \"the remote system acknowledges receipt, processes asynchronously.\" This lesson opens the hood on that pattern's engine: the Salesforce event bus, and its two flagship vehicles: Platform Events and Change Data Capture (CDC)."
+    },
+    {
+      "question": "Which conclusion does the lesson support?",
+      "options": [
+        "Salesforce calls this process integration, \"event-driven integration through the publication and subscription of platform events to other systems.\"",
+        "Event-driven architecture rests on three concepts: the event producer (publishes), the event consumer (subscribes and acts), and the event channel (the distribution vehicle between them).",
+        "- Publishing: 250,000 event messages per hour (Performance/Unlimited and Enterprise/Pro with API add-on; 50,000 in Developer Edition).",
+        "Platform Events, introduced in 2017, let you define a custom event structure (a message with your fields), publish it, and let subscribers react."
+      ],
+      "correct_answer_index": 2,
+      "explanation": "- Publishing: 250,000 event messages per hour (Performance/Unlimited and Enterprise/Pro with API add-on; 50,000 in Developer Edition)."
+    }
+  ]
+}

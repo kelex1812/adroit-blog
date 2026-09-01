@@ -1,0 +1,40 @@
+{
+  "quizName": "agentic-ai:lesson:choosing-models-providers-routing-fallbacks",
+  "title": "Lesson 6: Choosing Models & Providers: Capability Tiers, Routing, and Fallbacks",
+  "description": "The biggest agent-ops mistake is picking one 'best' model and pointing everything at it. This lesson builds the three-tier capability model, the three jobs of a router, and the fallback chains that keep agents alive when providers fail.",
+  "questions": [
+    {
+      "question": "Per the lesson “Choosing Models & Providers: Capability Tiers, Routing, and Fallbacks”, what is the central focus?",
+      "options": [
+        "The biggest agent-ops mistake is picking one 'best' model and pointing everything at it. This lesson builds the three-tier capability model, the three jobs of a…",
+        "A history of the technology and its vendors",
+        "A review of unrelated productivity tools",
+        "A summary of corporate policy rules"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "The lesson is centered on: The biggest agent-ops mistake is picking one 'best' model and pointing everything at it. This lesson builds the three-tier capability model, the three jobs of a router, and the fallback chains that keep agents alive when providers fail."
+    },
+    {
+      "question": "Which statement best reflects the lesson’s guidance?",
+      "options": [
+        "LogRocket describes the pattern precisely: teams launch with a single strong model and scale it across every use case, then discover they're \"paying supercomputer prices to solve calculator problems.\"",
+        "Lessons 1–5 built the agent loop, its prompts, and its economics.",
+        "The default answer (\"the best model we can afford, for everything\") is how every expensive, fragile agent system starts.",
+        "This lesson answers the question underneath all of them: which model should run which step?"
+      ],
+      "correct_answer_index": 1,
+      "explanation": "Lessons 1–5 built the agent loop, its prompts, and its economics."
+    },
+    {
+      "question": "Which conclusion does the lesson support?",
+      "options": [
+        "This lesson answers the question underneath all of them: which model should run which step?",
+        "The mental model that makes routing tractable is the capability tier: instead of routing to flagship names that change every quarter, route to small / medium / large and let config resolve each tier to a concrete model and provider.",
+        "The default answer (\"the best model we can afford, for everything\") is how every expensive, fragile agent system starts.",
+        "Lessons 1–5 built the agent loop, its prompts, and its economics."
+      ],
+      "correct_answer_index": 1,
+      "explanation": "The mental model that makes routing tractable is the capability tier: instead of routing to flagship names that change every quarter, route to small / medium / large and let config resolve each tier to a concrete model and provider."
+    }
+  ]
+}

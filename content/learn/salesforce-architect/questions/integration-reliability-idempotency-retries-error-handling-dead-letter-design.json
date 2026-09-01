@@ -1,0 +1,40 @@
+{
+  "quizName": "salesforce-architect:lesson:integration-reliability-idempotency-retries-error-handling-dead-letter-design",
+  "title": "Lesson 9: Integration Reliability: Idempotency, Retries, Error Handling, and Dead-Letter Design",
+  "description": "The reliability toolkit every integration needs: idempotency keys and message IDs so retries are safe, the transient vs. poisoned error taxonomy, bounded retry policies with backoff, per-pattern error handling, and dead-letter design with error tables so nothing is silently lost.",
+  "questions": [
+    {
+      "question": "Per the lesson “Integration Reliability: Idempotency, Retries, Error Handling, and Dead-Letter Design”, what is the central focus?",
+      "options": [
+        "The reliability toolkit every integration needs: idempotency keys and message IDs so retries are safe, the transient vs. poisoned error taxonomy, bounded retry …",
+        "A history of the technology and its vendors",
+        "A review of unrelated productivity tools",
+        "A summary of corporate policy rules"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "The lesson is centered on: The reliability toolkit every integration needs: idempotency keys and message IDs so retries are safe, the transient vs. poisoned error taxonomy, bounded retry policies with backoff, per-pattern error handling, and dead-letter design with error tables so nothing is silently lost."
+    },
+    {
+      "question": "Which statement best reflects the lesson’s guidance?",
+      "options": [
+        "This lesson is about what happens when those parts fail, because in a distributed integration, failure is not exceptional.",
+        "Classify every error before you decide how to react.",
+        "Lessons 4 through 8 gave you the mechanisms (REST, SOAP, Bulk), the patterns (request-reply, fire-and-forget, batch), the event bus, and the middleware decision.",
+        "Salesforce's own consulting architects treat error handling and recovery as a mandatory part of the solution: \"It's important to include an error handling and recovery strategy as part of the overall solution.\""
+      ],
+      "correct_answer_index": 2,
+      "explanation": "Lessons 4 through 8 gave you the mechanisms (REST, SOAP, Bulk), the patterns (request-reply, fire-and-forget, batch), the event bus, and the middleware decision."
+    },
+    {
+      "question": "Which conclusion does the lesson support?",
+      "options": [
+        "Message ID tracking in a custom receiver. \"The most typical method of building an idempotent receiver is for it to track duplicates based on unique message identifiers sent by the consumer.\"",
+        "This lesson is about what happens when those parts fail, because in a distributed integration, failure is not exceptional.",
+        "Lessons 4 through 8 gave you the mechanisms (REST, SOAP, Bulk), the patterns (request-reply, fire-and-forget, batch), the event bus, and the middleware decision.",
+        "Salesforce's own consulting architects treat error handling and recovery as a mandatory part of the solution: \"It's important to include an error handling and recovery strategy as part of the overall solution.\""
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Message ID tracking in a custom receiver. \"The most typical method of building an idempotent receiver is for it to track duplicates based on unique message identifiers sent by the consumer.\""
+    }
+  ]
+}

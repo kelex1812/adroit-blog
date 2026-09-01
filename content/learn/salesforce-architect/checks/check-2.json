@@ -1,0 +1,172 @@
+{
+  "quizName": "salesforce-architect:check:2",
+  "title": "Knowledge Check 2: Lessons 6–10",
+  "description": "Pooled check over Lessons 6–10 of the Salesforce Architect series. Score 80% or higher to unlock the cert prep exam.",
+  "questions": [
+    {
+      "question": "Per the lesson “Integration Patterns: Request-Reply, Fire-and-Forget, and Batch (Inbound & Outbound)”, what is the central focus?",
+      "options": [
+        "The three archetype integration patterns every Salesforce architect must recognize (request-reply, fire-and-forget, and batch data synchronization), plus the se…",
+        "A history of the technology and its vendors",
+        "A review of unrelated productivity tools",
+        "A summary of corporate policy rules"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "The lesson is centered on: The three archetype integration patterns every Salesforce architect must recognize (request-reply, fire-and-forget, and batch data synchronization), plus the selection matrix, the limits that shape each choice, and a worked example that combines all three."
+    },
+    {
+      "question": "Which statement best reflects the lesson’s guidance?",
+      "options": [
+        "The three patterns for outbound integrations (Salesforce → another system):",
+        "This lesson is about the patterns: the recurring integration archetypes that Salesforce's own consulting architects use as reference points during architectural reviews.",
+        "The Salesforce Integration Patterns guide frames each pattern with context, problem, forces, and solution.",
+        "Lesson 4 gave you the mechanisms (REST, SOAP, Bulk API 2.0, Pub/Sub API)."
+      ],
+      "correct_answer_index": 3,
+      "explanation": "Lesson 4 gave you the mechanisms (REST, SOAP, Bulk API 2.0, Pub/Sub API)."
+    },
+    {
+      "question": "Which conclusion does the lesson support?",
+      "options": [
+        "The Salesforce Integration Patterns guide frames each pattern with context, problem, forces, and solution.",
+        "Lesson 4 gave you the mechanisms (REST, SOAP, Bulk API 2.0, Pub/Sub API).",
+        "Two design obligations: idempotency (the remote operation must be safe to repeat, typically by passing a unique message ID and upserting instead of blind-inserting) and don't commit until success (Salesforce changes aren't committed until a successful response arrives, and retries handle failure).",
+        "This lesson is about the patterns: the recurring integration archetypes that Salesforce's own consulting architects use as reference points during architectural reviews."
+      ],
+      "correct_answer_index": 2,
+      "explanation": "Two design obligations: idempotency (the remote operation must be safe to repeat, typically by passing a unique message ID and upserting instead of blind-inserting) and don't commit until success (Salesforce changes aren't committed until a successful response arrives, and retries handle failure)."
+    },
+    {
+      "question": "Per the lesson “Event-Driven Integration: Platform Events + Change Data Capture”, what is the central focus?",
+      "options": [
+        "The Salesforce event bus, Platform Events vs. Change Data Capture: when to publish business intent vs. record state, how to consume on- and off-platform, and th…",
+        "A history of the technology and its vendors",
+        "A review of unrelated productivity tools",
+        "A summary of corporate policy rules"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "The lesson is centered on: The Salesforce event bus, Platform Events vs. Change Data Capture: when to publish business intent vs. record state, how to consume on- and off-platform, and the hard truth about ordering, replay, and allocations."
+    },
+    {
+      "question": "Which statement best reflects the lesson’s guidance?",
+      "options": [
+        "Salesforce calls this process integration, \"event-driven integration through the publication and subscription of platform events to other systems.\"",
+        "Event-driven architecture rests on three concepts: the event producer (publishes), the event consumer (subscribes and acts), and the event channel (the distribution vehicle between them).",
+        "Lesson 6 introduced the three outbound archetypes; fire-and-forget was the one where \"the remote system acknowledges receipt, processes asynchronously.\" This lesson opens the hood on that pattern's engine: the Salesforce event bus, and its two flagship vehicles: Platform Events and Change Data Capture (CDC).",
+        "Platform Events, introduced in 2017, let you define a custom event structure (a message with your fields), publish it, and let subscribers react."
+      ],
+      "correct_answer_index": 2,
+      "explanation": "Lesson 6 introduced the three outbound archetypes; fire-and-forget was the one where \"the remote system acknowledges receipt, processes asynchronously.\" This lesson opens the hood on that pattern's engine: the Salesforce event bus, and its two flagship vehicles: Platform Events and Change Data Capture (CDC)."
+    },
+    {
+      "question": "Which conclusion does the lesson support?",
+      "options": [
+        "Salesforce calls this process integration, \"event-driven integration through the publication and subscription of platform events to other systems.\"",
+        "Event-driven architecture rests on three concepts: the event producer (publishes), the event consumer (subscribes and acts), and the event channel (the distribution vehicle between them).",
+        "- Publishing: 250,000 event messages per hour (Performance/Unlimited and Enterprise/Pro with API add-on; 50,000 in Developer Edition).",
+        "Platform Events, introduced in 2017, let you define a custom event structure (a message with your fields), publish it, and let subscribers react."
+      ],
+      "correct_answer_index": 2,
+      "explanation": "- Publishing: 250,000 event messages per hour (Performance/Unlimited and Enterprise/Pro with API add-on; 50,000 in Developer Edition)."
+    },
+    {
+      "question": "Per the lesson “Middleware Tradeoffs: MuleSoft vs Boomi vs Custom (and When Salesforce Is the Hub)”, what is the central focus?",
+      "options": [
+        "How to choose the integration layer: MuleSoft's API-led pro-code platform, Boomi's low-code iPaaS, hand-rolled custom code, and the decision matrix for when Sal…",
+        "A history of the technology and its vendors",
+        "A review of unrelated productivity tools",
+        "A summary of corporate policy rules"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "The lesson is centered on: How to choose the integration layer: MuleSoft's API-led pro-code platform, Boomi's low-code iPaaS, hand-rolled custom code, and the decision matrix for when Salesforce itself should be the hub instead of any middleware at all."
+    },
+    {
+      "question": "Which statement best reflects the lesson’s guidance?",
+      "options": [
+        "Knowing how to pick is a core System/Platform Architect skill, because the middleware decision shapes cost, team skills, and vendor lock-in for years.",
+        "The answer usually comes down to four candidates: MuleSoft, Boomi, custom code, or Salesforce itself.",
+        "Lessons 4–7 taught you the integration mechanisms (REST, SOAP, Bulk, Pub/Sub), the patterns (request-reply, fire-and-forget, batch), and the event bus.",
+        "This lesson is the layer above: where does the integration logic physically run?"
+      ],
+      "correct_answer_index": 2,
+      "explanation": "Lessons 4–7 taught you the integration mechanisms (REST, SOAP, Bulk, Pub/Sub), the patterns (request-reply, fire-and-forget, batch), and the event bus."
+    },
+    {
+      "question": "Which conclusion does the lesson support?",
+      "options": [
+        "This lesson is the layer above: where does the integration logic physically run?",
+        "Lessons 4–7 taught you the integration mechanisms (REST, SOAP, Bulk, Pub/Sub), the patterns (request-reply, fire-and-forget, batch), and the event bus.",
+        "The answer usually comes down to four candidates: MuleSoft, Boomi, custom code, or Salesforce itself.",
+        "You get total control and no recurring license."
+      ],
+      "correct_answer_index": 3,
+      "explanation": "You get total control and no recurring license."
+    },
+    {
+      "question": "Per the lesson “Integration Reliability: Idempotency, Retries, Error Handling, and Dead-Letter Design”, what is the central focus?",
+      "options": [
+        "The reliability toolkit every integration needs: idempotency keys and message IDs so retries are safe, the transient vs. poisoned error taxonomy, bounded retry …",
+        "A history of the technology and its vendors",
+        "A review of unrelated productivity tools",
+        "A summary of corporate policy rules"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "The lesson is centered on: The reliability toolkit every integration needs: idempotency keys and message IDs so retries are safe, the transient vs. poisoned error taxonomy, bounded retry policies with backoff, per-pattern error handling, and dead-letter design with error tables so nothing is silently lost."
+    },
+    {
+      "question": "Which statement best reflects the lesson’s guidance?",
+      "options": [
+        "This lesson is about what happens when those parts fail, because in a distributed integration, failure is not exceptional.",
+        "Classify every error before you decide how to react.",
+        "Lessons 4 through 8 gave you the mechanisms (REST, SOAP, Bulk), the patterns (request-reply, fire-and-forget, batch), the event bus, and the middleware decision.",
+        "Salesforce's own consulting architects treat error handling and recovery as a mandatory part of the solution: \"It's important to include an error handling and recovery strategy as part of the overall solution.\""
+      ],
+      "correct_answer_index": 2,
+      "explanation": "Lessons 4 through 8 gave you the mechanisms (REST, SOAP, Bulk), the patterns (request-reply, fire-and-forget, batch), the event bus, and the middleware decision."
+    },
+    {
+      "question": "Which conclusion does the lesson support?",
+      "options": [
+        "Message ID tracking in a custom receiver. \"The most typical method of building an idempotent receiver is for it to track duplicates based on unique message identifiers sent by the consumer.\"",
+        "This lesson is about what happens when those parts fail, because in a distributed integration, failure is not exceptional.",
+        "Lessons 4 through 8 gave you the mechanisms (REST, SOAP, Bulk), the patterns (request-reply, fire-and-forget, batch), the event bus, and the middleware decision.",
+        "Salesforce's own consulting architects treat error handling and recovery as a mandatory part of the solution: \"It's important to include an error handling and recovery strategy as part of the overall solution.\""
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Message ID tracking in a custom receiver. \"The most typical method of building an idempotent receiver is for it to track duplicates based on unique message identifiers sent by the consumer.\""
+    },
+    {
+      "question": "Per the lesson “Sync vs Async, Queues, and Eventual Consistency: The Laws That Shape Agent Pipelines”, what is the central focus?",
+      "options": [
+        "The three operating laws that govern any pipeline spanning more than one system: synchronous calls block, asynchronous calls decouple, and distributed systems s…",
+        "A history of the technology and its vendors",
+        "A review of unrelated productivity tools",
+        "A summary of corporate policy rules"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "The lesson is centered on: The three operating laws that govern any pipeline spanning more than one system: synchronous calls block, asynchronous calls decouple, and distributed systems settle into eventual consistency. Queues are the buffer that makes async safe. And the same laws that drive Salesforce governor limits now shape multi-agent AI pipelines."
+    },
+    {
+      "question": "Which statement best reflects the lesson’s guidance?",
+      "options": [
+        "This lesson stays in that mode and takes the next step.",
+        "It covers three operating laws that govern every pipeline that spans more than one system: synchronous calls block, asynchronous calls decouple, and distributed systems converge only eventually.",
+        "Once you internalize those three, you can read any integration, and any agent pipeline, and see why it is shaped the way it is.",
+        "Lesson 5 introduced the general-systems frame: architecture is components, relationships, and principles, and AI agent patterns are remixes of patterns engineers have used for decades."
+      ],
+      "correct_answer_index": 3,
+      "explanation": "Lesson 5 introduced the general-systems frame: architecture is components, relationships, and principles, and AI agent patterns are remixes of patterns engineers have used for decades."
+    },
+    {
+      "question": "Which conclusion does the lesson support?",
+      "options": [
+        "Lesson 5 introduced the general-systems frame: architecture is components, relationships, and principles, and AI agent patterns are remixes of patterns engineers have used for decades.",
+        "This lesson stays in that mode and takes the next step.",
+        "Salesforce sets a default callout timeout of 10 seconds and a maximum cumulative callout timeout of 120 seconds per transaction.",
+        "It covers three operating laws that govern every pipeline that spans more than one system: synchronous calls block, asynchronous calls decouple, and distributed systems converge only eventually."
+      ],
+      "correct_answer_index": 2,
+      "explanation": "Salesforce sets a default callout timeout of 10 seconds and a maximum cumulative callout timeout of 120 seconds per transaction."
+    }
+  ]
+}

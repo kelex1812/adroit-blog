@@ -1,0 +1,40 @@
+{
+  "quizName": "salesforce-architect:lesson:middleware-tradeoffs-mulesoft-boomi-custom-salesforce-hub",
+  "title": "Lesson 8: Middleware Tradeoffs: MuleSoft vs Boomi vs Custom (and When Salesforce Is the Hub)",
+  "description": "How to choose the integration layer: MuleSoft's API-led pro-code platform, Boomi's low-code iPaaS, hand-rolled custom code, and the decision matrix for when Salesforce itself should be the hub instead of any middleware at all.",
+  "questions": [
+    {
+      "question": "Per the lesson “Middleware Tradeoffs: MuleSoft vs Boomi vs Custom (and When Salesforce Is the Hub)”, what is the central focus?",
+      "options": [
+        "How to choose the integration layer: MuleSoft's API-led pro-code platform, Boomi's low-code iPaaS, hand-rolled custom code, and the decision matrix for when Sal…",
+        "A history of the technology and its vendors",
+        "A review of unrelated productivity tools",
+        "A summary of corporate policy rules"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "The lesson is centered on: How to choose the integration layer: MuleSoft's API-led pro-code platform, Boomi's low-code iPaaS, hand-rolled custom code, and the decision matrix for when Salesforce itself should be the hub instead of any middleware at all."
+    },
+    {
+      "question": "Which statement best reflects the lesson’s guidance?",
+      "options": [
+        "Knowing how to pick is a core System/Platform Architect skill, because the middleware decision shapes cost, team skills, and vendor lock-in for years.",
+        "The answer usually comes down to four candidates: MuleSoft, Boomi, custom code, or Salesforce itself.",
+        "Lessons 4–7 taught you the integration mechanisms (REST, SOAP, Bulk, Pub/Sub), the patterns (request-reply, fire-and-forget, batch), and the event bus.",
+        "This lesson is the layer above: where does the integration logic physically run?"
+      ],
+      "correct_answer_index": 2,
+      "explanation": "Lessons 4–7 taught you the integration mechanisms (REST, SOAP, Bulk, Pub/Sub), the patterns (request-reply, fire-and-forget, batch), and the event bus."
+    },
+    {
+      "question": "Which conclusion does the lesson support?",
+      "options": [
+        "This lesson is the layer above: where does the integration logic physically run?",
+        "Lessons 4–7 taught you the integration mechanisms (REST, SOAP, Bulk, Pub/Sub), the patterns (request-reply, fire-and-forget, batch), and the event bus.",
+        "The answer usually comes down to four candidates: MuleSoft, Boomi, custom code, or Salesforce itself.",
+        "You get total control and no recurring license."
+      ],
+      "correct_answer_index": 3,
+      "explanation": "You get total control and no recurring license."
+    }
+  ]
+}

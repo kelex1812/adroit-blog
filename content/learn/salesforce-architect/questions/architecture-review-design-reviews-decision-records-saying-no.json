@@ -1,0 +1,40 @@
+{
+  "quizName": "salesforce-architect:lesson:architecture-review-design-reviews-decision-records-saying-no",
+  "title": "Lesson 22: Architecture Review: Design Reviews, Decision Records, and How to Say No",
+  "description": "The review discipline that keeps architecture coherent as the org grows: design review as a forum, not a gate, the ADR as durable decision memory, and how to decline a bad how without rejecting the person behind it.",
+  "questions": [
+    {
+      "question": "Per the lesson “Architecture Review: Design Reviews, Decision Records, and How to Say No”, what is the central focus?",
+      "options": [
+        "The review discipline that keeps architecture coherent as the org grows: design review as a forum, not a gate, the ADR as durable decision memory, and how to de…",
+        "A history of the technology and its vendors",
+        "A review of unrelated productivity tools",
+        "A summary of corporate policy rules"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "The lesson is centered on: The review discipline that keeps architecture coherent as the org grows: design review as a forum, not a gate, the ADR as durable decision memory, and how to decline a bad how without rejecting the person behind it."
+    },
+    {
+      "question": "Which statement best reflects the lesson’s guidance?",
+      "options": [
+        "A competent architect can build almost anything.",
+        "A mature one can explain why they built it this way, get the decision reviewed before it hardens, and push back on the wrong ask without burning the relationship.",
+        "Every lesson so far handed you a mechanism: data models, integration patterns, event buses, sharing rules.",
+        "This one is about the human machinery around those mechanisms, the part that decides whether the org still makes sense in two years."
+      ],
+      "correct_answer_index": 2,
+      "explanation": "Every lesson so far handed you a mechanism: data models, integration patterns, event buses, sharing rules."
+    },
+    {
+      "question": "Which conclusion does the lesson support?",
+      "options": [
+        "Every lesson so far handed you a mechanism: data models, integration patterns, event buses, sharing rules.",
+        "This one is about the human machinery around those mechanisms, the part that decides whether the org still makes sense in two years.",
+        "A competent architect can build almost anything.",
+        "Did the team reach for Apex when a Flow would do, or for a custom object when a standard one fits?"
+      ],
+      "correct_answer_index": 3,
+      "explanation": "Did the team reach for Apex when a Flow would do, or for a custom object when a standard one fits?"
+    }
+  ]
+}

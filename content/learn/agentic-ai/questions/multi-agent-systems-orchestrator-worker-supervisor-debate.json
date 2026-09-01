@@ -1,0 +1,40 @@
+{
+  "quizName": "agentic-ai:lesson:multi-agent-systems-orchestrator-worker-supervisor-debate",
+  "title": "Lesson 24: Multi-Agent Systems: Orchestrator-Worker, Supervisor, and Debate",
+  "description": "Lesson 23 taught you the single-agent patterns. This lesson puts several agents in one system. You learn the three coordination shapes that dominate real multi-agent work: orchestrator-worker (a central agent splits and delegates), supervisor (a coordinator routes to specialized workers via handoffs), and debate (multiple instances argue toward a consensus), plus when each one earns its complexity and when one agent is still the right call.",
+  "questions": [
+    {
+      "question": "Per the lesson “Multi-Agent Systems: Orchestrator-Worker, Supervisor, and Debate”, what is the central focus?",
+      "options": [
+        "Lesson 23 taught you the single-agent patterns. This lesson puts several agents in one system. You learn the three coordination shapes that dominate real multi-…",
+        "A history of the technology and its vendors",
+        "A review of unrelated productivity tools",
+        "A summary of corporate policy rules"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "The lesson is centered on: Lesson 23 taught you the single-agent patterns. This lesson puts several agents in one system. You learn the three coordination shapes that dominate real multi-agent work: orchestrator-worker (a central agent splits and delegates), supervisor (a coordinator routes to specialized workers via handoffs), and debate (multiple instances argue toward a consensus), plus when each one earns its complexity and when one agent is still the right call."
+    },
+    {
+      "question": "Which statement best reflects the lesson’s guidance?",
+      "options": [
+        "How do you stop two agents from working at cross purposes?",
+        "Each of those still runs one agent talking to a set of tools.",
+        "Instead of one loop, you get several loops that have to coordinate, and the interesting questions stop being about reasoning and start being about control.",
+        "Lesson 23 gave you the single-agent patterns: ReAct, plan-and-execute, reflection."
+      ],
+      "correct_answer_index": 3,
+      "explanation": "Lesson 23 gave you the single-agent patterns: ReAct, plan-and-execute, reflection."
+    },
+    {
+      "question": "Which conclusion does the lesson support?",
+      "options": [
+        "Instead of one loop, you get several loops that have to coordinate, and the interesting questions stop being about reasoning and start being about control.",
+        "Lesson 23 gave you the single-agent patterns: ReAct, plan-and-execute, reflection.",
+        "LangGraph ships this as a built-in primitive.",
+        "Each of those still runs one agent talking to a set of tools."
+      ],
+      "correct_answer_index": 2,
+      "explanation": "LangGraph ships this as a built-in primitive."
+    }
+  ]
+}

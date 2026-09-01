@@ -1,0 +1,40 @@
+{
+  "quizName": "hermes-consultant:lesson:installing-and-deploying-hermes-agent",
+  "title": "Lesson 7: Installing and Deploying Hermes Agent: Local Setup, Profiles, Gateway, First Run",
+  "description": "The consultant's deployment discipline: how to stand up an agent correctly once you have the go-ahead. Isolation per engagement, a verified first run before you layer on features, and a gateway that turns a laptop experiment into an always-on tool your client actually uses.",
+  "questions": [
+    {
+      "question": "Per the lesson “Installing and Deploying Hermes Agent: Local Setup, Profiles, Gateway, First Run”, what is the central focus?",
+      "options": [
+        "The consultant's deployment discipline: how to stand up an agent correctly once you have the go-ahead. Isolation per engagement, a verified first run before you…",
+        "A history of the technology and its vendors",
+        "A review of unrelated productivity tools",
+        "A summary of corporate policy rules"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "The lesson is centered on: The consultant's deployment discipline: how to stand up an agent correctly once you have the go-ahead. Isolation per engagement, a verified first run before you layer on features, and a gateway that turns a laptop experiment into an always-on tool your client actually uses."
+    },
+    {
+      "question": "Which statement best reflects the lesson’s guidance?",
+      "options": [
+        "Lesson 6 taught you when an agent is the right tool and when to say no.",
+        "This lesson assumes you said yes, the client signed off, and the work is yours to deliver.",
+        "It is where the consulting stops being advice and starts being a running system.",
+        "This lesson teaches you the deployment discipline that separates a consultant who stands an agent up correctly from one who creates a mess the client has to live with."
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Lesson 6 taught you when an agent is the right tool and when to say no."
+    },
+    {
+      "question": "Which conclusion does the lesson support?",
+      "options": [
+        "On native Windows it is the PowerShell equivalent.",
+        "This lesson assumes you said yes, the client signed off, and the work is yours to deliver.",
+        "It is where the consulting stops being advice and starts being a running system.",
+        "Lesson 6 taught you when an agent is the right tool and when to say no."
+      ],
+      "correct_answer_index": 0,
+      "explanation": "On native Windows it is the PowerShell equivalent."
+    }
+  ]
+}

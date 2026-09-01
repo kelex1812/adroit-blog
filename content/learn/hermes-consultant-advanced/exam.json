@@ -1,0 +1,238 @@
+{
+  "quizName": "hermes-consultant-advanced:exam",
+  "title": "Hermes Consultant Advanced: Practice Exam",
+  "description": "Timed certification practice exam for the Hermes Consultant Advanced series. Pass with 72% or higher.",
+  "questions": [
+    {
+      "question": "Per the lesson “From Consultant to Principal”, what is the central focus?",
+      "options": [
+        "The shift that defines a principal: from selling your own skill to building a delivery system. Why the unit of output changes, how leverage replaces hours, and …",
+        "A history of the technology and its vendors",
+        "A review of unrelated productivity tools",
+        "A summary of corporate policy rules"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "The lesson is centered on: The shift that defines a principal: from selling your own skill to building a delivery system. Why the unit of output changes, how leverage replaces hours, and what you have to stop doing to operate at scale."
+    },
+    {
+      "question": "Which statement best reflects the lesson’s guidance?",
+      "options": [
+        "You can take a client from discovery to handover, map five phases onto a calendar, set gates that hold, and leave a system the client can run without you.",
+        "Those are the skills of a practitioner, and they are the right skills to have.",
+        "This course assumes you have them and moves past them.",
+        "Levels 1 and 2 taught you to run engagements."
+      ],
+      "correct_answer_index": 3,
+      "explanation": "Levels 1 and 2 taught you to run engagements."
+    },
+    {
+      "question": "Which conclusion does the lesson support?",
+      "options": [
+        "You can take a client from discovery to handover, map five phases onto a calendar, set gates that hold, and leave a system the client can run without you.",
+        "Those are the skills of a practitioner, and they are the right skills to have.",
+        "Codification is turning the judgment you use to do the work into a repeatable system that a competent person can run without you in the room.",
+        "Levels 1 and 2 taught you to run engagements."
+      ],
+      "correct_answer_index": 2,
+      "explanation": "Codification is turning the judgment you use to do the work into a repeatable system that a competent person can run without you in the room."
+    },
+    {
+      "question": "Per the lesson “Service Lines, Offers, and Packaging”, what is the central focus?",
+      "options": [
+        "How a practice turns capability into something a client can actually buy. The difference between a service line and an offer, why packaging is the principal's r…",
+        "A history of the technology and its vendors",
+        "A review of unrelated productivity tools",
+        "A summary of corporate policy rules"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "The lesson is centered on: How a practice turns capability into something a client can actually buy. The difference between a service line and an offer, why packaging is the principal's real product work, and how productization fixes the worst economics in consulting."
+    },
+    {
+      "question": "Which statement best reflects the lesson’s guidance?",
+      "options": [
+        "They have capability, which nobody can buy, and no offers, which are the only things a client can buy.",
+        "That frame stays abstract until the practice has something to sell, and most practices fail exactly there.",
+        "A principal sells capacity, wins through leverage, and builds the delivery system rather than the deliverables.",
+        "It teaches you to split what you do into service lines, turn each line into priced offers, and package those offers so a client can buy them without you inventing the scope from scratch every time."
+      ],
+      "correct_answer_index": 2,
+      "explanation": "A principal sells capacity, wins through leverage, and builds the delivery system rather than the deliverables."
+    },
+    {
+      "question": "Which conclusion does the lesson support?",
+      "options": [
+        "A good service line has three properties, and it is worth testing every candidate line against all three.",
+        "That frame stays abstract until the practice has something to sell, and most practices fail exactly there.",
+        "A principal sells capacity, wins through leverage, and builds the delivery system rather than the deliverables.",
+        "They have capability, which nobody can buy, and no offers, which are the only things a client can buy."
+      ],
+      "correct_answer_index": 0,
+      "explanation": "A good service line has three properties, and it is worth testing every candidate line against all three."
+    },
+    {
+      "question": "Per the lesson “Architecture at Organizational Scale”, what is the central focus?",
+      "options": [
+        "The jump from running agents to running a fleet of them. How to design for many agents at once: the orchestration patterns that keep work moving, the governance…",
+        "A history of the technology and its vendors",
+        "A review of unrelated productivity tools",
+        "A summary of corporate policy rules"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "The lesson is centered on: The jump from running agents to running a fleet of them. How to design for many agents at once: the orchestration patterns that keep work moving, the governance layer that keeps it safe, and why control replaces heroics as the unit of success."
+    },
+    {
+      "question": "Which statement best reflects the lesson’s guidance?",
+      "options": [
+        "A principal sells capacity, wins through leverage, and turns capability into packaged offers.",
+        "This lesson drops below that layer to the machinery the offers actually run on.",
+        "A practice that sells many engagements at once is, underneath the marketing, a system that runs many agents at once, and a system of many agents is a different discipline than running one well.",
+        "A fleet of them is an organization you architect."
+      ],
+      "correct_answer_index": 0,
+      "explanation": "A principal sells capacity, wins through leverage, and turns capability into packaged offers."
+    },
+    {
+      "question": "Which conclusion does the lesson support?",
+      "options": [
+        "A principal sells capacity, wins through leverage, and turns capability into packaged offers.",
+        "A practice that sells many engagements at once is, underneath the marketing, a system that runs many agents at once, and a system of many agents is a different discipline than running one well.",
+        "This lesson drops below that layer to the machinery the offers actually run on.",
+        "The discipline is to make the unit small enough to finish in a bounded window and explicit enough that a different agent could take it over mid-flight without losing context."
+      ],
+      "correct_answer_index": 3,
+      "explanation": "The discipline is to make the unit small enough to finish in a bounded window and explicit enough that a different agent could take it over mid-flight without losing context."
+    },
+    {
+      "question": "Per the lesson “Design Authority”, what is the central focus?",
+      "options": [
+        "The layer that keeps a growing practice coherent. What design authority is, why a system of many agents drifts without it, how to set standards that actually ge…",
+        "A history of the technology and its vendors",
+        "A review of unrelated productivity tools",
+        "A summary of corporate policy rules"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "The lesson is centered on: The layer that keeps a growing practice coherent. What design authority is, why a system of many agents drifts without it, how to set standards that actually get followed, and how to run design reviews that are gates, not rubber stamps."
+    },
+    {
+      "question": "Which statement best reflects the lesson’s guidance?",
+      "options": [
+        "It does not answer the third, and the third is the one this lesson is about.",
+        "That architecture answers two questions: how work moves, and who is allowed to touch what.",
+        "A system of many agents, each producing deliverables under its own bounded context, will quickly and quietly drift in a dozen directions unless someone owns the standard of quality and has the authority to enforce it.",
+        "A principal runs a fleet of agents on many engagements at once, orchestrates the work, and governs it with isolation, permission, and audit."
+      ],
+      "correct_answer_index": 3,
+      "explanation": "A principal runs a fleet of agents on many engagements at once, orchestrates the work, and governs it with isolation, permission, and audit."
+    },
+    {
+      "question": "Which conclusion does the lesson support?",
+      "options": [
+        "A principal runs a fleet of agents on many engagements at once, orchestrates the work, and governs it with isolation, permission, and audit.",
+        "It does not answer the third, and the third is the one this lesson is about.",
+        "The property that makes a standard real is that the executor runs it without deciding to.",
+        "That architecture answers two questions: how work moves, and who is allowed to touch what."
+      ],
+      "correct_answer_index": 2,
+      "explanation": "The property that makes a standard real is that the executor runs it without deciding to."
+    },
+    {
+      "question": "Per the lesson “Building Reusable IP and Productized Offerings”, what is the central focus?",
+      "options": [
+        "The difference between an offer and the intellectual property underneath it, why IP is the asset that compounds, and how to turn a repeatable delivery method in…",
+        "A history of the technology and its vendors",
+        "A review of unrelated productivity tools",
+        "A summary of corporate policy rules"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "The lesson is centered on: The difference between an offer and the intellectual property underneath it, why IP is the asset that compounds, and how to turn a repeatable delivery method into a productized offering the practice owns and can sell again without reinventing the scope."
+    },
+    {
+      "question": "Which statement best reflects the lesson’s guidance?",
+      "options": [
+        "Lesson 2 taught you to turn capability into offers, and Lesson 4 taught you to keep the delivery system coherent with standards and review.",
+        "This lesson sits between them and answers a question neither one fully asked: what does the practice actually own?",
+        "That distinction, between the offer and the IP that produces it, is the difference between a practice that sells its time and a practice that sells an asset it keeps getting better at producing.",
+        "The intellectual property underneath it, the method, the templates, the reference architecture, the accumulated lessons, is something the practice owns and can reuse across every sale."
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Lesson 2 taught you to turn capability into offers, and Lesson 4 taught you to keep the delivery system coherent with standards and review."
+    },
+    {
+      "question": "Which conclusion does the lesson support?",
+      "options": [
+        "The reusable starting points for deliverables: the proposal, the discovery brief, the runbook, the report.",
+        "The intellectual property underneath it, the method, the templates, the reference architecture, the accumulated lessons, is something the practice owns and can reuse across every sale.",
+        "This lesson sits between them and answers a question neither one fully asked: what does the practice actually own?",
+        "Lesson 2 taught you to turn capability into offers, and Lesson 4 taught you to keep the delivery system coherent with standards and review."
+      ],
+      "correct_answer_index": 0,
+      "explanation": "The reusable starting points for deliverables: the proposal, the discovery brief, the runbook, the report."
+    },
+    {
+      "question": "Per the lesson “Hiring, Onboarding, and Running a Team of Consultants”, what is the central focus?",
+      "options": [
+        "The principal hires for the delivery system, not for a role they used to fill. How to staff against a captured method, onboard people onto it with a measurable …",
+        "A history of the technology and its vendors",
+        "A review of unrelated productivity tools",
+        "A summary of corporate policy rules"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "The lesson is centered on: The principal hires for the delivery system, not for a role they used to fill. How to staff against a captured method, onboard people onto it with a measurable exit gate, and run a team so quality stays a property of the system instead of a bet on any single person."
+    },
+    {
+      "question": "Which statement best reflects the lesson’s guidance?",
+      "options": [
+        "Lesson 1 ended with a test: you are a principal the day a client gets a good result and you were not the one who made it.",
+        "A practice scales only as fast as its people, and hiring people is the point where most principals break the delivery system they just spent a course building.",
+        "Lesson 5 gave you the assets to make that possible, the reusable IP and productized offerings the practice owns.",
+        "This lesson is about the people who run them."
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Lesson 1 ended with a test: you are a principal the day a client gets a good result and you were not the one who made it."
+    },
+    {
+      "question": "Which conclusion does the lesson support?",
+      "options": [
+        "Lesson 5 gave you the assets to make that possible, the reusable IP and productized offerings the practice owns.",
+        "This lesson is about the people who run them.",
+        "Lesson 1 ended with a test: you are a principal the day a client gets a good result and you were not the one who made it.",
+        "Your method is not actually captured if it requires the principal's implicit knowledge to run."
+      ],
+      "correct_answer_index": 3,
+      "explanation": "Your method is not actually captured if it requires the principal's implicit knowledge to run."
+    },
+    {
+      "question": "Per the lesson “From Consultant to Principal”, what is the central focus?",
+      "options": [
+        "The shift that defines a principal: from selling your own skill to building a delivery system. Why the unit of output changes, how leverage replaces hours, and …",
+        "A history of the technology and its vendors",
+        "A review of unrelated productivity tools",
+        "A summary of corporate policy rules"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "The lesson is centered on: The shift that defines a principal: from selling your own skill to building a delivery system. Why the unit of output changes, how leverage replaces hours, and what you have to stop doing to operate at scale."
+    },
+    {
+      "question": "Which statement best reflects the lesson’s guidance?",
+      "options": [
+        "You can take a client from discovery to handover, map five phases onto a calendar, set gates that hold, and leave a system the client can run without you.",
+        "Those are the skills of a practitioner, and they are the right skills to have.",
+        "This course assumes you have them and moves past them.",
+        "Levels 1 and 2 taught you to run engagements."
+      ],
+      "correct_answer_index": 3,
+      "explanation": "Levels 1 and 2 taught you to run engagements."
+    },
+    {
+      "question": "Which conclusion does the lesson support?",
+      "options": [
+        "You can take a client from discovery to handover, map five phases onto a calendar, set gates that hold, and leave a system the client can run without you.",
+        "Those are the skills of a practitioner, and they are the right skills to have.",
+        "Codification is turning the judgment you use to do the work into a repeatable system that a competent person can run without you in the room.",
+        "Levels 1 and 2 taught you to run engagements."
+      ],
+      "correct_answer_index": 2,
+      "explanation": "Codification is turning the judgment you use to do the work into a repeatable system that a competent person can run without you in the room."
+    }
+  ]
+}

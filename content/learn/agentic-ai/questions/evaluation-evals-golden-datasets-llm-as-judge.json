@@ -1,0 +1,40 @@
+{
+  "quizName": "agentic-ai:lesson:evaluation-evals-golden-datasets-llm-as-judge",
+  "title": "Lesson 19: Evaluation: Evals, Golden Datasets, LLM-as-Judge, and When It Lies",
+  "description": "An agent you cannot measure is an agent you cannot trust, and the moment a model changes you have no way to know what you traded away. This lesson walks the evaluation stack from the bottom up: the golden dataset that anchors everything, the classic metrics that break on open-ended output, the LLM-as-judge technique that replaces them, and the biases that make a judge lie, from position and verbosity preference to rating its own output too high and being misled by a confident wrong answer.",
+  "questions": [
+    {
+      "question": "Per the lesson “Evaluation: Evals, Golden Datasets, LLM-as-Judge, and When It Lies”, what is the central focus?",
+      "options": [
+        "An agent you cannot measure is an agent you cannot trust, and the moment a model changes you have no way to know what you traded away. This lesson walks the eva…",
+        "A history of the technology and its vendors",
+        "A review of unrelated productivity tools",
+        "A summary of corporate policy rules"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "The lesson is centered on: An agent you cannot measure is an agent you cannot trust, and the moment a model changes you have no way to know what you traded away. This lesson walks the evaluation stack from the bottom up: the golden dataset that anchors everything, the classic metrics that break on open-ended output, the LLM-as-judge technique that replaces them, and the biases that make a judge lie, from position and verbosity preference to rating its own output too high and being misled by a confident wrong answer."
+    },
+    {
+      "question": "Which statement best reflects the lesson’s guidance?",
+      "options": [
+        "If you cannot measure an agent, you cannot say whether a prompt tweak helped, whether a model swap helped, or whether it got worse last week and nobody noticed.",
+        "Both assumed you know whether the agent is working.",
+        "The last two lessons were about making an agent safe to run: Lesson 17 gated what it could reach, and Lesson 18 gated what it could emit.",
+        "Evaluation is the layer that turns \"it feels better\" into a number you can argue about."
+      ],
+      "correct_answer_index": 2,
+      "explanation": "The last two lessons were about making an agent safe to run: Lesson 17 gated what it could reach, and Lesson 18 gated what it could emit."
+    },
+    {
+      "question": "Which conclusion does the lesson support?",
+      "options": [
+        "The last two lessons were about making an agent safe to run: Lesson 17 gated what it could reach, and Lesson 18 gated what it could emit.",
+        "Datasets built purely from documentation or synthetic generation come out too clean; they miss the edge cases and adversarial inputs that surface once real users interact with the system.",
+        "Both assumed you know whether the agent is working.",
+        "If you cannot measure an agent, you cannot say whether a prompt tweak helped, whether a model swap helped, or whether it got worse last week and nobody noticed."
+      ],
+      "correct_answer_index": 1,
+      "explanation": "Datasets built purely from documentation or synthetic generation come out too clean; they miss the edge cases and adversarial inputs that surface once real users interact with the system."
+    }
+  ]
+}

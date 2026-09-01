@@ -1,5 +1,7 @@
 {
   "name": "Salesforce System Architect Primer",
   "description": "A practical deep dive into Flow design, Apex patterns, and platform architecture for teams scaling on Salesforce.",
-  "gradient": "from-sky to-blue-600"
+  "gradient": "from-sky to-blue-600",
+  "group": "Certifications",
+  "subgroup": "System Architect"
 }

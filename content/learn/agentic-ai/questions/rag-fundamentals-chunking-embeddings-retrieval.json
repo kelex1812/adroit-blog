@@ -1,0 +1,40 @@
+{
+  "quizName": "agentic-ai:lesson:rag-fundamentals-chunking-embeddings-retrieval",
+  "title": "Lesson 10: RAG Fundamentals: Chunking, Embeddings, Retrieval, and Why RAG Is the First Enterprise Pattern",
+  "description": "The pattern that grounds LLMs in your own knowledge: what RAG is and where it came from, why you chunk documents instead of feeding them whole, what embeddings actually are, how retrieval ranks chunks, and why RAG became the first pattern enterprises shipped.",
+  "questions": [
+    {
+      "question": "Per the lesson “RAG Fundamentals: Chunking, Embeddings, Retrieval, and Why RAG Is the First Enterprise Pattern”, what is the central focus?",
+      "options": [
+        "The pattern that grounds LLMs in your own knowledge: what RAG is and where it came from, why you chunk documents instead of feeding them whole, what embeddings …",
+        "A history of the technology and its vendors",
+        "A review of unrelated productivity tools",
+        "A summary of corporate policy rules"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "The lesson is centered on: The pattern that grounds LLMs in your own knowledge: what RAG is and where it came from, why you chunk documents instead of feeding them whole, what embeddings actually are, how retrieval ranks chunks, and why RAG became the first pattern enterprises shipped."
+    },
+    {
+      "question": "Which statement best reflects the lesson’s guidance?",
+      "options": [
+        "The paper defines the idea precisely: RAG models \"combine pre-trained parametric and non-parametric memory for language generation.\" The parametric memory is the model's weights, the knowledge baked in during training.",
+        "The term RAG comes from the 2020 paper by Patrick Lewis and colleagues, accepted at NeurIPS 2020.",
+        "RAG, retrieval-augmented generation, is the single most deployed pattern in enterprise AI, and it is the first one most teams actually ship.",
+        "Lesson 9 ended with a promise: the next building block is the augmented LLM, retrieval that gives agents knowledge beyond their training data."
+      ],
+      "correct_answer_index": 3,
+      "explanation": "Lesson 9 ended with a promise: the next building block is the augmented LLM, retrieval that gives agents knowledge beyond their training data."
+    },
+    {
+      "question": "Which conclusion does the lesson support?",
+      "options": [
+        "The chunking options, from simplest to most elaborate:",
+        "The term RAG comes from the 2020 paper by Patrick Lewis and colleagues, accepted at NeurIPS 2020.",
+        "Lesson 9 ended with a promise: the next building block is the augmented LLM, retrieval that gives agents knowledge beyond their training data.",
+        "RAG, retrieval-augmented generation, is the single most deployed pattern in enterprise AI, and it is the first one most teams actually ship."
+      ],
+      "correct_answer_index": 0,
+      "explanation": "The chunking options, from simplest to most elaborate:"
+    }
+  ]
+}

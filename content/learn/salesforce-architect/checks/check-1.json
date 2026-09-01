@@ -1,0 +1,172 @@
+{
+  "quizName": "salesforce-architect:check:1",
+  "title": "Knowledge Check 1: Lessons 1–5",
+  "description": "Pooled check over Lessons 1–5 of the Salesforce Architect series. Score 80% or higher to unlock the cert prep exam.",
+  "questions": [
+    {
+      "question": "Per the lesson “What a Salesforce System Architect Actually Does: Role, Cert Track, CTA Endgame”, what is the central focus?",
+      "options": [
+        "The Salesforce architect arc in one lesson: what System vs Application vs Technical Architects actually do, the certification ladder, and the CTA endgame.",
+        "A history of the technology and its vendors",
+        "A review of unrelated productivity tools",
+        "A summary of corporate policy rules"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "The lesson is centered on: The Salesforce architect arc in one lesson: what System vs Application vs Technical Architects actually do, the certification ladder, and the CTA endgame."
+    },
+    {
+      "question": "Which statement best reflects the lesson’s guidance?",
+      "options": [
+        "\"Architect\" is the most overloaded title in the Salesforce ecosystem.",
+        "But Salesforce itself defines the role precisely, and there is a certification ladder that tells you what each tier of architect is responsible for.",
+        "Companies hand it to whoever draws the org chart, and consulting firms put it on any senior consultant.",
+        "This lesson is the map for the whole track: what the roles are, how the credentials stack, and where it all ends (spoiler: CTA)."
+      ],
+      "correct_answer_index": 0,
+      "explanation": "\"Architect\" is the most overloaded title in the Salesforce ecosystem."
+    },
+    {
+      "question": "Which conclusion does the lesson support?",
+      "options": [
+        "The credential is granted automatically after four prerequisites:",
+        "Companies hand it to whoever draws the org chart, and consulting firms put it on any senior consultant.",
+        "But Salesforce itself defines the role precisely, and there is a certification ladder that tells you what each tier of architect is responsible for.",
+        "\"Architect\" is the most overloaded title in the Salesforce ecosystem."
+      ],
+      "correct_answer_index": 0,
+      "explanation": "The credential is granted automatically after four prerequisites:"
+    },
+    {
+      "question": "Per the lesson “Multi-Tenant Platform Architecture: Orgs, Environments, and the Instance Model”, what is the central focus?",
+      "options": [
+        "Why every Salesforce org rents a slice of a shared platform: multi-tenancy, metadata-driven design, the instance model, and the sandbox environments that keep D…",
+        "A history of the technology and its vendors",
+        "A review of unrelated productivity tools",
+        "A summary of corporate policy rules"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "The lesson is centered on: Why every Salesforce org rents a slice of a shared platform: multi-tenancy, metadata-driven design, the instance model, and the sandbox environments that keep Dev/QA/UAT/Prod safe."
+    },
+    {
+      "question": "Which statement best reflects the lesson’s guidance?",
+      "options": [
+        "Here is the single fact that explains most of what surprises newcomers to Salesforce: you never own a server, a database, or even a schema.",
+        "You rent a private, configurable slice of a platform that thousands of other companies share.",
+        "This lesson makes the mechanism concrete, because the System Architect exam (and real architecture work) constantly assumes you understand it.",
+        "Almost every \"weird\" platform rule (governor limits, code-coverage gates, sandbox refresh windows, the instance your org lives on) is a direct consequence of that sharing."
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Here is the single fact that explains most of what surprises newcomers to Salesforce: you never own a server, a database, or even a schema."
+    },
+    {
+      "question": "Which conclusion does the lesson support?",
+      "options": [
+        "Almost every \"weird\" platform rule (governor limits, code-coverage gates, sandbox refresh windows, the instance your org lives on) is a direct consequence of that sharing.",
+        "Isolation is enforced at the physical layer too: all platform data, metadata, and pivot tables are partitioned by OrgID using native database partitioning.",
+        "Here is the single fact that explains most of what surprises newcomers to Salesforce: you never own a server, a database, or even a schema.",
+        "You rent a private, configurable slice of a platform that thousands of other companies share."
+      ],
+      "correct_answer_index": 1,
+      "explanation": "Isolation is enforced at the physical layer too: all platform data, metadata, and pivot tables are partitioned by OrgID using native database partitioning."
+    },
+    {
+      "question": "Per the lesson “Core Building Blocks: Objects, Fields, Relationships, Record Types, and Formula vs Roll-Up”, what is the central focus?",
+      "options": [
+        "The architect's canvas: standard and custom objects, field types, lookup vs master-detail relationships, record types for process variation, and when to compute…",
+        "A history of the technology and its vendors",
+        "A review of unrelated productivity tools",
+        "A summary of corporate policy rules"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "The lesson is centered on: The architect's canvas: standard and custom objects, field types, lookup vs master-detail relationships, record types for process variation, and when to compute with a formula field vs a roll-up summary."
+    },
+    {
+      "question": "Which statement best reflects the lesson’s guidance?",
+      "options": [
+        "Every architecture decision on Salesforce eventually lands on the data model.",
+        "Sharing rules protect records, Flows act on records, reports aggregate records, integrations move records.",
+        "Lesson 2 showed that your customizations are metadata (descriptions the platform materializes at runtime).",
+        "But before any of that, you answer the question the whole platform is built around: what are the records, what do they contain, and how do they relate?"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Every architecture decision on Salesforce eventually lands on the data model."
+    },
+    {
+      "question": "Which conclusion does the lesson support?",
+      "options": [
+        "Sharing rules protect records, Flows act on records, reports aggregate records, integrations move records.",
+        "Master-detail. \"Closely links objects together such that the master record controls certain behaviors of the detail and subdetail record.\" Concretely: deleting a master also deletes related detail records; the detail's Owner field isn't available (ownership is inherited from the master); and detail records inherit the master's security and permissions, so you can't set permissions on the detail independently.",
+        "But before any of that, you answer the question the whole platform is built around: what are the records, what do they contain, and how do they relate?",
+        "Every architecture decision on Salesforce eventually lands on the data model."
+      ],
+      "correct_answer_index": 1,
+      "explanation": "Master-detail. \"Closely links objects together such that the master record controls certain behaviors of the detail and subdetail record.\" Concretely: deleting a master also deletes related detail records; the detail's Owner field isn't available (ownership is inherited from the master); and detail records inherit the master's security and permissions, so you can't set permissions on the detail independently."
+    },
+    {
+      "question": "Per the lesson “Integration Fundamentals: REST, SOAP, Bulk APIs, and Picking the Right One”, what is the central focus?",
+      "options": [
+        "The System Architect's home turf: when to call Salesforce with REST, when to reach for SOAP, when to hand it a CSV via Bulk API 2.0, and the request limits that…",
+        "A history of the technology and its vendors",
+        "A review of unrelated productivity tools",
+        "A summary of corporate policy rules"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "The lesson is centered on: The System Architect's home turf: when to call Salesforce with REST, when to reach for SOAP, when to hand it a CSV via Bulk API 2.0, and the request limits that make the choice matter."
+    },
+    {
+      "question": "Which statement best reflects the lesson’s guidance?",
+      "options": [
+        "Salesforce ships a dozen-plus APIs, but for plain data movement the Help doc \"Which API Do I Use?\" narrows the field.",
+        "Its primary benefit: \"it doesn't require much tooling to access your data.",
+        "It sits between the ERP, the e-commerce platform, the marketing automation tool, and a dozen SaaS apps, and every one of them needs to move records in and out.",
+        "This lesson builds the decision framework: what REST, SOAP, and Bulk actually are, the limits that constrain them, and how to pick."
+      ],
+      "correct_answer_index": 2,
+      "explanation": "It sits between the ERP, the e-commerce platform, the marketing automation tool, and a dozen SaaS apps, and every one of them needs to move records in and out."
+    },
+    {
+      "question": "Which conclusion does the lesson support?",
+      "options": [
+        "It sits between the ERP, the e-commerce platform, the marketing automation tool, and a dozen SaaS apps, and every one of them needs to move records in and out.",
+        "This lesson builds the decision framework: what REST, SOAP, and Bulk actually are, the limits that constrain them, and how to pick.",
+        "Salesforce's own guidance names its niche: \"you can use SOAP API to integrate Salesforce with your org's ERP and finance systems.\"",
+        "Salesforce ships a dozen-plus APIs, but for plain data movement the Help doc \"Which API Do I Use?\" narrows the field."
+      ],
+      "correct_answer_index": 2,
+      "explanation": "Salesforce's own guidance names its niche: \"you can use SOAP API to integrate Salesforce with your org's ERP and finance systems.\""
+    },
+    {
+      "question": "Per the lesson “General Systems Architecture: What 'Architecture' Means and Why AI Systems Reuse the Same Patterns”, what is the central focus?",
+      "options": [
+        "The foundational concepts of systems architecture (components, interfaces, and design principles) and why every AI agent pattern (sequential, parallel, hierarch…",
+        "A history of the technology and its vendors",
+        "A review of unrelated productivity tools",
+        "A summary of corporate policy rules"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "The lesson is centered on: The foundational concepts of systems architecture (components, interfaces, and design principles) and why every AI agent pattern (sequential, parallel, hierarchical) is a remix of patterns engineers have known for decades."
+    },
+    {
+      "question": "Which statement best reflects the lesson’s guidance?",
+      "options": [
+        "Here's the thesis: architecture is about making decisions under constraints.",
+        "This is the first general systems architecture lesson in the track, a deliberate break from Salesforce-specific content to build the cross-platform architecture thinking that every architect needs, especially one learning AI systems.",
+        "The patterns change names every decade, but the underlying mechanics are remarkably stable.",
+        "The ISO/IEC/IEEE 42010 standard defines architecture as \"the fundamental concepts or properties of a system in its environment embodied in its elements, relationships, and in the principles of its design and evolution.\""
+      ],
+      "correct_answer_index": 1,
+      "explanation": "This is the first general systems architecture lesson in the track, a deliberate break from Salesforce-specific content to build the cross-platform architecture thinking that every architect needs, especially one learning AI systems."
+    },
+    {
+      "question": "Which conclusion does the lesson support?",
+      "options": [
+        "The ISO/IEC/IEEE 42010 standard defines architecture as \"the fundamental concepts or properties of a system in its environment embodied in its elements, relationships, and in the principles of its design and evolution.\"",
+        "Google's MapReduce paper (2004) formalized an idea that had existed in distributed computing for years: split a problem into independent pieces, process them in parallel, then merge results.",
+        "The patterns change names every decade, but the underlying mechanics are remarkably stable.",
+        "Here's the thesis: architecture is about making decisions under constraints."
+      ],
+      "correct_answer_index": 1,
+      "explanation": "Google's MapReduce paper (2004) formalized an idea that had existed in distributed computing for years: split a problem into independent pieces, process them in parallel, then merge results."
+    }
+  ]
+}

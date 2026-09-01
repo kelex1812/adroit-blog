@@ -1,0 +1,40 @@
+{
+  "quizName": "salesforce-architect:lesson:high-volume-event-patterns-streaming-pacing-platform-event-limits",
+  "title": "Lesson 28: High-Volume Event Patterns: Streaming, Pacing, and Platform Event Limits",
+  "description": "What changes when event volume stops being a trickle and becomes a flood: streaming with the Pub/Sub API, pacing publish rates against rolling limits, and the platform event allocations that decide whether your bus survives the day.",
+  "questions": [
+    {
+      "question": "Per the lesson “High-Volume Event Patterns: Streaming, Pacing, and Platform Event Limits”, what is the central focus?",
+      "options": [
+        "What changes when event volume stops being a trickle and becomes a flood: streaming with the Pub/Sub API, pacing publish rates against rolling limits, and the p…",
+        "A history of the technology and its vendors",
+        "A review of unrelated productivity tools",
+        "A summary of corporate policy rules"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "The lesson is centered on: What changes when event volume stops being a trickle and becomes a flood: streaming with the Pub/Sub API, pacing publish rates against rolling limits, and the platform event allocations that decide whether your bus survives the day."
+    },
+    {
+      "question": "Which statement best reflects the lesson’s guidance?",
+      "options": [
+        "Lesson 7 taught you the two vehicles on the Salesforce event bus: Platform Events for business intent and Change Data Capture for record state.",
+        "Lesson 27 locked down the security around integrations.",
+        "A few hundred events a day is a design problem you solve with a trigger and a Flow.",
+        "This lesson is about what happens when the volume stops being a trickle."
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Lesson 7 taught you the two vehicles on the Salesforce event bus: Platform Events for business intent and Change Data Capture for record state."
+    },
+    {
+      "question": "Which conclusion does the lesson support?",
+      "options": [
+        "This lesson is about what happens when the volume stops being a trickle.",
+        "Lesson 7 taught you the two vehicles on the Salesforce event bus: Platform Events for business intent and Change Data Capture for record state.",
+        "The event bus has two rolling limits, an hourly publishing limit and a 24-hour delivery limit, and both are enforced.",
+        "Lesson 27 locked down the security around integrations."
+      ],
+      "correct_answer_index": 2,
+      "explanation": "The event bus has two rolling limits, an hourly publishing limit and a 24-hour delivery limit, and both are enforced."
+    }
+  ]
+}

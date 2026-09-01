@@ -1,0 +1,40 @@
+{
+  "quizName": "agentic-ai:lesson:tool-design-schemas-error-handling-retries",
+  "title": "Lesson 8: Designing Tools That Fail Well: Schemas, Error Handling, and Retries",
+  "description": "A tool is an operational contract, not an API wrapper. This lesson covers the five-part anatomy of a production tool, structured error schemas the model can act on, and retry discipline (backoff with jitter, idempotency keys, and retry budgets), so agents survive failures without corrupting state.",
+  "questions": [
+    {
+      "question": "Per the lesson “Designing Tools That Fail Well: Schemas, Error Handling, and Retries”, what is the central focus?",
+      "options": [
+        "A tool is an operational contract, not an API wrapper. This lesson covers the five-part anatomy of a production tool, structured error schemas the model can act…",
+        "A history of the technology and its vendors",
+        "A review of unrelated productivity tools",
+        "A summary of corporate policy rules"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "The lesson is centered on: A tool is an operational contract, not an API wrapper. This lesson covers the five-part anatomy of a production tool, structured error schemas the model can act on, and retry discipline (backoff with jitter, idempotency keys, and retry budgets), so agents survive failures without corrupting state."
+    },
+    {
+      "question": "Which statement best reflects the lesson’s guidance?",
+      "options": [
+        "The one idea to take from this lesson: a tool schema is an operational contract between the model, your application layer, and the system being accessed, and the error path is part of that contract, not an afterthought.",
+        "Enterprise agents are connected to production systems, and a vague schema or a blind retry can cause wrong reports, duplicate orders, or operational disruption.",
+        "Lesson 7 showed you how the model proposes tool calls.",
+        "This lesson is about the tools themselves: what separates a demo tool from a production tool is not the happy path; it's how the tool behaves when something goes wrong."
+      ],
+      "correct_answer_index": 2,
+      "explanation": "Lesson 7 showed you how the model proposes tool calls."
+    },
+    {
+      "question": "Which conclusion does the lesson support?",
+      "options": [
+        "Lesson 7 showed you how the model proposes tool calls.",
+        "This lesson is about the tools themselves: what separates a demo tool from a production tool is not the happy path; it's how the tool behaves when something goes wrong.",
+        "Every argument you remove is a hallucination you prevent.",
+        "Enterprise agents are connected to production systems, and a vague schema or a blind retry can cause wrong reports, duplicate orders, or operational disruption."
+      ],
+      "correct_answer_index": 2,
+      "explanation": "Every argument you remove is a hallucination you prevent."
+    }
+  ]
+}

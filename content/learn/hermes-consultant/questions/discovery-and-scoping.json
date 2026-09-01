@@ -1,0 +1,40 @@
+{
+  "quizName": "hermes-consultant:lesson:discovery-and-scoping",
+  "title": "Lesson 3: Discovery and Scoping: Listening Before Proposing",
+  "description": "The craft of discovery: who to talk to, what to watch, which questions surface the real problem, and how to write a problem statement the client agrees with before you propose any solution.",
+  "questions": [
+    {
+      "question": "Per the lesson “Discovery and Scoping: Listening Before Proposing”, what is the central focus?",
+      "options": [
+        "The craft of discovery: who to talk to, what to watch, which questions surface the real problem, and how to write a problem statement the client agrees with bef…",
+        "A history of the technology and its vendors",
+        "A review of unrelated productivity tools",
+        "A summary of corporate policy rules"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "The lesson is centered on: The craft of discovery: who to talk to, what to watch, which questions surface the real problem, and how to write a problem statement the client agrees with before you propose any solution."
+    },
+    {
+      "question": "Which statement best reflects the lesson’s guidance?",
+      "options": [
+        "It teaches you how to listen, what to listen for, which questions pull the real problem out of the noise, and how to write a problem statement the client agrees with before you propose anything.",
+        "Discovery is not a warm-up before the real work.",
+        "It is the phase where you earn the right to propose a solution at all, and it is the phase where most engagements quietly fail.",
+        "Lesson 2 gave you the lifecycle and told you that discovery is where the whole engagement is won or lost."
+      ],
+      "correct_answer_index": 3,
+      "explanation": "Lesson 2 gave you the lifecycle and told you that discovery is where the whole engagement is won or lost."
+    },
+    {
+      "question": "Which conclusion does the lesson support?",
+      "options": [
+        "Lesson 2 gave you the lifecycle and told you that discovery is where the whole engagement is won or lost.",
+        "Discovery is not a warm-up before the real work.",
+        "It teaches you how to listen, what to listen for, which questions pull the real problem out of the noise, and how to write a problem statement the client agrees with before you propose anything.",
+        "These are the questions that separate discovery from a pleasant chat."
+      ],
+      "correct_answer_index": 3,
+      "explanation": "These are the questions that separate discovery from a pleasant chat."
+    }
+  ]
+}

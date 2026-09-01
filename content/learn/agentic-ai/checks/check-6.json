@@ -1,0 +1,139 @@
+{
+  "quizName": "agentic-ai:check:6",
+  "title": "Knowledge Check 6: Lessons 26–30",
+  "description": "Pooled check over Lessons 26–30 of the Agentic Ai series. Score 80% or higher to unlock the cert prep exam.",
+  "questions": [
+    {
+      "question": "Per the lesson “Enterprise Deployment, Serving, API Design, Rate Limits, and Quotas”, what is the central focus?",
+      "options": [
+        "A working agent is a different thing from an agent many people can use. This lesson puts the three boundaries around it that make the difference: the serving la…",
+        "A history of the technology and its vendors",
+        "A review of unrelated productivity tools",
+        "A summary of corporate policy rules"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "The lesson is centered on: A working agent is a different thing from an agent many people can use. This lesson puts the three boundaries around it that make the difference: the serving layer that decides how much concurrent work the model can do, the API boundary that gives every consumer one stable interface, and the policy layer of rate limits and quotas that stops a single tenant from overwhelming the hardware or blowing the budget. It works through the numbers you need to size a deployment, and it shows how those three layers meet at the same number."
+    },
+    {
+      "question": "Which statement best reflects the lesson’s guidance?",
+      "options": [
+        "That control layer answers what the agent is allowed to do.",
+        "A single-user agent either answers fast enough or it does not, and when it does not you wait, because you are the only person in line.",
+        "This lesson answers how you run it for many users without it collapsing or blowing the bill.",
+        "Lesson 25 handed you control: approvals, interrupts, and kill switches for an agent that can act on its own."
+      ],
+      "correct_answer_index": 3,
+      "explanation": "Lesson 25 handed you control: approvals, interrupts, and kill switches for an agent that can act on its own."
+    },
+    {
+      "question": "Which conclusion does the lesson support?",
+      "options": [
+        "This lesson answers how you run it for many users without it collapsing or blowing the bill.",
+        "That control layer answers what the agent is allowed to do.",
+        "Once the model can serve many requests, you need the interface every consumer speaks.",
+        "Lesson 25 handed you control: approvals, interrupts, and kill switches for an agent that can act on its own."
+      ],
+      "correct_answer_index": 2,
+      "explanation": "Once the model can serve many requests, you need the interface every consumer speaks."
+    },
+    {
+      "question": "Per the lesson “Cost Control, Caching, Model Tiers, Budget Caps, and Spend Dashboards”, what is the central focus?",
+      "options": [
+        "A working agent is cheaper to build than to keep. Lesson 26 stopped a single tenant from blowing the monthly bill in an afternoon; this lesson turns the bill it…",
+        "A history of the technology and its vendors",
+        "A review of unrelated productivity tools",
+        "A summary of corporate policy rules"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "The lesson is centered on: A working agent is cheaper to build than to keep. Lesson 26 stopped a single tenant from blowing the monthly bill in an afternoon; this lesson turns the bill itself into a number you manage. It covers the three cost levers in order: caching so you never pay twice for the same answer, model tiers and routing so you only pay frontier prices when a task actually needs them, and budget caps with spend dashboards so a surprise bill becomes an early-warning system instead. A worked example runs the arithmetic on a real agent workload, and the Fortress angle shows a hybrid two-tier stack doing all three at once."
+    },
+    {
+      "question": "Which statement best reflects the lesson’s guidance?",
+      "options": [
+        "This lesson protects the bill, which is a different job.",
+        "The one idea to carry out of this lesson: cost control is three levers, applied in a fixed order.",
+        "Cost control is the discipline of making that bill a number you watch and steer rather than a number you discover at the end of the month.",
+        "Lesson 26 put boundaries around a running agent: a serving layer, a stable API, and rate limits and quotas that stop any single consumer from overwhelming the system."
+      ],
+      "correct_answer_index": 3,
+      "explanation": "Lesson 26 put boundaries around a running agent: a serving layer, a stable API, and rate limits and quotas that stop any single consumer from overwhelming the system."
+    },
+    {
+      "question": "Which conclusion does the lesson support?",
+      "options": [
+        "Cost control is the discipline of making that bill a number you watch and steer rather than a number you discover at the end of the month.",
+        "Lesson 26 put boundaries around a running agent: a serving layer, a stable API, and rate limits and quotas that stop any single consumer from overwhelming the system.",
+        "This lesson protects the bill, which is a different job.",
+        "Semantic caching can silently serve a wrong answer if your similarity threshold is loose, so the threshold is a correctness decision, not just a cost one."
+      ],
+      "correct_answer_index": 3,
+      "explanation": "Semantic caching can silently serve a wrong answer if your similarity threshold is loose, so the threshold is a correctness decision, not just a cost one."
+    },
+    {
+      "question": "Per the lesson “Security: Authentication, Authorization, and Secrets Management for Agents”, what is the central focus?",
+      "options": [
+        "An agent is not a user and not a plain service. It carries two identities at once, the person it acts for and the machine it runs as, and it reaches for credent…",
+        "A history of the technology and its vendors",
+        "A review of unrelated productivity tools",
+        "A summary of corporate policy rules"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "The lesson is centered on: An agent is not a user and not a plain service. It carries two identities at once, the person it acts for and the machine it runs as, and it reaches for credentials with every tool call it makes. This lesson separates the three systems that keep that under control: authentication proves who is acting, authorization decides what that actor may do, and secrets management keeps the credentials that prove identity short-lived, tightly scoped, and out of the model's context."
+    },
+    {
+      "question": "Which statement best reflects the lesson’s guidance?",
+      "options": [
+        "By now an agent in this series can call tools, keep state, observe itself, and coordinate with other agents.",
+        "The one idea to carry out of this lesson: an agent's security is decided before it acts, in three separate systems that must not be conflated.",
+        "It is the difference between an agent that quietly does its job and an agent that becomes the thing attackers talk to.",
+        "This lesson is about the gate that sits in front of all of it: proving who is acting and stopping that actor from doing more than it is allowed to do."
+      ],
+      "correct_answer_index": 0,
+      "explanation": "By now an agent in this series can call tools, keep state, observe itself, and coordinate with other agents."
+    },
+    {
+      "question": "Which conclusion does the lesson support?",
+      "options": [
+        "This lesson is about the gate that sits in front of all of it: proving who is acting and stopping that actor from doing more than it is allowed to do.",
+        "By now an agent in this series can call tools, keep state, observe itself, and coordinate with other agents.",
+        "The agent authenticates directly with its own credentials and pre-configured permissions.",
+        "It is the difference between an agent that quietly does its job and an agent that becomes the thing attackers talk to."
+      ],
+      "correct_answer_index": 2,
+      "explanation": "The agent authenticates directly with its own credentials and pre-configured permissions."
+    },
+    {
+      "question": "Per the lesson “Compliance: Data Residency, Audit Logging, and Retention for AI Systems”, what is the central focus?",
+      "options": [
+        "Security controls who can act. Compliance is the record of what that actor did with other people's data, and it lives in three separate controls. Data residency…",
+        "A history of the technology and its vendors",
+        "A review of unrelated productivity tools",
+        "A summary of corporate policy rules"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "The lesson is centered on: Security controls who can act. Compliance is the record of what that actor did with other people's data, and it lives in three separate controls. Data residency decides where the data is stored and processed and how it may cross borders. Audit logging keeps an immutable record of what happened, per action, so a regulator or an investigator can reconstruct it later. Retention puts a clock on how long you keep any of it. This lesson reads the EU AI Act's record-keeping article and GDPR's storage-limitation principle, then shows how a real agent pipeline turns its own event stream into an auditable trail."
+    },
+    {
+      "question": "Which statement best reflects the lesson’s guidance?",
+      "options": [
+        "Where did the data the agent touched actually live?",
+        "What exactly did the agent do, in what order, with which inputs?",
+        "Lesson 28 showed you how to gate an agent: prove who is acting and stop it from doing more than it is allowed.",
+        "Compliance is the logbook that sits beside the door, and it answers a different set of questions."
+      ],
+      "correct_answer_index": 2,
+      "explanation": "Lesson 28 showed you how to gate an agent: prove who is acting and stop it from doing more than it is allowed."
+    },
+    {
+      "question": "Which conclusion does the lesson support?",
+      "options": [
+        "It generally requires personal data gathered from individuals in China to be stored within the country's borders, and it subjects cross-border transfers to strict limitations and security assessments.",
+        "Compliance is the logbook that sits beside the door, and it answers a different set of questions.",
+        "Lesson 28 showed you how to gate an agent: prove who is acting and stop it from doing more than it is allowed.",
+        "Where did the data the agent touched actually live?"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "It generally requires personal data gathered from individuals in China to be stored within the country's borders, and it subjects cross-border transfers to strict limitations and security assessments."
+    }
+  ]
+}

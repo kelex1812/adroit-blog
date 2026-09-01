@@ -1,0 +1,40 @@
+{
+  "quizName": "hermes-consultant-intermediate:lesson:running-a-full-engagement",
+  "title": "Lesson 1: Running a Full Engagement",
+  "description": "Turning the five-phase lifecycle into a week-by-week plan: mapping discover, design, implement, handover, and support onto a real calendar, with gates, buffers, and the scheduling realities that kill engagements.",
+  "questions": [
+    {
+      "question": "Per the lesson “Running a Full Engagement”, what is the central focus?",
+      "options": [
+        "Turning the five-phase lifecycle into a week-by-week plan: mapping discover, design, implement, handover, and support onto a real calendar, with gates, buffers,…",
+        "A history of the technology and its vendors",
+        "A review of unrelated productivity tools",
+        "A summary of corporate policy rules"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "The lesson is centered on: Turning the five-phase lifecycle into a week-by-week plan: mapping discover, design, implement, handover, and support onto a real calendar, with gates, buffers, and the scheduling realities that kill engagements."
+    },
+    {
+      "question": "Which statement best reflects the lesson’s guidance?",
+      "options": [
+        "You will learn how to map the five phases onto a real week-by-week plan, how to set gates that hold, how much buffer to carry, and where the schedule quietly goes wrong on real engagements.",
+        "Level 1 gave you the container: five phases, discover, design, implement, handover, support, each with a product and an exit test.",
+        "The working example is a six-week Hermes Agent delivery, and the skill transfers to any tool you ever run.",
+        "It tells you what has to happen, not when, not how long each part gets, and not how to keep a multi-week engagement alive while it runs."
+      ],
+      "correct_answer_index": 1,
+      "explanation": "Level 1 gave you the container: five phases, discover, design, implement, handover, support, each with a product and an exit test."
+    },
+    {
+      "question": "Which conclusion does the lesson support?",
+      "options": [
+        "You will learn how to map the five phases onto a real week-by-week plan, how to set gates that hold, how much buffer to carry, and where the schedule quietly goes wrong on real engagements.",
+        "Review is a bottleneck, and it is almost never where you think.",
+        "Level 1 gave you the container: five phases, discover, design, implement, handover, support, each with a product and an exit test.",
+        "It tells you what has to happen, not when, not how long each part gets, and not how to keep a multi-week engagement alive while it runs."
+      ],
+      "correct_answer_index": 1,
+      "explanation": "Review is a bottleneck, and it is almost never where you think."
+    }
+  ]
+}

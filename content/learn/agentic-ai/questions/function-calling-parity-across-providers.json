@@ -1,0 +1,40 @@
+{
+  "quizName": "agentic-ai:lesson:function-calling-parity-across-providers",
+  "title": "Lesson 9: Function-Calling Parity Across OpenAI, Azure, Anthropic, Gemini, and Local Models",
+  "description": "Every frontier provider exposes function calling, but none uses the same wire format. This lesson maps the request and response shapes across OpenAI, Azure, Anthropic, and Gemini, then shows why local models (llama.cpp) are the parity wildcard and how one internal schema plus thin per-provider adapters keeps an agent portable.",
+  "questions": [
+    {
+      "question": "Per the lesson “Function-Calling Parity Across OpenAI, Azure, Anthropic, Gemini, and Local Models”, what is the central focus?",
+      "options": [
+        "Every frontier provider exposes function calling, but none uses the same wire format. This lesson maps the request and response shapes across OpenAI, Azure, Ant…",
+        "A history of the technology and its vendors",
+        "A review of unrelated productivity tools",
+        "A summary of corporate policy rules"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "The lesson is centered on: Every frontier provider exposes function calling, but none uses the same wire format. This lesson maps the request and response shapes across OpenAI, Azure, Anthropic, and Gemini, then shows why local models (llama.cpp) are the parity wildcard and how one internal schema plus thin per-provider adapters keeps an agent portable."
+    },
+    {
+      "question": "Which statement best reflects the lesson’s guidance?",
+      "options": [
+        "Lessons 7 and 8 built one correct tool schema and made it fail well.",
+        "Every major provider supports function calling, but each invented its own wire format, and the differences sit exactly where your code touches the API.",
+        "The one idea to take from this lesson: treat your canonical tool schema as the source of truth, and treat each provider's wire format as a dialect your adapter layer translates to and from.",
+        "Function-calling parity means understanding those differences well enough to build one internal contract that survives provider swaps."
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Lessons 7 and 8 built one correct tool schema and made it fail well."
+    },
+    {
+      "question": "Which conclusion does the lesson support?",
+      "options": [
+        "Function-calling parity means understanding those differences well enough to build one internal contract that survives provider swaps.",
+        "The differences are deployment plumbing, not schema.",
+        "Lessons 7 and 8 built one correct tool schema and made it fail well.",
+        "Every major provider supports function calling, but each invented its own wire format, and the differences sit exactly where your code touches the API."
+      ],
+      "correct_answer_index": 1,
+      "explanation": "The differences are deployment plumbing, not schema."
+    }
+  ]
+}

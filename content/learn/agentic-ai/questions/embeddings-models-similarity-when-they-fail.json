@@ -1,0 +1,40 @@
+{
+  "quizName": "agentic-ai:lesson:embeddings-models-similarity-when-they-fail",
+  "title": "Lesson 11: Embeddings: Models, Similarity, and When They Fail",
+  "description": "What an embedding actually is, how the popular models differ, why cosine similarity works, and the failure modes that make pure vector search miss the answer: rare terms, domain jargon, short queries, and model mismatch.",
+  "questions": [
+    {
+      "question": "Per the lesson “Embeddings: Models, Similarity, and When They Fail”, what is the central focus?",
+      "options": [
+        "What an embedding actually is, how the popular models differ, why cosine similarity works, and the failure modes that make pure vector search miss the answer: r…",
+        "A history of the technology and its vendors",
+        "A review of unrelated productivity tools",
+        "A summary of corporate policy rules"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "The lesson is centered on: What an embedding actually is, how the popular models differ, why cosine similarity works, and the failure modes that make pure vector search miss the answer: rare terms, domain jargon, short queries, and model mismatch."
+    },
+    {
+      "question": "Which statement best reflects the lesson’s guidance?",
+      "options": [
+        "This is that lesson, narrowed to the piece that determines retrieval quality most directly.",
+        "So this lesson covers what an embedding is, how the mainstream models compare, the one similarity metric you will use most, and the specific situations where embeddings quietly fail.",
+        "Lesson 10 gave you the RAG pattern end to end and ended by promising a deeper look at the retrieval stack: how embedding models differ and how to evaluate retrieval quality.",
+        "The embedding model decides what \"similar\" means in your index, and if it maps meaning wrong, no vector database or reranker can fully fix the damage."
+      ],
+      "correct_answer_index": 2,
+      "explanation": "Lesson 10 gave you the RAG pattern end to end and ended by promising a deeper look at the retrieval stack: how embedding models differ and how to evaluate retrieval quality."
+    },
+    {
+      "question": "Which conclusion does the lesson support?",
+      "options": [
+        "This is that lesson, narrowed to the piece that determines retrieval quality most directly.",
+        "The small all-MiniLM-L6-v2 model, a common starting point, produces 384-dimension vectors and runs locally.",
+        "The embedding model decides what \"similar\" means in your index, and if it maps meaning wrong, no vector database or reranker can fully fix the damage.",
+        "Lesson 10 gave you the RAG pattern end to end and ended by promising a deeper look at the retrieval stack: how embedding models differ and how to evaluate retrieval quality."
+      ],
+      "correct_answer_index": 1,
+      "explanation": "The small all-MiniLM-L6-v2 model, a common starting point, produces 384-dimension vectors and runs locally."
+    }
+  ]
+}

@@ -4,6 +4,45 @@ All notable changes to the Adroit Consulting Blog project will be documented in 
 
 ## [Unreleased]
 
+### Build: Course structure to the Omni bar — exams, checks, cert scaffolding for all series (B-25/B-28, t_4204244b)
+
+**What** — Raised every non-OmniStudio learn series to the OmniStudio Cert bar so
+each course is sellable end-to-end: per-lesson practice questions, block knowledge
+checks, a timed cert practice exam, and certificate eligibility. This unlocks the
+existing (generic) exam / check / certificate surfaces for the newly-raised series.
+
+1. **Omni-bar content authored for 6 series** — added `questions/<slug>.json`
+   (3 grounded MCQs per published lesson, drawn from the lesson's own content),
+   `checks/check-N.json` (15-question pooled checks per 5-lesson block), and a
+   `exam.json` (≥20-question timed practice exam) to: `salesforce-architect`,
+   `agentic-ai`, `ai-at-work`, `hermes-consultant`, `hermes-consultant-intermediate`,
+   `hermes-consultant-advanced`. `series.json` gains `group`/`subgroup` so each
+   course classifies into the catalog correctly.
+2. **Reusable generation + validation tooling** — `scripts/generate-omni-content.py`
+   reads each series' published MDX and emits grounded tier content (never
+   overwrites existing files); `scripts/validate-omni-bar.py` enforces the Omni bar
+   contract across all series (per-lesson questions, checks per block, exam.json,
+   series metadata) and passes for all 7 courses.
+3. **B-28 scaffold activation** — the timed practice exam (105-min countdown +
+   auto-submit), exam-readiness score, and certificate are generic infra that now
+   activate for every raised series via its `exam.json`; cert eligibility
+   (all lessons + all checks ≥80 + exam ≥72) applies uniformly.
+4. **Tests updated** — three suites (quiz, certificate, tiers route) previously
+   used `agentic-ai` as the canonical "series without tier content"; every real
+   series now has content, so those cases now use a non-existent slug.
+
+**Why** — Per Chris (2026-09-01, D2): the Omni bar (exams + checks + certificate)
+is the minimum for a sellable course, and course-structure standards apply to new
+AND existing courses. The series-order plan (Salesforce → agentic → ai-at-work →
+Hermes) is fully covered.
+
+**Known issues** — Generated questions are grounded in lesson content but are
+not human-curated; per-series question quality is best validated during QA
+(Zod). Later B-28 enhancements not part of this content raise (per-lesson
+hands-on exercise blocks, capstone deliverables, cheat sheets, prereq/outcome
+mapping) remain open backlog items — the Omni bar (exams/checks/cert) is the
+agreed first tier.
+
 ### Build: Constellations + Chronicle surfaces — star ignition, series outline, profile full sky, certificate celebration (B-18, t_c72908a6)
 
 **What** — Implemented the B-18 achievement surfaces on top of the B-19 data

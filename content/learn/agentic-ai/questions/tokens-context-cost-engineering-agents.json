@@ -1,0 +1,40 @@
+{
+  "quizName": "agentic-ai:lesson:tokens-context-cost-engineering-agents",
+  "title": "Lesson 5: Tokens, Context Windows, and Cost Engineering for Agent Workloads",
+  "description": "Agents don't just use tokens; they burn them: roughly 4x a chat conversation, 15x for multi-agent. The four levers that control the bill (budgeting, compression, caching, and model routing), with the math worked out on a real 10-agent pipeline.",
+  "questions": [
+    {
+      "question": "Per the lesson “Tokens, Context Windows, and Cost Engineering for Agent Workloads”, what is the central focus?",
+      "options": [
+        "Agents don't just use tokens; they burn them: roughly 4x a chat conversation, 15x for multi-agent. The four levers that control the bill (budgeting, compression…",
+        "A history of the technology and its vendors",
+        "A review of unrelated productivity tools",
+        "A summary of corporate policy rules"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "The lesson is centered on: Agents don't just use tokens; they burn them: roughly 4x a chat conversation, 15x for multi-agent. The four levers that control the bill (budgeting, compression, caching, and model routing), with the math worked out on a real 10-agent pipeline."
+    },
+    {
+      "question": "Which statement best reflects the lesson’s guidance?",
+      "options": [
+        "Anthropic's production data: agents typically use about 4x more tokens than chat interactions, and multi-agent systems about 15x more.",
+        "So cost engineering is not a finance exercise bolted on at the end.",
+        "Lesson 2 taught you what tokens and context windows are; Lesson 3 showed you the loop that spends them.",
+        "This lesson is about the economics, because agents don't just use tokens; they burn them."
+      ],
+      "correct_answer_index": 2,
+      "explanation": "Lesson 2 taught you what tokens and context windows are; Lesson 3 showed you the loop that spends them."
+    },
+    {
+      "question": "Which conclusion does the lesson support?",
+      "options": [
+        "Anthropic's production data: agents typically use about 4x more tokens than chat interactions, and multi-agent systems about 15x more.",
+        "Lesson 2 taught you what tokens and context windows are; Lesson 3 showed you the loop that spends them.",
+        "Comet's guidance is to account for every source of context up front: system prompts (typically 500–2,000 tokens), user input sized at worst case, tool outputs, conversation history, and retrieved documents.",
+        "This lesson is about the economics, because agents don't just use tokens; they burn them."
+      ],
+      "correct_answer_index": 2,
+      "explanation": "Comet's guidance is to account for every source of context up front: system prompts (typically 500–2,000 tokens), user input sized at worst case, tool outputs, conversation history, and retrieved documents."
+    }
+  ]
+}

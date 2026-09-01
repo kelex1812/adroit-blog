@@ -1,0 +1,172 @@
+{
+  "quizName": "salesforce-architect:check:5",
+  "title": "Knowledge Check 5: Lessons 21–25",
+  "description": "Pooled check over Lessons 21–25 of the Salesforce Architect series. Score 80% or higher to unlock the cert prep exam.",
+  "questions": [
+    {
+      "question": "Per the lesson “Solution Design: Turning a Requirement Into an Architecture Document (NFRs and Tradeoffs)”, what is the central focus?",
+      "options": [
+        "How a requirement becomes an architecture document: separating the business why from the what and the how, writing measurable non-functional requirements using …",
+        "A history of the technology and its vendors",
+        "A review of unrelated productivity tools",
+        "A summary of corporate policy rules"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "The lesson is centered on: How a requirement becomes an architecture document: separating the business why from the what and the how, writing measurable non-functional requirements using the Salesforce Well-Architected framework (Trusted, Easy, Adaptable), resolving design tradeoffs explicitly, and recording each decision with its rationale so the delivery team can build without re-litigating every choice."
+    },
+    {
+      "question": "Which statement best reflects the lesson’s guidance?",
+      "options": [
+        "The earlier lessons handed you the mechanisms: integration patterns, reliability, environments, data architecture.",
+        "This lesson is the step where all of those get organized into a single deliverable, the architecture document.",
+        "A requirement tells you what the business wants.",
+        "It is to convert a messy requirement into a clear set of decisions, each with a rationale, and record them so a delivery team can build without re-litigating every choice."
+      ],
+      "correct_answer_index": 0,
+      "explanation": "The earlier lessons handed you the mechanisms: integration patterns, reliability, environments, data architecture."
+    },
+    {
+      "question": "Which conclusion does the lesson support?",
+      "options": [
+        "If the requirement is specific about who gets notified before something lapses but silent on what happens after it lapses, that gap is your opening to propose something the stakeholder did not ask for and may not have considered.",
+        "It is to convert a messy requirement into a clear set of decisions, each with a rationale, and record them so a delivery team can build without re-litigating every choice.",
+        "The earlier lessons handed you the mechanisms: integration patterns, reliability, environments, data architecture.",
+        "This lesson is the step where all of those get organized into a single deliverable, the architecture document."
+      ],
+      "correct_answer_index": 0,
+      "explanation": "If the requirement is specific about who gets notified before something lapses but silent on what happens after it lapses, that gap is your opening to propose something the stakeholder did not ask for and may not have considered."
+    },
+    {
+      "question": "Per the lesson “Architecture Review: Design Reviews, Decision Records, and How to Say No”, what is the central focus?",
+      "options": [
+        "The review discipline that keeps architecture coherent as the org grows: design review as a forum, not a gate, the ADR as durable decision memory, and how to de…",
+        "A history of the technology and its vendors",
+        "A review of unrelated productivity tools",
+        "A summary of corporate policy rules"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "The lesson is centered on: The review discipline that keeps architecture coherent as the org grows: design review as a forum, not a gate, the ADR as durable decision memory, and how to decline a bad how without rejecting the person behind it."
+    },
+    {
+      "question": "Which statement best reflects the lesson’s guidance?",
+      "options": [
+        "A competent architect can build almost anything.",
+        "A mature one can explain why they built it this way, get the decision reviewed before it hardens, and push back on the wrong ask without burning the relationship.",
+        "Every lesson so far handed you a mechanism: data models, integration patterns, event buses, sharing rules.",
+        "This one is about the human machinery around those mechanisms, the part that decides whether the org still makes sense in two years."
+      ],
+      "correct_answer_index": 2,
+      "explanation": "Every lesson so far handed you a mechanism: data models, integration patterns, event buses, sharing rules."
+    },
+    {
+      "question": "Which conclusion does the lesson support?",
+      "options": [
+        "Every lesson so far handed you a mechanism: data models, integration patterns, event buses, sharing rules.",
+        "This one is about the human machinery around those mechanisms, the part that decides whether the org still makes sense in two years.",
+        "A competent architect can build almost anything.",
+        "Did the team reach for Apex when a Flow would do, or for a custom object when a standard one fits?"
+      ],
+      "correct_answer_index": 3,
+      "explanation": "Did the team reach for Apex when a Flow would do, or for a custom object when a standard one fits?"
+    },
+    {
+      "question": "Per the lesson “Error Handling and Monitoring: Debug Logs, Event Monitoring, Health Checks, and Alerts”, what is the central focus?",
+      "options": [
+        "The observability layer of a Salesforce org: debug logs and trace flags when a transaction misbehaves, Event Monitoring when you need who, what, and when across…",
+        "A history of the technology and its vendors",
+        "A review of unrelated productivity tools",
+        "A summary of corporate policy rules"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "The lesson is centered on: The observability layer of a Salesforce org: debug logs and trace flags when a transaction misbehaves, Event Monitoring when you need who, what, and when across the whole org, health checks for the security baseline and the platform status, and the alerting that turns all of it into action instead of archaeology."
+    },
+    {
+      "question": "Which statement best reflects the lesson’s guidance?",
+      "options": [
+        "Lesson 9 taught you how to design errors so nothing is silently dropped in an integration: idempotency, bounded retries, dead letters.",
+        "A system can have perfect error handling and still fail your users if nobody can see the failure, attribute it, and act before it becomes an incident.",
+        "Error handling decides what happens when a transaction fails.",
+        "This lesson is the observability side of that same discipline."
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Lesson 9 taught you how to design errors so nothing is silently dropped in an integration: idempotency, bounded retries, dead letters."
+    },
+    {
+      "question": "Which conclusion does the lesson support?",
+      "options": [
+        "A system can have perfect error handling and still fail your users if nobody can see the failure, attribute it, and act before it becomes an incident.",
+        "Lesson 9 taught you how to design errors so nothing is silently dropped in an integration: idempotency, bounded retries, dead letters.",
+        "The warning that follows the limit list is the one that bites production: if a trace flag is enabled on a frequently accessed Apex class, or for a user executing requests often, the request can fail, regardless of window and log size.",
+        "This lesson is the observability side of that same discipline."
+      ],
+      "correct_answer_index": 2,
+      "explanation": "The warning that follows the limit list is the one that bites production: if a trace flag is enabled on a frequently accessed Apex class, or for a user executing requests often, the request can fail, regardless of window and log size."
+    },
+    {
+      "question": "Per the lesson “Performance: Query Optimization, Selective SOQL, Indexes, and Caching”, what is the central focus?",
+      "options": [
+        "How a query becomes fast: the selectivity thresholds the optimizer uses to decide whether an index is worth it, how to write SOQL that the optimizer will actual…",
+        "A history of the technology and its vendors",
+        "A review of unrelated productivity tools",
+        "A summary of corporate policy rules"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "The lesson is centered on: How a query becomes fast: the selectivity thresholds the optimizer uses to decide whether an index is worth it, how to write SOQL that the optimizer will actually treat well, how to measure and index, and Platform Cache as the lever that skips the query entirely."
+    },
+    {
+      "question": "Which statement best reflects the lesson’s guidance?",
+      "options": [
+        "This lesson is about stopping the slowness before it starts.",
+        "Those tools tell you a query is slow after it happens.",
+        "Lesson 23 gave you the observability layer: debug logs, Event Monitoring, health checks, and alerts.",
+        "Lesson 17 handed you the volume toolkit: archiving, big objects, skinny tables, and an indexing strategy."
+      ],
+      "correct_answer_index": 2,
+      "explanation": "Lesson 23 gave you the observability layer: debug logs, Event Monitoring, health checks, and alerts."
+    },
+    {
+      "question": "Which conclusion does the lesson support?",
+      "options": [
+        "Those tools tell you a query is slow after it happens.",
+        "This lesson is about stopping the slowness before it starts.",
+        "Lesson 23 gave you the observability layer: debug logs, Event Monitoring, health checks, and alerts.",
+        "The first rule is to filter on an indexed field."
+      ],
+      "correct_answer_index": 3,
+      "explanation": "The first rule is to filter on an indexed field."
+    },
+    {
+      "question": "Per the lesson “Performance Engineering for AI: Latency Budgets, Caching, Throughput, and Batching”, what is the central focus?",
+      "options": [
+        "Performance stops being about one query and becomes a system-wide budget the moment AI is in the path. This lesson covers latency budgets, the difference betwee…",
+        "A history of the technology and its vendors",
+        "A review of unrelated productivity tools",
+        "A summary of corporate policy rules"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "The lesson is centered on: Performance stops being about one query and becomes a system-wide budget the moment AI is in the path. This lesson covers latency budgets, the difference between throughput and latency, the batch that makes LLM inference affordable, and the caches that skip work entirely."
+    },
+    {
+      "question": "Which statement best reflects the lesson’s guidance?",
+      "options": [
+        "Your agent calls a model, the model takes seconds, and suddenly the budget you used to measure in milliseconds is gone.",
+        "The discipline of this lesson is figuring out where the seconds go, which ones you can spend, and which ones you can make disappear with a cache or a well-packed batch.",
+        "Lesson 24 was about making a single query fast: selective SOQL, indexes, Platform Cache.",
+        "This lesson pulls back to the system level and asks the question the architect asks when an AI call is in the path."
+      ],
+      "correct_answer_index": 2,
+      "explanation": "Lesson 24 was about making a single query fast: selective SOQL, indexes, Platform Cache."
+    },
+    {
+      "question": "Which conclusion does the lesson support?",
+      "options": [
+        "This lesson pulls back to the system level and asks the question the architect asks when an AI call is in the path.",
+        "Your agent calls a model, the model takes seconds, and suddenly the budget you used to measure in milliseconds is gone.",
+        "Throughput is how many requests you complete per unit of time.",
+        "Lesson 24 was about making a single query fast: selective SOQL, indexes, Platform Cache."
+      ],
+      "correct_answer_index": 2,
+      "explanation": "Throughput is how many requests you complete per unit of time."
+    }
+  ]
+}

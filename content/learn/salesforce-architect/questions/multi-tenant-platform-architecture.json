@@ -1,0 +1,40 @@
+{
+  "quizName": "salesforce-architect:lesson:multi-tenant-platform-architecture",
+  "title": "Lesson 2: Multi-Tenant Platform Architecture: Orgs, Environments, and the Instance Model",
+  "description": "Why every Salesforce org rents a slice of a shared platform: multi-tenancy, metadata-driven design, the instance model, and the sandbox environments that keep Dev/QA/UAT/Prod safe.",
+  "questions": [
+    {
+      "question": "Per the lesson “Multi-Tenant Platform Architecture: Orgs, Environments, and the Instance Model”, what is the central focus?",
+      "options": [
+        "Why every Salesforce org rents a slice of a shared platform: multi-tenancy, metadata-driven design, the instance model, and the sandbox environments that keep D…",
+        "A history of the technology and its vendors",
+        "A review of unrelated productivity tools",
+        "A summary of corporate policy rules"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "The lesson is centered on: Why every Salesforce org rents a slice of a shared platform: multi-tenancy, metadata-driven design, the instance model, and the sandbox environments that keep Dev/QA/UAT/Prod safe."
+    },
+    {
+      "question": "Which statement best reflects the lesson’s guidance?",
+      "options": [
+        "Here is the single fact that explains most of what surprises newcomers to Salesforce: you never own a server, a database, or even a schema.",
+        "You rent a private, configurable slice of a platform that thousands of other companies share.",
+        "This lesson makes the mechanism concrete, because the System Architect exam (and real architecture work) constantly assumes you understand it.",
+        "Almost every \"weird\" platform rule (governor limits, code-coverage gates, sandbox refresh windows, the instance your org lives on) is a direct consequence of that sharing."
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Here is the single fact that explains most of what surprises newcomers to Salesforce: you never own a server, a database, or even a schema."
+    },
+    {
+      "question": "Which conclusion does the lesson support?",
+      "options": [
+        "Almost every \"weird\" platform rule (governor limits, code-coverage gates, sandbox refresh windows, the instance your org lives on) is a direct consequence of that sharing.",
+        "Isolation is enforced at the physical layer too: all platform data, metadata, and pivot tables are partitioned by OrgID using native database partitioning.",
+        "Here is the single fact that explains most of what surprises newcomers to Salesforce: you never own a server, a database, or even a schema.",
+        "You rent a private, configurable slice of a platform that thousands of other companies share."
+      ],
+      "correct_answer_index": 1,
+      "explanation": "Isolation is enforced at the physical layer too: all platform data, metadata, and pivot tables are partitioned by OrgID using native database partitioning."
+    }
+  ]
+}

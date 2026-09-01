@@ -183,12 +183,11 @@ describe("GET /api/progress/quiz/tiers — canonical coverage (t_55105899)", () 
 
   it("keeps s.totalLessons for non-tier series (no planned question files)", async () => {
     guest();
-    const res = await get("agentic-ai");
+    const res = await get("no-such-series");
     const json = await res.json();
-    // agentic-ai has no content/learn/agentic-ai/questions/ → fall back to
-    // the series' totalLessons (derived from the content taxonomy so future
-    // content additions stop breaking the suite, t_f44be1e9).
-    const totalLessons = getSeriesBySlug("agentic-ai")?.totalLessons ?? 0;
+    // A series with no content/learn/<series>/questions/ falls back to the
+    // series' totalLessons (0 here since the series doesn't exist).
+    const totalLessons = getSeriesBySlug("no-such-series")?.totalLessons ?? 0;
     expect(json.lessons.total).toBe(totalLessons);
     expect(json.checks).toEqual([]);
   });

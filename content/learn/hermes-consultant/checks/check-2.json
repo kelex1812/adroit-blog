@@ -1,0 +1,139 @@
+{
+  "quizName": "hermes-consultant:check:2",
+  "title": "Knowledge Check 2: Lessons 6–10",
+  "description": "Pooled check over Lessons 6–10 of the Hermes Consultant series. Score 80% or higher to unlock the cert prep exam.",
+  "questions": [
+    {
+      "question": "Per the lesson “When an Agent Is the Right Tool, and When to Say No”, what is the central focus?",
+      "options": [
+        "The honest consultant's rule: an agent is not always the right answer, and the consultant who can say no protects both the client's money and their own reputati…",
+        "A history of the technology and its vendors",
+        "A review of unrelated productivity tools",
+        "A summary of corporate policy rules"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "The lesson is centered on: The honest consultant's rule: an agent is not always the right answer, and the consultant who can say no protects both the client's money and their own reputation. How to tell the work an agent should do from the work it should never touch, and how to walk away cleanly."
+    },
+    {
+      "question": "Which statement best reflects the lesson’s guidance?",
+      "options": [
+        "This lesson turns the lens inward, at you and the recommendation you make.",
+        "A consultant can build an agent for almost anything.",
+        "This lesson teaches you the honest consultant's rule: when an agent is the right tool, when it is not, and how to decline a project you could build but should not.",
+        "Lesson 5 taught you how to map every stakeholder who can stop an implementation."
+      ],
+      "correct_answer_index": 3,
+      "explanation": "Lesson 5 taught you how to map every stakeholder who can stop an implementation."
+    },
+    {
+      "question": "Which conclusion does the lesson support?",
+      "options": [
+        "Here is a practical filter you can run against any request before you commit.",
+        "This lesson turns the lens inward, at you and the recommendation you make.",
+        "Lesson 5 taught you how to map every stakeholder who can stop an implementation.",
+        "A consultant can build an agent for almost anything."
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Here is a practical filter you can run against any request before you commit."
+    },
+    {
+      "question": "Per the lesson “Installing and Deploying Hermes Agent: Local Setup, Profiles, Gateway, First Run”, what is the central focus?",
+      "options": [
+        "The consultant's deployment discipline: how to stand up an agent correctly once you have the go-ahead. Isolation per engagement, a verified first run before you…",
+        "A history of the technology and its vendors",
+        "A review of unrelated productivity tools",
+        "A summary of corporate policy rules"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "The lesson is centered on: The consultant's deployment discipline: how to stand up an agent correctly once you have the go-ahead. Isolation per engagement, a verified first run before you layer on features, and a gateway that turns a laptop experiment into an always-on tool your client actually uses."
+    },
+    {
+      "question": "Which statement best reflects the lesson’s guidance?",
+      "options": [
+        "Lesson 6 taught you when an agent is the right tool and when to say no.",
+        "This lesson assumes you said yes, the client signed off, and the work is yours to deliver.",
+        "It is where the consulting stops being advice and starts being a running system.",
+        "This lesson teaches you the deployment discipline that separates a consultant who stands an agent up correctly from one who creates a mess the client has to live with."
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Lesson 6 taught you when an agent is the right tool and when to say no."
+    },
+    {
+      "question": "Which conclusion does the lesson support?",
+      "options": [
+        "On native Windows it is the PowerShell equivalent.",
+        "This lesson assumes you said yes, the client signed off, and the work is yours to deliver.",
+        "It is where the consulting stops being advice and starts being a running system.",
+        "Lesson 6 taught you when an agent is the right tool and when to say no."
+      ],
+      "correct_answer_index": 0,
+      "explanation": "On native Windows it is the PowerShell equivalent."
+    },
+    {
+      "question": "Per the lesson “What an Agent-Implementation Consultant Actually Does”, what is the central focus?",
+      "options": [
+        "The agent-implementation consultant arc in one lesson: what an engagement looks like, what you actually deliver, and why this is not the same job as building ag…",
+        "A history of the technology and its vendors",
+        "A review of unrelated productivity tools",
+        "A summary of corporate policy rules"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "The lesson is centered on: The agent-implementation consultant arc in one lesson: what an engagement looks like, what you actually deliver, and why this is not the same job as building agents for yourself."
+    },
+    {
+      "question": "Which statement best reflects the lesson’s guidance?",
+      "options": [
+        "Right now it is the agent-implementation consultant: the person a company brings in to turn a general-purpose AI agent into a working piece of their operations.",
+        "This whole series teaches that job, and it uses Hermes Agent as the concrete tool you will be implementing for clients.",
+        "In the mid-2010s it was the Salesforce admin, the person who turned a CRM into something a company could actually run on.",
+        "Every few years a new technology creates a role that did not exist before."
+      ],
+      "correct_answer_index": 3,
+      "explanation": "Every few years a new technology creates a role that did not exist before."
+    },
+    {
+      "question": "Which conclusion does the lesson support?",
+      "options": [
+        "Right now it is the agent-implementation consultant: the person a company brings in to turn a general-purpose AI agent into a working piece of their operations.",
+        "Every few years a new technology creates a role that did not exist before.",
+        "The consultant lands in the client's world: their security rules, their existing tools, their network, their risk tolerance, their budget.",
+        "In the mid-2010s it was the Salesforce admin, the person who turned a CRM into something a company could actually run on."
+      ],
+      "correct_answer_index": 2,
+      "explanation": "The consultant lands in the client's world: their security rules, their existing tools, their network, their risk tolerance, their budget."
+    },
+    {
+      "question": "Per the lesson “What an Agent-Implementation Consultant Actually Does”, what is the central focus?",
+      "options": [
+        "The agent-implementation consultant arc in one lesson: what an engagement looks like, what you actually deliver, and why this is not the same job as building ag…",
+        "A history of the technology and its vendors",
+        "A review of unrelated productivity tools",
+        "A summary of corporate policy rules"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "The lesson is centered on: The agent-implementation consultant arc in one lesson: what an engagement looks like, what you actually deliver, and why this is not the same job as building agents for yourself."
+    },
+    {
+      "question": "Which statement best reflects the lesson’s guidance?",
+      "options": [
+        "Right now it is the agent-implementation consultant: the person a company brings in to turn a general-purpose AI agent into a working piece of their operations.",
+        "This whole series teaches that job, and it uses Hermes Agent as the concrete tool you will be implementing for clients.",
+        "In the mid-2010s it was the Salesforce admin, the person who turned a CRM into something a company could actually run on.",
+        "Every few years a new technology creates a role that did not exist before."
+      ],
+      "correct_answer_index": 3,
+      "explanation": "Every few years a new technology creates a role that did not exist before."
+    },
+    {
+      "question": "Which conclusion does the lesson support?",
+      "options": [
+        "Right now it is the agent-implementation consultant: the person a company brings in to turn a general-purpose AI agent into a working piece of their operations.",
+        "Every few years a new technology creates a role that did not exist before.",
+        "The consultant lands in the client's world: their security rules, their existing tools, their network, their risk tolerance, their budget.",
+        "In the mid-2010s it was the Salesforce admin, the person who turned a CRM into something a company could actually run on."
+      ],
+      "correct_answer_index": 2,
+      "explanation": "The consultant lands in the client's world: their security rules, their existing tools, their network, their risk tolerance, their budget."
+    }
+  ]
+}

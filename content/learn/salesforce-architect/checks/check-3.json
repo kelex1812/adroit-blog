@@ -1,0 +1,172 @@
+{
+  "quizName": "salesforce-architect:check:3",
+  "title": "Knowledge Check 3: Lessons 11–15",
+  "description": "Pooled check over Lessons 11–15 of the Salesforce Architect series. Score 80% or higher to unlock the cert prep exam.",
+  "questions": [
+    {
+      "question": "Per the lesson “Security Architecture: The Sharing Model, OWD, Role Hierarchy, Sharing Rules, and Manual Sharing”, what is the central focus?",
+      "options": [
+        "Who can see a given record? The four record-level controls that answer it: org-wide defaults, the role hierarchy, sharing rules, and manual sharing. How they la…",
+        "A history of the technology and its vendors",
+        "A review of unrelated productivity tools",
+        "A summary of corporate policy rules"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "The lesson is centered on: Who can see a given record? The four record-level controls that answer it: org-wide defaults, the role hierarchy, sharing rules, and manual sharing. How they layer, how they only ever open access, and why 'most permissive wins' is the whole game."
+    },
+    {
+      "question": "Which statement best reflects the lesson’s guidance?",
+      "options": [
+        "This lesson is the deep dive every architect needs on the four record-level controls: org-wide defaults (OWD), the role hierarchy, sharing rules, and manual sharing.",
+        "Your integration can write a record to Salesforce, but that says nothing about who can see it.",
+        "Object permissions say a user may touch Accounts; the sharing model says which Accounts.",
+        "Get the sharing model wrong and the result is either a sales team that can't see its own territory or, worse, a field user who can see everyone's compensation."
+      ],
+      "correct_answer_index": 1,
+      "explanation": "Your integration can write a record to Salesforce, but that says nothing about who can see it."
+    },
+    {
+      "question": "Which conclusion does the lesson support?",
+      "options": [
+        "A role is \"a level of data access that a user or group of users needs.\" You build branches to model who must see whose data, not to mirror the reporting structure exactly.",
+        "Your integration can write a record to Salesforce, but that says nothing about who can see it.",
+        "Get the sharing model wrong and the result is either a sales team that can't see its own territory or, worse, a field user who can see everyone's compensation.",
+        "Object permissions say a user may touch Accounts; the sharing model says which Accounts."
+      ],
+      "correct_answer_index": 0,
+      "explanation": "A role is \"a level of data access that a user or group of users needs.\" You build branches to model who must see whose data, not to mirror the reporting structure exactly."
+    },
+    {
+      "question": "Per the lesson “Security, Part 2: Profiles, Permission Sets, Permission Set Groups, MFA, and Session Policies”, what is the central focus?",
+      "options": [
+        "Who can do what in an org. The move from profile-led to permission-set-led access, what a permission set group bundles together, the 2026 MFA enforcement that n…",
+        "A history of the technology and its vendors",
+        "A review of unrelated productivity tools",
+        "A summary of corporate policy rules"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "The lesson is centered on: Who can do what in an org. The move from profile-led to permission-set-led access, what a permission set group bundles together, the 2026 MFA enforcement that now touches every login, and the session policies that decide how long a session lives."
+    },
+    {
+      "question": "Which statement best reflects the lesson’s guidance?",
+      "options": [
+        "Profiles and permission sets decide what a user is allowed to touch.",
+        "Lesson 11 covered the sharing model: who can see which records.",
+        "This lesson covers the other half of security: who can do which things, and how they get in.",
+        "MFA and session policies decide whether the person typing the password is who they say they are, and how long that proof stays valid."
+      ],
+      "correct_answer_index": 1,
+      "explanation": "Lesson 11 covered the sharing model: who can see which records."
+    },
+    {
+      "question": "Which conclusion does the lesson support?",
+      "options": [
+        "This matters when one persona needs a permission that another persona sharing the same underlying set should not have.",
+        "This lesson covers the other half of security: who can do which things, and how they get in.",
+        "Profiles and permission sets decide what a user is allowed to touch.",
+        "Lesson 11 covered the sharing model: who can see which records."
+      ],
+      "correct_answer_index": 0,
+      "explanation": "This matters when one persona needs a permission that another persona sharing the same underlying set should not have."
+    },
+    {
+      "question": "Per the lesson “Security, Part 3: External Access, OAuth, SAML/SSO, Connected Apps, and Communities”, what is the central focus?",
+      "options": [
+        "How outside systems and outside people get in. OAuth flows for machine access, SAML single sign-on for employee logins, connected apps as the doorway, and Exper…",
+        "A history of the technology and its vendors",
+        "A review of unrelated productivity tools",
+        "A summary of corporate policy rules"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "The lesson is centered on: How outside systems and outside people get in. OAuth flows for machine access, SAML single sign-on for employee logins, connected apps as the doorway, and Experience Cloud communities as the portal where customers and partners authenticate without touching your internal identity system."
+    },
+    {
+      "question": "Which statement best reflects the lesson’s guidance?",
+      "options": [
+        "Two very different kinds of outsiders exist, and confusing them is a classic architect failure.",
+        "Lessons 11 and 12 covered the inside of the org: who sees which records, who can do which things, and how a user proves they are who they say they are.",
+        "External systems need to read and write data through APIs.",
+        "External access is the set of doors you cut into the fortress so machines and outsiders can get in without undoing everything you locked down on the inside."
+      ],
+      "correct_answer_index": 1,
+      "explanation": "Lessons 11 and 12 covered the inside of the org: who sees which records, who can do which things, and how a user proves they are who they say they are."
+    },
+    {
+      "question": "Which conclusion does the lesson support?",
+      "options": [
+        "Salesforce is explicit about the problem: it \"recommend[s] avoiding this flow because it passes credentials back and forth,\" and recommends blocking all connected apps from using it.",
+        "Two very different kinds of outsiders exist, and confusing them is a classic architect failure.",
+        "Lessons 11 and 12 covered the inside of the org: who sees which records, who can do which things, and how a user proves they are who they say they are.",
+        "External access is the set of doors you cut into the fortress so machines and outsiders can get in without undoing everything you locked down on the inside."
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Salesforce is explicit about the problem: it \"recommend[s] avoiding this flow because it passes credentials back and forth,\" and recommends blocking all connected apps from using it."
+    },
+    {
+      "question": "Per the lesson “Data Architecture: Data Model Design, Common Data Model Patterns, and Data Skew”, what is the central focus?",
+      "options": [
+        "Data is the load-bearing wall of every org. Designing a data model that scales means deciding where each relationship lives, recognizing the recurring shapes th…",
+        "A history of the technology and its vendors",
+        "A review of unrelated productivity tools",
+        "A summary of corporate policy rules"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "The lesson is centered on: Data is the load-bearing wall of every org. Designing a data model that scales means deciding where each relationship lives, recognizing the recurring shapes that solve real problems, and keeping the load off any single parent record or owner. This lesson covers data model design, the common patterns (one-to-many, many-to-many, hierarchical, and data tiering), and the three data skews that quietly break performance."
+    },
+    {
+      "question": "Which statement best reflects the lesson’s guidance?",
+      "options": [
+        "The thread through everything here is balance.",
+        "Ignore it, and you find out six months later when saves start failing with lock exceptions.",
+        "Lesson 3 gave you the vocabulary: objects, fields, lookups, master-details, record types, formula vs roll-up.",
+        "This lesson takes that vocabulary and does the actual job of architecture."
+      ],
+      "correct_answer_index": 2,
+      "explanation": "Lesson 3 gave you the vocabulary: objects, fields, lookups, master-details, record types, formula vs roll-up."
+    },
+    {
+      "question": "Which conclusion does the lesson support?",
+      "options": [
+        "Lesson 3 gave you the vocabulary: objects, fields, lookups, master-details, record types, formula vs roll-up.",
+        "Account can point at a parent Account via a hierarchical relationship; User is inherently hierarchical through the role hierarchy.",
+        "Ignore it, and you find out six months later when saves start failing with lock exceptions.",
+        "This lesson takes that vocabulary and does the actual job of architecture."
+      ],
+      "correct_answer_index": 1,
+      "explanation": "Account can point at a parent Account via a hierarchical relationship; User is inherently hierarchical through the role hierarchy."
+    },
+    {
+      "question": "Per the lesson “Data Architecture for AI: Databases, Vector DBs, Embeddings, and the Same Modeling Discipline”, what is the central focus?",
+      "options": [
+        "The data side of AI systems. Embeddings, vector databases, chunking, and why the modeling discipline from a Salesforce data model (records, relationships, sourc…",
+        "A history of the technology and its vendors",
+        "A review of unrelated productivity tools",
+        "A summary of corporate policy rules"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "The lesson is centered on: The data side of AI systems. Embeddings, vector databases, chunking, and why the modeling discipline from a Salesforce data model (records, relationships, source of truth, scale) carries over unchanged when the storage engine becomes a vector store. Includes a worked example of a RAG knowledge base, a pgvector walkthrough, and the Data Cloud vector database connection."
+    },
+    {
+      "question": "Which statement best reflects the lesson’s guidance?",
+      "options": [
+        "This lesson takes the same questions and asks them of an AI system.",
+        "Because when a client says \"we want an AI assistant that answers questions from our documents,\" the data architecture decisions you make are not new.",
+        "Lesson 14 gave you the Salesforce data model: objects, relationships, skew, and the discipline of deciding where records live.",
+        "Here is the thesis to hold onto: vector search is a retrieval technique, not a different world."
+      ],
+      "correct_answer_index": 2,
+      "explanation": "Lesson 14 gave you the Salesforce data model: objects, relationships, skew, and the discipline of deciding where records live."
+    },
+    {
+      "question": "Which conclusion does the lesson support?",
+      "options": [
+        "This lesson takes the same questions and asks them of an AI system.",
+        "Lesson 14 gave you the Salesforce data model: objects, relationships, skew, and the discipline of deciding where records live.",
+        "Choosing chunk size is a data model decision.",
+        "Because when a client says \"we want an AI assistant that answers questions from our documents,\" the data architecture decisions you make are not new."
+      ],
+      "correct_answer_index": 2,
+      "explanation": "Choosing chunk size is a data model decision."
+    }
+  ]
+}

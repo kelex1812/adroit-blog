@@ -59,7 +59,7 @@ describe("getKnowledgeChecks", () => {
   });
 
   it("returns [] for a series without check files and rejects bad series", () => {
-    expect(getKnowledgeChecks("agentic-ai")).toEqual([]);
+    expect(getKnowledgeChecks("no-such-series")).toEqual([]);
     expect(getKnowledgeChecks("../etc")).toEqual([]);
   });
 });
@@ -90,7 +90,7 @@ describe("tier lookups", () => {
   it("returns null for unknown series/slug/n", () => {
     expect(getQuizForLesson("omni-studio-cert", "no-such-lesson")).toBeNull();
     expect(getKnowledgeCheck("omni-studio-cert", 99)).toBeNull();
-    expect(getCertExam("agentic-ai")).toBeNull();
+    expect(getCertExam("no-such-series")).toBeNull();
     expect(getQuizForLesson("../etc", "x")).toBeNull();
   });
 });

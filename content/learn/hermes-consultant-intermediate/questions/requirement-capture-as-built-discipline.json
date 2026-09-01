@@ -1,0 +1,40 @@
+{
+  "quizName": "hermes-consultant-intermediate:lesson:requirement-capture-as-built-discipline",
+  "title": "Lesson 2: Requirement Capture as an As-Built Discipline",
+  "description": "Moving from a problem statement you agree on to a requirement set that survives handover: capturing the enacted process, not the stated one, and writing requirements the next team can run and change without you.",
+  "questions": [
+    {
+      "question": "Per the lesson “Requirement Capture as an As-Built Discipline”, what is the central focus?",
+      "options": [
+        "Moving from a problem statement you agree on to a requirement set that survives handover: capturing the enacted process, not the stated one, and writing require…",
+        "A history of the technology and its vendors",
+        "A review of unrelated productivity tools",
+        "A summary of corporate policy rules"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "The lesson is centered on: Moving from a problem statement you agree on to a requirement set that survives handover: capturing the enacted process, not the stated one, and writing requirements the next team can run and change without you."
+    },
+    {
+      "question": "Which statement best reflects the lesson’s guidance?",
+      "options": [
+        "The gap between Level 1 and here is the gap between agreeing on a problem and pinning it down so precisely that the build and the handover both survive contact with the client's real world.",
+        "Lesson 1 gave you the calendar: five phases mapped onto real weeks, with gates and buffers and a decision rule for slippage.",
+        "Level 1 taught you to listen, write a problem statement the client agrees with, and scope the work.",
+        "But a plan holds only as well as the discovery underneath it, and discovery pays off only if you capture what you found."
+      ],
+      "correct_answer_index": 1,
+      "explanation": "Lesson 1 gave you the calendar: five phases mapped onto real weeks, with gates and buffers and a decision rule for slippage."
+    },
+    {
+      "question": "Which conclusion does the lesson support?",
+      "options": [
+        "The agent never sends the report to the director without a human approval.",
+        "Level 1 taught you to listen, write a problem statement the client agrees with, and scope the work.",
+        "Lesson 1 gave you the calendar: five phases mapped onto real weeks, with gates and buffers and a decision rule for slippage.",
+        "But a plan holds only as well as the discovery underneath it, and discovery pays off only if you capture what you found."
+      ],
+      "correct_answer_index": 0,
+      "explanation": "The agent never sends the report to the director without a human approval."
+    }
+  ]
+}

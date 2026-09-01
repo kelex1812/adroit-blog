@@ -1,0 +1,40 @@
+{
+  "quizName": "hermes-consultant-advanced:lesson:architecture-at-organizational-scale",
+  "title": "Lesson 3: Architecture at Organizational Scale",
+  "description": "The jump from running agents to running a fleet of them. How to design for many agents at once: the orchestration patterns that keep work moving, the governance layer that keeps it safe, and why control replaces heroics as the unit of success.",
+  "questions": [
+    {
+      "question": "Per the lesson “Architecture at Organizational Scale”, what is the central focus?",
+      "options": [
+        "The jump from running agents to running a fleet of them. How to design for many agents at once: the orchestration patterns that keep work moving, the governance…",
+        "A history of the technology and its vendors",
+        "A review of unrelated productivity tools",
+        "A summary of corporate policy rules"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "The lesson is centered on: The jump from running agents to running a fleet of them. How to design for many agents at once: the orchestration patterns that keep work moving, the governance layer that keeps it safe, and why control replaces heroics as the unit of success."
+    },
+    {
+      "question": "Which statement best reflects the lesson’s guidance?",
+      "options": [
+        "A principal sells capacity, wins through leverage, and turns capability into packaged offers.",
+        "This lesson drops below that layer to the machinery the offers actually run on.",
+        "A practice that sells many engagements at once is, underneath the marketing, a system that runs many agents at once, and a system of many agents is a different discipline than running one well.",
+        "A fleet of them is an organization you architect."
+      ],
+      "correct_answer_index": 0,
+      "explanation": "A principal sells capacity, wins through leverage, and turns capability into packaged offers."
+    },
+    {
+      "question": "Which conclusion does the lesson support?",
+      "options": [
+        "A principal sells capacity, wins through leverage, and turns capability into packaged offers.",
+        "A practice that sells many engagements at once is, underneath the marketing, a system that runs many agents at once, and a system of many agents is a different discipline than running one well.",
+        "This lesson drops below that layer to the machinery the offers actually run on.",
+        "The discipline is to make the unit small enough to finish in a bounded window and explicit enough that a different agent could take it over mid-flight without losing context."
+      ],
+      "correct_answer_index": 3,
+      "explanation": "The discipline is to make the unit small enough to finish in a bounded window and explicit enough that a different agent could take it over mid-flight without losing context."
+    }
+  ]
+}

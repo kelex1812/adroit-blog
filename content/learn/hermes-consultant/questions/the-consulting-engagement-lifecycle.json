@@ -1,0 +1,40 @@
+{
+  "quizName": "hermes-consultant:lesson:the-consulting-engagement-lifecycle",
+  "title": "Lesson 2: The Consulting Engagement Lifecycle",
+  "description": "The five-phase arc that every engagement runs: discover, design, implement, handover, support. What each phase produces, the exit test that lets you leave it, and where engagements quietly die.",
+  "questions": [
+    {
+      "question": "Per the lesson “The Consulting Engagement Lifecycle”, what is the central focus?",
+      "options": [
+        "The five-phase arc that every engagement runs: discover, design, implement, handover, support. What each phase produces, the exit test that lets you leave it, a…",
+        "A history of the technology and its vendors",
+        "A review of unrelated productivity tools",
+        "A summary of corporate policy rules"
+      ],
+      "correct_answer_index": 0,
+      "explanation": "The lesson is centered on: The five-phase arc that every engagement runs: discover, design, implement, handover, support. What each phase produces, the exit test that lets you leave it, and where engagements quietly die."
+    },
+    {
+      "question": "Which statement best reflects the lesson’s guidance?",
+      "options": [
+        "Lesson 1 gave you the map: what an agent-implementation consultant does, and how that differs from being a builder.",
+        "It ended with the lifecycle in four parts and told you to treat it as the container for everything else.",
+        "When you finish, you will be able to look at any engagement, at any moment, and say exactly which phase you are in and what has to happen before you leave it.",
+        "It takes the lifecycle apart into its five phases, defines what each one produces, gives you the exit test that says you are allowed to move on, and shows you where engagements quietly die."
+      ],
+      "correct_answer_index": 0,
+      "explanation": "Lesson 1 gave you the map: what an agent-implementation consultant does, and how that differs from being a builder."
+    },
+    {
+      "question": "Which conclusion does the lesson support?",
+      "options": [
+        "What the agent will do, what it will refuse to do, what tools and data it touches, what its guardrails are, how it fits the systems the client already runs, and what the human approval points look like.",
+        "It takes the lifecycle apart into its five phases, defines what each one produces, gives you the exit test that says you are allowed to move on, and shows you where engagements quietly die.",
+        "Lesson 1 gave you the map: what an agent-implementation consultant does, and how that differs from being a builder.",
+        "It ended with the lifecycle in four parts and told you to treat it as the container for everything else."
+      ],
+      "correct_answer_index": 0,
+      "explanation": "What the agent will do, what it will refuse to do, what tools and data it touches, what its guardrails are, how it fits the systems the client already runs, and what the human approval points look like."
+    }
+  ]
+}
