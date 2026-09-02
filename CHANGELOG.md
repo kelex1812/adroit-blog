@@ -1,6 +1,11 @@
 # Changelog
 
 All notable changes to the Adroit Consulting Blog project will be documented in this file.
+## [v1.0.0] — 2026-09-02
+
+### Omni-Content-and-Constellation-Enhancement
+
+Baseline v1.0.0 — Omni content + course-structure/cert-standards bar + Constellations & Chronicle feature.
 
 ## [Unreleased]
 
