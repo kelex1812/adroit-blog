@@ -8,6 +8,143 @@ import { LearnLesson, LearningSeries } from "./types";
 /** All series, sorted by newest lesson date DESC (ties → slug asc). Empty dirs included with lessons: []. */
 export const learnSeries: LearningSeries[] = [
   {
+    "slug": "hermes-consultant",
+    "name": "Hermes Agent Consultant",
+    "description": "A path to becoming an agent-implementation consultant: scoping, implementation craft, delivery practice, and the business of consulting. Platform-agnostic skills with Hermes Agent as the working example.",
+    "gradient": "from-teal to-emerald-600",
+    "lessons": [
+      {
+        "slug": "what-an-agent-implementation-consultant-does",
+        "title": "Lesson 1: What an Agent-Implementation Consultant Actually Does",
+        "series": "hermes-consultant",
+        "lesson": 1,
+        "excerpt": "The agent-implementation consultant arc in one lesson: what an engagement looks like, what you actually deliver, and why this is not the same job as building agents for yourself.",
+        "date": "August 26, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "9 min read",
+        "tags": [
+          "AI Agents",
+          "Consulting",
+          "LLMs"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "the-consulting-engagement-lifecycle",
+        "title": "Lesson 2: The Consulting Engagement Lifecycle",
+        "series": "hermes-consultant",
+        "lesson": 2,
+        "excerpt": "The five-phase arc that every engagement runs: discover, design, implement, handover, support. What each phase produces, the exit test that lets you leave it, and where engagements quietly die.",
+        "date": "August 27, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "10 min read",
+        "tags": [
+          "AI Agents",
+          "Consulting",
+          "LLMs"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "discovery-and-scoping",
+        "title": "Lesson 3: Discovery and Scoping: Listening Before Proposing",
+        "series": "hermes-consultant",
+        "lesson": 3,
+        "excerpt": "The craft of discovery: who to talk to, what to watch, which questions surface the real problem, and how to write a problem statement the client agrees with before you propose any solution.",
+        "date": "August 28, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "11 min read",
+        "tags": [
+          "AI Agents",
+          "Consulting",
+          "LLMs"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "framing-value-and-roi",
+        "title": "Lesson 4: Framing Value and ROI: How to Talk to a Buyer, Not a Builder",
+        "series": "hermes-consultant",
+        "lesson": 4,
+        "excerpt": "The craft of turning what an agent does into a number a buyer can defend: how to measure value honestly, build ROI math that survives scrutiny, and talk outcomes instead of features to the person who signs the check.",
+        "date": "August 29, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "12 min read",
+        "tags": [
+          "AI Agents",
+          "Consulting",
+          "LLMs"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "stakeholder-mapping",
+        "title": "Lesson 5: Stakeholder Mapping: Who Has to Say Yes, and Who Has to Live With It",
+        "series": "hermes-consultant",
+        "lesson": 5,
+        "excerpt": "The craft of mapping every stakeholder an agent implementation touches: users, owners, IT, and compliance. Who must approve the deployment, who has to work with it every day, and how to win both before you build.",
+        "date": "August 30, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "11 min read",
+        "tags": [
+          "AI Agents",
+          "Consulting",
+          "LLMs"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "when-an-agent-is-the-right-tool",
+        "title": "Lesson 6: When an Agent Is the Right Tool, and When to Say No",
+        "series": "hermes-consultant",
+        "lesson": 6,
+        "excerpt": "The honest consultant's rule: an agent is not always the right answer, and the consultant who can say no protects both the client's money and their own reputation. How to tell the work an agent should do from the work it should never touch, and how to walk away cleanly.",
+        "date": "August 31, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "12 min read",
+        "tags": [
+          "AI Agents",
+          "Consulting",
+          "LLMs"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "installing-and-deploying-hermes-agent",
+        "title": "Lesson 7: Installing and Deploying Hermes Agent: Local Setup, Profiles, Gateway, First Run",
+        "series": "hermes-consultant",
+        "lesson": 7,
+        "excerpt": "The consultant's deployment discipline: how to stand up an agent correctly once you have the go-ahead. Isolation per engagement, a verified first run before you layer on features, and a gateway that turns a laptop experiment into an always-on tool your client actually uses.",
+        "date": "September 1, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "11 min read",
+        "tags": [
+          "AI Agents",
+          "Consulting",
+          "LLMs"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "configuration-models-providers-fallbacks",
+        "title": "Lesson 8: Configuration: Models, Providers, and Fallbacks: Why 'It Works on My Machine' Isn't Enough",
+        "series": "hermes-consultant",
+        "lesson": 8,
+        "excerpt": "The consultant's configuration discipline: the model, provider, and fallback choices that make an agent dependable are part of the deliverable, not an install detail. How to separate secrets from settings, verify what the running agent actually resolved, and build for the outage so the client's agent survives a provider that does not.",
+        "date": "September 2, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "12 min read",
+        "tags": [
+          "AI Agents",
+          "Consulting",
+          "LLMs"
+        ],
+        "status": "published"
+      }
+    ],
+    "totalLessons": 8
+  },
+  {
     "slug": "omni-studio-cert",
     "name": "OmniStudio Developer Certification",
     "description": "A deep dive for the Salesforce Certified OmniStudio Developer exam. One official exam-guide requirement per day, with config walkthroughs, exam traps, and practice questions.",
@@ -1586,127 +1723,6 @@ export const learnSeries: LearningSeries[] = [
     "totalLessons": 17
   },
   {
-    "slug": "hermes-consultant",
-    "name": "Hermes Agent Consultant",
-    "description": "A path to becoming an agent-implementation consultant: scoping, implementation craft, delivery practice, and the business of consulting. Platform-agnostic skills with Hermes Agent as the working example.",
-    "gradient": "from-teal to-emerald-600",
-    "lessons": [
-      {
-        "slug": "what-an-agent-implementation-consultant-does",
-        "title": "Lesson 1: What an Agent-Implementation Consultant Actually Does",
-        "series": "hermes-consultant",
-        "lesson": 1,
-        "excerpt": "The agent-implementation consultant arc in one lesson: what an engagement looks like, what you actually deliver, and why this is not the same job as building agents for yourself.",
-        "date": "August 26, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "9 min read",
-        "tags": [
-          "AI Agents",
-          "Consulting",
-          "LLMs"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "the-consulting-engagement-lifecycle",
-        "title": "Lesson 2: The Consulting Engagement Lifecycle",
-        "series": "hermes-consultant",
-        "lesson": 2,
-        "excerpt": "The five-phase arc that every engagement runs: discover, design, implement, handover, support. What each phase produces, the exit test that lets you leave it, and where engagements quietly die.",
-        "date": "August 27, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "10 min read",
-        "tags": [
-          "AI Agents",
-          "Consulting",
-          "LLMs"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "discovery-and-scoping",
-        "title": "Lesson 3: Discovery and Scoping: Listening Before Proposing",
-        "series": "hermes-consultant",
-        "lesson": 3,
-        "excerpt": "The craft of discovery: who to talk to, what to watch, which questions surface the real problem, and how to write a problem statement the client agrees with before you propose any solution.",
-        "date": "August 28, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "11 min read",
-        "tags": [
-          "AI Agents",
-          "Consulting",
-          "LLMs"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "framing-value-and-roi",
-        "title": "Lesson 4: Framing Value and ROI: How to Talk to a Buyer, Not a Builder",
-        "series": "hermes-consultant",
-        "lesson": 4,
-        "excerpt": "The craft of turning what an agent does into a number a buyer can defend: how to measure value honestly, build ROI math that survives scrutiny, and talk outcomes instead of features to the person who signs the check.",
-        "date": "August 29, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "12 min read",
-        "tags": [
-          "AI Agents",
-          "Consulting",
-          "LLMs"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "stakeholder-mapping",
-        "title": "Lesson 5: Stakeholder Mapping: Who Has to Say Yes, and Who Has to Live With It",
-        "series": "hermes-consultant",
-        "lesson": 5,
-        "excerpt": "The craft of mapping every stakeholder an agent implementation touches: users, owners, IT, and compliance. Who must approve the deployment, who has to work with it every day, and how to win both before you build.",
-        "date": "August 30, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "11 min read",
-        "tags": [
-          "AI Agents",
-          "Consulting",
-          "LLMs"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "when-an-agent-is-the-right-tool",
-        "title": "Lesson 6: When an Agent Is the Right Tool, and When to Say No",
-        "series": "hermes-consultant",
-        "lesson": 6,
-        "excerpt": "The honest consultant's rule: an agent is not always the right answer, and the consultant who can say no protects both the client's money and their own reputation. How to tell the work an agent should do from the work it should never touch, and how to walk away cleanly.",
-        "date": "August 31, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "12 min read",
-        "tags": [
-          "AI Agents",
-          "Consulting",
-          "LLMs"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "installing-and-deploying-hermes-agent",
-        "title": "Lesson 7: Installing and Deploying Hermes Agent: Local Setup, Profiles, Gateway, First Run",
-        "series": "hermes-consultant",
-        "lesson": 7,
-        "excerpt": "The consultant's deployment discipline: how to stand up an agent correctly once you have the go-ahead. Isolation per engagement, a verified first run before you layer on features, and a gateway that turns a laptop experiment into an always-on tool your client actually uses.",
-        "date": "September 1, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "11 min read",
-        "tags": [
-          "AI Agents",
-          "Consulting",
-          "LLMs"
-        ],
-        "status": "published"
-      }
-    ],
-    "totalLessons": 7
-  },
-  {
     "slug": "hermes-consultant-advanced",
     "name": "Hermes Agent Consultant · Advanced",
     "description": "Level 3 of the Hermes Consultant track: Practice & Scale. For the principal — building a consulting practice, org-scale architecture, delivery operations and margins, value-based pricing, hiring, and a go-to-market plan. Builds on Levels 1 and 2.",
@@ -1920,6 +1936,22 @@ export const learnSeries: LearningSeries[] = [
 
 /** Flat list of every lesson, NEWEST FIRST (for sitemap, nav, flat lookups). */
 export const learnLessons: LearnLesson[] = [
+  {
+    "slug": "configuration-models-providers-fallbacks",
+    "title": "Lesson 8: Configuration: Models, Providers, and Fallbacks: Why 'It Works on My Machine' Isn't Enough",
+    "series": "hermes-consultant",
+    "lesson": 8,
+    "excerpt": "The consultant's configuration discipline: the model, provider, and fallback choices that make an agent dependable are part of the deliverable, not an install detail. How to separate secrets from settings, verify what the running agent actually resolved, and build for the outage so the client's agent survives a provider that does not.",
+    "date": "September 2, 2026",
+    "author": "Adroit Consulting",
+    "readTime": "12 min read",
+    "tags": [
+      "AI Agents",
+      "Consulting",
+      "LLMs"
+    ],
+    "status": "published"
+  },
   {
     "slug": "day-24-ip-3-conditional-logic-loops-branching-in-ips",
     "title": "OmniStudio IP-3: Conditional Logic, Loops, and Branching in Integration Procedures",
