@@ -9,6 +9,12 @@ The **Adroit Consulting site** — a [Next.js](https://nextjs.org) (App Router) 
 > The production domain `adroit.io/blog` is intentionally not wired until launch. The site is staged on the private Vercel deployment.
 ## What's New
 
+### /blog 8-card grid statically server-rendered (SSR/CWV fix) — 2026-09-01
+
+The `/blog` 8-card post grid is now statically server-rendered, so the first page of post titles and excerpts is present in the initial HTML instead of shipping as blank loading skeletons. Root cause: every grid card rendered an `animate-pulse` skeleton whenever `useReadProgress.isLoading` was true (it starts `true` during SSR), and `BlogListingContent`'s `useSearchParams()` forced the whole listing tree to render client-side during static prerender — so the raw HTML contained zero card content and only a `Loading posts…` fallback. `PostCardWithRead` no longer gates on `isLoading`; it always renders the full `PostCard` (`isRead` defaults `false` on both server and first client paint, hydration-safe), and a new `BlogListingStaticFallback` renders the real default first page (featured hero + 8 cards, newest-first) as the inner Suspense fallback. Read-dimming and mark-as-read remain client-side progressive enhancement after hydration.
+
+**Verified live** at https://adroit-blog-two.vercel.app/blog: HTTP 200 with all 8 post-card `<h3>` titles in the initial HTML and zero grid skeletons (the only remaining `animate-pulse` is the decorative Featured badge dot). All three audits (a11y/lara, QA/zod, security/val-el) PASS; 427 tests green (4 new). Risk LOW. Commit c6b2702.
+
 ### Quick-win B — Trust + conversion (B-03, B-09, B-07, B-11) — 2026-09-01
 
 Quick-win B is a trust-and-conversion pass across the public site. A wrong or moved URL no longer dead-ends: `src/app/not-found.tsx` now renders a branded navy-and-red 404 with three real CTAs (Back to blog, Browse Learn, Contact us) instead of a bare error. The guest `/profile` page (`src/components/Profile/GuestProfileTeaser.tsx`) replaces a wall of dead "Sign in" strings with a locked "your sky" value demo and one real CTA to `/login?next=/profile`. Certificate pages for exam-less series (`src/app/learn/[series]/certificate/page.tsx`) no longer 404 — `generateStaticParams` prerenders every series and an exam-less series renders an interim "Completion Record / exam coming soon" state (decision D2). Both dead newsletter forms (footer + blog/categories) were removed per decision D4, tightening the footer grid from 4 to 3 columns.
