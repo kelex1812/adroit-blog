@@ -9,6 +9,12 @@ The **Adroit Consulting site** — a [Next.js](https://nextjs.org) (App Router) 
 > The production domain `adroit.io/blog` is intentionally not wired until launch. The site is staged on the private Vercel deployment.
 ## What's New
 
+### Slash-slug tag pages now resolve — /tags/ui-ux and /tags/ci-cd (B-22) — 2026-09-01
+
+Tag pages for topics whose names contain a slash (UI/UX, CI/CD) used to 404 because the tag slugifier turned the slash into a multi-segment URL (`/tags/ui/ux`) that can never match the single-segment `/tags/[tag]` route. The slugifiers in `src/lib/tag-vocab.ts` (`slugOf`) and `src/lib/tags.ts` (`getAllTags`) now replace `/[^\w]+/g` with `-`, so UI/UX → `ui-ux` and CI/CD → `ci-cd`: `/tags/ui-ux` and `/tags/ci-cd` now render a full tag page (topic definition, post count, sortable post list). `getAllTagSlugs`, `generateStaticParams`, and the sitemap all derive from the same slugifiers, so they updated automatically — the sitemap now emits only single-segment tag slugs.
+
+**Verified live** at https://adroit-blog-two.vercel.app: `/tags/ui-ux` and `/tags/ci-cd` return HTTP 200 with content; old slash-slugs `/tags/ui/ux` and `/tags/ci/cd` return 404 (intentional, consistent with any unknown slug). All three audits (a11y/lara, QA/zod, security/val-el) PASS; 436 tests green; tag vocab gate 40 canonical / 0 non-canonical. Risk LOW. Commits 9274981, 4b39be7, 05960e0.
+
 ### /blog 8-card grid statically server-rendered (SSR/CWV fix) — 2026-09-01
 
 The `/blog` 8-card post grid is now statically server-rendered, so the first page of post titles and excerpts is present in the initial HTML instead of shipping as blank loading skeletons. Root cause: every grid card rendered an `animate-pulse` skeleton whenever `useReadProgress.isLoading` was true (it starts `true` during SSR), and `BlogListingContent`'s `useSearchParams()` forced the whole listing tree to render client-side during static prerender — so the raw HTML contained zero card content and only a `Loading posts…` fallback. `PostCardWithRead` no longer gates on `isLoading`; it always renders the full `PostCard` (`isRead` defaults `false` on both server and first client paint, hydration-safe), and a new `BlogListingStaticFallback` renders the real default first page (featured hero + 8 cards, newest-first) as the inner Suspense fallback. Read-dimming and mark-as-read remain client-side progressive enhancement after hydration.
