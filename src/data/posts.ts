@@ -2,6 +2,29 @@ import { BlogPost } from "./types";
 
 export const posts: BlogPost[] = [
   {
+    "slug": "structured-output-tool-calling-reliability-2026",
+    "title": "Valid JSON Isn't Correct Data: The Reliability Gap",
+    "excerpt": "Structured output solved the formatting problem. But a model can emit valid, well-typed JSON that says the wrong thing, and no schema can tell the difference.",
+    "category": "AI & Consulting",
+    "categoryColor": "ai",
+    "categoryGradient": "from-amber to-amber-dark",
+    "date": "September 02, 2026",
+    "author": "Adroit Consulting",
+    "authorInitials": "AC",
+    "readTime": "10",
+    "featured": false,
+    "tags": [
+      "AI Agents",
+      "AI Infrastructure",
+      "Structured Outputs",
+      "Tool Calling",
+      "Reliability",
+      "LLM Engineering"
+    ],
+    "bannerImage": "/banners/structured-output-tool-calling-reliability-2026.png",
+    "status": "published"
+  },
+  {
     "slug": "react-19-2-activity-useeffectevent",
     "title": "React 19.2: Activity, useEffectEvent, and Perf Tracks",
     "excerpt": "React 19.2 ships three primitives that retire three workarounds: hiding without unmounting, clean effects, and real DevTools traces.",
