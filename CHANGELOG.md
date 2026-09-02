@@ -9,6 +9,54 @@ Baseline v1.0.0 — Omni content + course-structure/cert-standards bar + Constel
 
 ## [Unreleased]
 
+### Immersive 3D Constellations — celestial-immersion v1.1.0 (t_4181dffd)
+
+**What** — built the immersive 3D Learn constellation experience on the
+shipped 2D Constellations + Chronicle system (additive, graceful WebGL
+fallback). Two surfaces: (1) the on-course tracker on `/learn/[series]` renders
+the course's real constellation in 3D — Orion for Salesforce Architect (belt,
+Betelgeuse orange-red accent, Rigel blue-white, M42 sword as the completion
+anchor), Cassiopeia for Agentic AI — with ignited stars blooming, unlit stars
+faint, the current lesson pulsing, lit stars surging on one-by-one on load,
+raycast hover lift + tooltip, and click-to-fly to the lesson; (2) the profile
+galaxy on `/profile` renders every course as a real-constellation sector on a
+ring, with free-floating article stars from real `article` rows (G1), camera
+flight between sectors, a minimap, and rank → galaxy illumination.
+
+**Why** — Chris rejected the Rev 1 generic-space direction as "first-year
+stuff." Rev 2 reboots on real-astronomy grounding + full-advantage Three.js:
+custom GLSL shaders (single `Points` buffer + `RawShaderMaterial` per-star
+attributes), procedural fbm nebula (zero texture assets), Keplerian parallax +
+cinematic camera, and a full EffectComposer chain (UnrealBloom + chromatic
+aberration + vignette + film grain). The learner is INSIDE a real depth of sky,
+not in front of a poster of stars.
+
+**How** — new pure `asterism-data.ts` authors real IAU/Bayer member stars
+(coordinates, spectral class, magnitude) for Orion + Cassiopeia and overlays
+them onto the Star3D set (keeps `star-model.ts` READ-ONLY). New `starfield-gl`
+(single Points buffer + RawShaderMaterial), `star-material.glsl` (custom star
+shader), `nebula-gl` (procedural fbm dust). `ConstellationCanvas` now runs the
+full post chain and the custom deep-sky field (replacing stock drei `<Stars>`).
+`SeriesScene`/`ProfileScene` draw the real asterism figure (connections, not
+lesson-order zigzag) with magnitude-based sizing so bright anchors dominate.
+G2: `usePrefersReducedMotion` binds both entries to `matchMedia` (staticMode
+disables ignition/drift/parallax/grain). G1: `011_article_event.sql` widens the
+`event_type` CHECK to `'article'`; `POST /api/progress/read` appends an
+`article` event for signed-in blog reads (idempotent, best-effort).
+
+**Verification** — `npm run build` exit 0; `npm test` 487/487 pass (5 new
+asterism tests); `npm run lint` 0 errors. Browser-verified: the 3D canvas
+renders on `/learn/salesforce-architect` (WebGL gate, nebula, bloom, CA), the
+figure projects to the real Orion geometry, reduced-motion renders statically,
+and blog/home/hub/tags/search/cert pages never pull three (bundle trace: only
+the lazy 3D chunks reference three).
+
+**Known issues** — the profile galaxy requires an authenticated user with
+progress (guests see the locked-sky teaser); the `011_article_event.sql`
+migration must be applied together with the write site (until then the galaxy
+falls back to zero article stars). The AC-7 human visual sign-off (Chris) is
+the final gate on the visual language.
+
 ### Fix: Remove ellipsis-truncated central-focus answers across all 5 generated Omni series (t_bcb71c5a)
 
 **What** — a11y/lara's re-audit (t_df970416) found 215 correct answers across

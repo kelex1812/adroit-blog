@@ -25,13 +25,16 @@
  *   - quiz         a knowledge-check run      (POST /api/progress/quiz/run)
  *   - exam         a cert-prep EXAM passed >=72 (POST /api/progress/quiz/run)
  *   - certificate  user became certificate-eligible (/learn/[series]/certificate)
+ *   - article      a signed-in user read a blog post (G1 — profile galaxy
+ *                  free-floating stars; additive migration widens the CHECK)
  */
 export type CompletionEventType =
   | "lesson"
   | "course"
   | "quiz"
   | "exam"
-  | "certificate";
+  | "certificate"
+  | "article";
 
 /**
  * Envelope stored in completion_events.metadata (jsonb). Carries the

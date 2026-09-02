@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "./constellations.css";
+@import "./constellations-3d.css";
 
 /* Class-based dark mode: the ThemeProvider toggles `dark` on <html>, so the
    `dark:` Tailwind variant must follow the class, not the OS media query. */

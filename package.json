@@ -12,13 +12,19 @@
     "prebuild": "node scripts/build-posts.js && node scripts/build-learn.js"
   },
   "dependencies": {
+    "@react-three/drei": "^10.7.8",
+    "@react-three/fiber": "^9.7.0",
+    "@react-three/postprocessing": "^3.1.1",
     "@supabase/ssr": "^0.12.4",
     "@supabase/supabase-js": "^2.112.1",
+    "@types/three": "^0.185.4",
+    "maath": "^0.10.8",
     "next": "16.3.0",
     "next-mdx-remote": "^6.0.0",
     "react": "19.2.4",
     "react-dom": "19.2.4",
-    "remark-gfm": "^4.0.1"
+    "remark-gfm": "^4.0.1",
+    "three": "^0.185.1"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
