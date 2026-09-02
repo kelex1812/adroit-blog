@@ -2,6 +2,27 @@ import { BlogPost } from "./types";
 
 export const posts: BlogPost[] = [
   {
+    "slug": "llm-gateway-model-routing-2026",
+    "title": "The Model Gateway Is the Control Plane Your LLM Stack Needs",
+    "excerpt": "Your app talks to one endpoint; the gateway routes, fails over, and caps the bill. Providers aren't five-nines. The gateway is how you survive that.",
+    "category": "AI & Consulting",
+    "categoryColor": "ai",
+    "categoryGradient": "from-amber to-amber-dark",
+    "date": "September 02, 2026",
+    "author": "Adroit Consulting",
+    "authorInitials": "AC",
+    "readTime": "10 min read",
+    "featured": false,
+    "tags": [
+      "DevOps",
+      "AI Infrastructure",
+      "Model Routing",
+      "Platform Engineering"
+    ],
+    "bannerImage": "/banners/llm-gateway-model-routing-2026.png",
+    "status": "published"
+  },
+  {
     "slug": "structured-output-tool-calling-reliability-2026",
     "title": "Valid JSON Isn't Correct Data: The Reliability Gap",
     "excerpt": "Structured output solved the formatting problem. But a model can emit valid, well-typed JSON that says the wrong thing, and no schema can tell the difference.",
