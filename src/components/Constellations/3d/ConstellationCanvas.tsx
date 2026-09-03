@@ -80,6 +80,11 @@ export function ConstellationCanvas({
         gl={{ antialias: true, powerPreference: "high-performance" }}
         camera={{ position: [0, 0, 9], fov: 45, near: 0.1, far: 80 }}
         onCreated={() => setReady(true)}
+        // Lazy-mount fix: the scene mounts below the fold (or inside a lazy
+        // wrapper), so R3F's container ResizeObserver misses the initial size
+        // and the canvas stays at the 300x150 default. Observing scroll as well
+        // re-measures once the section scrolls into view.
+        resize={{ scroll: true }}
       >
         {/* The deep-sky field (v2 base): near-black sky + restrained blue/purple
             nebula + 3-shell parallax starfield + drifting dust + shooting stars. */}
