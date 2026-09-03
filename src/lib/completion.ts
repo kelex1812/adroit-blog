@@ -194,6 +194,40 @@ export async function appendCompletionEvent(input: {
 }
 
 /**
+ * The lesson_slugs the user has CURRENTLY completed, read from the mutable
+ * current-state store `lesson_completion` (migration 001). This is the single
+ * source of truth for "which lessons are done right now" — it is written on
+ * mark-complete (POST /api/progress/lesson upsert) and cleared on unmark
+ * (DELETE removes the row). Both the on-course tracker (/learn/[series]) and
+ * the profile sky derive their constellation lighting from THIS set, so the
+ * two surfaces always agree after a mark OR an unmark.
+ *
+ * NOTE (deep-sky v1.2.0 / ADR-211): completion_events is the append-only
+ * HISTORICAL log used to derive streaks / rank / chronicle. It is NOT used to
+ * light constellations, because unmarking a lesson would otherwise leave a
+ * stale 'lesson' event and the profile sky would show it lit forever. Keep the
+ * log immutable; read current lesson state from lesson_completion here.
+ */
+export async function getCompletedLessonSlugs(
+  userId: string,
+): Promise<Set<string>> {
+  try {
+    const supabase = await getSupabaseServerClient();
+    const { data, error } = await supabase
+      .from("lesson_completion")
+      .select("lesson_slug")
+      .eq("user_id", userId);
+    if (error) throw error;
+    return new Set(
+      ((data ?? []) as { lesson_slug: string }[]).map((r) => r.lesson_slug),
+    );
+  } catch (err) {
+    console.error("[completion] getCompletedLessonSlugs", err);
+    return new Set();
+  }
+}
+
+/**
  * The course_ids the user has fully completed (event_type='course'), read
  * through the RLS cookie-bound client (scoped to owner). Drives the
  * prerequisitesMet gate on course outlines.

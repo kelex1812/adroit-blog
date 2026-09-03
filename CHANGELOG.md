@@ -9,6 +9,54 @@ Baseline v1.0.0 — Omni content + course-structure/cert-standards bar + Constel
 
 ## [Unreleased]
 
+### deep-sky v1.2.0 — On-course tracker retune (Orion) (t_081a1ccc)
+
+**What** — ported the approved v2 deep-sky visual base into the real
+on-course tracker (`/learn/[series]`) and fixed the completion-sync bug.
+Background is now near-black `#02030a`; the nebula is a restrained low-alpha
+blue/purple fbm dust (not a flat blue wash). Background stars are sharp
+points (tightened `exp(-d*d*90)` core) with a per-star diffraction-cross
+spike on bright stars (`aSpike` by magnitude), and the scene-wide chromatic
+aberration is REMOVED from the post chain. Figure lines are the classic thin
+light-blue `#9fc4ff` at opacity 0.5. The background field is split into 3
+depth shells (near r8-14, mid r14-24, far r24-50) that shift at different
+rates with the camera plus depth fog that fades distant stars. Added life:
+occasional shooting stars (`Meteors`), floating dust motes (`DustMotes`),
+and a sum-of-sines organic twinkle in the star shader. Existing ignition
+sequence, hover lift, and click-to-fly are preserved.
+
+**Why** — Chris rejected the Rev 1 look as too generic; the demo
+(`orion-deepsky-demo.html`) locks the v2 language: real star-chart figure
+lines, diffraction spikes, and parallax depth instead of bokeh stars, a
+navy wash, and scene-wide CA. Separately, the profile sky lit stars from
+`completion_events` while the learn page read `lesson_completion`, so a
+lesson unmarked via DELETE stayed lit on the profile sky forever.
+
+**How** — data: new shared `getCompletedLessonSlugs(userId)` in
+`lib/completion.ts` reads the CURRENT set from `lesson_completion` (single
+source of truth); both `learn/[series]` and `lib/sky-server.ts`
+(`loadProfileSky`) now call it, so both surfaces light from the same rows.
+Visuals: rewrote `star-material.glsl` (sharp core, cross spikes, fog,
+sum-of-sines twinkle), `starfield-gl` (3 parallax shells, seeded),
+`nebula-gl` (restrained palette), added `dust-motes.tsx` + `meteors.tsx`
+(life layers), and updated `ConstellationCanvas` (near-black bg, CA removed,
+life layers wired). Reduced motion still freezes drift/twinkle/meteors.
+
+**Verification** — `npm run build` exit 0; `npm test` 492/492 pass (3 new
+`getCompletedLessonSlugs` tests + `loadProfileSky` regression test proving a
+stale `lesson` event no longer lights a star); `tsc --noEmit` clean; eslint
+clean on all changed files (repo-wide baseline errors pre-exist untouched).
+Browser-verified on `/learn/salesforce-architect`: canvas mounts, scene
+renders near-black sky, sharp stars + spikes, thin blue figure lines,
+blue/purple nebula; canvas sized correctly after lazy-mount.
+
+**Known issues** — meteors/dust are only visible to authenticated users with
+the 3D scene (guests see the locked-sky teaser, by design); the 
+`lesson_completion` table is the source of truth, so the old
+`completion_events`-derived sky data is intentionally no longer used by
+`loadProfileSky`.
+
+
 ### Immersive 3D Constellations — celestial-immersion v1.1.0 (t_4181dffd)
 
 **What** — built the immersive 3D Learn constellation experience on the

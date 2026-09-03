@@ -23,7 +23,7 @@ import ExamCard from "@/components/Progress/ExamCard";
 import { getKnowledgeChecks } from "@/lib/quiz";
 import { accessSeam, getAccessUserId, getCourseRowBySlug } from "@/lib/access";
 import { getCatalogForUserV2, prerequisitesMet } from "@/lib/catalog";
-import { getCompletedCourseIds } from "@/lib/completion";
+import { getCompletedCourseIds, getCompletedLessonSlugs } from "@/lib/completion";
 import { StatusBadge } from "@/components/Catalog/StatusBadge";
 import { AccessModelChip } from "@/components/Catalog/AccessModelChip";
 import DifficultyPill from "@/components/Learn/DifficultyPill";
@@ -136,19 +136,15 @@ export default async function SeriesPage({ params }: Props) {
 
   // Constellation + Chronicle (B-18): the series' planned star field beside
   // the syllabus. Authed users see per-lesson progress (lit/locked from their
-  // completion rows); guests see the locked/available shape (no labels).
+  // current completion rows — single source of truth lesson_completion, shared
+  // with the profile sky via getCompletedLessonSlugs, so a mark OR unmark
+  // reflects on both surfaces); guests see the locked/available shape.
   const supabase = await getSupabaseServerClient();
   const { data: { user } } = await supabase.auth.getUser();
   const isAuthed = Boolean(user);
-  const completedRows = isAuthed
-    ? await supabase
-        .from("lesson_completion")
-        .select("lesson_slug")
-        .eq("user_id", user!.id)
-    : null;
-  const completedSlugs = new Set(
-    (completedRows?.data ?? []).map((r) => r.lesson_slug as string),
-  );
+  const completedSlugs = isAuthed
+    ? await getCompletedLessonSlugs(user!.id)
+    : new Set<string>();
   const constellation = await loadSeriesConstellation({
     seriesSlug: series,
     name: s.name,

@@ -70,7 +70,7 @@ function ConnectingRails({
           <lineBasicMaterial
             color="#9fc4ff"
             transparent
-            opacity={0.45}
+            opacity={0.5}
             blending={THREE.AdditiveBlending}
             depthWrite={false}
           />
