@@ -2,6 +2,30 @@ import { BlogPost } from "./types";
 
 export const posts: BlogPost[] = [
   {
+    "slug": "accessibility-testing-layers-ci-2026",
+    "title": "Accessibility Is Regressing. Automated Testing Won't Stop It",
+    "excerpt": "The web got measurably less accessible in 2026. Here is what axe catches, what it misses, and the layered test stack that keeps accessibility from regressing in CI.",
+    "category": "UI/UX",
+    "categoryColor": "ux",
+    "categoryGradient": "from-violet to-violet-dark",
+    "date": "September 3, 2026",
+    "author": "Adroit Consulting",
+    "authorInitials": "AC",
+    "readTime": "9 min read",
+    "featured": false,
+    "tags": [
+      "Accessibility",
+      "Testing",
+      "WCAG",
+      "Design Engineering",
+      "CI/CD",
+      "Design Systems",
+      "Automation"
+    ],
+    "bannerImage": "/banners/accessibility-testing-layers-ci-2026.png",
+    "status": "published"
+  },
+  {
     "slug": "llm-gateway-model-routing-2026",
     "title": "The Model Gateway Is the Control Plane Your LLM Stack Needs",
     "excerpt": "Your app talks to one endpoint; the gateway routes, fails over, and caps the bill. Providers aren't five-nines. The gateway is how you survive that.",
