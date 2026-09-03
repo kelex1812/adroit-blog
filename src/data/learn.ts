@@ -490,10 +490,10 @@ export const learnSeries: LearningSeries[] = [
       },
       {
         "slug": "mcp-deep-dive-tools-resources-prompts-sampling-auth",
-        "title": "Lesson 31: MCP Deep Dive: Tools, Resources, Prompts, Sampling, and Auth",
+        "title": "Lesson 31: MCP Deep Dive: Tools, Resources, Prompts, and Auth",
         "series": "agentic-ai",
         "lesson": 31,
-        "excerpt": "Lesson 30 built a hello-world MCP server and left the deeper protocol features for later. This lesson is that later. It goes past the weather server into the five parts you will actually tune in production: how to design each of the three server primitives (tools, resources, prompts) so a model uses them well, how sampling lets a server borrow the client's model instead of holding its own API keys, and how OAuth 2.1 secures a remote server. Each section pairs the protocol method with the design decision behind it, and a single worked example ties them together: a project-intel server that exposes a tool, a resource, a prompt, and a sampling call, then gets locked down with real authorization.",
+        "excerpt": "Lesson 30 built a hello-world MCP server and left the deeper protocol features for later. This lesson is that later. It goes past the weather server into the four parts you will actually tune in production: how to design each of the three server primitives (tools, resources, prompts) so a model uses them well, and how OAuth 2.1 secures a remote server. It also covers sampling, the legacy feature that once let a server borrow the client's model instead of holding its own API keys, which is deprecated as of the 2026-07-28 spec revision and replaced by direct LLM provider API integration. Each section pairs the protocol method with the design decision behind it, and a single worked example ties them together: a project-intel server that exposes a tool, a resource, a prompt, and a sampling call, then gets locked down with real authorization.",
         "date": "September 3, 2026",
         "author": "Adroit Consulting",
         "readTime": "12 min read",
@@ -2085,10 +2085,10 @@ export const learnSeries: LearningSeries[] = [
 export const learnLessons: LearnLesson[] = [
   {
     "slug": "mcp-deep-dive-tools-resources-prompts-sampling-auth",
-    "title": "Lesson 31: MCP Deep Dive: Tools, Resources, Prompts, Sampling, and Auth",
+    "title": "Lesson 31: MCP Deep Dive: Tools, Resources, Prompts, and Auth",
     "series": "agentic-ai",
     "lesson": 31,
-    "excerpt": "Lesson 30 built a hello-world MCP server and left the deeper protocol features for later. This lesson is that later. It goes past the weather server into the five parts you will actually tune in production: how to design each of the three server primitives (tools, resources, prompts) so a model uses them well, how sampling lets a server borrow the client's model instead of holding its own API keys, and how OAuth 2.1 secures a remote server. Each section pairs the protocol method with the design decision behind it, and a single worked example ties them together: a project-intel server that exposes a tool, a resource, a prompt, and a sampling call, then gets locked down with real authorization.",
+    "excerpt": "Lesson 30 built a hello-world MCP server and left the deeper protocol features for later. This lesson is that later. It goes past the weather server into the four parts you will actually tune in production: how to design each of the three server primitives (tools, resources, prompts) so a model uses them well, and how OAuth 2.1 secures a remote server. It also covers sampling, the legacy feature that once let a server borrow the client's model instead of holding its own API keys, which is deprecated as of the 2026-07-28 spec revision and replaced by direct LLM provider API integration. Each section pairs the protocol method with the design decision behind it, and a single worked example ties them together: a project-intel server that exposes a tool, a resource, a prompt, and a sampling call, then gets locked down with real authorization.",
     "date": "September 3, 2026",
     "author": "Adroit Consulting",
     "readTime": "12 min read",

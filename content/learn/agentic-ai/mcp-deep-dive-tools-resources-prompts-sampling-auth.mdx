@@ -1,20 +1,20 @@
 ---
-title: "Lesson 31: MCP Deep Dive: Tools, Resources, Prompts, Sampling, and Auth"
+title: "Lesson 31: MCP Deep Dive: Tools, Resources, Prompts, and Auth"
 slug: mcp-deep-dive-tools-resources-prompts-sampling-auth
 series: "agentic-ai"
 lesson: 31
-excerpt: "Lesson 30 built a hello-world MCP server and left the deeper protocol features for later. This lesson is that later. It goes past the weather server into the five parts you will actually tune in production: how to design each of the three server primitives (tools, resources, prompts) so a model uses them well, how sampling lets a server borrow the client's model instead of holding its own API keys, and how OAuth 2.1 secures a remote server. Each section pairs the protocol method with the design decision behind it, and a single worked example ties them together: a project-intel server that exposes a tool, a resource, a prompt, and a sampling call, then gets locked down with real authorization."
+excerpt: "Lesson 30 built a hello-world MCP server and left the deeper protocol features for later. This lesson is that later. It goes past the weather server into the four parts you will actually tune in production: how to design each of the three server primitives (tools, resources, prompts) so a model uses them well, and how OAuth 2.1 secures a remote server. It also covers sampling, the legacy feature that once let a server borrow the client's model instead of holding its own API keys, which is deprecated as of the 2026-07-28 spec revision and replaced by direct LLM provider API integration. Each section pairs the protocol method with the design decision behind it, and a single worked example ties them together: a project-intel server that exposes a tool, a resource, a prompt, and a sampling call, then gets locked down with real authorization."
 date: "September 3, 2026"
 author: "Adroit Consulting"
 readTime: "12 min read"
 tags: [LLMs, AI Agents, MCP, Tool Integration, OAuth]
 ---
 
-# Lesson 31: MCP Deep Dive: Tools, Resources, Prompts, Sampling, and Auth
+# Lesson 31: MCP Deep Dive: Tools, Resources, Prompts, and Auth
 
-Lesson 30 got you a working server: two tools, a stdio transport, and the satisfaction of watching a model call a function you wrote. That is the hello-world. The parts you will actually tune in production are the ones this lesson covers. Tools, resources, and prompts are the three things a server can expose, and each one has a design discipline that separates a server a model uses well from a server a model fumbles with. Sampling and authorization are the two features that change what a server can be: sampling lets a server reason without holding its own model credentials, and authorization decides who is allowed to call it at all.
+Lesson 30 got you a working server: two tools, a stdio transport, and the satisfaction of watching a model call a function you wrote. That is the hello-world. The parts you will actually tune in production are the ones this lesson covers. Tools, resources, and prompts are the three things a server can expose, and each one has a design discipline that separates a server a model uses well from a server a model fumbles with. Authorization is what decides who is allowed to call the server at all. Sampling, the feature that once let a server reason without holding its own model credentials, is deprecated as of the 2026-07-28 spec revision: SEP-2577 moved inference out of the protocol toward direct LLM provider API integration. You still need to know it, because servers built before that revision use it and you may take one over.
 
-This lesson walks all five, then ties them into one server you can build and secure end to end.
+This lesson walks the four production features, then traces the deprecated sampling path so you can maintain servers that still use it, and ties it all into one server you can build and secure end to end.
 
 ## Tools: the model-controlled primitive
 
@@ -52,11 +52,11 @@ The flow is two methods. The client lists available prompts with `prompts/list`,
 
 The common pitfall is confusing prompts with tools. A tool is invoked by the model as part of its reasoning. A prompt is selected by the user to start or guide an interaction. If you want the model to be able to trigger a workflow on its own, that is a tool. If you want a human to be able to kick off a well-tested workflow, that is a prompt. [^3]
 
-## Sampling: borrowing the client's model
+## Sampling: a deprecated way to borrow the client's model
 
 The first three primitives all flow from client to server. Sampling flips the direction. It lets a server ask the client to run an LLM completion on its behalf, and return the result. [^4]
 
-> **Deprecated as of the 2026-07-28 spec revision.** Sampling is deprecated under SEP-2577. New implementations SHOULD NOT adopt it; existing implementations SHOULD migrate to integrating directly with LLM provider APIs. The mechanics below are still accurate for servers that already use sampling, but do not build a new server around it. [^4]
+> **Deprecated as of the 2026-07-28 spec revision.** Sampling is deprecated under SEP-2577, which moved inference out of the protocol toward direct LLM provider API integration. The replacement for sampling is to call your LLM provider's API directly. New implementations SHOULD NOT adopt it; existing implementations SHOULD migrate to integrating directly with LLM provider APIs. The mechanics below are still accurate for servers that already use sampling, but do not build a new server around it. [^4]
 
 This matters more than it sounds. A server that can sample can reason, summarize, classify, and plan without holding its own API keys or model access. The client keeps control of model access, selection, and permissions, and the server gets the benefit of AI without the credentials. [^4] The canonical use case is a server that needs to think: it reads a document, then asks the client's model to summarize it, then returns the summary as a tool result. The server never touches an LLM API. [^4]
 
@@ -66,7 +66,7 @@ Because the client owns model selection, the server cannot demand a specific mod
 
 Sampling also supports tool use. A server can include a tools array in its sampling request, scoped to that request, so the client's model can call tools mid-sampling, return tool results, and continue the conversation in a multi-turn loop. [^4] This is how a server builds a nested agent loop entirely through the client's model.
 
-The security rule mirrors the others: there should always be a human in the loop with the ability to deny a sampling request. [^4] And the design rule is to never design a server that assumes it can call models directly when sampling is available. The whole point is that the server routes inference through the client's model access, so a server that hard-codes its own model calls defeats the mechanism.
+The security rule mirrors the others: there should always be a human in the loop with the ability to deny a sampling request. [^4] And the design rule, for servers that still route inference through sampling, is to never assume they can call models directly. The whole point is that the server routes inference through the client's model access, so a server that hard-codes its own model calls defeats the mechanism.
 
 ## Authorization: who is allowed to call the server
 
@@ -84,7 +84,7 @@ The practical rules are the ones you would expect from any secure service: use s
 
 ## Worked example: a project-intel server
 
-The five pieces come together in one server. Build a `project-intel` server that gives a model everything it needs to work on a codebase, and secure it so only authorized callers can use it.
+All the pieces come together in one server. Build a `project-intel` server that gives a model everything it needs to work on a codebase, and secure it so only authorized callers can use it.
 
 Start with the tool. Expose `query_issues` with a description that says it runs a read-only query against the project's issue tracker and returns results as JSON, and an input schema with a `query` string property. The model now knows when to call it and what to pass. [^1]
 
@@ -96,7 +96,7 @@ Handle inherited sampling. If you take over a server that already uses sampling,
 
 Then secure it. Deploy the server over HTTP, stand up an authorization server, and protect the server as a resource server. The client gets a `401` with a metadata pointer, discovers the authorization server, runs the PKCE flow, and sends a bearer token on every call. The server validates the token's audience and scopes before it lets `query_issues` run. [^5]
 
-That is the whole protocol in one server: a tool the model calls, a resource the application attaches, a prompt the user selects, a sampling call that borrows the client's model, and OAuth 2.1 deciding who gets in.
+That is the protocol in one server: a tool the model calls, a resource the application attaches, a prompt the user selects, a sampling call that borrows the client's model where you maintain an inherited server, and OAuth 2.1 deciding who gets in.
 
 ## The pitfalls to avoid
 
@@ -122,7 +122,7 @@ The fifth is shipping a remote server with no authorization, or with a broken on
 
 ## What's next
 
-You now know how to design each MCP primitive well, how sampling lets a server reason without its own model credentials, and how OAuth 2.1 secures a remote server. The next lesson, **Building your first enterprise agent: project setup, end to end**, is where the pieces stop being individual techniques and become a product. It walks the full setup of a real agent project, from scaffolding the repository and wiring the model through to connecting the tools and shipping it, the way you would stand up a client engagement rather than a demo. The MCP server you built in these two lessons is the tool layer that enterprise agent will call, so keep it close.
+You now know how to design each MCP primitive well, how the now-deprecated sampling feature lets a legacy server reason without its own model credentials and why the protocol moved past it, and how OAuth 2.1 secures a remote server. The next lesson, **Building your first enterprise agent: project setup, end to end**, is where the pieces stop being individual techniques and become a product. It walks the full setup of a real agent project, from scaffolding the repository and wiring the model through to connecting the tools and shipping it, the way you would stand up a client engagement rather than a demo. The MCP server you built in these two lessons is the tool layer that enterprise agent will call, so keep it close.
 
 [^1]: modelcontextprotocol.io. [Tools (MCP specification)](https://modelcontextprotocol.io/specification/2026-07-28/server/tools)
 [^2]: modelcontextprotocol.io. [Resources (MCP specification)](https://modelcontextprotocol.io/specification/2026-07-28/server/resources)
