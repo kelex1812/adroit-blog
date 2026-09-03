@@ -9,6 +9,7 @@
  */
 import { getSupabaseServerClient } from "@/lib/supabase/server";
 import { deriveProgress } from "@/lib/completion";
+import { getCompletedLessonSlugs } from "@/lib/completion";
 import { buildAchievementStats, buildConstellation, buildProfileSky } from "@/lib/sky";
 import { getCatalogForUserV2, toLearnHubCards } from "@/lib/catalog";
 import { getLessonsForSeries, getSeriesBySlug } from "@/lib/learn";
@@ -185,11 +186,13 @@ export async function loadProfileSky(
   const maps = await getSkyCourseMaps();
   const lessonLabels = getLessonLabelMap();
 
-  const completedSlugs = new Set(
-    events
-      .filter((e) => e.event_type === "lesson" && e.lesson_slug)
-      .map((e) => e.lesson_slug as string),
-  );
+  // Constellation lighting source of truth (deep-sky v1.2.0): the CURRENT set
+  // of completed lessons comes from lesson_completion (getCompletedLessonSlugs)
+  // — the SAME source the on-course tracker /learn/[series] reads. completion
+  // events stay for rank/streak/chronicle below but are NOT used to light
+  // constellations, so an unmark (which deletes the lesson_completion row but
+  // keeps the immutable event) reflects on BOTH surfaces identically.
+  const completedSlugs = await getCompletedLessonSlugs(userId);
 
   // Constellation build inputs from the visible catalog (only courses with
   // a planned lesson set render a star field).

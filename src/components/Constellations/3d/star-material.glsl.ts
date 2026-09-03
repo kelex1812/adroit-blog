@@ -2,14 +2,22 @@
  * star-material.glsl.ts — custom star shader (vertex + fragment) as exported
  * GLSL strings (ADR-306: full-advantage Three.js, GPU-first).
  *
- * A single `Points` buffer draws thousands of stars with per-star shader
+ * A `Points` buffer draws thousands of stars with per-star shader
  * attributes — NONE identical (the anti-clip-art rule enforced at the GPU
- * level). Per-star variance (color temperature, size, staggered twinkle,
- * spectral diffraction spike) is computed in the shader, never per-star JS.
+ * level). Per-star variance (color temperature, size, staggered organic
+ * twinkle, spectral diffraction spike) is computed in the shader, never
+ * per-star JS.
+ *
+ * REV 3 (deep-sky v1.2.0): matches the approved v2 demo — sharp-point stars
+ * (not bokeh), diffraction spikes on bright stars, a faint spike halo, and
+ * depth fog (fade alpha by camera distance) so the field reads as layered.
+ * Chromatic aberration is removed scene-wide (it lives here no more); the
+ * fringing is replaced by real spectral diffraction crosses on bright stars.
  *
  * RawShaderMaterial (no built-in uniforms), so the standard matrices are
- * declared explicitly. Twinkle is a shader time-uniform (uTime + per-star
- * phase/speed), never per-star setTimeout.
+ * declared explicitly. Twinkle is an ORGANIC sum-of-sines (v2 demo) driven by
+ * a shader time-uniform (uTime + per-star phase/speed), never a per-star
+ * setTimeout.
  */
 
 export const STAR_VERTEX_GLSL = /* glsl */ `
@@ -31,22 +39,27 @@ uniform float uSize;
 varying vec3 vColor;
 varying float vTwinkle;
 varying float vSpike;
+varying float vDepth;
 
 void main() {
-  // Staggered twinkle: unique phase + speed per star, so they never blink in
-  // unison. Slight drift in the vertex stage keeps the field alive without a
-  // hot JS loop.
-  float tw = 0.72 + 0.28 * sin(uTime * aTwinkleSpeed + aTwinklePhase);
+  // Organic twinkle (v2): a weighted sum of sines with unique phase + speed,
+  // so the field shimmers naturally and never blinks in unison.
+  float tw = 0.72 + 0.28 * ( sin(uTime * aTwinkleSpeed + aTwinklePhase) * 0.5
+                           + sin(uTime * aTwinkleSpeed * 1.7 + aTwinklePhase * 2.3) * 0.3
+                           + sin(uTime * aTwinkleSpeed * 0.6 + aTwinklePhase * 0.7) * 0.2 );
   vTwinkle = tw;
   vSpike = aSpike;
   vColor = aColorTemp;
 
   // Size from apparent magnitude (brighter/lower mag → larger) + twinkle.
-  float size = uSize * (1.7 - aMagnitude * 0.13) * tw;
+  float size = uSize * (1.7 - aMagnitude * 0.13);
 
   vec4 mv = modelViewMatrix * vec4(position, 1.0);
+  // Depth fog: fade with distance from camera so the field is layered. The
+  // demo fade window starts ~6 units out and fully fades by ~46.
+  vDepth = clamp(1.0 - (-mv.z - 6.0) / 40.0, 0.0, 1.0);
   // Perspective point size: scale by distance so near stars read larger.
-  gl_PointSize = size * uPixelRatio * (320.0 / max(-mv.z, 0.1));
+  gl_PointSize = size * uPixelRatio * (320.0 / max(-mv.z, 0.1)) * tw;
   gl_Position = projectionMatrix * mv;
 }
 `;
@@ -57,23 +70,27 @@ precision highp float;
 varying vec3 vColor;
 varying float vTwinkle;
 varying float vSpike;
+varying float vDepth;
 
 uniform float uOpacity;
+uniform float uSpikeOn;
 
 void main() {
   vec2 uv = gl_PointCoord - 0.5;
   float d = length(uv);
 
-  // Soft radial falloff — a glowing round point of light, never a hard disc
-  // (design lesson: stars are layered LIGHT, not drawn strokes).
-  float glow = exp(-d * d * 16.0);
+  // Sharp point core (v2): tight falloff so stars read as pinpoints of light,
+  // NOT the soft bokeh of the old exp(-d*d*16) disc.
+  float core = exp(-d * d * 90.0);
 
-  // Thin spectral diffraction cross (per-star intensity) — the faintest trace
-  // of a spike, so hot stars read as real point sources, not emoji.
-  float crossMask = exp(-abs(uv.x) * 60.0) + exp(-abs(uv.y) * 60.0);
-  float spike = vSpike * crossMask * 0.18;
+  // Thin spectral diffraction cross on bright stars (per-star intensity).
+  float crossMask = exp(-abs(uv.x) * 22.0) + exp(-abs(uv.y) * 22.0);
+  float spike = vSpike * crossMask * 0.6 * uSpikeOn;
 
-  float alpha = (glow + spike) * vTwinkle * uOpacity;
+  // Faint halo bloom only on bright (spiked) stars.
+  float halo = exp(-d * d * 8.0) * 0.22 * vSpike;
+
+  float alpha = (core + spike + halo) * vTwinkle * uOpacity * vDepth;
   if (alpha < 0.01) discard;
   gl_FragColor = vec4(vColor, alpha);
 }

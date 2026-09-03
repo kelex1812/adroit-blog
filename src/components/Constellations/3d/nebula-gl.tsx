@@ -54,22 +54,24 @@ float fbm(vec2 p) {
 }
 
 void main() {
-  vec2 p = vUv * 5.0;
+  vec2 p = vUv * 4.0;
   float n = fbm(p + uTime * 0.012);
-  float n2 = fbm(p * 1.7 + 3.7);
+  float n2 = fbm(p * 1.6 + 3.7);
 
-  // Real deep-sky dust palette: deep violet + cool blue + faint warm amber.
-  vec3 violet = vec3(0.16, 0.12, 0.30);
-  vec3 cool   = vec3(0.10, 0.22, 0.36);
-  vec3 warm   = vec3(0.30, 0.24, 0.12);
+  // Restrained deep-sky dust (v2 demo palette): near-black deep + cool blue +
+  // faint violet. LOW base alpha so the wash reads as sparse interstellar dust,
+  // never a flat blue gradient. (Warm amber was retired in the v2 retune — the
+  // palette is blue/purple over near-black, per the approved demo.)
+  vec3 deep  = vec3(0.015, 0.025, 0.07);
+  vec3 blue  = vec3(0.09, 0.16, 0.32);
+  vec3 violet = vec3(0.18, 0.12, 0.30);
 
-  vec3 col = mix(cool, violet, n);
-    col = mix(col, warm, smoothstep(0.55, 0.9, n2));
+  vec3 col = mix(deep, blue, n);
+  col = mix(col, violet, smoothstep(0.5, 0.9, n2));
 
-    // Restrained: reads as atmosphere, not a generic purple/teal gradient.
-    float alpha = (0.12 + n * 0.55) * uOpacity;
-    if (alpha < 0.01) discard;
-    gl_FragColor = vec4(col, alpha);
+  float alpha = (0.10 + n * 0.45) * uOpacity;
+  if (alpha < 0.01) discard;
+  gl_FragColor = vec4(col, alpha);
 }
 `;
 

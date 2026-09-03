@@ -26,13 +26,14 @@ import {
   EffectComposer,
   Bloom,
   Vignette,
-  ChromaticAberration,
   Noise,
 } from "@react-three/postprocessing";
 import { LoadingSky } from "./LoadingSky";
 import { supportsWebGL } from "./webgl";
 import { StarfieldGL } from "./starfield-gl";
 import { NebulaGL } from "./nebula-gl";
+import { DustMotes } from "./dust-motes";
+import { Meteors } from "./meteors";
 
 export interface ConstellationCanvasProps {
   /** r3f scene content (star field, sectors, rays). */
@@ -80,11 +81,15 @@ export function ConstellationCanvas({
         camera={{ position: [0, 0, 9], fov: 45, near: 0.1, far: 80 }}
         onCreated={() => setReady(true)}
       >
-        <color attach="background" args={["#05070d"]} />
-        {/* The deep-sky field: procedural nebula dust + single-Points starfield. */}
+        {/* The deep-sky field (v2 base): near-black sky + restrained blue/purple
+            nebula + 3-shell parallax starfield + drifting dust + shooting stars. */}
+        <color attach="background" args={["#02030a"]} />
         <NebulaGL opacity={0.9} staticMode={prefersReducedMotion} />
         <StarfieldGL fieldCount={900} staticMode={prefersReducedMotion} />
         {children}
+        {/* Life layers: floating interstellar dust + occasional meteors. */}
+        <DustMotes count={220} staticMode={prefersReducedMotion} />
+        <Meteors staticMode={prefersReducedMotion} />
         <EffectComposer>
           <Bloom
             intensity={bloom?.strength ?? 0.7}
@@ -93,12 +98,9 @@ export function ConstellationCanvas({
             radius={bloom?.radius ?? 0.5}
             mipmapBlur
           />
-          {/* Subtle spectral fringe on hot stars (design token). */}
-          <ChromaticAberration
-            offset={[0.0015, 0.0015]}
-            radialModulation={false}
-            modulationOffset={0}
-          />
+          {/* NOTE: chromatic aberration was REMOVED in the v2 retune (AC-4).
+              Bright stars get their sharp diffraction spike in the shader
+              instead of scene-wide fringing. */}
           <Vignette eskil={false} offset={0.2} darkness={0.7} />
           {/* Restrained film grain, tied to state (off for reduced motion). */}
           {!prefersReducedMotion && <Noise premultiply opacity={0.05} />}
