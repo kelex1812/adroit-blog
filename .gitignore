@@ -66,3 +66,6 @@ deliverables/*.py
 
 # stray tool output
 /.hermes/
+
+# build cache backup — never commit
+.next.bak/
