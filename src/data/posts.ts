@@ -26,6 +26,28 @@ export const posts: BlogPost[] = [
     "status": "published"
   },
   {
+    "slug": "sprint-planning-routing-review-2026",
+    "title": "Sprint Planning Is Now a Routing Decision",
+    "excerpt": "Agents removed the scarcity that made sprint planning a rationing ritual; its real job is now routing work and budgeting review capacity.",
+    "category": "Project Management",
+    "categoryColor": "pm",
+    "categoryGradient": "from-teal to-teal-dark",
+    "date": "September 3, 2026",
+    "author": "Adroit Consulting",
+    "authorInitials": "AC",
+    "readTime": "9 min read",
+    "featured": false,
+    "tags": [
+      "Project Management",
+      "Agile",
+      "AI Agents",
+      "Sprint Planning",
+      "Delivery"
+    ],
+    "bannerImage": "/banners/sprint-planning-routing-review-2026.png",
+    "status": "published"
+  },
+  {
     "slug": "llm-gateway-model-routing-2026",
     "title": "The Model Gateway Is the Control Plane Your LLM Stack Needs",
     "excerpt": "Your app talks to one endpoint; the gateway routes, fails over, and caps the bill. Providers aren't five-nines. The gateway is how you survive that.",
