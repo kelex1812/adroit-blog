@@ -9,6 +9,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
 import { denyLessonNotAccessible } from "@/lib/access-gate";
+import { appendCompletionEvent } from "@/lib/completion";
 import {
   checkOrigin,
   checkRateLimit,
@@ -112,17 +113,31 @@ export async function POST(req: NextRequest) {
     );
 
     if (error) {
-      return NextResponse.json({ status: "error", error: sanitiseDbError(error) }, { status: 500 });
+          return NextResponse.json({ status: "error", error: sanitiseDbError(error) }, { status: 500 });
+        }
+
+        // G1 (celestial-immersion): a signed-in user reading a blog post appends
+        // one 'article' completion event — the source of the profile galaxy's
+        // free-floating stars. Idempotent per (user, event_type='article',
+        // lesson_slug=blog slug); best-effort (a log failure must not fail the
+        // read write, which already landed). Blog reads are not course-gated.
+        if (parsed.contentType === "blog") {
+          await appendCompletionEvent({
+            userId: user.id,
+            courseId: null,
+            eventType: "article",
+            lessonSlug: parsed.contentSlug.replace(/^blog\//, ""),
+          });
+        }
+
+        return NextResponse.json({ status: "ok" });
+      } catch {
+        // Silently fail — client has localStorage fallback
+        return NextResponse.json({ status: "error" }, { status: 500 });
+      }
     }
 
-    return NextResponse.json({ status: "ok" });
-  } catch {
-    // Silently fail — client has localStorage fallback
-    return NextResponse.json({ status: "error" }, { status: 500 });
-  }
-}
-
-export async function DELETE(req: NextRequest) {
+    export async function DELETE(req: NextRequest) {
   try {
     /* --- Origin / CSRF check (F6) --- */
     const originErr = checkOrigin(req);

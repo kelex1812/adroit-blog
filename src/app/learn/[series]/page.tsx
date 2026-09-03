@@ -28,7 +28,7 @@ import { StatusBadge } from "@/components/Catalog/StatusBadge";
 import { AccessModelChip } from "@/components/Catalog/AccessModelChip";
 import DifficultyPill from "@/components/Learn/DifficultyPill";
 import PrerequisitesSection from "@/components/Learn/PrerequisitesSection";
-import SeriesConstellation from "@/components/Constellations/SeriesConstellation";
+import SeriesConstellation3D from "@/components/Constellations/3d/SeriesConstellation3D";
 import { loadSeriesConstellation } from "@/lib/sky-server";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
 
@@ -309,10 +309,20 @@ export default async function SeriesPage({ params }: Props) {
         )}
 
         {/* Syllabus — lesson-number order (ADR-105), client sort + hide-completed.
-            Constellation (B-18) rendered beside it for authed users + guests. */}
+            Immersive 3D on-course tracker rendered above the syllabus (B-18+3D):
+            the course's constellation floats in real 3D with bloom, hover, and
+            click-to-fly. Falls back to the 2D rail when WebGL is unavailable. */}
         <div className="max-w-[1120px] mx-auto px-6 py-8 pb-4">
+          {constellation ? (
+            <div className="mb-10">
+              <SeriesConstellation3D
+                constellation={constellation}
+                isGuest={!isAuthed}
+              />
+            </div>
+          ) : null}
           {baseLessons.length > 0 ? (
-            <div className="grid gap-10 md:grid-cols-[1fr_auto] md:items-start">
+            <div className="grid gap-10">
               <Suspense fallback={null}>
                 <SeriesSyllabus
                   lessons={baseLessons}
@@ -321,14 +331,6 @@ export default async function SeriesPage({ params }: Props) {
                   upcoming={upcoming}
                 />
               </Suspense>
-              {constellation ? (
-                <aside className="md:sticky md:top-6 w-full md:w-[240px] rounded-2xl border border-[var(--border-default)] bg-[var(--surface-card-soft)] p-5">
-                  <SeriesConstellation
-                    constellation={constellation}
-                    isGuest={!isAuthed}
-                  />
-                </aside>
-              ) : null}
             </div>
           ) : (
             <EmptyState />

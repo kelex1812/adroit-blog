@@ -2,8 +2,14 @@
  * FullSkySection — the /profile full-sky hero (P2). "The hero IS the
  * starfield": no marketing hero, no feature cards — just the sky canvas with
  * every course's constellation, the rank-ladder rung list, the stat block, and
- * the Chronicle feed. Purely presentational: the server loader passes a ready
- * ProfileSky payload.
+ * the Chronicle feed.
+ *
+ * The hero canvas is the immersive 3D galaxy (ProfileGalaxy3D): every course
+ * floats as a 3D sector, the camera flies between them, and the rank ladder
+ * maps to how much of the galaxy is lit. When WebGL is unavailable the same
+ * header chrome + stat block render as the static 2D hero (fallback2D), so the
+ * surface never goes dark. Purely presentational: the server loader passes a
+ * ready ProfileSky payload.
  */
 "use client";
 
@@ -12,6 +18,7 @@ import { ChronicleFeed } from "@/components/Constellations/ChronicleFeed";
 import { StreakCounter } from "@/components/Constellations/StreakCounter";
 import { RANK_LADDER } from "@/shared/rank-ladder";
 import type { FullSkySectionProps, RankId } from "@/shared/contracts-constellations";
+import { ProfileGalaxy3D } from "./3d/ProfileGalaxy3D";
 
 /** Star magnitude color for a rank band (display-only; thresholds live in code). */
 const MAGNITUDE_VAR: Record<RankId, string> = {
@@ -22,123 +29,136 @@ const MAGNITUDE_VAR: Record<RankId, string> = {
   celestial: "var(--magnitude-5)",
 };
 
+/** The header chrome + stat block, rendered over the galaxy (or as 2D fallback). */
+function SkyHeroChrome({ sky }: FullSkySectionProps) {
+  const { stats, constellations } = sky;
+  return (
+    <div className="relative px-6 py-10 md:px-10 md:py-12">
+      <p className="relative font-mono text-[10.5px] font-bold uppercase tracking-[0.12em] text-[var(--sky-ink-muted)]">
+        YOUR SKY
+      </p>
+      <div className="relative mt-2 flex flex-wrap items-baseline gap-x-4 gap-y-1">
+        <h1 className="text-[clamp(2.4rem,5vw,3.5rem)] font-extrabold leading-none tracking-[-0.03em] text-[var(--sky-ink)]">
+          {stats.rank?.name ?? "Starseed"}
+        </h1>
+        <span
+          aria-hidden="true"
+          className="cx-rank-display text-[clamp(1.6rem,3.5vw,2.4rem)] font-medium"
+        >
+          {stats.rank?.name ?? "Starseed"}
+        </span>
+      </div>
+      <p className="relative mt-2 max-w-[560px] text-[15px] leading-relaxed text-[var(--sky-ink-muted)]">
+        {stats.rank?.description ?? RANK_LADDER[0]?.description}
+      </p>
+
+      {/* Stat block */}
+      <div className="relative mt-8 grid grid-cols-2 gap-4 sm:grid-cols-4">
+        <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-4">
+          <div className="text-[1.8rem] font-extrabold leading-none text-[var(--sky-ink)]">
+            {stats.coursesCompleted}
+          </div>
+          <div className="mt-1 font-mono text-[10.5px] font-bold uppercase tracking-[0.08em] text-[var(--sky-ink-muted)]">
+            courses
+          </div>
+        </div>
+        <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-4">
+          <div className="text-[1.8rem] font-extrabold leading-none text-[var(--sky-ink)]">
+            {constellations.reduce((n, c) => n + c.totalStars, 0)}
+          </div>
+          <div className="mt-1 font-mono text-[10.5px] font-bold uppercase tracking-[0.08em] text-[var(--sky-ink-muted)]">
+            lessons
+          </div>
+        </div>
+        <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-4">
+          <div className="text-[1.8rem] font-extrabold leading-none text-[var(--chronicle-streak)]">
+            {stats.streakDays}
+          </div>
+          <div className="mt-1 font-mono text-[10.5px] font-bold uppercase tracking-[0.08em] text-[var(--sky-ink-muted)]">
+            day streak
+          </div>
+        </div>
+        <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-4">
+          <div className="text-[1.8rem] font-extrabold leading-none text-[var(--sky-ink)]">
+            {stats.tracksCompleted}
+          </div>
+          <div className="mt-1 font-mono text-[10.5px] font-bold uppercase tracking-[0.08em] text-[var(--sky-ink-muted)]">
+            tracks
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export function FullSkySection({ sky }: FullSkySectionProps) {
   const { stats, constellations, chronicle } = sky;
   const currentId = stats.rank?.id ?? "starseed";
 
   return (
     <section className="cx-sky overflow-hidden" data-testid="full-sky-section">
-      {/* Sky canvas */}
-      <div className="relative px-6 py-10 md:px-10 md:py-12">
-        <p className="relative font-mono text-[10.5px] font-bold uppercase tracking-[0.12em] text-[var(--sky-ink-muted)]">
-          YOUR SKY
-        </p>
-        <div className="relative mt-2 flex flex-wrap items-baseline gap-x-4 gap-y-1">
-          <h1 className="text-[clamp(2.4rem,5vw,3.5rem)] font-extrabold leading-none tracking-[-0.03em] text-[var(--sky-ink)]">
-            {stats.rank?.name ?? "Starseed"}
-          </h1>
-          <span
-            aria-hidden="true"
-            className="cx-rank-display text-[clamp(1.6rem,3.5vw,2.4rem)] font-medium"
-          >
-            {stats.rank?.name ?? "Starseed"}
-          </span>
-        </div>
-        <p className="relative mt-2 max-w-[560px] text-[15px] leading-relaxed text-[var(--sky-ink-muted)]">
-          {stats.rank?.description ?? RANK_LADDER[0]?.description}
-        </p>
+      {/* Sky canvas — the immersive 3D galaxy (falls back to the static hero). */}
+      <ProfileGalaxy3D
+        sky={sky}
+        rank={currentId}
+        fallback2D={<SkyHeroChrome sky={sky} />}
+      >
+        <SkyHeroChrome sky={sky} />
+      </ProfileGalaxy3D>
 
-        {/* Stat block */}
-        <div className="relative mt-8 grid grid-cols-2 gap-4 sm:grid-cols-4">
-          <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-4">
-            <div className="text-[1.8rem] font-extrabold leading-none text-[var(--sky-ink)]">
-              {stats.coursesCompleted}
-            </div>
-            <div className="mt-1 font-mono text-[10.5px] font-bold uppercase tracking-[0.08em] text-[var(--sky-ink-muted)]">
-              courses
-            </div>
-          </div>
-          <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-4">
-            <div className="text-[1.8rem] font-extrabold leading-none text-[var(--sky-ink)]">
-              {constellations.reduce((n, c) => n + c.totalStars, 0)}
-            </div>
-            <div className="mt-1 font-mono text-[10.5px] font-bold uppercase tracking-[0.08em] text-[var(--sky-ink-muted)]">
-              lessons
-            </div>
-          </div>
-          <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-4">
-            <div className="text-[1.8rem] font-extrabold leading-none text-[var(--chronicle-streak)]">
-              {stats.streakDays}
-            </div>
-            <div className="mt-1 font-mono text-[10.5px] font-bold uppercase tracking-[0.08em] text-[var(--sky-ink-muted)]">
-              day streak
-            </div>
-          </div>
-          <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-4">
-            <div className="text-[1.8rem] font-extrabold leading-none text-[var(--sky-ink)]">
-              {stats.tracksCompleted}
-            </div>
-            <div className="mt-1 font-mono text-[10.5px] font-bold uppercase tracking-[0.08em] text-[var(--sky-ink-muted)]">
-              tracks
-            </div>
-          </div>
-        </div>
-
-        {/* Rank ladder */}
-        <div className="relative mt-8 max-w-[560px]">
-          <p className="mb-2 font-mono text-[10.5px] font-bold uppercase tracking-[0.12em] text-[var(--sky-ink-muted)]">
-            Rank ladder
-          </p>
-          <ol className="flex flex-col gap-1.5">
-            {RANK_LADDER.map((band, i) => {
-              const isCurrent = band.id === currentId;
-              const reached =
-                stats.rank !== null && i <= (stats.rank?.index ?? 0);
-              return (
-                <li
-                  key={band.id}
-                  data-testid={`rank-rung-${band.id}`}
-                  className={`flex items-center gap-3 rounded-xl px-3.5 py-2.5 ${
-                    isCurrent ? "bg-white/10 ring-1 ring-white/15" : ""
+      {/* Rank ladder */}
+      <div className="relative max-w-[560px] px-6 pb-2 md:px-10">
+        <p className="mb-2 font-mono text-[10.5px] font-bold uppercase tracking-[0.12em] text-[var(--sky-ink-muted)]">
+          Rank ladder
+        </p>
+        <ol className="flex flex-col gap-1.5">
+          {RANK_LADDER.map((band, i) => {
+            const isCurrent = band.id === currentId;
+            const reached = stats.rank !== null && i <= (stats.rank?.index ?? 0);
+            return (
+              <li
+                key={band.id}
+                data-testid={`rank-rung-${band.id}`}
+                className={`flex items-center gap-3 rounded-xl px-3.5 py-2.5 ${
+                  isCurrent ? "bg-white/10 ring-1 ring-white/15" : ""
+                }`}
+              >
+                <span
+                  aria-hidden
+                  className="h-3 w-3 rounded-full"
+                  style={{
+                    background: reached ? MAGNITUDE_VAR[band.id] : "rgba(255,255,255,0.15)",
+                  }}
+                />
+                <span
+                  className={`font-mono text-[12px] font-bold uppercase tracking-[0.06em] ${
+                    isCurrent ? "text-[var(--sky-ink)]" : "text-[var(--sky-ink-muted)]"
                   }`}
                 >
-                  <span
-                    aria-hidden
-                    className="h-3 w-3 rounded-full"
-                    style={{
-                      background: reached ? MAGNITUDE_VAR[band.id] : "rgba(255,255,255,0.15)",
-                    }}
-                  />
-                  <span
-                    className={`font-mono text-[12px] font-bold uppercase tracking-[0.06em] ${
-                      isCurrent ? "text-[var(--sky-ink)]" : "text-[var(--sky-ink-muted)]"
-                    }`}
-                  >
-                    {band.name}
-                    {isCurrent ? (
-                      <span
-                        role="img"
-                        aria-label="Current rank"
-                        className="ml-1.5 text-[var(--constellation-star-lit)]"
-                      >
-                        <span aria-hidden="true">· you</span>
-                      </span>
-                    ) : null}
-                  </span>
-                  {reached && !isCurrent ? (
+                  {band.name}
+                  {isCurrent ? (
                     <span
                       role="img"
-                      aria-label="Reached"
-                      className="ml-auto font-mono text-[10px] text-[var(--sky-ink-muted)]"
+                      aria-label="Current rank"
+                      className="ml-1.5 text-[var(--constellation-star-lit)]"
                     >
-                      <span aria-hidden="true">✓</span>
+                      <span aria-hidden="true">· you</span>
                     </span>
                   ) : null}
-                </li>
-              );
-            })}
-          </ol>
-        </div>
+                </span>
+                {reached && !isCurrent ? (
+                  <span
+                    role="img"
+                    aria-label="Reached"
+                    className="ml-auto font-mono text-[10px] text-[var(--sky-ink-muted)]"
+                  >
+                    <span aria-hidden="true">✓</span>
+                  </span>
+                ) : null}
+              </li>
+            );
+          })}
+        </ol>
       </div>
 
       {/* Constellation grid + Chronicle */}

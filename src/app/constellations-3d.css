@@ -1,0 +1,219 @@
+/* ═══════════════════════════════════════════════════════════════════
+   ADROIT LEARN — IMMERSIVE 3D CONSTELLATIONS · EXECUTION TOKENS + CHROME
+   design/t_89b4bfbf/design-tokens-3d.css (kara) · steel · 2026-09-02
+   ADDITIVE on the shipped semantic system in globals.css +
+   constellations.css. NOTHING replaces shipped tokens. The 3D scene
+   (react-three-fiber) reads these vars directly; the DOM HUD chrome
+   (tooltip, minimap, loading) uses the .cx3d-* classes.
+   ═══════════════════════════════════════════════════════════════════ */
+
+@theme inline {
+  /* ── 1. STAR COLOR TEMPERATURES (the core 3D decision) ─────────
+     cold → fire arc, physically grounded under UnrealBloom:
+     unlit = pale cool pinprick (NO bloom) · current = cyan pulse (low bloom)
+     · ignited = warm golden-white bloom (medium) · complete = white-hot
+     finish-line (highest bloom; NOT red — red is brand chrome only). */
+  --star-unlit: #7DD3FC;
+  --star-current: #4FC3F7;
+  --star-ignited-core: #FFF7E6;
+  --star-ignited: #FFC46B;
+  --star-complete: #FFF1D8;
+  --star-line: rgba(125, 211, 252, 0.35);
+
+  /* ── 2. BLOOM (UnrealBloom params, design tokens) ───────────── */
+  --bloom-strength: 0.7;
+  --bloom-threshold: 0.85;
+  --bloom-radius: 0.5;
+
+  /* ── 3. NEBULA PALETTE (restrained — NOT generic space) ─────── */
+  --nebula-base: #0B1D3A;
+  --nebula-cool: rgba(79, 195, 247, 0.10);
+  --nebula-deep: rgba(109, 91, 208, 0.08);
+  --nebula-warm: rgba(240, 184, 58, 0.06);
+
+  /* ── 4. RANK → GALAXY ILLUMINATION (arch ladder, DISPLAY ONLY) */
+  --galaxy-illumination-starseed: 0.10;
+  --galaxy-illumination-wayfarer: 0.30;
+  --galaxy-illumination-explorer: 0.55;
+  --galaxy-illumination-polestar: 0.80;
+  --galaxy-illumination-celestial: 1.00;
+
+  /* ── 5. SCENE PARAMS (r3f / drei) ───────────────────────────── */
+  --star-size-unlit: 0.5;
+  --star-size-current: 0.8;
+  --star-size-ignited: 1.0;
+  --star-size-complete: 1.2;
+  --star-hover-scale: 1.35;
+  --line-opacity: 0.35;
+  --camera-fly-ms: 600;
+  --camera-galaxy-ms: 800;
+  --ignition-stagger-ms: 120;
+}
+
+/* ── DARK REMAP (matches existing html.dark signal overrides) ──── */
+html.dark {
+  --star-unlit: #9BD8F5;
+  --star-current: #22D3EE;
+  --star-ignited-core: #FFF7E6;
+  --star-ignited: #F0B83A;
+  --star-complete: #FFF6E8;
+  --star-line: rgba(125, 211, 252, 0.40);
+  --nebula-base: #070B14;
+  --nebula-cool: rgba(79, 195, 247, 0.12);
+  --nebula-deep: rgba(109, 91, 208, 0.10);
+  --nebula-warm: rgba(240, 184, 58, 0.08);
+}
+
+/* ── Scene container (Learn aside + profile galaxy) ────────────── */
+.cx3d-scene {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: var(--radius-panel, 20px);
+  overflow: hidden;
+  /* the 3D scene is the imagery — no flat CSS gradient needed */
+}
+.cx3d-scene > canvas,
+.cx3d-scene .cx3d-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.cx3d-scene--galaxy {
+  min-height: min(480px, 52vh);
+  aspect-ratio: 16 / 9;
+}
+
+/* ── r3f canvas shell ──────────────────────────────────────────── */
+.cx3d-canvas {
+  position: absolute;
+  inset: 0;
+  background: var(--nebula-base);
+  border-radius: var(--radius-panel, 20px);
+  overflow: hidden;
+}
+
+/* ── Loading sky ("materializing" state before renderer live) ──── */
+.cx3d-loading {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: radial-gradient(120% 120% at 50% 40%, #0b1d3a 0%, #070b14 100%);
+  transition: opacity 0.6s ease;
+}
+.cx3d-loading-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--sky-ink-muted);
+}
+.cx3d-loading-stars {
+  display: flex;
+  gap: 6px;
+}
+.cx3d-loading-stars span {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--star-unlit);
+  animation: cx3d-shimmer 1.4s ease-in-out infinite;
+}
+.cx3d-loading-stars span:nth-child(2) { animation-delay: 0.2s; }
+.cx3d-loading-stars span:nth-child(3) { animation-delay: 0.4s; }
+.cx3d-loading-stars span:nth-child(4) { animation-delay: 0.6s; }
+@keyframes cx3d-shimmer {
+  0%, 100% { opacity: 0.25; transform: scale(0.8); }
+  50% { opacity: 1; transform: scale(1.2); }
+}
+
+/* ── Star tooltip (2D overlay anchored to a star's screen pos) ─── */
+.cx3d-tooltip {
+  position: absolute;
+  z-index: 20;
+  pointer-events: none;
+  transform: translate(-50%, -110%);
+  background: rgba(6, 15, 31, 0.85);
+  border: 1px solid var(--star-line);
+  border-radius: 10px;
+  padding: 8px 12px;
+  color: var(--sky-ink, #fff);
+  font-size: 12.5px;
+  line-height: 1.4;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(6px);
+  white-space: nowrap;
+}
+.cx3d-tooltip .cx3d-tooltip-kicker {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--star-current);
+  margin-bottom: 2px;
+}
+.cx3d-tooltip-state { color: var(--sky-ink-muted); }
+
+/* ── Minimap (profile galaxy sector dots) ─────────────────────── */
+.cx3d-minimap {
+  position: absolute;
+  z-index: 15;
+  bottom: 16px;
+  right: 16px;
+  width: 160px;
+  height: 160px;
+  border-radius: 12px;
+  background: rgba(6, 15, 31, 0.6);
+  border: 1px solid var(--star-line);
+  backdrop-filter: blur(4px);
+}
+.cx3d-minimap-title {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--sky-ink-muted);
+  padding: 10px 10px 0;
+}
+.cx3d-minimap-dot {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: transform 0.15s ease;
+  border: none;
+  padding: 0;
+}
+.cx3d-minimap-dot:hover { transform: scale(1.4); }
+.cx3d-minimap-dot.is-lit { background: var(--star-ignited); box-shadow: 0 0 6px var(--star-ignited); }
+.cx3d-minimap-dot.is-current { background: var(--star-current); box-shadow: 0 0 6px var(--star-current); }
+.cx3d-minimap-dot.is-unlit { background: var(--star-unlit); opacity: 0.5; }
+.cx3d-minimap-dot.is-active { outline: 2px solid var(--sky-ink); outline-offset: 1px; }
+
+/* ── Rank ladder → galaxy illumination (reuses 2D cx-rung) ─────── */
+.cx3d-rung { display: flex; align-items: center; gap: 12px; padding: 12px 14px; border-radius: 10px; }
+.cx3d-rung.is-current { background: var(--surface-card-soft); box-shadow: inset 3px 0 0 var(--accent); }
+.cx3d-rung.is-current .cx3d-rung-name { color: var(--accent-on-tint); font-weight: 700; }
+.cx3d-rung-mag { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
+
+/* ── Reduced motion (global) ──────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .cx3d-canvas,
+  .cx3d-tooltip,
+  .cx3d-minimap-dot,
+  .cx3d-loading,
+  .cx3d-loading-stars span {
+    transition: none !important;
+    animation: none !important;
+  }
+}
