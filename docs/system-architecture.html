@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Immersive Three.js Constellations — Implementation Plan</title>
+<title>deep-sky — Profile Galaxy Navigation (Sky Roads) — System Architecture</title>
 <style>
   :root {
     --primary: #1a1a2e;
@@ -79,113 +79,154 @@
 <header>
   <div class="container">
     <div class="badge badge-adroit">Adroit Consulting</div>
-    <h1>Immersive Three.js Constellations — Implementation Plan</h1>
+    <h1>deep-sky — Profile Galaxy Navigation (Sky Roads) — System Architecture</h1>
     <div class="meta">
       <span>📅 September 02, 2026</span>
-      <span>📋 Adroit Blog · Adroit Learn</span>
-      <span>👤 Brainiac (Solution Architect)</span>
-      <span>📄 v1.0</span>
+      <span>📋 adroit-blog</span>
+      <span>👤 brainiac (Fortress of Solitude Consulting)</span>
+      <span>📄 deep-sky v1.2.0</span>
     </div>
   </div>
 </header>
 
 <main class="container">
-<h2>Summary</h2>
-<p>Immersive upgrade to the shipped <strong>Constellations + Chronicle</strong> system. Two surfaces: the <strong>on-course tracker</strong> (Learn course page, real 3D constellation with UnrealBloom, ignition sequence, hover + click-to-fly) and the <strong>profile galaxy</strong> (every course a 3D sector, navigable via damped camera flight + minimap, rank ladder maps to galaxy illumination). Engine is LOCKED to Three.js via react-three-fiber + drei + @react-three/postprocessing. D3 is not in the main path.</p>
+<section>
+  <h2>Overview</h2>
+  <p><strong>Release:</strong> deep-sky v1.2.0 &middot; <strong>Tenant:</strong> adroit-blog &middot; <strong>Surface:</strong> /profile &quot;Your Sky&quot;</p>
+  <p><strong>Architect:</strong> brainiac (t_2156deb1) &middot; <strong>Pipeline:</strong> design (kara, t_ea789325) &rarr; arch (this card) &rarr; build (steel, t_62a40095)</p>
+  <p>The navigable profile galaxy reboot. The shipped <code>ProfileScene</code>/<code>ProfileGalaxy3D</code> renders every course's constellation at full fidelity simultaneously &mdash; the exact &quot;dense, non-navigable jumble of dots&quot; Chris rejected. The reboot is a <strong>compositional change</strong>: stop showing everything at once, and give the sky a guided-map structure like a video-game world map. This arch targets kara's FRESH &quot;Sky Roads&quot; concept tokens, NOT the stale rejected generic-space direction.</p>
+  <p><strong>Engine LOCKED:</strong> Three.js via react-three-fiber + drei + @react-three/postprocessing (UnrealBloom). Custom GLSL/GPU-first where it matters. Next.js app (16.3.0, App Router).</p>
+</section>
 
-<h2>State of the codebase</h2>
-<p>A working 3D scaffold already exists in <code>src/components/Constellations/3d/</code>. Verified: tsc clean, 17/17 model + DOM tests pass, all three/r3f deps installed, Learn page and FullSkySection already wired. This scaffold is the <strong>reference implementation shape</strong> — steel finalizes and completes it, not greenfield.</p>
-<p><strong>Two gaps the architecture closes (steel's work):</strong></p>
-<ul>
-<li><strong>G1 — <code>article</code> event type not real.</strong> The profile galaxy is spec'd to scatter free-floating stars from blog article reads via a new <code>article</code> completion event. Today <code>galaxy-model.ts</code> fabricates them from <code>lesson</code> rows (wrong data). A migration widens the <code>event_type</code> CHECK to <code>'article'</code>; a write site logs blog reads; the model sources real article stars.</li>
-<li><strong>G2 — <code>prefers-reduced-motion</code> inert.</strong> The gate exists in scene code but defaults to <code>false</code> and is never bound to <code>matchMedia('(prefers-reduced-motion: reduce)')</code>. A <code>usePrefersReducedMotion</code> hook wires it through both public entries.</li>
-</ul>
+<section>
+  <h2>Component Architecture</h2>
+  <p>All paths under <code>src/components/Constellations/3d/</code> unless noted. Public entry components are lightweight and server-page-safe; the full three/r3f stack is <code>next/dynamic(..., { ssr: false })</code> behind them so blog pages never pull three.</p>
+<pre>src/components/Constellations/3d/
+├── ProfileGalaxy3D.tsx        PUBLIC entry (unchanged). Lazy-imports canvas + scene;
+│                              WebGL gate → fallback2D; hosts scene + HUD; owns
+│                              sector → learn navigation.
+├── ProfileScene.tsx           r3f galaxy scene (REWRITTEN to LOD): the focused
+│                              constellation at full fidelity + ConstellationGlyph
+│                              nodes + SkyRoad + WaypointReticle + CameraRig.
+├── ConstellationGlyph.tsx      (NEW) LOD node — bright-anchor asterism at --glyph-scale,
+│                              status halo + progress arc + name label. Clickable.
+├── SkyRoad.tsx                (NEW) additive route line; traveled warm gold,
+│                              untraveled faint cool dashed.
+├── WaypointReticle.tsx        (NEW) pulsing cyan ring + "NEXT · [course]" tag.
+├── CameraRig.tsx              (NEW) dolly-and-tilt flight controller.
+├── SkyChart.tsx               (NEW, replaces SectorMinimap) mini sky-road map.
+├── ConstellationCard.tsx      (NEW, replaces StarTooltip) contextual info card.
+├── JourneyRail.tsx            (NEW) horizontal waypoint strip in road order.
+├── RankChip.tsx               (NEW) "EXPLORER · 55% lit" (Monitor aggregate).
+├── Legend.tsx                 (NEW) collapsible state key.
+├── galaxy-model.ts            PURE (EXTENDED): sectors + glyph + focus + road +
+│                              frontierSlug + articles. SSR-safe, unit-tested.
+├── star-model.ts              PURE (unchanged): Star3D, OBAFGKM arc, no-red palette.
+├── asterism-data.ts           PURE (unchanged): real asterisms, projectAsterism,
+│                              overlayAsterism. Glyph subset = magnitude &lt; 3.5.
+├── ConstellationCanvas.tsx    r3f &lt;Canvas&gt; shell (unchanged): EffectComposer, dpr cap,
+│                              WebGL gate, LoadingSky.
+├── IgnitedStar.tsx            layered-light star sprite (unchanged) — focused
+│                              constellation's member stars.
+├── usePrefersReducedMotion.ts hook (unchanged, G2 closed).
+├── glow-texture.ts / webgl.ts / LoadingSky.tsx   unchanged.
+└── constellations-3d.test.tsx  tests extended for road/frontier/glyph (pure) + HUD.</pre>
+  <p><strong>Responsibilities boundary:</strong> pure-model files (<code>galaxy-model</code>, <code>star-model</code>, <code>asterism-data</code>) are testable and SSR-safe; scene + shader files are browser-only; the two public entries are the only server-page-facing surface. Keeps three out of the server bundle.</p>
+</section>
 
-<h2>Stack</h2>
-<ul>
-<li><strong>Three.js</strong> <code>three@0.185.1</code> — core renderer</li>
-<li><strong>react-three-fiber</strong> <code>@react-three/fiber@9.7.0</code> — declarative React renderer</li>
-<li><strong>drei</strong> <code>@react-three/drei@10.7.8</code> — <code>&lt;Stars&gt;</code> field, helpers</li>
-<li><strong>postprocessing</strong> <code>@react-three/postprocessing@3.1.1</code> — <code>UnrealBloom</code> + <code>Vignette</code> via <code>EffectComposer</code></li>
-<li><strong>maath</strong> <code>0.10.8</code> — easing/damp math</li>
-<li><strong>Next.js</strong> 16.3.0 App Router, TypeScript 5</li>
-</ul>
+<section>
+  <h2>Data Flow</h2>
+  <p><strong>Constellation lighting source of truth (deep-sky v1.2.0 / ADR-211):</strong> the CURRENT set of completed lessons comes from <code>lesson_completion</code> (via <code>getCompletedLessonSlugs</code> in <code>src/lib/completion.ts</code>) &mdash; the SAME source the on-course tracker <code>/learn/[series]</code> reads. This is the completion-sync fix. Both surfaces stay consistent after a mark OR an unmark, because an unmark deletes the <code>lesson_completion</code> row (which the immutable <code>completion_events</code> log does not).</p>
+  <p><strong><code>completion_events</code> role:</strong> the append-only HISTORICAL log used to derive rank / streak / chronicle (<code>deriveProgress</code>). It is NOT used to light constellations &mdash; unmarking a lesson would otherwise leave a stale <code>lesson</code> event and the profile sky would show it lit forever.</p>
+<pre>lesson_completion (current-state store, migration 001)   ← constellation LIGHTING
+   │  getCompletedLessonSlugs(userId) → Set&lt;lesson_slug&gt;
+   ├──► on-course tracker /learn/[series]  (loadSeriesConstellation → buildConstellation)
+   └──► profile sky /profile               (loadProfileSky → buildConstellation)
+          buildGalaxyModel maps each course → a galaxy SECTOR (state from lit/total + cert)
 
-<h2>Component map</h2>
-<p>All under <code>src/components/Constellations/3d/</code>. Public entries are lightweight and server-page-safe; the full three/r3f stack is <code>next/dynamic(..., { ssr: false })</code> behind them so blog pages never pull three.</p>
-<table>
-<thead><tr><th>File</th><th>Responsibility</th><th>Layer</th></tr></thead>
-<tbody>
-<tr><td><code>ConstellationCanvas.tsx</code></td><td>r3f Canvas shell: UnrealBloom EffectComposer, drei Stars field, dpr cap [1,2], WebGL gate, LoadingSky until first frame</td><td>scene host</td></tr>
-<tr><td><code>SeriesConstellation3D.tsx</code></td><td>PUBLIC on-course entry. Lazy-imports canvas + scene; 2D fallback on no-WebGL; hosts tooltip; owns lesson navigation</td><td>public entry</td></tr>
-<tr><td><code>SeriesScene.tsx</code></td><td>On-course scene: Star3D set, IgnitedStar per star + additive rails, ignition (120ms stagger), damped drift + parallax, raycast hover / click-to-fly</td><td>scene</td></tr>
-<tr><td><code>ProfileGalaxy3D.tsx</code></td><td>PUBLIC profile-galaxy entry. Lazy-imports canvas + scene; fallback2D on no-WebGL; SectorMinimap + chrome overlay; sector navigation</td><td>public entry</td></tr>
-<tr><td><code>ProfileScene.tsx</code></td><td>Galaxy scene: SectorConstellation per course on XZ ring, free-floating article stars, damped camera flight, rank → illumination</td><td>scene</td></tr>
-<tr><td><code>IgnitedStar.tsx</code></td><td>One star as layered additive LIGHT (bloom + mid + core sprites), per-star temp/size/twinkle, raycast hover lift + click → slug</td><td>star</td></tr>
-<tr><td><code>star-model.ts</code></td><td>PURE: ConstellationState → Star3D[] (state ladder, deterministic positions, palette, twinkle)</td><td>model (SSR-safe)</td></tr>
-<tr><td><code>galaxy-model.ts</code></td><td>PURE: courses → sector ring, rank → illumination, article stars, sector → minimap coords</td><td>model (SSR-safe)</td></tr>
-<tr><td><code>glow-texture.ts</code></td><td>Shared 128px radial-gradient procedural sprite texture (cached)</td><td>support</td></tr>
-<tr><td><code>webgl.ts</code></td><td>SSR-safe WebGL support detection, injectable for tests</td><td>support</td></tr>
-<tr><td><code>LoadingSky.tsx</code></td><td>Shimmer fallback (cx3d-loading) while the chunk loads / not ready</td><td>support</td></tr>
-<tr><td><code>SectorMinimap.tsx</code></td><td>DOM minimap overlay: one dot per sector, click-to-fly</td><td>DOM HUD</td></tr>
-<tr><td><code>StarTooltip.tsx</code></td><td>DOM tooltip anchored to a star's screen %, cx3d-tooltip token</td><td>DOM HUD</td></tr>
-<tr><td><code>constellations-3d.test.tsx</code></td><td>17 tests: pure models, WebGL gate, DOM HUD chrome</td><td>test</td></tr>
-</tbody>
-</table>
-<p><strong>Boundary:</strong> pure-model files are testable and SSR-safe; scene files are browser-only; the two public entries are the only server-page-facing surface.</p>
+completion_events (append-only log, RLS owner-scoped)     ← rank / streak / chronicle
+   ├── lesson + course events ──► deriveProgress ──► rank (RankId) ──► RANK_ILLUMINATION
+   └── article rows (G1) ──► free-floating ArticleStar[] in the galaxy interior</pre>
+  <p><strong>Course &rarr; constellation mapping (authored, not derived):</strong> each course maps to a real named constellation whose (Bayer-designated) member stars are authored with real coordinates, spectral class, and apparent magnitude (already in <code>asterism-data.ts</code>: Salesforce Architect &rarr; Orion, Agentic AI &rarr; Cassiopeia). Lesson count = member-star count used; overflow maps to progressively fainter real members. The glyph's recognizable figure = the bright anchors (magnitude &lt; 3.5), the same set <code>projectAsterism</code> uses to frame the figure.</p>
+  <p><strong>Note on the task brief's phrasing:</strong> the brief says &quot;profile galaxy sources from <code>completion_events</code> (single source of truth)&quot;. That phrasing predates the completion-sync fix. The accurate, current wiring is: <strong>constellation lighting reads <code>lesson_completion</code></strong> (shared with the on-course tracker), while <strong><code>completion_events</code> remains the source for rank/streak/chronicle</strong>. This is the correct, consistent wiring and satisfies AC-4.</p>
+</section>
 
-<h2>Data flow</h2>
-<p>Source of truth remains the <code>completion_events</code> log (owner-scoped via RLS).</p>
-<ul>
-<li><strong>completion_events → lit stars:</strong> <code>course_id</code> + <code>lesson_slug</code> on lesson rows feed <code>buildConstellation</code> (src/lib/sky.ts) → ConstellationState.stars[].lit; the on-course SeriesScene draws lit stars ignited and the current slug pulses cyan.</li>
-<li><strong>course → constellation:</strong> <code>course_id</code> aggregation → ConstellationState.complete / litStars; <code>buildGalaxyModel</code> maps each course to a 3D galaxy SECTOR.</li>
-<li><strong>blog-article stars (NEW, G1):</strong> <code>event_type 'article'</code> rows scatter free-floating ArticleStar[] in the galaxy interior, sourced in the model from the chronicle.</li>
-<li><strong>rank → illumination:</strong> lesson + course counts → deriveRank → RankId → RANK_ILLUMINATION (Starseed 0.10 → Celestial 1.00) drives overall galaxy luminance.</li>
-</ul>
+<section>
+  <h2>Architecture Decision Records (ADRs)</h2>
+  <table>
+    <thead><tr><th>ID</th><th>Decision</th><th>Context</th><th>Consequence</th></tr></thead>
+    <tbody>
+      <tr><td>ADR-301</td><td>Three.js (r3f) over D3/SVG</td><td>Bloom, depth, parallax, camera flight; D3 renders flat charts (engine LOCKED)</td><td>~150-600KB bundle, MUST be lazy-loaded, not server render</td></tr>
+      <tr><td>ADR-306</td><td>Custom GLSL + GPU-first over stock drei + single bloom</td><td>Stock helpers read as tutorial-level; need per-star variance at scale, procedural nebula, cinematic depth</td><td>Shader authoring + testing; GLSL in exported string files</td></tr>
+      <tr><td>ADR-307</td><td>Real-astronomy grounding over invented/generic space</td><td>States, colors, asterism geometry map to real constellations, spectral classes, stellar evolution</td><td>Authored real-asterism data at the loader; no invented scatter</td></tr>
+      <tr><td>ADR-302</td><td>Stars as layered additive light, never drawn strokes</td><td>A lit star is a white-hot core over a tinted glow over a soft bloom</td><td>Layered additive glow sprites; per-star variation</td></tr>
+      <tr><td>ADR-303</td><td>Red is brand chrome, never a general star colour</td><td>Red reads as alert; lit/captured stars are warm luminous</td><td>Betelgeuse accuracy exception only</td></tr>
+      <tr><td>ADR-304</td><td>completion_events stays the sole source of truth; article added additively</td><td>No per-kind tables; RLS + idempotent write extends to article (G1)</td><td>CHECK-widening migration</td></tr>
+      <tr><td>ADR-305</td><td>Pure model layer, dumb scenes</td><td>star-model / galaxy-model derive geometry deterministically, no three imports</td><td>Scene files are thin converters; all design math unit-tested</td></tr>
+      <tr><td>ADR-211</td><td>Constellation lighting reads lesson_completion, not completion_events</td><td>Append-only log is immutable; unmark deletes the lesson_completion row but keeps the event</td><td>Both surfaces read getCompletedLessonSlugs; consistent after mark OR unmark</td></tr>
+      <tr><td>ADR-308</td><td>Galaxy contracts in src/shared/contracts-galaxy.ts, not contracts.ts</td><td>contracts.ts is owned by the quiz-tier arch (t_cf2e9661), documented DO NOT EDIT</td><td>Dedicated domain-suffixed file; avoids a collision hotspot</td></tr>
+      <tr><td>ADR-309</td><td>LOD galaxy: one focused constellation + glyph nodes</td><td>Full-fidelity-everything is the rejected jumble; one rich constellation + legible glyphs stays readable</td><td>GalaxySector.glyph (bright-anchor subset) + focus</td></tr>
+      <tr><td>ADR-310</td><td>Sky Road + Frontier Waypoint as guided-map navigation</td><td>Catmull-Rom route threads sectors in journey order; frontier carries pulsing cyan reticle + NEXT tag</td><td>SkyRoad + frontierSlug in the pure model; WaypointReticle + CameraRig in the scene</td></tr>
+    </tbody>
+  </table>
+</section>
 
-<h2>Performance strategy</h2>
-<ul>
-<li><strong>Sprite stars, never individual meshes at scale.</strong> IgnitedStar renders 3 additive sprites per star — fine for the ~29-lesson tracker; galaxy caps sectors (~4-9 stars each) and 24 article stars. If a course exceeds ~60 stars, <code>Points</code> with per-point attributes is the scale-up path.</li>
-<li><strong>DPR cap 2:</strong> <code>dpr={[1,2]}</code>, <code>powerPreference: 'high-performance'</code>.</li>
-<li><strong>Lazy-load:</strong> the entire three/r3f chunk behind <code>next/dynamic(..., { ssr: false })</code>; blog pages never import three.</li>
-<li><strong>frameloop:</strong> render loop is cheap (sprite useFrame + damped lerps); add <code>frameloop="demand"</code> only if profiling shows a hot idle loop.</li>
-<li><strong>Reduced motion (G2):</strong> hook drives staticMode, skips ignition, disables drift/parallax, settles the camera. The tokens' media query zeroes DOM transitions + shimmer.</li>
-</ul>
+<section>
+  <h2>Schema Changes</h2>
+  <p>No new tables. The deep-sky galaxy build is additive on the existing schema:</p>
+  <ul>
+    <li><strong>lesson_completion</strong> (migration 001) &mdash; unchanged; the current-state store for constellation lighting (shared with on-course).</li>
+    <li><strong>completion_events</strong> &mdash; unchanged for this card; the append-only log for rank/streak/chronicle. The <code>article</code> event type (G1) is a separate follow-up migration (widens the event_type CHECK) and is NOT in this card's scope.</li>
+    <li><strong>No DB migration required</strong> for the navigable galaxy &mdash; all new state (road, frontier, glyph, focus) is derived in the pure model layer from the existing ProfileSky payload.</li>
+  </ul>
+</section>
 
-<h2>Bundle weight</h2>
-<p>three (~150-600KB gzipped) sits behind the dynamic import. Public entries ship a few-KB shell; the heavy r3f chunk loads only on <code>/learn/[series]</code> and <code>/profile</code>. Blog, home, hub, tags, search, and the certificate page stay three-free. The WebGL gate means no-WebGL clients download nothing extra (chunk never requested when the gate is false).</p>
+<section>
+  <h2>Tech Decisions</h2>
+  <table>
+    <thead><tr><th>Decision</th><th>Rationale</th><th>Alternatives</th></tr></thead>
+    <tbody>
+      <tr><td>LOD galaxy (one focused constellation + glyph nodes)</td><td>Kills the rejected jumble; the eye is never asked to parse hundreds of simultaneous stars</td><td>Full-fidelity-everything (rejected), flat 2D list</td></tr>
+      <tr><td>Sky Road + Frontier Waypoint</td><td>Guided-map feel; clear click affordance and &quot;what to do next&quot; answer</td><td>Equal-angular ring (no journey), bare minimap</td></tr>
+      <tr><td>Dolly-and-tilt CameraRig</td><td>Floating-in-space flight, not a bare position lerp</td><td>Position lerp + lookAt(0,0,0) (rejected)</td></tr>
+      <tr><td>Pure model layer (road/frontier/glyph in galaxy-model.ts)</td><td>SSR-safe, unit-tested, shared by scene + HUD + tests</td><td>Deriving in scene components (untestable)</td></tr>
+      <tr><td>Constellation lighting from lesson_completion</td><td>Consistent with on-course after mark OR unmark (completion-sync fix)</td><td>completion_events (stale lit star on unmark)</td></tr>
+      <tr><td>contracts-galaxy.ts (dedicated file)</td><td>Follows domain-suffixed convention; avoids collision with quiz-tier contracts.ts</td><td>contracts.ts (owned by another arch task)</td></tr>
+    </tbody>
+  </table>
+</section>
 
-<h2>ADR table</h2>
-<table>
-<thead><tr><th>ID</th><th>Title</th><th>Decision</th><th>Consequence</th></tr></thead>
-<tbody>
-<tr><td>ADR-301</td><td>Three.js (r3f) over D3/SVG for the immersive layer</td><td>r3f + drei + postprocessing (engine LOCKED)</td><td>~150-600KB bundle that MUST be lazy-loaded; not server-rendered</td></tr>
-<tr><td>ADR-302</td><td>Stars as layered additive light, never drawn strokes</td><td>3 additive sprites per star (bloom + mid + core)</td><td>Scale sensitivity mitigated by caps</td></tr>
-<tr><td>ADR-303</td><td>Red is brand chrome, never a star colour</td><td>Lit stars warm-white/gold luminous</td><td>Galaxy never uses --accent on a star</td></tr>
-<tr><td>ADR-304</td><td>completion_events stays the sole source of truth; article added additively</td><td>Widen event_type CHECK to 'article', idempotent write site</td><td>CHECK-widening migration; galaxy depends on the write site existing before real article stars render</td></tr>
-<tr><td>ADR-305</td><td>Pure model layer, dumb scenes</td><td>star-model / galaxy-model derive deterministically, no three imports</td><td>HUD chrome + tests share one SSR-safe source; all design math unit-tested</td></tr>
-</tbody>
-</table>
+<section>
+  <h2>Build Decomposition</h2>
+  <p>Three sub-tasks (~35 turns each), each with exact file scope, contracts implemented/consumed, and dependencies. Full plan posted as the <code>decomposition-plan:</code> comment on t_2156deb1.</p>
+  <table>
+    <thead><tr><th>#</th><th>Task</th><th>File scope</th><th>Contracts</th><th>Depends on</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>Pure model + contracts</td><td>galaxy-model.ts (glyph, focus, road, frontierSlug), contracts-galaxy.ts (written), tests</td><td>Implements: GlyphStar, GalaxySectorNav, SkyRoad, FrontierSlug, GalaxyModel</td><td>none</td></tr>
+      <tr><td>2</td><td>Scene LOD + road + waypoint + camera</td><td>ProfileScene.tsx (rewrite), ConstellationGlyph.tsx, SkyRoad.tsx, WaypointReticle.tsx, CameraRig.tsx</td><td>Consumes: GalaxySectorNav, SkyRoad, GalaxyNavigationState; implements scene props</td><td>1</td></tr>
+      <tr><td>3</td><td>HUD + a11y + responsive</td><td>SkyChart.tsx, ConstellationCard.tsx, JourneyRail.tsx, RankChip.tsx, Legend.tsx, ProfileGalaxy3D.tsx wiring</td><td>Consumes: SkyChartProps, ConstellationCardProps, JourneyRailProps, RankChipProps, LegendProps</td><td>1, 2</td></tr>
+    </tbody>
+  </table>
+</section>
 
-<h2>Schema changes</h2>
-<ul>
-<li><strong>G1 (follow-up migration):</strong> drop + re-add <code>completion_events.event_type</code> CHECK to include <code>'article'</code> (Postgres limitation, same pattern as migration 010). Existing rows unchanged.</li>
-<li>No new tables. Article events reuse the idempotent (user + event_type + lesson_slug) write guard; RLS (select-own / insert-own) is unchanged.</li>
-</ul>
+<section>
+  <h2>Handoff Guide for Kara (designer)</h2>
+  <p>Kara's &quot;Sky Roads&quot; concept (t_ea789325) is the source of truth for the fresh tokens. The arch targets those tokens directly:</p>
+  <ul>
+    <li><strong>Design tokens:</strong> <code>design/t_ea789325/design-tokens-sky-roads.css</code> &mdash; road (traveled/untraveled), waypoint ring, node states, progress arc, LOD (glyph-scale, focus-fill), camera (fly-dolly/arc-ms, overview-drift), HUD chrome. Every token ships an <code>html.dark</code> remap.</li>
+    <li><strong>Component spec:</strong> <code>design/t_ea789325/component-spec-sky-roads.md</code> &mdash; the LOD decomposition, state matrix, camera flight spec, a11y. The arch encodes these as the contracts in <code>contracts-galaxy.ts</code>.</li>
+    <li><strong>Mockups:</strong> <code>design/t_ea789325/mockups/</code> (desktop overview, desktop approach, mobile 375) &mdash; the visual target steel verifies against.</li>
+    <li><strong>No renames:</strong> every component name/type maps to the contracts; steel does not rename. Use <code>RankBand</code>/<code>Rank</code>/<code>LadderProgress</code> for the ladder.</li>
+    <li><strong>Rejection floor:</strong> if the build reads as generic space, clip-art circles, or a first-year demo, it is rejected. The AC-7 wow bar (&ge;4/6) is non-negotiable.</li>
+  </ul>
+</section>
 
-<h2>Implementation steps → steel (t_07f0daca)</h2>
-<ol>
-<li><strong>Close G2 reduced-motion</strong> — add <code>usePrefersReducedMotion</code> hook; wire into SeriesConstellation3D + ProfileGalaxy3D. Depends: none.</li>
-<li><strong>Close G1 article event</strong> — migration widening event_type + blog-read write site + galaxy-model sourcing from article rows. Depends: none (parallel with 1).</li>
-<li><strong>Integrate + verify</strong> — full build, full suite, reduced-motion check, WebGL-fallback check, no-three-on-blog bundle trace. Depends: 1 + 2.</li>
-</ol>
-<p>Steel's work is <strong>closure, not greenfield</strong> — the scaffold already passes 17 tests + typecheck; steel completes the two gaps and verifies the whole surface against the acceptance criteria. Kara's visual language is approved and must not be re-derived.</p>
 </main>
 
 <footer>
   <div class="container">
     <p><strong>Fortress of Solitude Consulting</strong> — a division of Adroit Consulting Group</p>
-    <p>Confidential — prepared for Steel (build window) + Kara (design)</p>
+    <p>Confidential — prepared for Adroit Learn</p>
   </div>
 </footer>
 </body>
