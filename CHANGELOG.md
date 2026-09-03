@@ -9,6 +9,36 @@ Baseline v1.0.0 — Omni content + course-structure/cert-standards bar + Constel
 
 ## [Unreleased]
 
+### deep-sky v1.2.0 — Profile galaxy navigation ("Sky Roads") (t_62a40095)
+
+**What** — made `/profile` "Your Sky" a navigable, guided-map galaxy per kara's
+approved design + brainiac's arch (design/t_ea789325). Extended the pure
+`galaxy-model.ts` with the LOD vocabulary: `glyphFor` (bright-anchor subset,
+magnitude < 3.5, of each real asterism), `buildRoad` (guided Sky Road in
+journey order, traveled warm / untraveled cool, Catmull-Rom sampled curve),
+`frontierSlug` (the "next" beacon), and `withFocus`. The r3f scene
+(`ProfileScene.tsx`) is now LOD: ONE focused constellation at full deep-sky
+fidelity (IgnitedStar + real spectral colors + figure lines) with every other
+sector as a compact `ConstellationGlyph` node (status halo, progress arc,
+certified diamond), the additive `SkyRoad` route line, a pulsing cyan
+`WaypointReticle` on the frontier, and a dolly-and-tilt `CameraRig` (3-phase
+pull-back / arc / settle + FOV breath; reduced motion = static). The HUD layer
+replaces the old minimap/tooltip with `SkyChart` (mini sky-road map, view cone,
+you-are-here pulse), `JourneyRail` (accessible waypoint strip with arrow-key
+nav), `ConstellationCard` (contextual info + Continue CTA), `RankChip`
+("EXPLORER · 55% lit"), and a collapsible `Legend`. All new HUD chrome is pure
+DOM + SSR-safe and ships the sky-roads tokens in `constellations-3d.css`.
+
+**Why** — learners could see stars but not where to go: where each
+constellation sits, how far along it is, and which one to do next. The
+guided-map + frontier beacon turns the sky into navigation.
+
+**Known issues** — `SkyRoad` renders the untraveled base as a solid faint line
+(dash-style only applies on the SkyChart polyline; r3f dashed line needs
+`LineDashedMaterial` with computed distances, deferred); article stars remain
+zero until the article write site lands (G1 source exists in the model); scene
+depth/perf tuning (glyph counts on 375px) is left to perf review.
+
 ### deep-sky v1.2.0 — On-course tracker retune (Orion) (t_081a1ccc)
 
 **What** — ported the approved v2 deep-sky visual base into the real

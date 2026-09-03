@@ -2,8 +2,10 @@
  * ProfileGalaxy3D — public entry for the 3D profile galaxy hero (/profile).
  *
  * Self-contained for a server page: gates on WebGL (falls back to `fallback2D`),
- * lazy-imports the whole three/r3f chunk, hosts the galaxy scene + bloom +
- * sector minimap overlay, and wires minimap clicks to camera flight.
+ * lazy-imports the whole three/r3f chunk, hosts the LOD galaxy scene (focused
+ * constellation full-fidelity + glyph nodes + SkyRoad + frontier reticle) +
+ * bloom, and overlays the deep-sky HUD chrome (SkyChart, JourneyRail,
+ * ConstellationCard, RankChip, Legend). Focus selection flies the camera.
  *
  * This component is the "sky" — the hero IS the starfield. On the profile page
  * it replaces the flat static galaxy with a navigable 3D one; the caller passes
@@ -17,9 +19,13 @@ import { useRouter } from "next/navigation";
 import { useState, useCallback, useMemo } from "react";
 import type { ProfileSky, RankId } from "@/shared/contracts-constellations";
 import { supportsWebGL } from "./webgl";
-import { buildGalaxyModel } from "./galaxy-model";
+import { buildGalaxyModel, rankIllumination } from "./galaxy-model";
 import { usePrefersReducedMotion } from "./usePrefersReducedMotion";
-import { SectorMinimap } from "./SectorMinimap";
+import { SkyChart } from "./SkyChart";
+import { JourneyRail } from "./JourneyRail";
+import { ConstellationCard } from "./ConstellationCard";
+import { RankChip } from "./RankChip";
+import { Legend } from "./Legend";
 import { StarTooltip } from "./StarTooltip";
 import { LoadingSky } from "./LoadingSky";
 import type { SectorHover } from "./ProfileScene";
@@ -57,13 +63,14 @@ export function ProfileGalaxy3D({
   const router = useRouter();
   const [webgl] = useState(() => supportsWebGL());
   const [hover, setHover] = useState<SectorHover | null>(null);
-  const [activeSlug, setActiveSlug] = useState<string | null>(null);
+  const [focusSlug, setFocusSlug] = useState<string | null>(null);
   // G2: bind to the user's motion preference (camera flight/parallax off).
   const reducedMotion = usePrefersReducedMotion();
   const effectiveReducedMotion = prefersReducedMotion || reducedMotion;
 
-  // Minimap dots come from the pure galaxy model (deterministic, no three).
-  const { sectors } = useMemo(
+  // SkyChart dots + road + frontier come from the pure galaxy model
+  // (deterministic, no three).
+  const { sectors, road, frontierSlug } = useMemo(
     () => buildGalaxyModel({ sky, certifiedSeriesSlugs }),
     [sky, certifiedSeriesSlugs],
   );
@@ -72,12 +79,17 @@ export function ProfileGalaxy3D({
 
   const handleSelectSector = useCallback(
     (slug: string) => {
-      setActiveSlug(slug);
+      setFocusSlug(slug);
       if (onSelectSector) onSelectSector(slug);
       else router.push(`/learn/${slug}`);
     },
     [onSelectSector, router],
   );
+
+  const handleReturnToOverview = useCallback(() => setFocusSlug(null), []);
+
+  const focusedSector =
+    sectors.find((s) => s.seriesSlug === focusSlug) ?? null;
 
   if (!webgl) return <>{fallback2D}</>;
 
@@ -96,16 +108,51 @@ export function ProfileGalaxy3D({
           sky={sky}
           rank={rank}
           certifiedSeriesSlugs={certifiedSeriesSlugs}
+          focusSlug={focusSlug}
+          onSettled={undefined}
           onHover={handleHover}
           onSelectSector={handleSelectSector}
           prefersReducedMotion={effectiveReducedMotion}
         />
       </ConstellationCanvas>
-      <SectorMinimap
+
+      {/* Deep-sky HUD chrome (edge-anchored; the sky stays the hero) */}
+      <SkyChart
         sectors={sectors}
-        activeSlug={activeSlug}
+        road={road}
+        focusSlug={focusSlug}
+        frontierSlug={frontierSlug}
         onSelect={handleSelectSector}
       />
+      <JourneyRail
+        sectors={sectors}
+        road={road}
+        focusSlug={focusSlug}
+        frontierSlug={frontierSlug}
+        onSelect={handleSelectSector}
+      />
+      <div className="cx3d-hud-top">
+        <RankChip rank={rank} illuminationPct={rankIllumination(rank)} />
+        <Legend />
+      </div>
+      {focusedSector ? (
+        <ConstellationCard
+          sector={focusedSector}
+          onContinue={() => handleSelectSector(focusedSector.seriesSlug)}
+        />
+      ) : null}
+      {!focusSlug ? (
+        <button
+          type="button"
+          className="cx3d-overview-btn"
+          onClick={handleReturnToOverview}
+          data-testid="cx3d-overview-btn"
+          aria-label="Return to galaxy overview"
+        >
+          Overview
+        </button>
+      ) : null}
+
       {children ? (
         <div className="cx3d-overlay" data-testid="cx3d-galaxy-overlay">
           {children}
