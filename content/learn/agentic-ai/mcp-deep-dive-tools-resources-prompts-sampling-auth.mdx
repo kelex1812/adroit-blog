@@ -56,6 +56,8 @@ The common pitfall is confusing prompts with tools. A tool is invoked by the mod
 
 The first three primitives all flow from client to server. Sampling flips the direction. It lets a server ask the client to run an LLM completion on its behalf, and return the result. [^4]
 
+> **Deprecated as of the 2026-07-28 spec revision.** Sampling is deprecated under SEP-2577. New implementations SHOULD NOT adopt it; existing implementations SHOULD migrate to integrating directly with LLM provider APIs. The mechanics below are still accurate for servers that already use sampling, but do not build a new server around it. [^4]
+
 This matters more than it sounds. A server that can sample can reason, summarize, classify, and plan without holding its own API keys or model access. The client keeps control of model access, selection, and permissions, and the server gets the benefit of AI without the credentials. [^4] The canonical use case is a server that needs to think: it reads a document, then asks the client's model to summarize it, then returns the summary as a tool result. The server never touches an LLM API. [^4]
 
 The flow is a single method. The server sends a `sampling/createMessage` request, and the client, after human review, forwards it to whatever model it is connected to and returns the generation. The response reports the actual model the client used and a stop reason, so the server learns what answered it. [^4]
@@ -90,7 +92,7 @@ Add the resource. Expose the project's schema as a resource at `config://project
 
 Add the prompt. Define a `code_review` prompt with a `file` argument, so a user can select it from a menu, fill in the file to review, and get a well-tested review workflow dropped into the conversation. The prompt can even embed the file as a resource, so the reviewer sees the code it is reviewing. [^3]
 
-Add sampling. Inside `query_issues`, after fetching the raw issues, call `sampling/createMessage` with a request to summarize the results in a few sentences, with `intelligencePriority` weighted high because the summary needs judgment. The server returns the summary as the tool result, and it never needed its own model key. [^4]
+Handle inherited sampling. If you take over a server that already uses sampling, this is how it works: inside `query_issues`, after fetching the raw issues, the server calls `sampling/createMessage` with a request to summarize the results in a few sentences, with `intelligencePriority` weighted high because the summary needs judgment. The server returns the summary as the tool result, and it never needed its own model key. [^4] Remember that sampling is deprecated as of the 2026-07-28 spec revision, so a new server should integrate directly with an LLM provider API instead.
 
 Then secure it. Deploy the server over HTTP, stand up an authorization server, and protect the server as a resource server. The client gets a `401` with a metadata pointer, discovers the authorization server, runs the PKCE flow, and sends a bearer token on every call. The server validates the token's audience and scopes before it lets `query_issues` run. [^5]
 
@@ -114,7 +116,7 @@ The fifth is shipping a remote server with no authorization, or with a broken on
 
 2. **Add a resource and a prompt to your server.** Expose one piece of context as a resource with a custom scheme, and one workflow as a prompt with an argument. Connect a host and confirm the resource shows up as attachable context and the prompt shows up as a selectable command. [^2] [^3]
 
-3. **Add a sampling call.** Pick a tool that returns raw data and have it summarize that data through `sampling/createMessage` instead of returning it verbatim. Set `intelligencePriority` high and confirm the server returns a summary without holding its own model key. [^4]
+3. **Trace an inherited sampling call.** If you take over a server that already uses sampling, trace how it works: pick a tool that returns raw data and see how it summarizes that data through `sampling/createMessage` instead of returning it verbatim, with `intelligencePriority` set high. Confirm the server returns a summary without holding its own model key. [^4]
 
 4. **Protect the server.** Deploy it over HTTP and stand up an authorization server. Confirm an unauthenticated request gets a `401` with a metadata pointer, and that a valid token with the right scope reaches the tool while a token for the wrong audience is rejected. [^5]
 
