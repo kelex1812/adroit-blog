@@ -1,3 +1,4 @@
+import { fileURLToPath } from "node:url";
 import { defineConfig } from "vitest/config";
 import react from "@vitejs/plugin-react";
 
@@ -19,7 +20,13 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      "@": new URL("./src", import.meta.url).pathname,
+      /*
+       * `fileURLToPath`, not `.pathname` — the latter percent-encodes spaces
+       * and keeps a leading slash before the Windows drive letter, so a repo
+       * checked out to a path like "…/Adroit Consulting" resolved every `@/`
+       * import to a directory that does not exist.
+       */
+      "@": fileURLToPath(new URL("./src", import.meta.url)),
     },
   },
 });
