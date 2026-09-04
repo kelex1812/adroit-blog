@@ -37,7 +37,9 @@ replaces colour with a flat tint — cool while a course is in progress, warm go
 once complete. Depth is three pointer-parallax bands over a lit dome, drifting
 nebulae and ~420 seeded stars; motion (twinkle, breathing figures, sparks along
 completed rails, exam pulse, meteors) is CSS only and fully disabled under
-`prefers-reduced-motion`. The WebGL studies remain as contrast references.
+`prefers-reduced-motion`. The four rejected WebGL studies — and their shared
+canvas, shaders, dust volume and control panel — were **deleted**, taking the
+lab from eighteen files to six; git history holds them.
 Route: `src/app/lab/hubble-field/` with `ssr: false`, noindex, robots
 `disallow: /lab/`, and a development-or-`ALLOW_HUBBLE_LAB=1` gate.
 

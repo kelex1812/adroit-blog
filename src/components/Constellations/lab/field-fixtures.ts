@@ -24,8 +24,31 @@ import type {
 } from "@/shared/contracts-constellations";
 import type { Asterism } from "../3d/asterism-data";
 import { asterismFor, projectAsterism } from "../3d/asterism-data";
-import { seededUnit } from "../3d/star-model";
-import type { FigureStar } from "./deep-field-model";
+import type { SpectralClass } from "../3d/star-model";
+
+/**
+ * One member star of a course figure.
+ *
+ * `role` is assigned heuristically here (see `labFigure`) purely so the chart
+ * has a hierarchy to draw. It is **not** production truth — real knowledge
+ * checks and exams are separate entities, derivable from `getKnowledgeChecks()`
+ * and `getCertExam()`. See `docs/implementation-plan-hubble-field.md` §3.1.
+ */
+export interface FigureStar {
+  name: string;
+  position: [number, number, number];
+  spectralClass: SpectralClass;
+  magnitude: number;
+  /** Lesson completed → the star burns; otherwise it is a faint marker. */
+  lit: boolean;
+  /** Whole course complete → lit members run white-hot. */
+  complete?: boolean;
+  /** ADR-303: the one astronomically-real red giant keeps its true tint. */
+  isRedGiantAccent?: boolean;
+  isNebula?: boolean;
+  /** Lessons stay quiet; checks punch; the exam crowns the figure. */
+  role?: "lesson" | "check" | "exam";
+}
 
 /* ------------------------------------------------------------------ */
 /*  Lab-only real asterisms for the five unauthored courses            */
@@ -374,38 +397,4 @@ export function labFigure(fixture: LabCourseFixture, scale = 1): LabFigure {
 /** All seven course figures. */
 export function labFigures(scale = 1): LabFigure[] {
   return LAB_COURSES.map((c) => labFigure(c, scale));
-}
-
-/* ------------------------------------------------------------------ */
-/*  Atlas placement                                                    */
-/* ------------------------------------------------------------------ */
-
-/**
- * Scatter the course sectors through a flattened volume on a golden-angle
- * spiral, with a deterministic per-slug jitter in radius and height.
- *
- * A ring at fixed radius is what made the shipped scene read as a diagram: it
- * gives every course the same distance from camera, so nothing is far away and
- * nothing is approached. Varying radius by roughly 2x means approaching a
- * sector is a real change in scale.
- */
-export function atlasSectorPositions(
-  slugs: readonly string[],
-  opts: { rMin?: number; rMax?: number; spread?: number } = {},
-): Record<string, [number, number, number]> {
-  const { rMin = 20, rMax = 46, spread = 9 } = opts;
-  const golden = Math.PI * (3 - Math.sqrt(5));
-  const out: Record<string, [number, number, number]> = {};
-  slugs.forEach((slug, i) => {
-    const angle = i * golden + seededUnit(`${slug}:atlas:a`) * 0.5;
-    const t = slugs.length > 1 ? i / (slugs.length - 1) : 0;
-    const r = rMin + t * (rMax - rMin) + (seededUnit(`${slug}:atlas:r`) - 0.5) * 6;
-    const y = (seededUnit(`${slug}:atlas:y`) - 0.5) * spread;
-    out[slug] = [
-      Number((Math.cos(angle) * r).toFixed(3)),
-      Number(y.toFixed(3)),
-      Number((Math.sin(angle) * r).toFixed(3)),
-    ];
-  });
-  return out;
 }

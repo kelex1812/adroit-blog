@@ -8,10 +8,30 @@ end-product. This at least is understandable."*
 Read that as: **legible beats ambitious, and the chart is a floor, not a
 ceiling.** Port it, get it in front of real progress data, iterate from there.
 
-**Direction pivot (2026-09-04):** primary look is **Star chart** — a top-down navy + gold celestial atlas plate (Urania’s Mirror / Jamieson cues), not a pitch-black Hubble flythrough. The WebGL studies stay only as contrast references; **the 3D production port described in earlier plan revisions is void.**
+**Direction pivot (2026-09-04):** primary look is **Star chart** — a top-down navy + gold celestial atlas plate (Urania’s Mirror / Jamieson cues), not a pitch-black Hubble flythrough. **The 3D production port described in earlier plan revisions is void.**
 
 Next: `docs/implementation-plan-hubble-field.md` (rewritten chart-first). Its
 §10 holds four open questions that need answers before or during the port.
+
+## Deleted (2026-09-04)
+
+The lab began as four WebGL studies — star material, deep field, volume atlas,
+warp — plus their shared canvas, shaders, dust volume and control panel. They
+were built, reviewed and rejected: faithful to Hubble, unreadable as a progress
+surface. **All of it has been deleted**, taking the lab from eighteen files to
+six. Nothing was kept "just in case"; git history holds it if the reasoning
+ever needs revisiting.
+
+What survives is the chart and the fixtures that feed it:
+
+| File | Role |
+|---|---|
+| `chart-atlas.tsx` | The chart |
+| `chart-2d.css` | Its styles |
+| `chart-sky.ts` | Backdrop maths (pure, tested) |
+| `field-fixtures.ts` | Synthetic courses + the seven asterisms |
+| `HubbleFieldLab.tsx` | Focus state around the chart |
+| `lab.test.ts` | 12 tests |
 
 ## How to review
 
@@ -20,15 +40,7 @@ npm run dev
 → http://localhost:3000/lab/hubble-field
 ```
 
-Start on **Star chart** (default):
-
-| Study | What to judge |
-|---|---|
-| **Star chart** | Is this the product? Navy plate, gold figures, mythic overlays, click-to-focus |
-| **Star material** | Point shader vs shipped sprites (still useful) |
-| **Deep field** | Photographic flythrough — contrast only |
-| **Volume atlas** | Old 3D orbit atlas — contrast only |
-| **Warp** | Framed ↔ fullscreen interaction |
+There are no studies to switch between any more — the chart is the lab.
 
 ## Figure art (2026-09-04)
 
@@ -68,6 +80,6 @@ set is disabled under `prefers-reduced-motion`.
 
 ## After approval
 
-1. Follow `docs/implementation-plan-hubble-field.md` (update for chart-first if needed)
+1. Follow `docs/implementation-plan-hubble-field.md` — rewritten chart-first; §3 is the real work
 2. Port into production profile / series
 3. CHANGELOG + README What’s New on ship only

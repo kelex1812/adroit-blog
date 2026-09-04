@@ -4,20 +4,11 @@
 import { describe, expect, it } from "vitest";
 import {
   LAB_COURSES,
-  atlasSectorPositions,
   labAsterismFor,
   labFigure,
   labFigures,
   labProfileSky,
 } from "./field-fixtures";
-import {
-  buildFigureAttributes,
-  buildShellAttributes,
-  magnitudeHistogram,
-  shellSpecs,
-  spikeWeight,
-} from "./deep-field-model";
-import { DEFAULT_FIELD_PARAMS } from "./FieldControls";
 import {
   SKY_MIN,
   SKY_SPAN,
@@ -74,63 +65,11 @@ describe("field-fixtures", () => {
     expect(unfinished.stars.find((s) => s.role === "exam")?.lit).toBe(false);
   });
 
-  it("places atlas sectors at distinct positions", () => {
-    const pos = atlasSectorPositions(LAB_COURSES.map((c) => c.seriesSlug));
-    const keys = Object.keys(pos);
-    expect(keys).toHaveLength(7);
-    const serialized = keys.map((k) => pos[k]!.join(","));
-    expect(new Set(serialized).size).toBe(7);
-  });
-
   it("builds a synthetic ProfileSky without network", () => {
     const sky = labProfileSky();
     expect(sky.constellations).toHaveLength(7);
     expect(sky.isGuest).toBe(false);
     expect(sky.stats.rank?.id).toBe("explorer");
-  });
-});
-
-describe("deep-field-model", () => {
-  it("builds deterministic shell attributes", () => {
-    const specs = shellSpecs(9000, 12);
-    expect(specs.length).toBe(3);
-    const a = buildShellAttributes(specs[0]!, undefined, "test");
-    const b = buildShellAttributes(specs[0]!, undefined, "test");
-    expect(a.count).toBe(b.count);
-    expect([...a.positions]).toEqual([...b.positions]);
-    expect(a.count).toBeGreaterThan(100);
-  });
-
-  it("keeps most stars in the faint half of the magnitude range", () => {
-    const specs = shellSpecs(12000, 10);
-    const attrs = buildShellAttributes(specs[1]!, undefined, "hist");
-    const hist = magnitudeHistogram(attrs.magnitudes);
-    const mid = Math.floor(hist.length / 2);
-    const faint = hist.slice(mid).reduce((a, b) => a + b, 0);
-    const bright = hist.slice(0, mid).reduce((a, b) => a + b, 0);
-    // Steep LF: more stars at higher magnitudes (fainter).
-    expect(faint + bright).toBeGreaterThan(0);
-    expect(faint).toBeGreaterThanOrEqual(bright * 0.8);
-  });
-
-  it("gates spike weight to bright magnitudes", () => {
-    expect(spikeWeight(0.5)).toBeGreaterThan(spikeWeight(4.0));
-    expect(spikeWeight(8)).toBe(0);
-  });
-
-  it("builds figure attributes for atlas stars", () => {
-    const fig = labFigure(LAB_COURSES[0]!);
-    const attrs = buildFigureAttributes(fig.stars, { seed: "t" });
-    expect(attrs.count).toBe(fig.stars.length);
-    expect(attrs.positions.length).toBe(fig.stars.length * 3);
-  });
-});
-
-describe("FieldControls defaults", () => {
-  it("exposes lab defaults", () => {
-    expect(DEFAULT_FIELD_PARAMS.fieldCount).toBeGreaterThan(10000);
-    expect(DEFAULT_FIELD_PARAMS.illumination).toBeGreaterThan(0);
-    expect(DEFAULT_FIELD_PARAMS.staticMode).toBe(false);
   });
 });
 
