@@ -1,125 +1,267 @@
 # Implementation Plan — Hubble Field (Phase 2 production port)
 
-**Tenant:** adroit-blog · **Branch:** `feat/hubble-field` · **Date:** 2026-09-04  
-**Phase:** 2 — **blocked until Chris approves the lab look** at `/lab/hubble-field`  
-**Governing specs:** `docs/hubble-field-north-star.md`, `docs/requirements-hubble-field.md`, `docs/arch-hubble-field.md`, `design/hubble-field/direction-brief.md`  
-**Lab (approved look source):** `src/components/Constellations/lab/` + `src/app/lab/hubble-field/`
+**Tenant:** adroit-blog · **Branch:** `feat/hubble-field` · **Date:** 2026-09-04
+**Phase:** 2 — port the approved lab look into production
+**Governing specs:** `docs/hubble-field-north-star.md`, `docs/requirements-hubble-field.md`, `docs/arch-hubble-field.md`, `design/hubble-field/direction-brief.md`
+**Approved look source:** `src/components/Constellations/lab/chart-atlas.tsx` + `chart-2d.css` + `chart-sky.ts`, at `/lab/hubble-field` (study: **Star chart**)
 
-This is the file-level port contract. Do **not** start until the lab passes the north-star human gate. Do **not** rewrite Wave-1 discovery, `contracts-constellations.ts`, or the 2D / Chronicle floors.
+---
+
+## 0. Direction reset — read this first
+
+**This plan was rewritten on 2026-09-04.** The previous version described
+promoting GLSL point shaders, `deep-field-gl`, `dust-volume` and `WarpRig` into
+production `3d/`. **That plan is void.** None of it should be executed.
+
+Phase 1 built four WebGL studies on the theory that wow lives in the star
+shader and the camera. On review they read as a pitch-black void — technically
+faithful to Hubble, and unreadable as a progress surface. The study that won is
+a **2D SVG celestial chart**: a navy plate of constellation figures, each course
+carrying an engraved drawing of what it depicts, progress lighting the star
+lines.
+
+The chart is treated as the **new baseline, not the finished product.** It is
+being ported because it is legible and shippable, and because a real surface in
+front of real users is a better starting point for the next iteration than more
+lab rounds. Expect a v2 that pushes closer to the intended end state.
+
+**Consequence for the 3D stack:** the production r3f components
+(`ProfileScene`, `SeriesScene`, `ConstellationGlyph`, `CameraRig`, `SkyRoad`,
+`starfield-gl`, `nebula-gl`, `meteors`, `dust-motes`) stop being mounted. They
+are **left in tree and unreferenced** for one release so the port can be rolled
+back cheaply. Removing them, and dropping `three` / `@react-three/fiber` /
+`@react-three/drei` / `@react-three/postprocessing` from the shipped bundle, is
+a **separate follow-up commit** taken once the chart is confirmed in production.
+Do not bundle the deletion into the port.
 
 ---
 
 ## 1. Goals
 
-Port the approved lab language into production `/profile` (and the on-course tracker) so the sky is the hero:
+1. `/profile` "Your Sky" renders the **chart** as its hero.
+2. `/learn/[series]` renders a **single-figure** chart as the course tracker.
+3. A newcomer can answer "what am I looking at?" without help — the figure
+   drawing, the plain-language labels, and the legend carry it.
+4. Progress reads at a glance: lit lines for lessons done, a distinct final
+   exam, a visibly *finished* constellation when the course is complete.
+5. No WebGL anywhere on the path. The chart is SVG, so the old
+   "3D + 2D fallback" split collapses into one surface.
 
-1. Hubble-style **point-shader stars** replace bokeh `IgnitedStar` sprites as the default field primitive.
-2. Profile galaxy is a **framed observatory window**; warp-in → fullscreen; Esc / warp-out returns.
-3. **Stay in the galaxy:** click = focus / inspect; CTA alone routes to `/learn/...`.
-4. Rank illumination actually modulates the field; missing asterisms get real figures.
-5. Sky Roads HUD chrome moves **off** the canvas (below/beside); thin telescope HUD only in observatory mode.
-
-**Out of scope for this port:** README What’s New (cut with the release), GitHub wiki sync, inventing a new progress model, HTML mockup rounds.
-
----
-
-## 2. Checkpoint (must be true before coding)
-
-- [ ] Chris reviews `/lab/hubble-field` studies: **Star material**, **Deep field**, **Atlas**, **Warp**
-- [ ] Frame still reads as a telescope image (not cyan HUD / bloom demo)
-- [ ] Parameter presets worth shipping are recorded (field count, spike threshold, exposure, dust, illumination)
-- [ ] Reduced-motion path accepted (static field + instant mode swap)
-
-Until then: lab stays; production `ProfileGalaxy3D` / `SeriesScene` stay frozen.
+**Out of scope:** inventing a new progress model, README What's New (ships with
+the release cut), GitHub wiki sync, deleting the 3D stack (see §0).
 
 ---
 
-## 3. Promote lab modules into `3d/`
+## 2. What Phase 1 already landed (do not redo)
 
-| Lab source | Production destination | Notes |
+- Chart renderer: `lab/chart-atlas.tsx`, `lab/chart-2d.css`
+- Backdrop maths, isolated and tested: `lab/chart-sky.ts`
+- Seven engraved figure plates: `public/constellations/*.png` (grayscale, ~170 KB each)
+- Luma-key ghost treatment, depth pockets, parallax bands, CSS motion, reduced-motion path
+- Lab route gated on `NODE_ENV=development` or `ALLOW_HUBBLE_LAB=1`, noindex, robots `disallow: /lab/`
+- Tests: `lab/lab.test.ts` (18), including the star-field correlation guard
+- Docs: north star, requirements, arch (+ HTML twins), design brief, supersession banners
+
+---
+
+## 3. Gaps between the lab and production
+
+These are the real work. Each is a gap the lab papered over with fixtures.
+
+### 3.1 Star roles — the achievement hierarchy has no data behind it
+
+The chart's whole read depends on three kinds of node: lesson, knowledge check,
+final exam. Production `ConstellationStar` (`src/shared/contracts-constellations.ts`)
+carries only `lessonSlug`, `index`, `label`, `lit`. **There is no role.**
+`lab/field-fixtures.ts` invents roles positionally — brightest star becomes the
+exam, every *n*th becomes a check — which is fine for a lab and is not shippable
+as a claim about someone's progress.
+
+What is genuinely derivable today:
+
+| Node | Derivable now? | From |
 |---|---|---|
-| `lab/spike-material.glsl.ts` | `3d/spike-material.glsl.ts` (or merge into `star-material.glsl.ts`) | Hot core + magnitude-gated spikes; retire soft sprite path for field stars |
-| `lab/deep-field-gl.tsx` | `3d/deep-field-gl.tsx` (+ thin wrappers used by Profile/Series) | Single `Points` buffer; shells + luminosity |
-| `lab/deep-field-model.ts` | `3d/deep-field-model.ts` or fold into `galaxy-model.ts` / `starfield` builders | Pure attribute builders only |
-| `lab/dust-volume.tsx` | `3d/dust-volume.tsx` | Replaces / demotes `nebula-gl` wash sphere |
-| `lab/WarpRig.tsx` | `3d/WarpRig.tsx` | Modes: `framed` \| `observatory` \| warping; reduced motion snaps |
-| `lab/field-fixtures.ts` asterism drafts | Expand `asterism-data.ts` | Author five missing courses from IAU figures (Lyra, Corvus, etc. as starting drafts) |
+| Lesson | Yes | `ConstellationStar.lit` |
+| Course finished | Yes | `ConstellationState.complete` |
+| Exam **passed** | Yes, per series | `CompletionEventType = "exam"` in `completion_events` |
+| Quiz **run** | Yes, per series | `CompletionEventType = "quiz"` |
+| *Which star* is the exam / a check | **No** | nothing maps a quiz or exam to a position in the series |
 
-Keep `LabCanvas` / `FieldControls` / `/lab/hubble-field` as the tuning sandbox; do not delete until after ship.
+**Staged recommendation:**
+
+- **v1 (this port):** ship two roles, not three. Lessons are the star line; the
+  exam is a distinct crowning node whose lit state comes from `complete` (or from
+  an `exam` completion event where one exists). Drop knowledge-check diamonds
+  rather than fake their positions.
+- **v2:** widen `ConstellationState` with real anchors once the catalog exposes
+  where quizzes sit in a series. That is a contract change and needs its own ADR.
+
+Do **not** port `labFigure`'s role assignment into production.
+
+### 3.2 Asterism coverage — production has 2 of 7
+
+`3d/asterism-data.ts` contains **Orion** and **Cassiopeia** only.
+`lab/field-fixtures.ts` has all seven. Promote **Lyra, Corvus, Delphinus,
+Corona Borealis, Cygnus** into `asterism-data.ts` in the existing `Asterism`
+shape (real RA/Dec, magnitude, spectral class — the lab drafts already use IAU
+figures). `hasAsterism()` and `labAsterismFor()` already gate on presence, so
+partial coverage degrades safely; full coverage is still the goal.
+
+### 3.3 Layout does not scale past seven courses
+
+`chartLayout()` is seven hardcoded `[cx, cy, scale]` slots. Production must
+handle courses being added, removed, or hidden by access rules. Needs a
+deterministic layout from course count — ring or phyllotaxis packing, seeded so
+a given catalog always produces the same sky. Must stay stable when a course is
+added (existing figures should not all jump).
+
+### 3.4 Figure art needs a fallback and a home for its metadata
+
+`FIGURE_ART` is a hardcoded map in the lab component, keyed by `seriesSlug`,
+with hand-tuned `scale` / `dx` / `dy`. For production:
+
+- Move it beside the asterism data, not inside the renderer.
+- **A course with no plate must still render** — lines, labels and progress
+  only. Never a broken `<image>`.
+- Per-figure alignment is currently approximate; Cassiopeia's throne and Lyra's
+  eagle in particular want tuning against their stars.
+
+### 3.5 Data adapter
+
+The chart consumes `LabFigure`. Production must feed it from `ProfileSky` /
+`ConstellationState`. Write a **pure** `buildChartFigures()` alongside
+`sky.ts` — no React, no DOM — so it is unit-testable the way `galaxy-model.ts`
+is. The renderer should take chart-ready figures and nothing else.
+
+### 3.6 Asset weight
+
+Seven plates ≈ 1.2 MB total. Acceptable for a lab, not for a hero above the
+fold. Before ship: serve WebP with PNG fallback, load below-fold figures lazily,
+and confirm the art is not blocking first paint of the star lines.
 
 ---
 
-## 4. File-level production changes
+## 4. File-level port contract
 
-### 4.1 Profile framed window + warp
+### 4.1 New production modules
+
+| File | Role |
+|---|---|
+| `Constellations/chart/StarChart.tsx` | The renderer, promoted from `lab/chart-atlas.tsx`. Presentational: takes figures + focus, emits selection. No data loading. |
+| `Constellations/chart/chart-sky.ts` | Promoted as-is from the lab (already pure and tested). |
+| `Constellations/chart/chart-figures.ts` | Layout (§3.3) + figure-art registry (§3.4). Pure. |
+| `Constellations/chart/star-chart.css` | Promoted from `chart-2d.css`, prefixed to match production CSS conventions. |
+| `src/lib/chart.ts` | `buildChartFigures(ProfileSky)` / single-course variant (§3.5). Pure. |
+
+### 4.2 Changed production files
 
 | File | Change |
 |---|---|
-| `FullSkySection.tsx` | Stop passing `SkyHeroChrome` as canvas `children`. Rank title, stats, JourneyRail, Chronicle = **siblings** of the framed galaxy, not overlay. |
-| `ProfileGalaxy3D.tsx` | Own `GalaxyMode` (`framed` \| `observatory`). Wire WarpRig. **Never** `router.push` on first sector select. Invert Overview / warp-out so it exists when focused / in observatory. |
-| `ProfileScene.tsx` | Swap field + figure stars to deep-field / spike material. Dim unfocused asterisms; focus fills frame. Strip glyph rings, progress donuts, world-space HTML pills. |
-| `CameraRig.tsx` | Demote or replace for profile: WarpRig + OrbitControls in observatory only. Rest pose is in-sky, not looking down at a diagram. |
-| `constellations-3d.css` | Framed window sizing; observatory fixed inset; thin telescope HUD; remove chrome-on-canvas rules that fight the sky. |
+| `FullSkySection.tsx` | Mount `StarChart` in place of `ProfileGalaxy3D`. Rank title, stats, JourneyRail and Chronicle stay **siblings**, never overlay. The separate 2D constellation dot grid is now redundant with the chart — decide whether it stays as a dense list or goes. |
+| `ProfileGalaxy3D.tsx` | No longer mounted by `FullSkySection`. Leave the file (§0). |
+| `SeriesConstellation3D.tsx` | Render the single-figure chart instead of the r3f scene / vertical-rail fallback. |
+| `SeriesConstellation.tsx` | Was the no-WebGL fallback. With an SVG hero there is no WebGL to fall back from — retire or repoint at the chart. |
+| `asterism-data.ts` | Add the five missing asterisms (§3.2). |
+| `constellations-3d.css` | Drop rules for chrome-on-canvas that the chart does not use. Do not delete the file while the 3D modules remain in tree. |
 
-### 4.2 Navigation contract
+### 4.3 Leave alone
 
-| Interaction | Behavior |
-|---|---|
-| Click course / sector | Focus + camera approach; stay on `/profile` |
-| Click lit / unlit star | Inspect lesson (name, progress); stay in sky |
-| CTA in inspect panel | `router.push('/learn/...')` — only egress |
-| Warp in | Fullscreen observatory + orbit |
-| Esc / Warp out | Framed section; restore scroll |
-
-### 4.3 Series / on-course tracker
-
-| File | Change |
-|---|---|
-| `SeriesConstellation3D.tsx` / `SeriesScene.tsx` | Same star + dust language as profile. Click inspects; CTA routes (no instant eject). Optional later: small warp. |
-
-### 4.4 Data / contracts
-
-| File | Change |
-|---|---|
-| `asterism-data.ts` | Author OmniStudio, Hermes ×3, AI at Work figures |
-| `galaxy-model.ts` / `sky.ts` | Apply `rankIllumination` to field uniforms (already computed) |
-| `contracts-galaxy.ts` | Only if types change: update `Mirrors:` → `docs/arch-hubble-field.md` |
-| `contracts-constellations.ts` | **Do not touch** |
-
-### 4.5 Leave alone
-
-- `discovery/`, B-18/B-19 constellation data architecture docs
-- 2D constellation list, rank ladder, Chronicle (a11y + no-WebGL floor)
-- Stock drei `<Stars>` (still forbidden)
+- `contracts-constellations.ts` (except the v2 role work in §3.1, which needs its own ADR)
+- `sky.ts`, `sky-server.ts`, `completion.ts` — the data layer is renderer-agnostic and already correct
+- `discovery/`, B-18/B-19 data-architecture docs
+- Chronicle, rank ladder, streak surfaces
+- `ConstellationPreview` / `PathConstellation` (learn-hub cards) — out of scope this pass
 
 ---
 
-## 5. Verification (Phase 2)
+## 5. Interaction contract
 
-1. `npx tsc --noEmit` clean on touched files  
-2. Vitest: galaxy model + any new warp/mode pure helpers; existing constellation tests still green  
-3. Browser: `/profile` framed sky → warp in → orbit → Esc out; click sector does **not** leave page; CTA does  
-4. Reduced motion: no warp tween; field static  
-5. No-WebGL: 2D fallback still mounts  
-6. CHANGELOG `[Unreleased]` What/Why/How/Verification for the production port  
-7. README What’s New **only when the release ships**
+| Interaction | Behaviour |
+|---|---|
+| Click a figure | Focus it; dim the rest; **stay on `/profile`** |
+| Click the focused figure again | Clear focus |
+| CTA in the inspect panel | `router.push('/learn/...')` — the only egress |
+| Keyboard | Figures are tab-stops; Enter/Space focuses; Esc clears |
+| Pointer move | Parallax only — never changes state |
 
----
-
-## 6. Suggested implement order
-
-1. Promote shaders + deep-field + dust behind a feature flag or parallel components; lab remains reference  
-2. Wire ProfileScene field swap; strip overlay chrome  
-3. WarpRig + mode on ProfileGalaxy3D; fix select/CTA  
-4. SeriesScene parity  
-5. Asterism coverage + rank illumination uniform  
-6. Polish, tests, CHANGELOG; ship README What’s New with the cut  
+Clicking a course must not navigate. That was the Sky Roads complaint and it
+still applies.
 
 ---
 
-## 7. Phase 1 already landed (do not redo)
+## 6. Accessibility and motion
 
-- Docs: north star, requirements, arch (+ HTML twins), design brief, supersession banners  
-- Lab route gated (`NODE_ENV=development` or `ALLOW_HUBBLE_LAB=1`), noindex, robots `/lab/`  
-- Studies: star compare, deep field, atlas, warp  
-- Unit tests: `src/components/Constellations/lab/lab.test.ts`
+The chart already ships most of this in the lab; it must survive the port.
+
+- Every figure is a labelled control: `role="button"`, `tabIndex={0}`,
+  `aria-label` naming the constellation, the course, and percent complete.
+- The SVG root carries a meaningful `aria-label`; decorative backdrop layers are
+  `aria-hidden`.
+- `prefers-reduced-motion` disables parallax transitions, twinkle, breathing,
+  rail sparks, exam pulse and meteors. Verify against the real hook
+  (`usePrefersReducedMotion`), not only the media query.
+- Colour is never the sole signal: completion is also carried by the closed
+  ring, the "Course complete" label, and the exam node.
+- Contrast-check the label and percentage text against the *lit* areas of the
+  nebulae, not just the base plate.
+
+---
+
+## 7. Performance budget
+
+- Each figure currently costs two filtered `<image>` passes (a blurred halo and
+  a keyed core). At seven figures that is fourteen filtered rasters plus a
+  Gaussian blur each. **Measure before assuming it is fine**, and cap the halo
+  pass to focused and completed figures if it does not hold.
+- ~420 animated background circles: keep twinkle off the far layer.
+- Parallax must stay off React state (it writes CSS custom properties today —
+  keep it that way).
+- Target: no dropped frames on pointer move on a mid-range laptop; art not
+  blocking first paint of lines and labels.
+
+---
+
+## 8. Verification
+
+1. `npx tsc --noEmit` clean
+2. `npm run lint` clean (one known pre-existing warning in `MDXArticle.tsx`)
+3. `npx vitest run` — full suite green (76 files / 532 tests as of this branch)
+4. New unit tests: `buildChartFigures` (progress → lit rails, complete → exam lit,
+   course with no asterism, course with no art plate), layout stability when a
+   course is added
+5. Browser `/profile`: click focuses and does **not** navigate; CTA does; Esc clears
+6. Browser `/learn/[series]`: single figure reflects real progress
+7. Reduced motion: all animation stops, layout unchanged
+8. Guest `/profile`: `LockedSkyTeaser` path untouched
+9. CHANGELOG `[Unreleased]` What / Why / How / Verification for the port
+10. README What's New **only on the release cut**
+
+---
+
+## 9. Suggested order
+
+1. Promote `chart-sky.ts` and the renderer into `Constellations/chart/` unchanged; no wiring yet
+2. Write `buildChartFigures()` + tests against real `ProfileSky` fixtures (§3.5)
+3. Resolve star roles down to the v1 two-role model (§3.1)
+4. Layout algorithm + art registry with fallback (§3.3, §3.4)
+5. Wire `/profile` via `FullSkySection`; leave 3D in tree, unmounted
+6. Wire `/learn/[series]`
+7. Promote the five asterisms (§3.2)
+8. Accessibility pass, perf measurement, asset optimisation
+9. CHANGELOG; ship
+10. **Follow-up commit:** delete unreferenced 3D modules and drop the four r3f
+    packages, once the chart is confirmed in production
+
+---
+
+## 10. Open questions for Chris
+
+1. **Knowledge checks.** Ship v1 with lessons + exam only (§3.1), or hold the
+   port until quiz positions are modelled in the catalog?
+2. **The 2D dot grid** below the profile hero — does it survive alongside the
+   chart, or was it only ever a WebGL fallback?
+3. **Learn-hub cards.** `ConstellationPreview` still draws a dot row. Leave for
+   now, or bring into the chart language in the same pass?
+4. **Figure art for future courses.** Every new course needs a plate. Is
+   generating one part of the course-launch checklist, or do we accept
+   lines-only figures as the default and treat art as an upgrade?

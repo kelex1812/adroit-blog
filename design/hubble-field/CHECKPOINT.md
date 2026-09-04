@@ -1,8 +1,17 @@
 # Checkpoint — Hubble Field lab review
 
-**Status:** Phase 1 lab is ready for Chris. **No production `ProfileGalaxy3D` / `SeriesScene` rewrite until this is signed.**
+**Status (2026-09-04): direction accepted — the 2D Star chart is the baseline.**
+Chris: *"we're starting over with this 2d model … we'll implement this as phase
+one and work from there. Hopefully in another version we can get closer to the
+end-product. This at least is understandable."*
 
-**Direction pivot (2026-09-04):** primary look is now **Star chart** — a top-down / high-oblique navy + gold celestial atlas plate (Urania’s Mirror / Jamieson / modern navy-gold chart cues), not a pitch-black Hubble flythrough. Deep field / volume atlas remain as contrast studies.
+Read that as: **legible beats ambitious, and the chart is a floor, not a
+ceiling.** Port it, get it in front of real progress data, iterate from there.
+
+**Direction pivot (2026-09-04):** primary look is **Star chart** — a top-down navy + gold celestial atlas plate (Urania’s Mirror / Jamieson cues), not a pitch-black Hubble flythrough. The WebGL studies stay only as contrast references; **the 3D production port described in earlier plan revisions is void.**
+
+Next: `docs/implementation-plan-hubble-field.md` (rewritten chart-first). Its
+§10 holds four open questions that need answers before or during the port.
 
 ## How to review
 
