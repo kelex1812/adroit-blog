@@ -527,6 +527,333 @@ export const learnSeries: LearningSeries[] = [
     "totalLessons": 32
   },
   {
+    "slug": "ai-at-work",
+    "name": "AI at Work",
+    "description": "A vendor-agnostic primer for using AI in day-to-day work: foundations, prompting, productivity, small automations, and team adoption. Company-wide training that works for any team and any AI tool.",
+    "gradient": "from-fuchsia to-purple-600",
+    "lessons": [
+      {
+        "slug": "what-ai-actually-is",
+        "title": "Lesson 1: What AI Actually Is",
+        "series": "ai-at-work",
+        "lesson": 1,
+        "excerpt": "The words around AI are doing more confusing than clarifying. This lesson separates the four that trip up most people: models vs automation, chatbots vs tools, plus why 'LLM' and 'generative AI' are not synonyms.",
+        "date": "August 16, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "8 min read",
+        "tags": [
+          "LLMs",
+          "AI at Work",
+          "Salesforce"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "how-ai-thinks",
+        "title": "Lesson 2: How AI Thinks in Plain Language",
+        "series": "ai-at-work",
+        "lesson": 2,
+        "excerpt": "The tools you use every day do not read like you do. They read text in chunks called tokens, predict the next chunk over and over, and can only see a limited slice of the conversation at once. This lesson explains those three ideas and what they mean for how you prompt.",
+        "date": "August 17, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "8 min read",
+        "tags": [
+          "LLMs",
+          "AI at Work",
+          "Salesforce"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "hallucinations-what-they-are-and-how-to-catch-them",
+        "title": "Lesson 3: Hallucinations, and How to Catch Them",
+        "series": "ai-at-work",
+        "lesson": 3,
+        "excerpt": "AI tools make things up, and they do it in a confident voice. This lesson explains what a hallucination actually is, why a next-word predictor produces them, and the practical habits for catching them before they reach your work.",
+        "date": "August 18, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "8 min read",
+        "tags": [
+          "LLMs",
+          "AI at Work",
+          "Salesforce"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "what-ai-is-genuinely-good-at-and-where-it-fails",
+        "title": "Lesson 4: What AI Is Genuinely Good At, and Where It Fails",
+        "series": "ai-at-work",
+        "lesson": 4,
+        "excerpt": "AI tools are not good at everything, and pretending they are is how people get burned. This lesson gives you a clean dividing line between the work AI genuinely helps with and the work you should keep, backed by what the research actually shows.",
+        "date": "August 19, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "9 min read",
+        "tags": [
+          "LLMs",
+          "AI at Work",
+          "Salesforce"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "data-safety-what-you-can-and-cannot-put-in",
+        "title": "Lesson 5: Data Safety: What You Can and Cannot Put Into an AI Tool",
+        "series": "ai-at-work",
+        "lesson": 5,
+        "excerpt": "Know what belongs in an AI tool before you paste. Off-limits categories, consumer versus enterprise, and habits that protect client data.",
+        "date": "August 20, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "8 min read",
+        "tags": [
+          "LLMs",
+          "Security"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "ai-literacy-judging-ai-output",
+        "title": "Lesson 6: AI Literacy: Judging AI Output the Way You'd Judge a Colleague's Work",
+        "series": "ai-at-work",
+        "lesson": 6,
+        "excerpt": "The skill that makes every other AI skill safe: read AI output like a draft from a helpful but fallible colleague, then check it before you trust it.",
+        "date": "August 21, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "9 min read",
+        "tags": [
+          "LLMs",
+          "AI at Work"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "anatomy-of-a-good-prompt-role-task-context-format",
+        "title": "Lesson 7: Anatomy of a Good Prompt: Role, Task, Context, and Format",
+        "series": "ai-at-work",
+        "lesson": 7,
+        "excerpt": "A good prompt is not a wish, it is a brief. This lesson breaks the brief into its four parts: the role you want the tool to play, the task you want done, the context it needs, and the format you want back. Learn the anatomy and you get sharper output from the first try.",
+        "date": "August 22, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "9 min read",
+        "tags": [
+          "LLMs",
+          "AI at Work",
+          "Prompt Engineering"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "iteration-as-a-skill-refine-rephrase-ask-for-alternatives",
+        "title": "Lesson 8: Iteration as a Skill: Refine, Rephrase, and Ask for Alternatives",
+        "series": "ai-at-work",
+        "lesson": 8,
+        "excerpt": "The first answer is almost never the final one. The real skill is treating the conversation like a conversation: refine what is close, rephrase what misfires, and ask for alternatives when you are stuck. This lesson makes that loop deliberate.",
+        "date": "August 23, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "9 min read",
+        "tags": [
+          "LLMs",
+          "AI at Work",
+          "Agile"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "fixing-the-failure-modes-vague-asks-invented-facts-and-wrong-formats",
+        "title": "Lesson 9: Fixing the Failure Modes: Vague Asks, Invented Facts, and Wrong Formats",
+        "series": "ai-at-work",
+        "lesson": 9,
+        "excerpt": "When AI output misses, the cause is almost always one of three things: you asked vaguely, it invented a fact, or you never said what shape the answer should take. This lesson teaches you to name the failure mode and apply the fix that actually addresses it.",
+        "date": "August 24, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "9 min read",
+        "tags": [
+          "LLMs",
+          "AI at Work",
+          "Prompt Engineering"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "turning-a-one-off-prompt-into-a-reusable-template",
+        "title": "Lesson 10: Turning a One-Off Prompt into a Reusable Template",
+        "series": "ai-at-work",
+        "lesson": 10,
+        "excerpt": "You have a prompt that nailed it once. Now you retype the same shape every week with small changes. This lesson teaches you to notice the parts that stay the same and the parts that change, and to lock the stable ones into a reusable template so you stop rewriting the whole thing each time.",
+        "date": "August 25, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "9 min read",
+        "tags": [
+          "LLMs",
+          "AI at Work",
+          "Prompt Engineering"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "writing-and-communication-drafts-emails-summaries-and-tone-shifts",
+        "title": "Lesson 11: Writing and Communication: Drafts, Emails, Summaries, and Tone Shifts",
+        "series": "ai-at-work",
+        "lesson": 11,
+        "excerpt": "Most of your workday is words: emails, drafts, summaries, and the tone of all of it. AI is the fastest first-draft writer you will ever hire, and it is built for exactly this. This lesson teaches you to use it well without letting it speak for you, by bringing the facts, checking the output, and keeping your voice.",
+        "date": "August 26, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "10 min read",
+        "tags": [
+          "LLMs",
+          "AI at Work",
+          "Consulting"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "editing-and-reviewing-ai-writing-human-in-the-loop",
+        "title": "Lesson 12: Editing and Reviewing AI's Writing: Human-in-the-Loop",
+        "series": "ai-at-work",
+        "lesson": 12,
+        "excerpt": "AI drafts fast. You are the reason the draft is safe to ship. This lesson is the difference between editing (fixing what is there) and reviewing (checking it before it goes anywhere), and why keeping yourself in the loop is the whole job.",
+        "date": "August 27, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "9 min read",
+        "tags": [
+          "LLMs",
+          "AI at Work",
+          "UI/UX"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "research-and-synthesis-reading-comparing-extracting",
+        "title": "Lesson 13: Research and Synthesis: Reading, Comparing, and Extracting the Useful Bit",
+        "series": "ai-at-work",
+        "lesson": 13,
+        "excerpt": "You have sources to read, compare, and pull the useful bit out of. An AI tool can do that reading for you, but only if you feed it the right documents and keep each claim traceable. This lesson is the front end of a task: research and synthesis without importing the tool's errors.",
+        "date": "August 28, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "9 min read",
+        "tags": [
+          "LLMs",
+          "AI at Work",
+          "UI/UX"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "spreadsheets-and-data-analysis-cleaning-formulas",
+        "title": "Lesson 14: Spreadsheets and Data: Analysis, Cleaning, and Formulas",
+        "series": "ai-at-work",
+        "lesson": 14,
+        "excerpt": "Most of us live in spreadsheets, and most spreadsheet work is cleaning up messy data before it will tell you anything. An AI tool can tidy your data, write the formulas you cannot remember, and point at the pattern you missed, as long as you check its work against the cells.",
+        "date": "August 29, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "10 min read",
+        "tags": [
+          "LLMs",
+          "AI at Work",
+          "Data"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "meetings-agendas-transcripts-action-items-follow-ups",
+        "title": "Lesson 15: Meetings: Agendas, Transcripts, Action Items, and Follow-Ups",
+        "series": "ai-at-work",
+        "lesson": 15,
+        "excerpt": "Meetings eat hours and then vanish. An AI tool can draft the agenda before the meeting, capture what was actually said during it, and turn the conversation into action items and owners afterward. This lesson is the whole loop, and the check that keeps it honest: you confirm the action items are real before you trust them.",
+        "date": "August 30, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "10 min read",
+        "tags": [
+          "LLMs",
+          "AI at Work",
+          "Project Management"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "brainstorming-and-problem-solving-options-tradeoffs-stress-testing",
+        "title": "Lesson 16: Brainstorming and Problem-Solving: Options, Tradeoffs, and Stress-Testing",
+        "series": "ai-at-work",
+        "lesson": 16,
+        "excerpt": "The tool is a fast generator of options and a poor chooser between them. The real skill is using it to widen the field, weigh the tradeoffs, and stress-test a plan before you commit. This lesson makes that three-part loop deliberate.",
+        "date": "August 31, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "10 min read",
+        "tags": [
+          "LLMs",
+          "AI at Work",
+          "Consulting"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "knowing-when-not-to-use-ai",
+        "title": "Lesson 17: Knowing When NOT to Use AI",
+        "series": "ai-at-work",
+        "lesson": 17,
+        "excerpt": "The most underrated AI skill is the ability to leave the tool switched off. This lesson gives you a practical filter for recognizing the tasks where AI is the wrong tool, so you use it where it earns its place and skip it where it costs you.",
+        "date": "September 1, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "9 min read",
+        "tags": [
+          "LLMs",
+          "AI at Work",
+          "Judgment"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "spotting-automatable-tasks-in-your-own-job",
+        "title": "Lesson 18: Spotting the Automatable Tasks in Your Own Job",
+        "series": "ai-at-work",
+        "lesson": 18,
+        "excerpt": "Your job is not one thing. It is a bundle of small recurring tasks, and a few of them can be handed to a tool for good. This lesson gives you a simple audit for finding the slices of your own week that are worth automating, with a worked example and a payback calculation you can run on any task.",
+        "date": "September 2, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "9 min read",
+        "tags": [
+          "LLMs",
+          "AI at Work",
+          "Productivity"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "building-a-personal-prompt-library",
+        "title": "Lesson 19: Building a Personal Prompt Library",
+        "series": "ai-at-work",
+        "lesson": 19,
+        "excerpt": "A good prompt is worth saving, and most people throw it away the moment the answer arrives. This lesson shows you how to build a personal prompt library: what to capture, how to name and organize the prompts so you can actually find them again, and why a library of your best prompts saves you minutes every single time one of your recurring tasks rolls around.",
+        "date": "September 3, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "10 min read",
+        "tags": [
+          "LLMs",
+          "AI at Work",
+          "Productivity"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "simple-repeatable-workflows-you-can-run-weekly",
+        "title": "Lesson 20: Simple Repeatable Workflows You Can Run Weekly",
+        "series": "ai-at-work",
+        "lesson": 20,
+        "excerpt": "You have saved the prompts that work. The next step is to run them on a schedule. This lesson shows you how to take two or three prompts from your library and package them into a fixed weekly routine: the same steps, in the same order, on the same day, ending with a check you actually run. It defines what a workflow is, walks through a worked example end to end, and gives you a five-step method for building your own.",
+        "date": "September 4, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "9 min read",
+        "tags": [
+          "LLMs",
+          "AI at Work",
+          "Productivity"
+        ],
+        "status": "published"
+      }
+    ],
+    "totalLessons": 20
+  },
+  {
     "slug": "hermes-consultant",
     "name": "Hermes Agent Consultant",
     "description": "A path to becoming an agent-implementation consultant: scoping, implementation craft, delivery practice, and the business of consulting. Platform-agnostic skills with Hermes Agent as the working example.",
@@ -1895,317 +2222,6 @@ export const learnSeries: LearningSeries[] = [
       }
     ],
     "totalLessons": 31
-  },
-  {
-    "slug": "ai-at-work",
-    "name": "AI at Work",
-    "description": "A vendor-agnostic primer for using AI in day-to-day work: foundations, prompting, productivity, small automations, and team adoption. Company-wide training that works for any team and any AI tool.",
-    "gradient": "from-fuchsia to-purple-600",
-    "lessons": [
-      {
-        "slug": "what-ai-actually-is",
-        "title": "Lesson 1: What AI Actually Is",
-        "series": "ai-at-work",
-        "lesson": 1,
-        "excerpt": "The words around AI are doing more confusing than clarifying. This lesson separates the four that trip up most people: models vs automation, chatbots vs tools, plus why 'LLM' and 'generative AI' are not synonyms.",
-        "date": "August 16, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "8 min read",
-        "tags": [
-          "LLMs",
-          "AI at Work",
-          "Salesforce"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "how-ai-thinks",
-        "title": "Lesson 2: How AI Thinks in Plain Language",
-        "series": "ai-at-work",
-        "lesson": 2,
-        "excerpt": "The tools you use every day do not read like you do. They read text in chunks called tokens, predict the next chunk over and over, and can only see a limited slice of the conversation at once. This lesson explains those three ideas and what they mean for how you prompt.",
-        "date": "August 17, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "8 min read",
-        "tags": [
-          "LLMs",
-          "AI at Work",
-          "Salesforce"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "hallucinations-what-they-are-and-how-to-catch-them",
-        "title": "Lesson 3: Hallucinations, and How to Catch Them",
-        "series": "ai-at-work",
-        "lesson": 3,
-        "excerpt": "AI tools make things up, and they do it in a confident voice. This lesson explains what a hallucination actually is, why a next-word predictor produces them, and the practical habits for catching them before they reach your work.",
-        "date": "August 18, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "8 min read",
-        "tags": [
-          "LLMs",
-          "AI at Work",
-          "Salesforce"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "what-ai-is-genuinely-good-at-and-where-it-fails",
-        "title": "Lesson 4: What AI Is Genuinely Good At, and Where It Fails",
-        "series": "ai-at-work",
-        "lesson": 4,
-        "excerpt": "AI tools are not good at everything, and pretending they are is how people get burned. This lesson gives you a clean dividing line between the work AI genuinely helps with and the work you should keep, backed by what the research actually shows.",
-        "date": "August 19, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "9 min read",
-        "tags": [
-          "LLMs",
-          "AI at Work",
-          "Salesforce"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "data-safety-what-you-can-and-cannot-put-in",
-        "title": "Lesson 5: Data Safety: What You Can and Cannot Put Into an AI Tool",
-        "series": "ai-at-work",
-        "lesson": 5,
-        "excerpt": "Know what belongs in an AI tool before you paste. Off-limits categories, consumer versus enterprise, and habits that protect client data.",
-        "date": "August 20, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "8 min read",
-        "tags": [
-          "LLMs",
-          "Security"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "ai-literacy-judging-ai-output",
-        "title": "Lesson 6: AI Literacy: Judging AI Output the Way You'd Judge a Colleague's Work",
-        "series": "ai-at-work",
-        "lesson": 6,
-        "excerpt": "The skill that makes every other AI skill safe: read AI output like a draft from a helpful but fallible colleague, then check it before you trust it.",
-        "date": "August 21, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "9 min read",
-        "tags": [
-          "LLMs",
-          "AI at Work"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "anatomy-of-a-good-prompt-role-task-context-format",
-        "title": "Lesson 7: Anatomy of a Good Prompt: Role, Task, Context, and Format",
-        "series": "ai-at-work",
-        "lesson": 7,
-        "excerpt": "A good prompt is not a wish, it is a brief. This lesson breaks the brief into its four parts: the role you want the tool to play, the task you want done, the context it needs, and the format you want back. Learn the anatomy and you get sharper output from the first try.",
-        "date": "August 22, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "9 min read",
-        "tags": [
-          "LLMs",
-          "AI at Work",
-          "Prompt Engineering"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "iteration-as-a-skill-refine-rephrase-ask-for-alternatives",
-        "title": "Lesson 8: Iteration as a Skill: Refine, Rephrase, and Ask for Alternatives",
-        "series": "ai-at-work",
-        "lesson": 8,
-        "excerpt": "The first answer is almost never the final one. The real skill is treating the conversation like a conversation: refine what is close, rephrase what misfires, and ask for alternatives when you are stuck. This lesson makes that loop deliberate.",
-        "date": "August 23, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "9 min read",
-        "tags": [
-          "LLMs",
-          "AI at Work",
-          "Agile"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "fixing-the-failure-modes-vague-asks-invented-facts-and-wrong-formats",
-        "title": "Lesson 9: Fixing the Failure Modes: Vague Asks, Invented Facts, and Wrong Formats",
-        "series": "ai-at-work",
-        "lesson": 9,
-        "excerpt": "When AI output misses, the cause is almost always one of three things: you asked vaguely, it invented a fact, or you never said what shape the answer should take. This lesson teaches you to name the failure mode and apply the fix that actually addresses it.",
-        "date": "August 24, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "9 min read",
-        "tags": [
-          "LLMs",
-          "AI at Work",
-          "Prompt Engineering"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "turning-a-one-off-prompt-into-a-reusable-template",
-        "title": "Lesson 10: Turning a One-Off Prompt into a Reusable Template",
-        "series": "ai-at-work",
-        "lesson": 10,
-        "excerpt": "You have a prompt that nailed it once. Now you retype the same shape every week with small changes. This lesson teaches you to notice the parts that stay the same and the parts that change, and to lock the stable ones into a reusable template so you stop rewriting the whole thing each time.",
-        "date": "August 25, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "9 min read",
-        "tags": [
-          "LLMs",
-          "AI at Work",
-          "Prompt Engineering"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "writing-and-communication-drafts-emails-summaries-and-tone-shifts",
-        "title": "Lesson 11: Writing and Communication: Drafts, Emails, Summaries, and Tone Shifts",
-        "series": "ai-at-work",
-        "lesson": 11,
-        "excerpt": "Most of your workday is words: emails, drafts, summaries, and the tone of all of it. AI is the fastest first-draft writer you will ever hire, and it is built for exactly this. This lesson teaches you to use it well without letting it speak for you, by bringing the facts, checking the output, and keeping your voice.",
-        "date": "August 26, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "10 min read",
-        "tags": [
-          "LLMs",
-          "AI at Work",
-          "Consulting"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "editing-and-reviewing-ai-writing-human-in-the-loop",
-        "title": "Lesson 12: Editing and Reviewing AI's Writing: Human-in-the-Loop",
-        "series": "ai-at-work",
-        "lesson": 12,
-        "excerpt": "AI drafts fast. You are the reason the draft is safe to ship. This lesson is the difference between editing (fixing what is there) and reviewing (checking it before it goes anywhere), and why keeping yourself in the loop is the whole job.",
-        "date": "August 27, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "9 min read",
-        "tags": [
-          "LLMs",
-          "AI at Work",
-          "UI/UX"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "research-and-synthesis-reading-comparing-extracting",
-        "title": "Lesson 13: Research and Synthesis: Reading, Comparing, and Extracting the Useful Bit",
-        "series": "ai-at-work",
-        "lesson": 13,
-        "excerpt": "You have sources to read, compare, and pull the useful bit out of. An AI tool can do that reading for you, but only if you feed it the right documents and keep each claim traceable. This lesson is the front end of a task: research and synthesis without importing the tool's errors.",
-        "date": "August 28, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "9 min read",
-        "tags": [
-          "LLMs",
-          "AI at Work",
-          "UI/UX"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "spreadsheets-and-data-analysis-cleaning-formulas",
-        "title": "Lesson 14: Spreadsheets and Data: Analysis, Cleaning, and Formulas",
-        "series": "ai-at-work",
-        "lesson": 14,
-        "excerpt": "Most of us live in spreadsheets, and most spreadsheet work is cleaning up messy data before it will tell you anything. An AI tool can tidy your data, write the formulas you cannot remember, and point at the pattern you missed, as long as you check its work against the cells.",
-        "date": "August 29, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "10 min read",
-        "tags": [
-          "LLMs",
-          "AI at Work",
-          "Data"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "meetings-agendas-transcripts-action-items-follow-ups",
-        "title": "Lesson 15: Meetings: Agendas, Transcripts, Action Items, and Follow-Ups",
-        "series": "ai-at-work",
-        "lesson": 15,
-        "excerpt": "Meetings eat hours and then vanish. An AI tool can draft the agenda before the meeting, capture what was actually said during it, and turn the conversation into action items and owners afterward. This lesson is the whole loop, and the check that keeps it honest: you confirm the action items are real before you trust them.",
-        "date": "August 30, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "10 min read",
-        "tags": [
-          "LLMs",
-          "AI at Work",
-          "Project Management"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "brainstorming-and-problem-solving-options-tradeoffs-stress-testing",
-        "title": "Lesson 16: Brainstorming and Problem-Solving: Options, Tradeoffs, and Stress-Testing",
-        "series": "ai-at-work",
-        "lesson": 16,
-        "excerpt": "The tool is a fast generator of options and a poor chooser between them. The real skill is using it to widen the field, weigh the tradeoffs, and stress-test a plan before you commit. This lesson makes that three-part loop deliberate.",
-        "date": "August 31, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "10 min read",
-        "tags": [
-          "LLMs",
-          "AI at Work",
-          "Consulting"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "knowing-when-not-to-use-ai",
-        "title": "Lesson 17: Knowing When NOT to Use AI",
-        "series": "ai-at-work",
-        "lesson": 17,
-        "excerpt": "The most underrated AI skill is the ability to leave the tool switched off. This lesson gives you a practical filter for recognizing the tasks where AI is the wrong tool, so you use it where it earns its place and skip it where it costs you.",
-        "date": "September 1, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "9 min read",
-        "tags": [
-          "LLMs",
-          "AI at Work",
-          "Judgment"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "spotting-automatable-tasks-in-your-own-job",
-        "title": "Lesson 18: Spotting the Automatable Tasks in Your Own Job",
-        "series": "ai-at-work",
-        "lesson": 18,
-        "excerpt": "Your job is not one thing. It is a bundle of small recurring tasks, and a few of them can be handed to a tool for good. This lesson gives you a simple audit for finding the slices of your own week that are worth automating, with a worked example and a payback calculation you can run on any task.",
-        "date": "September 2, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "9 min read",
-        "tags": [
-          "LLMs",
-          "AI at Work",
-          "Productivity"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "building-a-personal-prompt-library",
-        "title": "Lesson 19: Building a Personal Prompt Library",
-        "series": "ai-at-work",
-        "lesson": 19,
-        "excerpt": "A good prompt is worth saving, and most people throw it away the moment the answer arrives. This lesson shows you how to build a personal prompt library: what to capture, how to name and organize the prompts so you can actually find them again, and why a library of your best prompts saves you minutes every single time one of your recurring tasks rolls around.",
-        "date": "September 3, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "10 min read",
-        "tags": [
-          "LLMs",
-          "AI at Work",
-          "Productivity"
-        ],
-        "status": "published"
-      }
-    ],
-    "totalLessons": 19
   }
 ];
 
@@ -2225,6 +2241,22 @@ export const learnLessons: LearnLesson[] = [
       "AI Agents",
       "Architecture",
       "Tool Integration"
+    ],
+    "status": "published"
+  },
+  {
+    "slug": "simple-repeatable-workflows-you-can-run-weekly",
+    "title": "Lesson 20: Simple Repeatable Workflows You Can Run Weekly",
+    "series": "ai-at-work",
+    "lesson": 20,
+    "excerpt": "You have saved the prompts that work. The next step is to run them on a schedule. This lesson shows you how to take two or three prompts from your library and package them into a fixed weekly routine: the same steps, in the same order, on the same day, ending with a check you actually run. It defines what a workflow is, walks through a worked example end to end, and gives you a five-step method for building your own.",
+    "date": "September 4, 2026",
+    "author": "Adroit Consulting",
+    "readTime": "9 min read",
+    "tags": [
+      "LLMs",
+      "AI at Work",
+      "Productivity"
     ],
     "status": "published"
   },
