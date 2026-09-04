@@ -9,6 +9,50 @@ Baseline v1.0.0 — Omni content + course-structure/cert-standards bar + Constel
 
 ## [Unreleased]
 
+### Hubble Field — Phase 1 lab, landing on a 2D star chart (`feat/hubble-field`)
+
+**What** — opened a gated internal observatory at `/lab/hubble-field` so the
+constellation visual reboot is judged against real rendering instead of another
+HTML poster. It began as four WebGL studies (star material, deep field, atlas,
+warp) and **ended somewhere else**: the study that won is a 2D SVG celestial
+chart, now the lab default. Each course is a constellation carrying an engraved
+figure of what it depicts. Added Phase 1 docs (north star, requirements, arch +
+HTML twins), `design/hubble-field/` direction brief + checkpoint, supersession
+banners on prior immersive / Sky Roads visual docs, and a Phase 2 port plan
+blocked on look approval. Production `ProfileGalaxy3D` / `SeriesScene` are
+intentionally untouched.
+
+**Why** — Sky Roads shipped the right data and LOD idea but still reads as a
+cyan dashboard. The 3D studies were built first on the theory that wow lives in
+the shader and the camera; on review they read as a pitch-black void, and a
+top-down atlas plate turned out to carry both the mythology and the progress far
+better. Dots and lines alone don't tell a newcomer what a constellation *is* —
+hence the figures.
+
+**How** — `src/components/Constellations/lab/`. The chart is `chart-atlas.tsx` +
+`chart-2d.css`, with backdrop maths split into `chart-sky.ts` so it is testable.
+Figure art lives in `public/constellations/*.png` as grayscale plates, keyed at
+render time by an SVG `feColorMatrix` that takes alpha from luminance and
+replaces colour with a flat tint — cool while a course is in progress, warm gold
+once complete. Depth is three pointer-parallax bands over a lit dome, drifting
+nebulae and ~420 seeded stars; motion (twinkle, breathing figures, sparks along
+completed rails, exam pulse, meteors) is CSS only and fully disabled under
+`prefers-reduced-motion`. The WebGL studies remain as contrast references.
+Route: `src/app/lab/hubble-field/` with `ssr: false`, noindex, robots
+`disallow: /lab/`, and a development-or-`ALLOW_HUBBLE_LAB=1` gate.
+
+**Watch out** — do not build a seeded field with `seededUnit(seed + key)`.
+FNV-1a maps a one-character seed difference to a near-constant output
+difference, so `"…-x"` and `"…-y"` returned values ~0.004 apart and the entire
+star field collapsed onto the line y = x. `chart-sky.ts` uses a mulberry32
+stream instead, and `lab.test.ts` guards it with an x/y correlation assertion —
+range and count checks passed straight through the bug.
+
+**Verification** — `npx tsc --noEmit` clean; `npx vitest run
+src/components/Constellations/lab` 18/18 pass. Open `/lab/hubble-field` in
+`npm run dev`; the Star chart study is the default. Production port waits on
+Chris signing `design/hubble-field/CHECKPOINT.md`.
+
 ### deep-sky v1.2.0 — Profile galaxy navigation ("Sky Roads") (t_62a40095)
 
 **What** — made `/profile` "Your Sky" a navigable, guided-map galaxy per kara's

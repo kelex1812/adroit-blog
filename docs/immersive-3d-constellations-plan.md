@@ -1,5 +1,7 @@
 # Immersive Three.js Constellations — Handoff Plan for the Web Dev Team
 
+> **SUPERSEDED (2026-09-04):** Visual direction for the constellation 3D layer is now **Hubble Field** (Rev 3). See `docs/hubble-field-north-star.md`, `docs/requirements-hubble-field.md`, and `docs/arch-hubble-field.md`. This document is retained as historical record of the Rev 2 handoff plan. Do not implement from this file.
+
 **Status:** PLAN ONLY (REV 2, 2026-09-02). In-flight kanban work cancelled 2026-09-02. This document is the single source of truth for the Web Dev team to rebuild the feature. Rev 2 supersedes Rev 1's design direction: the visual language has been rebooted from scratch on a **real-astronomy grounding** and the engine is now specced to take **full advantage of Three.js** (custom GLSL, GPU-first). Rev 1 color tokens and mockups are demoted to reference artifacts only.
 
 **IMPORTANT — creative reboot (Chris, 2026-09-02).** Rev 1 was rejected: kara's initial design docs read as **generic space / "first-year stuff."** Chris is not satisfied with the direction and explicitly wants DEEP CREATIVITY and a WOW-grade result. Rev 2 therefore reboots the visual language from scratch with three hard mandates that must not be lost:

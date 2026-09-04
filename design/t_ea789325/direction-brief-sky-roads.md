@@ -1,5 +1,7 @@
 # deep-sky - Profile Galaxy Reboot: "Sky Roads" (Direction Brief)
 
+> **SUPERSEDED (2026-09-04):** Visual direction for the constellation 3D layer is now **Hubble Field** (Rev 3). See `docs/hubble-field-north-star.md`, `docs/requirements-hubble-field.md`, and `docs/arch-hubble-field.md`. This document is retained as historical record of the Sky Roads direction. Do not implement from this file.
+
 **Task:** t_ea789325 (design) · **Author:** kara (designer) · **Date:** 2026-09-02
 **Release:** `deep-sky` v1.2.0 · **Tenant:** adroit-blog · **Surface:** `/profile` "Your Sky"
 **Engine (LOCKED):** Three.js via react-three-fiber + drei + @react-three/postprocessing (UnrealBloom). Custom GLSL/GPU-first where it matters.
