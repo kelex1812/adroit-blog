@@ -2,6 +2,30 @@ import { BlogPost } from "./types";
 
 export const posts: BlogPost[] = [
   {
+    "slug": "state-of-the-stack-september-2026",
+    "title": "State of the Stack, September 2026: The Interface Moved",
+    "excerpt": "Claudeforce put Claude inside the top CRM and Salesforce inside Claude, Kubeflow became Kubernetes' AI control plane, and agent policy learned sequences.",
+    "category": "AI & Consulting",
+    "categoryColor": "ai",
+    "categoryGradient": "from-amber to-amber-dark",
+    "date": "September 04, 2026",
+    "author": "Adroit Consulting",
+    "authorInitials": "AC",
+    "readTime": "11 min read",
+    "featured": false,
+    "tags": [
+      "Architecture",
+      "AI Agents",
+      "Salesforce",
+      "MCP",
+      "DevOps",
+      "Design Systems",
+      "Project Management"
+    ],
+    "bannerImage": "/banners/state-of-the-stack-september-2026.png",
+    "status": "published"
+  },
+  {
     "slug": "accessibility-testing-layers-ci-2026",
     "title": "Accessibility Is Regressing. Automated Testing Won't Stop It",
     "excerpt": "The web got measurably less accessible in 2026. Here is what axe catches, what it misses, and the layered test stack that keeps accessibility from regressing in CI.",
