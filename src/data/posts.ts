@@ -2,6 +2,30 @@ import { BlogPost } from "./types";
 
 export const posts: BlogPost[] = [
   {
+    "slug": "agent-durable-execution-state-machines-2026",
+    "title": "Durable Execution Is the Difference From Demo to Deployment",
+    "excerpt": "Durable execution is the reliability layer that lets a long-running agent crash at step 47 and resume at step 48 without redoing a single side effect.",
+    "category": "AI & Consulting",
+    "categoryColor": "ai",
+    "categoryGradient": "from-amber to-amber-dark",
+    "date": "September 04, 2026",
+    "author": "Adroit Consulting",
+    "authorInitials": "AC",
+    "readTime": "10 min read",
+    "featured": false,
+    "tags": [
+      "AI Agents",
+      "Durable Execution",
+      "State Machines",
+      "Multi-Agent Pipelines",
+      "AI Infrastructure",
+      "Idempotency",
+      "Human-in-the-Loop"
+    ],
+    "bannerImage": "/banners/agent-durable-execution-state-machines-2026.png",
+    "status": "published"
+  },
+  {
     "slug": "state-of-the-stack-september-2026",
     "title": "State of the Stack, September 2026: The Interface Moved",
     "excerpt": "Claudeforce put Claude inside the top CRM and Salesforce inside Claude, Kubeflow became Kubernetes' AI control plane, and agent policy learned sequences.",
