@@ -30,6 +30,7 @@ const series = (over: Partial<LearningSeries> = {}): LearningSeries => ({
   gradient: "from-sky to-blue-600",
   lessons: [],
   totalLessons: 28,
+  curriculumLessons: 28,
   ...over,
 });
 

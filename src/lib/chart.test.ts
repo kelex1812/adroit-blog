@@ -38,6 +38,7 @@ function constellation(
     name: over.name ?? "A Course",
     gradient: over.gradient ?? "from-blue-500 to-purple-500",
     totalStars,
+    curriculumLessons: over.curriculumLessons ?? totalStars,
     litStars,
     complete: over.complete ?? (totalStars > 0 && litStars === totalStars),
     stars: over.stars ?? [],

@@ -51,6 +51,7 @@ function makeConstellation(overrides: Partial<ConstellationState> = {}): Constel
     courseId: "c1",
     seriesSlug: "salesforce-architect",
     name: "Salesforce System Architect Primer",
+    curriculumLessons: 29,
     gradient: "from-sky-500 to-indigo-500",
     totalStars: 4,
     litStars: 2,

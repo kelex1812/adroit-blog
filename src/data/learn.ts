@@ -174,7 +174,8 @@ export const learnSeries: LearningSeries[] = [
         "status": "published"
       }
     ],
-    "totalLessons": 10
+    "totalLessons": 10,
+    "curriculumLessons": 10
   },
   {
     "slug": "omni-studio-cert",
@@ -552,7 +553,8 @@ export const learnSeries: LearningSeries[] = [
         "status": "published"
       }
     ],
-    "totalLessons": 26
+    "totalLessons": 26,
+    "curriculumLessons": 26
   },
   {
     "slug": "salesforce-architect",
@@ -1069,7 +1071,8 @@ export const learnSeries: LearningSeries[] = [
         "status": "published"
       }
     ],
-    "totalLessons": 31
+    "totalLessons": 31,
+    "curriculumLessons": 31
   },
   {
     "slug": "agentic-ai",
@@ -1571,7 +1574,8 @@ export const learnSeries: LearningSeries[] = [
         "status": "published"
       }
     ],
-    "totalLessons": 31
+    "totalLessons": 31,
+    "curriculumLessons": 31
   },
   {
     "slug": "ai-at-work",
@@ -1882,7 +1886,8 @@ export const learnSeries: LearningSeries[] = [
         "status": "published"
       }
     ],
-    "totalLessons": 19
+    "totalLessons": 19,
+    "curriculumLessons": 19
   },
   {
     "slug": "hermes-consultant-advanced",
@@ -2019,7 +2024,8 @@ export const learnSeries: LearningSeries[] = [
         "status": "published"
       }
     ],
-    "totalLessons": 8
+    "totalLessons": 8,
+    "curriculumLessons": 8
   },
   {
     "slug": "hermes-consultant-intermediate",
@@ -2156,7 +2162,8 @@ export const learnSeries: LearningSeries[] = [
         "status": "published"
       }
     ],
-    "totalLessons": 8
+    "totalLessons": 8,
+    "curriculumLessons": 8
   }
 ];
 

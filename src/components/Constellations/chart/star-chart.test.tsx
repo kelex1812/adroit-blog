@@ -16,6 +16,7 @@ function course(
   litStars: number,
   totalStars: number,
   name = "A Course",
+  curriculumLessons = totalStars,
 ): ConstellationState {
   return {
     courseId: `c-${seriesSlug}`,
@@ -23,6 +24,7 @@ function course(
     name,
     gradient: "from-blue-500 to-purple-500",
     totalStars,
+    curriculumLessons,
     litStars,
     complete: totalStars > 0 && litStars === totalStars,
     stars: [],

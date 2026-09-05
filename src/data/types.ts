@@ -55,6 +55,16 @@ export interface LearningSeries {
   lessons: LearnLesson[];
   /** Highest lesson number present (BA decision: NOT hardcoded "90") */
   totalLessons: number;
+  /**
+   * The curriculum's final planned lesson count, from `series.json`.
+   *
+   * Distinct from `totalLessons`, which is the highest lesson number that
+   * currently exists and therefore grows as lessons land. Use this wherever a
+   * *stable* course size is needed — the star chart sizes a course's
+   * constellation from it — and `totalLessons` for "published so far" counts and
+   * certificate gating. Falls back to `totalLessons` when undeclared.
+   */
+  curriculumLessons: number;
 }
 
 /**
@@ -82,6 +92,12 @@ export interface LearnCardSeries {
   lessonCount: number;
   /** Total (incl. unpublished) lesson count from series.json. */
   totalLessons: number;
+  /**
+   * The curriculum's final planned lesson count. Optional on the card
+   * projection: cards render "{n} / {total}" from `totalLessons`, and only the
+   * star chart needs the stable size. See `LearningSeries.curriculumLessons`.
+   */
+  curriculumLessons?: number;
   /** Lesson slugs — signed-in only (SeriesProgress); empty for guests. */
   lessonSlugs: string[];
   /* ---- Learn v2 org (DB-derived via CatalogCourse) ---- */

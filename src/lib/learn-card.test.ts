@@ -9,6 +9,7 @@ const fullSeries: LearningSeries = {
   description: "A structured path to the Salesforce Architect certification.",
   gradient: "from-sky to-blue-600",
   totalLessons: 42,
+  curriculumLessons: 60,
   lessons: [
     {
       slug: "what-is-solution-architecture",

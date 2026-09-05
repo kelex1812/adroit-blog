@@ -72,6 +72,11 @@ export interface LabCourseFixture {
   figureName: string;
   totalStars: number;
   litStars: number;
+  /**
+   * The curriculum's final size, where the fixture wants to exercise a course
+   * still being written. Defaults to `totalStars` — a finished curriculum.
+   */
+  curriculumLessons?: number;
 }
 
 /**
@@ -160,6 +165,7 @@ export function labConstellation(fixture: LabCourseFixture): ConstellationState 
     name: fixture.name,
     gradient: GRADIENTS[fixture.seriesSlug] ?? "from-sky to-blue-600",
     totalStars: fixture.totalStars,
+    curriculumLessons: fixture.curriculumLessons ?? fixture.totalStars,
     litStars: fixture.litStars,
     complete: fixture.litStars >= fixture.totalStars,
     stars,
