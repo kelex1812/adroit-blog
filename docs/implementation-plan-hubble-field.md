@@ -2,6 +2,10 @@
 
 **Tenant:** adroit-blog · **Branch:** `feat/hubble-field` · **Date:** 2026-09-04
 **Phase:** 2 — port the approved lab look into production
+**Status:** §§1–9 landed on `feat/hubble-field`. §9 step 10 (delete the 3D stack,
+drop the four r3f packages) is the remaining follow-up, held until the chart is
+confirmed in production. See the CHANGELOG entry for what the port deliberately
+does not claim, and §11 below for what is left.
 **Governing specs:** `docs/hubble-field-north-star.md`, `docs/requirements-hubble-field.md`, `docs/arch-hubble-field.md`, `design/hubble-field/direction-brief.md`
 **Approved look source:** `src/components/Constellations/lab/chart-atlas.tsx` + `chart-2d.css` + `chart-sky.ts`, at `/lab/hubble-field` (study: **Star chart**)
 
@@ -266,14 +270,69 @@ The chart already ships most of this in the lab; it must survive the port.
 
 ## 10. Open questions for Chris
 
-1. **Knowledge checks.** Ship v1 with lessons + exam only (§3.1), or hold the
-   port until quiz positions are modelled in the catalog?
-2. **The 2D dot grid** below the profile hero — does it survive alongside the
-   chart, or was it only ever a WebGL fallback?
-3. **Learn-hub cards.** `ConstellationPreview` still draws a dot row. Leave for
-   now, or bring into the chart language in the same pass?
+1. ~~**Knowledge checks.**~~ **Shipped as v1 (lessons + exam only).** The port
+   took §3.1's staged recommendation rather than holding. The crowning node also
+   lights on a real `exam` completion event read off the chronicle, not only on
+   `complete` — an exam event is written only on a pass, so a learner who passes
+   the cert exam with lessons outstanding still crowns the figure. Reversible;
+   real check anchors remain v2 and need their own ADR.
+2. ~~**The 2D dot grid.**~~ **Kept.** It is not redundant after all: the chart
+   draws the *figure*, which has as many members as the real constellation has
+   (Cassiopeia five), so it cannot show one node per lesson. The list can, it
+   carries the per-course links and lit/total counts, and it doubles as the
+   chart's text alternative. Still a fair call to revisit on design grounds.
+3. **Learn-hub cards.** `ConstellationPreview` still draws a dot row. Left as-is
+   this pass, per §4.3. Still open: bring it into the chart language, or leave
+   the hub cards deliberately cheaper than the hero?
 4. ~~**Figure art for future courses.**~~ **Settled.** All 88 IAU plates are in
    tree, so a new course needs a *mapping* to a constellation, not a new
    illustration. Course launch picks a free figure; the lines-only fallback in
    §3.4 stays as the safety net for an unmapped course. What still needs a call
    is who owns the mapping and whether it lives in content or in code.
+
+---
+
+## 11. What Phase 2 left open
+
+Carried forward deliberately, not forgotten.
+
+### 11.1 Not verified against a live database
+
+`/profile` and `/learn/[series]` were built and verified without reachable
+Supabase credentials, so both were checked by production build, unit tests, and
+the lab surface rather than a logged-in session. **Before merge, someone with a
+session should confirm:** the profile hero renders with real progress, clicking a
+figure focuses without navigating, the CTA routes to `/learn/...`, the on-course
+tracker reflects real lesson state, and the guest `LockedSkyTeaser` path is
+untouched. The riskiest of these is the adapter's read of a real `chronicle`,
+which fixtures only approximate.
+
+### 11.2 Star roles (v2)
+
+`ConstellationState` still carries no role anchors, so knowledge-check nodes stay
+out and the exam node's *position* remains a display choice (the brightest
+member) rather than catalog truth. Widening the contract is an ADR.
+
+### 11.3 Asterism coverage is exactly the current catalog
+
+All seven courses have a figure; an eighth would not. `buildChartFigure` degrades
+to a label-and-progress figure rather than failing, so this is safe — but the
+first new course will render bare until an asterism is authored for it. Authoring
+one is ~15 lines of real RA/Dec plus a connection list.
+
+### 11.4 Perf was reasoned, not measured
+
+§7's budget assumed measurement. What actually happened: `three` and the four r3f
+packages left the client bundle on both routes, and the plates dropped from
+14.7 MB to 6.5 MB as WebP, so the port is strictly lighter than what it replaced.
+Not done: profiling the two filtered `<image>` passes per figure on a mid-range
+laptop. The mitigation §7 suggests — capping the halo pass to focused and
+completed figures — was left unimplemented on purpose, since it changes the
+approved look and there is no evidence yet that it is needed.
+
+### 11.5 Scale ceiling
+
+Layout has no scale floor by design (any floor eventually collides), so a very
+large catalog draws very small figures. Past roughly three dozen courses the
+answer is a different presentation — paging, or zoom into a region — not a
+smaller engraving.
