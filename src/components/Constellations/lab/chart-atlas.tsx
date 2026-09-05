@@ -37,7 +37,7 @@ const FIGURE_ART: Record<string, FigureArt> = {
   "omni-studio-cert": { src: "/constellations/lyra.png", scale: 2.4, dx: 0, dy: -0.05 },
   "hermes-consultant": { src: "/constellations/corvus.png", scale: 2.2, dx: 0, dy: 0 },
   "hermes-consultant-intermediate": { src: "/constellations/delphinus.png", scale: 2.3, dx: 0, dy: 0 },
-  "hermes-consultant-advanced": { src: "/constellations/corona.png", scale: 2.4, dx: 0, dy: 0.05 },
+  "hermes-consultant-advanced": { src: "/constellations/corona-borealis.png", scale: 2.4, dx: 0, dy: 0.05 },
   "ai-at-work": { src: "/constellations/cygnus.png", scale: 2.5, dx: 0, dy: 0 },
 };
 
