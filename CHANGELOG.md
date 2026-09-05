@@ -51,6 +51,10 @@ another course was using. That is inherent to automatic assignment and is why
 `FIGURE_PINS` exists. It is deterministic either way: the same set of courses
 always yields the same mapping.
 
+The figure pocket is the click target (`pointer-events: fill`). Decorative
+art, labels and 1.25px rails do not receive pointer events; without the pocket
+a click in the middle of a winding figure such as Draco misses.
+
 **Still open** — planned finals per course (none in content); who owns
 course→figure pins vs automatic size match; live-session check of `/profile`
 and `/learn/[series]` before merge.
