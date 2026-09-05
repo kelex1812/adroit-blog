@@ -7,22 +7,37 @@
  * left to rot — `docs/implementation-plan-hubble-field.md` §0 records why, and
  * git history has them if the reasoning ever needs revisiting.
  *
- * What remains is the study that won: a 2D SVG celestial chart. It owns the
- * whole stage, so this shell is only the focus state around it.
+ * The study that won is now production. So the lab renders the *production*
+ * `StarChart` against synthetic fixtures rather than keeping its own copy of
+ * the renderer: two copies of a 700-line SVG component would have drifted
+ * within a week, and the only thing the lab actually needs to own is data a
+ * reviewer can see without a session.
+ *
+ * What that buys: the seven courses sit at deliberately uneven completion, so
+ * every visual state — untouched, part-way, complete, exam-passed — is on
+ * screen at once, which no real account reliably shows.
  */
 "use client";
 
-import { useState } from "react";
-import { ChartAtlasStudy } from "./chart-atlas";
+import { useMemo, useState } from "react";
+import { buildChartFigures } from "@/lib/chart";
+import { StarChart } from "../chart/StarChart";
+import { labProfileSky } from "./field-fixtures";
 
 export function HubbleFieldLab() {
   const [focusSlug, setFocusSlug] = useState<string | null>(
     "salesforce-architect",
   );
+  const figures = useMemo(() => buildChartFigures(labProfileSky()), []);
 
   return (
     <div data-testid="hubble-field-lab">
-      <ChartAtlasStudy focusSlug={focusSlug} onFocusChange={setFocusSlug} />
+      <StarChart
+        figures={figures}
+        focusSlug={focusSlug}
+        onFocusChange={setFocusSlug}
+        // The lab has nowhere to navigate to; the CTA is omitted on purpose.
+      />
     </div>
   );
 }

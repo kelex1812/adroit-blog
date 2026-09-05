@@ -264,18 +264,44 @@ describe("chartLayout", () => {
   });
 
   it("never overlaps two figures", () => {
-    for (const count of [7, 12, 18]) {
+    for (const count of [2, 7, 8, 12, 18, 26, 36, 50, 64]) {
       const slots = chartLayout(count);
       for (let i = 0; i < slots.length; i++) {
         for (let j = i + 1; j < slots.length; j++) {
           const d = Math.hypot(slots[i]!.cx - slots[j]!.cx, slots[i]!.cy - slots[j]!.cy);
-          // Figures are drawn at roughly `70 * scale` half-span.
+          /*
+           * A figure is drawn out to about `70 * scale` from its centre, so two
+           * centres must stay more than that apart or the linework collides.
+           */
           expect(d, `count ${count}: slots ${i}/${j} collide`).toBeGreaterThan(
-            60 * slots[i]!.scale,
+            140 * slots[i]!.scale,
           );
         }
       }
     }
+  });
+
+  /*
+   * Regression: even-area packing (`r ∝ √i`) put the first figures of a
+   * seven-course sky near the centre and left the outer plate empty, so the
+   * chart read as a huddle in the middle of a large circle. Every assertion
+   * above passed while that was true — only the distance from centre catches it.
+   */
+  it("pushes a sparse sky out into a ring rather than huddling it centrally", () => {
+    for (const count of [3, 7, 8]) {
+      const radii = chartLayout(count).map((s) =>
+        Math.hypot(s.cx - 500, s.cy - 520),
+      );
+      expect(Math.min(...radii), `count ${count} sits too close to centre`)
+        .toBeGreaterThan(0.45 * 330);
+    }
+  });
+
+  it("uses the full disc once there are enough figures to fill it", () => {
+    const radii = chartLayout(26).map((s) => Math.hypot(s.cx - 500, s.cy - 520));
+    // A full sky should reach both the middle and the rim.
+    expect(Math.min(...radii)).toBeLessThan(0.35 * 330);
+    expect(Math.max(...radii)).toBeGreaterThan(0.9 * 330);
   });
 
   it("is deterministic", () => {

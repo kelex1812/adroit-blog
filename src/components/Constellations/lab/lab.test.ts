@@ -15,7 +15,7 @@ import {
   bgStars,
   rng,
   xyCorrelation,
-} from "./chart-sky";
+} from "../chart/chart-sky";
 
 describe("field-fixtures", () => {
   it("covers seven real series slugs", () => {

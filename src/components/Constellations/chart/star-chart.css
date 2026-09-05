@@ -8,15 +8,20 @@
  */
 /*
  * The lab shell was `height: 100vh` because the chart owned the whole screen.
- * As a page hero it has to be bounded, and it has to stay roughly square or the
- * circular plate letterboxes into a slot. `aspect-ratio` with a clamped height
- * ceiling keeps the plate whole on tall phones and short laptops alike.
+ * As a page hero it has to be bounded and square: the plate is a circle, and
+ * the SVG preserves its aspect ratio, so a wide box letterboxes the plate into
+ * the middle and strands the absolutely-positioned legend and inspect panel out
+ * over the empty margins.
+ *
+ * Constraining *width* is what keeps the box square — `aspect-ratio` with a
+ * `max-height` cap does not, because the cap shortens the box without narrowing
+ * it, which is exactly how that stranding happened.
  */
 .cxc {
   position: relative;
-  width: 100%;
+  width: min(100%, 88vh, 900px);
+  margin-inline: auto;
   aspect-ratio: 1 / 1;
-  max-height: min(88vh, 900px);
   overflow: hidden;
   color: #e8dfd0;
   background:
@@ -642,8 +647,9 @@
  * without pushing it off the fold.
  */
 .cxc.is-single {
+  width: 100%;
   aspect-ratio: 16 / 10;
-  max-height: 480px;
+  max-width: none;
   border-radius: 16px;
 }
 

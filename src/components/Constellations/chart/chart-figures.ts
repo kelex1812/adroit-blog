@@ -44,29 +44,70 @@ export interface ChartSlot {
 }
 
 /**
+ * How far in the innermost figure sits, as a fraction of `MAX_RADIUS`.
+ *
+ * Even-area packing (`r ∝ √i`) is right for a full sky and wrong for a sparse
+ * one: with seven courses it drops the first figures near the centre and leaves
+ * the outer plate empty, so the sky reads as a huddle rather than a chart. An
+ * inner bound pushes a sparse catalog out into a ring and relaxes to zero — the
+ * full disc — once there are enough figures to fill it.
+ */
+function innerFraction(capacity: number): number {
+  return Math.min(0.58, Math.max(0, 1 - capacity / 18));
+}
+
+/**
  * Deterministic slot per course index.
  *
- * Phyllotaxis: `r ∝ √i` with a golden-angle turn each step, which is how a
- * sunflower packs seeds at even density. Index-driven, so the same catalog
- * always produces the same sky.
+ * Phyllotaxis: a golden-angle turn each step, which is how a sunflower packs
+ * seeds without rows lining up. Radius interpolates between `innerFraction` and
+ * the plate edge on a √ curve, so density stays even across whatever band is in
+ * use. Index-driven, so the same catalog always produces the same sky.
  */
 export function chartLayout(count: number): ChartSlot[] {
   if (count <= 0) return [];
   const capacity = layoutCapacity(count);
-  // Spacing that puts the outermost slot of a full tier at MAX_RADIUS.
-  const spacing = MAX_RADIUS / Math.sqrt(capacity - 0.5);
-  // Figures must not collide; their drawn extent is roughly 2× the base span.
-  const scale = Math.min(1.45, Math.max(0.72, spacing / 108));
+  const inner = innerFraction(capacity);
 
-  return Array.from({ length: count }, (_, i) => {
-    const radius = spacing * Math.sqrt(i + 0.5);
+  const positions = Array.from({ length: count }, (_, i) => {
+    const spread = Math.sqrt((i + 0.5) / capacity);
+    const radius = MAX_RADIUS * (inner + (1 - inner) * spread);
     const theta = i * GOLDEN_ANGLE;
     return {
       cx: CENTRE_X + Math.cos(theta) * radius,
       cy: CENTRE_Y + Math.sin(theta) * radius,
-      scale,
     };
   });
+
+  /*
+   * Size figures off the tightest gap the layout actually produced rather than a
+   * guess from the capacity. A figure's drawn extent is about `2 × 70 × scale`,
+   * so half the nearest-neighbour distance is the ceiling before they touch.
+   */
+  let tightest = Infinity;
+  for (let i = 0; i < positions.length; i++) {
+    for (let j = i + 1; j < positions.length; j++) {
+      const d = Math.hypot(
+        positions[i]!.cx - positions[j]!.cx,
+        positions[i]!.cy - positions[j]!.cy,
+      );
+      if (d < tightest) tightest = d;
+    }
+  }
+  /*
+   * Spacing alone decides the size. Any fixed floor eventually exceeds
+   * `tightest / 140` and reintroduces the collisions it was clamping away —
+   * first at 26 courses, then at 50 as the floor was lowered. A lone figure has
+   * no neighbour to crowd, so it takes the maximum.
+   *
+   * The consequence is that a very large catalog draws very small figures. That
+   * is the honest failure mode: past roughly three dozen courses the answer is a
+   * different presentation (paging, or zoom into a region), not a smaller
+   * engraving. The chart degrades legibly instead of overlapping.
+   */
+  const scale = Number.isFinite(tightest) ? Math.min(1.6, tightest / 150) : 1.6;
+
+  return positions.map((p) => ({ ...p, scale }));
 }
 
 /* ------------------------------------------------------------------ */
