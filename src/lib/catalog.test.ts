@@ -194,6 +194,9 @@ describe("toLearnHubCards", () => {
     expect(card.level).toBe(2);
     expect(card.difficulty).toBe("Advanced");
     expect(card.lessonSlugs).toEqual([]);
+    // hermes-consultant has no declared finish line, so this equals totalLessons.
+    expect(card.curriculumLessons).toBe(card.totalLessons);
+    expect(card.curriculumLessons).toBeGreaterThan(0);
     expect(card).not.toHaveProperty("course");
     expect(card).not.toHaveProperty("lessons");
   });

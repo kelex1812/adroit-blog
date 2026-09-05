@@ -9,6 +9,52 @@ Baseline v1.0.0 — Omni content + course-structure/cert-standards bar + Constel
 
 ## [Unreleased]
 
+### Hubble Field — constellations sized to the curriculum (`feat/hubble-field`)
+
+**What** — a course's constellation is chosen by the curriculum's *final*
+lesson count, not by a hardcoded `seriesSlug` → asterism map. Stars light by
+lesson number: finish lesson 4 and the star that stands for lesson 4 lights.
+The figure stays the same shape while daily lessons land, because size comes
+from a declared finish line rather than from whatever is published today.
+
+**Why** — Phase 2 mapped each course to a named constellation and then lit
+members brightest-first as a *proportion* of progress. That looked right on a
+finished 10-lesson course and fell apart the moment a course was still being
+written: a 5-lesson launch of a 40-lesson curriculum drew Cassiopeia's five
+stars, then would have reshuffled the whole sky when lesson 6 shipped. A
+progress surface that changes shape every morning is not a progress surface.
+
+**How** — `series.json` may declare `curriculumLessons`. `totalLessons` stays
+"highest lesson number that exists" — certificate gating depends on that
+meaning exactly that, so it was not reused. Undeclared courses fall back to
+`totalLessons`. **Authors set the field when they know the finish line.** Do
+not invent a planned size; none of the seven courses have a declared final
+yet, and the fallback already does the honest thing.
+
+Assignment is three-pass and deterministic: editorial pins first
+(`FIGURE_PINS`, empty on purpose), then exact size matches (so a 19-lesson
+course cannot steal Gemini from a 10-lesson course), then closest remaining,
+largest course first. No two courses share a figure; overflow renders
+label-only. Lighting deals 1-based lesson numbers onto stars
+(`lessonsPerStar`); a star burns when every lesson in its bucket is done. The
+crown (brightest member) still answers to `complete` or a real `exam` event.
+
+The catalog lives in `chart/figure-catalog.ts` — 23 real figures, 3–14 stars,
+J2000 RA/Dec, every member connected. `3d/asterism-data.ts` is 3D-only now.
+
+Hub cards carry `curriculumLessons` through `toLearnCardSeries` /
+`getContentDisplay` / `toLearnHubCards` so a later surface can read the same
+number the chart does. The chart itself still sizes from `getSeriesBySlug`.
+
+**Watch out** — because the pool is shared, adding a course can take a figure
+another course was using. That is inherent to automatic assignment and is why
+`FIGURE_PINS` exists. It is deterministic either way: the same set of courses
+always yields the same mapping.
+
+**Still open** — planned finals per course (none in content); who owns
+course→figure pins vs automatic size match; live-session check of `/profile`
+and `/learn/[series]` before merge.
+
 ### Hubble Field — Phase 2, the star chart in production (`feat/hubble-field`)
 
 **What** — `/profile` "Your Sky" and the `/learn/[series]` on-course tracker now

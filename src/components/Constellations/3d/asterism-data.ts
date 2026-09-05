@@ -1,16 +1,23 @@
 /**
  * asterism-data.ts — PURE real-asterism data (no three/r3f imports).
  *
- * ADR-307 (REV 2): the on-course tracker is grounded in REAL astronomy, not
- * invented scatter. Each course maps to a real named constellation whose
- * (Bayer-designated) member stars are authored with real coordinates, spectral
- * class, and apparent magnitude. Lesson count must equal member-star count
- * used; where a course has more lessons than bright members, the overflow maps
- * to progressively fainter real members of that constellation.
+ * 3D-only. The leftover WebGL stack (`star-model`, `SeriesConstellation3D`,
+ * `labAsterismFor`) still keys a figure by `seriesSlug` and still requires
+ * lesson count to equal member-star count. The production star chart does
+ * **not** read this file: it assigns from `chart/figure-catalog.ts` by the
+ * curriculum's final lesson count, because a slug→constellation map cannot
+ * answer "which figure fits a 10-lesson course" and it cannot stay stable
+ * while lessons land daily.
  *
- * This module is the loader's authored source. `buildSeriesStars` (star-model)
- * provides a deterministic scaffold fallback; the scene overlays this real
- * data by seriesSlug so the figure reads as the actual constellation.
+ * ADR-307 (REV 2) still applies *here*: the 3D tracker is grounded in real
+ * astronomy. Each course maps to a named constellation whose Bayer members
+ * are authored with real coordinates, spectral class, and apparent magnitude.
+ * Where a course has more lessons than bright members, overflow maps to
+ * fainter real members of that constellation.
+ *
+ * This module is the 3D loader's authored source. `buildSeriesStars`
+ * (star-model) provides a deterministic scaffold fallback; the scene overlays
+ * this data by seriesSlug so the figure reads as the actual constellation.
  *
  * Coordinates are J2000 (RA in hours, Dec in degrees). Positions are projected
  * onto the constellation plane (equirectangular-ish, centered on the figure)

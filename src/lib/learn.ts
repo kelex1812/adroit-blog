@@ -56,6 +56,7 @@ export function toLearnCardSeries(
     gradient: s.gradient,
     lessonCount: s.lessons.length,
     totalLessons: s.totalLessons,
+    curriculumLessons: s.curriculumLessons,
     lessonSlugs: opts.includeLessonSlugs
       ? s.lessons.map((l) => l.slug)
       : [],

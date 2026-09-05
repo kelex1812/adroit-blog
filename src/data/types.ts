@@ -62,7 +62,8 @@ export interface LearningSeries {
    * currently exists and therefore grows as lessons land. Use this wherever a
    * *stable* course size is needed — the star chart sizes a course's
    * constellation from it — and `totalLessons` for "published so far" counts and
-   * certificate gating. Falls back to `totalLessons` when undeclared.
+   * certificate gating. Falls back to `totalLessons` when undeclared. Authors
+   * set this in `series.json` when they know the finish line; do not invent one.
    */
   curriculumLessons: number;
 }

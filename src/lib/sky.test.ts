@@ -70,6 +70,46 @@ describe("buildConstellation", () => {
     expect(none.complete).toBe(false);
   });
 
+  it("defaults curriculumLessons to the published star count", () => {
+    const c = buildConstellation({
+      courseId: "c1",
+      seriesSlug: "s",
+      name: "n",
+      gradient: "g",
+      lessonSlugs: ["a", "b", "c"],
+      completedSlugs: new Set(),
+    });
+    expect(c.curriculumLessons).toBe(3);
+    expect(c.curriculumLessons).toBe(c.totalStars);
+  });
+
+  it("keeps a declared curriculum above what is published", () => {
+    const c = buildConstellation({
+      courseId: "c1",
+      seriesSlug: "s",
+      name: "n",
+      gradient: "g",
+      lessonSlugs: ["a"],
+      curriculumLessons: 40,
+      completedSlugs: new Set(),
+    });
+    expect(c.totalStars).toBe(1);
+    expect(c.curriculumLessons).toBe(40);
+  });
+
+  it("never shrinks a stale declaration below what already exists", () => {
+    const c = buildConstellation({
+      courseId: "c1",
+      seriesSlug: "s",
+      name: "n",
+      gradient: "g",
+      lessonSlugs: ["a", "b", "c"],
+      curriculumLessons: 1,
+      completedSlugs: new Set(),
+    });
+    expect(c.curriculumLessons).toBe(3);
+  });
+
   it("falls back to the slug when no label is provided", () => {
     const c = buildConstellation({
       courseId: "c1",

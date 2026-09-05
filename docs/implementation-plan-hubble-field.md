@@ -2,10 +2,11 @@
 
 **Tenant:** adroit-blog · **Branch:** `feat/hubble-field` · **Date:** 2026-09-04
 **Phase:** 2 — port the approved lab look into production
-**Status:** §§1–9 landed on `feat/hubble-field`. §9 step 10 (delete the 3D stack,
-drop the four r3f packages) is the remaining follow-up, held until the chart is
-confirmed in production. See the CHANGELOG entry for what the port deliberately
-does not claim, and §11 below for what is left.
+**Status:** §§1–9 landed on `feat/hubble-field`. Figures are now assigned by
+`curriculumLessons` (see §11.3 / §11.6), not by a slug→asterism map. §9 step 10
+(delete the 3D stack, drop the four r3f packages) is the remaining follow-up,
+held until the chart is confirmed in production. See the CHANGELOG entry for
+what the port deliberately does not claim, and §11 below for what is left.
 **Governing specs:** `docs/hubble-field-north-star.md`, `docs/requirements-hubble-field.md`, `docs/arch-hubble-field.md`, `design/hubble-field/direction-brief.md`
 **Approved look source:** `src/components/Constellations/lab/chart-atlas.tsx` + `chart-2d.css` + `chart-sky.ts`, at `/lab/hubble-field` (study: **Star chart**)
 
@@ -313,12 +314,18 @@ which fixtures only approximate.
 out and the exam node's *position* remains a display choice (the brightest
 member) rather than catalog truth. Widening the contract is an ADR.
 
-### 11.3 Asterism coverage is exactly the current catalog
+### 11.3 Figure catalog vs 3D asterisms
 
-All seven courses have a figure; an eighth would not. `buildChartFigure` degrades
-to a label-and-progress figure rather than failing, so this is safe — but the
-first new course will render bare until an asterism is authored for it. Authoring
-one is ~15 lines of real RA/Dec plus a connection list.
+The chart no longer reads `3d/asterism-data.ts`. That file is a slug→constellation
+map for the unmounted 3D stack and still assumes lesson count equals member
+count. Production assignment is by *size*, from `chart/figure-catalog.ts`: 23
+real figures spanning 3–14 stars (Triangulum through Draco). A new course gets
+the closest unclaimed figure until the catalog is exhausted; then
+`buildChartFigure` degrades to label-and-progress. Authoring one more figure is
+~15 lines of real RA/Dec plus a connection list.
+
+`asterism-data.ts` stays in tree with the rest of `3d/` until the chart is
+confirmed and the WebGL stack is deleted.
 
 ### 11.4 Perf was reasoned, not measured
 
@@ -336,3 +343,23 @@ Layout has no scale floor by design (any floor eventually collides), so a very
 large catalog draws very small figures. Past roughly three dozen courses the
 answer is a different presentation — paging, or zoom into a region — not a
 smaller engraving.
+
+### 11.6 Curriculum size is declared, not invented
+
+`series.json` may set `curriculumLessons`. `totalLessons` remains "highest lesson
+number that exists" — `certificate.ts` gates on `lessonsCompleted >= totalLessons`,
+so that field must not be reused as a planned finish line. The generator clamps
+`max(declared, totalLessons)` and warns if the declaration is already stale.
+
+**Do not invent finals.** None of the seven courses currently declare a finish
+line in content; the fallback (`= totalLessons`) is the honest default. Authors
+set the field when they know how long the curriculum will be. Until then the
+chart sizes from published count and will reshuffle if that count later grows —
+which is why the field exists.
+
+### 11.7 Who owns course→figure pins
+
+`FIGURE_PINS` in `figure-assignment.ts` is empty. Size matching is the rule; a
+pin is the escape hatch for a course whose figure has to be a particular one, or
+to hold a figure stable that adding a new course would otherwise move. That is
+an editorial call, not a code one. Until someone owns it, leave the map empty.
