@@ -2,6 +2,29 @@ import { BlogPost } from "./types";
 
 export const posts: BlogPost[] = [
   {
+    "slug": "agentforce-determinism-ladder-2026",
+    "title": "The Agentforce Determinism Ladder: Reliable Agents",
+    "excerpt": "Reliability in an Agentforce agent is engineered, not prompted. Move up six levels of agentic control and every rung lands on a concrete build decision.",
+    "category": "Salesforce",
+    "categoryColor": "sf",
+    "categoryGradient": "from-sky to-sky-dark",
+    "date": "September 05, 2026",
+    "author": "Adroit Consulting",
+    "authorInitials": "AC",
+    "readTime": "9 min read",
+    "featured": false,
+    "tags": [
+      "Salesforce",
+      "Agentforce",
+      "Flow",
+      "Apex",
+      "Data Cloud",
+      "security"
+    ],
+    "bannerImage": "/banners/agentforce-determinism-ladder-2026.png",
+    "status": "published"
+  },
+  {
     "slug": "realtime-write-conflicts-supabase-2026",
     "title": "Real-Time Writes: Stopping the Last-Writer-Wins Overwrite",
     "excerpt": "Real-time apps are easy to read and hard to write. When two people edit the same record, whoever saves last wins silently. One guarded UPDATE fixes it.",
