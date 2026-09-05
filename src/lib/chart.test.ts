@@ -416,6 +416,22 @@ describe("buildChartFigures", () => {
       expect(f.stars.length, `${slug} lost its exact fit`).toBe(f.curriculumLessons);
     }
   });
+
+  it("sizes the lab's just-launched course from its curriculum, not five published lessons", async () => {
+    const { labProfileSky } = await import(
+      "@/components/Constellations/lab/field-fixtures"
+    );
+    const figures = buildChartFigures(labProfileSky());
+    const agentic = figures.find((f) => f.seriesSlug === "agentic-ai");
+    expect(agentic).toBeDefined();
+    expect(agentic!.curriculumLessons).toBe(40);
+    expect(agentic!.totalStars).toBe(5);
+    // Cassiopeia is the 5-star figure the old slug map would have given it.
+    expect(agentic!.figureName).not.toBe("Cassiopeia");
+    expect(agentic!.stars.length).toBeGreaterThan(5);
+    expect(agentic!.figureName).toBe("Draco");
+    expect(agentic!.stars).toHaveLength(14);
+  });
 });
 
 describe("assignFigures", () => {

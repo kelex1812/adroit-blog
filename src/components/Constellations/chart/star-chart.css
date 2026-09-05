@@ -212,8 +212,14 @@
  * of the star lines — the drawing says "this is a swan", it doesn't become
  * the chart.
  */
+/*
+ * The pocket is the figure's hit target. Art, labels and decorative strokes
+ * stay `pointer-events: none` so they don't steal the click; without this the
+ * only painted pixels that receive one are 1.25px rails and pinprick dots,
+ * and a click in the middle of the figure misses.
+ */
 .cxc-pocket {
-  pointer-events: none;
+  pointer-events: fill;
 }
 
 .cxc-art-group {
