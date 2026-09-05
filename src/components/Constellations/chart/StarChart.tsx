@@ -428,6 +428,17 @@ export function StarChart({
 
   const focused = figures.find((f) => f.seriesSlug === focusSlug) ?? null;
 
+  const singleLabel = useMemo(() => {
+    const f = figures[0];
+    if (!f) return "Course constellation";
+    const pct = Math.round(figureProgress(f) * 100);
+    const drawn = f.figureName ? ` drawn as ${f.figureName}` : "";
+    const state = f.complete
+      ? "course complete"
+      : `${f.litStars} of ${f.totalStars} lessons done, ${pct}% complete`;
+    return `${f.name}${drawn} — ${state}`;
+  }, [figures]);
+
   const far = useMemo(() => bgStars(260, "far", [0.4, 1.1], [0.12, 0.4]), []);
   const mid = useMemo(() => bgStars(120, "mid", [0.8, 1.7], [0.3, 0.65]), []);
   const near = useMemo(() => bgStars(36, "near", [1.4, 2.4], [0.5, 0.9]), []);
@@ -455,6 +466,20 @@ export function StarChart({
     el.style.setProperty("--cxc-py", "0");
   }, []);
 
+  /*
+   * Esc clears focus. Scoped to the chart's own subtree rather than the window,
+   * so it cannot swallow Escape from a dialog or menu elsewhere on the page.
+   */
+  const onKeyDown = useCallback(
+    (e: React.KeyboardEvent<HTMLDivElement>) => {
+      if (e.key === "Escape" && focusSlug) {
+        e.stopPropagation();
+        onFocusChange(null);
+      }
+    },
+    [focusSlug, onFocusChange],
+  );
+
   const rootClasses = [
     "cxc",
     single ? "is-single" : "",
@@ -471,6 +496,7 @@ export function StarChart({
       ref={rootRef}
       onPointerMove={onPointerMove}
       onPointerLeave={onPointerLeave}
+      onKeyDown={onKeyDown}
     >
       {!single ? (
         <div className="cxc-legend">
@@ -496,15 +522,19 @@ export function StarChart({
         </div>
       ) : null}
 
+      {/*
+        `role="img"` only when nothing inside is operable. An img's subtree is
+        presentational, so using it on the profile chart would hide every figure
+        button from assistive tech — the controls would be keyboard-reachable and
+        completely undescribed. The single-course tracker has no controls, so
+        there it is correct, and its label has to carry the progress that the
+        (now presentational) text nodes state visually.
+      */}
       <svg
         className="cxc-svg"
         viewBox="0 0 1000 1000"
-        role="img"
-        aria-label={
-          single
-            ? `${figures[0]?.name ?? "Course"} drawn as a constellation`
-            : "Map of your courses as constellation figures"
-        }
+        role={single ? "img" : "group"}
+        aria-label={single ? singleLabel : "Your courses, drawn as constellation figures"}
       >
         <defs>
           {ghostFilter(ids.ghostBronze, BRONZE, 0.7)}

@@ -398,8 +398,25 @@
   opacity: 0.2;
 }
 
+/*
+ * Recolouring a 1.25px line is not a focus indicator you can find. The pocket
+ * ellipse is already the figure's bounding shape, so outlining it gives keyboard
+ * users the same target the pointer gets, at a size that is actually visible
+ * against the nebulae.
+ */
+.cxc-figure:focus-visible .cxc-pocket {
+  stroke: #f2d692;
+  stroke-width: 2;
+  stroke-dasharray: 5 4;
+}
+
 .cxc-figure:focus-visible .cxc-line {
   stroke: rgba(220, 190, 130, 0.55);
+}
+
+/* A focused figure must not be dimmed out from under the keyboard. */
+.cxc-figure.is-dimmed:focus-visible {
+  opacity: 1;
 }
 
 /* Stick-figure lines — thin, sharp */
