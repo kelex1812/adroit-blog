@@ -4,8 +4,13 @@
  * Plates are produced one at a time by an image model into the Cursor assets
  * directory as `<slug>-figure.png` (~1.5MB colour). This script is the second
  * half of that pipeline: it downscales to 640px, drops to grayscale (the chart
- * luma-keys them anyway, see the hf2-ghost filters in chart-atlas.tsx) and
- * writes `public/constellations/<slug>.png` at ~180KB.
+ * luma-keys them anyway — see `ghostFilter` in `chart/StarChart.tsx`) and writes
+ * `public/constellations/<slug>.webp` at ~75KB.
+ *
+ * Grayscale WebP at q90 is the shipped format. The chart never shows a plate
+ * directly: it reads luminance through `feColorMatrix` and blurs the result, so
+ * the encoder's artifacts land far below anything that survives to the screen.
+ * The lossless originals stay in the assets directory, outside the repo.
  *
  * It exists because generation is long and interruptible. Running it after
  * every batch means a dropped provider connection costs one batch, not the
@@ -42,6 +47,8 @@ const slugOf = (name) => name.toLowerCase().replace(/\s+/g, "-");
 const SLUGS = IAU_88.map(slugOf);
 
 const DEST = path.join("public", "constellations");
+/** Shipped format. Must stay in step with PLATE_EXT in chart-figures.ts. */
+const OUT_EXT = "webp";
 const DEFAULT_SRC =
   process.env.CURSOR_ASSETS_DIR ||
   path.join(
@@ -64,8 +71,8 @@ function synced() {
   if (!fs.existsSync(DEST)) return new Set();
   return new Set(
     fs.readdirSync(DEST)
-      .filter((f) => f.endsWith(".png"))
-      .map((f) => f.replace(/\.png$/, "")),
+      .filter((f) => f.endsWith(`.${OUT_EXT}`))
+      .map((f) => f.replace(new RegExp(`\\.${OUT_EXT}$`), "")),
   );
 }
 
@@ -103,9 +110,9 @@ if (flag("--remaining")) {
     const buf = await sharp(file)
       .resize(640, 640, { fit: "inside" })
       .grayscale()
-      .png({ compressionLevel: 9, palette: true })
+      .webp({ quality: 90 })
       .toBuffer();
-    fs.writeFileSync(path.join(DEST, `${slug}.png`), buf);
+    fs.writeFileSync(path.join(DEST, `${slug}.${OUT_EXT}`), buf);
     bytes += buf.length;
     console.log(`  + ${slug}  ${Math.round(buf.length / 1024)}KB`);
   }

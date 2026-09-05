@@ -351,7 +351,7 @@ describe("figure art registry", () => {
     ]) {
       const art = figureArtFor(name);
       expect(art, `${name} has no plate`).not.toBeNull();
-      expect(art!.src).toBe(`/constellations/${plateSlug(name)}.png`);
+      expect(art!.src).toBe(`/constellations/${plateSlug(name)}.webp`);
     }
   });
 
@@ -373,8 +373,8 @@ describe("figure art registry", () => {
     const onDisk = new Set(
       fs
         .readdirSync(dir)
-        .filter((f) => f.endsWith(".png"))
-        .map((f) => f.replace(/\.png$/, "")),
+        .filter((f) => f.endsWith(".webp"))
+        .map((f) => f.replace(/\.webp$/, "")),
     );
     const missing = [...PLATE_SLUGS].filter((s) => !onDisk.has(s));
     const untracked = [...onDisk].filter((s) => !PLATE_SLUGS.has(s));

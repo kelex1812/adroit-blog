@@ -114,6 +114,9 @@ export function chartLayout(count: number): ChartSlot[] {
 /*  Figure art                                                         */
 /* ------------------------------------------------------------------ */
 
+/** Served format. See `PLATE_SLUGS` for why there is no PNG alongside it. */
+const PLATE_EXT = "webp";
+
 /**
  * The engraved plates in `public/constellations/`, by constellation slug.
  *
@@ -121,6 +124,14 @@ export function chartLayout(count: number): ChartSlot[] {
  * for free — no new illustration, just a mapping. `chart.test.ts` asserts this
  * list against what is actually on disk, because a missing file renders as a
  * broken `<image>` and there is no runtime existence check in the browser.
+ *
+ * WebP only, with no PNG fallback, for two reasons. There is no way to express
+ * one inside SVG `<image>` — no `srcset`, no `<picture>` — short of a
+ * `<foreignObject>`, which brings its own problems. And the loss is invisible
+ * here regardless: the chart never shows the plate directly, it reads the
+ * plate's *luminance* through `feColorMatrix` and then blurs the result, so q90
+ * artifacts sit well below what survives that pipeline. It cut the plates from
+ * 14.7 MB to 6.5 MB, and a seven-course sky from ~1.2 MB to ~540 KB.
  */
 export const PLATE_SLUGS: ReadonlySet<string> = new Set([
   "andromeda", "antlia", "apus", "aquarius", "aquila", "ara", "aries",
@@ -189,7 +200,7 @@ export function figureArtFor(figureName: string | null): FigureArt | null {
   const slug = plateSlug(figureName);
   if (!PLATE_SLUGS.has(slug)) return null;
   return {
-    src: `/constellations/${slug}.png`,
+    src: `/constellations/${slug}.${PLATE_EXT}`,
     ...DEFAULT_ART,
     ...ART_TUNING[slug],
   };

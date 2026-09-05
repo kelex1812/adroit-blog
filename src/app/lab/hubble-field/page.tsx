@@ -3,8 +3,12 @@ import { notFound } from "next/navigation";
 import { HubbleFieldLabClient } from "./HubbleFieldLabClient";
 
 /**
- * Hubble Field lab — Phase 1 visual observatory.
- * The mockup IS this page. Production ProfileGalaxy3D is untouched.
+ * Hubble Field lab — the star chart against synthetic fixtures.
+ *
+ * Since the Phase 2 port this renders the *production* chart, not a mockup of
+ * it. What the lab still buys is data: seven courses at deliberately uneven
+ * completion, so every visual state is on screen at once without a session and
+ * without a database.
  *
  * Gated: development by default. Production returns 404 unless
  * ALLOW_HUBBLE_LAB=1 is set (staging review only). noindex + /lab/ robots.
@@ -14,7 +18,8 @@ import { HubbleFieldLabClient } from "./HubbleFieldLabClient";
  */
 export const metadata: Metadata = {
   title: "Hubble Field Lab — Adroit",
-  description: "Internal WebGL observatory for the constellation visual reboot.",
+  description:
+    "Internal review surface for the constellation star chart, on synthetic progress.",
   robots: { index: false, follow: false },
 };
 

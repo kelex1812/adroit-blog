@@ -31,7 +31,21 @@ export function HubbleFieldLab() {
   const figures = useMemo(() => buildChartFigures(labProfileSky()), []);
 
   return (
-    <div data-testid="hubble-field-lab">
+    <div
+      data-testid="hubble-field-lab"
+      /*
+       * The chart is a square that centres itself inside whatever it is given.
+       * On /profile the surrounding section supplies the sky; the lab has no
+       * page around it, so without this the plate floats on default white and
+       * reads as broken rather than as a bounded hero.
+       */
+      style={{
+        minHeight: "100vh",
+        background: "#02030a",
+        display: "grid",
+        placeItems: "center",
+      }}
+    >
       <StarChart
         figures={figures}
         focusSlug={focusSlug}
