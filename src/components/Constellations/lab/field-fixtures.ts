@@ -6,16 +6,15 @@
  * levels — two complete, four part-way, one untouched — plus the figure each
  * course draws.
  *
- * Orion and Cassiopeia come from the shipped `asterism-data.ts`. The other
- * five courses get REAL small constellations authored here (Lyra, Corvus,
- * Delphinus, Corona Borealis, Cygnus) in the same `Asterism` shape, projected
- * through the shipped `projectAsterism`. That is deliberately not a generated
- * ring: a ring of equidistant equal stars is the "invented scatter wearing a
- * course name" failure the architecture doc calls out, and these figures are
- * cheap to author because the coordinates already exist in the sky.
+ * All seven figures now come from the shipped `asterism-data.ts`. Five of them
+ * (Lyra, Corvus, Delphinus, Corona Borealis, Cygnus) were authored here first
+ * and promoted in the Phase 2 port; they were real coordinates rather than a
+ * generated ring, because a ring of equidistant equal stars is the "invented
+ * scatter wearing a course name" failure the architecture doc calls out.
  *
- * Nothing here is a production data source — `asterism-data.ts` stays
- * untouched, and promoting any of these figures is a Phase 2 decision.
+ * What is still lab-only is the *progress* — the completion levels below are
+ * fabricated, and `labFigure` invents star roles positionally. Neither is a
+ * production data source; see `docs/implementation-plan-hubble-field.md` §3.1.
  */
 import type {
   AchievementStats,
@@ -50,130 +49,15 @@ export interface FigureStar {
   role?: "lesson" | "check" | "exam";
 }
 
-/* ------------------------------------------------------------------ */
-/*  Lab-only real asterisms for the five unauthored courses            */
-/* ------------------------------------------------------------------ */
-
-/** LYRA — the lyre. Vega plus the parallelogram. */
-const LYRA: Asterism = {
-  seriesSlug: "omni-studio-cert",
-  name: "Lyra",
-  stars: [
-    { name: "Vega (α Lyr)", raH: 18.6156, decDeg: 38.78, spectralClass: "A", magnitude: 0.03 },
-    { name: "ζ¹ Lyr", raH: 18.7461, decDeg: 37.6, spectralClass: "A", magnitude: 4.36 },
-    { name: "Sheliak (β Lyr)", raH: 18.8347, decDeg: 33.36, spectralClass: "B", magnitude: 3.52 },
-    { name: "Sulafat (γ Lyr)", raH: 18.9822, decDeg: 32.69, spectralClass: "B", magnitude: 3.24 },
-    { name: "δ² Lyr", raH: 18.9, decDeg: 36.9, spectralClass: "M", magnitude: 4.3 },
-    { name: "ε Lyr", raH: 18.7392, decDeg: 39.67, spectralClass: "A", magnitude: 4.6 },
-  ],
-  connections: [
-    [0, 1],
-    [1, 2],
-    [2, 3],
-    [3, 4],
-    [4, 1],
-    [0, 5],
-  ],
-};
-
-/** CORVUS — the crow. The "sail" quadrilateral. */
-const CORVUS: Asterism = {
-  seriesSlug: "hermes-consultant",
-  name: "Corvus",
-  stars: [
-    { name: "Gienah (γ Crv)", raH: 12.2634, decDeg: -17.54, spectralClass: "B", magnitude: 2.59 },
-    { name: "Algorab (δ Crv)", raH: 12.4979, decDeg: -16.52, spectralClass: "B", magnitude: 2.95 },
-    { name: "Kraz (β Crv)", raH: 12.5721, decDeg: -23.4, spectralClass: "G", magnitude: 2.65 },
-    { name: "Minkar (ε Crv)", raH: 12.1683, decDeg: -22.62, spectralClass: "K", magnitude: 3.02 },
-    { name: "Alchiba (α Crv)", raH: 12.1405, decDeg: -24.73, spectralClass: "F", magnitude: 4.02 },
-  ],
-  connections: [
-    [4, 3],
-    [3, 0],
-    [0, 1],
-    [1, 2],
-    [2, 3],
-  ],
-};
-
-/** DELPHINUS — the dolphin. Job's Coffin plus the tail. */
-const DELPHINUS: Asterism = {
-  seriesSlug: "hermes-consultant-intermediate",
-  name: "Delphinus",
-  stars: [
-    { name: "Rotanev (β Del)", raH: 20.6255, decDeg: 14.6, spectralClass: "F", magnitude: 3.63 },
-    { name: "Sualocin (α Del)", raH: 20.6607, decDeg: 15.91, spectralClass: "B", magnitude: 3.77 },
-    { name: "γ Del", raH: 20.7758, decDeg: 16.12, spectralClass: "K", magnitude: 4.27 },
-    { name: "δ Del", raH: 20.7325, decDeg: 15.07, spectralClass: "A", magnitude: 4.43 },
-    { name: "ε Del", raH: 20.5566, decDeg: 11.3, spectralClass: "B", magnitude: 4.03 },
-  ],
-  connections: [
-    [4, 0],
-    [0, 3],
-    [3, 2],
-    [2, 1],
-    [1, 0],
-  ],
-};
-
-/** CORONA BOREALIS — the northern crown. */
-const CORONA_BOREALIS: Asterism = {
-  seriesSlug: "hermes-consultant-advanced",
-  name: "Corona Borealis",
-  stars: [
-    { name: "Alphecca (α CrB)", raH: 15.5781, decDeg: 26.71, spectralClass: "A", magnitude: 2.22 },
-    { name: "Nusakan (β CrB)", raH: 15.4638, decDeg: 29.11, spectralClass: "F", magnitude: 3.68 },
-    { name: "γ CrB", raH: 15.7108, decDeg: 26.3, spectralClass: "B", magnitude: 3.84 },
-    { name: "θ CrB", raH: 15.5486, decDeg: 31.36, spectralClass: "B", magnitude: 4.14 },
-    { name: "δ CrB", raH: 15.8267, decDeg: 26.07, spectralClass: "G", magnitude: 4.63 },
-    { name: "ε CrB", raH: 15.9585, decDeg: 26.88, spectralClass: "K", magnitude: 4.15 },
-  ],
-  connections: [
-    [3, 1],
-    [1, 0],
-    [0, 2],
-    [2, 4],
-    [4, 5],
-  ],
-};
-
-/** CYGNUS — the swan / Northern Cross. */
-const CYGNUS: Asterism = {
-  seriesSlug: "ai-at-work",
-  name: "Cygnus",
-  stars: [
-    { name: "Deneb (α Cyg)", raH: 20.6905, decDeg: 45.28, spectralClass: "A", magnitude: 1.25 },
-    { name: "Sadr (γ Cyg)", raH: 20.3705, decDeg: 40.26, spectralClass: "F", magnitude: 2.23 },
-    { name: "δ Cyg", raH: 19.7495, decDeg: 45.13, spectralClass: "B", magnitude: 2.87 },
-    { name: "Gienah (ε Cyg)", raH: 20.7702, decDeg: 33.97, spectralClass: "K", magnitude: 2.48 },
-    { name: "Albireo (β Cyg)", raH: 19.5121, decDeg: 27.96, spectralClass: "K", magnitude: 3.08 },
-    { name: "ζ Cyg", raH: 21.2149, decDeg: 30.23, spectralClass: "G", magnitude: 3.2 },
-  ],
-  connections: [
-    [0, 1],
-    [1, 3],
-    [1, 2],
-    [1, 4],
-    [3, 5],
-  ],
-};
-
-const LAB_ASTERISMS: Record<string, Asterism> = {
-  [LYRA.seriesSlug]: LYRA,
-  [CORVUS.seriesSlug]: CORVUS,
-  [DELPHINUS.seriesSlug]: DELPHINUS,
-  [CORONA_BOREALIS.seriesSlug]: CORONA_BOREALIS,
-  [CYGNUS.seriesSlug]: CYGNUS,
-};
-
-/**
- * The asterism a course draws: the shipped authored data first, then the
- * lab-only figures. Null would mean a course renders as a lone dot, which is
- * exactly the state the lab exists to eliminate — so every fixture slug
- * resolves.
+/*
+ * The five figures the lab authored for the unauthored courses (Lyra, Corvus,
+ * Delphinus, Corona Borealis, Cygnus) were promoted into `asterism-data.ts` by
+ * the Phase 2 port, so `asterismFor` now resolves all seven on its own. This
+ * indirection stays because the lab imports it in a dozen places and because a
+ * future lab figure should have somewhere to live that is not production.
  */
 export function labAsterismFor(seriesSlug: string): Asterism | null {
-  return asterismFor(seriesSlug) ?? LAB_ASTERISMS[seriesSlug] ?? null;
+  return asterismFor(seriesSlug);
 }
 
 /* ------------------------------------------------------------------ */
