@@ -56,10 +56,14 @@ the release cut), GitHub wiki sync, deleting the 3D stack (see §0).
 
 - Chart renderer: `lab/chart-atlas.tsx`, `lab/chart-2d.css`
 - Backdrop maths, isolated and tested: `lab/chart-sky.ts`
-- Seven engraved figure plates: `public/constellations/*.png` (grayscale, ~170 KB each)
+- Engraved figure plates for the **full IAU 88**: `public/constellations/<slug>.png`
+  (grayscale, 640px, ~170 KB each, ~15 MB total). Regenerate or extend with
+  `node scripts/sync-constellation-plates.js`, which reports coverage against the
+  canonical 88 and is idempotent.
 - Luma-key ghost treatment, depth pockets, parallax bands, CSS motion, reduced-motion path
 - Lab route gated on `NODE_ENV=development` or `ALLOW_HUBBLE_LAB=1`, noindex, robots `disallow: /lab/`
-- Tests: `lab/lab.test.ts` (18), including the star-field correlation guard
+- Tests: `lab/lab.test.ts` (12), including the star-field correlation guard.
+  Was 18 — six went out with the rejected WebGL studies they covered.
 - Docs: north star, requirements, arch (+ HTML twins), design brief, supersession banners
 
 ---
@@ -135,9 +139,15 @@ is. The renderer should take chart-ready figures and nothing else.
 
 ### 3.6 Asset weight
 
-Seven plates ≈ 1.2 MB total. Acceptable for a lab, not for a hero above the
-fold. Before ship: serve WebP with PNG fallback, load below-fold figures lazily,
-and confirm the art is not blocking first paint of the star lines.
+The full 88 plates are ≈ 15 MB in tree, and a seven-course sky pulls ≈ 1.2 MB of
+that. Acceptable for a lab, not for a hero above the fold. Before ship: serve
+WebP with PNG fallback, load below-fold figures lazily, and confirm the art is
+not blocking first paint of the star lines.
+
+Only the plates a course actually maps to are ever requested, so page weight
+tracks course count, not the 88. The 88 in tree is a repo-size question, not a
+page-weight one — if it becomes a problem the answer is a CDN or LFS, not
+deleting figures.
 
 ---
 
@@ -225,7 +235,7 @@ The chart already ships most of this in the lab; it must survive the port.
 
 1. `npx tsc --noEmit` clean
 2. `npm run lint` clean (one known pre-existing warning in `MDXArticle.tsx`)
-3. `npx vitest run` — full suite green (76 files / 532 tests as of this branch)
+3. `npx vitest run` — full suite green (76 files / 526 tests as of this branch)
 4. New unit tests: `buildChartFigures` (progress → lit rails, complete → exam lit,
    course with no asterism, course with no art plate), layout stability when a
    course is added
@@ -262,6 +272,8 @@ The chart already ships most of this in the lab; it must survive the port.
    chart, or was it only ever a WebGL fallback?
 3. **Learn-hub cards.** `ConstellationPreview` still draws a dot row. Leave for
    now, or bring into the chart language in the same pass?
-4. **Figure art for future courses.** Every new course needs a plate. Is
-   generating one part of the course-launch checklist, or do we accept
-   lines-only figures as the default and treat art as an upgrade?
+4. ~~**Figure art for future courses.**~~ **Settled.** All 88 IAU plates are in
+   tree, so a new course needs a *mapping* to a constellation, not a new
+   illustration. Course launch picks a free figure; the lines-only fallback in
+   §3.4 stays as the safety net for an unmapped course. What still needs a call
+   is who owns the mapping and whether it lives in content or in code.

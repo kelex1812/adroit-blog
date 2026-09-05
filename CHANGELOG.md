@@ -31,10 +31,12 @@ hence the figures.
 
 **How** — `src/components/Constellations/lab/`. The chart is `chart-atlas.tsx` +
 `chart-2d.css`, with backdrop maths split into `chart-sky.ts` so it is testable.
-Figure art lives in `public/constellations/*.png` as grayscale plates, keyed at
-render time by an SVG `feColorMatrix` that takes alpha from luminance and
-replaces colour with a flat tint — cool while a course is in progress, warm gold
-once complete. Depth is three pointer-parallax bands over a lit dome, drifting
+Figure art lives in `public/constellations/*.png` as grayscale plates — the full
+IAU 88, so any course can be mapped to a figure — keyed at render time by an SVG
+`feColorMatrix` that takes alpha from luminance and replaces colour with a flat
+tint: dim bronze while a course is in progress, bright gold once complete. The
+plates are stored grey because only their luminance is read; colour in the
+source is discarded. Depth is three pointer-parallax bands over a lit dome, drifting
 nebulae and ~420 seeded stars; motion (twinkle, breathing figures, sparks along
 completed rails, exam pulse, meteors) is CSS only and fully disabled under
 `prefers-reduced-motion`. The four rejected WebGL studies — and their shared
@@ -51,7 +53,8 @@ stream instead, and `lab.test.ts` guards it with an x/y correlation assertion �
 range and count checks passed straight through the bug.
 
 **Verification** — `npx tsc --noEmit` clean; `npx vitest run
-src/components/Constellations/lab` 18/18 pass. Open `/lab/hubble-field` in
+src/components/Constellations/lab` 12/12 pass (was 18 before the four rejected
+WebGL studies and their six tests were deleted). Open `/lab/hubble-field` in
 `npm run dev`; the Star chart study is the default. Production port waits on
 Chris signing `design/hubble-field/CHECKPOINT.md`.
 
