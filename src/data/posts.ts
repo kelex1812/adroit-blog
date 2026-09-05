@@ -2,6 +2,29 @@ import { BlogPost } from "./types";
 
 export const posts: BlogPost[] = [
   {
+    "slug": "realtime-write-conflicts-supabase-2026",
+    "title": "Real-Time Writes: Stopping the Last-Writer-Wins Overwrite",
+    "excerpt": "Real-time apps are easy to read and hard to write. When two people edit the same record, whoever saves last wins silently. One guarded UPDATE fixes it.",
+    "category": "React & Web Dev",
+    "categoryColor": "react",
+    "categoryGradient": "from-emerald to-emerald-dark",
+    "date": "September 05, 2026",
+    "author": "Adroit Consulting",
+    "authorInitials": "AC",
+    "readTime": "11",
+    "featured": false,
+    "tags": [
+      "React",
+      "Supabase",
+      "TypeScript",
+      "Realtime",
+      "Web Development",
+      "Postgres"
+    ],
+    "bannerImage": "/banners/realtime-write-conflicts-supabase-2026.png",
+    "status": "published"
+  },
+  {
     "slug": "agent-durable-execution-state-machines-2026",
     "title": "Durable Execution Is the Difference From Demo to Deployment",
     "excerpt": "Durable execution is the reliability layer that lets a long-running agent crash at step 47 and resume at step 48 without redoing a single side effect.",
