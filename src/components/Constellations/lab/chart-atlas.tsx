@@ -76,7 +76,13 @@ function ghostFilter(id: string, tint: [number, number, number], blur: number) {
   );
 }
 
-const BRONZE: [number, number, number] = [0.72, 0.56, 0.33];
+/**
+ * Bronze carries roughly the luminance the old cool tint did (~0.78 relative).
+ * Dropping straight to a dark bronze reads as "gold" but sinks the in-progress
+ * figures under the nebulae, so the state is separated by hue and saturation
+ * rather than by brightness.
+ */
+const BRONZE: [number, number, number] = [0.94, 0.76, 0.46];
 const GOLD: [number, number, number] = [1, 0.85, 0.62];
 
 const GHOST_FILTERS = (
