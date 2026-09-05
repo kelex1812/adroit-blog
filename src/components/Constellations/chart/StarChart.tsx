@@ -134,6 +134,7 @@ function FigureSvg({
   showArt,
   index,
   ids,
+  interactive,
   onSelect,
 }: {
   figure: ChartFigure;
@@ -143,6 +144,13 @@ function FigureSvg({
   showArt: boolean;
   index: number;
   ids: FigureIds;
+  /**
+   * False on the single-course tracker, where there is nothing to select — the
+   * page is already the course. A `role="button"` that does nothing is worse
+   * than no control, so the semantics come off entirely and the enclosing
+   * `role="img"` svg carries the description.
+   */
+  interactive: boolean;
   onSelect: () => void;
 }) {
   const drawn = useMemo(() => drawnIndices(figure), [figure]);
@@ -181,20 +189,26 @@ function FigureSvg({
 
   const examIdx = drawn.find((i) => figure.stars[i]?.role === "exam") ?? -1;
 
+  const interaction = interactive
+    ? {
+        role: "button" as const,
+        tabIndex: 0,
+        "aria-label": label,
+        onClick: onSelect,
+        onKeyDown: (e: React.KeyboardEvent<SVGGElement>) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            onSelect();
+          }
+        },
+      }
+    : {};
+
   return (
     <g
       className={classes}
-      role="button"
-      tabIndex={0}
-      aria-label={label}
       data-testid={`cxc-figure-${figure.seriesSlug}`}
-      onClick={onSelect}
-      onKeyDown={(e) => {
-        if (e.key === "Enter" || e.key === " ") {
-          e.preventDefault();
-          onSelect();
-        }
-      }}
+      {...interaction}
     >
       {/* Depth: a pool of deeper sky so the apparition has somewhere to sit */}
       <ellipse
@@ -634,6 +648,7 @@ export function StarChart({
                 showArt={showArt}
                 index={i}
                 ids={ids}
+                interactive={!single}
                 onSelect={() =>
                   onFocusChange(focusSlug === figure.seriesSlug ? null : figure.seriesSlug)
                 }
