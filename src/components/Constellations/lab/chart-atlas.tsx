@@ -3,9 +3,9 @@
  *
  * The Urania's Mirror answer to "dots and lines aren't exciting": each course
  * constellation carries an engraved figure of what it depicts, drawn behind
- * the star lines. Art is gold-on-black PNG composited with `mix-blend-mode:
- * screen`, so the black plate disappears into the sky and only the engraving
- * shows — no cut-out masks, no per-asset alpha work.
+ * the star lines. Art ships as grayscale-on-black PNG and is luma-keyed to a
+ * flat gold by `ghostFilter`, so the black plate disappears into the sky and
+ * only the engraving shows — no cut-out masks, no per-asset alpha work.
  *
  * Art placement is per-figure (`FIGURE_ART`): scale is a multiple of the star
  * figure's span, dx/dy nudge it so the drawing sits over the right stars.
@@ -30,7 +30,7 @@ interface FigureArt {
   dy: number;
 }
 
-/** Engraved figures — generated for the lab, gold line art on black. */
+/** Engraved figures — generated for the lab, grayscale line art on black. */
 const FIGURE_ART: Record<string, FigureArt> = {
   "salesforce-architect": { src: "/constellations/orion.png", scale: 2.5, dx: 0, dy: -0.08 },
   "agentic-ai": { src: "/constellations/cassiopeia.png", scale: 2.3, dx: 0, dy: -0.1 },
@@ -42,13 +42,15 @@ const FIGURE_ART: Record<string, FigureArt> = {
 };
 
 /**
- * Ghost keying. The engravings ship as gold-on-black, so alpha is taken from
- * luminance (`0.32 0.55 0.13`) and the colour is replaced with a flat tint in
- * the matrix's constant column. Result: the black plate vanishes and the
- * linework survives as a single luminous colour whose density follows the
- * original hatching — spectral rather than printed.
+ * Ghost keying. The engravings ship as grayscale-on-black, so alpha is taken
+ * from luminance (`0.32 0.55 0.13`) and the colour is replaced with a flat
+ * tint in the matrix's constant column. Result: the black plate vanishes and
+ * the linework survives as a single luminous colour whose density follows the
+ * original hatching — spectral rather than printed. The plate's own colour is
+ * discarded, which is why the assets are stored grey: only luminance is read.
  *
- * Cool tint = still being earned. Warm gold = course complete.
+ * Both states are gold. Dim bronze = still being earned, bright gold = course
+ * complete; opacity in chart-2d.css widens the same gap.
  */
 function ghostFilter(id: string, tint: [number, number, number], blur: number) {
   return (
@@ -74,15 +76,15 @@ function ghostFilter(id: string, tint: [number, number, number], blur: number) {
   );
 }
 
-const COOL: [number, number, number] = [0.68, 0.81, 1];
-const WARM: [number, number, number] = [1, 0.85, 0.62];
+const BRONZE: [number, number, number] = [0.72, 0.56, 0.33];
+const GOLD: [number, number, number] = [1, 0.85, 0.62];
 
 const GHOST_FILTERS = (
   <>
-    {ghostFilter("hf2-ghost", COOL, 0.7)}
-    {ghostFilter("hf2-ghost-halo", COOL, 6)}
-    {ghostFilter("hf2-ghost-gold", WARM, 0.7)}
-    {ghostFilter("hf2-ghost-gold-halo", WARM, 6)}
+    {ghostFilter("hf2-ghost-bronze", BRONZE, 0.7)}
+    {ghostFilter("hf2-ghost-bronze-halo", BRONZE, 6)}
+    {ghostFilter("hf2-ghost-gold", GOLD, 0.7)}
+    {ghostFilter("hf2-ghost-gold-halo", GOLD, 6)}
   </>
 );
 
@@ -266,7 +268,7 @@ function FigureSvg({
             width={artSize}
             height={artSize}
             preserveAspectRatio="xMidYMid meet"
-            filter={figure.complete ? "url(#hf2-ghost-gold-halo)" : "url(#hf2-ghost-halo)"}
+            filter={figure.complete ? "url(#hf2-ghost-gold-halo)" : "url(#hf2-ghost-bronze-halo)"}
           />
           <image
             className="hf2-art"
@@ -276,7 +278,7 @@ function FigureSvg({
             width={artSize}
             height={artSize}
             preserveAspectRatio="xMidYMid meet"
-            filter={figure.complete ? "url(#hf2-ghost-gold)" : "url(#hf2-ghost)"}
+            filter={figure.complete ? "url(#hf2-ghost-gold)" : "url(#hf2-ghost-bronze)"}
           />
         </g>
       ) : null}
