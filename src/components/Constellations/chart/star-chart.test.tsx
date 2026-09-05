@@ -8,7 +8,7 @@
 import { describe, expect, it, vi } from "vitest";
 import { render, screen, fireEvent } from "@testing-library/react";
 import { StarChart } from "./StarChart";
-import { buildChartFigure } from "@/lib/chart";
+import { buildChartFigure, buildChartFigures } from "@/lib/chart";
 import type { ConstellationState } from "@/shared/contracts-constellations";
 
 function course(
@@ -27,15 +27,41 @@ function course(
     curriculumLessons,
     litStars,
     complete: totalStars > 0 && litStars === totalStars,
-    stars: [],
+    // Real per-lesson stars: lighting is per-lesson, not proportional.
+    stars: Array.from({ length: totalStars }, (_, i) => ({
+      lessonSlug: `${seriesSlug}-lesson-${i + 1}`,
+      index: i + 1,
+      label: `Lesson ${i + 1}`,
+      lit: i < litStars,
+    })),
   };
 }
 
-const SKY = [
-  buildChartFigure(course("salesforce-architect", 29, 29, "Architect Primer")),
-  buildChartFigure(course("agentic-ai", 6, 10, "Agentic AI Path")),
-  buildChartFigure(course("omni-studio-cert", 0, 12, "OmniStudio Cert")),
-];
+/*
+ * Built through `buildChartFigures` rather than one at a time, because assignment
+ * is a decision across the whole sky — called individually, two courses could be
+ * handed the same constellation.
+ */
+const SKY = buildChartFigures({
+  stats: {
+    streakDays: 0,
+    longestStreakDays: 0,
+    rank: null,
+    coursesCompleted: 0,
+    tracksCompleted: 0,
+  },
+  constellations: [
+    course("salesforce-architect", 29, 29, "Architect Primer"),
+    course("agentic-ai", 6, 10, "Agentic AI Path"),
+    course("omni-studio-cert", 0, 12, "OmniStudio Cert"),
+  ],
+  chronicle: [],
+  isGuest: false,
+});
+
+/** The constellation a fixture course ends up drawn as. */
+const figureNameOf = (seriesSlug: string) =>
+  SKY.find((f) => f.seriesSlug === seriesSlug)!.figureName!;
 
 function renderSky(over: Partial<React.ComponentProps<typeof StarChart>> = {}) {
   const onFocusChange = vi.fn();
@@ -74,8 +100,11 @@ describe("StarChart — sky variant", () => {
 
   it("labels each figure with its constellation, course and progress", () => {
     renderSky();
+    const drawn = figureNameOf("agentic-ai");
     expect(
-      screen.getByRole("button", { name: /Cassiopeia constellation — Agentic AI Path, 60% complete/ }),
+      screen.getByRole("button", {
+        name: new RegExp(`${drawn} constellation — Agentic AI Path, 60% complete`),
+      }),
     ).toBeInTheDocument();
   });
 
@@ -176,6 +205,7 @@ describe("StarChart — sky variant", () => {
 
 describe("StarChart — single variant", () => {
   const single = [buildChartFigure(course("agentic-ai", 6, 10, "Agentic AI Path"))];
+  const singleFigureName = single[0]!.figureName!;
 
   function renderSingle() {
     return render(
@@ -202,7 +232,9 @@ describe("StarChart — single variant", () => {
     renderSingle();
     expect(
       screen.getByRole("img", {
-        name: /Agentic AI Path drawn as Cassiopeia — 6 of 10 lessons done, 60% complete/,
+        name: new RegExp(
+          `Agentic AI Path drawn as ${singleFigureName} — 6 of 10 lessons done, 60% complete`,
+        ),
       }),
     ).toBeInTheDocument();
   });
@@ -215,8 +247,10 @@ describe("StarChart — single variant", () => {
 });
 
 describe("StarChart — degraded data", () => {
-  it("renders a course with no mapped constellation as label and progress only", () => {
-    const orphan = [buildChartFigure(course("no-such-series", 2, 8, "Unmapped Course"))];
+  it("renders a course with no assigned figure as label and progress only", () => {
+    const orphan = [
+      buildChartFigure(course("unlucky", 2, 8, "Unmapped Course"), { figure: null }),
+    ];
     render(<StarChart figures={orphan} focusSlug={null} onFocusChange={() => {}} />);
     const svg = document.querySelector(".cxc-svg")!;
     expect(svg.textContent).toContain("Unmapped Course");

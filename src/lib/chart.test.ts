@@ -21,12 +21,24 @@ import {
   plateSlug,
   PLATE_SLUGS,
 } from "@/components/Constellations/chart/chart-figures";
+import {
+  CONSTELLATION_FIGURES,
+  projectFigure,
+} from "@/components/Constellations/chart/figure-catalog";
+import {
+  assignFigures,
+  lessonsPerStar,
+} from "@/components/Constellations/chart/figure-assignment";
 import type {
   ChronicleEntry,
   ConstellationState,
   ProfileSky,
 } from "@/shared/contracts-constellations";
 
+/**
+ * A course with real per-lesson stars, because lighting is per-lesson now:
+ * lessons 1..litStars are complete, in order.
+ */
 function constellation(
   over: Partial<ConstellationState> & { seriesSlug: string },
 ): ConstellationState {
@@ -41,7 +53,14 @@ function constellation(
     curriculumLessons: over.curriculumLessons ?? totalStars,
     litStars,
     complete: over.complete ?? (totalStars > 0 && litStars === totalStars),
-    stars: over.stars ?? [],
+    stars:
+      over.stars ??
+      Array.from({ length: totalStars }, (_, i) => ({
+        lessonSlug: `${over.seriesSlug}-lesson-${i + 1}`,
+        index: i + 1,
+        label: `Lesson ${i + 1}`,
+        lit: i < litStars,
+      })),
   };
 }
 
@@ -90,23 +109,25 @@ describe("examPassedSlugs", () => {
 });
 
 describe("buildChartFigure", () => {
-  it("resolves the mapped constellation and its connections", () => {
+  it("draws a figure sized to the course, with its connections", () => {
     const f = buildChartFigure(
-      constellation({ seriesSlug: "agentic-ai", litStars: 0, totalStars: 10 }),
+      constellation({ seriesSlug: "a-course", litStars: 0, totalStars: 10 }),
     );
-    expect(f.figureName).toBe("Cassiopeia");
-    expect(f.stars).toHaveLength(5);
+    // 10 lessons has an exact match in the catalog.
+    expect(f.figureName).toBe("Gemini");
+    expect(f.stars).toHaveLength(10);
     expect(f.connections.length).toBeGreaterThan(0);
   });
 
   /*
-   * A course with no asterism is a supported state, not an error — it renders
-   * label and progress only. The guard that matters is that it never produces a
-   * figure with connections pointing at stars that do not exist.
+   * A course with no figure is a supported state, not an error — it renders label
+   * and progress only. It happens when the catalog is exhausted, since every
+   * course otherwise gets one.
    */
-  it("degrades to a label-only figure when no constellation is mapped", () => {
+  it("degrades to a label-only figure when no figure is available", () => {
     const f = buildChartFigure(
-      constellation({ seriesSlug: "not-a-real-course", litStars: 3, totalStars: 6 }),
+      constellation({ seriesSlug: "unlucky", litStars: 3, totalStars: 6 }),
+      { figure: null },
     );
     expect(f.figureName).toBeNull();
     expect(f.stars).toEqual([]);
@@ -117,28 +138,25 @@ describe("buildChartFigure", () => {
   });
 
   it("crowns exactly one member as the exam", () => {
-    const f = buildChartFigure(constellation({ seriesSlug: "omni-studio-cert" }));
+    const f = buildChartFigure(constellation({ seriesSlug: "c", totalStars: 6 }));
     expect(f.stars.filter((s) => s.role === "exam")).toHaveLength(1);
   });
 
   it("crowns the brightest member, so the exam node is the figure's anchor star", () => {
-    const f = buildChartFigure(constellation({ seriesSlug: "omni-studio-cert" }));
+    const f = buildChartFigure(constellation({ seriesSlug: "c", totalStars: 7 }));
     const exam = f.stars.find((s) => s.role === "exam")!;
-    const brightest = Math.min(...f.stars.map((s) => s.magnitude));
-    expect(exam.magnitude).toBe(brightest);
-    // Vega is Lyra's anchor.
-    expect(exam.name).toContain("Vega");
+    expect(exam.magnitude).toBe(Math.min(...f.stars.map((s) => s.magnitude)));
     expect(exam.name).toContain("Final exam");
   });
 
   it("ships two roles only — knowledge checks are not faked in v1", () => {
-    const f = buildChartFigure(constellation({ seriesSlug: "salesforce-architect" }));
+    const f = buildChartFigure(constellation({ seriesSlug: "c", totalStars: 9 }));
     expect(new Set(f.stars.map((s) => s.role))).toEqual(new Set(["lesson", "exam"]));
   });
 
   it("leaves the crown dark until the course is finished", () => {
     const partial = buildChartFigure(
-      constellation({ seriesSlug: "agentic-ai", litStars: 9, totalStars: 10 }),
+      constellation({ seriesSlug: "c", litStars: 9, totalStars: 10 }),
     );
     expect(partial.complete).toBe(false);
     expect(partial.stars.find((s) => s.role === "exam")?.lit).toBe(false);
@@ -146,7 +164,7 @@ describe("buildChartFigure", () => {
 
   it("lights the crown when the course is complete", () => {
     const done = buildChartFigure(
-      constellation({ seriesSlug: "agentic-ai", litStars: 10, totalStars: 10 }),
+      constellation({ seriesSlug: "c", litStars: 10, totalStars: 10 }),
     );
     expect(done.complete).toBe(true);
     expect(done.stars.find((s) => s.role === "exam")?.lit).toBe(true);
@@ -159,7 +177,7 @@ describe("buildChartFigure", () => {
    */
   it("lights the crown on a passed exam even when lessons remain", () => {
     const f = buildChartFigure(
-      constellation({ seriesSlug: "agentic-ai", litStars: 4, totalStars: 10 }),
+      constellation({ seriesSlug: "c", litStars: 4, totalStars: 10 }),
       { examPassed: true },
     );
     expect(f.complete).toBe(false);
@@ -169,37 +187,136 @@ describe("buildChartFigure", () => {
 
   it("lights more members as progress rises, and all of them when complete", () => {
     const lit = (n: number) =>
-      buildChartFigure(
-        constellation({ seriesSlug: "ai-at-work", litStars: n, totalStars: 10 }),
-      ).stars.filter((s) => s.lit).length;
+      buildChartFigure(constellation({ seriesSlug: "c", litStars: n, totalStars: 10 }))
+        .stars.filter((s) => s.lit).length;
     expect(lit(0)).toBe(0);
     expect(lit(5)).toBeGreaterThan(0);
     expect(lit(5)).toBeLessThan(lit(10));
-    const all = buildChartFigure(
-      constellation({ seriesSlug: "ai-at-work", litStars: 10, totalStars: 10 }),
-    );
-    expect(all.stars.every((s) => s.lit)).toBe(true);
-  });
-
-  /*
-   * Orion pads to 29 members so the 3D scene can give every lesson a star, but
-   * only the 9 forming the hunter are connected. The chart draws the figure, so
-   * the padding must never be lit — a lit floating dot outside the figure is
-   * the visible symptom.
-   */
-  it("never lights Orion's unconnected padding members", () => {
-    const f = buildChartFigure(
-      constellation({ seriesSlug: "salesforce-architect", litStars: 29, totalStars: 29 }),
-    );
-    const drawn = new Set(f.connections.flat());
-    for (const [i, s] of f.stars.entries()) {
-      if (!drawn.has(i)) expect(s.lit, `padding member ${i} is lit`).toBe(false);
-    }
+    expect(lit(10)).toBe(10);
   });
 
   it("is deterministic — the same course produces the same figure", () => {
-    const c = constellation({ seriesSlug: "hermes-consultant", litStars: 4, totalStars: 9 });
+    const c = constellation({ seriesSlug: "c", litStars: 4, totalStars: 9 });
     expect(JSON.stringify(buildChartFigure(c))).toBe(JSON.stringify(buildChartFigure(c)));
+  });
+});
+
+/* ------------------------------------------------------------------ */
+/*  Lessons → stars                                                    */
+/* ------------------------------------------------------------------ */
+
+describe("lesson-to-star mapping", () => {
+  it("gives one star per lesson when the figure fits exactly", () => {
+    const f = buildChartFigure(
+      constellation({ seriesSlug: "c", litStars: 0, totalStars: 10 }),
+    );
+    expect(f.stars).toHaveLength(10);
+    for (const s of f.stars) expect(s.lessons).toHaveLength(1);
+    // Every lesson is represented exactly once.
+    expect(f.stars.flatMap((s) => s.lessons).sort((a, b) => a - b)).toEqual([
+      1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
+    ]);
+  });
+
+  it("lights star N when lesson N is done, and no others", () => {
+    const f = buildChartFigure(
+      constellation({ seriesSlug: "c", litStars: 4, totalStars: 10 }),
+    );
+    for (const s of f.stars) {
+      if (s.role === "exam") continue;
+      const expected = s.lessons.every((n) => n <= 4);
+      expect(s.lit, `star for lessons ${s.lessons} wrong`).toBe(expected);
+    }
+  });
+
+  /*
+   * No real constellation outline runs to thirty stars, so a big course has to
+   * share. The star then stands for a group and only lights when the whole group
+   * is done — otherwise it would claim credit for lessons still outstanding.
+   */
+  it("deals surplus lessons round-robin and waits for the whole group", () => {
+    const f = buildChartFigure(
+      constellation({ seriesSlug: "c", litStars: 0, totalStars: 31 }),
+    );
+    const starCount = f.stars.length;
+    expect(starCount).toBeLessThan(31);
+    // Every lesson lands on exactly one star.
+    expect(f.stars.flatMap((s) => s.lessons).sort((a, b) => a - b)).toEqual(
+      Array.from({ length: 31 }, (_, i) => i + 1),
+    );
+    // Round-robin, so bucket sizes differ by at most one.
+    const sizes = f.stars.map((s) => s.lessons.length);
+    expect(Math.max(...sizes) - Math.min(...sizes)).toBeLessThanOrEqual(1);
+  });
+
+  it("holds a shared star dark until its last lesson lands", () => {
+    const partial = buildChartFigure(
+      constellation({ seriesSlug: "c", litStars: 1, totalStars: 31 }),
+    );
+    const first = partial.stars.find((s) => s.lessons.includes(1))!;
+    expect(first.lessons.length).toBeGreaterThan(1);
+    expect(first.lit).toBe(false);
+
+    const done = buildChartFigure(
+      constellation({ seriesSlug: "c", litStars: 31, totalStars: 31 }),
+    );
+    expect(done.stars.every((s) => s.lit)).toBe(true);
+  });
+
+  /*
+   * The whole point of curriculumLessons: a star's meaning must not shift when a
+   * lesson ships. Lesson 12 belongs to the same star on launch day and at the end.
+   */
+  it("keeps a lesson on the same star as the course grows", () => {
+    const early = buildChartFigure(
+      constellation({
+        seriesSlug: "c",
+        litStars: 0,
+        totalStars: 12,
+        curriculumLessons: 40,
+      }),
+    );
+    const later = buildChartFigure(
+      constellation({
+        seriesSlug: "c",
+        litStars: 0,
+        totalStars: 30,
+        curriculumLessons: 40,
+      }),
+    );
+    expect(early.figureName).toBe(later.figureName);
+    const starOf = (f: typeof early, lesson: number) =>
+      f.stars.findIndex((s) => s.lessons.includes(lesson));
+    for (const lesson of [1, 5, 12]) {
+      expect(starOf(early, lesson)).toBe(starOf(later, lesson));
+    }
+  });
+
+  it("sizes the figure from the curriculum, not from what is published", () => {
+    const young = buildChartFigure(
+      constellation({
+        seriesSlug: "c",
+        litStars: 0,
+        totalStars: 3,
+        curriculumLessons: 10,
+      }),
+    );
+    // Sized for the eventual 10, not the 3 that exist.
+    expect(young.figureName).toBe("Gemini");
+    expect(young.stars).toHaveLength(10);
+    expect(young.curriculumLessons).toBe(10);
+  });
+
+  it("never lets a stale declaration shrink a course below what exists", () => {
+    const f = buildChartFigure(
+      constellation({
+        seriesSlug: "c",
+        litStars: 0,
+        totalStars: 14,
+        curriculumLessons: 6,
+      }),
+    );
+    expect(f.curriculumLessons).toBe(14);
   });
 });
 
@@ -234,7 +351,7 @@ describe("buildChartFigures", () => {
       sky({
         constellations: [
           constellation({ seriesSlug: "agentic-ai", litStars: 2, totalStars: 10 }),
-          constellation({ seriesSlug: "ai-at-work", litStars: 2, totalStars: 10 }),
+          constellation({ seriesSlug: "ai-at-work", litStars: 2, totalStars: 12 }),
         ],
         chronicle: [chronicleEntry({ eventType: "exam", seriesSlug: "ai-at-work" })],
       }),
@@ -245,6 +362,224 @@ describe("buildChartFigures", () => {
 
   it("handles an empty sky without throwing", () => {
     expect(buildChartFigures(sky())).toEqual([]);
+  });
+
+  /*
+   * Two courses drawing the same constellation would make the sky unreadable, and
+   * it is a decision about the whole sky rather than about one course — which is
+   * why figures are assigned across the set instead of per call.
+   */
+  it("never draws two courses as the same constellation", () => {
+    const figures = buildChartFigures(
+      sky({
+        constellations: [
+          constellation({ seriesSlug: "a", totalStars: 8 }),
+          constellation({ seriesSlug: "b", totalStars: 8 }),
+          constellation({ seriesSlug: "c", totalStars: 8 }),
+          constellation({ seriesSlug: "d", totalStars: 8 }),
+        ],
+      }),
+    );
+    const names = figures.map((f) => f.figureName);
+    expect(new Set(names).size).toBe(names.length);
+  });
+
+  it("gives every real catalog course a figure sized near its curriculum", () => {
+    const real = [
+      ["salesforce-architect", 31],
+      ["agentic-ai", 31],
+      ["omni-studio-cert", 26],
+      ["ai-at-work", 19],
+      ["hermes-consultant", 10],
+      ["hermes-consultant-intermediate", 8],
+      ["hermes-consultant-advanced", 8],
+    ] as const;
+    const figures = buildChartFigures(
+      sky({
+        constellations: real.map(([slug, n]) =>
+          constellation({ seriesSlug: slug, totalStars: n }),
+        ),
+      }),
+    );
+    for (const f of figures) {
+      expect(f.figureName, `${f.seriesSlug} got no figure`).not.toBeNull();
+      expect(f.stars.length).toBeGreaterThan(0);
+    }
+    // The three courses with an exact match in the catalog must get it.
+    const bySlug = new Map(figures.map((f) => [f.seriesSlug, f]));
+    for (const slug of [
+      "hermes-consultant",
+      "hermes-consultant-intermediate",
+      "hermes-consultant-advanced",
+    ]) {
+      const f = bySlug.get(slug)!;
+      expect(f.stars.length, `${slug} lost its exact fit`).toBe(f.curriculumLessons);
+    }
+  });
+});
+
+describe("assignFigures", () => {
+  const course = (seriesSlug: string, curriculumLessons: number) => ({
+    seriesSlug,
+    curriculumLessons,
+  });
+
+  it("gives a course with an exact match its exact figure", () => {
+    const m = assignFigures([course("a", 7)]);
+    expect(m.get("a")!.stars).toHaveLength(7);
+  });
+
+  /*
+   * Regression: a single largest-first sweep let a 19-lesson course grab the
+   * 10-star figure as its nearest option, leaving the 10-lesson course on a 9 and
+   * breaking one-star-per-lesson for the course that could have had it.
+   */
+  it("does not let a course without an exact match steal one", () => {
+    const m = assignFigures([course("big", 19), course("ten", 10)]);
+    expect(m.get("ten")!.stars).toHaveLength(10);
+    expect(m.get("big")!.stars).not.toHaveLength(10);
+  });
+
+  it("hands bigger figures to bigger courses", () => {
+    const m = assignFigures([course("small", 26), course("big", 40)]);
+    expect(m.get("big")!.stars.length).toBeGreaterThan(m.get("small")!.stars.length);
+  });
+
+  it("honours a pin over size matching", () => {
+    const m = assignFigures([course("a", 7)], { a: "Orion" });
+    expect(m.get("a")!.name).toBe("Orion");
+  });
+
+  it("does not let size matching take a pinned figure", () => {
+    const m = assignFigures([course("pinned", 30), course("exact", 9)], {
+      pinned: "Orion",
+    });
+    expect(m.get("pinned")!.name).toBe("Orion");
+    expect(m.get("exact")!.name).not.toBe("Orion");
+  });
+
+  it("ignores a pin naming a figure that does not exist", () => {
+    const m = assignFigures([course("a", 7)], { a: "Nonexistent" });
+    expect(m.get("a")!.stars).toHaveLength(7);
+  });
+
+  it("is deterministic", () => {
+    const courses = [course("a", 8), course("b", 8), course("c", 14)];
+    const first = [...assignFigures(courses)].map(([k, v]) => [k, v.name]);
+    const second = [...assignFigures(courses)].map(([k, v]) => [k, v.name]);
+    expect(first).toEqual(second);
+  });
+
+  it("runs out rather than double-booking once the catalog is exhausted", () => {
+    const many = Array.from({ length: CONSTELLATION_FIGURES.length + 3 }, (_, i) =>
+      course(`c${String(i).padStart(2, "0")}`, 8),
+    );
+    const m = assignFigures(many);
+    expect(m.size).toBe(CONSTELLATION_FIGURES.length);
+    expect(new Set([...m.values()].map((f) => f.name)).size).toBe(m.size);
+  });
+});
+
+describe("lessonsPerStar", () => {
+  it("is 1:1 when counts match", () => {
+    expect(lessonsPerStar(4, 4)).toEqual([[1], [2], [3], [4]]);
+  });
+
+  it("deals round-robin so the figure fills evenly", () => {
+    expect(lessonsPerStar(7, 3)).toEqual([
+      [1, 4, 7],
+      [2, 5],
+      [3, 6],
+    ]);
+  });
+
+  it("leaves surplus stars unassigned rather than inventing lessons", () => {
+    expect(lessonsPerStar(2, 4)).toEqual([[1], [2], [], []]);
+  });
+
+  it("returns nothing for a figure with no stars", () => {
+    expect(lessonsPerStar(5, 0)).toEqual([]);
+  });
+});
+
+describe("figure catalog", () => {
+  it("spans a range of sizes, so courses of different lengths can be matched", () => {
+    const sizes = [...new Set(CONSTELLATION_FIGURES.map((f) => f.stars.length))].sort(
+      (a, b) => a - b,
+    );
+    expect(sizes[0]).toBeLessThanOrEqual(3);
+    expect(sizes[sizes.length - 1]).toBeGreaterThanOrEqual(14);
+    // No gaps wider than two, or a course lands awkwardly far from its size.
+    for (let i = 1; i < sizes.length; i++) {
+      expect(sizes[i]! - sizes[i - 1]!, `gap above ${sizes[i - 1]}`).toBeLessThanOrEqual(2);
+    }
+  });
+
+  it("names figures that all have an engraved plate", () => {
+    for (const f of CONSTELLATION_FIGURES) {
+      expect(figureArtFor(f.name), `${f.name} has no plate`).not.toBeNull();
+    }
+  });
+
+  it("gives every figure a unique name", () => {
+    const names = CONSTELLATION_FIGURES.map((f) => f.name);
+    expect(new Set(names).size).toBe(names.length);
+  });
+
+  /*
+   * The chart draws connected members only, so an unconnected star would be an
+   * orphan dot floating outside the outline — and would silently be a lesson that
+   * can never visibly light.
+   */
+  it("draws every member of every figure", () => {
+    for (const f of CONSTELLATION_FIGURES) {
+      const drawn = new Set(f.connections.flat());
+      expect(drawn.size, `${f.name} has an undrawn member`).toBe(f.stars.length);
+    }
+  });
+
+  it("keeps every connection index inside the member list", () => {
+    for (const f of CONSTELLATION_FIGURES) {
+      for (const [a, b] of f.connections) {
+        expect(f.stars[a], `${f.name} start ${a}`).toBeDefined();
+        expect(f.stars[b], `${f.name} end ${b}`).toBeDefined();
+        expect(a, `${f.name} joins a star to itself`).not.toBe(b);
+      }
+    }
+  });
+
+  it("uses plausible sky coordinates", () => {
+    for (const f of CONSTELLATION_FIGURES) {
+      for (const s of f.stars) {
+        expect(s.raH, `${f.name}/${s.name} RA`).toBeGreaterThanOrEqual(0);
+        expect(s.raH, `${f.name}/${s.name} RA`).toBeLessThan(24);
+        expect(s.decDeg, `${f.name}/${s.name} Dec`).toBeGreaterThanOrEqual(-90);
+        expect(s.decDeg, `${f.name}/${s.name} Dec`).toBeLessThanOrEqual(90);
+        expect(s.magnitude, `${f.name}/${s.name} magnitude`).toBeLessThan(7);
+      }
+    }
+  });
+
+  /*
+   * Pegasus runs from 21h to 0.2h. Without unwrapping RA across 0h its span reads
+   * as ~350 degrees and the whole figure collapses toward a point.
+   */
+  it("projects every figure to a real spread, including ones crossing RA 0h", () => {
+    for (const f of CONSTELLATION_FIGURES) {
+      const p = projectFigure(f);
+      const xs = p.map((s) => s.position[0]);
+      const ys = p.map((s) => s.position[1]);
+      const span = Math.max(
+        Math.max(...xs) - Math.min(...xs),
+        Math.max(...ys) - Math.min(...ys),
+      );
+      expect(span, `${f.name} collapsed`).toBeGreaterThan(1);
+    }
+  });
+
+  it("projects deterministically", () => {
+    const f = CONSTELLATION_FIGURES[0]!;
+    expect(projectFigure(f)).toEqual(projectFigure(f));
   });
 });
 

@@ -3,14 +3,12 @@
  *
  * The lab has to be reviewable without a session, so this module fabricates a
  * `ProfileSky` covering all seven real series slugs at assorted completion
- * levels — two complete, four part-way, one untouched — plus the figure each
- * course draws.
+ * levels — two complete, four part-way, one untouched.
  *
- * All seven figures now come from the shipped `asterism-data.ts`. Five of them
- * (Lyra, Corvus, Delphinus, Corona Borealis, Cygnus) were authored here first
- * and promoted in the Phase 2 port; they were real coordinates rather than a
- * generated ring, because a ring of equidistant equal stars is the "invented
- * scatter wearing a course name" failure the architecture doc calls out.
+ * The production chart (`HubbleFieldLab` → `buildChartFigures`) assigns each
+ * course a constellation from `figure-catalog.ts` by `curriculumLessons`. The
+ * leftover `labFigure` / `labAsterismFor` path still reads `3d/asterism-data.ts`
+ * for the unmounted 3D studies; it is not what the chart draws.
  *
  * What is still lab-only is the *progress* — the completion levels below are
  * fabricated, and `labFigure` invents star roles positionally. Neither is a
@@ -83,6 +81,15 @@ export interface LabCourseFixture {
  * Seven real series slugs at deliberately uneven completion, so every visual
  * state is on screen at once: two complete, four in progress at different
  * depths, one never started.
+ *
+ * `figureName` is advisory. The chart assigns constellations by *size* now, so
+ * what a course actually draws comes from `assignFigures` against
+ * `curriculumLessons` — this field only records what the lab was authored
+ * against.
+ *
+ * Two courses carry a `curriculumLessons` above their published count, because a
+ * curriculum still being written is the normal state here and the lab should show
+ * what that looks like: a figure sized for the finished course, mostly dark.
  */
 export const LAB_COURSES: readonly LabCourseFixture[] = [
   {
@@ -98,6 +105,8 @@ export const LAB_COURSES: readonly LabCourseFixture[] = [
     figureName: "Cassiopeia",
     totalStars: 5,
     litStars: 3,
+    // Three of five published, of a planned forty — the "just launched" case.
+    curriculumLessons: 40,
   },
   {
     seriesSlug: "omni-studio-cert",
@@ -126,6 +135,8 @@ export const LAB_COURSES: readonly LabCourseFixture[] = [
     figureName: "Corona Borealis",
     totalStars: 12,
     litStars: 0,
+    // Halfway written, nothing started.
+    curriculumLessons: 20,
   },
   {
     seriesSlug: "ai-at-work",

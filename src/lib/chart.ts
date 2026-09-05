@@ -5,26 +5,44 @@
  * and nothing else, so everything that decides *what* the chart claims about
  * someone's progress is unit-testable here.
  *
- * The v1 role model is deliberately two roles, not three. Production carries
- * `ConstellationStar.lit` per lesson and `ConstellationState.complete` per
- * course, and nothing maps a quiz or an exam to a *position* in a series. The
- * lab faked that by making the brightest star the exam and every nth star a
- * knowledge check, which is fine for a lab and is not shippable as a claim
- * about what someone has passed. So: lessons are the star line, the exam is a
- * single crowning node, and the knowledge-check diamonds are dropped until the
- * catalog exposes where quizzes sit. See
- * `docs/implementation-plan-hubble-field.md` §3.1.
+ * ## Lessons light stars
+ *
+ * A course is drawn as a constellation sized to its curriculum, so a lesson maps
+ * to a star: finish lesson 4, star 4 lights. The size that decides which
+ * constellation a course gets is `ConstellationState.curriculumLessons` — the
+ * *final* lesson count, declared in `series.json` — not the count published so
+ * far. Lessons land daily, and a figure that reshuffled every time one shipped
+ * would be worthless as a progress surface.
+ *
+ * Where a course has more lessons than the largest figure has stars (no real
+ * constellation outline runs to thirty-odd stars), lessons deal round-robin so
+ * each star stands for a small group and lights when that group is done. See
+ * `lessonsPerStar`.
+ *
+ * ## Two roles, not three
+ *
+ * Production carries `ConstellationStar.lit` per lesson and `complete` per
+ * course, and nothing maps a quiz or an exam to a *position* in a series. The lab
+ * faked that by making the brightest star the exam and every nth star a knowledge
+ * check, which is fine for a lab and is not shippable as a claim about what
+ * someone has passed. So: lessons are the star line, the exam is a single
+ * crowning node, and the knowledge-check diamonds are dropped until the catalog
+ * exposes where quizzes sit. See `docs/implementation-plan-hubble-field.md` §3.1.
  */
 import type {
   ChronicleEntry,
   ConstellationState,
   ProfileSky,
 } from "@/shared/contracts-constellations";
-import {
-  asterismFor,
-  projectAsterism,
-} from "@/components/Constellations/3d/asterism-data";
 import type { SpectralClass } from "@/components/Constellations/3d/star-model";
+import {
+  projectFigure,
+  type ConstellationFigure,
+} from "@/components/Constellations/chart/figure-catalog";
+import {
+  assignFigures,
+  lessonsPerStar,
+} from "@/components/Constellations/chart/figure-assignment";
 
 /** One drawn member of a course figure. */
 export interface ChartStar {
@@ -32,16 +50,16 @@ export interface ChartStar {
   position: [number, number, number];
   spectralClass: SpectralClass;
   magnitude: number;
-  /**
-   * Whether this member burns.
-   *
-   * Member-level lighting is a *proportional rendering of course progress*,
-   * not a claim that a named lesson owns this star. Real per-lesson progress
-   * lives in `litStars` / `totalStars`, which is what the rails read. A figure
-   * has however many members the real constellation has (Cassiopeia has five),
-   * which rarely equals the lesson count, so a 1:1 mapping would be fiction.
-   */
+  /** True when every lesson this star stands for is complete. */
   lit: boolean;
+  /**
+   * The 1-based lesson numbers this star stands for.
+   *
+   * Usually one. More than one only when the course has more lessons than the
+   * figure has stars, and empty when it has fewer — those stars can never light,
+   * which is honest: the course has no lessons to earn them.
+   */
+  lessons: number[];
   isRedGiantAccent?: boolean;
   isNebula?: boolean;
   /** v1 is two roles. `check` is deliberately absent — see the file header. */
@@ -53,14 +71,16 @@ export interface ChartFigure {
   seriesSlug: string;
   /** Course display name. */
   name: string;
-  /** Constellation the course draws, or null when no figure is mapped. */
+  /** Constellation the course draws, or null when none could be assigned. */
   figureName: string | null;
   litStars: number;
   totalStars: number;
+  /** The curriculum's final lesson count — what sized the figure. */
+  curriculumLessons: number;
   complete: boolean;
   /** True when an `exam` completion event exists for this course. */
   examPassed: boolean;
-  /** Empty when the course has no mapped asterism — renders label-only. */
+  /** Empty when no figure was assigned — renders label-only. */
   stars: ChartStar[];
   connections: ReadonlyArray<readonly [number, number]>;
 }
@@ -94,122 +114,123 @@ export function examPassedSlugs(
 /**
  * Which member crowns the figure.
  *
- * The brightest member, ties broken by name so the choice is stable across
- * runs. This is a *display* choice about where to put the course's exam node —
- * it is not asserting that this star is the exam question.
+ * The brightest member, ties broken by name so the choice is stable across runs.
+ * This is a *display* choice about where to put the course's exam node — it is
+ * not asserting that this star is the exam question.
  */
-function crownIndex(
-  stars: ReadonlyArray<{ magnitude: number; name: string }>,
-  drawn: readonly number[],
-): number {
-  if (drawn.length === 0) return -1;
-  return [...drawn].sort((a, b) => {
-    const sa = stars[a]!;
-    const sb = stars[b]!;
-    return sa.magnitude - sb.magnitude || (sa.name < sb.name ? -1 : 1);
-  })[0]!;
+function crownIndex(stars: ReadonlyArray<{ magnitude: number; name: string }>): number {
+  if (stars.length === 0) return -1;
+  return stars
+    .map((s, i) => ({ i, magnitude: s.magnitude, name: s.name }))
+    .sort((a, b) => a.magnitude - b.magnitude || (a.name < b.name ? -1 : 1))[0]!.i;
 }
 
-/**
- * Members the figure actually draws — the ones a connection touches.
- *
- * Orion pads to 29 members so the 3D scene can give every lesson a star, but
- * only the 9 forming the hunter are connected. The chart draws the figure, so
- * unconnected padding must not become floating dots.
- */
-function drawnIndices(
-  connections: ReadonlyArray<readonly [number, number]>,
-  starCount: number,
-): number[] {
-  const set = new Set<number>();
-  for (const [a, b] of connections) {
-    if (a >= 0 && a < starCount) set.add(a);
-    if (b >= 0 && b < starCount) set.add(b);
+/** The set of 1-based lesson numbers completed, from per-lesson progress. */
+function completedLessonNumbers(constellation: ConstellationState): Set<number> {
+  const out = new Set<number>();
+  for (const [i, star] of constellation.stars.entries()) {
+    // `index` is 1-based and authoritative; fall back to array order.
+    if (star.lit) out.add(star.index > 0 ? star.index : i + 1);
   }
-  return [...set].sort((a, b) => a - b);
+  return out;
+}
+
+export interface BuildChartFigureOptions {
+  /** The constellation this course draws. Null → a label-only figure. */
+  figure?: ConstellationFigure | null;
+  examPassed?: boolean;
 }
 
 /** Build one course's chart figure from production constellation state. */
 export function buildChartFigure(
   constellation: ConstellationState,
-  options: { examPassed?: boolean } = {},
+  options: BuildChartFigureOptions = {},
 ): ChartFigure {
   const { seriesSlug, name, litStars, totalStars, complete } = constellation;
-  const asterism = asterismFor(seriesSlug);
+  const curriculumLessons = Math.max(constellation.curriculumLessons ?? 0, totalStars);
   const examPassed = options.examPassed ?? false;
 
-  if (!asterism) {
-    return {
-      seriesSlug,
-      name,
-      figureName: null,
-      litStars,
-      totalStars,
-      complete,
-      examPassed,
-      stars: [],
-      connections: [],
-    };
-  }
-
-  const projected = projectAsterism(asterism);
-  const drawn = drawnIndices(asterism.connections, projected.length);
-  const crown = crownIndex(projected, drawn);
-  const progress = figureProgress({ litStars, totalStars });
-
   /*
-   * Light the drawn members brightest-first, proportional to real progress.
-   * Brightest-first rather than index order so a half-finished course reads as
-   * the figure's skeleton emerging, not as its left half.
+   * Callers that hand over a single course (the on-course tracker, tests) get
+   * size matching for free rather than having to run the assigner themselves.
    */
-  const byBrightness = [...drawn]
-    .filter((i) => i !== crown)
-    .sort((a, b) => {
-      const sa = projected[a]!;
-      const sb = projected[b]!;
-      return sa.magnitude - sb.magnitude || (sa.name < sb.name ? -1 : 1);
-    });
-  const litCount = Math.round(byBrightness.length * progress);
-  const litSet = new Set(byBrightness.slice(0, litCount));
+  const figure =
+    options.figure === undefined
+      ? (assignFigures([{ seriesSlug, curriculumLessons }]).get(seriesSlug) ?? null)
+      : options.figure;
 
-  // The crown lights only when the course is finished — it closes the figure.
-  const crownLit = complete || examPassed;
-  if (crown >= 0 && crownLit) litSet.add(crown);
-
-  const stars: ChartStar[] = projected.map((s, i) => ({
-    name: i === crown ? `${s.name} · Final exam` : s.name,
-    position: s.position,
-    spectralClass: s.spectralClass,
-    magnitude: s.magnitude,
-    lit: litSet.has(i),
-    isRedGiantAccent: s.isRedGiantAccent,
-    isNebula: s.isNebula,
-    role: i === crown ? "exam" : "lesson",
-  }));
-
-  return {
+  const base = {
     seriesSlug,
     name,
-    figureName: asterism.name,
     litStars,
     totalStars,
+    curriculumLessons,
     complete,
     examPassed,
+  };
+
+  if (!figure) {
+    return { ...base, figureName: null, stars: [], connections: [] };
+  }
+
+  const projected = projectFigure(figure);
+  const crown = crownIndex(projected);
+
+  /*
+   * Buckets are sized against the curriculum, not against what is published, so
+   * a star's meaning does not change when a lesson ships. Lesson 12 belongs to
+   * the same star on the day the course launches and the day it finishes.
+   */
+  const buckets = lessonsPerStar(curriculumLessons, projected.length);
+  const done = completedLessonNumbers(constellation);
+
+  const stars: ChartStar[] = projected.map((s, i) => {
+    const lessons = buckets[i] ?? [];
+    const isCrown = i === crown;
+    // A star burns once every lesson it stands for is done. No lessons → never.
+    const earned = lessons.length > 0 && lessons.every((n) => done.has(n));
+    return {
+      name: isCrown ? `${s.name} · Final exam` : s.name,
+      position: s.position,
+      spectralClass: s.spectralClass,
+      magnitude: s.magnitude,
+      // The crown closes the figure, so it answers to the course, not a lesson.
+      lit: isCrown ? complete || examPassed : earned,
+      lessons,
+      ...(s.isRedGiantAccent ? { isRedGiantAccent: true } : {}),
+      ...(s.isNebula ? { isNebula: true } : {}),
+      role: isCrown ? ("exam" as const) : ("lesson" as const),
+    };
+  });
+
+  return {
+    ...base,
+    figureName: figure.name,
     stars,
-    connections: asterism.connections,
+    connections: figure.connections,
   };
 }
 
 /**
  * Build every course's figure for the profile sky.
  *
- * Order follows `sky.constellations`, which is catalog order — the layout is
- * index-driven, so a stable input order is what keeps figures from swapping
- * places between loads.
+ * Figures are assigned across the whole set at once, because no two courses may
+ * draw the same constellation — that is a decision about the sky, not about a
+ * course, so it cannot be made one course at a time.
  */
 export function buildChartFigures(sky: ProfileSky): ChartFigure[] {
   const passed = examPassedSlugs(sky.chronicle);
+  const assignments = assignFigures(
+    sky.constellations.map((c) => ({
+      seriesSlug: c.seriesSlug,
+      curriculumLessons: Math.max(c.curriculumLessons ?? 0, c.totalStars),
+    })),
+  );
+
   return sky.constellations.map((c) =>
-    buildChartFigure(c, { examPassed: passed.has(c.seriesSlug) }),
+    buildChartFigure(c, {
+      figure: assignments.get(c.seriesSlug) ?? null,
+      examPassed: passed.has(c.seriesSlug),
+    }),
   );
 }
