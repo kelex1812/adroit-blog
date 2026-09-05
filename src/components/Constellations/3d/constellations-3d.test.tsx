@@ -238,12 +238,77 @@ describe("buildGalaxyModel", () => {
 
 /* ── asterism-data (real-astronomy grounding, ADR-307) ─────────────── */
 
+/** The five figures the Phase 2 port promoted out of the lab. */
+const PROMOTED_FIGURE_SLUGS = [
+  "omni-studio-cert",
+  "hermes-consultant",
+  "hermes-consultant-intermediate",
+  "hermes-consultant-advanced",
+  "ai-at-work",
+] as const;
+
+const ALL_FIGURE_SLUGS = [
+  "salesforce-architect",
+  "agentic-ai",
+  ...PROMOTED_FIGURE_SLUGS,
+] as const;
+
 describe("asterism-data", () => {
   it("maps known courses to real constellations (Orion, Cassiopeia)", () => {
     expect(asterismFor("salesforce-architect")?.name).toBe("Orion");
     expect(asterismFor("agentic-ai")?.name).toBe("Cassiopeia");
     expect(hasAsterism("salesforce-architect")).toBe(true);
     expect(hasAsterism("unknown-series")).toBe(false);
+  });
+
+  it("covers all seven catalog courses after the Phase 2 promotion", () => {
+    const expected: Record<(typeof ALL_FIGURE_SLUGS)[number], string> = {
+      "salesforce-architect": "Orion",
+      "agentic-ai": "Cassiopeia",
+      "omni-studio-cert": "Lyra",
+      "hermes-consultant": "Corvus",
+      "hermes-consultant-intermediate": "Delphinus",
+      "hermes-consultant-advanced": "Corona Borealis",
+      "ai-at-work": "Cygnus",
+    };
+    for (const slug of ALL_FIGURE_SLUGS) {
+      expect(hasAsterism(slug)).toBe(true);
+      expect(asterismFor(slug)?.name).toBe(expected[slug]);
+    }
+  });
+
+  /*
+   * Connections index into `stars`, so an out-of-range pair silently drops a
+   * line rather than throwing — the five promoted figures were hand-authored,
+   * which is exactly where an off-by-one lands.
+   */
+  it("keeps every connection index inside the member list", () => {
+    for (const slug of ALL_FIGURE_SLUGS) {
+      const a = asterismFor(slug)!;
+      for (const [x, y] of a.connections) {
+        expect(a.stars[x], `${a.name} connection start ${x}`).toBeDefined();
+        expect(a.stars[y], `${a.name} connection end ${y}`).toBeDefined();
+        expect(x, `${a.name} connects a star to itself`).not.toBe(y);
+      }
+    }
+  });
+
+  /*
+   * Orion is the odd one out: it pads to 29 members so every lesson gets a
+   * star, but only the 9 that form the recognizable hunter are connected. The
+   * chart draws connected members only, so the other 20 never appear there.
+   * The five figures promoted from the lab were authored as pure figures, so
+   * for them "every member is drawn" IS the invariant, and a stray member
+   * would be an authoring slip rather than a deliberate pad.
+   */
+  it("draws every member of the five promoted figures", () => {
+    for (const slug of PROMOTED_FIGURE_SLUGS) {
+      const a = asterismFor(slug)!;
+      const drawn = new Set(a.connections.flat());
+      expect(drawn.size, `${a.name} has an undrawn member`).toBe(
+        a.stars.length,
+      );
+    }
   });
 
   it("authors real member stars with spectral class + magnitude", () => {

@@ -28,7 +28,7 @@ import { StatusBadge } from "@/components/Catalog/StatusBadge";
 import { AccessModelChip } from "@/components/Catalog/AccessModelChip";
 import DifficultyPill from "@/components/Learn/DifficultyPill";
 import PrerequisitesSection from "@/components/Learn/PrerequisitesSection";
-import SeriesConstellation3D from "@/components/Constellations/3d/SeriesConstellation3D";
+import SeriesStarChart from "@/components/Constellations/chart/SeriesStarChart";
 import { loadSeriesConstellation } from "@/lib/sky-server";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
 
@@ -305,13 +305,13 @@ export default async function SeriesPage({ params }: Props) {
         )}
 
         {/* Syllabus — lesson-number order (ADR-105), client sort + hide-completed.
-            Immersive 3D on-course tracker rendered above the syllabus (B-18+3D):
-            the course's constellation floats in real 3D with bloom, hover, and
-            click-to-fly. Falls back to the 2D rail when WebGL is unavailable. */}
+            On-course tracker above it: the course drawn as its constellation,
+            star lines lit to match progress (Hubble Field Phase 2). SVG, so
+            there is no WebGL gate and no 2D fallback to keep in step. */}
         <div className="max-w-[1120px] mx-auto px-6 py-8 pb-4">
           {constellation ? (
             <div className="mb-10">
-              <SeriesConstellation3D
+              <SeriesStarChart
                 constellation={constellation}
                 isGuest={!isAuthed}
               />

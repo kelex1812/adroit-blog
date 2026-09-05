@@ -9,6 +9,142 @@ Baseline v1.0.0 — Omni content + course-structure/cert-standards bar + Constel
 
 ## [Unreleased]
 
+### Hubble Field — Phase 2, the star chart in production (`feat/hubble-field`)
+
+**What** — `/profile` "Your Sky" and the `/learn/[series]` on-course tracker now
+render the 2D celestial chart the Phase 1 lab landed on. Every course is a
+constellation carrying an engraved figure of what it depicts, and finishing
+lessons lights its star lines. Promoted the renderer into
+`Constellations/chart/` as `StarChart`, added a pure `buildChartFigures` adapter,
+replaced the seven hardcoded layout slots and the seven-entry art map, and
+promoted the lab's five authored asterisms (Lyra, Corvus, Delphinus, Corona
+Borealis, Cygnus) into `asterism-data.ts` so all seven catalog courses resolve a
+figure from production data. `ProfileGalaxy3D`, `SeriesConstellation3D` and
+`SeriesConstellation` are left in tree and unmounted for one release so the port
+can be rolled back cheaply; deleting them and dropping the four r3f packages is
+a separate follow-up.
+
+**Why** — the chart is the surface that survived review, and a real surface in
+front of real users beats another lab round. Because it is SVG, the old "3D with
+a 2D fallback" split collapses into one thing: `/learn` was shipping a WebGL
+probe, a three/r3f dynamic import, a loading state and a vertical-rail fallback
+in order to draw one constellation. `three` is now absent from the client
+bundle on both routes.
+
+**How** — the honest bits are the ones worth reading.
+
+*Two roles, not three.* Production carries `ConstellationStar.lit` per lesson and
+`complete` per course, and nothing maps a quiz or an exam to a *position* in a
+series. The lab faked that by making the brightest star the exam and every nth
+star a knowledge check. `src/lib/chart.ts` ships lessons plus a single crowning
+exam node and drops the check diamonds until the catalog exposes where quizzes
+sit. The crown lights on `complete` **or** on a real `exam` completion event read
+off the chronicle — an exam event is only written on a pass, so its presence is
+the pass, and it is the one piece of exam truth `ProfileSky` already carries.
+Member-level lighting is documented as a proportional rendering of course
+progress rather than a per-lesson claim, because a figure has as many members as
+the real constellation has (Cassiopeia has five) and that rarely equals the
+lesson count.
+
+*Layout that survives a course being added.* A golden-angle spiral keyed to
+capacity tiers, so adding a course inside a tier moves nothing and only crossing
+a tier reshuffles. Radius interpolates from an inner bound that relaxes to zero
+as the catalog grows: a sparse sky forms a ring, a full one uses the whole disc.
+Figure scale comes from the tightest gap the layout actually produced — there is
+deliberately no scale floor, because any fixed floor eventually exceeds the
+collision bound and reintroduces the overlap it was clamping away.
+
+*Art by mapping, not by illustration.* All 88 IAU plates are in tree, so a plate
+is resolved from the constellation's name and a new course needs a mapping rather
+than new artwork. Only figures that sit badly under the default get a placement
+nudge. `figureArtFor` returns null instead of a `src` for a plate that is not on
+disk, and a course with no plate — or no asterism at all — still renders its
+lines, labels and progress.
+
+*Assets.* The plates ship as grayscale WebP at q90: 14.7MB → 6.5MB in tree, and a
+seven-course sky from ~1.2MB to ~540KB. No PNG fallback, because SVG `<image>`
+cannot express one and the loss is invisible anyway — the chart reads plate
+*luminance* through `feColorMatrix` and blurs the result, so q90 artifacts land
+below what survives to the screen.
+
+**Watch out** — two bugs here were invisible to unit tests and obvious on screen.
+`aspect-ratio` with a `max-height` cap does not keep a box square: the cap
+shortens it without narrowing it, so the SVG letterboxed into the middle and the
+absolutely-positioned legend stranded out over the empty margin. Constraining
+*width* is what squares it. And even-area packing (`r ∝ √i`) is correct for a
+full sky and wrong for a sparse one — it dropped the first figures of a
+seven-course sky near the centre and left the outer plate empty. Every layout
+assertion passed while that was true, because none of them measured distance from
+centre; there is now one that does.
+
+Also: the lab no longer keeps its own copy of the renderer. It renders the
+production `StarChart` against synthetic fixtures, because two copies of a
+700-line SVG component drift. What the lab still owns is data — seven courses at
+uneven completion, so every visual state is reviewable without a session.
+
+**Verification** — `npx tsc --noEmit` clean; `npm run lint` clean bar the known
+pre-existing `MDXArticle.tsx` warning; `npx vitest run` 77 files / 562 tests
+green, including 33 new adapter/layout tests and an on-disk guard that every
+declared plate slug has a file. `npm run build` succeeds and `three` /
+`@react-three/*` are absent from `.next/static/chunks`. Chart verified rendering
+in a browser at `/lab/hubble-field` — figures ringed, legend on the plate, all
+seven WebP plates 200/304 with no 404s.
+
+**Still open** — `/profile` and `/learn/[series]` were not exercised against a
+live database (this branch was built without Supabase credentials reachable), so
+both were verified by build, tests and the lab surface rather than a logged-in
+session. Knowledge-check nodes and the `ConstellationState` role anchors remain
+v2 work needing their own ADR.
+
+### Hubble Field — Phase 1 lab, landing on a 2D star chart (`feat/hubble-field`)
+
+**What** — opened a gated internal observatory at `/lab/hubble-field` so the
+constellation visual reboot is judged against real rendering instead of another
+HTML poster. It began as four WebGL studies (star material, deep field, atlas,
+warp) and **ended somewhere else**: the study that won is a 2D SVG celestial
+chart, now the lab default. Each course is a constellation carrying an engraved
+figure of what it depicts. Added Phase 1 docs (north star, requirements, arch +
+HTML twins), `design/hubble-field/` direction brief + checkpoint, supersession
+banners on prior immersive / Sky Roads visual docs, and a Phase 2 port plan
+blocked on look approval. Production `ProfileGalaxy3D` / `SeriesScene` are
+intentionally untouched.
+
+**Why** — Sky Roads shipped the right data and LOD idea but still reads as a
+cyan dashboard. The 3D studies were built first on the theory that wow lives in
+the shader and the camera; on review they read as a pitch-black void, and a
+top-down atlas plate turned out to carry both the mythology and the progress far
+better. Dots and lines alone don't tell a newcomer what a constellation *is* —
+hence the figures.
+
+**How** — `src/components/Constellations/lab/`. The chart is `chart-atlas.tsx` +
+`chart-2d.css`, with backdrop maths split into `chart-sky.ts` so it is testable.
+Figure art lives in `public/constellations/*.png` as grayscale plates — the full
+IAU 88, so any course can be mapped to a figure — keyed at render time by an SVG
+`feColorMatrix` that takes alpha from luminance and replaces colour with a flat
+tint: dim bronze while a course is in progress, bright gold once complete. The
+plates are stored grey because only their luminance is read; colour in the
+source is discarded. Depth is three pointer-parallax bands over a lit dome, drifting
+nebulae and ~420 seeded stars; motion (twinkle, breathing figures, sparks along
+completed rails, exam pulse, meteors) is CSS only and fully disabled under
+`prefers-reduced-motion`. The four rejected WebGL studies — and their shared
+canvas, shaders, dust volume and control panel — were **deleted**, taking the
+lab from eighteen files to six; git history holds them.
+Route: `src/app/lab/hubble-field/` with `ssr: false`, noindex, robots
+`disallow: /lab/`, and a development-or-`ALLOW_HUBBLE_LAB=1` gate.
+
+**Watch out** — do not build a seeded field with `seededUnit(seed + key)`.
+FNV-1a maps a one-character seed difference to a near-constant output
+difference, so `"…-x"` and `"…-y"` returned values ~0.004 apart and the entire
+star field collapsed onto the line y = x. `chart-sky.ts` uses a mulberry32
+stream instead, and `lab.test.ts` guards it with an x/y correlation assertion —
+range and count checks passed straight through the bug.
+
+**Verification** — `npx tsc --noEmit` clean; `npx vitest run
+src/components/Constellations/lab` 12/12 pass (was 18 before the four rejected
+WebGL studies and their six tests were deleted). Open `/lab/hubble-field` in
+`npm run dev`; the Star chart study is the default. Production port waits on
+Chris signing `design/hubble-field/CHECKPOINT.md`.
+
 ### deep-sky v1.2.0 — Profile galaxy navigation ("Sky Roads") (t_62a40095)
 
 **What** — made `/profile` "Your Sky" a navigable, guided-map galaxy per kara's

@@ -1,5 +1,7 @@
 # Requirements: Immersive 3D Constellations (celestial-immersion v1.1.0)
 
+> **SUPERSEDED (2026-09-04):** Visual direction for the constellation 3D layer is now **Hubble Field** (Rev 3). See `docs/hubble-field-north-star.md`, `docs/requirements-hubble-field.md`, and `docs/arch-hubble-field.md`. This document is retained as historical record of the Rev 2 celestial-immersion requirements. Do not implement from this file.
+
 > **Tenant:** adroit-blog
 > **Workspace:** /Users/kelex/Documents/Fortress-of-Solitude/adroit-blog
 > **Date:** 2026-09-02
