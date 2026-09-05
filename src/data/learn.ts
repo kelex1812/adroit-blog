@@ -729,6 +729,175 @@ export const learnSeries: LearningSeries[] = [
     "totalLessons": 11
   },
   {
+    "slug": "hermes-consultant-advanced",
+    "name": "Hermes Agent Consultant · Advanced",
+    "description": "Level 3 of the Hermes Consultant track: Practice & Scale. For the principal — building a consulting practice, org-scale architecture, delivery operations and margins, value-based pricing, hiring, and a go-to-market plan. Builds on Levels 1 and 2.",
+    "gradient": "from-teal to-emerald-600",
+    "lessons": [
+      {
+        "slug": "from-consultant-to-principal",
+        "title": "Lesson 1: From Consultant to Principal",
+        "series": "hermes-consultant-advanced",
+        "lesson": 1,
+        "excerpt": "The shift that defines a principal: from selling your own skill to building a delivery system. Why the unit of output changes, how leverage replaces hours, and what you have to stop doing to operate at scale.",
+        "date": "August 27, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "12 min read",
+        "tags": [
+          "AI Agents",
+          "Consulting",
+          "LLMs"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "service-lines-offers-and-packaging",
+        "title": "Lesson 2: Service Lines, Offers, and Packaging",
+        "series": "hermes-consultant-advanced",
+        "lesson": 2,
+        "excerpt": "How a practice turns capability into something a client can actually buy. The difference between a service line and an offer, why packaging is the principal's real product work, and how productization fixes the worst economics in consulting.",
+        "date": "August 28, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "13 min read",
+        "tags": [
+          "AI Agents",
+          "Consulting",
+          "LLMs"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "architecture-at-organizational-scale",
+        "title": "Lesson 3: Architecture at Organizational Scale",
+        "series": "hermes-consultant-advanced",
+        "lesson": 3,
+        "excerpt": "The jump from running agents to running a fleet of them. How to design for many agents at once: the orchestration patterns that keep work moving, the governance layer that keeps it safe, and why control replaces heroics as the unit of success.",
+        "date": "August 29, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "13 min read",
+        "tags": [
+          "AI Agents",
+          "Consulting",
+          "LLMs"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "design-authority",
+        "title": "Lesson 4: Design Authority",
+        "series": "hermes-consultant-advanced",
+        "lesson": 4,
+        "excerpt": "The layer that keeps a growing practice coherent. What design authority is, why a system of many agents drifts without it, how to set standards that actually get followed, and how to run design reviews that are gates, not rubber stamps.",
+        "date": "August 30, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "13 min read",
+        "tags": [
+          "AI Agents",
+          "Consulting",
+          "LLMs"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "reusable-ip-and-productized-offerings",
+        "title": "Lesson 5: Building Reusable IP and Productized Offerings",
+        "series": "hermes-consultant-advanced",
+        "lesson": 5,
+        "excerpt": "The difference between an offer and the intellectual property underneath it, why IP is the asset that compounds, and how to turn a repeatable delivery method into a productized offering the practice owns and can sell again without reinventing the scope.",
+        "date": "August 31, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "13 min read",
+        "tags": [
+          "AI Agents",
+          "Consulting",
+          "LLMs"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "hiring-onboarding-and-running-a-team",
+        "title": "Lesson 6: Hiring, Onboarding, and Running a Team of Consultants",
+        "series": "hermes-consultant-advanced",
+        "lesson": 6,
+        "excerpt": "The principal hires for the delivery system, not for a role they used to fill. How to staff against a captured method, onboard people onto it with a measurable exit gate, and run a team so quality stays a property of the system instead of a bet on any single person.",
+        "date": "September 01, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "12 min read",
+        "tags": [
+          "AI Agents",
+          "Consulting",
+          "LLMs"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "delivery-operations-utilization-capacity-margins",
+        "title": "Lesson 7: Delivery Operations: Utilization, Capacity, and Margins",
+        "series": "hermes-consultant-advanced",
+        "lesson": 7,
+        "excerpt": "How a principal reads the three operating numbers that determine whether a delivery system is healthy, and why they fight each other: the utilization that lies when it hits 100%, the capacity that is throughput not headcount, and the margin that funds the future.",
+        "date": "September 02, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "14 min read",
+        "tags": [
+          "AI Agents",
+          "Consulting",
+          "LLMs"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "pricing-strategy-hourly-productized-value-based",
+        "title": "Lesson 8: Pricing Strategy: From Hourly to Productized to Value-Based",
+        "series": "hermes-consultant-advanced",
+        "lesson": 8,
+        "excerpt": "How a principal stops selling time and starts pricing outcomes: the risk economics that decide between hourly, productized, and value-based pricing, and why the real craft is choosing the right model for each offer in the catalog rather than picking one forever.",
+        "date": "September 03, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "14 min read",
+        "tags": [
+          "AI Agents",
+          "Consulting",
+          "LLMs"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "large-engagement-governance",
+        "title": "Lesson 9: Governance for Large Engagements",
+        "series": "hermes-consultant-advanced",
+        "lesson": 9,
+        "excerpt": "How a principal keeps control of an engagement too big for any one head to hold. Steering committees, status cadence, and escalation as one operating rhythm that makes surprises arrive early instead of as crises.",
+        "date": "September 04, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "13 min read",
+        "tags": [
+          "AI Agents",
+          "Consulting",
+          "LLMs"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "compliance-and-risk-at-enterprise-scale",
+        "title": "Lesson 10: Compliance and Risk at Enterprise Scale",
+        "series": "hermes-consultant-advanced",
+        "lesson": 10,
+        "excerpt": "When a consultant becomes a practice, the obligations change. Compliance is the set of rules the practice must meet or it is out of business; risk is what can hurt it even when it breaks no rule. How a principal turns both into controls that are properties of the operating system, not of anyone's good intentions.",
+        "date": "September 05, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "14 min read",
+        "tags": [
+          "AI Agents",
+          "Consulting",
+          "LLMs"
+        ],
+        "status": "published"
+      }
+    ],
+    "totalLessons": 10
+  },
+  {
     "slug": "hermes-consultant-intermediate",
     "name": "Hermes Agent Consultant · Intermediate",
     "description": "Level 2 of the Hermes Consultant track: Applied Delivery. For the working practitioner — running full engagements, complex client environments, multi-week estimation, team delivery, incident discipline, pricing, and case studies. Builds on Level 1.",
@@ -2150,159 +2319,6 @@ export const learnSeries: LearningSeries[] = [
       }
     ],
     "totalLessons": 20
-  },
-  {
-    "slug": "hermes-consultant-advanced",
-    "name": "Hermes Agent Consultant · Advanced",
-    "description": "Level 3 of the Hermes Consultant track: Practice & Scale. For the principal — building a consulting practice, org-scale architecture, delivery operations and margins, value-based pricing, hiring, and a go-to-market plan. Builds on Levels 1 and 2.",
-    "gradient": "from-teal to-emerald-600",
-    "lessons": [
-      {
-        "slug": "from-consultant-to-principal",
-        "title": "Lesson 1: From Consultant to Principal",
-        "series": "hermes-consultant-advanced",
-        "lesson": 1,
-        "excerpt": "The shift that defines a principal: from selling your own skill to building a delivery system. Why the unit of output changes, how leverage replaces hours, and what you have to stop doing to operate at scale.",
-        "date": "August 27, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "12 min read",
-        "tags": [
-          "AI Agents",
-          "Consulting",
-          "LLMs"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "service-lines-offers-and-packaging",
-        "title": "Lesson 2: Service Lines, Offers, and Packaging",
-        "series": "hermes-consultant-advanced",
-        "lesson": 2,
-        "excerpt": "How a practice turns capability into something a client can actually buy. The difference between a service line and an offer, why packaging is the principal's real product work, and how productization fixes the worst economics in consulting.",
-        "date": "August 28, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "13 min read",
-        "tags": [
-          "AI Agents",
-          "Consulting",
-          "LLMs"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "architecture-at-organizational-scale",
-        "title": "Lesson 3: Architecture at Organizational Scale",
-        "series": "hermes-consultant-advanced",
-        "lesson": 3,
-        "excerpt": "The jump from running agents to running a fleet of them. How to design for many agents at once: the orchestration patterns that keep work moving, the governance layer that keeps it safe, and why control replaces heroics as the unit of success.",
-        "date": "August 29, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "13 min read",
-        "tags": [
-          "AI Agents",
-          "Consulting",
-          "LLMs"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "design-authority",
-        "title": "Lesson 4: Design Authority",
-        "series": "hermes-consultant-advanced",
-        "lesson": 4,
-        "excerpt": "The layer that keeps a growing practice coherent. What design authority is, why a system of many agents drifts without it, how to set standards that actually get followed, and how to run design reviews that are gates, not rubber stamps.",
-        "date": "August 30, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "13 min read",
-        "tags": [
-          "AI Agents",
-          "Consulting",
-          "LLMs"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "reusable-ip-and-productized-offerings",
-        "title": "Lesson 5: Building Reusable IP and Productized Offerings",
-        "series": "hermes-consultant-advanced",
-        "lesson": 5,
-        "excerpt": "The difference between an offer and the intellectual property underneath it, why IP is the asset that compounds, and how to turn a repeatable delivery method into a productized offering the practice owns and can sell again without reinventing the scope.",
-        "date": "August 31, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "13 min read",
-        "tags": [
-          "AI Agents",
-          "Consulting",
-          "LLMs"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "hiring-onboarding-and-running-a-team",
-        "title": "Lesson 6: Hiring, Onboarding, and Running a Team of Consultants",
-        "series": "hermes-consultant-advanced",
-        "lesson": 6,
-        "excerpt": "The principal hires for the delivery system, not for a role they used to fill. How to staff against a captured method, onboard people onto it with a measurable exit gate, and run a team so quality stays a property of the system instead of a bet on any single person.",
-        "date": "September 01, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "12 min read",
-        "tags": [
-          "AI Agents",
-          "Consulting",
-          "LLMs"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "delivery-operations-utilization-capacity-margins",
-        "title": "Lesson 7: Delivery Operations: Utilization, Capacity, and Margins",
-        "series": "hermes-consultant-advanced",
-        "lesson": 7,
-        "excerpt": "How a principal reads the three operating numbers that determine whether a delivery system is healthy, and why they fight each other: the utilization that lies when it hits 100%, the capacity that is throughput not headcount, and the margin that funds the future.",
-        "date": "September 02, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "14 min read",
-        "tags": [
-          "AI Agents",
-          "Consulting",
-          "LLMs"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "pricing-strategy-hourly-productized-value-based",
-        "title": "Lesson 8: Pricing Strategy: From Hourly to Productized to Value-Based",
-        "series": "hermes-consultant-advanced",
-        "lesson": 8,
-        "excerpt": "How a principal stops selling time and starts pricing outcomes: the risk economics that decide between hourly, productized, and value-based pricing, and why the real craft is choosing the right model for each offer in the catalog rather than picking one forever.",
-        "date": "September 03, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "14 min read",
-        "tags": [
-          "AI Agents",
-          "Consulting",
-          "LLMs"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "large-engagement-governance",
-        "title": "Lesson 9: Governance for Large Engagements",
-        "series": "hermes-consultant-advanced",
-        "lesson": 9,
-        "excerpt": "How a principal keeps control of an engagement too big for any one head to hold. Steering committees, status cadence, and escalation as one operating rhythm that makes surprises arrive early instead of as crises.",
-        "date": "September 04, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "13 min read",
-        "tags": [
-          "AI Agents",
-          "Consulting",
-          "LLMs"
-        ],
-        "status": "published"
-      }
-    ],
-    "totalLessons": 9
   }
 ];
 
@@ -2334,6 +2350,22 @@ export const learnLessons: LearnLesson[] = [
     "date": "September 5, 2026",
     "author": "Adroit Consulting",
     "readTime": "12 min read",
+    "tags": [
+      "AI Agents",
+      "Consulting",
+      "LLMs"
+    ],
+    "status": "published"
+  },
+  {
+    "slug": "compliance-and-risk-at-enterprise-scale",
+    "title": "Lesson 10: Compliance and Risk at Enterprise Scale",
+    "series": "hermes-consultant-advanced",
+    "lesson": 10,
+    "excerpt": "When a consultant becomes a practice, the obligations change. Compliance is the set of rules the practice must meet or it is out of business; risk is what can hurt it even when it breaks no rule. How a principal turns both into controls that are properties of the operating system, not of anyone's good intentions.",
+    "date": "September 05, 2026",
+    "author": "Adroit Consulting",
+    "readTime": "14 min read",
     "tags": [
       "AI Agents",
       "Consulting",
