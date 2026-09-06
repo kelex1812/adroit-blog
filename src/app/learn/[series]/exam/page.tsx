@@ -34,7 +34,6 @@ import {
 import { buildPaywallView } from "@/lib/paywall";
 import { LockedContentPage } from "@/components/Catalog/LockedContentPage";
 import { getLessonsForSeries } from "@/lib/learn";
-import { getSeriesLessonSlugs } from "@/lib/certificate";
 
 interface Props {
   params: Promise<{ series: string }>;
@@ -131,32 +130,11 @@ export default async function ExamPage({ params }: Props) {
   // unlock decision must never depend on it).
   const checkMetas = getKnowledgeChecks(series);
   const quizNames = checkMetas.map((c) => `${series}:check:${c.n}`);
-  const publishedLessonSlugs = getLessonsForSeries(series).map((l) => l.slug);
-  const targetLessonSlugs =
-    publishedLessonSlugs.length > 0 ? publishedLessonSlugs : getSeriesLessonSlugs(series);
-  const [checkRes, lessonRes] = await Promise.all([
-    supabase
-      .from("quiz_attempt")
-      .select("quiz_name, question_index, is_correct")
-      .eq("user_id", user!.id)
-      .in("quiz_name", quizNames),
-    targetLessonSlugs.length > 0
-      ? supabase
-          .from("lesson_completion")
-          .select("lesson_slug")
-          .eq("user_id", user!.id)
-          .in("lesson_slug", targetLessonSlugs)
-      : Promise.resolve({ data: [] as { lesson_slug: string }[], error: null }),
-  ]);
-  const data = checkRes.data ?? [];
-  const completedLessons = new Set(
-    ((lessonRes.data ?? []) as { lesson_slug: string }[]).map((r) => r.lesson_slug),
-  );
-  // Exam is a capstone: open only once the course is fully complete AND every
-  // knowledge check passes. Keeps certification meaning "did it all."
-  const courseComplete =
-    targetLessonSlugs.length > 0 &&
-    targetLessonSlugs.every((slug) => completedLessons.has(slug));
+  const { data } = await supabase
+    .from("quiz_attempt")
+    .select("quiz_name, question_index, is_correct")
+    .eq("user_id", user!.id)
+    .in("quiz_name", quizNames);
 
   // Canonical coverage (t_55105899): a check with only 8 of 15 questions
   // answered (all correct) must NOT derive as 8/8 = 100% and unlock the
@@ -180,14 +158,12 @@ export default async function ExamPage({ params }: Props) {
     return { n: c.n, bestScore, attempts: 0, passed: bestScore >= CHECK_PASS_PCT };
   });
   const allChecksPassed = checks.every((c) => c.passed);
-  // Exam requires the course to be complete AND every check passed.
-  const unlocked = courseComplete && allChecksPassed;
 
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
       <main id="main" className="flex-1">
-        {unlocked ? (
+        {allChecksPassed ? (
           <ExamWidget
             quizName={exam.quizName}
             // F3 (CWE-200): strip the answer key server-side — the client
@@ -208,12 +184,7 @@ export default async function ExamPage({ params }: Props) {
             >
               &larr; Back to {s.name}
             </Link>
-            <ExamLocked
-              series={series}
-              checks={checks}
-              seriesName={s.name}
-              courseComplete={courseComplete}
-            />
+            <ExamLocked series={series} checks={checks} seriesName={s.name} />
           </div>
         )}
       </main>
