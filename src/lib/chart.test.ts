@@ -429,8 +429,10 @@ describe("buildChartFigures", () => {
     // Cassiopeia is the 5-star figure the old slug map would have given it.
     expect(agentic!.figureName).not.toBe("Cassiopeia");
     expect(agentic!.stars.length).toBeGreaterThan(5);
-    expect(agentic!.figureName).toBe("Draco");
-    expect(agentic!.stars).toHaveLength(14);
+    // Closest figure to 40 is now 19★ Cetus (the Phase 3 addition; the old
+    // catalog's 14★ Draco was the largest available). Bigger catalog, closer fit.
+    expect(agentic!.figureName).toBe("Cetus");
+    expect(agentic!.stars).toHaveLength(19);
   });
 });
 

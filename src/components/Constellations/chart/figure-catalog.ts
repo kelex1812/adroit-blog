@@ -542,6 +542,43 @@ const TAURUS: ConstellationFigure = {
 };
 
 /* ------------------------------------------------------------------ */
+/*  12 stars                                                           */
+/* ------------------------------------------------------------------ */
+
+const OPHIUCHUS: ConstellationFigure = {
+  name: "Ophiuchus",
+  stars: [
+    { name: "Rasalhague (α Oph)", raH: 17.5822, decDeg: 12.56, spectralClass: "A", magnitude: 2.08 },
+    { name: "κ Oph", raH: 16.9612, decDeg: 9.38, spectralClass: "K", magnitude: 3.19 },
+    { name: "Cebalrai (β Oph)", raH: 17.7245, decDeg: 4.57, spectralClass: "K", magnitude: 2.76 },
+    { name: "γ Oph", raH: 17.7982, decDeg: 2.71, spectralClass: "A", magnitude: 3.75 },
+    { name: "Sinistra (ν Oph)", raH: 17.9838, decDeg: -9.77, spectralClass: "K", magnitude: 3.32 },
+    { name: "θ Oph", raH: 17.3668, decDeg: -25.0, spectralClass: "B", magnitude: 3.27 },
+    { name: "Han (ζ Oph)", raH: 16.6193, decDeg: -10.57, spectralClass: "O", magnitude: 2.54 },
+    { name: "ι Oph", raH: 16.9001, decDeg: 10.17, spectralClass: "B", magnitude: 4.39 },
+    { name: "Marfik (λ Oph)", raH: 16.5152, decDeg: 1.98, spectralClass: "A", magnitude: 3.82 },
+    { name: "Yed Prior (δ Oph)", raH: 16.2391, decDeg: -3.69, spectralClass: "M", magnitude: 2.73, isRedGiantAccent: true },
+    { name: "Yed Posterior (ε Oph)", raH: 16.3053, decDeg: -4.69, spectralClass: "G", magnitude: 3.23 },
+    { name: "Sabik (η Oph)", raH: 17.173, decDeg: -15.73, spectralClass: "A", magnitude: 2.43 },
+  ],
+  // The serpent-bearer: head at Rasalhague, the Yed hands, body to Sinistra.
+  connections: [
+    [0, 1],
+    [1, 2],
+    [2, 3],
+    [3, 4],
+    [4, 5],
+    [0, 6],
+    [6, 7],
+    [7, 8],
+    [2, 10],
+    [10, 9],
+    [9, 4],
+    [8, 11],
+  ],
+};
+
+/* ------------------------------------------------------------------ */
 /*  13 stars                                                           */
 /* ------------------------------------------------------------------ */
 
@@ -620,6 +657,292 @@ const DRACO: ConstellationFigure = {
   ],
 };
 
+const HERCULES: ConstellationFigure = {
+  name: "Hercules",
+  stars: [
+    { name: "Kornephoros (β Her)", raH: 16.5037, decDeg: 21.49, spectralClass: "G", magnitude: 2.78 },
+    { name: "ζ Her", raH: 16.6882, decDeg: 31.6, spectralClass: "F", magnitude: 2.81 },
+    { name: "Sarin (δ Her)", raH: 17.2505, decDeg: 24.84, spectralClass: "A", magnitude: 3.12 },
+    { name: "π Her", raH: 17.2508, decDeg: 36.81, spectralClass: "K", magnitude: 3.16 },
+    { name: "Rasalgethi (α¹ Her)", raH: 17.2441, decDeg: 14.39, spectralClass: "M", magnitude: 3.31, isRedGiantAccent: true },
+    { name: "μ Her", raH: 17.7744, decDeg: 27.72, spectralClass: "G", magnitude: 3.42 },
+    { name: "η Her", raH: 16.7149, decDeg: 38.92, spectralClass: "G", magnitude: 3.48 },
+    { name: "ξ Her", raH: 17.9627, decDeg: 29.25, spectralClass: "K", magnitude: 3.7 },
+    { name: "γ Her", raH: 16.3653, decDeg: 19.15, spectralClass: "A", magnitude: 3.74 },
+    { name: "ι Her", raH: 17.6577, decDeg: 46.01, spectralClass: "B", magnitude: 3.82 },
+    { name: "ο Her", raH: 18.1257, decDeg: 28.76, spectralClass: "B", magnitude: 3.84 },
+    { name: "θ Her", raH: 17.9376, decDeg: 37.25, spectralClass: "K", magnitude: 3.86 },
+    { name: "τ Her", raH: 16.329, decDeg: 46.31, spectralClass: "B", magnitude: 3.91 },
+    { name: "ε Her", raH: 17.0048, decDeg: 30.93, spectralClass: "A", magnitude: 3.92 },
+    { name: "Maasym (λ Her)", raH: 17.5123, decDeg: 26.11, spectralClass: "K", magnitude: 4.41 },
+  ],
+  // The keystone quadrilateral of the torso, head at Rasalgethi, limbs fanned out.
+  connections: [
+    [8, 6],
+    [6, 1],
+    [1, 3],
+    [3, 8],
+    [3, 9],
+    [9, 12],
+    [3, 2],
+    [2, 4],
+    [8, 0],
+    [0, 13],
+    [13, 6],
+    [0, 5],
+    [5, 14],
+    [14, 7],
+    [7, 10],
+    [7, 11],
+    [11, 9],
+  ],
+};
+
+/* ------------------------------------------------------------------ */
+/*  16 stars                                                           */
+/* ------------------------------------------------------------------ */
+
+const VIRGO: ConstellationFigure = {
+  name: "Virgo",
+  stars: [
+    { name: "Spica (α Vir)", raH: 13.4199, decDeg: -11.16, spectralClass: "B", magnitude: 0.98 },
+    { name: "Porrima (γ Vir)", raH: 12.6944, decDeg: -1.45, spectralClass: "F", magnitude: 2.74 },
+    { name: "Vindemiatrix (ε Vir)", raH: 13.0363, decDeg: 10.96, spectralClass: "G", magnitude: 2.85 },
+    { name: "Heze (ζ Vir)", raH: 13.5783, decDeg: -0.6, spectralClass: "A", magnitude: 3.38 },
+    { name: "Auva (δ Vir)", raH: 12.9268, decDeg: 3.4, spectralClass: "M", magnitude: 3.39, isRedGiantAccent: true },
+    { name: "Zavijava (β Vir)", raH: 11.8448, decDeg: 1.77, spectralClass: "F", magnitude: 3.59 },
+    { name: "Maenalus (109 Vir)", raH: 14.7708, decDeg: 1.89, spectralClass: "A", magnitude: 3.73 },
+    { name: "Rijl al Awwa (μ Vir)", raH: 14.7177, decDeg: -5.66, spectralClass: "F", magnitude: 3.87 },
+    { name: "Zaniah (η Vir)", raH: 12.3318, decDeg: -0.67, spectralClass: "A", magnitude: 3.89 },
+    { name: "ν Vir", raH: 11.7643, decDeg: 6.53, spectralClass: "M", magnitude: 4.04, isRedGiantAccent: true },
+    { name: "Syrma (ι Vir)", raH: 14.2669, decDeg: -6.0, spectralClass: "F", magnitude: 4.07 },
+    { name: "ο Vir", raH: 12.0869, decDeg: 8.73, spectralClass: "G", magnitude: 4.12 },
+    { name: "Kang (κ Vir)", raH: 14.2149, decDeg: -10.27, spectralClass: "K", magnitude: 4.18 },
+    { name: "τ Vir", raH: 14.0274, decDeg: 1.54, spectralClass: "A", magnitude: 4.23 },
+    { name: "θ Vir", raH: 13.1658, decDeg: -5.54, spectralClass: "A", magnitude: 4.38 },
+    { name: "Khambalia (λ Vir)", raH: 14.3185, decDeg: -13.37, spectralClass: "A", magnitude: 4.52 },
+  ],
+  // The stalk of the ear of wheat: Spica up through Kang and Syrma to Vindemiatrix.
+  connections: [
+    [0, 12],
+    [12, 10],
+    [10, 7],
+    [10, 14],
+    [10, 13],
+    [13, 2],
+    [2, 6],
+    [12, 3],
+    [3, 4],
+    [4, 8],
+    [8, 11],
+    [11, 5],
+    [5, 9],
+    [3, 1],
+    [8, 1],
+    [0, 15],
+  ],
+};
+
+/* ------------------------------------------------------------------ */
+/*  17 stars                                                           */
+/* ------------------------------------------------------------------ */
+
+const HYDRA: ConstellationFigure = {
+  name: "Hydra",
+  stars: [
+    { name: "ζ Hya", raH: 8.9232, decDeg: 5.95, spectralClass: "G", magnitude: 3.11 },
+    { name: "ε Hya", raH: 8.7796, decDeg: 6.42, spectralClass: "G", magnitude: 3.38 },
+    { name: "η Hya", raH: 8.7204, decDeg: 3.4, spectralClass: "B", magnitude: 4.3 },
+    { name: "δ Hya", raH: 8.6276, decDeg: 5.7, spectralClass: "A", magnitude: 4.14 },
+    { name: "σ Hya", raH: 8.646, decDeg: 3.34, spectralClass: "K", magnitude: 4.45 },
+    { name: "ρ Hya", raH: 8.8072, decDeg: 5.84, spectralClass: "A", magnitude: 4.35 },
+    { name: "θ Hya", raH: 9.2394, decDeg: 2.32, spectralClass: "B", magnitude: 3.89 },
+    { name: "ι Hya", raH: 9.6643, decDeg: -1.14, spectralClass: "K", magnitude: 3.9 },
+    { name: "Alphard (α Hya)", raH: 9.4598, decDeg: -8.66, spectralClass: "K", magnitude: 1.99 },
+    { name: "λ Hya", raH: 10.1765, decDeg: -12.35, spectralClass: "K", magnitude: 3.61 },
+    { name: "μ Hya", raH: 10.4349, decDeg: -16.84, spectralClass: "K", magnitude: 3.83 },
+    { name: "ν Hya", raH: 10.8271, decDeg: -16.19, spectralClass: "K", magnitude: 3.11 },
+    { name: "ξ Hya", raH: 11.5501, decDeg: -31.86, spectralClass: "G", magnitude: 3.54 },
+    { name: "β Hya", raH: 11.8818, decDeg: -33.91, spectralClass: "A", magnitude: 4.29 },
+    { name: "γ Hya", raH: 13.3153, decDeg: -23.17, spectralClass: "G", magnitude: 2.99 },
+    { name: "π Hya", raH: 14.1062, decDeg: -26.68, spectralClass: "K", magnitude: 3.25 },
+    { name: "τ² Hya", raH: 9.533, decDeg: -1.18, spectralClass: "A", magnitude: 4.54 },
+  ],
+  // The snake's head ring, then the long body down to the last coil.
+  connections: [
+    [0, 1],
+    [1, 2],
+    [2, 3],
+    [3, 4],
+    [4, 2],
+    [2, 5],
+    [5, 1],
+    [0, 6],
+    [6, 7],
+    [7, 8],
+    [8, 9],
+    [9, 10],
+    [10, 11],
+    [11, 12],
+    [12, 13],
+    [13, 14],
+    [14, 15],
+    [7, 16],
+    [16, 8],
+  ],
+};
+
+/* ------------------------------------------------------------------ */
+/*  18 stars                                                           */
+/* ------------------------------------------------------------------ */
+
+const CENTAURUS: ConstellationFigure = {
+  name: "Centaurus",
+  stars: [
+    { name: "δ Cen", raH: 12.1393, decDeg: -50.72, spectralClass: "B", magnitude: 2.58 },
+    { name: "ε Cen", raH: 13.6648, decDeg: -53.47, spectralClass: "B", magnitude: 2.29 },
+    { name: "ζ Cen", raH: 13.9257, decDeg: -47.29, spectralClass: "B", magnitude: 2.55 },
+    { name: "Muhlifain (γ Cen)", raH: 12.692, decDeg: -48.96, spectralClass: "A", magnitude: 2.2 },
+    { name: "τ Cen", raH: 12.6284, decDeg: -48.54, spectralClass: "A", magnitude: 3.85 },
+    { name: "Menkent (θ Cen)", raH: 14.1115, decDeg: -36.37, spectralClass: "K", magnitude: 2.06 },
+    { name: "η Cen", raH: 14.5918, decDeg: -42.16, spectralClass: "B", magnitude: 2.33 },
+    { name: "ν Cen", raH: 13.8251, decDeg: -41.69, spectralClass: "B", magnitude: 3.41 },
+    { name: "φ Cen", raH: 13.9712, decDeg: -42.1, spectralClass: "B", magnitude: 3.83 },
+    { name: "κ Cen", raH: 14.986, decDeg: -42.1, spectralClass: "B", magnitude: 3.13 },
+    { name: "Hadar (β Cen)", raH: 14.0637, decDeg: -60.37, spectralClass: "B", magnitude: 0.61 },
+    { name: "Rigil Kentaurus (α Cen)", raH: 14.6614, decDeg: -60.84, spectralClass: "G", magnitude: -0.01 },
+    { name: "π Cen", raH: 11.3501, decDeg: -54.49, spectralClass: "B", magnitude: 3.9 },
+    { name: "λ Cen", raH: 11.5964, decDeg: -63.02, spectralClass: "B", magnitude: 3.11 },
+    { name: "μ Cen", raH: 13.8269, decDeg: -42.47, spectralClass: "B", magnitude: 3.47 },
+    { name: "ι Cen", raH: 13.3434, decDeg: -36.71, spectralClass: "A", magnitude: 2.75 },
+    { name: "σ Cen", raH: 12.4673, decDeg: -50.23, spectralClass: "B", magnitude: 3.91 },
+    { name: "υ¹ Cen", raH: 13.978, decDeg: -44.8, spectralClass: "B", magnitude: 3.87 },
+  ],
+  // The centaur's upper body running south-east through the torso to the feet.
+  connections: [
+    [0, 1],
+    [1, 2],
+    [2, 3],
+    [3, 4],
+    [4, 5],
+    [5, 6],
+    [6, 7],
+    [7, 8],
+    [8, 9],
+    [9, 11],
+    [11, 10],
+    [3, 12],
+    [12, 13],
+    [7, 14],
+    [7, 15],
+    [4, 16],
+    [8, 17],
+  ],
+};
+
+/* ------------------------------------------------------------------ */
+/*  19 stars                                                           */
+/* ------------------------------------------------------------------ */
+
+const CETUS: ConstellationFigure = {
+  name: "Cetus",
+  stars: [
+    { name: "Menkar (α Cet)", raH: 3.038, decDeg: 4.09, spectralClass: "M", magnitude: 2.54, isRedGiantAccent: true },
+    { name: "Kaffaljidhma (γ Cet)", raH: 2.7217, decDeg: 3.24, spectralClass: "A", magnitude: 3.47 },
+    { name: "δ Cet", raH: 2.658, decDeg: 0.33, spectralClass: "B", magnitude: 4.08 },
+    { name: "ξ² Cet", raH: 2.4693, decDeg: 8.46, spectralClass: "B", magnitude: 4.3 },
+    { name: "μ Cet", raH: 2.749, decDeg: 10.11, spectralClass: "F", magnitude: 4.27 },
+    { name: "λ Cet", raH: 2.9952, decDeg: 8.91, spectralClass: "B", magnitude: 4.71 },
+    { name: "ε Cet", raH: 2.6594, decDeg: -11.87, spectralClass: "F", magnitude: 4.83 },
+    { name: "π Cet", raH: 2.7354, decDeg: -13.86, spectralClass: "B", magnitude: 4.24 },
+    { name: "χ Cet", raH: 1.8264, decDeg: -10.69, spectralClass: "F", magnitude: 4.66 },
+    { name: "Baten Kaitos (ζ Cet)", raH: 1.8577, decDeg: -10.33, spectralClass: "K", magnitude: 3.74 },
+    { name: "Deneb Kaitos (β Cet)", raH: 0.7265, decDeg: -17.99, spectralClass: "K", magnitude: 2.04 },
+    { name: "Hydor (2 Cet)", raH: 0.0623, decDeg: -17.34, spectralClass: "B", magnitude: 4.55 },
+    { name: "Schemali (ι Cet)", raH: 0.3238, decDeg: -8.82, spectralClass: "K", magnitude: 3.56 },
+    { name: "Thanih (θ Cet)", raH: 1.4004, decDeg: -8.18, spectralClass: "K", magnitude: 3.6 },
+    { name: "τ Cet", raH: 1.7348, decDeg: -15.94, spectralClass: "G", magnitude: 3.49 },
+    { name: "υ Cet", raH: 2.0001, decDeg: -21.08, spectralClass: "K", magnitude: 3.99 },
+    { name: "Mira (ο Cet)", raH: 2.3224, decDeg: -2.98, spectralClass: "M", magnitude: 3.04, isRedGiantAccent: true },
+    { name: "Deneb Algenubi (η Cet)", raH: 1.1431, decDeg: -10.18, spectralClass: "K", magnitude: 3.46 },
+    { name: "ξ¹ Cet", raH: 2.2167, decDeg: 8.85, spectralClass: "G", magnitude: 4.36 },
+  ],
+  // The sea-monster: head at Menkar, down through the jaw to the knot of the tail.
+  connections: [
+    [0, 1],
+    [1, 2],
+    [2, 3],
+    [3, 4],
+    [4, 5],
+    [2, 6],
+    [6, 7],
+    [7, 8],
+    [8, 9],
+    [9, 10],
+    [10, 11],
+    [11, 12],
+    [12, 13],
+    [13, 14],
+    [14, 9],
+    [14, 15],
+    [15, 16],
+    [16, 17],
+    [17, 18],
+  ],
+};
+
+/* ------------------------------------------------------------------ */
+/*  20 stars                                                           */
+/* ------------------------------------------------------------------ */
+
+const ERIDANUS: ConstellationFigure = {
+  name: "Eridanus",
+  stars: [
+    { name: "Cursa (β Eri)", raH: 5.1308, decDeg: -5.09, spectralClass: "A", magnitude: 2.78 },
+    { name: "λ Eri", raH: 5.1524, decDeg: -8.75, spectralClass: "B", magnitude: 4.25 },
+    { name: "ν Eri", raH: 4.6053, decDeg: -3.35, spectralClass: "B", magnitude: 3.93 },
+    { name: "Sceptrum (53 Eri)", raH: 4.6364, decDeg: -14.3, spectralClass: "K", magnitude: 3.86 },
+    { name: "υ² Eri", raH: 4.5925, decDeg: -30.56, spectralClass: "G", magnitude: 3.81 },
+    { name: "υ⁴ Eri", raH: 4.2982, decDeg: -33.8, spectralClass: "B", magnitude: 3.55 },
+    { name: "Beid (ο¹ Eri)", raH: 4.1978, decDeg: -6.84, spectralClass: "F", magnitude: 4.04 },
+    { name: "ε Eri", raH: 3.549, decDeg: -9.46, spectralClass: "K", magnitude: 3.72 },
+    { name: "Rana (δ Eri)", raH: 3.7208, decDeg: -9.77, spectralClass: "K", magnitude: 3.52 },
+    { name: "Zaurak (γ Eri)", raH: 3.9671, decDeg: -13.51, spectralClass: "M", magnitude: 2.97, isRedGiantAccent: true },
+    { name: "τ⁶ Eri", raH: 3.7808, decDeg: -23.25, spectralClass: "F", magnitude: 4.22 },
+    { name: "τ³ Eri", raH: 3.0399, decDeg: -23.62, spectralClass: "A", magnitude: 4.08 },
+    { name: "τ⁴ Eri", raH: 3.3253, decDeg: -21.76, spectralClass: "M", magnitude: 3.7, isRedGiantAccent: true },
+    { name: "Azha (η Eri)", raH: 2.9404, decDeg: -8.9, spectralClass: "K", magnitude: 3.89 },
+    { name: "Acamar (θ¹ Eri)", raH: 2.971, decDeg: -40.3, spectralClass: "A", magnitude: 2.88 },
+    { name: "ι Eri", raH: 2.6778, decDeg: -39.86, spectralClass: "K", magnitude: 4.11 },
+    { name: "κ Eri", raH: 2.4498, decDeg: -47.7, spectralClass: "B", magnitude: 4.24 },
+    { name: "φ Eri", raH: 2.2751, decDeg: -51.51, spectralClass: "B", magnitude: 3.56 },
+    { name: "χ Eri", raH: 1.9325, decDeg: -51.61, spectralClass: "G", magnitude: 3.69 },
+    { name: "Achernar (α Eri)", raH: 1.6285, decDeg: -57.24, spectralClass: "B", magnitude: 0.45 },
+  ],
+  // The river meandering from Cursa at the source down to Achernar at the mouth.
+  connections: [
+    [0, 1],
+    [1, 2],
+    [2, 3],
+    [3, 4],
+    [4, 5],
+    [0, 6],
+    [6, 7],
+    [7, 8],
+    [8, 9],
+    [8, 10],
+    [10, 11],
+    [11, 12],
+    [7, 13],
+    [13, 14],
+    [14, 15],
+    [15, 16],
+    [16, 17],
+    [17, 18],
+    [18, 19],
+  ],
+};
+
 /**
  * Every figure a course can draw, ascending by star count.
  *
@@ -649,8 +972,15 @@ export const CONSTELLATION_FIGURES: readonly ConstellationFigure[] = [
   LEO,
   GEMINI,
   TAURUS,
+  OPHIUCHUS,
   SCORPIUS,
   DRACO,
+  HERCULES,
+  VIRGO,
+  HYDRA,
+  CENTAURUS,
+  CETUS,
+  ERIDANUS,
 ];
 
 /** How many stars a figure draws. Every catalogue member is drawn. */
