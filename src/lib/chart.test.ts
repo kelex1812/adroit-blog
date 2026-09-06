@@ -23,10 +23,12 @@ import {
 } from "@/components/Constellations/chart/chart-figures";
 import {
   CONSTELLATION_FIGURES,
+  figureByName,
   projectFigure,
 } from "@/components/Constellations/chart/figure-catalog";
 import {
   assignFigures,
+  FIGURE_PINS,
   lessonsPerStar,
 } from "@/components/Constellations/chart/figure-assignment";
 import type {
@@ -405,15 +407,13 @@ describe("buildChartFigures", () => {
       expect(f.figureName, `${f.seriesSlug} got no figure`).not.toBeNull();
       expect(f.stars.length).toBeGreaterThan(0);
     }
-    // The three courses with an exact match in the catalog must get it.
+    // Real courses are pinned (the course→constellation contract): the figure is
+    // the one the course owns, regardless of what size-matching would pick.
     const bySlug = new Map(figures.map((f) => [f.seriesSlug, f]));
-    for (const slug of [
-      "hermes-consultant",
-      "hermes-consultant-intermediate",
-      "hermes-consultant-advanced",
-    ]) {
+    for (const [slug] of real) {
       const f = bySlug.get(slug)!;
-      expect(f.stars.length, `${slug} lost its exact fit`).toBe(f.curriculumLessons);
+      expect(f.figureName, `${slug} lost its pin`).toBe(FIGURE_PINS[slug]);
+      expect(f.stars.length).toBe(figureByName(FIGURE_PINS[slug]!)!.stars.length);
     }
   });
 
@@ -495,6 +495,88 @@ describe("assignFigures", () => {
     const m = assignFigures(many);
     expect(m.size).toBe(CONSTELLATION_FIGURES.length);
     expect(new Set([...m.values()].map((f) => f.name)).size).toBe(m.size);
+  });
+});
+
+/*
+ * The course→constellation contract (baked in from Phase 4): every real course
+ * is defined by exactly one constellation, exclusive to that course, and the
+ * on-course tracker `/learn/[series]` and the whole-sky profile must resolve to
+ * the SAME figure. Before pins, the course page ran an isolated size-match that
+ * ignored the rest of the sky and could hand a course a figure the profile had
+ * already given to another course.
+ */
+describe("course → constellation pins (exclusivity + surface consistency)", () => {
+  // Real courses (slug, final curriculum). Source of truth mirrors the
+  // scheduler counts in learn-curriculum.test.ts.
+  const REAL_COURSES: ReadonlyArray<readonly [string, number]> = [
+    ["salesforce-architect", 90],
+    ["agentic-ai", 90],
+    ["omni-studio-cert", 46],
+    ["ai-at-work", 30],
+    ["hermes-consultant", 30],
+    ["hermes-consultant-intermediate", 25],
+    ["hermes-consultant-advanced", 20],
+  ];
+
+  it("pins every real course, so none can silently drift to another figure", () => {
+    for (const [slug] of REAL_COURSES) {
+      expect(
+        FIGURE_PINS[slug],
+        `${slug} must be pinned in FIGURE_PINS — every course owns exactly one constellation`,
+      ).toBeTypeOf("string");
+    }
+  });
+
+  it("names only constellations that exist in the catalog", () => {
+    for (const name of Object.values(FIGURE_PINS)) {
+      expect(figureByName(name), `pin "${name}" is not an authorable figure`).not.toBeNull();
+    }
+  });
+
+  it("never pins two courses to the same constellation (exclusivity)", () => {
+    const names = Object.values(FIGURE_PINS);
+    expect(new Set(names).size).toBe(names.length);
+  });
+
+  it("every catalog course resolves to its pinned figure, never another course's", () => {
+    const map = assignFigures(
+      REAL_COURSES.map(([slug, c]) => ({ seriesSlug: slug, curriculumLessons: c })),
+    );
+    for (const [slug] of REAL_COURSES) {
+      expect(map.get(slug)!.name, `${slug} did not keep its pin`).toBe(FIGURE_PINS[slug]);
+    }
+  });
+
+  /*
+   * The regression this fixes: the on-course tracker uses `buildChartFigure`
+   * (one course, isolated assign) while the profile uses `buildChartFigures`
+   * (whole sky, claiming figures). Without pins these could disagree. With the
+   * contract, both must give every real course the same constellation.
+   */
+  it("makes the course page and the profile agree on every course's constellation", () => {
+    const sky: ProfileSky = {
+      stats: { streakDays: 0, longestStreakDays: 0, rank: null, coursesCompleted: 0, tracksCompleted: 0 },
+      constellations: REAL_COURSES.map(([slug, n]) =>
+        constellation({ seriesSlug: slug, curriculumLessons: n, totalStars: n }),
+      ),
+      chronicle: [],
+      isGuest: false,
+    };
+    const profile = buildChartFigures(sky);
+
+    for (const [slug, n] of REAL_COURSES) {
+      const fromProfile = profile.find((f) => f.seriesSlug === slug)!.figureName;
+      // The course page's path: a single course handed to buildChartFigure.
+      const fromCoursePage = buildChartFigure(
+        constellation({ seriesSlug: slug, curriculumLessons: n, totalStars: n }),
+      ).figureName;
+      expect(
+        fromCoursePage,
+        `${slug}: course page resolved "${fromCoursePage}" but the profile shows "${fromProfile}"`,
+      ).toBe(fromProfile);
+      expect(fromCoursePage, `${slug} must be its pinned figure`).toBe(FIGURE_PINS[slug]);
+    }
   });
 });
 

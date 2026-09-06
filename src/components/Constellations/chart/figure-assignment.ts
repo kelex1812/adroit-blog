@@ -25,13 +25,31 @@ export interface AssignableCourse {
 /**
  * Courses pinned to a specific constellation, overriding size matching.
  *
- * Empty by design. Size matching is the rule; a pin is the escape hatch for a
- * course whose figure has to be a particular one — an editorial call, or holding
- * a figure stable that automatic assignment would otherwise move. Pinning is
- * also the only way to *guarantee* a course keeps its figure forever, since the
- * pool is shared (see `assignFigures`).
+ * Pinning is the **single source of truth** for "which constellation a course
+ * draws," and it is exclusive: a pinned figure is claimed and no other course
+ * can take it. This is what makes the on-course tracker at `/learn/[series]`
+ * and the whole-sky profile always agree on a course's constellation — before
+ * pins, the course page ran an *isolated* size-match (`buildChartFigure` on one
+ * course) that ignored the rest of the sky, so a course could quietly draw a
+ * figure the profile had already given to a different course. With every real
+ * course pinned, both surfaces resolve to the same figure.
+ *
+ * Each course is defined by exactly one constellation, and that constellation is
+ * not used by anything else (`assignFigures` enforces the claim). This is the
+ * editorial contract: a course owns its constellation. Adding a new course means
+ * pinning it to an unused constellation (Daily Planet picks); the guard test in
+ * `chart.test.ts` fails CI if a real course goes unpinned or two courses share a
+ * pin.
  */
-export const FIGURE_PINS: Readonly<Record<string, string>> = {};
+export const FIGURE_PINS: Readonly<Record<string, string>> = {
+  "salesforce-architect": "Centaurus",
+  "agentic-ai": "Cetus",
+  "omni-studio-cert": "Hydra",
+  "ai-at-work": "Virgo",
+  "hermes-consultant": "Hercules",
+  "hermes-consultant-intermediate": "Draco",
+  "hermes-consultant-advanced": "Eridanus",
+};
 
 /** Deterministic processing order: biggest course first, then by slug. */
 function byDescendingSize(a: AssignableCourse, b: AssignableCourse): number {
