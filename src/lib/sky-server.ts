@@ -106,6 +106,7 @@ export async function loadSeriesConstellation(input: {
     name: input.name,
     gradient: input.gradient,
     lessonSlugs: slugs,
+    curriculumLessons: getSeriesBySlug(input.seriesSlug)?.curriculumLessons,
     lessonLabels,
     completedSlugs: input.completedSlugs ?? new Set<string>(),
   });
@@ -216,6 +217,7 @@ export async function loadProfileSky(
         name: card.name,
         gradient: card.gradient,
         lessonSlugs: slugs,
+        curriculumLessons: getSeriesBySlug(card.slug)?.curriculumLessons,
         lessonLabels: lessonLabels,
         completedSlugs,
       });

@@ -34,17 +34,21 @@ export interface CourseContentDisplay {
   gradient: string;
   lessonCount: number;
   totalLessons: number;
+  /** Final planned lesson count; falls back to `totalLessons` when undeclared. */
+  curriculumLessons: number;
 }
 
 /** Resolve content display for a series slug (fallbacks for missing content). */
 export function getContentDisplay(slug: string): CourseContentDisplay {
   const content = getSeriesBySlug(slug);
+  const totalLessons = content?.totalLessons ?? 0;
   return {
     name: content?.name ?? humanize(slug),
     description: content?.description ?? "",
     gradient: content?.gradient ?? "from-navy to-navy-light",
     lessonCount: content?.lessons.length ?? 0,
-    totalLessons: content?.totalLessons ?? 0,
+    totalLessons,
+    curriculumLessons: content?.curriculumLessons ?? totalLessons,
   };
 }
 
@@ -102,6 +106,7 @@ export function buildCatalogCourse(
     gradient: display.gradient,
     lessonCount: display.lessonCount,
     totalLessons: display.totalLessons,
+    curriculumLessons: display.curriculumLessons,
     visible: true,
     canAccess,
   };
@@ -199,6 +204,7 @@ export function toLearnHubCards(
     gradient: c.gradient,
     lessonCount: c.lessonCount,
     totalLessons: c.totalLessons,
+    curriculumLessons: c.curriculumLessons,
     lessonSlugs: opts.includeLessonSlugs
       ? getLessonsForSeries(c.course.series_slug).map((l) => l.slug)
       : [],

@@ -8,7 +8,7 @@ export default function robots(): MetadataRoute.Robots {
       // /preview/ holds auth-gated drafts — never indexable (draft-state).
       // /admin/ is the gated course-admin surface — disallow crawlers
       // (defense-in-depth; the layout also emits noindex, t_d2dfc405).
-      disallow: ['/api/', '/preview/', '/admin/'],
+      disallow: ['/api/', '/preview/', '/admin/', '/lab/'],
     },
     sitemap: 'https://adroit.io/sitemap.xml',
   };

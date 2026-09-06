@@ -1,5 +1,7 @@
 # System Architecture — Immersive Three.js Constellations (course tracker + profile galaxy)
 
+> **SUPERSEDED (2026-09-04):** Visual direction for the constellation 3D layer is now **Hubble Field** (Rev 3). See `docs/hubble-field-north-star.md`, `docs/requirements-hubble-field.md`, and `docs/arch-hubble-field.md`. This document is retained as historical record of the celestial-immersion v1.1.0 architecture. Do not implement from this file.
+
 **Tenant:** adroit-blog · **Release:** celestial-immersion v1.1.0
 **Architect:** brainiac (task t_58866c93) · **Pipeline stage → design (kara) → build (steel), gated by this card**
 **Inputs:** kara's FRESH clean-slate concept (t_66ab1383) — `docs/design-immersive-3d-concept/` (concept brief + design-tokens-3d.css + 4 moodboards). **This arch targets kara's REV 2 tokens, NOT the stale rejected Rev 1 design.**

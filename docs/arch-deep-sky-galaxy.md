@@ -1,5 +1,7 @@
 # System Architecture — deep-sky Profile Galaxy Navigation ("Sky Roads")
 
+> **SUPERSEDED (2026-09-04):** Visual direction for the constellation 3D layer is now **Hubble Field** (Rev 3). See `docs/hubble-field-north-star.md`, `docs/requirements-hubble-field.md`, and `docs/arch-hubble-field.md`. This document is retained as historical record of the Sky Roads (deep-sky v1.2.0) architecture. Do not implement from this file.
+
 **Tenant:** adroit-blog · **Release:** deep-sky v1.2.0
 **Architect:** brainiac (task t_2156deb1) · **Pipeline stage → build (steel, t_62a40095), gated by this card**
 **Inputs:** kara's approved clean-slate concept (t_ea789325) — `design/t_ea789325/` (direction-brief-sky-roads.md, component-spec-sky-roads.md, design-tokens-sky-roads.css, mockups). **This arch targets kara's FRESH "Sky Roads" concept tokens, NOT the stale rejected generic-space direction.**

@@ -9,6 +9,7 @@ const fullSeries: LearningSeries = {
   description: "A structured path to the Salesforce Architect certification.",
   gradient: "from-sky to-blue-600",
   totalLessons: 42,
+  curriculumLessons: 60,
   lessons: [
     {
       slug: "what-is-solution-architecture",
@@ -48,6 +49,7 @@ describe("toLearnCardSeries (guest payload hardening t_3dbf4826)", () => {
     expect(card.gradient).toBe("from-sky to-blue-600");
     expect(card.lessonCount).toBe(2);
     expect(card.totalLessons).toBe(42);
+    expect(card.curriculumLessons).toBe(60);
     // Content-derived series carry no org (ADR-207) — the hub page fills these
     // from the DB-backed CatalogCourse, so toLearnCardSeries leaves them null.
     expect(card.section).toBeNull();

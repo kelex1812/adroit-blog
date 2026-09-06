@@ -202,6 +202,32 @@ function buildSeries(seriesSlug, dir) {
   const sorted = sortLessonsByLessonNumber(lessons);
   const totalLessons = sorted.reduce((max, l) => Math.max(max, l.lesson), 0);
 
+  /*
+   * The curriculum's FINAL size, declared in series.json.
+   *
+   * `totalLessons` above is the highest lesson number that currently exists, so
+   * it grows every time a lesson lands. That is correct for "12 / 12 published"
+   * badges and it is what certificate eligibility gates on, so it must keep
+   * meaning exactly that. But anything that needs a *stable* size — the star
+   * chart picks a constellation whose star count matches the course — cannot use
+   * a number that moves daily.
+   *
+   * Falls back to `totalLessons` when undeclared, so a course without the field
+   * behaves exactly as before.
+   */
+  const declared = Number.parseInt(cfg.curriculumLessons, 10);
+  const curriculumLessons =
+    Number.isInteger(declared) && declared > 0
+      ? Math.max(declared, totalLessons)
+      : totalLessons;
+
+  if (Number.isInteger(declared) && declared > 0 && declared < totalLessons) {
+    console.warn(
+      `Warning: ${seriesSlug} declares curriculumLessons=${declared} but already ` +
+        `has ${totalLessons} lessons; using ${totalLessons}. Update series.json.`,
+    );
+  }
+
   return {
     slug: seriesSlug,
     name: cfg.name || known.name || humanize(seriesSlug),
@@ -213,6 +239,7 @@ function buildSeries(seriesSlug, dir) {
     gradient: cfg.gradient || known.gradient || FALLBACK_GRADIENT,
     lessons: sorted,
     totalLessons,
+    curriculumLessons,
   };
 }
 

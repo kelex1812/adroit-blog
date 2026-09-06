@@ -32,6 +32,7 @@ export function PathConstellation({
         name: series.name,
         gradient: series.gradient,
         totalStars: series.totalLessons,
+        curriculumLessons: series.curriculumLessons ?? series.totalLessons,
         litStars: 0,
         complete: false,
         stars: Array.from({ length: series.totalLessons }, (_, i) => ({

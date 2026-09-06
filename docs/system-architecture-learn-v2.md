@@ -17,7 +17,8 @@ course profile become **data** (DB rows), and one **unified `CatalogCourse` cont
 every surface. It replaces the `LearnFilters.bucketOf()` regex + `series.json` `group`/`subgroup`
 split with real tables (`catalog_sections`, `catalog_groups`) and moves **all** org + profile
 fields out of `series.json` into `courses`. `series.json` keeps only pure display
-(name/description/gradient) — the content team's contribution. A `completion_events` append-only
+(name/description/gradient, plus optional `curriculumLessons` for a stable
+course size) — the content team's contribution. A `completion_events` append-only
 log is the foundation for the V2 Constellations + Chronicle achievement system.
 
 **Non-negotiable (plan):** organization as data — adding a new cert vendor or track is **one DB
@@ -31,7 +32,7 @@ Planet and Kanban never collide in git.
 | `courses` table (008) | lifecycle + access model | extended with 11 new org/profile columns (009) |
 | `src/lib/access.ts` seam | the authoritative gate | loader extended for org rows; feeds the new catalog builder |
 | `LearnFilters.bucketOf()` | — | **removed** — bucketing from `catalog_sections`/`catalog_groups` |
-| `series.json` | name/description/gradient | `group`/`subgroup` removed (moved to DB) |
+| `series.json` | name/description/gradient + optional `curriculumLessons` | `group`/`subgroup` removed (moved to DB) |
 | `src/data/learn.ts` (build output) | content display + lesson counts | no org fields read from series.json |
 | `lesson_completion` (001) | current-state store (SeriesProgress/cert) | unchanged; `completion_events` added alongside |
 
@@ -108,6 +109,7 @@ interface CatalogCourse {
   nextCourseId: string | null;       // derived next (ADR-212)
   name: string; description: string; gradient: string;  // from series.json
   lessonCount: number; totalLessons: number;            // from lesson files
+  curriculumLessons: number;                            // series.json, else totalLessons
   visible: boolean; canAccess: boolean;                 // from access seam
 }
 ```

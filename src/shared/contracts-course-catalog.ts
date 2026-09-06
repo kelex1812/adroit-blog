@@ -184,6 +184,8 @@ export interface CatalogCourseView {
   /** Published lesson count (from build data). */
   lessonCount: number;
   totalLessons: number;
+  /** Final planned lesson count; equals `totalLessons` when undeclared. */
+  curriculumLessons: number;
   /** User's access on this card (drives lock vs click-through). */
   canAccess: boolean;
 }
@@ -375,6 +377,11 @@ export interface CatalogCourse {
   lessonCount: number;
   /** Total (incl. unpublished) lesson count. */
   totalLessons: number;
+  /**
+   * The curriculum's final planned lesson count (`series.json`).
+   * Equals `totalLessons` when the course has not declared a finish line.
+   */
+  curriculumLessons: number;
   /* ---- access (from the access seam) ---- */
   visible: boolean;
   canAccess: boolean;

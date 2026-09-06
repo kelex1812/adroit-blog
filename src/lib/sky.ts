@@ -33,6 +33,12 @@ export interface ConstellationBuildInput {
   gradient: string;
   /** ALL planned lesson slugs in canonical order (getSeriesLessonSlugs). */
   lessonSlugs: string[];
+  /**
+   * The curriculum's final lesson count. Omit and it falls back to the number of
+   * slugs supplied, which is what a course that has not declared a final size
+   * has always effectively used.
+   */
+  curriculumLessons?: number;
   /** slug → display label (lesson title). Falls back to the slug. */
   lessonLabels?: Record<string, string>;
   /** The set of completed lesson slugs (from completion events / DB). */
@@ -93,6 +99,8 @@ export function buildConstellation(
     name: input.name,
     gradient: input.gradient,
     totalStars: stars.length,
+    // Never below what already exists; a stale declaration must not shrink a course.
+    curriculumLessons: Math.max(input.curriculumLessons ?? 0, stars.length),
     litStars,
     complete: stars.length > 0 && litStars === stars.length,
     stars,

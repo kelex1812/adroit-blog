@@ -167,6 +167,17 @@ export interface ConstellationState {
   gradient: string;
   /** Total planned stars (all lessons, incl. unpublished). */
   totalStars: number;
+  /**
+   * The curriculum's final lesson count (`series.json` → `curriculumLessons`).
+   *
+   * `totalStars` counts the lessons that exist today and grows as they land.
+   * This is the number the finished course will have, so it is stable: the star
+   * chart sizes a course's constellation from it, and a figure chosen for a
+   * 40-lesson curriculum does not change shape when lesson 13 ships.
+   *
+   * Equals `totalStars` when the course has not declared a final size.
+   */
+  curriculumLessons: number;
   /** Lit (completed) stars. */
   litStars: number;
   /** True when every star is lit (course complete). */

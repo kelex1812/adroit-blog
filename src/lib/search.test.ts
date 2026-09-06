@@ -25,6 +25,7 @@ const series = (slug: string, name: string): LearningSeries => ({
   gradient: "from-sky to-blue-600",
   lessons: [],
   totalLessons: 5,
+  curriculumLessons: 5,
 });
 
 const lesson = (
