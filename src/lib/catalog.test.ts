@@ -194,8 +194,11 @@ describe("toLearnHubCards", () => {
     expect(card.level).toBe(2);
     expect(card.difficulty).toBe("Advanced");
     expect(card.lessonSlugs).toEqual([]);
-    // hermes-consultant has no declared finish line, so this equals totalLessons.
-    expect(card.curriculumLessons).toBe(card.totalLessons);
+    // hermes-consultant declares curriculumLessons=30 (final count) in series.json,
+    // so it is NOT equal to totalLessons (highest published, currently lower).
+    // This is what stops the constellation from reshuffling as lessons land daily.
+    expect(card.curriculumLessons).toBe(30);
+    expect(card.curriculumLessons).toBeGreaterThan(card.totalLessons);
     expect(card.curriculumLessons).toBeGreaterThan(0);
     expect(card).not.toHaveProperty("course");
     expect(card).not.toHaveProperty("lessons");
