@@ -8,6 +8,887 @@ import { LearnLesson, LearningSeries } from "./types";
 /** All series, sorted by newest lesson date DESC (ties → slug asc). Empty dirs included with lessons: []. */
 export const learnSeries: LearningSeries[] = [
   {
+    "slug": "agentic-ai",
+    "name": "Agentic AI Implementation Path",
+    "description": "From single-agent prototypes to multi-agent orchestration, a practitioner's curriculum for shipping agentic systems.",
+    "gradient": "from-amber to-yellow-600",
+    "lessons": [
+      {
+        "slug": "what-is-an-agent",
+        "title": "Lesson 1: What an Agent Actually Is (LLMs vs Rules vs Workflows)",
+        "series": "agentic-ai",
+        "lesson": 1,
+        "excerpt": "The definitions that matter for the whole track: what separates a rules system, an LLM workflow, and a true agent, plus how to tell which one you're actually building.",
+        "date": "August 04, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "9 min read",
+        "tags": [
+          "LLMs",
+          "AI Agents",
+          "Salesforce"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "how-llms-work-tokens-context-inference",
+        "title": "Lesson 2: How LLMs Work for Implementers: Tokens, Context, Inference, Temperature",
+        "series": "agentic-ai",
+        "lesson": 2,
+        "excerpt": "The four knobs that decide every LLM bill, latency budget, and reliability call: what tokens actually are, how the context window constrains agents, how inference really runs, and what temperature does and doesn't do.",
+        "date": "August 05, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "9 min read",
+        "tags": [
+          "LLMs",
+          "AI Agents",
+          "Salesforce"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "the-agent-loop-perceive-reason-act-observe",
+        "title": "Lesson 3: The Agent Loop: Perceive, Reason, Act, Observe, and Where Your Code Lives",
+        "series": "agentic-ai",
+        "lesson": 3,
+        "excerpt": "The one while loop that turns a language model into an agent: the five stages of the loop, the pseudocode that runs underneath every framework, and exactly which parts of it are your code versus the runtime's.",
+        "date": "August 06, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "9 min read",
+        "tags": [
+          "LLMs",
+          "AI Agents",
+          "Salesforce"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "prompting-for-agents-system-prompts-few-shot",
+        "title": "Lesson 4: Prompting for Agents: System Prompts, Few-Shot, and When Prompts Aren't Enough",
+        "series": "agentic-ai",
+        "lesson": 4,
+        "excerpt": "In an agent, the prompt isn't a single message; it's the constitution the loop obeys on every iteration. The anatomy of a production system prompt, how few-shot examples actually work, and the escalation ladder for when words stop being enough.",
+        "date": "August 07, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "10 min read",
+        "tags": [
+          "LLMs",
+          "AI Agents",
+          "Prompt Engineering"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "tokens-context-cost-engineering-agents",
+        "title": "Lesson 5: Tokens, Context Windows, and Cost Engineering for Agent Workloads",
+        "series": "agentic-ai",
+        "lesson": 5,
+        "excerpt": "Agents don't just use tokens; they burn them: roughly 4x a chat conversation, 15x for multi-agent. The four levers that control the bill (budgeting, compression, caching, and model routing), with the math worked out on a real 10-agent pipeline.",
+        "date": "August 08, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "9 min read",
+        "tags": [
+          "LLMs",
+          "AI Agents",
+          "Performance"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "choosing-models-providers-routing-fallbacks",
+        "title": "Lesson 6: Choosing Models & Providers: Capability Tiers, Routing, and Fallbacks",
+        "series": "agentic-ai",
+        "lesson": 6,
+        "excerpt": "The biggest agent-ops mistake is picking one 'best' model and pointing everything at it. This lesson builds the three-tier capability model, the three jobs of a router, and the fallback chains that keep agents alive when providers fail.",
+        "date": "August 09, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "8 min read",
+        "tags": [
+          "LLMs",
+          "AI Agents"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "structured-output-json-mode-function-calling-tool-schemas",
+        "title": "Lesson 7: Structured Output: JSON Mode, Function Calling, and Tool Schemas Done Right",
+        "series": "agentic-ai",
+        "lesson": 7,
+        "excerpt": "An agent is only as reliable as its data contracts. This lesson builds the structured-output ladder (JSON mode, Structured Outputs, function calling) and the tool-schema practices that keep tool calls valid, parseable, and safe in production.",
+        "date": "August 10, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "8 min read",
+        "tags": [
+          "LLMs",
+          "AI Agents"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "tool-design-schemas-error-handling-retries",
+        "title": "Lesson 8: Designing Tools That Fail Well: Schemas, Error Handling, and Retries",
+        "series": "agentic-ai",
+        "lesson": 8,
+        "excerpt": "A tool is an operational contract, not an API wrapper. This lesson covers the five-part anatomy of a production tool, structured error schemas the model can act on, and retry discipline (backoff with jitter, idempotency keys, and retry budgets), so agents survive failures without corrupting state.",
+        "date": "August 11, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "9 min read",
+        "tags": [
+          "LLMs",
+          "AI Agents"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "function-calling-parity-across-providers",
+        "title": "Lesson 9: Function-Calling Parity Across OpenAI, Azure, Anthropic, Gemini, and Local Models",
+        "series": "agentic-ai",
+        "lesson": 9,
+        "excerpt": "Every frontier provider exposes function calling, but none uses the same wire format. This lesson maps the request and response shapes across OpenAI, Azure, Anthropic, and Gemini, then shows why local models (llama.cpp) are the parity wildcard and how one internal schema plus thin per-provider adapters keeps an agent portable.",
+        "date": "August 12, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "9 min read",
+        "tags": [
+          "LLMs",
+          "AI Agents"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "rag-fundamentals-chunking-embeddings-retrieval",
+        "title": "Lesson 10: RAG Fundamentals: Chunking, Embeddings, Retrieval, and Why RAG Is the First Enterprise Pattern",
+        "series": "agentic-ai",
+        "lesson": 10,
+        "excerpt": "The pattern that grounds LLMs in your own knowledge: what RAG is and where it came from, why you chunk documents instead of feeding them whole, what embeddings actually are, how retrieval ranks chunks, and why RAG became the first pattern enterprises shipped.",
+        "date": "August 13, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "10 min read",
+        "tags": [
+          "LLMs",
+          "AI Agents",
+          "RAG"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "embeddings-models-similarity-when-they-fail",
+        "title": "Lesson 11: Embeddings: Models, Similarity, and When They Fail",
+        "series": "agentic-ai",
+        "lesson": 11,
+        "excerpt": "What an embedding actually is, how the popular models differ, why cosine similarity works, and the failure modes that make pure vector search miss the answer: rare terms, domain jargon, short queries, and model mismatch.",
+        "date": "August 14, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "10 min read",
+        "tags": [
+          "LLMs",
+          "AI Agents",
+          "RAG"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "vector-databases-pinecone-pgvector-milvus-weaviate",
+        "title": "Lesson 12: Vector Databases: Pinecone, pgvector, Milvus, Weaviate, and Choosing for Your Workload",
+        "series": "agentic-ai",
+        "lesson": 12,
+        "excerpt": "What a vector database actually does, why you need one instead of scanning vectors in memory, the approximate nearest neighbor tradeoff you are making, and how to choose between Pinecone, pgvector, Milvus, and Weaviate for your workload and your team.",
+        "date": "August 15, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "10 min read",
+        "tags": [
+          "LLMs",
+          "AI Agents",
+          "RAG"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "rag-quality-reranking-hybrid-search-metadata-filtering-freshness",
+        "title": "Lesson 13: RAG Quality: Reranking, Hybrid Search, Metadata Filtering, and Freshness",
+        "series": "agentic-ai",
+        "lesson": 13,
+        "excerpt": "The four levers that turn a RAG demo into a system you can trust: reranking to fix top-k precision, hybrid search so exact terms still win, metadata filtering so access control and scope survive retrieval, and freshness so the answers do not go stale.",
+        "date": "August 16, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "12 min read",
+        "tags": [
+          "LLMs",
+          "AI Agents",
+          "RAG"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "agent-memory-short-term-long-term-episodic-semantic",
+        "title": "Lesson 14: Agent Memory: Short-Term vs Long-Term, Episodic vs Semantic",
+        "series": "agentic-ai",
+        "lesson": 14,
+        "excerpt": "An agent with no memory answers the same question the same way forever. This lesson maps the memory taxonomy production systems borrow from cognitive science: the context window as working memory, long-term stores for persistence, episodic memory for what happened, semantic memory for what you know, and the pipeline that turns raw interactions into retrievable knowledge.",
+        "date": "August 17, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "10 min read",
+        "tags": [
+          "LLMs",
+          "AI Agents"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "context-engineering-what-to-include-trimming-summarization-windowing",
+        "title": "Lesson 15: Context Engineering: What to Include, Trim, Summarize, and Window",
+        "series": "agentic-ai",
+        "lesson": 15,
+        "excerpt": "The context window is finite and filling it sloppily degrades your agent before it ever fails. This lesson covers the four ways to keep a long-running loop coherent: deciding what to include, trimming what stops earning its keep, summarizing what still matters, and windowing what you can drop. With real numbers from JetBrains on which approach actually pays.",
+        "date": "August 18, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "10 min read",
+        "tags": [
+          "LLMs",
+          "AI Agents",
+          "Prompt Engineering"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "multi-turn-agents-sessions-state-resuming-conversations",
+        "title": "Lesson 16: Multi-Turn Agents: Sessions, State, and Resuming Conversations",
+        "series": "agentic-ai",
+        "lesson": 16,
+        "excerpt": "An LLM is stateless: every call forgets the one before it, so multi-turn behavior has to be built, not assumed. This lesson defines the session, the state it carries, and the checkpointing that lets an agent resume where it left off: the difference between a thread and a durable store, why the state schema is the real design, and how production systems survive restarts and long conversations.",
+        "date": "August 19, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "11 min read",
+        "tags": [
+          "LLMs",
+          "AI Agents",
+          "Salesforce"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "guardrails-prompt-injection-system-boundaries-input-validation",
+        "title": "Lesson 17: Guardrails I: Prompt Injection Defense, System Boundaries, and Input Validation",
+        "series": "agentic-ai",
+        "lesson": 17,
+        "excerpt": "Prompt injection tops the OWASP list of LLM risks for a reason: an agent that can act turns a misled model into an unauthorized action. This lesson separates direct from indirect injection, explains why input filters and prompt hardening alone will not stop it, and argues that the durable defense lives at the system boundary: least-privilege tools, hard containment on what the agent can reach, and human approval for high-impact actions.",
+        "date": "August 20, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "11 min read",
+        "tags": [
+          "LLMs",
+          "AI Agents",
+          "Security"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "guardrails-output-validation-allowlists-pii-redaction",
+        "title": "Lesson 18: Guardrails II, Output Validation, Allowlists, PII Redaction, and Refusal Paths",
+        "series": "agentic-ai",
+        "lesson": 18,
+        "excerpt": "Input guardrails keep an attacker from pushing the agent past its boundary. Output guardrails keep the agent from pushing bad output out the other side: validation, allowlists, PII redaction, and refusal paths.",
+        "date": "August 21, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "13 min read",
+        "tags": [
+          "LLMs",
+          "AI Agents",
+          "Security"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "evaluation-evals-golden-datasets-llm-as-judge",
+        "title": "Lesson 19: Evaluation: Evals, Golden Datasets, LLM-as-Judge, and When It Lies",
+        "series": "agentic-ai",
+        "lesson": 19,
+        "excerpt": "An agent you cannot measure is an agent you cannot trust, and the moment a model changes you have no way to know what you traded away. This lesson walks the evaluation stack from the bottom up: the golden dataset that anchors everything, the classic metrics that break on open-ended output, the LLM-as-judge technique that replaces them, and the biases that make a judge lie, from position and verbosity preference to rating its own output too high and being misled by a confident wrong answer.",
+        "date": "August 22, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "14 min read",
+        "tags": [
+          "LLMs",
+          "AI Agents"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "observability-tracing-logging-langsmith-opentelemetry-replay",
+        "title": "Lesson 20: Observability, Tracing, Logging, and Replay for Agents",
+        "series": "agentic-ai",
+        "lesson": 20,
+        "excerpt": "An agent runs several model calls, tool invocations, and retrieval steps inside one request, and when it returns the wrong answer you have no idea which step caused it. This lesson builds observability from the bottom up: the trace that records every step as a span, the trace tree that shows how they connect, the OpenTelemetry gen_ai.* conventions that give the telemetry a standard shape, the structured logs that answer 'why' when a trace only shows 'what,' and the replay loop that turns a captured trace back into a repeatable bug you can fix and verify.",
+        "date": "August 23, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "15 min read",
+        "tags": [
+          "LLMs",
+          "AI Agents",
+          "Observability"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "agent-frameworks-overview-langchain-langgraph-crewai-openai-claude",
+        "title": "Lesson 21: Frameworks overview - LangChain, LangGraph, CrewAI, OpenAI Agents SDK, Claude Agent SDK",
+        "series": "agentic-ai",
+        "lesson": 21,
+        "excerpt": "By now you can build a single agent: a model, a loop, some tools. The hard part is deciding what holds the pieces together when the work grows. This lesson surveys the five frameworks you will actually meet in the wild, and it is honest about what each one is for. LangChain is an integration ecosystem. LangGraph is a stateful graph runtime for workflows that branch and loop. CrewAI is a role-based layer for teams of agents with jobs and backstories. The OpenAI Agents SDK is a deliberately tiny set of primitives with clean handoffs and guardrails. The Claude Agent SDK gives the agent a computer with built-in file, shell, and edit tools. You will learn the mental model behind each one, see the same small task written in two of them so the difference is concrete, and finish with a decision path for choosing a framework instead of trusting star counts.",
+        "date": "August 24, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "16 min read",
+        "tags": [
+          "LLMs",
+          "AI Agents",
+          "Architecture"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "agent-loop-by-hand-no-framework",
+        "title": "Lesson 22: Building Without a Framework: the Agent Loop by Hand in 100 Lines",
+        "series": "agentic-ai",
+        "lesson": 22,
+        "excerpt": "Lesson 21 ended on a quiet note: sometimes you don't need a framework at all. This lesson makes that concrete. You write the loop yourself, in roughly a hundred lines, with nothing but an LLM API and a while loop. You see the canonical agent loop in real code, you build a working agent with two tools, you learn the one ordering mistake that trips up every beginner, and you find out exactly where a hand-rolled loop runs out of room and a framework starts to earn its complexity.",
+        "date": "August 25, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "14 min read",
+        "tags": [
+          "LLMs",
+          "AI Agents",
+          "Architecture"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "agent-patterns-react-plan-execute-reflection-tool-loops",
+        "title": "Lesson 23: Agent Patterns: ReAct, Plan-and-Execute, Reflection, and Tool Loops",
+        "series": "agentic-ai",
+        "lesson": 23,
+        "excerpt": "Lesson 22 built the loop by hand. This lesson gives that loop its names. You learn the four patterns that dominate real agent work: ReAct (reason and act interleaved), plan-and-execute (plan first, then execute), reflection (evaluate and revise), and the tool loop they all run on, plus when each one earns its complexity.",
+        "date": "August 26, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "10 min read",
+        "tags": [
+          "LLMs",
+          "AI Agents",
+          "Architecture"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "multi-agent-systems-orchestrator-worker-supervisor-debate",
+        "title": "Lesson 24: Multi-Agent Systems: Orchestrator-Worker, Supervisor, and Debate",
+        "series": "agentic-ai",
+        "lesson": 24,
+        "excerpt": "Lesson 23 taught you the single-agent patterns. This lesson puts several agents in one system. You learn the three coordination shapes that dominate real multi-agent work: orchestrator-worker (a central agent splits and delegates), supervisor (a coordinator routes to specialized workers via handoffs), and debate (multiple instances argue toward a consensus), plus when each one earns its complexity and when one agent is still the right call.",
+        "date": "August 27, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "11 min read",
+        "tags": [
+          "LLMs",
+          "AI Agents"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "human-in-the-loop-approvals-interrupts-escalation-kill-switches",
+        "title": "Lesson 25: Human-in-the-Loop, Approvals, Interrupts, Escalation, and Kill Switches",
+        "series": "agentic-ai",
+        "lesson": 25,
+        "excerpt": "An agent that can act on its own against a system that matters needs a person in the loop. This lesson builds the control layer: approvals that gate a single risky action, interrupts that pause the whole run and resume it later, escalation that hands an unsafe decision to a human, and a kill switch that stops a runaway system before it does damage.",
+        "date": "August 28, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "14 min read",
+        "tags": [
+          "LLMs",
+          "AI Agents",
+          "Security"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "enterprise-deployment-serving-api-design-rate-limits-quotas",
+        "title": "Lesson 26: Enterprise Deployment, Serving, API Design, Rate Limits, and Quotas",
+        "series": "agentic-ai",
+        "lesson": 26,
+        "excerpt": "A working agent is a different thing from an agent many people can use. This lesson puts the three boundaries around it that make the difference: the serving layer that decides how much concurrent work the model can do, the API boundary that gives every consumer one stable interface, and the policy layer of rate limits and quotas that stops a single tenant from overwhelming the hardware or blowing the budget. It works through the numbers you need to size a deployment, and it shows how those three layers meet at the same number.",
+        "date": "August 29, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "16 min read",
+        "tags": [
+          "LLMs",
+          "AI Agents",
+          "Delivery"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "cost-control-caching-model-tiers-budget-caps-spend-dashboards",
+        "title": "Lesson 27: Cost Control, Caching, Model Tiers, Budget Caps, and Spend Dashboards",
+        "series": "agentic-ai",
+        "lesson": 27,
+        "excerpt": "A working agent is cheaper to build than to keep. Lesson 26 stopped a single tenant from blowing the monthly bill in an afternoon; this lesson turns the bill itself into a number you manage. It covers the three cost levers in order: caching so you never pay twice for the same answer, model tiers and routing so you only pay frontier prices when a task actually needs them, and budget caps with spend dashboards so a surprise bill becomes an early-warning system instead. A worked example runs the arithmetic on a real agent workload, and the Fortress angle shows a hybrid two-tier stack doing all three at once.",
+        "date": "August 30, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "15 min read",
+        "tags": [
+          "LLMs",
+          "AI Agents",
+          "Performance"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "security-auth-authorization-secrets-management-for-agents",
+        "title": "Lesson 28: Security: Authentication, Authorization, and Secrets Management for Agents",
+        "series": "agentic-ai",
+        "lesson": 28,
+        "excerpt": "An agent is not a user and not a plain service. It carries two identities at once, the person it acts for and the machine it runs as, and it reaches for credentials with every tool call it makes. This lesson separates the three systems that keep that under control: authentication proves who is acting, authorization decides what that actor may do, and secrets management keeps the credentials that prove identity short-lived, tightly scoped, and out of the model's context.",
+        "date": "August 31, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "11 min read",
+        "tags": [
+          "LLMs",
+          "AI Agents",
+          "Security"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "compliance-data-residency-audit-logging-retention",
+        "title": "Lesson 29: Compliance: Data Residency, Audit Logging, and Retention for AI Systems",
+        "series": "agentic-ai",
+        "lesson": 29,
+        "excerpt": "Security controls who can act. Compliance is the record of what that actor did with other people's data, and it lives in three separate controls. Data residency decides where the data is stored and processed and how it may cross borders. Audit logging keeps an immutable record of what happened, per action, so a regulator or an investigator can reconstruct it later. Retention puts a clock on how long you keep any of it. This lesson reads the EU AI Act's record-keeping article and GDPR's storage-limitation principle, then shows how a real agent pipeline turns its own event stream into an auditable trail.",
+        "date": "September 1, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "11 min read",
+        "tags": [
+          "LLMs",
+          "AI Agents",
+          "Security",
+          "Governance"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "mcp-model-context-protocol-intro-build-server",
+        "title": "Lesson 30: The Model Context Protocol (MCP): What It Is, Why It Matters, and How to Build a Server",
+        "series": "agentic-ai",
+        "lesson": 30,
+        "excerpt": "The Model Context Protocol (MCP) is an open standard that connects AI applications to the tools and data they act on. It attacks a problem every agent builder hits: bespoke integrations do not scale. Without a common protocol, each AI app wires itself to each tool with its own custom connector, and the number of connectors grows as the product of apps times tools. MCP breaks that pattern by defining one client-server protocol, so an AI application that speaks it can use any server that speaks it, and a server author writes the integration once for every compliant client. This lesson explains the three participants in that architecture (host, client, server), the three things a server can expose (tools, resources, prompts), the two transports that carry the messages, and walks through building a real server with the Python SDK.",
+        "date": "September 2, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "11 min read",
+        "tags": [
+          "LLMs",
+          "AI Agents",
+          "MCP",
+          "Tool Integration"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "mcp-deep-dive-tools-resources-prompts-sampling-auth",
+        "title": "Lesson 31: MCP Deep Dive: Tools, Resources, Prompts, and Auth",
+        "series": "agentic-ai",
+        "lesson": 31,
+        "excerpt": "Lesson 30 built a hello-world MCP server and left the deeper protocol features for later. This lesson is that later. It goes past the weather server into the four parts you will actually tune in production: how to design each of the three server primitives (tools, resources, prompts) so a model uses them well, and how OAuth 2.1 secures a remote server. It also covers sampling, the legacy feature that once let a server borrow the client's model instead of holding its own API keys, which is deprecated as of the 2026-07-28 spec revision and replaced by direct LLM provider API integration. Each section pairs the protocol method with the design decision behind it, and a single worked example ties them together: a project-intel server that exposes a tool, a resource, a prompt, and a sampling call, then gets locked down with real authorization.",
+        "date": "September 3, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "12 min read",
+        "tags": [
+          "LLMs",
+          "AI Agents",
+          "MCP",
+          "Tool Integration",
+          "OAuth"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "first-enterprise-agent-project-setup",
+        "title": "Lesson 32: Building your first enterprise agent: project setup, end to end",
+        "series": "agentic-ai",
+        "lesson": 32,
+        "excerpt": "You have the pieces: the loop, tools, context, memory, evaluation. This lesson is the first time they stop being separate techniques and become one running system. It walks the full setup of an enterprise agent project, from picking a bounded problem and scaffolding the repository, through wiring the model, defining the agent, and registering tools, to running it end to end behind a small API. The point is not to write clever code. It is to make the boring decisions deliberately, the ones that decide whether your agent survives contact with a real codebase, a real API key, and a real deployment. A worked example ties it together: a ticket-triager agent you stand up from an empty folder to a running endpoint in one pass.",
+        "date": "September 4, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "14 min read",
+        "tags": [
+          "LLMs",
+          "AI Agents",
+          "Architecture",
+          "Tool Integration"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "hands-on-one-framework-real-agent-real-work",
+        "title": "Lesson 33: Hands on with one framework, a real agent that does real work",
+        "series": "agentic-ai",
+        "lesson": 33,
+        "excerpt": "Lesson 32 gave you a running skeleton: a bounded task, an isolated repository, wired tools, typed state, an API in front. This lesson is where that skeleton stops being a scaffold and starts doing a real job. It picks the OpenAI Agents SDK, the framework the series has already leaned on, and walks every primitive that turns a model into an agent that an actual team can hand real work to. You will meet the Runner loop that owns the reason-act-observe cycle, function tools that reach a real system, a structured output the rest of your stack can consume, an input guardrail that blocks out-of-scope requests before they waste tokens, a session that carries memory across turns, and the tracing that is on by default. The worked example is the ticket resolver you stood up last lesson, grown from a classifier into an agent that gathers account context, checks the refund policy, and drafts a reply an agentic contact center could actually send. Define the terms, build it in numbered steps, and finish with a try-it prompt that makes the framework primitives yours.",
+        "date": "September 5, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "15 min read",
+        "tags": [
+          "LLMs",
+          "AI Agents",
+          "Architecture",
+          "Tool Integration"
+        ],
+        "status": "published"
+      }
+    ],
+    "totalLessons": 33,
+    "curriculumLessons": 33
+  },
+  {
+    "slug": "ai-at-work",
+    "name": "AI at Work",
+    "description": "A vendor-agnostic primer for using AI in day-to-day work: foundations, prompting, productivity, small automations, and team adoption. Company-wide training that works for any team and any AI tool.",
+    "gradient": "from-fuchsia to-purple-600",
+    "lessons": [
+      {
+        "slug": "what-ai-actually-is",
+        "title": "Lesson 1: What AI Actually Is",
+        "series": "ai-at-work",
+        "lesson": 1,
+        "excerpt": "The words around AI are doing more confusing than clarifying. This lesson separates the four that trip up most people: models vs automation, chatbots vs tools, plus why 'LLM' and 'generative AI' are not synonyms.",
+        "date": "August 16, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "8 min read",
+        "tags": [
+          "LLMs",
+          "AI at Work",
+          "Salesforce"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "how-ai-thinks",
+        "title": "Lesson 2: How AI Thinks in Plain Language",
+        "series": "ai-at-work",
+        "lesson": 2,
+        "excerpt": "The tools you use every day do not read like you do. They read text in chunks called tokens, predict the next chunk over and over, and can only see a limited slice of the conversation at once. This lesson explains those three ideas and what they mean for how you prompt.",
+        "date": "August 17, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "8 min read",
+        "tags": [
+          "LLMs",
+          "AI at Work",
+          "Salesforce"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "hallucinations-what-they-are-and-how-to-catch-them",
+        "title": "Lesson 3: Hallucinations, and How to Catch Them",
+        "series": "ai-at-work",
+        "lesson": 3,
+        "excerpt": "AI tools make things up, and they do it in a confident voice. This lesson explains what a hallucination actually is, why a next-word predictor produces them, and the practical habits for catching them before they reach your work.",
+        "date": "August 18, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "8 min read",
+        "tags": [
+          "LLMs",
+          "AI at Work",
+          "Salesforce"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "what-ai-is-genuinely-good-at-and-where-it-fails",
+        "title": "Lesson 4: What AI Is Genuinely Good At, and Where It Fails",
+        "series": "ai-at-work",
+        "lesson": 4,
+        "excerpt": "AI tools are not good at everything, and pretending they are is how people get burned. This lesson gives you a clean dividing line between the work AI genuinely helps with and the work you should keep, backed by what the research actually shows.",
+        "date": "August 19, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "9 min read",
+        "tags": [
+          "LLMs",
+          "AI at Work",
+          "Salesforce"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "data-safety-what-you-can-and-cannot-put-in",
+        "title": "Lesson 5: Data Safety: What You Can and Cannot Put Into an AI Tool",
+        "series": "ai-at-work",
+        "lesson": 5,
+        "excerpt": "Know what belongs in an AI tool before you paste. Off-limits categories, consumer versus enterprise, and habits that protect client data.",
+        "date": "August 20, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "8 min read",
+        "tags": [
+          "LLMs",
+          "Security"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "ai-literacy-judging-ai-output",
+        "title": "Lesson 6: AI Literacy: Judging AI Output the Way You'd Judge a Colleague's Work",
+        "series": "ai-at-work",
+        "lesson": 6,
+        "excerpt": "The skill that makes every other AI skill safe: read AI output like a draft from a helpful but fallible colleague, then check it before you trust it.",
+        "date": "August 21, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "9 min read",
+        "tags": [
+          "LLMs",
+          "AI at Work"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "anatomy-of-a-good-prompt-role-task-context-format",
+        "title": "Lesson 7: Anatomy of a Good Prompt: Role, Task, Context, and Format",
+        "series": "ai-at-work",
+        "lesson": 7,
+        "excerpt": "A good prompt is not a wish, it is a brief. This lesson breaks the brief into its four parts: the role you want the tool to play, the task you want done, the context it needs, and the format you want back. Learn the anatomy and you get sharper output from the first try.",
+        "date": "August 22, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "9 min read",
+        "tags": [
+          "LLMs",
+          "AI at Work",
+          "Prompt Engineering"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "iteration-as-a-skill-refine-rephrase-ask-for-alternatives",
+        "title": "Lesson 8: Iteration as a Skill: Refine, Rephrase, and Ask for Alternatives",
+        "series": "ai-at-work",
+        "lesson": 8,
+        "excerpt": "The first answer is almost never the final one. The real skill is treating the conversation like a conversation: refine what is close, rephrase what misfires, and ask for alternatives when you are stuck. This lesson makes that loop deliberate.",
+        "date": "August 23, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "9 min read",
+        "tags": [
+          "LLMs",
+          "AI at Work",
+          "Agile"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "fixing-the-failure-modes-vague-asks-invented-facts-and-wrong-formats",
+        "title": "Lesson 9: Fixing the Failure Modes: Vague Asks, Invented Facts, and Wrong Formats",
+        "series": "ai-at-work",
+        "lesson": 9,
+        "excerpt": "When AI output misses, the cause is almost always one of three things: you asked vaguely, it invented a fact, or you never said what shape the answer should take. This lesson teaches you to name the failure mode and apply the fix that actually addresses it.",
+        "date": "August 24, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "9 min read",
+        "tags": [
+          "LLMs",
+          "AI at Work",
+          "Prompt Engineering"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "turning-a-one-off-prompt-into-a-reusable-template",
+        "title": "Lesson 10: Turning a One-Off Prompt into a Reusable Template",
+        "series": "ai-at-work",
+        "lesson": 10,
+        "excerpt": "You have a prompt that nailed it once. Now you retype the same shape every week with small changes. This lesson teaches you to notice the parts that stay the same and the parts that change, and to lock the stable ones into a reusable template so you stop rewriting the whole thing each time.",
+        "date": "August 25, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "9 min read",
+        "tags": [
+          "LLMs",
+          "AI at Work",
+          "Prompt Engineering"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "writing-and-communication-drafts-emails-summaries-and-tone-shifts",
+        "title": "Lesson 11: Writing and Communication: Drafts, Emails, Summaries, and Tone Shifts",
+        "series": "ai-at-work",
+        "lesson": 11,
+        "excerpt": "Most of your workday is words: emails, drafts, summaries, and the tone of all of it. AI is the fastest first-draft writer you will ever hire, and it is built for exactly this. This lesson teaches you to use it well without letting it speak for you, by bringing the facts, checking the output, and keeping your voice.",
+        "date": "August 26, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "10 min read",
+        "tags": [
+          "LLMs",
+          "AI at Work",
+          "Consulting"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "editing-and-reviewing-ai-writing-human-in-the-loop",
+        "title": "Lesson 12: Editing and Reviewing AI's Writing: Human-in-the-Loop",
+        "series": "ai-at-work",
+        "lesson": 12,
+        "excerpt": "AI drafts fast. You are the reason the draft is safe to ship. This lesson is the difference between editing (fixing what is there) and reviewing (checking it before it goes anywhere), and why keeping yourself in the loop is the whole job.",
+        "date": "August 27, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "9 min read",
+        "tags": [
+          "LLMs",
+          "AI at Work",
+          "UI/UX"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "research-and-synthesis-reading-comparing-extracting",
+        "title": "Lesson 13: Research and Synthesis: Reading, Comparing, and Extracting the Useful Bit",
+        "series": "ai-at-work",
+        "lesson": 13,
+        "excerpt": "You have sources to read, compare, and pull the useful bit out of. An AI tool can do that reading for you, but only if you feed it the right documents and keep each claim traceable. This lesson is the front end of a task: research and synthesis without importing the tool's errors.",
+        "date": "August 28, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "9 min read",
+        "tags": [
+          "LLMs",
+          "AI at Work",
+          "UI/UX"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "spreadsheets-and-data-analysis-cleaning-formulas",
+        "title": "Lesson 14: Spreadsheets and Data: Analysis, Cleaning, and Formulas",
+        "series": "ai-at-work",
+        "lesson": 14,
+        "excerpt": "Most of us live in spreadsheets, and most spreadsheet work is cleaning up messy data before it will tell you anything. An AI tool can tidy your data, write the formulas you cannot remember, and point at the pattern you missed, as long as you check its work against the cells.",
+        "date": "August 29, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "10 min read",
+        "tags": [
+          "LLMs",
+          "AI at Work",
+          "Data"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "meetings-agendas-transcripts-action-items-follow-ups",
+        "title": "Lesson 15: Meetings: Agendas, Transcripts, Action Items, and Follow-Ups",
+        "series": "ai-at-work",
+        "lesson": 15,
+        "excerpt": "Meetings eat hours and then vanish. An AI tool can draft the agenda before the meeting, capture what was actually said during it, and turn the conversation into action items and owners afterward. This lesson is the whole loop, and the check that keeps it honest: you confirm the action items are real before you trust them.",
+        "date": "August 30, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "10 min read",
+        "tags": [
+          "LLMs",
+          "AI at Work",
+          "Project Management"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "brainstorming-and-problem-solving-options-tradeoffs-stress-testing",
+        "title": "Lesson 16: Brainstorming and Problem-Solving: Options, Tradeoffs, and Stress-Testing",
+        "series": "ai-at-work",
+        "lesson": 16,
+        "excerpt": "The tool is a fast generator of options and a poor chooser between them. The real skill is using it to widen the field, weigh the tradeoffs, and stress-test a plan before you commit. This lesson makes that three-part loop deliberate.",
+        "date": "August 31, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "10 min read",
+        "tags": [
+          "LLMs",
+          "AI at Work",
+          "Consulting"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "knowing-when-not-to-use-ai",
+        "title": "Lesson 17: Knowing When NOT to Use AI",
+        "series": "ai-at-work",
+        "lesson": 17,
+        "excerpt": "The most underrated AI skill is the ability to leave the tool switched off. This lesson gives you a practical filter for recognizing the tasks where AI is the wrong tool, so you use it where it earns its place and skip it where it costs you.",
+        "date": "September 1, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "9 min read",
+        "tags": [
+          "LLMs",
+          "AI at Work",
+          "Judgment"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "spotting-automatable-tasks-in-your-own-job",
+        "title": "Lesson 18: Spotting the Automatable Tasks in Your Own Job",
+        "series": "ai-at-work",
+        "lesson": 18,
+        "excerpt": "Your job is not one thing. It is a bundle of small recurring tasks, and a few of them can be handed to a tool for good. This lesson gives you a simple audit for finding the slices of your own week that are worth automating, with a worked example and a payback calculation you can run on any task.",
+        "date": "September 2, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "9 min read",
+        "tags": [
+          "LLMs",
+          "AI at Work",
+          "Productivity"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "building-a-personal-prompt-library",
+        "title": "Lesson 19: Building a Personal Prompt Library",
+        "series": "ai-at-work",
+        "lesson": 19,
+        "excerpt": "A good prompt is worth saving, and most people throw it away the moment the answer arrives. This lesson shows you how to build a personal prompt library: what to capture, how to name and organize the prompts so you can actually find them again, and why a library of your best prompts saves you minutes every single time one of your recurring tasks rolls around.",
+        "date": "September 3, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "10 min read",
+        "tags": [
+          "LLMs",
+          "AI at Work",
+          "Productivity"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "simple-repeatable-workflows-you-can-run-weekly",
+        "title": "Lesson 20: Simple Repeatable Workflows You Can Run Weekly",
+        "series": "ai-at-work",
+        "lesson": 20,
+        "excerpt": "You have saved the prompts that work. The next step is to run them on a schedule. This lesson shows you how to take two or three prompts from your library and package them into a fixed weekly routine: the same steps, in the same order, on the same day, ending with a check you actually run. It defines what a workflow is, walks through a worked example end to end, and gives you a five-step method for building your own.",
+        "date": "September 4, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "9 min read",
+        "tags": [
+          "LLMs",
+          "AI at Work",
+          "Productivity"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "low-risk-ways-to-start-automating-and-when-to-stop",
+        "title": "Lesson 21: Low-Risk Ways to Start Automating, and When to Stop",
+        "series": "ai-at-work",
+        "lesson": 21,
+        "excerpt": "Automation is where AI stops waiting for you and runs a step on its own. The skill is choosing the rare steps that are safe to hand over, and pulling one back the moment it stops earning its place. This lesson gives you a filter for which is which, a worked example, and the warning signs that you have automated too much.",
+        "date": "September 5, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "10 min read",
+        "tags": [
+          "LLMs",
+          "AI at Work",
+          "Automation"
+        ],
+        "status": "published"
+      }
+    ],
+    "totalLessons": 21,
+    "curriculumLessons": 21
+  },
+  {
     "slug": "hermes-consultant",
     "name": "Hermes Agent Consultant",
     "description": "A path to becoming an agent-implementation consultant: scoping, implementation craft, delivery practice, and the business of consulting. Platform-agnostic skills with Hermes Agent as the working example.",
@@ -166,6 +1047,362 @@ export const learnSeries: LearningSeries[] = [
         "date": "September 4, 2026",
         "author": "Adroit Consulting",
         "readTime": "12 min read",
+        "tags": [
+          "AI Agents",
+          "Consulting",
+          "LLMs"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "automation-and-cron-jobs",
+        "title": "Lesson 11: Automation and Cron Jobs: Turning One-Off Wins Into Reliable Recurring Value",
+        "series": "hermes-consultant",
+        "lesson": 11,
+        "excerpt": "A working demo is a win. Recurring value is a service. This lesson teaches how to turn a one-off agent win into work that fires on a schedule without anyone asking for it, how to write prompts that survive a fresh session, and how to make unattended work loud when it goes wrong instead of failing silently.",
+        "date": "September 5, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "12 min read",
+        "tags": [
+          "AI Agents",
+          "Consulting",
+          "LLMs"
+        ],
+        "status": "published"
+      }
+    ],
+    "totalLessons": 11,
+    "curriculumLessons": 11
+  },
+  {
+    "slug": "hermes-consultant-advanced",
+    "name": "Hermes Agent Consultant · Advanced",
+    "description": "Level 3 of the Hermes Consultant track: Practice & Scale. For the principal — building a consulting practice, org-scale architecture, delivery operations and margins, value-based pricing, hiring, and a go-to-market plan. Builds on Levels 1 and 2.",
+    "gradient": "from-teal to-emerald-600",
+    "lessons": [
+      {
+        "slug": "from-consultant-to-principal",
+        "title": "Lesson 1: From Consultant to Principal",
+        "series": "hermes-consultant-advanced",
+        "lesson": 1,
+        "excerpt": "The shift that defines a principal: from selling your own skill to building a delivery system. Why the unit of output changes, how leverage replaces hours, and what you have to stop doing to operate at scale.",
+        "date": "August 27, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "12 min read",
+        "tags": [
+          "AI Agents",
+          "Consulting",
+          "LLMs"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "service-lines-offers-and-packaging",
+        "title": "Lesson 2: Service Lines, Offers, and Packaging",
+        "series": "hermes-consultant-advanced",
+        "lesson": 2,
+        "excerpt": "How a practice turns capability into something a client can actually buy. The difference between a service line and an offer, why packaging is the principal's real product work, and how productization fixes the worst economics in consulting.",
+        "date": "August 28, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "13 min read",
+        "tags": [
+          "AI Agents",
+          "Consulting",
+          "LLMs"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "architecture-at-organizational-scale",
+        "title": "Lesson 3: Architecture at Organizational Scale",
+        "series": "hermes-consultant-advanced",
+        "lesson": 3,
+        "excerpt": "The jump from running agents to running a fleet of them. How to design for many agents at once: the orchestration patterns that keep work moving, the governance layer that keeps it safe, and why control replaces heroics as the unit of success.",
+        "date": "August 29, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "13 min read",
+        "tags": [
+          "AI Agents",
+          "Consulting",
+          "LLMs"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "design-authority",
+        "title": "Lesson 4: Design Authority",
+        "series": "hermes-consultant-advanced",
+        "lesson": 4,
+        "excerpt": "The layer that keeps a growing practice coherent. What design authority is, why a system of many agents drifts without it, how to set standards that actually get followed, and how to run design reviews that are gates, not rubber stamps.",
+        "date": "August 30, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "13 min read",
+        "tags": [
+          "AI Agents",
+          "Consulting",
+          "LLMs"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "reusable-ip-and-productized-offerings",
+        "title": "Lesson 5: Building Reusable IP and Productized Offerings",
+        "series": "hermes-consultant-advanced",
+        "lesson": 5,
+        "excerpt": "The difference between an offer and the intellectual property underneath it, why IP is the asset that compounds, and how to turn a repeatable delivery method into a productized offering the practice owns and can sell again without reinventing the scope.",
+        "date": "August 31, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "13 min read",
+        "tags": [
+          "AI Agents",
+          "Consulting",
+          "LLMs"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "hiring-onboarding-and-running-a-team",
+        "title": "Lesson 6: Hiring, Onboarding, and Running a Team of Consultants",
+        "series": "hermes-consultant-advanced",
+        "lesson": 6,
+        "excerpt": "The principal hires for the delivery system, not for a role they used to fill. How to staff against a captured method, onboard people onto it with a measurable exit gate, and run a team so quality stays a property of the system instead of a bet on any single person.",
+        "date": "September 01, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "12 min read",
+        "tags": [
+          "AI Agents",
+          "Consulting",
+          "LLMs"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "delivery-operations-utilization-capacity-margins",
+        "title": "Lesson 7: Delivery Operations: Utilization, Capacity, and Margins",
+        "series": "hermes-consultant-advanced",
+        "lesson": 7,
+        "excerpt": "How a principal reads the three operating numbers that determine whether a delivery system is healthy, and why they fight each other: the utilization that lies when it hits 100%, the capacity that is throughput not headcount, and the margin that funds the future.",
+        "date": "September 02, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "14 min read",
+        "tags": [
+          "AI Agents",
+          "Consulting",
+          "LLMs"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "pricing-strategy-hourly-productized-value-based",
+        "title": "Lesson 8: Pricing Strategy: From Hourly to Productized to Value-Based",
+        "series": "hermes-consultant-advanced",
+        "lesson": 8,
+        "excerpt": "How a principal stops selling time and starts pricing outcomes: the risk economics that decide between hourly, productized, and value-based pricing, and why the real craft is choosing the right model for each offer in the catalog rather than picking one forever.",
+        "date": "September 03, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "14 min read",
+        "tags": [
+          "AI Agents",
+          "Consulting",
+          "LLMs"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "large-engagement-governance",
+        "title": "Lesson 9: Governance for Large Engagements",
+        "series": "hermes-consultant-advanced",
+        "lesson": 9,
+        "excerpt": "How a principal keeps control of an engagement too big for any one head to hold. Steering committees, status cadence, and escalation as one operating rhythm that makes surprises arrive early instead of as crises.",
+        "date": "September 04, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "13 min read",
+        "tags": [
+          "AI Agents",
+          "Consulting",
+          "LLMs"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "compliance-and-risk-at-enterprise-scale",
+        "title": "Lesson 10: Compliance and Risk at Enterprise Scale",
+        "series": "hermes-consultant-advanced",
+        "lesson": 10,
+        "excerpt": "When a consultant becomes a practice, the obligations change. Compliance is the set of rules the practice must meet or it is out of business; risk is what can hurt it even when it breaks no rule. How a principal turns both into controls that are properties of the operating system, not of anyone's good intentions.",
+        "date": "September 05, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "14 min read",
+        "tags": [
+          "AI Agents",
+          "Consulting",
+          "LLMs"
+        ],
+        "status": "published"
+      }
+    ],
+    "totalLessons": 10,
+    "curriculumLessons": 10
+  },
+  {
+    "slug": "hermes-consultant-intermediate",
+    "name": "Hermes Agent Consultant · Intermediate",
+    "description": "Level 2 of the Hermes Consultant track: Applied Delivery. For the working practitioner — running full engagements, complex client environments, multi-week estimation, team delivery, incident discipline, pricing, and case studies. Builds on Level 1.",
+    "gradient": "from-teal to-emerald-600",
+    "lessons": [
+      {
+        "slug": "running-a-full-engagement",
+        "title": "Lesson 1: Running a Full Engagement",
+        "series": "hermes-consultant-intermediate",
+        "lesson": 1,
+        "excerpt": "Turning the five-phase lifecycle into a week-by-week plan: mapping discover, design, implement, handover, and support onto a real calendar, with gates, buffers, and the scheduling realities that kill engagements.",
+        "date": "August 27, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "11 min read",
+        "tags": [
+          "AI Agents",
+          "Consulting",
+          "LLMs"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "requirement-capture-as-built-discipline",
+        "title": "Lesson 2: Requirement Capture as an As-Built Discipline",
+        "series": "hermes-consultant-intermediate",
+        "lesson": 2,
+        "excerpt": "Moving from a problem statement you agree on to a requirement set that survives handover: capturing the enacted process, not the stated one, and writing requirements the next team can run and change without you.",
+        "date": "August 28, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "12 min read",
+        "tags": [
+          "AI Agents",
+          "Consulting",
+          "LLMs"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "production-routing-evals-guardrails",
+        "title": "Lesson 3: Advanced Hermes Configuration: Model Routing, Evals, and Guardrails in Production",
+        "series": "hermes-consultant-intermediate",
+        "lesson": 3,
+        "excerpt": "When the agent leaves the sandbox and runs at real volume in front of a client, three decisions decide whether it holds up: which model runs which task, how you prove the output is still correct, and how you keep the guardrails you documented actually enforced. This lesson teaches all three.",
+        "date": "August 29, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "14 min read",
+        "tags": [
+          "AI Agents",
+          "Consulting",
+          "LLMs"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "reusable-delivery-toolkit-skill-packaging",
+        "title": "Lesson 4: Building a Reusable Delivery Toolkit: Skill Packaging Done Right",
+        "series": "hermes-consultant-intermediate",
+        "lesson": 4,
+        "excerpt": "The difference between a consultant who solves one client's problem and one who compounds every engagement into the next: turning the working capture discipline, eval suite, and guardrail set from Lessons 2 and 3 into packaged, loadable skills another consultant can run without relearning them.",
+        "date": "August 30, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "14 min read",
+        "tags": [
+          "AI Agents",
+          "Consulting",
+          "LLMs"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "complex-client-environments-existing-stacks-sandboxed-deploys",
+        "title": "Lesson 5: Complex Client Environments: Existing Stacks, Enterprise Constraints, and Sandboxed Deploys",
+        "series": "hermes-consultant-intermediate",
+        "lesson": 5,
+        "excerpt": "The clean single-client world where you chose the stack is the exception, not the rule. This lesson teaches you to land a packaged agent delivery inside a company that already has infrastructure, security rules, and processes you did not choose, and to keep the toolkit working when the environment fights back.",
+        "date": "August 31, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "15 min read",
+        "tags": [
+          "AI Agents",
+          "Consulting",
+          "LLMs"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "estimating-multi-week-engagements",
+        "title": "Lesson 6: Estimating Multi-Week Engagements: Beyond the 30-45 Minute Task",
+        "series": "hermes-consultant-intermediate",
+        "lesson": 6,
+        "excerpt": "The 30-45 minute task is the unit of execution, not the unit of estimation. This lesson teaches you to size a real multi-week delivery: how to break a large engagement into estimable pieces, why you estimate the critical path and not the total, how to put the constraints and reviews from Lesson 5 into the number, and how to keep an estimate honest when the environment reveals surprises.",
+        "date": "September 1, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "15 min read",
+        "tags": [
+          "AI Agents",
+          "Consulting",
+          "LLMs"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "team-delivery-splitting-work-across-consultants",
+        "title": "Lesson 7: Team Delivery: When It's More Than One Consultant, How the Work Splits",
+        "series": "hermes-consultant-intermediate",
+        "lesson": 7,
+        "excerpt": "Single-consultant delivery has a ceiling. This lesson teaches the working practitioner when that ceiling hits, how to split work so more than one owner can hold it without the pieces drifting apart, and the seams, contracts, and dependency rules that hold a delivery team together. Hermes Agent's multi-agent board is the concrete example.",
+        "date": "September 2, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "15 min read",
+        "tags": [
+          "AI Agents",
+          "Consulting",
+          "LLMs"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "internal-pilot-converting-to-paid-engagement",
+        "title": "Lesson 8: Running an Internal Pilot That Converts Into a Paid Engagement",
+        "series": "hermes-consultant-intermediate",
+        "lesson": 8,
+        "excerpt": "The hardest sale in consulting is the one where the client has not yet decided you are worth paying. This lesson teaches the working practitioner to run an internal pilot that converts: how you scope a real slice of a prospect's problem, deliver it as a bounded proof, and turn the measured result into a signed engagement instead of a free spec.",
+        "date": "September 3, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "15 min read",
+        "tags": [
+          "AI Agents",
+          "Consulting",
+          "LLMs"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "quality-at-scale-golden-sets-eval-gates-regression",
+        "title": "Lesson 9: Quality at Scale: Golden Sets, Eval Gates, and Regression Discipline",
+        "series": "hermes-consultant-intermediate",
+        "lesson": 9,
+        "excerpt": "A single agent that works under review is not the hard problem. An estate that keeps producing correct output at volume, after the rules, the data, and the models keep changing, is. This lesson teaches the practitioner who runs real multi-week delivery how to keep quality true at scale: a golden set that lives and grows without rotting, eval gates that block the wrong change before it ships, and the regression discipline that triages a failing gate instead of burying it.",
+        "date": "September 4, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "16 min read",
+        "tags": [
+          "AI Agents",
+          "Consulting",
+          "LLMs"
+        ],
+        "status": "published"
+      },
+      {
+        "slug": "cost-and-reliability-engineering-running-agent-estate",
+        "title": "Lesson 10: Cost and Reliability Engineering for a Running Agent Estate",
+        "series": "hermes-consultant-intermediate",
+        "lesson": 10,
+        "excerpt": "The build is one project. The running estate is a subscription to a recurring bill and a standing reliability obligation, and a consultant who hands over a system without engineering both is handing over a liability. This lesson teaches the practitioner operating a real delivery how to model and contain the recurring spend of a fleet of scheduled agents, how to make that fleet dependable when models and providers and infrastructure keep changing underneath it, and how to engineer for the failure of any single part without taking the whole delivery down.",
+        "date": "September 5, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "16 min read",
         "tags": [
           "AI Agents",
           "Consulting",
@@ -551,10 +1788,25 @@ export const learnSeries: LearningSeries[] = [
           "Integration"
         ],
         "status": "published"
+      },
+      {
+        "slug": "day-27-ip-6-exception-handling-try-catch-rollback",
+        "title": "OmniStudio IP-6: Exception Handling: Try/Catch & Rollback",
+        "series": "omni-studio-cert",
+        "lesson": 27,
+        "excerpt": "Implement robust exception handling in Integration Procedures with Try/Catch blocks and proper rollback. Learn how a Try/Catch Block wraps risky work, what the Catch branch must do, why Load and write actions belong after risky calls, and how the Response Action returns a controlled error shape to callers. This is requirement IP-6 in the Integration Procedures domain.",
+        "date": "September 5, 2026",
+        "author": "Adroit Consulting",
+        "readTime": "12 min read",
+        "tags": [
+          "OmniStudio",
+          "Integration"
+        ],
+        "status": "published"
       }
     ],
-    "totalLessons": 26,
-    "curriculumLessons": 26
+    "totalLessons": 27,
+    "curriculumLessons": 27
   },
   {
     "slug": "salesforce-architect",
@@ -1069,1106 +2321,178 @@ export const learnSeries: LearningSeries[] = [
           "Patterns"
         ],
         "status": "published"
-      }
-    ],
-    "totalLessons": 31,
-    "curriculumLessons": 31
-  },
-  {
-    "slug": "agentic-ai",
-    "name": "Agentic AI Implementation Path",
-    "description": "From single-agent prototypes to multi-agent orchestration, a practitioner's curriculum for shipping agentic systems.",
-    "gradient": "from-amber to-yellow-600",
-    "lessons": [
-      {
-        "slug": "what-is-an-agent",
-        "title": "Lesson 1: What an Agent Actually Is (LLMs vs Rules vs Workflows)",
-        "series": "agentic-ai",
-        "lesson": 1,
-        "excerpt": "The definitions that matter for the whole track: what separates a rules system, an LLM workflow, and a true agent, plus how to tell which one you're actually building.",
-        "date": "August 04, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "9 min read",
-        "tags": [
-          "LLMs",
-          "AI Agents",
-          "Salesforce"
-        ],
-        "status": "published"
       },
       {
-        "slug": "how-llms-work-tokens-context-inference",
-        "title": "Lesson 2: How LLMs Work for Implementers: Tokens, Context, Inference, Temperature",
-        "series": "agentic-ai",
-        "lesson": 2,
-        "excerpt": "The four knobs that decide every LLM bill, latency budget, and reliability call: what tokens actually are, how the context window constrains agents, how inference really runs, and what temperature does and doesn't do.",
-        "date": "August 05, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "9 min read",
-        "tags": [
-          "LLMs",
-          "AI Agents",
-          "Salesforce"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "the-agent-loop-perceive-reason-act-observe",
-        "title": "Lesson 3: The Agent Loop: Perceive, Reason, Act, Observe, and Where Your Code Lives",
-        "series": "agentic-ai",
-        "lesson": 3,
-        "excerpt": "The one while loop that turns a language model into an agent: the five stages of the loop, the pseudocode that runs underneath every framework, and exactly which parts of it are your code versus the runtime's.",
-        "date": "August 06, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "9 min read",
-        "tags": [
-          "LLMs",
-          "AI Agents",
-          "Salesforce"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "prompting-for-agents-system-prompts-few-shot",
-        "title": "Lesson 4: Prompting for Agents: System Prompts, Few-Shot, and When Prompts Aren't Enough",
-        "series": "agentic-ai",
-        "lesson": 4,
-        "excerpt": "In an agent, the prompt isn't a single message; it's the constitution the loop obeys on every iteration. The anatomy of a production system prompt, how few-shot examples actually work, and the escalation ladder for when words stop being enough.",
-        "date": "August 07, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "10 min read",
-        "tags": [
-          "LLMs",
-          "AI Agents",
-          "Prompt Engineering"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "tokens-context-cost-engineering-agents",
-        "title": "Lesson 5: Tokens, Context Windows, and Cost Engineering for Agent Workloads",
-        "series": "agentic-ai",
-        "lesson": 5,
-        "excerpt": "Agents don't just use tokens; they burn them: roughly 4x a chat conversation, 15x for multi-agent. The four levers that control the bill (budgeting, compression, caching, and model routing), with the math worked out on a real 10-agent pipeline.",
-        "date": "August 08, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "9 min read",
-        "tags": [
-          "LLMs",
-          "AI Agents",
-          "Performance"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "choosing-models-providers-routing-fallbacks",
-        "title": "Lesson 6: Choosing Models & Providers: Capability Tiers, Routing, and Fallbacks",
-        "series": "agentic-ai",
-        "lesson": 6,
-        "excerpt": "The biggest agent-ops mistake is picking one 'best' model and pointing everything at it. This lesson builds the three-tier capability model, the three jobs of a router, and the fallback chains that keep agents alive when providers fail.",
-        "date": "August 09, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "8 min read",
-        "tags": [
-          "LLMs",
-          "AI Agents"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "structured-output-json-mode-function-calling-tool-schemas",
-        "title": "Lesson 7: Structured Output: JSON Mode, Function Calling, and Tool Schemas Done Right",
-        "series": "agentic-ai",
-        "lesson": 7,
-        "excerpt": "An agent is only as reliable as its data contracts. This lesson builds the structured-output ladder (JSON mode, Structured Outputs, function calling) and the tool-schema practices that keep tool calls valid, parseable, and safe in production.",
-        "date": "August 10, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "8 min read",
-        "tags": [
-          "LLMs",
-          "AI Agents"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "tool-design-schemas-error-handling-retries",
-        "title": "Lesson 8: Designing Tools That Fail Well: Schemas, Error Handling, and Retries",
-        "series": "agentic-ai",
-        "lesson": 8,
-        "excerpt": "A tool is an operational contract, not an API wrapper. This lesson covers the five-part anatomy of a production tool, structured error schemas the model can act on, and retry discipline (backoff with jitter, idempotency keys, and retry budgets), so agents survive failures without corrupting state.",
-        "date": "August 11, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "9 min read",
-        "tags": [
-          "LLMs",
-          "AI Agents"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "function-calling-parity-across-providers",
-        "title": "Lesson 9: Function-Calling Parity Across OpenAI, Azure, Anthropic, Gemini, and Local Models",
-        "series": "agentic-ai",
-        "lesson": 9,
-        "excerpt": "Every frontier provider exposes function calling, but none uses the same wire format. This lesson maps the request and response shapes across OpenAI, Azure, Anthropic, and Gemini, then shows why local models (llama.cpp) are the parity wildcard and how one internal schema plus thin per-provider adapters keeps an agent portable.",
-        "date": "August 12, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "9 min read",
-        "tags": [
-          "LLMs",
-          "AI Agents"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "rag-fundamentals-chunking-embeddings-retrieval",
-        "title": "Lesson 10: RAG Fundamentals: Chunking, Embeddings, Retrieval, and Why RAG Is the First Enterprise Pattern",
-        "series": "agentic-ai",
-        "lesson": 10,
-        "excerpt": "The pattern that grounds LLMs in your own knowledge: what RAG is and where it came from, why you chunk documents instead of feeding them whole, what embeddings actually are, how retrieval ranks chunks, and why RAG became the first pattern enterprises shipped.",
-        "date": "August 13, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "10 min read",
-        "tags": [
-          "LLMs",
-          "AI Agents",
-          "RAG"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "embeddings-models-similarity-when-they-fail",
-        "title": "Lesson 11: Embeddings: Models, Similarity, and When They Fail",
-        "series": "agentic-ai",
-        "lesson": 11,
-        "excerpt": "What an embedding actually is, how the popular models differ, why cosine similarity works, and the failure modes that make pure vector search miss the answer: rare terms, domain jargon, short queries, and model mismatch.",
-        "date": "August 14, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "10 min read",
-        "tags": [
-          "LLMs",
-          "AI Agents",
-          "RAG"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "vector-databases-pinecone-pgvector-milvus-weaviate",
-        "title": "Lesson 12: Vector Databases: Pinecone, pgvector, Milvus, Weaviate, and Choosing for Your Workload",
-        "series": "agentic-ai",
-        "lesson": 12,
-        "excerpt": "What a vector database actually does, why you need one instead of scanning vectors in memory, the approximate nearest neighbor tradeoff you are making, and how to choose between Pinecone, pgvector, Milvus, and Weaviate for your workload and your team.",
-        "date": "August 15, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "10 min read",
-        "tags": [
-          "LLMs",
-          "AI Agents",
-          "RAG"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "rag-quality-reranking-hybrid-search-metadata-filtering-freshness",
-        "title": "Lesson 13: RAG Quality: Reranking, Hybrid Search, Metadata Filtering, and Freshness",
-        "series": "agentic-ai",
-        "lesson": 13,
-        "excerpt": "The four levers that turn a RAG demo into a system you can trust: reranking to fix top-k precision, hybrid search so exact terms still win, metadata filtering so access control and scope survive retrieval, and freshness so the answers do not go stale.",
-        "date": "August 16, 2026",
+        "slug": "flow-architecture-flow-vs-apex-vs-external-automation",
+        "title": "Lesson 32: Flow Architecture: Flow vs Apex vs External Automation, Decision Framework",
+        "series": "salesforce-architect",
+        "lesson": 32,
+        "excerpt": "A repeatable framework for choosing where a process runs: Record-Triggered Flow for low-density automation, the hybrid Flow plus invocable Apex pattern for medium density, Apex triggers for high density, and the boundary where automation should leave the org entirely for external, agentic, or cross-system work.",
+        "date": "September 5, 2026",
         "author": "Adroit Consulting",
         "readTime": "12 min read",
         "tags": [
-          "LLMs",
-          "AI Agents",
-          "RAG"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "agent-memory-short-term-long-term-episodic-semantic",
-        "title": "Lesson 14: Agent Memory: Short-Term vs Long-Term, Episodic vs Semantic",
-        "series": "agentic-ai",
-        "lesson": 14,
-        "excerpt": "An agent with no memory answers the same question the same way forever. This lesson maps the memory taxonomy production systems borrow from cognitive science: the context window as working memory, long-term stores for persistence, episodic memory for what happened, semantic memory for what you know, and the pipeline that turns raw interactions into retrievable knowledge.",
-        "date": "August 17, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "10 min read",
-        "tags": [
-          "LLMs",
-          "AI Agents"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "context-engineering-what-to-include-trimming-summarization-windowing",
-        "title": "Lesson 15: Context Engineering: What to Include, Trim, Summarize, and Window",
-        "series": "agentic-ai",
-        "lesson": 15,
-        "excerpt": "The context window is finite and filling it sloppily degrades your agent before it ever fails. This lesson covers the four ways to keep a long-running loop coherent: deciding what to include, trimming what stops earning its keep, summarizing what still matters, and windowing what you can drop. With real numbers from JetBrains on which approach actually pays.",
-        "date": "August 18, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "10 min read",
-        "tags": [
-          "LLMs",
-          "AI Agents",
-          "Prompt Engineering"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "multi-turn-agents-sessions-state-resuming-conversations",
-        "title": "Lesson 16: Multi-Turn Agents: Sessions, State, and Resuming Conversations",
-        "series": "agentic-ai",
-        "lesson": 16,
-        "excerpt": "An LLM is stateless: every call forgets the one before it, so multi-turn behavior has to be built, not assumed. This lesson defines the session, the state it carries, and the checkpointing that lets an agent resume where it left off: the difference between a thread and a durable store, why the state schema is the real design, and how production systems survive restarts and long conversations.",
-        "date": "August 19, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "11 min read",
-        "tags": [
-          "LLMs",
-          "AI Agents",
-          "Salesforce"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "guardrails-prompt-injection-system-boundaries-input-validation",
-        "title": "Lesson 17: Guardrails I: Prompt Injection Defense, System Boundaries, and Input Validation",
-        "series": "agentic-ai",
-        "lesson": 17,
-        "excerpt": "Prompt injection tops the OWASP list of LLM risks for a reason: an agent that can act turns a misled model into an unauthorized action. This lesson separates direct from indirect injection, explains why input filters and prompt hardening alone will not stop it, and argues that the durable defense lives at the system boundary: least-privilege tools, hard containment on what the agent can reach, and human approval for high-impact actions.",
-        "date": "August 20, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "11 min read",
-        "tags": [
-          "LLMs",
-          "AI Agents",
-          "Security"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "guardrails-output-validation-allowlists-pii-redaction",
-        "title": "Lesson 18: Guardrails II, Output Validation, Allowlists, PII Redaction, and Refusal Paths",
-        "series": "agentic-ai",
-        "lesson": 18,
-        "excerpt": "Input guardrails keep an attacker from pushing the agent past its boundary. Output guardrails keep the agent from pushing bad output out the other side: validation, allowlists, PII redaction, and refusal paths.",
-        "date": "August 21, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "13 min read",
-        "tags": [
-          "LLMs",
-          "AI Agents",
-          "Security"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "evaluation-evals-golden-datasets-llm-as-judge",
-        "title": "Lesson 19: Evaluation: Evals, Golden Datasets, LLM-as-Judge, and When It Lies",
-        "series": "agentic-ai",
-        "lesson": 19,
-        "excerpt": "An agent you cannot measure is an agent you cannot trust, and the moment a model changes you have no way to know what you traded away. This lesson walks the evaluation stack from the bottom up: the golden dataset that anchors everything, the classic metrics that break on open-ended output, the LLM-as-judge technique that replaces them, and the biases that make a judge lie, from position and verbosity preference to rating its own output too high and being misled by a confident wrong answer.",
-        "date": "August 22, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "14 min read",
-        "tags": [
-          "LLMs",
-          "AI Agents"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "observability-tracing-logging-langsmith-opentelemetry-replay",
-        "title": "Lesson 20: Observability, Tracing, Logging, and Replay for Agents",
-        "series": "agentic-ai",
-        "lesson": 20,
-        "excerpt": "An agent runs several model calls, tool invocations, and retrieval steps inside one request, and when it returns the wrong answer you have no idea which step caused it. This lesson builds observability from the bottom up: the trace that records every step as a span, the trace tree that shows how they connect, the OpenTelemetry gen_ai.* conventions that give the telemetry a standard shape, the structured logs that answer 'why' when a trace only shows 'what,' and the replay loop that turns a captured trace back into a repeatable bug you can fix and verify.",
-        "date": "August 23, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "15 min read",
-        "tags": [
-          "LLMs",
-          "AI Agents",
-          "Observability"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "agent-frameworks-overview-langchain-langgraph-crewai-openai-claude",
-        "title": "Lesson 21: Frameworks overview - LangChain, LangGraph, CrewAI, OpenAI Agents SDK, Claude Agent SDK",
-        "series": "agentic-ai",
-        "lesson": 21,
-        "excerpt": "By now you can build a single agent: a model, a loop, some tools. The hard part is deciding what holds the pieces together when the work grows. This lesson surveys the five frameworks you will actually meet in the wild, and it is honest about what each one is for. LangChain is an integration ecosystem. LangGraph is a stateful graph runtime for workflows that branch and loop. CrewAI is a role-based layer for teams of agents with jobs and backstories. The OpenAI Agents SDK is a deliberately tiny set of primitives with clean handoffs and guardrails. The Claude Agent SDK gives the agent a computer with built-in file, shell, and edit tools. You will learn the mental model behind each one, see the same small task written in two of them so the difference is concrete, and finish with a decision path for choosing a framework instead of trusting star counts.",
-        "date": "August 24, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "16 min read",
-        "tags": [
-          "LLMs",
-          "AI Agents",
-          "Architecture"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "agent-loop-by-hand-no-framework",
-        "title": "Lesson 22: Building Without a Framework: the Agent Loop by Hand in 100 Lines",
-        "series": "agentic-ai",
-        "lesson": 22,
-        "excerpt": "Lesson 21 ended on a quiet note: sometimes you don't need a framework at all. This lesson makes that concrete. You write the loop yourself, in roughly a hundred lines, with nothing but an LLM API and a while loop. You see the canonical agent loop in real code, you build a working agent with two tools, you learn the one ordering mistake that trips up every beginner, and you find out exactly where a hand-rolled loop runs out of room and a framework starts to earn its complexity.",
-        "date": "August 25, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "14 min read",
-        "tags": [
-          "LLMs",
-          "AI Agents",
-          "Architecture"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "agent-patterns-react-plan-execute-reflection-tool-loops",
-        "title": "Lesson 23: Agent Patterns: ReAct, Plan-and-Execute, Reflection, and Tool Loops",
-        "series": "agentic-ai",
-        "lesson": 23,
-        "excerpt": "Lesson 22 built the loop by hand. This lesson gives that loop its names. You learn the four patterns that dominate real agent work: ReAct (reason and act interleaved), plan-and-execute (plan first, then execute), reflection (evaluate and revise), and the tool loop they all run on, plus when each one earns its complexity.",
-        "date": "August 26, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "10 min read",
-        "tags": [
-          "LLMs",
-          "AI Agents",
-          "Architecture"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "multi-agent-systems-orchestrator-worker-supervisor-debate",
-        "title": "Lesson 24: Multi-Agent Systems: Orchestrator-Worker, Supervisor, and Debate",
-        "series": "agentic-ai",
-        "lesson": 24,
-        "excerpt": "Lesson 23 taught you the single-agent patterns. This lesson puts several agents in one system. You learn the three coordination shapes that dominate real multi-agent work: orchestrator-worker (a central agent splits and delegates), supervisor (a coordinator routes to specialized workers via handoffs), and debate (multiple instances argue toward a consensus), plus when each one earns its complexity and when one agent is still the right call.",
-        "date": "August 27, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "11 min read",
-        "tags": [
-          "LLMs",
-          "AI Agents"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "human-in-the-loop-approvals-interrupts-escalation-kill-switches",
-        "title": "Lesson 25: Human-in-the-Loop, Approvals, Interrupts, Escalation, and Kill Switches",
-        "series": "agentic-ai",
-        "lesson": 25,
-        "excerpt": "An agent that can act on its own against a system that matters needs a person in the loop. This lesson builds the control layer: approvals that gate a single risky action, interrupts that pause the whole run and resume it later, escalation that hands an unsafe decision to a human, and a kill switch that stops a runaway system before it does damage.",
-        "date": "August 28, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "14 min read",
-        "tags": [
-          "LLMs",
-          "AI Agents",
-          "Security"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "enterprise-deployment-serving-api-design-rate-limits-quotas",
-        "title": "Lesson 26: Enterprise Deployment, Serving, API Design, Rate Limits, and Quotas",
-        "series": "agentic-ai",
-        "lesson": 26,
-        "excerpt": "A working agent is a different thing from an agent many people can use. This lesson puts the three boundaries around it that make the difference: the serving layer that decides how much concurrent work the model can do, the API boundary that gives every consumer one stable interface, and the policy layer of rate limits and quotas that stops a single tenant from overwhelming the hardware or blowing the budget. It works through the numbers you need to size a deployment, and it shows how those three layers meet at the same number.",
-        "date": "August 29, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "16 min read",
-        "tags": [
-          "LLMs",
-          "AI Agents",
-          "Delivery"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "cost-control-caching-model-tiers-budget-caps-spend-dashboards",
-        "title": "Lesson 27: Cost Control, Caching, Model Tiers, Budget Caps, and Spend Dashboards",
-        "series": "agentic-ai",
-        "lesson": 27,
-        "excerpt": "A working agent is cheaper to build than to keep. Lesson 26 stopped a single tenant from blowing the monthly bill in an afternoon; this lesson turns the bill itself into a number you manage. It covers the three cost levers in order: caching so you never pay twice for the same answer, model tiers and routing so you only pay frontier prices when a task actually needs them, and budget caps with spend dashboards so a surprise bill becomes an early-warning system instead. A worked example runs the arithmetic on a real agent workload, and the Fortress angle shows a hybrid two-tier stack doing all three at once.",
-        "date": "August 30, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "15 min read",
-        "tags": [
-          "LLMs",
-          "AI Agents",
-          "Performance"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "security-auth-authorization-secrets-management-for-agents",
-        "title": "Lesson 28: Security: Authentication, Authorization, and Secrets Management for Agents",
-        "series": "agentic-ai",
-        "lesson": 28,
-        "excerpt": "An agent is not a user and not a plain service. It carries two identities at once, the person it acts for and the machine it runs as, and it reaches for credentials with every tool call it makes. This lesson separates the three systems that keep that under control: authentication proves who is acting, authorization decides what that actor may do, and secrets management keeps the credentials that prove identity short-lived, tightly scoped, and out of the model's context.",
-        "date": "August 31, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "11 min read",
-        "tags": [
-          "LLMs",
-          "AI Agents",
-          "Security"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "compliance-data-residency-audit-logging-retention",
-        "title": "Lesson 29: Compliance: Data Residency, Audit Logging, and Retention for AI Systems",
-        "series": "agentic-ai",
-        "lesson": 29,
-        "excerpt": "Security controls who can act. Compliance is the record of what that actor did with other people's data, and it lives in three separate controls. Data residency decides where the data is stored and processed and how it may cross borders. Audit logging keeps an immutable record of what happened, per action, so a regulator or an investigator can reconstruct it later. Retention puts a clock on how long you keep any of it. This lesson reads the EU AI Act's record-keeping article and GDPR's storage-limitation principle, then shows how a real agent pipeline turns its own event stream into an auditable trail.",
-        "date": "September 1, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "11 min read",
-        "tags": [
-          "LLMs",
-          "AI Agents",
-          "Security",
-          "Governance"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "mcp-model-context-protocol-intro-build-server",
-        "title": "Lesson 30: The Model Context Protocol (MCP): What It Is, Why It Matters, and How to Build a Server",
-        "series": "agentic-ai",
-        "lesson": 30,
-        "excerpt": "The Model Context Protocol (MCP) is an open standard that connects AI applications to the tools and data they act on. It attacks a problem every agent builder hits: bespoke integrations do not scale. Without a common protocol, each AI app wires itself to each tool with its own custom connector, and the number of connectors grows as the product of apps times tools. MCP breaks that pattern by defining one client-server protocol, so an AI application that speaks it can use any server that speaks it, and a server author writes the integration once for every compliant client. This lesson explains the three participants in that architecture (host, client, server), the three things a server can expose (tools, resources, prompts), the two transports that carry the messages, and walks through building a real server with the Python SDK.",
-        "date": "September 2, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "11 min read",
-        "tags": [
-          "LLMs",
-          "AI Agents",
-          "MCP",
-          "Tool Integration"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "mcp-deep-dive-tools-resources-prompts-sampling-auth",
-        "title": "Lesson 31: MCP Deep Dive: Tools, Resources, Prompts, and Auth",
-        "series": "agentic-ai",
-        "lesson": 31,
-        "excerpt": "Lesson 30 built a hello-world MCP server and left the deeper protocol features for later. This lesson is that later. It goes past the weather server into the four parts you will actually tune in production: how to design each of the three server primitives (tools, resources, prompts) so a model uses them well, and how OAuth 2.1 secures a remote server. It also covers sampling, the legacy feature that once let a server borrow the client's model instead of holding its own API keys, which is deprecated as of the 2026-07-28 spec revision and replaced by direct LLM provider API integration. Each section pairs the protocol method with the design decision behind it, and a single worked example ties them together: a project-intel server that exposes a tool, a resource, a prompt, and a sampling call, then gets locked down with real authorization.",
-        "date": "September 3, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "12 min read",
-        "tags": [
-          "LLMs",
-          "AI Agents",
-          "MCP",
-          "Tool Integration",
-          "OAuth"
+          "Salesforce",
+          "Architecture",
+          "Flow",
+          "Apex"
         ],
         "status": "published"
       }
     ],
-    "totalLessons": 31,
-    "curriculumLessons": 31
-  },
-  {
-    "slug": "ai-at-work",
-    "name": "AI at Work",
-    "description": "A vendor-agnostic primer for using AI in day-to-day work: foundations, prompting, productivity, small automations, and team adoption. Company-wide training that works for any team and any AI tool.",
-    "gradient": "from-fuchsia to-purple-600",
-    "lessons": [
-      {
-        "slug": "what-ai-actually-is",
-        "title": "Lesson 1: What AI Actually Is",
-        "series": "ai-at-work",
-        "lesson": 1,
-        "excerpt": "The words around AI are doing more confusing than clarifying. This lesson separates the four that trip up most people: models vs automation, chatbots vs tools, plus why 'LLM' and 'generative AI' are not synonyms.",
-        "date": "August 16, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "8 min read",
-        "tags": [
-          "LLMs",
-          "AI at Work",
-          "Salesforce"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "how-ai-thinks",
-        "title": "Lesson 2: How AI Thinks in Plain Language",
-        "series": "ai-at-work",
-        "lesson": 2,
-        "excerpt": "The tools you use every day do not read like you do. They read text in chunks called tokens, predict the next chunk over and over, and can only see a limited slice of the conversation at once. This lesson explains those three ideas and what they mean for how you prompt.",
-        "date": "August 17, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "8 min read",
-        "tags": [
-          "LLMs",
-          "AI at Work",
-          "Salesforce"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "hallucinations-what-they-are-and-how-to-catch-them",
-        "title": "Lesson 3: Hallucinations, and How to Catch Them",
-        "series": "ai-at-work",
-        "lesson": 3,
-        "excerpt": "AI tools make things up, and they do it in a confident voice. This lesson explains what a hallucination actually is, why a next-word predictor produces them, and the practical habits for catching them before they reach your work.",
-        "date": "August 18, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "8 min read",
-        "tags": [
-          "LLMs",
-          "AI at Work",
-          "Salesforce"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "what-ai-is-genuinely-good-at-and-where-it-fails",
-        "title": "Lesson 4: What AI Is Genuinely Good At, and Where It Fails",
-        "series": "ai-at-work",
-        "lesson": 4,
-        "excerpt": "AI tools are not good at everything, and pretending they are is how people get burned. This lesson gives you a clean dividing line between the work AI genuinely helps with and the work you should keep, backed by what the research actually shows.",
-        "date": "August 19, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "9 min read",
-        "tags": [
-          "LLMs",
-          "AI at Work",
-          "Salesforce"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "data-safety-what-you-can-and-cannot-put-in",
-        "title": "Lesson 5: Data Safety: What You Can and Cannot Put Into an AI Tool",
-        "series": "ai-at-work",
-        "lesson": 5,
-        "excerpt": "Know what belongs in an AI tool before you paste. Off-limits categories, consumer versus enterprise, and habits that protect client data.",
-        "date": "August 20, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "8 min read",
-        "tags": [
-          "LLMs",
-          "Security"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "ai-literacy-judging-ai-output",
-        "title": "Lesson 6: AI Literacy: Judging AI Output the Way You'd Judge a Colleague's Work",
-        "series": "ai-at-work",
-        "lesson": 6,
-        "excerpt": "The skill that makes every other AI skill safe: read AI output like a draft from a helpful but fallible colleague, then check it before you trust it.",
-        "date": "August 21, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "9 min read",
-        "tags": [
-          "LLMs",
-          "AI at Work"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "anatomy-of-a-good-prompt-role-task-context-format",
-        "title": "Lesson 7: Anatomy of a Good Prompt: Role, Task, Context, and Format",
-        "series": "ai-at-work",
-        "lesson": 7,
-        "excerpt": "A good prompt is not a wish, it is a brief. This lesson breaks the brief into its four parts: the role you want the tool to play, the task you want done, the context it needs, and the format you want back. Learn the anatomy and you get sharper output from the first try.",
-        "date": "August 22, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "9 min read",
-        "tags": [
-          "LLMs",
-          "AI at Work",
-          "Prompt Engineering"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "iteration-as-a-skill-refine-rephrase-ask-for-alternatives",
-        "title": "Lesson 8: Iteration as a Skill: Refine, Rephrase, and Ask for Alternatives",
-        "series": "ai-at-work",
-        "lesson": 8,
-        "excerpt": "The first answer is almost never the final one. The real skill is treating the conversation like a conversation: refine what is close, rephrase what misfires, and ask for alternatives when you are stuck. This lesson makes that loop deliberate.",
-        "date": "August 23, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "9 min read",
-        "tags": [
-          "LLMs",
-          "AI at Work",
-          "Agile"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "fixing-the-failure-modes-vague-asks-invented-facts-and-wrong-formats",
-        "title": "Lesson 9: Fixing the Failure Modes: Vague Asks, Invented Facts, and Wrong Formats",
-        "series": "ai-at-work",
-        "lesson": 9,
-        "excerpt": "When AI output misses, the cause is almost always one of three things: you asked vaguely, it invented a fact, or you never said what shape the answer should take. This lesson teaches you to name the failure mode and apply the fix that actually addresses it.",
-        "date": "August 24, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "9 min read",
-        "tags": [
-          "LLMs",
-          "AI at Work",
-          "Prompt Engineering"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "turning-a-one-off-prompt-into-a-reusable-template",
-        "title": "Lesson 10: Turning a One-Off Prompt into a Reusable Template",
-        "series": "ai-at-work",
-        "lesson": 10,
-        "excerpt": "You have a prompt that nailed it once. Now you retype the same shape every week with small changes. This lesson teaches you to notice the parts that stay the same and the parts that change, and to lock the stable ones into a reusable template so you stop rewriting the whole thing each time.",
-        "date": "August 25, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "9 min read",
-        "tags": [
-          "LLMs",
-          "AI at Work",
-          "Prompt Engineering"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "writing-and-communication-drafts-emails-summaries-and-tone-shifts",
-        "title": "Lesson 11: Writing and Communication: Drafts, Emails, Summaries, and Tone Shifts",
-        "series": "ai-at-work",
-        "lesson": 11,
-        "excerpt": "Most of your workday is words: emails, drafts, summaries, and the tone of all of it. AI is the fastest first-draft writer you will ever hire, and it is built for exactly this. This lesson teaches you to use it well without letting it speak for you, by bringing the facts, checking the output, and keeping your voice.",
-        "date": "August 26, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "10 min read",
-        "tags": [
-          "LLMs",
-          "AI at Work",
-          "Consulting"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "editing-and-reviewing-ai-writing-human-in-the-loop",
-        "title": "Lesson 12: Editing and Reviewing AI's Writing: Human-in-the-Loop",
-        "series": "ai-at-work",
-        "lesson": 12,
-        "excerpt": "AI drafts fast. You are the reason the draft is safe to ship. This lesson is the difference between editing (fixing what is there) and reviewing (checking it before it goes anywhere), and why keeping yourself in the loop is the whole job.",
-        "date": "August 27, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "9 min read",
-        "tags": [
-          "LLMs",
-          "AI at Work",
-          "UI/UX"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "research-and-synthesis-reading-comparing-extracting",
-        "title": "Lesson 13: Research and Synthesis: Reading, Comparing, and Extracting the Useful Bit",
-        "series": "ai-at-work",
-        "lesson": 13,
-        "excerpt": "You have sources to read, compare, and pull the useful bit out of. An AI tool can do that reading for you, but only if you feed it the right documents and keep each claim traceable. This lesson is the front end of a task: research and synthesis without importing the tool's errors.",
-        "date": "August 28, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "9 min read",
-        "tags": [
-          "LLMs",
-          "AI at Work",
-          "UI/UX"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "spreadsheets-and-data-analysis-cleaning-formulas",
-        "title": "Lesson 14: Spreadsheets and Data: Analysis, Cleaning, and Formulas",
-        "series": "ai-at-work",
-        "lesson": 14,
-        "excerpt": "Most of us live in spreadsheets, and most spreadsheet work is cleaning up messy data before it will tell you anything. An AI tool can tidy your data, write the formulas you cannot remember, and point at the pattern you missed, as long as you check its work against the cells.",
-        "date": "August 29, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "10 min read",
-        "tags": [
-          "LLMs",
-          "AI at Work",
-          "Data"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "meetings-agendas-transcripts-action-items-follow-ups",
-        "title": "Lesson 15: Meetings: Agendas, Transcripts, Action Items, and Follow-Ups",
-        "series": "ai-at-work",
-        "lesson": 15,
-        "excerpt": "Meetings eat hours and then vanish. An AI tool can draft the agenda before the meeting, capture what was actually said during it, and turn the conversation into action items and owners afterward. This lesson is the whole loop, and the check that keeps it honest: you confirm the action items are real before you trust them.",
-        "date": "August 30, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "10 min read",
-        "tags": [
-          "LLMs",
-          "AI at Work",
-          "Project Management"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "brainstorming-and-problem-solving-options-tradeoffs-stress-testing",
-        "title": "Lesson 16: Brainstorming and Problem-Solving: Options, Tradeoffs, and Stress-Testing",
-        "series": "ai-at-work",
-        "lesson": 16,
-        "excerpt": "The tool is a fast generator of options and a poor chooser between them. The real skill is using it to widen the field, weigh the tradeoffs, and stress-test a plan before you commit. This lesson makes that three-part loop deliberate.",
-        "date": "August 31, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "10 min read",
-        "tags": [
-          "LLMs",
-          "AI at Work",
-          "Consulting"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "knowing-when-not-to-use-ai",
-        "title": "Lesson 17: Knowing When NOT to Use AI",
-        "series": "ai-at-work",
-        "lesson": 17,
-        "excerpt": "The most underrated AI skill is the ability to leave the tool switched off. This lesson gives you a practical filter for recognizing the tasks where AI is the wrong tool, so you use it where it earns its place and skip it where it costs you.",
-        "date": "September 1, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "9 min read",
-        "tags": [
-          "LLMs",
-          "AI at Work",
-          "Judgment"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "spotting-automatable-tasks-in-your-own-job",
-        "title": "Lesson 18: Spotting the Automatable Tasks in Your Own Job",
-        "series": "ai-at-work",
-        "lesson": 18,
-        "excerpt": "Your job is not one thing. It is a bundle of small recurring tasks, and a few of them can be handed to a tool for good. This lesson gives you a simple audit for finding the slices of your own week that are worth automating, with a worked example and a payback calculation you can run on any task.",
-        "date": "September 2, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "9 min read",
-        "tags": [
-          "LLMs",
-          "AI at Work",
-          "Productivity"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "building-a-personal-prompt-library",
-        "title": "Lesson 19: Building a Personal Prompt Library",
-        "series": "ai-at-work",
-        "lesson": 19,
-        "excerpt": "A good prompt is worth saving, and most people throw it away the moment the answer arrives. This lesson shows you how to build a personal prompt library: what to capture, how to name and organize the prompts so you can actually find them again, and why a library of your best prompts saves you minutes every single time one of your recurring tasks rolls around.",
-        "date": "September 3, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "10 min read",
-        "tags": [
-          "LLMs",
-          "AI at Work",
-          "Productivity"
-        ],
-        "status": "published"
-      }
-    ],
-    "totalLessons": 19,
-    "curriculumLessons": 19
-  },
-  {
-    "slug": "hermes-consultant-advanced",
-    "name": "Hermes Agent Consultant · Advanced",
-    "description": "Level 3 of the Hermes Consultant track: Practice & Scale. For the principal — building a consulting practice, org-scale architecture, delivery operations and margins, value-based pricing, hiring, and a go-to-market plan. Builds on Levels 1 and 2.",
-    "gradient": "from-teal to-emerald-600",
-    "lessons": [
-      {
-        "slug": "from-consultant-to-principal",
-        "title": "Lesson 1: From Consultant to Principal",
-        "series": "hermes-consultant-advanced",
-        "lesson": 1,
-        "excerpt": "The shift that defines a principal: from selling your own skill to building a delivery system. Why the unit of output changes, how leverage replaces hours, and what you have to stop doing to operate at scale.",
-        "date": "August 27, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "12 min read",
-        "tags": [
-          "AI Agents",
-          "Consulting",
-          "LLMs"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "service-lines-offers-and-packaging",
-        "title": "Lesson 2: Service Lines, Offers, and Packaging",
-        "series": "hermes-consultant-advanced",
-        "lesson": 2,
-        "excerpt": "How a practice turns capability into something a client can actually buy. The difference between a service line and an offer, why packaging is the principal's real product work, and how productization fixes the worst economics in consulting.",
-        "date": "August 28, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "13 min read",
-        "tags": [
-          "AI Agents",
-          "Consulting",
-          "LLMs"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "architecture-at-organizational-scale",
-        "title": "Lesson 3: Architecture at Organizational Scale",
-        "series": "hermes-consultant-advanced",
-        "lesson": 3,
-        "excerpt": "The jump from running agents to running a fleet of them. How to design for many agents at once: the orchestration patterns that keep work moving, the governance layer that keeps it safe, and why control replaces heroics as the unit of success.",
-        "date": "August 29, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "13 min read",
-        "tags": [
-          "AI Agents",
-          "Consulting",
-          "LLMs"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "design-authority",
-        "title": "Lesson 4: Design Authority",
-        "series": "hermes-consultant-advanced",
-        "lesson": 4,
-        "excerpt": "The layer that keeps a growing practice coherent. What design authority is, why a system of many agents drifts without it, how to set standards that actually get followed, and how to run design reviews that are gates, not rubber stamps.",
-        "date": "August 30, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "13 min read",
-        "tags": [
-          "AI Agents",
-          "Consulting",
-          "LLMs"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "reusable-ip-and-productized-offerings",
-        "title": "Lesson 5: Building Reusable IP and Productized Offerings",
-        "series": "hermes-consultant-advanced",
-        "lesson": 5,
-        "excerpt": "The difference between an offer and the intellectual property underneath it, why IP is the asset that compounds, and how to turn a repeatable delivery method into a productized offering the practice owns and can sell again without reinventing the scope.",
-        "date": "August 31, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "13 min read",
-        "tags": [
-          "AI Agents",
-          "Consulting",
-          "LLMs"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "hiring-onboarding-and-running-a-team",
-        "title": "Lesson 6: Hiring, Onboarding, and Running a Team of Consultants",
-        "series": "hermes-consultant-advanced",
-        "lesson": 6,
-        "excerpt": "The principal hires for the delivery system, not for a role they used to fill. How to staff against a captured method, onboard people onto it with a measurable exit gate, and run a team so quality stays a property of the system instead of a bet on any single person.",
-        "date": "September 01, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "12 min read",
-        "tags": [
-          "AI Agents",
-          "Consulting",
-          "LLMs"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "delivery-operations-utilization-capacity-margins",
-        "title": "Lesson 7: Delivery Operations: Utilization, Capacity, and Margins",
-        "series": "hermes-consultant-advanced",
-        "lesson": 7,
-        "excerpt": "How a principal reads the three operating numbers that determine whether a delivery system is healthy, and why they fight each other: the utilization that lies when it hits 100%, the capacity that is throughput not headcount, and the margin that funds the future.",
-        "date": "September 02, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "14 min read",
-        "tags": [
-          "AI Agents",
-          "Consulting",
-          "LLMs"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "pricing-strategy-hourly-productized-value-based",
-        "title": "Lesson 8: Pricing Strategy: From Hourly to Productized to Value-Based",
-        "series": "hermes-consultant-advanced",
-        "lesson": 8,
-        "excerpt": "How a principal stops selling time and starts pricing outcomes: the risk economics that decide between hourly, productized, and value-based pricing, and why the real craft is choosing the right model for each offer in the catalog rather than picking one forever.",
-        "date": "September 03, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "14 min read",
-        "tags": [
-          "AI Agents",
-          "Consulting",
-          "LLMs"
-        ],
-        "status": "published"
-      }
-    ],
-    "totalLessons": 8,
-    "curriculumLessons": 8
-  },
-  {
-    "slug": "hermes-consultant-intermediate",
-    "name": "Hermes Agent Consultant · Intermediate",
-    "description": "Level 2 of the Hermes Consultant track: Applied Delivery. For the working practitioner — running full engagements, complex client environments, multi-week estimation, team delivery, incident discipline, pricing, and case studies. Builds on Level 1.",
-    "gradient": "from-teal to-emerald-600",
-    "lessons": [
-      {
-        "slug": "running-a-full-engagement",
-        "title": "Lesson 1: Running a Full Engagement",
-        "series": "hermes-consultant-intermediate",
-        "lesson": 1,
-        "excerpt": "Turning the five-phase lifecycle into a week-by-week plan: mapping discover, design, implement, handover, and support onto a real calendar, with gates, buffers, and the scheduling realities that kill engagements.",
-        "date": "August 27, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "11 min read",
-        "tags": [
-          "AI Agents",
-          "Consulting",
-          "LLMs"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "requirement-capture-as-built-discipline",
-        "title": "Lesson 2: Requirement Capture as an As-Built Discipline",
-        "series": "hermes-consultant-intermediate",
-        "lesson": 2,
-        "excerpt": "Moving from a problem statement you agree on to a requirement set that survives handover: capturing the enacted process, not the stated one, and writing requirements the next team can run and change without you.",
-        "date": "August 28, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "12 min read",
-        "tags": [
-          "AI Agents",
-          "Consulting",
-          "LLMs"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "production-routing-evals-guardrails",
-        "title": "Lesson 3: Advanced Hermes Configuration: Model Routing, Evals, and Guardrails in Production",
-        "series": "hermes-consultant-intermediate",
-        "lesson": 3,
-        "excerpt": "When the agent leaves the sandbox and runs at real volume in front of a client, three decisions decide whether it holds up: which model runs which task, how you prove the output is still correct, and how you keep the guardrails you documented actually enforced. This lesson teaches all three.",
-        "date": "August 29, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "14 min read",
-        "tags": [
-          "AI Agents",
-          "Consulting",
-          "LLMs"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "reusable-delivery-toolkit-skill-packaging",
-        "title": "Lesson 4: Building a Reusable Delivery Toolkit: Skill Packaging Done Right",
-        "series": "hermes-consultant-intermediate",
-        "lesson": 4,
-        "excerpt": "The difference between a consultant who solves one client's problem and one who compounds every engagement into the next: turning the working capture discipline, eval suite, and guardrail set from Lessons 2 and 3 into packaged, loadable skills another consultant can run without relearning them.",
-        "date": "August 30, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "14 min read",
-        "tags": [
-          "AI Agents",
-          "Consulting",
-          "LLMs"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "complex-client-environments-existing-stacks-sandboxed-deploys",
-        "title": "Lesson 5: Complex Client Environments: Existing Stacks, Enterprise Constraints, and Sandboxed Deploys",
-        "series": "hermes-consultant-intermediate",
-        "lesson": 5,
-        "excerpt": "The clean single-client world where you chose the stack is the exception, not the rule. This lesson teaches you to land a packaged agent delivery inside a company that already has infrastructure, security rules, and processes you did not choose, and to keep the toolkit working when the environment fights back.",
-        "date": "August 31, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "15 min read",
-        "tags": [
-          "AI Agents",
-          "Consulting",
-          "LLMs"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "estimating-multi-week-engagements",
-        "title": "Lesson 6: Estimating Multi-Week Engagements: Beyond the 30-45 Minute Task",
-        "series": "hermes-consultant-intermediate",
-        "lesson": 6,
-        "excerpt": "The 30-45 minute task is the unit of execution, not the unit of estimation. This lesson teaches you to size a real multi-week delivery: how to break a large engagement into estimable pieces, why you estimate the critical path and not the total, how to put the constraints and reviews from Lesson 5 into the number, and how to keep an estimate honest when the environment reveals surprises.",
-        "date": "September 1, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "15 min read",
-        "tags": [
-          "AI Agents",
-          "Consulting",
-          "LLMs"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "team-delivery-splitting-work-across-consultants",
-        "title": "Lesson 7: Team Delivery: When It's More Than One Consultant, How the Work Splits",
-        "series": "hermes-consultant-intermediate",
-        "lesson": 7,
-        "excerpt": "Single-consultant delivery has a ceiling. This lesson teaches the working practitioner when that ceiling hits, how to split work so more than one owner can hold it without the pieces drifting apart, and the seams, contracts, and dependency rules that hold a delivery team together. Hermes Agent's multi-agent board is the concrete example.",
-        "date": "September 2, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "15 min read",
-        "tags": [
-          "AI Agents",
-          "Consulting",
-          "LLMs"
-        ],
-        "status": "published"
-      },
-      {
-        "slug": "internal-pilot-converting-to-paid-engagement",
-        "title": "Lesson 8: Running an Internal Pilot That Converts Into a Paid Engagement",
-        "series": "hermes-consultant-intermediate",
-        "lesson": 8,
-        "excerpt": "The hardest sale in consulting is the one where the client has not yet decided you are worth paying. This lesson teaches the working practitioner to run an internal pilot that converts: how you scope a real slice of a prospect's problem, deliver it as a bounded proof, and turn the measured result into a signed engagement instead of a free spec.",
-        "date": "September 3, 2026",
-        "author": "Adroit Consulting",
-        "readTime": "15 min read",
-        "tags": [
-          "AI Agents",
-          "Consulting",
-          "LLMs"
-        ],
-        "status": "published"
-      }
-    ],
-    "totalLessons": 8,
-    "curriculumLessons": 8
+    "totalLessons": 32,
+    "curriculumLessons": 32
   }
 ];
 
 /** Flat list of every lesson, NEWEST FIRST (for sitemap, nav, flat lookups). */
 export const learnLessons: LearnLesson[] = [
+  {
+    "slug": "hands-on-one-framework-real-agent-real-work",
+    "title": "Lesson 33: Hands on with one framework, a real agent that does real work",
+    "series": "agentic-ai",
+    "lesson": 33,
+    "excerpt": "Lesson 32 gave you a running skeleton: a bounded task, an isolated repository, wired tools, typed state, an API in front. This lesson is where that skeleton stops being a scaffold and starts doing a real job. It picks the OpenAI Agents SDK, the framework the series has already leaned on, and walks every primitive that turns a model into an agent that an actual team can hand real work to. You will meet the Runner loop that owns the reason-act-observe cycle, function tools that reach a real system, a structured output the rest of your stack can consume, an input guardrail that blocks out-of-scope requests before they waste tokens, a session that carries memory across turns, and the tracing that is on by default. The worked example is the ticket resolver you stood up last lesson, grown from a classifier into an agent that gathers account context, checks the refund policy, and drafts a reply an agentic contact center could actually send. Define the terms, build it in numbered steps, and finish with a try-it prompt that makes the framework primitives yours.",
+    "date": "September 5, 2026",
+    "author": "Adroit Consulting",
+    "readTime": "15 min read",
+    "tags": [
+      "LLMs",
+      "AI Agents",
+      "Architecture",
+      "Tool Integration"
+    ],
+    "status": "published"
+  },
+  {
+    "slug": "low-risk-ways-to-start-automating-and-when-to-stop",
+    "title": "Lesson 21: Low-Risk Ways to Start Automating, and When to Stop",
+    "series": "ai-at-work",
+    "lesson": 21,
+    "excerpt": "Automation is where AI stops waiting for you and runs a step on its own. The skill is choosing the rare steps that are safe to hand over, and pulling one back the moment it stops earning its place. This lesson gives you a filter for which is which, a worked example, and the warning signs that you have automated too much.",
+    "date": "September 5, 2026",
+    "author": "Adroit Consulting",
+    "readTime": "10 min read",
+    "tags": [
+      "LLMs",
+      "AI at Work",
+      "Automation"
+    ],
+    "status": "published"
+  },
+  {
+    "slug": "automation-and-cron-jobs",
+    "title": "Lesson 11: Automation and Cron Jobs: Turning One-Off Wins Into Reliable Recurring Value",
+    "series": "hermes-consultant",
+    "lesson": 11,
+    "excerpt": "A working demo is a win. Recurring value is a service. This lesson teaches how to turn a one-off agent win into work that fires on a schedule without anyone asking for it, how to write prompts that survive a fresh session, and how to make unattended work loud when it goes wrong instead of failing silently.",
+    "date": "September 5, 2026",
+    "author": "Adroit Consulting",
+    "readTime": "12 min read",
+    "tags": [
+      "AI Agents",
+      "Consulting",
+      "LLMs"
+    ],
+    "status": "published"
+  },
+  {
+    "slug": "compliance-and-risk-at-enterprise-scale",
+    "title": "Lesson 10: Compliance and Risk at Enterprise Scale",
+    "series": "hermes-consultant-advanced",
+    "lesson": 10,
+    "excerpt": "When a consultant becomes a practice, the obligations change. Compliance is the set of rules the practice must meet or it is out of business; risk is what can hurt it even when it breaks no rule. How a principal turns both into controls that are properties of the operating system, not of anyone's good intentions.",
+    "date": "September 05, 2026",
+    "author": "Adroit Consulting",
+    "readTime": "14 min read",
+    "tags": [
+      "AI Agents",
+      "Consulting",
+      "LLMs"
+    ],
+    "status": "published"
+  },
+  {
+    "slug": "cost-and-reliability-engineering-running-agent-estate",
+    "title": "Lesson 10: Cost and Reliability Engineering for a Running Agent Estate",
+    "series": "hermes-consultant-intermediate",
+    "lesson": 10,
+    "excerpt": "The build is one project. The running estate is a subscription to a recurring bill and a standing reliability obligation, and a consultant who hands over a system without engineering both is handing over a liability. This lesson teaches the practitioner operating a real delivery how to model and contain the recurring spend of a fleet of scheduled agents, how to make that fleet dependable when models and providers and infrastructure keep changing underneath it, and how to engineer for the failure of any single part without taking the whole delivery down.",
+    "date": "September 5, 2026",
+    "author": "Adroit Consulting",
+    "readTime": "16 min read",
+    "tags": [
+      "AI Agents",
+      "Consulting",
+      "LLMs"
+    ],
+    "status": "published"
+  },
+  {
+    "slug": "day-27-ip-6-exception-handling-try-catch-rollback",
+    "title": "OmniStudio IP-6: Exception Handling: Try/Catch & Rollback",
+    "series": "omni-studio-cert",
+    "lesson": 27,
+    "excerpt": "Implement robust exception handling in Integration Procedures with Try/Catch blocks and proper rollback. Learn how a Try/Catch Block wraps risky work, what the Catch branch must do, why Load and write actions belong after risky calls, and how the Response Action returns a controlled error shape to callers. This is requirement IP-6 in the Integration Procedures domain.",
+    "date": "September 5, 2026",
+    "author": "Adroit Consulting",
+    "readTime": "12 min read",
+    "tags": [
+      "OmniStudio",
+      "Integration"
+    ],
+    "status": "published"
+  },
+  {
+    "slug": "flow-architecture-flow-vs-apex-vs-external-automation",
+    "title": "Lesson 32: Flow Architecture: Flow vs Apex vs External Automation, Decision Framework",
+    "series": "salesforce-architect",
+    "lesson": 32,
+    "excerpt": "A repeatable framework for choosing where a process runs: Record-Triggered Flow for low-density automation, the hybrid Flow plus invocable Apex pattern for medium density, Apex triggers for high density, and the boundary where automation should leave the org entirely for external, agentic, or cross-system work.",
+    "date": "September 5, 2026",
+    "author": "Adroit Consulting",
+    "readTime": "12 min read",
+    "tags": [
+      "Salesforce",
+      "Architecture",
+      "Flow",
+      "Apex"
+    ],
+    "status": "published"
+  },
+  {
+    "slug": "first-enterprise-agent-project-setup",
+    "title": "Lesson 32: Building your first enterprise agent: project setup, end to end",
+    "series": "agentic-ai",
+    "lesson": 32,
+    "excerpt": "You have the pieces: the loop, tools, context, memory, evaluation. This lesson is the first time they stop being separate techniques and become one running system. It walks the full setup of an enterprise agent project, from picking a bounded problem and scaffolding the repository, through wiring the model, defining the agent, and registering tools, to running it end to end behind a small API. The point is not to write clever code. It is to make the boring decisions deliberately, the ones that decide whether your agent survives contact with a real codebase, a real API key, and a real deployment. A worked example ties it together: a ticket-triager agent you stand up from an empty folder to a running endpoint in one pass.",
+    "date": "September 4, 2026",
+    "author": "Adroit Consulting",
+    "readTime": "14 min read",
+    "tags": [
+      "LLMs",
+      "AI Agents",
+      "Architecture",
+      "Tool Integration"
+    ],
+    "status": "published"
+  },
+  {
+    "slug": "simple-repeatable-workflows-you-can-run-weekly",
+    "title": "Lesson 20: Simple Repeatable Workflows You Can Run Weekly",
+    "series": "ai-at-work",
+    "lesson": 20,
+    "excerpt": "You have saved the prompts that work. The next step is to run them on a schedule. This lesson shows you how to take two or three prompts from your library and package them into a fixed weekly routine: the same steps, in the same order, on the same day, ending with a check you actually run. It defines what a workflow is, walks through a worked example end to end, and gives you a five-step method for building your own.",
+    "date": "September 4, 2026",
+    "author": "Adroit Consulting",
+    "readTime": "9 min read",
+    "tags": [
+      "LLMs",
+      "AI at Work",
+      "Productivity"
+    ],
+    "status": "published"
+  },
   {
     "slug": "mcp-servers-and-integrations",
     "title": "Lesson 10: MCP Servers and Integrations: Wiring the Agent Into the Client's Stack",
@@ -2178,6 +2502,38 @@ export const learnLessons: LearnLesson[] = [
     "date": "September 4, 2026",
     "author": "Adroit Consulting",
     "readTime": "12 min read",
+    "tags": [
+      "AI Agents",
+      "Consulting",
+      "LLMs"
+    ],
+    "status": "published"
+  },
+  {
+    "slug": "large-engagement-governance",
+    "title": "Lesson 9: Governance for Large Engagements",
+    "series": "hermes-consultant-advanced",
+    "lesson": 9,
+    "excerpt": "How a principal keeps control of an engagement too big for any one head to hold. Steering committees, status cadence, and escalation as one operating rhythm that makes surprises arrive early instead of as crises.",
+    "date": "September 04, 2026",
+    "author": "Adroit Consulting",
+    "readTime": "13 min read",
+    "tags": [
+      "AI Agents",
+      "Consulting",
+      "LLMs"
+    ],
+    "status": "published"
+  },
+  {
+    "slug": "quality-at-scale-golden-sets-eval-gates-regression",
+    "title": "Lesson 9: Quality at Scale: Golden Sets, Eval Gates, and Regression Discipline",
+    "series": "hermes-consultant-intermediate",
+    "lesson": 9,
+    "excerpt": "A single agent that works under review is not the hard problem. An estate that keeps producing correct output at volume, after the rules, the data, and the models keep changing, is. This lesson teaches the practitioner who runs real multi-week delivery how to keep quality true at scale: a golden set that lives and grows without rotting, eval gates that block the wrong change before it ships, and the regression discipline that triages a failing gate instead of burying it.",
+    "date": "September 4, 2026",
+    "author": "Adroit Consulting",
+    "readTime": "16 min read",
     "tags": [
       "AI Agents",
       "Consulting",

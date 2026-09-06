@@ -2,6 +2,76 @@ import { BlogPost } from "./types";
 
 export const posts: BlogPost[] = [
   {
+    "slug": "agentforce-determinism-ladder-2026",
+    "title": "The Agentforce Determinism Ladder: Reliable Agents",
+    "excerpt": "Reliability in an Agentforce agent is engineered, not prompted. Move up six levels of agentic control and every rung lands on a concrete build decision.",
+    "category": "Salesforce",
+    "categoryColor": "sf",
+    "categoryGradient": "from-sky to-sky-dark",
+    "date": "September 05, 2026",
+    "author": "Adroit Consulting",
+    "authorInitials": "AC",
+    "readTime": "9 min read",
+    "featured": false,
+    "tags": [
+      "Salesforce",
+      "Agentforce",
+      "Flow",
+      "Apex",
+      "Data Cloud",
+      "security"
+    ],
+    "bannerImage": "/banners/agentforce-determinism-ladder-2026.png",
+    "status": "published"
+  },
+  {
+    "slug": "realtime-write-conflicts-supabase-2026",
+    "title": "Real-Time Writes: Stopping the Last-Writer-Wins Overwrite",
+    "excerpt": "Real-time apps are easy to read and hard to write. When two people edit the same record, whoever saves last wins silently. One guarded UPDATE fixes it.",
+    "category": "React & Web Dev",
+    "categoryColor": "react",
+    "categoryGradient": "from-emerald to-emerald-dark",
+    "date": "September 05, 2026",
+    "author": "Adroit Consulting",
+    "authorInitials": "AC",
+    "readTime": "11",
+    "featured": false,
+    "tags": [
+      "React",
+      "Supabase",
+      "TypeScript",
+      "Realtime",
+      "Web Development",
+      "Postgres"
+    ],
+    "bannerImage": "/banners/realtime-write-conflicts-supabase-2026.png",
+    "status": "published"
+  },
+  {
+    "slug": "agent-durable-execution-state-machines-2026",
+    "title": "Durable Execution Is the Difference From Demo to Deployment",
+    "excerpt": "Durable execution is the reliability layer that lets a long-running agent crash at step 47 and resume at step 48 without redoing a single side effect.",
+    "category": "AI & Consulting",
+    "categoryColor": "ai",
+    "categoryGradient": "from-amber to-amber-dark",
+    "date": "September 04, 2026",
+    "author": "Adroit Consulting",
+    "authorInitials": "AC",
+    "readTime": "10 min read",
+    "featured": false,
+    "tags": [
+      "AI Agents",
+      "Durable Execution",
+      "State Machines",
+      "Multi-Agent Pipelines",
+      "AI Infrastructure",
+      "Idempotency",
+      "Human-in-the-Loop"
+    ],
+    "bannerImage": "/banners/agent-durable-execution-state-machines-2026.png",
+    "status": "published"
+  },
+  {
     "slug": "state-of-the-stack-september-2026",
     "title": "State of the Stack, September 2026: The Interface Moved",
     "excerpt": "Claudeforce put Claude inside the top CRM and Salesforce inside Claude, Kubeflow became Kubernetes' AI control plane, and agent policy learned sequences.",

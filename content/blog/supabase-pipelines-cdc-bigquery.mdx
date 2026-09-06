@@ -83,7 +83,7 @@ alter table public.your_table replica identity full;
 
 ### Generated columns are silently skipped
 
-Custom data types replicate as strings. Neither errors, both change the shape of your destination data if you did not expect them. [^3]
+Generated columns are not replicated, and custom data types replicate as strings. Neither raises an error, but both change the shape of your destination data if you did not expect them. [^3]
 
 ### Partitioned tables land as separate destination tables
 
