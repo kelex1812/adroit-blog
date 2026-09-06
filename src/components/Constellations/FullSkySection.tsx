@@ -116,10 +116,10 @@ export function FullSkySection({ sky }: FullSkySectionProps) {
     <section className="cx-sky overflow-hidden" data-testid="full-sky-section">
       <SkyHeroChrome sky={sky} />
 
-      {/* The hero: every course as a constellation figure. Full-bleed — the
-          sky is a sheet, not a card, so no page gutters here. */}
+      {/* The hero: every course as a constellation figure. The chart centres its
+          own wide band (max-width 1500px) with the galaxy filling the frame. */}
       {figures.length > 0 ? (
-        <div className="w-full pb-6">
+        <div className="px-6 pb-6 md:px-10">
           <StarChart
             figures={figures}
             focusSlug={focusSlug}

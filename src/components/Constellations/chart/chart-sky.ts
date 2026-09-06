@@ -55,20 +55,32 @@ export const SKY_MIN = -60;
 export const SKY_SPAN = 1120;
 
 /**
+ * Field width override for a wide viewBox. The chart's *content* (constellation
+ * figures) lives in a fixed ~1000-unit square centred on (500,520), but the
+ * container the SVG sits in is wide (16:9-ish). If the background stars only
+ * fill a square, the sides of the frame show a bare-gradient letterbox — the
+ * "squared off" plate. Spreading the field to the full viewBox width makes the
+ * galaxy reach every edge while the content stays centred.
+ */
+export const SKY_ASPECT_WIDTH = 1882;
+
+/**
  * Deterministic backdrop stars — identical on server and client, so the field
- * never causes a hydration mismatch.
+ * never causes a hydration mismatch. `fieldW` lets the caller spread the stars
+ * over a wide viewBox (default: the square field).
  */
 export function bgStars(
   count: number,
   prefix: string,
   rRange: [number, number],
   oRange: [number, number],
+  fieldW = SKY_SPAN,
 ): BgStar[] {
   const next = rng(prefix);
   const out: BgStar[] = [];
   for (let i = 0; i < count; i++) {
     out.push({
-      x: SKY_MIN + next() * SKY_SPAN,
+      x: SKY_MIN + next() * fieldW,
       y: SKY_MIN + next() * SKY_SPAN,
       r: rRange[0] + next() * (rRange[1] - rRange[0]),
       o: oRange[0] + next() * (oRange[1] - oRange[0]),

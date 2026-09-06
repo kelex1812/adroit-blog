@@ -19,7 +19,7 @@ import { useCallback, useId, useMemo, useRef, useState } from "react";
 import type { ChartFigure } from "@/lib/chart";
 import { figureProgress } from "@/lib/chart";
 import { usePrefersReducedMotion } from "../model/usePrefersReducedMotion";
-import { bgStars, NEBULAE } from "./chart-sky";
+import { bgStars, SKY_ASPECT_WIDTH, NEBULAE } from "./chart-sky";
 import { chartLayout, figureArtFor, type ChartSlot } from "./chart-figures";
 import "./star-chart.css";
 
@@ -459,6 +459,19 @@ export function StarChart({
   const reducedMotion = usePrefersReducedMotion();
 
   /*
+   * The field is wider than it is tall (the container is 16:8.5 on the sky and
+   * 16:9 on the single course). The constellation *content* is authored in a
+   * fixed ~1000-unit square centred on (500,520) — but if the whole SVG were
+   * that square, `preserveAspectRatio=meet` would letterbox it inside the wide
+   * frame, pinning the galaxy to a square plate with bare-gradient flanks (the
+   * "squared off" look). Instead the viewBox holds the full wide grade, the
+   * background starfield is generated across that width, and the chart content
+   * is shifted right so it sits centred within the wide field.
+   */
+  const viewW = single ? 1778 : SKY_ASPECT_WIDTH; // match the CSS aspect ratio
+  const shiftX = (viewW - 1000) / 2;
+
+  /*
    * SVG ids must be unique per instance or a second chart on the page would
    * steal the first one's filters — `url(#id)` resolves document-wide.
    * `useId` contains colons, which are legal in an id but awkward in CSS, so
@@ -500,9 +513,18 @@ export function StarChart({
     return `${f.name}${drawn} — ${state}`;
   }, [figures]);
 
-  const far = useMemo(() => bgStars(260, "far", [0.4, 1.1], [0.12, 0.4]), []);
-  const mid = useMemo(() => bgStars(120, "mid", [0.8, 1.7], [0.3, 0.65]), []);
-  const near = useMemo(() => bgStars(36, "near", [1.4, 2.4], [0.5, 0.9]), []);
+  const far = useMemo(
+    () => bgStars(260, "far", [0.4, 1.1], [0.12, 0.4], viewW),
+    [viewW],
+  );
+  const mid = useMemo(
+    () => bgStars(120, "mid", [0.8, 1.7], [0.3, 0.65], viewW),
+    [viewW],
+  );
+  const near = useMemo(
+    () => bgStars(36, "near", [1.4, 2.4], [0.5, 0.9], viewW),
+    [viewW],
+  );
 
   /*
    * Parallax writes CSS custom properties instead of React state — pointer
@@ -593,7 +615,7 @@ export function StarChart({
       */}
       <svg
         className="cxc-svg"
-        viewBox="0 0 1000 1000"
+        viewBox={`0 0 ${viewW} 1000`}
         role={single ? "img" : "group"}
         aria-label={single ? singleLabel : "Your courses, drawn as constellation figures"}
       >
@@ -660,20 +682,22 @@ export function StarChart({
 
         {/* ---- Far: dome, nebulae, deep star field ---- */}
         <g className="cxc-par cxc-par-far" aria-hidden="true">
-          <circle cx="500" cy="520" r="520" fill={`url(#cxc-dome-${uid})`} />
-          {NEBULAE.map((n) => (
-            <ellipse
-              key={n.id}
-              className="cxc-neb"
-              cx={n.cx}
-              cy={n.cy}
-              rx={n.rx}
-              ry={n.ry}
-              fill={`url(#${n.id}-${uid})`}
-              transform={`rotate(${n.rot} ${n.cx} ${n.cy})`}
-              style={{ animationDuration: `${n.drift}s`, animationDelay: `-${n.rot}s` }}
-            />
-          ))}
+          <g transform={`translate(${shiftX} 0)`}>
+            <circle cx="500" cy="520" r="520" fill={`url(#cxc-dome-${uid})`} />
+            {NEBULAE.map((n) => (
+              <ellipse
+                key={n.id}
+                className="cxc-neb"
+                cx={n.cx}
+                cy={n.cy}
+                rx={n.rx}
+                ry={n.ry}
+                fill={`url(#${n.id}-${uid})`}
+                transform={`rotate(${n.rot} ${n.cx} ${n.cy})`}
+                style={{ animationDuration: `${n.drift}s`, animationDelay: `-${n.rot}s` }}
+              />
+            ))}
+          </g>
           {far.map((s, i) => (
             <circle key={i} className="cxc-bg-star" cx={s.x} cy={s.y} r={s.r} opacity={s.o} />
           ))}
@@ -681,8 +705,10 @@ export function StarChart({
 
         {/* ---- Mid: graticule, plate edge, twinkling field ---- */}
         <g className="cxc-par cxc-par-mid" aria-hidden="true">
-          <Graticule />
-          <circle className="cxc-plate" cx="500" cy="520" r="440" fill="none" />
+          <g transform={`translate(${shiftX} 0)`}>
+            <Graticule />
+            <circle className="cxc-plate" cx="500" cy="520" r="440" fill="none" />
+          </g>
           {mid.map((s, i) => (
             <circle
               key={i}
@@ -723,29 +749,33 @@ export function StarChart({
             />
           ))}
 
-          {figures.map((figure, i) => {
-            const slot = layout[i];
-            if (!slot) return null;
-            return (
-              <FigureSvg
-                key={figure.seriesSlug}
-                figure={figure}
-                slot={{
-                  ...slot,
-                  scale: slot.scale * (focusSlug === figure.seriesSlug ? 1.08 : 1),
-                }}
-                focused={focusSlug === figure.seriesSlug}
-                dimmed={Boolean(focusSlug && focusSlug !== figure.seriesSlug)}
-                showArt={showArt}
-                index={i}
-                ids={ids}
-                interactive={!single}
-                onSelect={() =>
-                  onFocusChange(focusSlug === figure.seriesSlug ? null : figure.seriesSlug)
-                }
-              />
-            );
-          })}
+          <g transform={`translate(${shiftX} 0)`}>
+            {figures.map((figure, i) => {
+              const slot = layout[i];
+              if (!slot) return null;
+              return (
+                <FigureSvg
+                  key={figure.seriesSlug}
+                  figure={figure}
+                  slot={{
+                    ...slot,
+                    scale: slot.scale * (focusSlug === figure.seriesSlug ? 1.08 : 1),
+                  }}
+                  focused={focusSlug === figure.seriesSlug}
+                  dimmed={Boolean(focusSlug && focusSlug !== figure.seriesSlug)}
+                  showArt={showArt}
+                  index={i}
+                  ids={ids}
+                  interactive={!single}
+                  onSelect={() =>
+                    onFocusChange(
+                      focusSlug === figure.seriesSlug ? null : figure.seriesSlug,
+                    )
+                  }
+                />
+              );
+            })}
+          </g>
         </g>
 
         {/* Occasional meteors — the sky is alive, not a screenshot */}
@@ -757,9 +787,9 @@ export function StarChart({
         <rect
           className="cxc-vignette"
           aria-hidden="true"
-          x="-60"
+          x={-60}
           y="-60"
-          width="1120"
+          width={viewW + 120}
           height="1120"
           fill={`url(#cxc-vignette-${uid})`}
         />

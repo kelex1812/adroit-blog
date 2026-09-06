@@ -1,23 +1,21 @@
 /* Readable constellation course map — stick figures, no glow blobs. */
 
 /*
- * The SVG keeps a square aspect and letterboxes on wide viewports, so the
- * ambient sky is painted on the panel instead — otherwise the plate reads as
- * a square sitting on dead black. These washes line up with the in-SVG
- * nebulae so the two halves join without a seam.
- *
- * Full-width band (not a card). The SVG's `preserveAspectRatio` is the
- * default xMidYMid *meet*, so the square star plate scales uniformly and is
- * centred; widening the box reveals more of the CSS-painted sky around it
- * rather than stretching the plate. This is what makes the sky read as a
- * sweeping band instead of a square doorway.
+ * A wide sky band (not a card). The SVG's `preserveAspectRatio` is the default
+ * xMidYMid *meet*, and the viewBox is authored to the same aspect ratio the box
+ * here declares (16:8.5 = 1882×1000), so the frame fills exactly — no
+ * letterboxing, no square plate. The background starfield is generated across
+ * the full viewBox width, so the galaxy reaches every edge; the constellation
+ * content stays centred on top. `max-width` keeps a very wide viewport from
+ * stretching the hero absurdly wide — it is a centred band, not a full-bleed
+ * sheet.
  */
 .cxc {
   position: relative;
   width: 100%;
+  max-width: 1500px;
   margin-inline: auto;
   aspect-ratio: 16 / 8.5;
-  max-height: min(76vh, 860px);
   overflow: hidden;
   color: #e8dfd0;
   background:
@@ -704,14 +702,15 @@
 
 /*
  * Single-figure mode (/learn/[series]): one constellation, no legend, no
- * inspect panel. Full-bleed wide band like the profile hero — the square
- * plate still letterboxes (uniform scale, never stretched) and the CSS sky
- * fills the sides. No card corner; it is a sheet of sky, not a boxed panel.
+ * inspect panel. Same wide-band treatment as the profile hero — the galaxy
+ * fills the whole frame and the constellation is centred. No card corner; it
+ * is a sheet of sky, not a boxed panel. Max-width keeps a wide desktop from
+ * stretching the tracker absurdly wide.
  */
 .cxc.is-single {
   width: 100%;
+  max-width: 1200px;
   aspect-ratio: 16 / 9;
-  max-width: none;
 }
 
 /*
