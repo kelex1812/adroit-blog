@@ -7,7 +7,7 @@
  * test that only checked counts and ranges.
  */
 
-import { hashString } from "../3d/star-model";
+import { hashString } from "../model/star-model";
 
 /**
  * Nebula clouds. Desaturated and broad: they carry the plate's depth and

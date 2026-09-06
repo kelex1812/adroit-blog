@@ -34,7 +34,7 @@ import type {
   ConstellationState,
   ProfileSky,
 } from "@/shared/contracts-constellations";
-import type { SpectralClass } from "@/components/Constellations/3d/star-model";
+import type { SpectralClass } from "@/components/Constellations/model/star-model";
 import {
   projectFigure,
   type ConstellationFigure,

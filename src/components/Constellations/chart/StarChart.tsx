@@ -18,7 +18,7 @@
 import { useCallback, useId, useMemo, useRef, useState } from "react";
 import type { ChartFigure } from "@/lib/chart";
 import { figureProgress } from "@/lib/chart";
-import { usePrefersReducedMotion } from "../3d/usePrefersReducedMotion";
+import { usePrefersReducedMotion } from "../model/usePrefersReducedMotion";
 import { bgStars, NEBULAE } from "./chart-sky";
 import { chartLayout, figureArtFor, type ChartSlot } from "./chart-figures";
 import "./star-chart.css";

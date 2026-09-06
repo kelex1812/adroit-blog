@@ -1,7 +1,7 @@
 /**
  * figure-catalog.ts — the constellations a course can be drawn as.
  *
- * Course-agnostic on purpose. `3d/asterism-data.ts` keys figures by
+ * Course-agnostic on purpose. `model/asterism-data.ts` keys figures by
  * `seriesSlug`, which hardcodes "this course is Orion" and cannot answer "which
  * figure fits a 10-lesson course". These are just constellations; `assignFigures`
  * matches them to courses by size.
@@ -25,7 +25,7 @@
  * Every figure here draws all of its members — `chart.test.ts` enforces that, so
  * a member can never become an orphan dot floating outside the outline.
  */
-import type { SpectralClass } from "../3d/star-model";
+import type { SpectralClass } from "../model/star-model";
 
 export interface CatalogStar {
   /** Bayer designation / proper name, e.g. "Vega (α Lyr)". */
@@ -416,7 +416,7 @@ const PEGASUS: ConstellationFigure = {
 /**
  * Orion, as the recognizable hunter.
  *
- * `3d/asterism-data.ts` carries a 29-member Orion, padded so the old 3D scene
+ * `model/asterism-data.ts` carries a 29-member Orion, padded so the old 3D scene
  * could give every lesson its own star. The padding was never drawn — only these
  * nine are connected — so it produced twenty members that existed and did
  * nothing. Sizing is `assignFigures`' job now, and this is the figure.
