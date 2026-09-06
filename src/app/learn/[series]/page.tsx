@@ -313,17 +313,19 @@ export default async function SeriesPage({ params }: Props) {
 
         {/* On-course tracker — the course drawn as its constellation, star
             lines lit to match progress (Hubble Field Phase 2). SVG, so there
-            is no WebGL gate and no 2D fallback to keep in step. Full-bleed —
-            it is a sheet of sky, not a card, so it flushes edge to edge above
-            the syllabus's own max-width shell. */}
-        {constellation ? (
-          <div className="w-full overflow-hidden">
-            <SeriesStarChart
-              constellation={constellation}
-              isGuest={!isAuthed}
-            />
-          </div>
-        ) : null}
+            is no WebGL gate and no 2D fallback to keep in step. The chart
+            centres its own wide band (max-width 1200px) with the galaxy
+            filling the frame, inside the syllabus's content shell. */}
+        <div className="max-w-[1120px] mx-auto px-6 pt-8">
+          {constellation ? (
+            <div className="mb-10">
+              <SeriesStarChart
+                constellation={constellation}
+                isGuest={!isAuthed}
+              />
+            </div>
+          ) : null}
+        </div>
 
         {/* Syllabus — lesson-number order (ADR-105), client sort + hide-completed. */}
         <div className="max-w-[1120px] mx-auto px-6 py-8 pb-4">
