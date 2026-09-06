@@ -2,6 +2,31 @@ import { BlogPost } from "./types";
 
 export const posts: BlogPost[] = [
   {
+    "slug": "agent-release-engineering-2026",
+    "title": "Ship an Agent Like Risk: Version, Gate, Canary, Roll Back",
+    "excerpt": "An agent is a code, prompt, model, and tool bundle that changes in five places. Ship it like a service and a prompt tweak has no fast rollback.",
+    "category": "AI & Consulting",
+    "categoryColor": "ai",
+    "categoryGradient": "from-amber to-amber-dark",
+    "date": "September 06, 2026",
+    "author": "Adroit Consulting",
+    "authorInitials": "AC",
+    "readTime": "10 min read",
+    "featured": false,
+    "tags": [
+      "AI Agents",
+      "Agent DevOps",
+      "Versioning",
+      "Canary Deployment",
+      "Rollback",
+      "Eval Gates",
+      "AI Infrastructure",
+      "Multi-Agent Pipelines"
+    ],
+    "bannerImage": "/banners/agent-release-engineering-2026.png",
+    "status": "published"
+  },
+  {
     "slug": "agentforce-determinism-ladder-2026",
     "title": "The Agentforce Determinism Ladder: Reliable Agents",
     "excerpt": "Reliability in an Agentforce agent is engineered, not prompted. Move up six levels of agentic control and every rung lands on a concrete build decision.",
