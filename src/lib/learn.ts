@@ -208,12 +208,24 @@ export function toIsoDate(date: string): string {
 /**
  * Progress derivation (ADR-004): published = lessons present,
  * total = highest lesson number in the series (NOT hardcoded "90").
+ *
+ * `curriculum` is the series' FINAL planned lesson count (curriculumLessons),
+ * which Phase 1 (Hubble Field hardening) makes stable and declared. It is the
+ * number that sizes the constellation and the number the publisher is working
+ * toward; `total - published` is the number of lessons still to come, whereas
+ * `totalLessons - published` is ~0 because totalLessons == highest published.
  */
 export function getSeriesProgress(series: LearningSeries): {
   published: number;
   total: number;
+  /** Final planned lesson count (curriculumLessons) — stable, never shrinks. */
+  curriculum: number;
 } {
-  return { published: series.lessons.length, total: series.totalLessons };
+  return {
+    published: series.lessons.length,
+    total: series.totalLessons,
+    curriculum: series.curriculumLessons ?? series.totalLessons,
+  };
 }
 
 /** Short display label for a series (band tag pill). */

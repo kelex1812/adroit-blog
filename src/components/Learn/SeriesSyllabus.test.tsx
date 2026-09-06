@@ -95,6 +95,18 @@ function getVisibleLessonTitles(): string[] {
   return titles;
 }
 
+function renderSyllabus(over: Partial<React.ComponentProps<typeof SeriesSyllabus>> = {}) {
+  return render(
+    <SeriesSyllabus
+      lessons={LESSONS}
+      totalLessons={3}
+      published={3}
+      upcoming={0}
+      {...over}
+    />,
+  );
+}
+
 describe("SeriesSyllabus", () => {
   beforeEach(() => {
     paramsMock.mockReturnValue(new URLSearchParams());
@@ -102,14 +114,7 @@ describe("SeriesSyllabus", () => {
 
   it("renders lessons in lesson-number ascending order by default", () => {
     paramsMock.mockReturnValue(new URLSearchParams(""));
-    render(
-      <SeriesSyllabus
-        lessons={LESSONS}
-        totalLessons={3}
-        published={3}
-        upcoming={0}
-      />,
-    );
+    renderSyllabus();
     expect(getVisibleLessonTitles()).toEqual([
       "Lesson One",
       "Lesson Two",
@@ -119,14 +124,7 @@ describe("SeriesSyllabus", () => {
 
   it("re-sorts to descending order when ?sort=desc is present (toggle wiring)", () => {
     paramsMock.mockReturnValue(new URLSearchParams("sort=desc"));
-    render(
-      <SeriesSyllabus
-        lessons={LESSONS}
-        totalLessons={3}
-        published={3}
-        upcoming={0}
-      />,
-    );
+    renderSyllabus();
     expect(getVisibleLessonTitles()).toEqual([
       "Lesson Three",
       "Lesson Two",
@@ -135,14 +133,7 @@ describe("SeriesSyllabus", () => {
   });
 
   it("exposes the sort + hide-completed controls", () => {
-    render(
-      <SeriesSyllabus
-        lessons={LESSONS}
-        totalLessons={3}
-        published={3}
-        upcoming={0}
-      />,
-    );
+    renderSyllabus();
     expect(screen.getByRole("switch", { name: "Hide completed lessons" })).toBeInTheDocument();
     expect(
       screen.getByRole("button", { name: "Sort by lesson number ascending" }),
@@ -153,17 +144,28 @@ describe("SeriesSyllabus", () => {
   });
 
   it("keeps the hide-completed switch at a ≥44px hit target (a11y finding 6)", () => {
-    render(
-      <SeriesSyllabus
-        lessons={LESSONS}
-        totalLessons={3}
-        published={3}
-        upcoming={0}
-      />,
-    );
+    renderSyllabus();
     const sw = screen.getByRole("switch", { name: "Hide completed lessons" });
     // w-11 = 44px, h-11 = 44px (WCAG 2.5.8 target size minimum).
     expect(sw.className).toContain("w-11");
     expect(sw.className).toContain("h-11");
+  });
+
+  it("renders coming-soon placeholder nodes for planned-but-unwritten lessons", () => {
+    // published=3, upcoming=3 → lessons 4,5,6 are owed.
+    renderSyllabus({ published: 3, upcoming: 3 });
+    const block = screen.getByTestId("coming-soon-lessons");
+    expect(block).toBeInTheDocument();
+    expect(screen.getByLabelText("Lesson 4, coming soon")).toBeInTheDocument();
+    expect(screen.getByLabelText("Lesson 5, coming soon")).toBeInTheDocument();
+    expect(screen.getByLabelText("Lesson 6, coming soon")).toBeInTheDocument();
+    // They are placeholders, not links — nothing navigates and no completion toggle.
+    expect(screen.queryAllByRole("link")).toHaveLength(LESSONS.length);
+    expect(screen.getAllByTestId("mark-complete")).toHaveLength(LESSONS.length);
+  });
+
+  it("hides coming-soon nodes when the curriculum is fully published", () => {
+    renderSyllabus({ upcoming: 0 });
+    expect(screen.queryByTestId("coming-soon-lessons")).not.toBeInTheDocument();
   });
 });

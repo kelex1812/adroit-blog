@@ -108,8 +108,11 @@ export default async function SeriesPage({ params }: Props) {
   // Lesson-number ordering (ADR-105) — the syllabus client re-sorts on
   // toggle; the server always passes the canonical asc order.
   const baseLessons = getLessonsForSeries(series);
-  const { published, total } = getSeriesProgress(s);
-  const upcoming = Math.max(0, total - published);
+  const { published, total, curriculum } = getSeriesProgress(s);
+  // Lessons the publisher still owes (curriculumLessons - published). This is
+  // the "coming soon" count — totalLessons == highest published, so the old
+  // total - published was ~0 and hid the real gap.
+  const upcoming = Math.max(0, curriculum - published);
 
   // Tier presence (ADR-101): omni-studio-cert ships checks + exam; non-tier
   // series (sfarch, agentic) keep the legacy quiz behaviour.

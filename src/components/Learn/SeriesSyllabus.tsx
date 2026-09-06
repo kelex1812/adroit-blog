@@ -27,6 +27,11 @@ interface SeriesSyllabusProps {
   totalLessons: number;
   /** Published count (server-side). */
   published: number;
+  /**
+   * Lessons still owed (curriculumLessons - published), computed server-side.
+   * These render as "coming soon" placeholder nodes that demote to real
+   * lessons as the daily learning crons publish them.
+   */
   upcoming: number;
 }
 
@@ -116,6 +121,44 @@ export default function SeriesSyllabus({
             {hideCompleted ? "All lessons completed — nice work." : "No lessons yet."}
           </p>
         )}
+
+        {/* Coming-soon placeholder nodes for planned-but-unwritten lessons.
+            When the daily learning cron publishes lesson N, it slides out of
+            this list and into the published rows above — no manual step. */}
+        {upcoming > 0 ? (
+          <div
+            className="border-t border-dashed border-gray-300 dark:border-[var(--border-default)]"
+            data-testid="coming-soon-lessons"
+          >
+            <p className="px-3 pt-3 pb-1 font-mono text-[10px] font-bold text-gray-400 dark:text-[var(--ink-faint)] uppercase tracking-[0.08em]">
+              Coming soon
+            </p>
+            {Array.from({ length: upcoming }, (_, i) => published + i + 1).map((n) => (
+              <div
+                key={n}
+                aria-label={`Lesson ${n}, coming soon`}
+                className="flex items-center gap-[18px] px-3 py-[14px] border-b border-dashed border-gray-200 dark:border-[var(--border-default)] opacity-70"
+              >
+                <div className="flex-shrink-0 w-14 h-10 rounded-xl border border-dashed border-gray-300 dark:border-[var(--border-default)] flex flex-col items-center justify-center font-mono">
+                  <span className="text-[15px] font-bold leading-none text-gray-400 dark:text-[var(--ink-faint)]">
+                    {n}
+                  </span>
+                  <span className="text-[7.5px] uppercase tracking-[0.06em] text-gray-400 dark:text-[var(--ink-faint)] mt-0.5">
+                    Lesson
+                  </span>
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-[15px] font-medium text-gray-400 dark:text-[var(--ink-faint)] leading-snug">
+                    Coming soon
+                  </p>
+                </div>
+                <span className="flex-shrink-0 text-[10px] font-bold text-gray-400 dark:text-[var(--ink-faint)] uppercase tracking-[0.05em]">
+                  Planned
+                </span>
+              </div>
+            ))}
+          </div>
+        ) : null}
       </div>
     </>
   );
