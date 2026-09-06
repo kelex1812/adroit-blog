@@ -2,14 +2,12 @@
  * SeriesStarChart — the on-course tracker at `/learn/[series]`.
  *
  * The course's own constellation, drawn once and centred, with its star lines
- * lit to match real progress. Replaces `SeriesConstellation3D` in the Hubble
- * Field Phase 2 port; both that component and the `SeriesConstellation` vertical
- * rail it fell back to are left in tree and unmounted for one release.
+ * lit to match real progress. Replaced the unmounted `SeriesConstellation3D`
+ * (removed in Phase 5 cleanup) in the Hubble Field Phase 2 port.
  *
  * There is no WebGL gate and no lazy chunk to wait for, because the chart is
- * SVG — which is the point. The old surface shipped a WebGL probe, a
- * three/r3f dynamic import, a loading state and a 2D fallback to render one
- * constellation; this needs none of them.
+ * SVG — which is the point. No legacy 3D component, loading state, or 2D
+ * fallback remains: the whole 3D stack was removed in Phase 5 cleanup.
  *
  * Nothing here is selectable: the page already *is* the course, so the figure
  * carries no interaction and the syllabus below owns lesson navigation.

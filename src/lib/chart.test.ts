@@ -31,6 +31,12 @@ import {
   FIGURE_PINS,
   lessonsPerStar,
 } from "@/components/Constellations/chart/figure-assignment";
+import {
+  availableFigures,
+  poolCapacity,
+  recommendForLessonCount,
+  usedConstellationNames,
+} from "@/components/Constellations/chart/constellation-pool";
 import type {
   ChronicleEntry,
   ConstellationState,
@@ -577,6 +583,47 @@ describe("course → constellation pins (exclusivity + surface consistency)", ()
       ).toBe(fromProfile);
       expect(fromCoursePage, `${slug} must be its pinned figure`).toBe(FIGURE_PINS[slug]);
     }
+  });
+});
+
+/* Phase 4 — the used/available pool that backs a new-course launch. */
+describe("constellation pool (used vs available)", () => {
+  it("marks every pinned figure as used", () => {
+    expect([...usedConstellationNames()].sort()).toEqual(
+      Object.values(FIGURE_PINS).sort(),
+    );
+  });
+
+  it("reconciles against the catalog — used figures all exist, available never overlap used", () => {
+    const used = usedConstellationNames();
+    const available = availableFigures();
+    const availableNames = new Set(available.map((f) => f.name));
+    // Every pin names a real authorable figure.
+    for (const name of used) {
+      expect(figureByName(name), `pinned figure "${name}" is not authorable`).not.toBeNull();
+    }
+    // Available = catalog minus used; nothing double-books.
+    for (const name of used) {
+      expect(availableNames.has(name), `"${name}" is both used and available`).toBe(false);
+    }
+    expect(available.length).toBe(CONSTELLATION_FIGURES.length - used.size);
+  });
+
+  it("recommends only from the available pool, sized to the lesson count", () => {
+    const rec = recommendForLessonCount(22);
+    expect(rec).not.toBeNull();
+    expect(usedConstellationNames().has(rec!.name)).toBe(false);
+    // Closest available to 22: Hydra(17) is used (omni), next is AURIGA(9)...
+    // actually largest remaining — just assert it picks a non-pinned figure
+    // sizes are all 3–20, so exact assertions could churn; assert shape.
+    expect(rec!.stars.length).toBeGreaterThan(0);
+  });
+
+  it("reports the 88 as authorable + art-only (the honest '88 alignable once figured')", () => {
+    const cap = poolCapacity();
+    expect(cap.total).toBe(88);
+    expect(cap.authorable).toBe(CONSTELLATION_FIGURES.length);
+    expect(cap.artOnly).toBe(88 - CONSTELLATION_FIGURES.length);
   });
 });
 

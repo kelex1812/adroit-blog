@@ -1,12 +1,11 @@
 /**
- * usePrefersReducedMotion — G2: bind the 3D scenes to the user's motion
- * preference (a11y regression vs the shipped 2D layer).
+ * usePrefersReducedMotion — bind the chart to the user's motion preference
+ * (a11y). The on-course tracker and profile 2D charts disable decorative motion
+ * (pulsing, page drift) when the user opts out.
  *
  * Reads `matchMedia('(prefers-reduced-motion: reduce)')` and returns a live
  * boolean. SSR-safe (returns false on the server), and re-evaluates when the
- * user toggles the OS setting while the page is open. Passed into
- * SeriesConstellation3D + ProfileGalaxy3D to disable ignition, parallax,
- * drift, film-grain, and camera breathing (staticMode).
+ * user toggles the OS setting while the page is open.
  */
 "use client";
 

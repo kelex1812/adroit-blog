@@ -7,7 +7,7 @@
  *
  * The production chart (`HubbleFieldLab` → `buildChartFigures`) assigns each
  * course a constellation from `figure-catalog.ts` by `curriculumLessons`. The
- * leftover `labFigure` / `labAsterismFor` path still reads `3d/asterism-data.ts`
+ * leftover `labFigure` / `labAsterismFor` path still reads `model/asterism-data.ts`
  * for the unmounted 3D studies; it is not what the chart draws.
  *
  * What is still lab-only is the *progress* — the completion levels below are
@@ -19,9 +19,9 @@ import type {
   ConstellationState,
   ProfileSky,
 } from "@/shared/contracts-constellations";
-import type { Asterism } from "../3d/asterism-data";
-import { asterismFor, projectAsterism } from "../3d/asterism-data";
-import type { SpectralClass } from "../3d/star-model";
+import type { Asterism } from "../model/asterism-data";
+import { asterismFor, projectAsterism } from "../model/asterism-data";
+import type { SpectralClass } from "../model/star-model";
 
 /**
  * One member star of a course figure.
