@@ -531,6 +531,17 @@
   pointer-events: none;
 }
 
+/* Coming-soon caption on the single-course tracker — a plain line under the
+   figure telling the learner how many curriculum lessons are still owed. */
+.cxc-coming-soon {
+  margin: -4px 0 0;
+  text-align: center;
+  font-family: ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  color: rgba(150, 150, 170, 0.75);
+}
+
 .cxc-inspect {
   position: absolute;
   z-index: 2;

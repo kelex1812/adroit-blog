@@ -244,6 +244,29 @@ describe("StarChart — single variant", () => {
     expect(document.querySelector(".cxc-legend")).toBeNull();
     expect(screen.queryByTestId("cxc-inspect")).not.toBeInTheDocument();
   });
+
+  it("shows a coming-soon caption when the curriculum outruns published lessons", () => {
+    // curriculum 30, published 10 → 20 lessons still owed.
+    const gap = [
+      buildChartFigure(course("agentic-ai", 6, 10, "Agentic AI Path", 30)),
+    ];
+    render(
+      <StarChart
+        figures={gap}
+        variant="single"
+        focusSlug={null}
+        onFocusChange={() => {}}
+      />,
+    );
+    const caption = screen.getByTestId("chart-coming-soon");
+    expect(caption).toBeInTheDocument();
+    expect(caption.textContent).toContain("20 more lessons");
+  });
+
+  it("hides the coming-soon caption when the course is fully published", () => {
+    renderSingle(); // curriculum == totalStars
+    expect(screen.queryByTestId("chart-coming-soon")).not.toBeInTheDocument();
+  });
 });
 
 describe("StarChart — degraded data", () => {

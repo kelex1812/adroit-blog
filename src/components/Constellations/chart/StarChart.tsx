@@ -704,6 +704,19 @@ export function StarChart({
         />
       </svg>
 
+      {/* Coming-soon caption — the gap between published and the final
+          curriculum. Per-star placeholders don't apply here (the figure's
+          stars map lesson groups, not individual lessons, so once a course has
+          published ≥ its figure size every star already has a published lesson);
+          this line is the honest "n still coming" signal. */}
+      {single && figures[0] && figures[0].curriculumLessons > figures[0].totalStars ? (
+        <p className="cxc-coming-soon" data-testid="chart-coming-soon">
+          {figures[0].curriculumLessons - figures[0].totalStars} more{" "}
+          {figures[0].curriculumLessons - figures[0].totalStars === 1 ? "lesson" : "lessons"}{" "}
+          in this curriculum coming soon
+        </p>
+      ) : null}
+
       {focused && !single ? (
         <aside className="cxc-inspect" data-testid="cxc-inspect">
           <p className="cxc-kicker">Course</p>
