@@ -13,11 +13,9 @@ interface ExamLockedProps {
   series: string;
   checks: CheckProgress[];
   seriesName: string;
-  /** True when every lesson in the course is complete (exam capstone gate). */
-  courseComplete?: boolean;
 }
 
-export default function ExamLocked({ series, checks, seriesName, courseComplete = true }: ExamLockedProps) {
+export default function ExamLocked({ series, checks, seriesName }: ExamLockedProps) {
   const passedCount = checks.filter((c) => c.passed).length;
   const total = checks.length;
   const pct = total > 0 ? Math.round((passedCount / total) * 100) : 0;
@@ -34,25 +32,6 @@ export default function ExamLocked({ series, checks, seriesName, courseComplete 
           Cert Prep Exam · locked
         </div>
 
-        {!courseComplete ? (
-          <>
-            <h1 className="text-[clamp(1.5rem,3vw,2rem)] font-extrabold text-navy tracking-[-0.02em] leading-tight mb-3">
-              Finish the course to unlock the exam
-            </h1>
-            <p className="text-[14px] text-gray-500 max-w-[600px] leading-relaxed mb-3">
-              The timed cert prep exam opens once you&apos;ve completed the full {seriesName} course. Keep going through the lessons, then come back to start your 105-minute run.
-            </p>
-            <div className="mt-4">
-              <Link
-                href={`/learn/${series}`}
-                className="inline-flex items-center gap-1.5 text-sm font-semibold text-white bg-navy hover:bg-navy/90 rounded-full px-5 py-2.5 no-underline transition-colors duration-150"
-              >
-                Back to {seriesName}
-              </Link>
-            </div>
-          </>
-        ) : (
-          <> 
         <h1 className="text-[clamp(1.5rem,3vw,2rem)] font-extrabold text-navy tracking-[-0.02em] leading-tight mb-3">
           Unlock: complete all 9 knowledge checks with 80%+
         </h1>
@@ -119,8 +98,6 @@ export default function ExamLocked({ series, checks, seriesName, courseComplete 
             </Link>
           ))}
         </div>
-          </>
-        )}
       </div>
 
       <p className="font-mono text-[10.5px] text-gray-500 mt-4">
