@@ -43,6 +43,11 @@ export interface ConstellationBuildInput {
   lessonLabels?: Record<string, string>;
   /** The set of completed lesson slugs (from completion events / DB). */
   completedSlugs: ReadonlySet<string>;
+  /**
+   * True when this course's cert-prep exam has been passed (server-graded
+   * `quiz_attempt` best score >= 72). Single exam source across all surfaces.
+   */
+  examPassed?: boolean;
 }
 
 /** Inputs for the Chronicle narrative feed. */
@@ -103,6 +108,7 @@ export function buildConstellation(
     curriculumLessons: Math.max(input.curriculumLessons ?? 0, stars.length),
     litStars,
     complete: stars.length > 0 && litStars === stars.length,
+    examPassed: input.examPassed ?? false,
     stars,
   };
 }

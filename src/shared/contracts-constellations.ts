@@ -182,6 +182,18 @@ export interface ConstellationState {
   litStars: number;
   /** True when every star is lit (course complete). */
   complete: boolean;
+  /**
+   * True when the cert-prep exam has been passed (best server-graded
+   * `quiz_attempt` score for `<series>:exam` >= 72). This is the SINGLE
+   * source of truth for the exam crown across every surface — profile sky,
+   * on-course tracker, and certificate all read the same derived value, so
+   * they can never disagree. (ADR: quiz_attempt is server-graded; quiz_run is
+   * client-writable history and must never gate a crown or certificate.)
+   *
+   * Optional so content/synthetic surfaces (PathCard previews, guest locks,
+   * tests) can omit it and get no crown; the server loaders set it.
+   */
+  examPassed?: boolean;
   stars: ConstellationStar[];
 }
 

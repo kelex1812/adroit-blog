@@ -23,9 +23,9 @@ export interface SeriesStarChartProps {
   constellation: ConstellationState;
   isGuest?: boolean;
   /**
-   * Whether the cert exam has been passed. The page would need its own query to
-   * know, so it defaults off and the crowning node then follows `complete` —
-   * see `docs/implementation-plan-hubble-field.md` §3.1.
+   * Legacy override. When omitted (normal), the constellation's own
+   * `examPassed` (server-graded quiz_attempt) drives the crown — the same
+   * source the profile sky uses.
    */
   examPassed?: boolean;
 }
@@ -33,10 +33,14 @@ export interface SeriesStarChartProps {
 export function SeriesStarChart({
   constellation,
   isGuest = false,
-  examPassed = false,
+  examPassed,
 }: SeriesStarChartProps) {
   const figures = useMemo(
-    () => [buildChartFigure(constellation, { examPassed })],
+    () => [
+      buildChartFigure(constellation, {
+        examPassed: examPassed ?? constellation.examPassed,
+      }),
+    ],
     [constellation, examPassed],
   );
 

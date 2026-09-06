@@ -11,6 +11,7 @@ import { describe, expect, it } from "vitest";
 import {
   buildChartFigure,
   buildChartFigures,
+  buildSegments,
   examPassedSlugs,
   figureProgress,
 } from "./chart";
@@ -61,6 +62,7 @@ function constellation(
     curriculumLessons: over.curriculumLessons ?? totalStars,
     litStars,
     complete: over.complete ?? (totalStars > 0 && litStars === totalStars),
+    examPassed: over.examPassed ?? false,
     stars:
       over.stars ??
       Array.from({ length: totalStars }, (_, i) => ({
@@ -354,14 +356,23 @@ describe("buildChartFigures", () => {
     expect(figures.map((f) => f.seriesSlug)).toEqual(["agentic-ai", "ai-at-work"]);
   });
 
-  it("wires the chronicle's exam events through to the right course", () => {
+  it("wires the server-derived exam flag through to the right course", () => {
     const figures = buildChartFigures(
       sky({
         constellations: [
-          constellation({ seriesSlug: "agentic-ai", litStars: 2, totalStars: 10 }),
-          constellation({ seriesSlug: "ai-at-work", litStars: 2, totalStars: 12 }),
+          constellation({
+            seriesSlug: "agentic-ai",
+            litStars: 2,
+            totalStars: 10,
+            examPassed: false,
+          }),
+          constellation({
+            seriesSlug: "ai-at-work",
+            litStars: 2,
+            totalStars: 12,
+            examPassed: true,
+          }),
         ],
-        chronicle: [chronicleEntry({ eventType: "exam", seriesSlug: "ai-at-work" })],
       }),
     );
     expect(figures.find((f) => f.seriesSlug === "agentic-ai")!.examPassed).toBe(false);
@@ -624,6 +635,70 @@ describe("constellation pool (used vs available)", () => {
     expect(cap.total).toBe(88);
     expect(cap.authorable).toBe(CONSTELLATION_FIGURES.length);
     expect(cap.artOnly).toBe(88 - CONSTELLATION_FIGURES.length);
+  });
+});
+
+describe("buildSegments (lesson path between main stars)", () => {
+  // A straight horizontal 0..10 figure with two connections (three stars).
+  const proj = (pts: [number, number][]) =>
+    pts.map(([x, y]) => ({ position: [x, y, 0] as [number, number, number] }));
+  const lineFig = proj([[0, 0], [5, 0], [10, 0]]);
+  const conns: ReadonlyArray<readonly [number, number]> = [
+    [0, 1],
+    [1, 2],
+  ];
+
+  const mut = (done: ReadonlySet<number>) =>
+    buildSegments(conns, lineFig, 6, done);
+
+  it("distributes every lesson across the segments, in order", () => {
+    const segs = mut(new Set());
+    // Two equal-length segments → ~3 lessons each.
+    expect(segs.length).toBe(2);
+    expect(segs[0]!.lessons.length + segs[1]!.lessons.length).toBe(6);
+    expect(segs[0]!.lessons).toEqual([1, 2, 3]);
+    expect(segs[1]!.lessons).toEqual([4, 5, 6]);
+  });
+
+  it("counts done lessons per segment", () => {
+    const segs = mut(new Set([1, 2, 3, 4]));
+    expect(segs[0]!.done).toBe(3);
+    expect(segs[1]!.done).toBe(1);
+  });
+
+  it("keeps segment endpoints inside the star list", () => {
+    const segs = mut(new Set());
+    for (const s of segs) {
+      expect(s.a).toBeGreaterThanOrEqual(0);
+      expect(s.b).toBeGreaterThanOrEqual(0);
+      expect(s.a).toBeLessThan(3);
+      expect(s.b).toBeLessThan(3);
+    }
+  });
+
+  it("is deterministic — same figure + curriculum yields the same layout", () => {
+    const first = buildSegments(conns, lineFig, 6, new Set([2, 5]));
+    const second = buildSegments(conns, lineFig, 6, new Set([2, 5]));
+    expect(first).toEqual(second);
+  });
+
+  it("keeps the crown independent — segments ride the connections, not the exam node", () => {
+    // The path layout must not change just because the course completes.
+    const half = buildSegments(conns, lineFig, 6, new Set([1, 2, 3]));
+    const all = buildSegments(conns, lineFig, 6, new Set([1, 2, 3, 4, 5, 6]));
+    expect(half.map((s) => ({ a: s.a, b: s.b, lessons: s.lessons }))).toEqual(
+      all.map((s) => ({ a: s.a, b: s.b, lessons: s.lessons })),
+    );
+    expect(all[0]!.done).toBe(3);
+    expect(all[1]!.done).toBe(3);
+  });
+
+  it("reports a dense segment's done fraction for the rail render", () => {
+    // 20 lessons over two 5-unit segments → 10 per segment (dense, ≥ rail).
+    const segs = buildSegments(conns, lineFig, 20, new Set([1, 2, 3, 4, 5]));
+    expect(segs[0]!.lessons.length).toBeGreaterThan(4);
+    expect(segs[0]!.done).toBe(5);
+    expect(segs[1]!.done).toBe(0);
   });
 });
 
