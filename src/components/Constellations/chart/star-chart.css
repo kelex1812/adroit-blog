@@ -5,23 +5,19 @@
  * ambient sky is painted on the panel instead — otherwise the plate reads as
  * a square sitting on dead black. These washes line up with the in-SVG
  * nebulae so the two halves join without a seam.
- */
-/*
- * The lab shell was `height: 100vh` because the chart owned the whole screen.
- * As a page hero it has to be bounded and square: the plate is a circle, and
- * the SVG preserves its aspect ratio, so a wide box letterboxes the plate into
- * the middle and strands the absolutely-positioned legend and inspect panel out
- * over the empty margins.
  *
- * Constraining *width* is what keeps the box square — `aspect-ratio` with a
- * `max-height` cap does not, because the cap shortens the box without narrowing
- * it, which is exactly how that stranding happened.
+ * Full-width band (not a card). The SVG's `preserveAspectRatio` is the
+ * default xMidYMid *meet*, so the square star plate scales uniformly and is
+ * centred; widening the box reveals more of the CSS-painted sky around it
+ * rather than stretching the plate. This is what makes the sky read as a
+ * sweeping band instead of a square doorway.
  */
 .cxc {
   position: relative;
-  width: min(100%, 88vh, 900px);
+  width: 100%;
   margin-inline: auto;
-  aspect-ratio: 1 / 1;
+  aspect-ratio: 16 / 8.5;
+  max-height: min(76vh, 860px);
   overflow: hidden;
   color: #e8dfd0;
   background:
@@ -708,14 +704,14 @@
 
 /*
  * Single-figure mode (/learn/[series]): one constellation, no legend, no
- * inspect panel. Shorter than the profile hero so it sits above a syllabus
- * without pushing it off the fold.
+ * inspect panel. Full-bleed wide band like the profile hero — the square
+ * plate still letterboxes (uniform scale, never stretched) and the CSS sky
+ * fills the sides. No card corner; it is a sheet of sky, not a boxed panel.
  */
 .cxc.is-single {
   width: 100%;
-  aspect-ratio: 16 / 10;
+  aspect-ratio: 16 / 9;
   max-width: none;
-  border-radius: 16px;
 }
 
 /*

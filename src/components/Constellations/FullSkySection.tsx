@@ -116,9 +116,10 @@ export function FullSkySection({ sky }: FullSkySectionProps) {
     <section className="cx-sky overflow-hidden" data-testid="full-sky-section">
       <SkyHeroChrome sky={sky} />
 
-      {/* The hero: every course as a constellation figure. */}
+      {/* The hero: every course as a constellation figure. Full-bleed — the
+          sky is a sheet, not a card, so no page gutters here. */}
       {figures.length > 0 ? (
-        <div className="px-6 pb-6 md:px-10">
+        <div className="w-full pb-6">
           <StarChart
             figures={figures}
             focusSlug={focusSlug}
