@@ -228,6 +228,17 @@ describe("StarChart — single variant", () => {
     expect(screen.getByTestId("cxc-figure-agentic-ai")).not.toHaveAttribute("tabindex");
   });
 
+  it("draws the fine lesson path between the main stars", () => {
+    renderSingle();
+    const figure = document.querySelector('[data-testid="cxc-figure-agentic-ai"]')!;
+    // A 10-lesson course over a ≥17★ figure (single assign) → sparse segments,
+    // so it renders individual path nodes, not dense rails.
+    const nodes = Array.from(figure.querySelectorAll(".cxc-path-node"));
+    expect(nodes.length).toBeGreaterThan(0);
+    // Every one of the 10 lessons should sit on the path as a node.
+    expect(nodes.length).toBeGreaterThanOrEqual(8);
+  });
+
   it("describes the course and its progress on the image itself", () => {
     renderSingle();
     expect(

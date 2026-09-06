@@ -469,12 +469,43 @@
 }
 
 /*
- * A member whose share of the course is done. Faint on its own — the rails
- * carry progress; this only keeps the joints from looking dead behind them.
- */
-.cxc-dot.is-lit {
-  fill: #ecdcaa;
-}
+ /* A member whose share of the course is done. Faint on its own — the rails
+  * carry progress; this only keeps the joints from looking dead behind them.
+  */
+ .cxc-dot.is-lit {
+   fill: #ecdcaa;
+ }
+
+ /* Lesson-path nodes — the fine per-lesson progress strung between main stars.
+    Smaller than the joint dots, so the constellation's anchors stay prominent. */
+ .cxc-path-node {
+   fill: #6b6a66;
+   stroke: rgba(4, 6, 12, 0.85);
+   stroke-width: 0.9;
+   paint-order: stroke;
+ }
+
+ .cxc-path-node.is-lit {
+   fill: #f7e8b8;
+   stroke: rgba(4, 6, 12, 0.6);
+ }
+
+ /* Dense-segment rails — a thin path that fills as lessons land. */
+ .cxc-path-rail {
+   stroke: rgba(200, 184, 144, 0.22);
+   stroke-width: 2;
+   stroke-linecap: round;
+ }
+
+ .cxc-path-rail-lit {
+   stroke: rgba(247, 232, 184, 0.6);
+   stroke-width: 2;
+   stroke-linecap: round;
+ }
+
+ .cxc-figure.is-complete .cxc-path-rail-lit {
+   stroke: rgba(255, 241, 216, 0.9);
+ }
 
 /* Exam — ring + core, no haze */
 .cxc-exam-ring {

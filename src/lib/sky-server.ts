@@ -14,6 +14,8 @@ import { buildAchievementStats, buildConstellation, buildProfileSky } from "@/li
 import { getCatalogForUserV2, toLearnHubCards } from "@/lib/catalog";
 import { getLessonsForSeries, getSeriesBySlug } from "@/lib/learn";
 import { getSeriesLessonSlugs } from "@/lib/certificate";
+import { getCertExam, scoreQuizAttemptRows } from "@/lib/quiz";
+import { CERT_EXAM_PASS_PCT } from "@/lib/certificate";
 import type {
   AchievementStats,
   CompletionEventRow,
@@ -66,6 +68,54 @@ function getAllSeriesSlugs(): string[] {
 }
 
 /**
+ * Which of the courses' cert-prep exams the user has PASSED, derived server-side
+ * from the graded `quiz_attempt` rows (single source of truth for the crown).
+ *
+ * Returns a Set of series slugs where the best exam score is >= 72. This is the
+ * SAME derivation the certificate page uses (server-graded quiz_attempt, full
+ * canonical coverage — never the client-writable quiz_run history). Both the
+ * profile sky and the on-course tracker read this, so the exam crown is
+ * identical everywhere.
+ */
+export async function loadExamPassedBySeries(
+  userId: string,
+  seriesSlugs: string[],
+): Promise<Set<string>> {
+  const withExam = seriesSlugs.filter((s) => getCertExam(s) !== null);
+  if (withExam.length === 0) return new Set();
+
+  const quizNames = withExam.map((s) => `${s}:exam`);
+  try {
+    const supabase = await getSupabaseServerClient();
+    const { data, error } = await supabase
+      .from("quiz_attempt")
+      .select("quiz_name, question_index, is_correct")
+      .eq("user_id", userId)
+      .in("quiz_name", quizNames);
+    if (error) throw error;
+
+    const rows = (data ?? []) as {
+      quiz_name: string;
+      question_index: number;
+      is_correct: boolean;
+    }[];
+
+    const passed = new Set<string>();
+    for (const s of withExam) {
+      const exam = getCertExam(s);
+      const canonical = exam?.questions.length;
+      const attempts = rows.filter((r) => r.quiz_name === `${s}:exam`);
+      const scored = scoreQuizAttemptRows(attempts, canonical);
+      if (scored && scored.score >= CERT_EXAM_PASS_PCT) passed.add(s);
+    }
+    return passed;
+  } catch (err) {
+    console.error("[sky] loadExamPassedBySeries", err);
+    return new Set();
+  }
+}
+
+/**
  * Lesson labels (slug → title) for all series (best-effort). */
 export function getLessonLabelMap(): Record<string, string> {
   const map: Record<string, string> = {};
@@ -92,6 +142,7 @@ export async function loadSeriesConstellation(input: {
   gradient: string;
   courseId: string;
   completedSlugs?: ReadonlySet<string>;
+  examPassed?: boolean;
 }): Promise<ReturnType<typeof buildConstellation> | null> {
   // Canonical, ordered star set: the series' published lessons. Falls back to
   // the generator's planned question-file set (unpublished-yet lessons still
@@ -109,6 +160,7 @@ export async function loadSeriesConstellation(input: {
     curriculumLessons: getSeriesBySlug(input.seriesSlug)?.curriculumLessons,
     lessonLabels,
     completedSlugs: input.completedSlugs ?? new Set<string>(),
+    examPassed: input.examPassed ?? false,
   });
 }
 
@@ -205,6 +257,12 @@ export async function loadProfileSky(
     // catalog unreachable → empty constellation set
   }
 
+  // Exam crowns: single server-graded source (quiz_attempt), not the chronicle.
+  const examPassedBySeries = await loadExamPassedBySeries(
+    userId,
+    cards.map((c) => c.slug),
+  );
+
   const constellations = cards
     .map((card) => {
       const published = getLessonsForSeries(card.slug).map((l) => l.slug);
@@ -220,6 +278,7 @@ export async function loadProfileSky(
         curriculumLessons: getSeriesBySlug(card.slug)?.curriculumLessons,
         lessonLabels: lessonLabels,
         completedSlugs,
+        examPassed: examPassedBySeries.has(card.slug),
       });
     })
     .filter((c): c is NonNullable<typeof c> => c !== null);

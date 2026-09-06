@@ -29,7 +29,7 @@ import { AccessModelChip } from "@/components/Catalog/AccessModelChip";
 import DifficultyPill from "@/components/Learn/DifficultyPill";
 import PrerequisitesSection from "@/components/Learn/PrerequisitesSection";
 import SeriesStarChart from "@/components/Constellations/chart/SeriesStarChart";
-import { loadSeriesConstellation } from "@/lib/sky-server";
+import { loadSeriesConstellation, loadExamPassedBySeries } from "@/lib/sky-server";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
 
 interface Props {
@@ -148,12 +148,16 @@ export default async function SeriesPage({ params }: Props) {
   const completedSlugs = isAuthed
     ? await getCompletedLessonSlugs(user!.id)
     : new Set<string>();
+  const examPassed = isAuthed
+    ? (await loadExamPassedBySeries(user!.id, [series])).has(series)
+    : false;
   const constellation = await loadSeriesConstellation({
     seriesSlug: series,
     name: s.name,
     gradient: s.gradient,
     courseId: courseRow?.id ?? series,
     completedSlugs,
+    examPassed,
   });
 
   return (

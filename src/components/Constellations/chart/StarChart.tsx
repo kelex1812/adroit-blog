@@ -309,6 +309,67 @@ function FigureSvg({
         />
       ))}
 
+      {/*
+        Lesson path — the fine progress between main stars. The main
+        constellation stars are the recognizable anchors; the lessons that
+        round-robin onto them are instead drawn as small nodes strung along the
+        connecting segments, so a learner lights the PATH toward the next main
+        star per lesson. Sparse segments (<= 4 lessons) draw one node per
+        lesson, lit individually; dense segments draw a filling rail (done
+        fraction) plus a muted count, so a long course never crowds a phone.
+      */}
+      {figure.segments.map((seg, i) => {
+        const sa = figure.stars[seg.a]!;
+        const sb = figure.stars[seg.b]!;
+        const ax = toX(sa.position[0]);
+        const ay = toY(sa.position[1]);
+        const bx = toX(sb.position[0]);
+        const by = toY(sb.position[1]);
+        const n = seg.lessons.length;
+        // i+1 of n → the lesson's fractional position along the segment.
+        const fract = (k: number) => (k + 1) / (n + 1);
+        const xAt = (k: number) => ax + (bx - ax) * fract(k);
+        const yAt = (k: number) => ay + (by - ay) * fract(k);
+
+        if (n <= 4) {
+          return seg.lessons.map((lesson, k) => {
+            const lit = seg.done >= k + 1;
+            return (
+              <circle
+                key={`sp-${i}-${k}`}
+                className={`cxc-path-node${lit ? " is-lit" : ""}`}
+                cx={xAt(k)}
+                cy={yAt(k)}
+                r={1.1}
+              />
+            );
+          });
+        }
+        // Dense: a partial-fill rail from the segment start, lit in proportion
+        // to done/total, plus a muted count badge.
+        const frac = n > 0 ? seg.done / n : 0;
+        const px = ax + (bx - ax) * frac;
+        const py = ay + (by - ay) * frac;
+        return (
+          <g key={`sp-${i}`}>
+            <line
+              className="cxc-path-rail"
+              x1={ax}
+              y1={ay}
+              x2={bx}
+              y2={by}
+            />
+            <line
+              className="cxc-path-rail-lit"
+              x1={ax}
+              y1={ay}
+              x2={px}
+              y2={py}
+            />
+          </g>
+        );
+      })}
+
       {/* Joint vertices */}
       {drawn.map((i) => {
         if (i === examIdx) return null;

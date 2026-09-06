@@ -83,6 +83,30 @@ export interface ChartFigure {
   /** Empty when no figure was assigned — renders label-only. */
   stars: ChartStar[];
   connections: ReadonlyArray<readonly [number, number]>;
+  /**
+   * The fine-grained path between main stars. Lessons (1..curriculum, in
+   * lesson order) are distributed across the figure's connecting segments
+   * proportionally to each segment's projected length, so the learner lights
+   * the PATH toward the next main star rather than waiting for a whole
+   * round-robin bucket to finish. Each segment reports which lessons it
+   * carries and how many of them are done — the renderer shows sparse
+   * segments as individual nodes and dense ones as a filling rail.
+   */
+  segments: ChartSegment[];
+}
+
+/**
+ * A chunk of the course's lessons mapped onto one connecting segment between
+ * two main stars.
+ */
+export interface ChartSegment {
+  /** Indices into `stars` — the two main stars this path runs between. */
+  a: number;
+  b: number;
+  /** 1-based lesson numbers carried by this segment, in curriculum order. */
+  lessons: number[];
+  /** How many of `lessons` are completed. */
+  done: number;
 }
 
 /** Fraction of the course finished, 0-1. Guards a zero-lesson course. */
@@ -148,7 +172,9 @@ export function buildChartFigure(
 ): ChartFigure {
   const { seriesSlug, name, litStars, totalStars, complete } = constellation;
   const curriculumLessons = Math.max(constellation.curriculumLessons ?? 0, totalStars);
-  const examPassed = options.examPassed ?? false;
+  // Exam crown uses the server-authoritative value carried on the constellation
+  // (single source), overridable by explicit callers (tests/lab).
+  const examPassed = options.examPassed ?? constellation.examPassed ?? false;
 
   /*
    * Callers that hand over a single course (the on-course tracker, tests) get
@@ -170,7 +196,7 @@ export function buildChartFigure(
   };
 
   if (!figure) {
-    return { ...base, figureName: null, stars: [], connections: [] };
+    return { ...base, figureName: null, stars: [], connections: [], segments: [] };
   }
 
   const projected = projectFigure(figure);
@@ -208,7 +234,99 @@ export function buildChartFigure(
     figureName: figure.name,
     stars,
     connections: figure.connections,
+    segments: buildSegments(figure.connections, projected, curriculumLessons, done),
   };
+}
+
+/**
+ * Distribute a course's lessons (1..curriculum, in lesson order) across the
+ * figure's connecting segments, proportional to each segment's projected
+ * length, so the learner lights the path toward the next main star rather than
+ * waiting for a whole round-robin bucket.
+ *
+ * Long segments get more lessons than short ones (a long crossing reads as
+ * "more path to travel"); lessons are kept contiguous per segment so the rail
+ * fills left-to-right along the course. A segment where every lesson is done is
+ * fully lit; partial completion lights a fraction (the renderer shows dense
+ * segments as a filling rail).
+ *
+ * Deterministic — the same figure + curriculum always yields the same layout.
+ * When the figure has fewer segments than lessons, some segments carry several
+ * lessons; when it has more, tail lessons simply have no segment (honest).
+ */
+export function buildSegments(
+  connections: ReadonlyArray<readonly [number, number]>,
+  projected: ReadonlyArray<{ position: [number, number, number] }>,
+  curriculumLessons: number,
+  done: ReadonlySet<number>,
+): ChartSegment[] {
+  if (curriculumLessons < 1 || connections.length === 0) return [];
+
+  // Length of each segment in projected space.
+  const lengths = connections.map(([a, b]) => {
+    const [ax, ay] = projected[a]!.position;
+    const [bx, by] = projected[b]!.position;
+    return Math.hypot(bx - ax, by - ay);
+  });
+  const totalLen = lengths.reduce((s, l) => s + l, 0);
+  if (totalLen <= 0) {
+    // Degenerate (collapsed figure) — split evenly instead.
+    return distributeEvenly(connections, projected, curriculumLessons, done);
+  }
+
+  // Assign an integer lesson count per segment proportional to length, keeping
+  // the total exactly curriculumLessons via largest-remainder apportionment.
+  const raw = lengths.map((l) => (l / totalLen) * curriculumLessons);
+  const counts = raw.map((r) => Math.floor(r));
+  const remaining = curriculumLessons - counts.reduce((s, c) => s + c, 0);
+  const order = raw
+    .map((r, i) => ({ r, i }))
+    .sort((x, y) => y.r - Math.floor(y.r) - (x.r - Math.floor(x.r)))
+    .map((x) => x.i);
+  for (let k = 0; k < remaining && k < order.length; k++) counts[order[k]!]!++;
+
+  // Walk lessons onto segments in connection order (contiguous per segment).
+  const segments: ChartSegment[] = [];
+  let cursor = 1;
+  for (let i = 0; i < connections.length; i++) {
+    const n = counts[i]!;
+    if (n < 1) continue;
+    const lessons = Array.from({ length: n }, (_, k) => cursor + k);
+    cursor += n;
+    segments.push({
+      a: connections[i]![0],
+      b: connections[i]![1],
+      lessons,
+      done: lessons.filter((l) => done.has(l)).length,
+    });
+  }
+  return segments;
+}
+
+/** Fallback when a figure collapses (zero-length segments): split evenly. */
+function distributeEvenly(
+  connections: ReadonlyArray<readonly [number, number]>,
+  projected: ReadonlyArray<{ position: [number, number, number] }>,
+  curriculumLessons: number,
+  done: ReadonlySet<number>,
+): ChartSegment[] {
+  const have = Math.min(connections.length, curriculumLessons);
+  const base = Math.floor(curriculumLessons / Math.max(have, 1));
+  const extra = curriculumLessons - base * have;
+  const segments: ChartSegment[] = [];
+  let cursor = 1;
+  for (let i = 0; i < have; i++) {
+    const n = base + (i < extra ? 1 : 0);
+    const lessons = Array.from({ length: n }, (_, k) => cursor + k);
+    cursor += n;
+    segments.push({
+      a: connections[i]![0],
+      b: connections[i]![1],
+      lessons,
+      done: lessons.filter((l) => done.has(l)).length,
+    });
+  }
+  return segments;
 }
 
 /**
@@ -219,7 +337,6 @@ export function buildChartFigure(
  * course, so it cannot be made one course at a time.
  */
 export function buildChartFigures(sky: ProfileSky): ChartFigure[] {
-  const passed = examPassedSlugs(sky.chronicle);
   const assignments = assignFigures(
     sky.constellations.map((c) => ({
       seriesSlug: c.seriesSlug,
@@ -230,7 +347,7 @@ export function buildChartFigures(sky: ProfileSky): ChartFigure[] {
   return sky.constellations.map((c) =>
     buildChartFigure(c, {
       figure: assignments.get(c.seriesSlug) ?? null,
-      examPassed: passed.has(c.seriesSlug),
+      examPassed: c.examPassed,
     }),
   );
 }
