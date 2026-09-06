@@ -27,6 +27,27 @@ export const posts: BlogPost[] = [
     "status": "published"
   },
   {
+    "slug": "ci-cache-infrastructure-2026",
+    "title": "CI Cache Is Infrastructure: Budget, Scope, Verify",
+    "excerpt": "A CI cache is infrastructure. It has a storage budget, an eviction policy, and a trust boundary. Treat it as the stateful system it is.",
+    "category": "AI & Consulting",
+    "categoryColor": "ai",
+    "categoryGradient": "from-amber to-amber-dark",
+    "date": "September 6, 2026",
+    "author": "Adroit Consulting",
+    "authorInitials": "AC",
+    "readTime": "9 min read",
+    "featured": false,
+    "tags": [
+      "DevOps",
+      "CI/CD",
+      "Platform Engineering",
+      "Security"
+    ],
+    "bannerImage": "/banners/ci-cache-infrastructure-2026.png",
+    "status": "published"
+  },
+  {
     "slug": "agentforce-determinism-ladder-2026",
     "title": "The Agentforce Determinism Ladder: Reliable Agents",
     "excerpt": "Reliability in an Agentforce agent is engineered, not prompted. Move up six levels of agentic control and every rung lands on a concrete build decision.",
