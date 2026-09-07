@@ -62,7 +62,7 @@ export default function Header() {
         </Link>
 
         {/* Desktop Nav */}
-        <nav aria-label="Main" className="hidden md:flex items-center gap-7">
+        <nav aria-label="Main" className="hidden md:flex items-center gap-6 lg:gap-7">
           {navLinks.map((link) =>
             link.external ? (
               <a
@@ -96,7 +96,7 @@ export default function Header() {
               </Link>
             ),
           )}
-          <div className="flex items-center gap-4 pl-2 border-l border-[var(--border-subtle)]">
+          <div className="flex items-center gap-3 lg:gap-4 pl-2 border-l border-[var(--border-subtle)]">
             <SearchOverlay />
             <ThemeToggle authed={!!user} iconOnly />
             <Link

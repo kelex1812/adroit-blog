@@ -9,6 +9,36 @@ Baseline v1.0.0 — Omni content + course-structure/cert-standards bar + Constel
 
 ## [Unreleased]
 
+### Fix: global site header no longer overflows 25px at the 768px md breakpoint (t_1f5b6abd)
+
+**What** — At a 768px viewport (md, desktop nav mode) the global site header
+in `Header.tsx` overflowed the document horizontally by 25px
+(`documentElement.scrollWidth` 778 vs `clientWidth` 753). The culprit was the
+desktop nav (`hidden md:flex`) — Posts/Categories/Tags/Learn/Adroit.io plus the
+trailing auth cluster (search / theme / Contact Us / Sign in) — wide enough
+that its right edge ran off the viewport edge. Because the header is global,
+every page in the md–lg width band (700–820px swept) showed the overflow.
+
+**Why** — Two one-class additive changes, desktop band only, no JS/bundle
+impact:
++ `Header.tsx` desktop `<nav>`: `gap-7` → `gap-6 lg:gap-7` (saves 5×4 = 20px
+  in the 768–1023px band, restored to the original 28px at ≥1024px).
++ The trailing auth cluster `<div>`: `gap-4` → `gap-3 lg:gap-4` (saves 3×4 =
+  12px in the md band, restored at lg). Combined −32px of gap across the nav.
+Brand, links, Contact Us/Sign in shrink-to-fit; nothing hidden, wrapped, or
+reflowed — spacing-only, per the perf note (additive utilities, zero bundle).
+
+**Verified live (headless Chrome/CDP, `/blog`)** — post-fix `scrollWidth`
+vs `clientWidth`: 768→753/753 (was 778), plus a 700/720/800/820/375/390/1280
+sweep all at 0 overflow; all 6 nav items render un-clipped (right edge 746 ≤
+753px). Regression test added to `Header.test.tsx` locking the md gap contract
+(class assertions — jsdom can't measure layout), keeping the suite at 616
+tests.
+
+**Known issues** — None. The referenced `MDXArticle.tsx` unused-`kind` lint
+warning is pre-existing and unrelated. Build/Blog-pagination changes from
+t_2a868238 (be382c6) are untouched.
+
 ### Public read surfaces — mobile thumb-conformance hardening (`feat/public-mobile-responsive-t_c4c0a710`)
 
 **What** — Hardened the public READ surfaces for small-viewport thumb use

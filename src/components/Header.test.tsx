@@ -103,4 +103,24 @@ describe("Header mobile nav toggle (t_c4c0a710)", () => {
     expect(hamburger).toHaveAttribute("aria-expanded", "false");
     expect(screen.queryByRole("navigation", { name: "Mobile" })).toBeNull();
   });
+
+  it("keeps the desktop nav within the viewport at the md breakpoint (t_1f5b6abd)", () => {
+    // At 768px (md, mobile=false) the desktop nav — 5 links + auth cluster —
+    // previously overflowed the document by 25px (nav right edge 778 vs
+    // clientWidth 753). The fix is additive spacing only: the desktop nav
+    // runs a tighter `gap-6` in the md band (restored to `gap-7` at lg) and
+    // the trailing auth cluster a tighter `gap-3` (restored to `gap-4` at
+    // lg). jsdom can't measure real layout, so this locks the class contract
+    // that keeps total nav width under the 753px md viewport; a revert to
+    // `gap-7`/`gap-4` at md is what shipped the 25px overflow.
+    renderHeader();
+    // Class assertions on the compiled element classes.
+    const navEl = screen.getByRole("navigation", { name: "Main" });
+    expect(navEl.className).toMatch(/gap-6/);
+    expect(navEl.className).toMatch(/lg:gap-7/);
+    // The trailing auth cluster must carry the tighter md gap too.
+    const cluster = navEl.querySelector<HTMLElement>(".gap-3");
+    expect(cluster).not.toBeNull();
+    expect(cluster!.className).toMatch(/lg:gap-4/);
+  });
 });
