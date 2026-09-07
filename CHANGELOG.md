@@ -52,6 +52,15 @@ of the (already-correct) mobile grid.,
 **Known issues** — none. The pre-existing `MDXArticle.tsx` unused-`kind`
 lint warning is untouched (shipped on main before this branch)).
 
+**Fix (`t_2a868238`)** — the `flex flex-wrap` hardening: at a 390px
+viewport the 12 (44x44px) pagination buttons (prev + 10 numbers +
+next) previously overran the ~375px content width, causing a 109px
+page-level horizontal overflow on / (home, →/blog redirect) and /blog. Letting
+the pager row wrap (`flex flex-wrap items-center justify-center gap-1.5`)
+keeps every button at the 44px thumb floor while dropping the row to two
+lines on narrow phones — `docOverflowPx = 0` restored at 390px. On
+tablet/desktop widthsthe row still fits a single line, so no visual change.
+
 ### Hubble Field — constellations sized to the curriculum (`feat/hubble-field`)
 
 **What** — a course's constellation is chosen by the curriculum's *final*

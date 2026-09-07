@@ -328,7 +328,7 @@ function BlogListingContent({
         {totalPages > 1 && paginatedPosts.length > 0 && (
           <nav
             aria-label="Pagination"
-            className="flex items-center justify-center gap-1.5 mt-8"
+            className="flex flex-wrap items-center justify-center gap-1.5 mt-8"
           >
             <button
               onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
