@@ -115,111 +115,118 @@ export default function AdminCoursesPage() {
       </div>
 
       <div className="rounded-xl border overflow-hidden" style={{ borderColor: "var(--admin-table-border)" }}>
-        <table className="w-full text-left border-collapse">
-          <thead>
-            <tr className="font-mono text-[11px] font-bold uppercase tracking-[0.07em]" style={{ color: "var(--admin-table-head)" }}>
-              <th scope="col" className="px-4 py-3">Series</th>
-              <th scope="col" className="px-4 py-3">Status</th>
-              <th scope="col" className="px-4 py-3">Access</th>
-              <th scope="col" className="px-4 py-3">Entitlements</th>
-              <th scope="col" className="px-4 py-3">Status</th>
-              <th scope="col" className="px-4 py-3">Access model</th>
-              <th scope="col" className="px-4 py-3"></th>
-            </tr>
-          </thead>
-          <tbody>
-            {rows.map(({ course, activeEntitlementCount }) => (
-              <tr key={course.id} className="text-[13.5px]" style={{ borderTop: "1px solid var(--admin-table-border)" }}>
-                <td className="px-4 py-3">
-                  <span className="font-semibold text-[var(--ink-primary)]">
-                    {course.title}
-                  </span>
-                  <div className="font-mono text-[11px] text-[var(--ink-muted)]">
-                    {course.series_slug}
-                  </div>
-                </td>
-                <td className="px-4 py-3">
-                  <StatusBadge status={course.status} />
-                </td>
-                <td className="px-4 py-3">
-                  <AccessModelChip model={course.access_model} />
-                </td>
-                <td className="px-4 py-3 font-mono text-[12.5px] text-[var(--ink-muted)]">
-                  {activeEntitlementCount}
-                </td>
-                <td className="px-4 py-3">
-                  <select
-                    value={course.status}
-                    disabled={saving === course.id}
-                    aria-label={`Status for ${course.title}`}
-                    onChange={(e) =>
-                      onStatusChange(
-                        course.series_slug,
-                        e.target.value as CourseStatus,
-                      )
-                    }
-                    className="rounded-md border text-[12.5px] px-2 py-1.5 bg-transparent disabled:opacity-50"
-                    style={{ borderColor: "var(--admin-table-border)" }}
-                  >
-                    {STATUSES.map((s) => (
-                      <option key={s} value={s}>
-                        {s}
-                      </option>
-                    ))}
-                  </select>
-                </td>
-                <td className="px-4 py-3">
-                  <select
-                    value={course.access_model}
-                    disabled={saving === course.id}
-                    aria-label={`Access model for ${course.title}`}
-                    onChange={(e) =>
-                      onModelChange(
-                        course.series_slug,
-                        e.target.value as AccessModel,
-                      )
-                    }
-                    className="rounded-md border text-[12.5px] px-2 py-1.5 bg-transparent disabled:opacity-50"
-                    style={{ borderColor: "var(--admin-table-border)" }}
-                  >
-                    {MODELS.map((m) => (
-                      <option key={m} value={m}>
-                        {m}
-                      </option>
-                    ))}
-                  </select>
-                </td>
-                <td className="px-4 py-3">
-                  {course.status === "pending" && (
-                    <button
-                      type="button"
-                      onClick={() => setLaunching(course)}
-                      className="rounded-md text-white text-[11.5px] font-semibold px-3 py-1.5 mr-2 hover:opacity-90"
-                      style={{ background: "var(--color-red)" }}
-                    >
-                      Launch →
-                    </button>
-                  )}
-                  <Link
-                    href={`/learn/${course.series_slug}/preview`}
-                    className="inline-flex items-center gap-1 rounded-md border px-3 py-1.5 text-[11.5px] font-semibold no-underline text-[var(--ink-muted)] hover:text-[var(--ink-primary)] hover:bg-[var(--surface-sunken)] mr-2"
-                    style={{ borderColor: "var(--admin-table-border)" }}
-                  >
-                    Preview first lesson <span aria-hidden>&rarr;</span>
-                  </Link>
-                  <button
-                    type="button"
-                    onClick={() => setEditing(course)}
-                    className="rounded-md border px-3 py-1.5 text-[11.5px] font-semibold text-[var(--ink-primary)] hover:bg-[var(--surface-sunken)]"
-                    style={{ borderColor: "var(--admin-table-border)" }}
-                  >
-                    Edit profile
-                  </button>
-                </td>
+        <div className="overflow-x-auto">
+          <table className="w-full text-left border-collapse">
+            <thead>
+              <tr className="font-mono text-[11px] font-bold uppercase tracking-[0.07em]" style={{ color: "var(--admin-table-head)" }}>
+                <th scope="col" className="px-4 py-3">Series</th>
+                <th scope="col" className="px-4 py-3">Status</th>
+                <th scope="col" className="px-4 py-3">Access model</th>
+                <th scope="col" className="px-4 py-3 hidden md:table-cell">Entitlements</th>
+                <th scope="col" className="px-4 py-3"></th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {rows.map(({ course, activeEntitlementCount }) => (
+                <tr key={course.id} className="text-[13.5px]" style={{ borderTop: "1px solid var(--admin-table-border)" }}>
+                  <td className="px-4 py-3">
+                    <span className="font-semibold text-[var(--ink-primary)]">
+                      {course.title}
+                    </span>
+                    <div className="font-mono text-[11px] text-[var(--ink-muted)] hidden sm:block">
+                      {course.series_slug}
+                    </div>
+                  </td>
+                  <td className="px-4 py-3">
+                    {/* Reconciled single Status column (ADR-231): the read-only
+                        badge + the editable select both describe the same status —
+                        keeping them as two columns duplicated the header. */}
+                    <div className="flex flex-wrap items-center gap-2">
+                      <StatusBadge status={course.status} />
+                      <select
+                        value={course.status}
+                        disabled={saving === course.id}
+                        aria-label={`Status for ${course.title}`}
+                        onChange={(e) =>
+                          onStatusChange(
+                            course.series_slug,
+                            e.target.value as CourseStatus,
+                          )
+                        }
+                        className="rounded-md border text-[12.5px] px-2 py-1.5 min-h-[44px] md:min-h-0 bg-transparent disabled:opacity-50"
+                        style={{ borderColor: "var(--admin-table-border)" }}
+                      >
+                        {STATUSES.map((s) => (
+                          <option key={s} value={s}>
+                            {s}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  </td>
+                  <td className="px-4 py-3">
+                    <div className="flex flex-wrap items-center gap-2">
+                      <AccessModelChip model={course.access_model} />
+                      <select
+                        value={course.access_model}
+                        disabled={saving === course.id}
+                        aria-label={`Access model for ${course.title}`}
+                        onChange={(e) =>
+                          onModelChange(
+                            course.series_slug,
+                            e.target.value as AccessModel,
+                          )
+                        }
+                        className="rounded-md border text-[12.5px] px-2 py-1.5 min-h-[44px] md:min-h-0 bg-transparent disabled:opacity-50"
+                        style={{ borderColor: "var(--admin-table-border)" }}
+                      >
+                        {MODELS.map((m) => (
+                          <option key={m} value={m}>
+                            {m}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  </td>
+                  <td className="px-4 py-3 font-mono text-[12.5px] text-[var(--ink-muted)] hidden md:table-cell">
+                    {activeEntitlementCount}
+                  </td>
+                  <td className="px-4 py-3">
+                    {/* Action cluster wraps never-negated on mobile; every
+                        action is a ≥44px touch target below md (ADR-233). */}
+                    <div className="flex flex-wrap gap-1.5 items-center justify-end">
+                      {course.status === "pending" && (
+                        <button
+                          type="button"
+                          onClick={() => setLaunching(course)}
+                          className="rounded-md text-white text-[11.5px] font-semibold px-3 py-1.5 min-h-[44px] md:min-h-0 hover:opacity-90"
+                          style={{ background: "var(--color-red)" }}
+                        >
+                          Launch →
+                        </button>
+                      )}
+                      <Link
+                        href={`/learn/${course.series_slug}/preview`}
+                        className="inline-flex items-center gap-1 rounded-md border px-3 py-1.5 text-[11.5px] font-semibold no-underline text-[var(--ink-muted)] hover:text-[var(--ink-primary)] hover:bg-[var(--surface-sunken)] min-h-[44px] md:min-h-0"
+                        style={{ borderColor: "var(--admin-table-border)" }}
+                      >
+                        Preview first lesson <span aria-hidden>&rarr;</span>
+                      </Link>
+                      <button
+                        type="button"
+                        onClick={() => setEditing(course)}
+                        className="rounded-md border px-3 py-1.5 text-[11.5px] font-semibold text-[var(--ink-primary)] hover:bg-[var(--surface-sunken)] min-h-[44px] md:min-h-0"
+                        style={{ borderColor: "var(--admin-table-border)" }}
+                      >
+                        Edit profile
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
 
       {launching && (

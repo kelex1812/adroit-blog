@@ -9,6 +9,40 @@ Baseline v1.0.0 — Omni content + course-structure/cert-standards bar + Constel
 
 ## [Unreleased]
 
+### Admin mobile-responsive sweep — off-canvas drawer + table hardening (`feat/admin-mobile-responsive-t_71a0d478`)
+
+**What** — the fixed `w-60` admin sidebar now collapses to an off-canvas
+hamburger drawer below the `md` (768px) breakpoint, restoring the full
+viewport to the Operate content column; at `md+` it remains the same static
+240px sidebar. The 3–7 column admin tables are hardened so no page scrolls
+horizontally: Courses and Audit gained the missing `overflow-x-auto` wrapper,
+secondary columns hide by breakpoint (`hidden md:table-cell` / `lg`), the
+Audit log reflows to label→value cards below `sm`, Analytics hides
+Enrolled/Signal/Lessons-done below their breakpoints, and every admin action
+(grant / revoke / one-time / adjust / launch / bulk / select) is a ≥44px
+touch target below `md`. The duplicate Status/Access-model header pair in the
+Courses table was reconciled into single columns (the selects are the real
+controls).
+
+**Why** — the Operate surface was the last un-responsive slice of the app: a
+fixed 240px sidebar + un-wrapped dense tables produced hard horizontal
+page-scrolls and unusable hit targets at phone widths (kara's
+`direction-brief-mobile-responsive-sweep.md`). This is a presentational pass
+only — zero data/contract/API change, public surfaces untouched
+(ADR-230..234).
+
+**How** — additive `--admin-*` / `--touch-target-*` tokens only (ADR-233),
+referenced via `var()` in the shell + tables. `drawerOpen` is client state:
+Escape closes it, the hamburger mirrors `aria-expanded`/`aria-controls`, and
+route change auto-closes it (React's adjust-state-on-prop-change pattern).
+Reduced-motion is respected by the existing global `prefers-reduced-motion`
+reset (visibility drives the closed drawer, so it still collapses cleanly).
+
+**Known issues** — none. The AccessGrid intentionally stays a horizontal
+scroll-matrix (cell semantics are lost in cards, ADR-231) with a below-`sm`
+"scroll ← →" hint; a searchable/sticky-person matrix is a separate backlog
+item. Blog filter toolbar rework (B-24) is deliberately out of scope.
+
 ### Hubble Field — constellations sized to the curriculum (`feat/hubble-field`)
 
 **What** — a course's constellation is chosen by the curriculum's *final*

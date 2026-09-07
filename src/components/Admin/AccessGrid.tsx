@@ -82,12 +82,15 @@ export function AccessGrid({
         <thead>
           <tr className="font-mono text-[10px] font-bold uppercase tracking-[0.06em]" style={{ color: "var(--admin-table-head)" }}>
             <th scope="col" className="px-3 py-2 w-8">
-              <input
-                type="checkbox"
-                aria-label="Select all users"
-                checked={allSelected}
-                onChange={toggleAll}
-              />
+              <label className="flex h-11 w-11 items-center justify-center rounded hover:bg-[var(--surface-sunken)]">
+                <input
+                  type="checkbox"
+                  className="h-4 w-4"
+                  aria-label="Select all users"
+                  checked={allSelected}
+                  onChange={toggleAll}
+                />
+              </label>
             </th>
             <th scope="col" className="px-3 py-2 text-left min-w-[180px]">Person</th>
             {liveCourses.map(({ course }) => (
@@ -108,12 +111,15 @@ export function AccessGrid({
               style={{ borderTop: "1px solid var(--admin-table-border)" }}
             >
               <td className="px-3 py-2">
-                <input
-                  type="checkbox"
-                  aria-label={`Select ${u.display_name ?? u.email}`}
-                  checked={selected.has(u.user_id)}
-                  onChange={() => toggleUser(u.user_id)}
-                />
+                <label className="flex h-11 w-11 items-center justify-center rounded hover:bg-[var(--surface-sunken)]">
+                  <input
+                    type="checkbox"
+                    className="h-4 w-4"
+                    aria-label={`Select ${u.display_name ?? u.email}`}
+                    checked={selected.has(u.user_id)}
+                    onChange={() => toggleUser(u.user_id)}
+                  />
+                </label>
               </td>
               <td className="px-3 py-2">
                 <span className="font-semibold text-[var(--ink-primary)]">
@@ -218,6 +224,11 @@ export function AccessGrid({
           ))}
         </tbody>
       </table>
+      {/* Mobile affordance — the grid keeps horizontal scroll (cell semantics
+          are lost in cards, ADR-231) but must signal it on narrow screens. */}
+      <p role="note" className="sm:hidden px-3 py-2 text-[10.5px] text-[var(--ink-faint)]">
+        Scroll ← → to see every course.
+      </p>
       {users.length === 0 && (
         <p className="px-4 py-6 text-sm text-gray-500">No users found.</p>
       )}

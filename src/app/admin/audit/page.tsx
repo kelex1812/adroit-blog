@@ -128,41 +128,88 @@ export default function AdminAuditPage() {
 
       {rows && (
         <div className="rounded-xl border overflow-hidden" style={{ borderColor: "var(--admin-table-border)" }}>
-          <table className="w-full text-left border-collapse">
-            <thead>
-              <tr className="font-mono text-[11px] font-bold uppercase tracking-[0.07em]" style={{ color: "var(--admin-table-head)" }}>
-                <th scope="col" className="px-4 py-3">Time</th>
-                <th scope="col" className="px-4 py-3">Actor</th>
-                <th scope="col" className="px-4 py-3">Action</th>
-                <th scope="col" className="px-4 py-3">Target</th>
-                <th scope="col" className="px-4 py-3">Details</th>
-              </tr>
-            </thead>
-            <tbody>
-              {current.map((r) => (
-                <tr key={r.id} className="text-[13px] align-top" style={{ borderTop: "1px solid var(--admin-table-border)" }}>
-                  <td className="px-4 py-3 font-mono text-[11.5px] text-[var(--ink-muted)] whitespace-nowrap">
-                    {new Date(r.created_at).toLocaleString()}
-                  </td>
-                  <td className="px-4 py-3 font-mono text-[11.5px] text-[var(--ink-muted)]">
-                    {r.actor_user_id?.slice(0, 8) ?? "system"}
-                  </td>
-                  <td className="px-4 py-3">
-                    <span className="font-mono text-[11.5px] font-semibold rounded-md bg-gray-100 dark:bg-gray-800 px-2 py-0.5">
-                      {r.action}
-                    </span>
-                  </td>
-                  <td className="px-4 py-3 font-mono text-[11.5px] text-[var(--ink-muted)]">
-                    {r.target_type}
-                    {r.target_id ? ` · ${r.target_id.slice(0, 36)}` : ""}
-                  </td>
-                  <td className="px-4 py-3 font-mono text-[11px] text-[var(--ink-muted)] max-w-[280px] truncate">
-                    {r.details ? JSON.stringify(r.details) : "—"}
-                  </td>
+          {/* Table retained at sm+; below sm rows reflow to label → value
+              cards (ADR-232) so the read-only log stays readable with no
+              horizontal page-scroll. */}
+          <div className="overflow-x-auto hidden sm:block">
+            <table className="w-full text-left border-collapse">
+              <thead>
+                <tr className="font-mono text-[11px] font-bold uppercase tracking-[0.07em]" style={{ color: "var(--admin-table-head)" }}>
+                  <th scope="col" className="px-4 py-3">Time</th>
+                  <th scope="col" className="px-4 py-3">Actor</th>
+                  <th scope="col" className="px-4 py-3">Action</th>
+                  <th scope="col" className="px-4 py-3">Target</th>
+                  <th scope="col" className="px-4 py-3">Details</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {current.map((r) => (
+                  <tr key={r.id} className="text-[13px] align-top" style={{ borderTop: "1px solid var(--admin-table-border)" }}>
+                    <td className="px-4 py-3 font-mono text-[11.5px] text-[var(--ink-muted)]">
+                      {new Date(r.created_at).toLocaleString()}
+                    </td>
+                    <td className="px-4 py-3 font-mono text-[11.5px] text-[var(--ink-muted)]">
+                      {r.actor_user_id?.slice(0, 8) ?? "system"}
+                    </td>
+                    <td className="px-4 py-3">
+                      <span className="font-mono text-[11.5px] font-semibold rounded-md bg-gray-100 dark:bg-gray-800 px-2 py-0.5">
+                        {r.action}
+                      </span>
+                    </td>
+                    <td className="px-4 py-3 font-mono text-[11.5px] text-[var(--ink-muted)]">
+                      {r.target_type}
+                      {r.target_id ? ` · ${r.target_id.slice(0, 36)}` : ""}
+                    </td>
+                    <td className="px-4 py-3 font-mono text-[11px] text-[var(--ink-muted)] max-w-[280px] truncate">
+                      {r.details ? JSON.stringify(r.details) : "—"}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          {/* Card-stack view — only below sm (ADR-232) */}
+          <ul className="sm:hidden" aria-label="Audit log (mobile view)">
+            {current.map((r) => (
+              <li
+                key={r.id}
+                className="px-4 py-3.5 border-b"
+                style={{ borderBottom: "1px solid var(--border-subtle, #F3F4F6)" }}
+              >
+                <div className="flex items-center gap-2 flex-wrap">
+                  <span className="font-mono text-[11.5px] font-semibold rounded-md bg-gray-100 dark:bg-gray-800 px-2 py-0.5">
+                    {r.action}
+                  </span>
+                  <span className="ml-auto font-mono text-[10.5px] text-[var(--ink-muted)]">
+                    {new Date(r.created_at).toLocaleString()}
+                  </span>
+                </div>
+                <dl className="flex flex-col gap-1.5 mt-2 text-[12px]">
+                  <div className="flex justify-between gap-3">
+                    <dt className="text-[var(--ink-muted)]">Actor</dt>
+                    <dd className="font-mono text-[var(--ink-primary)] font-medium">
+                      {r.actor_user_id?.slice(0, 8) ?? "system"}
+                    </dd>
+                  </div>
+                  <div className="flex justify-between gap-3">
+                    <dt className="text-[var(--ink-muted)]">Target</dt>
+                    <dd className="font-mono text-[var(--ink-primary)] font-medium truncate">
+                      {r.target_type}
+                      {r.target_id ? ` · ${r.target_id.slice(0, 36)}` : ""}
+                    </dd>
+                  </div>
+                  <div className="flex justify-between gap-3">
+                    <dt className="text-[var(--ink-muted)]">Details</dt>
+                    <dd className="font-mono text-[var(--ink-primary)] font-medium truncate">
+                      {r.details ? JSON.stringify(r.details) : "—"}
+                    </dd>
+                  </div>
+                </dl>
+              </li>
+            ))}
+          </ul>
+
           {current.length === 0 && (
             <p className="px-4 py-6 text-sm text-gray-500">
               No audit entries match the current filters.

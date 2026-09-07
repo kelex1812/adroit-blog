@@ -204,7 +204,7 @@ export function AccessPanel({
                   </div>
                   <EffectiveAccessChip state={state} />
                   <div className="font-mono text-[10.5px] text-[var(--ink-faint)] w-[150px] hidden lg:block">{subNote}</div>
-                  <div className="flex gap-1.5 justify-end min-w-[220px]">
+                  <div className="flex flex-wrap gap-1.5 justify-end min-w-[220px]">
                     <RowActions
                       state={state}
                       src={src}
@@ -246,7 +246,7 @@ function RowActions({
       <button
         type="button"
         onClick={() => onGrant("granted")}
-        className="text-[11px] font-semibold px-2.5 py-1 rounded-md text-[var(--color-red)] bg-[var(--admin-selected-bg)] hover:bg-[var(--color-red)] hover:text-white transition-colors"
+        className="text-[11px] font-semibold px-2.5 py-1 min-h-[44px] md:min-h-0 rounded-md text-[var(--color-red)] bg-[var(--admin-selected-bg)] hover:bg-[var(--color-red)] hover:text-white transition-colors"
       >
         Grant granted
       </button>
@@ -258,14 +258,14 @@ function RowActions({
         <button
           type="button"
           onClick={() => onGrant("granted")}
-          className="text-[11px] font-semibold px-2.5 py-1 rounded-md text-[var(--color-red)] bg-[var(--admin-selected-bg)] hover:bg-[var(--color-red)] hover:text-white transition-colors"
+          className="text-[11px] font-semibold px-2.5 py-1 min-h-[44px] md:min-h-0 rounded-md text-[var(--color-red)] bg-[var(--admin-selected-bg)] hover:bg-[var(--color-red)] hover:text-white transition-colors"
         >
           Grant granted
         </button>
         <button
           type="button"
           onClick={() => onGrant("one-time")}
-          className="text-[11px] font-semibold px-2.5 py-1 rounded-md text-[var(--access-one-time)] bg-[rgba(13,148,136,0.1)] hover:bg-[var(--access-one-time)] hover:text-white transition-colors"
+          className="text-[11px] font-semibold px-2.5 py-1 min-h-[44px] md:min-h-0 rounded-md text-[var(--access-one-time)] bg-[rgba(13,148,136,0.1)] hover:bg-[var(--access-one-time)] hover:text-white transition-colors"
         >
           One-time
         </button>
@@ -277,7 +277,7 @@ function RowActions({
       <button
         type="button"
         onClick={() => onGrant("granted")}
-        className="text-[11px] font-semibold px-2.5 py-1 rounded-md text-[var(--color-red)] bg-[var(--admin-selected-bg)] hover:bg-[var(--color-red)] hover:text-white transition-colors"
+        className="text-[11px] font-semibold px-2.5 py-1 min-h-[44px] md:min-h-0 rounded-md text-[var(--color-red)] bg-[var(--admin-selected-bg)] hover:bg-[var(--color-red)] hover:text-white transition-colors"
       >
         Grant granted
       </button>
@@ -289,7 +289,7 @@ function RowActions({
       <button
         type="button"
         onClick={onRevoke}
-        className="text-[11px] font-semibold px-2.5 py-1 rounded-md border text-[var(--ink-muted)] hover:text-[var(--color-red-dark)] hover:border-[var(--color-red-dark)] transition-colors"
+        className="text-[11px] font-semibold px-2.5 py-1 min-h-[44px] md:min-h-0 rounded-md border text-[var(--ink-muted)] hover:text-[var(--color-red-dark)] hover:border-[var(--color-red-dark)] transition-colors"
         style={{ borderColor: "var(--admin-table-border)" }}
       >
         Revoke
@@ -297,7 +297,7 @@ function RowActions({
       <button
         type="button"
         onClick={() => onAdjust(src === "granted" ? "one-time" : "granted")}
-        className="text-[11px] font-semibold px-2.5 py-1 rounded-md border text-[var(--ink-muted)] hover:text-[var(--ink-primary)] hover:border-[var(--ink-soft)] transition-colors"
+        className="text-[11px] font-semibold px-2.5 py-1 min-h-[44px] md:min-h-0 rounded-md border text-[var(--ink-muted)] hover:text-[var(--ink-primary)] hover:border-[var(--ink-soft)] transition-colors"
         style={{ borderColor: "var(--admin-table-border)" }}
       >
         Adjust
