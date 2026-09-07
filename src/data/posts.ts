@@ -2,6 +2,29 @@ import { BlogPost } from "./types";
 
 export const posts: BlogPost[] = [
   {
+    "slug": "design-system-release-discipline-2026",
+    "title": "When the Version Label Lies: Release Discipline",
+    "excerpt": "A minor bump can break your product. Design systems fail at the social contract of change, not the version number. Here is how to define breaking.",
+    "category": "UI/UX",
+    "categoryColor": "ux",
+    "categoryGradient": "from-violet to-violet-dark",
+    "date": "September 07, 2026",
+    "author": "Adroit Consulting",
+    "authorInitials": "AC",
+    "readTime": "12 min read",
+    "featured": false,
+    "tags": [
+      "Design Systems",
+      "Versioning",
+      "Design Engineering",
+      "Component Libraries",
+      "Migration",
+      "UI/UX"
+    ],
+    "bannerImage": "/banners/design-system-release-discipline-2026.png",
+    "status": "published"
+  },
+  {
     "slug": "agent-release-engineering-2026",
     "title": "Ship an Agent Like Risk: Version, Gate, Canary, Roll Back",
     "excerpt": "An agent is a code, prompt, model, and tool bundle that changes in five places. Ship it like a service and a prompt tweak has no fast rollback.",
