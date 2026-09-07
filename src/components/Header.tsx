@@ -112,7 +112,7 @@ export default function Header() {
         {/* Mobile Hamburger */}
         <div className="flex items-center gap-3 md:hidden">
           <button
-            className="bg-none border-none cursor-pointer p-1"
+            className="bg-none border-none cursor-pointer inline-flex items-center justify-center min-w-[44px] h-11"
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-label="Toggle menu"
             aria-expanded={mobileOpen}

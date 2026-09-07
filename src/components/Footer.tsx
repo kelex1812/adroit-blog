@@ -53,7 +53,7 @@ export default function Footer() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="border-t border-white/8 py-5 flex items-center justify-between text-xs text-white/50">
+        <div className="border-t border-white/8 py-5 flex flex-wrap items-center justify-between gap-x-3 gap-y-2 text-xs text-white/50">
           <span>&copy; 2026 Adroit Consulting. All rights reserved.</span>
           <div className="flex gap-3">
             <SocialIcon title="LinkedIn">in</SocialIcon>

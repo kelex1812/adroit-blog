@@ -73,7 +73,7 @@ export default function ShareBar() {
           target="_blank"
           rel="noopener noreferrer"
           title={btn.label}
-          className="w-9 h-9 rounded-full border border-gray-200 bg-white flex items-center justify-center text-gray-600 dark:border-[var(--border-default)] dark:bg-[var(--surface-card)] dark:text-[var(--ink-muted)] cursor-pointer hover:bg-navy hover:text-white hover:border-navy hover:-translate-y-0.5 transition-all duration-150 no-underline"
+          className="min-w-[44px] min-h-[44px] rounded-full border border-gray-200 bg-white flex items-center justify-center text-gray-600 dark:border-[var(--border-default)] dark:bg-[var(--surface-card)] dark:text-[var(--ink-muted)] cursor-pointer hover:bg-navy hover:text-white hover:border-navy hover:-translate-y-0.5 transition-all duration-150 no-underline"
         >
           {btn.icon}
         </a>
@@ -82,7 +82,7 @@ export default function ShareBar() {
         onClick={copyLink}
         title="Copy link"
         aria-label="Copy link to clipboard"
-        className={`w-9 h-9 rounded-full border flex items-center justify-center cursor-pointer transition-all duration-150 ${
+        className={`min-w-[44px] min-h-[44px] rounded-full border flex items-center justify-center cursor-pointer transition-all duration-150 ${
           copied
             ? "bg-emerald-700 text-white border-emerald-700 dark:bg-emerald-600 dark:border-emerald-600"
             : "border-gray-200 bg-white text-gray-500 dark:border-[var(--border-default)] dark:bg-[var(--surface-card)] dark:text-[var(--ink-muted)] hover:bg-navy hover:text-white hover:border-navy hover:-translate-y-0.5"

@@ -334,7 +334,7 @@ function BlogListingContent({
               onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
               disabled={currentPage === 1}
               aria-label="Previous page"
-              className="w-9 h-9 rounded-md border border-gray-200 bg-white flex items-center justify-center text-xs font-medium text-gray-600 cursor-pointer hover:bg-gray-50 hover:border-gray-300 transition-all duration-150 disabled:opacity-40 disabled:cursor-not-allowed active:scale-[0.98] dark:bg-[var(--surface-card)] dark:border-[var(--border-default)] dark:text-[var(--ink-body)] dark:hover:bg-[var(--surface-card-soft)] dark:hover:border-[var(--border-strong)]"
+              className="min-w-[44px] min-h-[44px] rounded-md border border-gray-200 bg-white flex items-center justify-center text-xs font-medium text-gray-600 cursor-pointer hover:bg-gray-50 hover:border-gray-300 transition-all duration-150 disabled:opacity-40 disabled:cursor-not-allowed active:scale-[0.98] dark:bg-[var(--surface-card)] dark:border-[var(--border-default)] dark:text-[var(--ink-body)] dark:hover:bg-[var(--surface-card-soft)] dark:hover:border-[var(--border-strong)]"
             >
               &lsaquo;
             </button>
@@ -345,7 +345,7 @@ function BlogListingContent({
                   onClick={() => setCurrentPage(page)}
                   aria-current={page === currentPage ? "page" : undefined}
                   aria-label={`Page ${page}`}
-                  className={`w-9 h-9 rounded-md border flex items-center justify-center text-xs font-medium cursor-pointer transition-all duration-150 active:scale-[0.98] ${
+                  className={`min-w-[44px] min-h-[44px] rounded-md border flex items-center justify-center text-xs font-medium cursor-pointer transition-all duration-150 active:scale-[0.98] ${
                     page === currentPage
                       ? "bg-navy text-white border-navy dark:bg-[var(--surface-inverse)] dark:border-[var(--surface-inverse)]"
                       : "border-gray-200 bg-white text-gray-600 hover:bg-gray-50 hover:border-gray-300 dark:bg-[var(--surface-card)] dark:border-[var(--border-default)] dark:text-[var(--ink-body)] dark:hover:bg-[var(--surface-card-soft)] dark:hover:border-[var(--border-strong)]"
@@ -361,7 +361,7 @@ function BlogListingContent({
               }
               disabled={currentPage === totalPages}
               aria-label="Next page"
-              className="w-9 h-9 rounded-md border border-gray-200 bg-white flex items-center justify-center text-sm font-medium text-gray-600 cursor-pointer hover:bg-gray-50 hover:border-gray-300 transition-all duration-150 disabled:opacity-40 disabled:cursor-not-allowed active:scale-[0.98] dark:bg-[var(--surface-card)] dark:border-[var(--border-default)] dark:text-[var(--ink-body)] dark:hover:bg-[var(--surface-card-soft)] dark:hover:border-[var(--border-strong)]"
+              className="min-w-[44px] min-h-[44px] rounded-md border border-gray-200 bg-white flex items-center justify-center text-sm font-medium text-gray-600 cursor-pointer hover:bg-gray-50 hover:border-gray-300 transition-all duration-150 disabled:opacity-40 disabled:cursor-not-allowed active:scale-[0.98] dark:bg-[var(--surface-card)] dark:border-[var(--border-default)] dark:text-[var(--ink-body)] dark:hover:bg-[var(--surface-card-soft)] dark:hover:border-[var(--border-strong)]"
             >
               &rsaquo;
             </button>
