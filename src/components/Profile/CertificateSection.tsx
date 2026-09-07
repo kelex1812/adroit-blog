@@ -163,7 +163,7 @@ export default async function CertificateSection({
           </div>
           <Link
             href={`/learn/${cert.seriesSlug}/certificate`}
-            className="whitespace-nowrap text-[13px] font-bold text-[var(--accent)] no-underline hover:text-[var(--accent-hover)] transition-colors duration-150"
+            className="inline-flex min-h-[44px] items-center justify-center whitespace-nowrap text-[13px] font-bold text-[var(--accent)] no-underline hover:text-[var(--accent-hover)] transition-colors duration-150"
           >
             View cert
           </Link>
