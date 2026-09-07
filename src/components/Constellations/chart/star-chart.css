@@ -50,6 +50,8 @@
   align-items: center;
   gap: 7px;
   margin-top: 10px;
+  min-height: 44px; /* WCAG 2.5.8 target-size floor — tap target, not just text */
+  padding: 0 10px;
   pointer-events: auto;
   font-size: 11.5px;
   color: rgba(190, 180, 160, 0.65);

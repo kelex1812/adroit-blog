@@ -54,7 +54,7 @@ export default function LearnFilters({
             type="button"
             onClick={() => onSectionChange(null)}
             aria-pressed={sectionSlug === null}
-            className={`text-[13px] font-semibold px-[18px] py-2.5 rounded-full border cursor-pointer transition-all duration-150 ${
+            className={`text-[13px] font-semibold px-[18px] min-h-[44px] inline-flex items-center justify-center rounded-full border cursor-pointer transition-all duration-150 ${
               sectionSlug === null
                 ? "bg-[var(--surface-inverse)] text-[var(--ink-on-inverse)] border-[var(--surface-inverse)] shadow-md"
                 : "bg-[var(--surface-card)] text-[var(--ink-muted)] border-[var(--border-default)] hover:border-[var(--ink-primary)] hover:text-[var(--ink-primary)]"
@@ -71,7 +71,7 @@ export default function LearnFilters({
                 type="button"
                 onClick={() => onSectionChange(s.slug)}
                 aria-pressed={sectionSlug === s.slug}
-                className={`text-[13px] font-semibold px-[18px] py-2.5 rounded-full border cursor-pointer transition-all duration-150 ${
+                className={`text-[13px] font-semibold px-[18px] min-h-[44px] inline-flex items-center justify-center rounded-full border cursor-pointer transition-all duration-150 ${
                   sectionSlug === s.slug
                     ? "bg-[var(--surface-inverse)] text-[var(--ink-on-inverse)] border-[var(--surface-inverse)] shadow-md"
                     : "bg-[var(--surface-card)] text-[var(--ink-muted)] border-[var(--border-default)] hover:border-[var(--ink-primary)] hover:text-[var(--ink-primary)]"
@@ -102,7 +102,7 @@ export default function LearnFilters({
             value={query}
             onChange={(e) => onQueryChange(e.target.value)}
             placeholder="Search courses…"
-            className="w-full rounded-full border border-[var(--border-default)] bg-[var(--surface-card)] text-[13px] text-[var(--ink-primary)] placeholder:text-[var(--ink-faint)] pl-9 pr-4 py-2.5 outline-none focus:border-[var(--accent)] transition-colors"
+            className="w-full min-h-[44px] rounded-full border border-[var(--border-default)] bg-[var(--surface-card)] text-[13px] text-[var(--ink-primary)] placeholder:text-[var(--ink-faint)] pl-9 pr-4 outline-none focus:border-[var(--accent)] transition-colors"
           />
         </label>
       </div>
@@ -118,7 +118,7 @@ export default function LearnFilters({
             type="button"
             onClick={() => onGroupChange(null)}
             aria-pressed={groupSlug === null}
-            className={`font-mono text-[11px] font-bold px-[14px] py-1.5 rounded-full border cursor-pointer uppercase tracking-[0.05em] transition-all duration-150 ${
+            className={`font-mono text-[11px] font-bold px-[14px] min-h-[44px] inline-flex items-center justify-center rounded-full border cursor-pointer uppercase tracking-[0.05em] transition-all duration-150 ${
               groupSlug === null
                 ? "bg-[var(--accent-bg)] text-white border-[var(--accent-bg)]"
                 : "bg-[var(--surface-card-soft)] text-[var(--ink-faint)] border-dashed border-[var(--border-strong)] hover:border-[var(--accent)] hover:text-[var(--accent)]"
@@ -132,7 +132,7 @@ export default function LearnFilters({
               type="button"
               onClick={() => onGroupChange(g.slug)}
               aria-pressed={groupSlug === g.slug}
-              className={`font-mono text-[11px] font-bold px-[14px] py-1.5 rounded-full border cursor-pointer uppercase tracking-[0.05em] transition-all duration-150 ${
+              className={`font-mono text-[11px] font-bold px-[14px] min-h-[44px] inline-flex items-center justify-center rounded-full border cursor-pointer uppercase tracking-[0.05em] transition-all duration-150 ${
                 groupSlug === g.slug
                   ? "bg-[var(--accent-bg)] text-white border-[var(--accent-bg)]"
                   : "bg-[var(--surface-card-soft)] text-[var(--ink-faint)] border-dashed border-[var(--border-strong)] hover:border-[var(--accent)] hover:text-[var(--accent)]"

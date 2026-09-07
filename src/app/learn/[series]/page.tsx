@@ -330,7 +330,7 @@ export default async function SeriesPage({ params }: Props) {
         {/* Syllabus — lesson-number order (ADR-105), client sort + hide-completed. */}
         <div className="max-w-[1120px] mx-auto px-6 py-8 pb-4">
           {baseLessons.length > 0 ? (
-            <div className="grid gap-10">
+            <div className="grid gap-10 grid-cols-[minmax(0,1fr)]">
               <Suspense fallback={null}>
                 <SeriesSyllabus
                   lessons={baseLessons}

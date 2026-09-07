@@ -142,6 +142,68 @@ reset (visibility drives the closed drawer, so it still collapses cleanly).
 scroll-matrix (cell semantics are lost in cards, ADR-231) with a below-`sm`
 "scroll ← →" hint; a searchable/sticky-person matrix is a separate backlog
 item. Blog filter toolbar rework (B-24) is deliberately out of scope.
+### Fix — series syllabus horizontal overflow on phones (t_aa82c1e3)
+
+**What** — `src/app/learn/[series]/page.tsx` wrapped `SeriesSyllabus` in a
+single-column `<div className="grid gap-10">`. A one-column auto grid sizes
+to the *max-content* of the widest grid item (default `min-width:auto`), so
+the widest lesson title pinned the sort row and every lesson card to ~734px
+inside a ~312px phone content column — the series syllabus
+(`/learn/omni-studio-cert`) horizontally scrolled ~398px on a 375px viewport.
+Added `grid-cols-[minmax(0,1fr)]` to the wrapper so the column is shrinkable
+to the container width. Now: overflow_px = 0 at 375/390/1280 (768 leftover is
+the known/accepted out-of-scope public header desktop nav).
+
+**Why** — the syllabus is one of the eight in-scope surfaces in PR #384's
+criterion #1 ("all surfaces zero horizontal overflow") and the PR's stated
+goal is "make the exam and syllabus fully usable on a phone." The
+thumb-conformance pass had brought the controls to the 44px floor but left
+the grid track unshrinkable, so the syllabus still scrolled sideways on a
+phone.
+
+**How** — one additive Tailwind arbitrary-value class
+(`grid-cols-[minmax(0,1fr)]`) on the existing `grid gap-10` wrapper. No
+layout/contract/data change; verified in-browser at 375/390/768/1280.
+
+**Known issues** — none introduced. The 49px horizontal leftover at exactly
+768px is the public header desktop nav (Posts/Categories/Tags/Learn/Adroit.io/
+Contact/QM), out of scope for this branch (t_c4c0a710 / PR #372) and already
+accepted across all PR #384 surfaces.
+
+### Mobile responsive — Learn hub, syllabus, lesson, exam, certificate, preview, constellation, lab (t_9ca96a47)
+
+**What** — thumb-conformance pass for the Learn + special surfaces
+(`/learn` hub, series syllabus, lesson, knowledge-check, cert-prep exam,
+certificate, preview, profile constellation, lab/hubble-field), delivered on
+the same 44px WCAG 2.5.8 target-size floor used by the public and admin
+sweeps. Bumped the interactive controls that fell below the floor: the hub's
+section/group filter chips (42px → 44px) and search input (42px → 44px), the
+syllabus `LessonSortToggle` compact chips (25px → 44×44), the preview amber
+strip "Unlock full course →" CTA and the "Preview first lesson →" links
+(PathCard + Paywall, ~20px → 44px), and the profile constellation
+`.cxc-toggle` "Show figure drawings" label (17px → 44px). Fixed a genuine
+phone overflow in the cert-prep `ExamWidget`: its 60-segment progress bar used
+`flex-1 min-w-[6px]` (≈507px min at 342px of phone content → horizontal
+scroll); the segments now `min-w-0` below `sm`, keeping the 6px floor only at
+`sm+`, so the bar stays on-screen through the whole exam.
+
+**Why** — kara's diagnosis (direction-brief-mobile-responsive-sweep.md) put
+the Learn surfaces at ~95% healthy, so this is a light hardening pass rather
+than a re-layout: keep every Learn filter/sort/quiz/exam action thumb-usable
+at phone widths and make the quiz/exam and syllabus fully usable on a 390px
+viewport. All surfaces measured zero horizontal overflow at 390px.
+
+**How** — additive Tailwind `min-h-[44px]`/`min-w-[44px]` on the sub-floor
+controls (no token, no class-name, no layout/contract change); exam segment
+bar becomes `flex gap-[1.5px] sm:gap-[2.5px]` with `min-w-0 sm:min-w-[6px]`
+segments. Verified the running app at 390px: chips/search/sort/preview
+CTA/cxc-toggle all ≥44×44, chip toggles `aria-pressed`, cxc-toggle flips its
+checkbox, overflow_px = 0 across all eight surfaces.
+
+**Known issues** — the public header hamburger (28px, MobileNav drawer) is
+t_c4c0a710's fix (PR #372) and is intentionally out of this branch to avoid a
+merge collision; it lands on main via its own PR. Footer/nav text links are
+public-header scope and left at text size per the sweep brief (no re-layout).
 
 ### Hubble Field — constellations sized to the curriculum (`feat/hubble-field`)
 

@@ -40,4 +40,18 @@ describe("LessonSortToggle a11y (t_5664453e)", () => {
       screen.getByRole("button", { name: "Sort by lesson number ascending" }),
     ).toHaveAttribute("aria-pressed", "false");
   });
+
+  it("gives every sort button a >=44px touch target (WCAG 2.5.8)", () => {
+    render(<LessonSortToggle />);
+    const asc = screen.getByRole("button", {
+      name: "Sort by lesson number ascending",
+    });
+    const desc = screen.getByRole("button", {
+      name: "Sort by lesson number descending",
+    });
+    for (const b of [asc, desc]) {
+      expect(b.className).toContain("min-h-[44px]");
+      expect(b.className).toContain("min-w-[44px]");
+    }
+  });
 });

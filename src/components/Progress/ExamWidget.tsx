@@ -440,11 +440,11 @@ export default function ExamWidget({
           <span>Question {currentQ + 1} of {total}</span>
           <span className="text-navy font-bold">{answeredCount} answered</span>
         </div>
-        <div className="flex gap-[2.5px] mb-7" role="img" aria-label={`${answeredCount} of ${total} answered`}>
+        <div className="flex gap-[1.5px] sm:gap-[2.5px] mb-7" role="img" aria-label={`${answeredCount} of ${total} answered`}>
           {questions.map((_, i) => (
             <div
               key={i}
-              className={`h-[3.5px] flex-1 min-w-[6px] rounded-full transition-colors duration-200 ${
+              className={`h-[3.5px] flex-1 min-w-0 sm:min-w-[6px] rounded-full transition-colors duration-200 ${
                 answers[i] !== undefined ? "bg-navy" : "bg-gray-200"
               }`}
             />

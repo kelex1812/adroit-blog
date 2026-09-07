@@ -56,7 +56,7 @@ export default function PreviewFirstLesson({
           <span className="ml-auto flex items-center gap-2">
             <Link
               href={ctaHref}
-              className="inline-flex items-center gap-1 rounded-lg bg-[var(--color-red)] text-white text-[12px] font-bold px-3.5 py-1.5 no-underline hover:bg-[var(--color-red-dark)] whitespace-nowrap"
+              className="inline-flex items-center gap-1 rounded-lg bg-[var(--color-red)] text-white text-[12px] font-bold px-3.5 min-h-[44px] no-underline hover:bg-[var(--color-red-dark)] whitespace-nowrap"
             >
               {unlockLabel}
             </Link>
