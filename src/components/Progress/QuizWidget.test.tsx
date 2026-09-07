@@ -116,6 +116,66 @@ describe("QuizWidget", () => {
     expect(localStorage.getItem(KEY)).toContain('"attemptCount":1');
   });
 
+  it("fires onPerfectScore exactly once when a run completes perfect in this session", async () => {
+    const onPerfectScore = vi.fn();
+    render(
+      <QuizWidget
+        quizName="test-quiz"
+        questions={QUESTIONS}
+        onPerfectScore={onPerfectScore}
+      />,
+    );
+
+    // Answer all three correctly → perfect score (3/3).
+    await answerQuestion(0, false);
+    await answerQuestion(1, false);
+    await answerQuestion(2, true);
+
+    // Perfect score in-session → callback fired exactly once.
+    await waitFor(() => expect(onPerfectScore).toHaveBeenCalledTimes(1));
+  });
+
+  it("does NOT fire onPerfectScore for a non-perfect run or on reload of a perfect quiz", async () => {
+    const onPerfectScore = vi.fn();
+    const first = render(
+      <QuizWidget
+        quizName="test-quiz"
+        questions={QUESTIONS}
+        onPerfectScore={onPerfectScore}
+      />,
+    );
+
+    // Q1 wrong → run is not perfect (2/3), so no callback.
+    fireEvent.click(screen.getAllByRole("radio")[1]); // Beta, not Alpha
+    fireEvent.click(screen.getByRole("button", { name: "Submit answer" }));
+    await waitFor(() =>
+      expect(screen.getByRole("button", { name: "Next question" })).toBeInTheDocument(),
+    );
+    fireEvent.click(screen.getByRole("button", { name: "Next question" }));
+    await answerQuestion(1, false);
+    await answerQuestion(2, true);
+
+    expect(await screen.findByText(/2\/3/)).toBeInTheDocument();
+    expect(onPerfectScore).not.toHaveBeenCalled();
+
+    // A returning user with a completed PERFECT quiz sees results directly,
+    // but a reload must NOT re-fire the callback (session-scoped, QA F-2).
+    // Unmount the first widget first so the remounted fresh tree is the only
+    // one on the page (otherwise screen queries are ambiguous across roots).
+    first.unmount();
+    onPerfectScore.mockClear();
+    seedCompletedQuiz(1);
+    render(
+      <QuizWidget
+        quizName="test-quiz"
+        questions={QUESTIONS}
+        onPerfectScore={onPerfectScore}
+      />,
+    );
+    expect(await screen.findByText(/Best score · 1 attempt/)).toBeInTheDocument();
+    expect(onPerfectScore).not.toHaveBeenCalled();
+  });
+
   it("shows the Grading… state while an answer is being graded (copy deck §1)", async () => {
     render(<QuizWidget quizName="test-quiz" questions={QUESTIONS} />);
 

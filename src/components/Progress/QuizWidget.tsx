@@ -76,6 +76,12 @@ interface QuizWidgetProps {
    * (correct/wrong styling, explanation) is rendered from the response.
    */
   serverGraded?: boolean;
+  /**
+   * Lesson-tier opt-in: fired once when a run completes PERFECT (all answers
+   * correct) in this session — used to auto-mark the lesson complete. Guests
+   * and reloads of an already-perfect quiz never fire it (session-scoped).
+   */
+  onPerfectScore?: () => void;
 }
 
 export default function QuizWidget({
@@ -87,6 +93,7 @@ export default function QuizWidget({
   backHref,
   backLabel = "Back",
   serverGraded = false,
+  onPerfectScore,
 }: QuizWidgetProps) {
   const [currentQ, setCurrentQ] = useState(0);
   const [selected, setSelected] = useState<number | null>(null);
@@ -161,6 +168,27 @@ export default function QuizWidget({
     quizTierFiredRef.current = true;
     trackQuizTierComplete({ quizName, score, passed });
   }, [allAnswered, currentQ, questions.length, hydrated, completedThisSession, progress.correct, progress.total, quizName, passThreshold]);
+
+  // Lesson-tier auto-complete (topherdev 2026-09-06): when a run completes
+  // PERFECT (all answers correct) in this session, fire the opt-in callback so
+  // the owning component can mark the lesson complete. Session-scoped (gated on
+  // completedThisSession) so a returning user who reloads an already-perfect
+  // quiz — or a guest — never triggers it, and it fires at most once per run.
+  // A retake that is perfect counts as a fresh session fire; the write is an
+  // idempotent upsert and the consumer guards against re-marking an already
+  // complete lesson.
+  const perfectScoreFiredRef = useRef(false);
+  useEffect(() => {
+    if (!onPerfectScore || !hydrated || perfectScoreFiredRef.current) return;
+    const showResults =
+      (allAnswered && !completedThisSession) ||
+      currentQ >= questions.length;
+    if (!showResults) return;
+    if (progress.total > 0 && progress.correct === progress.total && completedThisSession) {
+      perfectScoreFiredRef.current = true;
+      onPerfectScore();
+    }
+  }, [onPerfectScore, hydrated, allAnswered, completedThisSession, currentQ, questions.length, progress.correct, progress.total]);
 
   // Hydration gate (QA F-1): before the stored quiz state has been read
   // after mount, render a placeholder instead of the question/results view.

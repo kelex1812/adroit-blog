@@ -13,11 +13,14 @@
 "use client";
 
 import QuizWidget from "@/components/Progress/QuizWidget";
+import { useLessonProgress } from "@/lib/hooks/useLessonProgress";
 import type { QuizQuestion } from "@/shared/contracts";
 
 interface LessonQuizProps {
   quizName: string;
   lessonNumber: number;
+  /** Canonical lesson slug — used to auto-mark the lesson complete on a perfect score. */
+  lessonSlug: string;
   questions: QuizQuestion[];
   /** Back link target (lesson page itself). */
   backHref: string;
@@ -26,9 +29,21 @@ interface LessonQuizProps {
 export default function LessonQuiz({
   quizName,
   lessonNumber,
+  lessonSlug,
   questions,
   backHref,
 }: LessonQuizProps) {
+  const { isCompleted, markComplete } = useLessonProgress(lessonSlug);
+
+  // Auto-complete the lesson when the practice quiz is answered perfectly.
+  // Guards against re-marking: if the lesson is already complete the hook
+  // would toggle back off, so we no-op here (the write is an idempotent
+  // upsert, and MarkComplete visibility is driven by the same hook).
+  const handlePerfectScore = () => {
+    if (isCompleted) return;
+    markComplete();
+  };
+
   return (
     <section aria-label="Practice questions" className="mt-11 border-t border-gray-200 pt-7 dark:border-[var(--border-default)]">
       <div className="max-w-[640px]">
@@ -55,6 +70,7 @@ export default function LessonQuiz({
         retakeLabel="Retake quiz"
         backHref={backHref}
         backLabel="Back to lesson"
+        onPerfectScore={handlePerfectScore}
       />
     </section>
   );
