@@ -142,6 +142,34 @@ reset (visibility drives the closed drawer, so it still collapses cleanly).
 scroll-matrix (cell semantics are lost in cards, ADR-231) with a below-`sm`
 "scroll ← →" hint; a searchable/sticky-person matrix is a separate backlog
 item. Blog filter toolbar rework (B-24) is deliberately out of scope.
+### Fix — series syllabus horizontal overflow on phones (t_aa82c1e3)
+
+**What** — `src/app/learn/[series]/page.tsx` wrapped `SeriesSyllabus` in a
+single-column `<div className="grid gap-10">`. A one-column auto grid sizes
+to the *max-content* of the widest grid item (default `min-width:auto`), so
+the widest lesson title pinned the sort row and every lesson card to ~734px
+inside a ~312px phone content column — the series syllabus
+(`/learn/omni-studio-cert`) horizontally scrolled ~398px on a 375px viewport.
+Added `grid-cols-[minmax(0,1fr)]` to the wrapper so the column is shrinkable
+to the container width. Now: overflow_px = 0 at 375/390/1280 (768 leftover is
+the known/accepted out-of-scope public header desktop nav).
+
+**Why** — the syllabus is one of the eight in-scope surfaces in PR #384's
+criterion #1 ("all surfaces zero horizontal overflow") and the PR's stated
+goal is "make the exam and syllabus fully usable on a phone." The
+thumb-conformance pass had brought the controls to the 44px floor but left
+the grid track unshrinkable, so the syllabus still scrolled sideways on a
+phone.
+
+**How** — one additive Tailwind arbitrary-value class
+(`grid-cols-[minmax(0,1fr)]`) on the existing `grid gap-10` wrapper. No
+layout/contract/data change; verified in-browser at 375/390/768/1280.
+
+**Known issues** — none introduced. The 49px horizontal leftover at exactly
+768px is the public header desktop nav (Posts/Categories/Tags/Learn/Adroit.io/
+Contact/QM), out of scope for this branch (t_c4c0a710 / PR #372) and already
+accepted across all PR #384 surfaces.
+
 ### Mobile responsive — Learn hub, syllabus, lesson, exam, certificate, preview, constellation, lab (t_9ca96a47)
 
 **What** — thumb-conformance pass for the Learn + special surfaces
