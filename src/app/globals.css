@@ -199,6 +199,36 @@
   --preview-strip-ink: #92400E;
   --preview-lock-seam: linear-gradient(180deg, transparent, var(--surface-page));
   --preview-lock-opacity: 0.45;
+
+  /* ── MOBILE RESPONSIVE SWEEP (kara t_bde7f68b) — ADDITIVE ────────
+     Responsive admin tokens driving the off-canvas drawer collapse
+     (ADR-230/233) + table-family hardening (ADR-231/232) + thumb-zone
+     hit targets (ADR-233). Values mirror the shipped admin chrome so
+     nothing drifts: sidebar 240px = w-60, topbar 64px = h-16. Nothing
+     here replaces a shipped token — it only ADDS. Full spec:
+     design/design-tokens-mobile-responsive.css. */
+
+  /* 1. Admin responsive nav — off-canvas drawer (desktop static sidebar) */
+  --admin-sidebar-w: 240px;              /* = current w-60 */
+  --admin-topbar-h: 64px;                /* = current h-16 */
+  --admin-drawer-w: 84vw;                /* near-full on narrow phones */
+  --admin-drawer-max-w: 320px;           /* cap so it never exceeds thumb reach */
+  --admin-scrim: rgba(6, 15, 31, 0.5);   /* navy-dark scrim ~ LaunchDialog backdrop */
+  --admin-drawer-ease: cubic-bezier(0.22, 1, 0.36, 1); /* ease-out quint */
+  --admin-drawer-dur: 220ms;
+
+  /* 2. Mobile hit-target floor (WCAG 2.5.8 — Operate thumb conformance) */
+  --touch-target-min: 44px;
+  --touch-target-ideal: 48px;
+  --mobile-action-pad-x: 12px;
+  --mobile-action-pad-y: 12px;
+
+  /* 3. Table hardening standards (overflow wrappers + priority col hides) */
+  --table-overflow: auto;
+  --table-col-essential: table-cell;      /* always show */
+  --table-col-secondary-hide-sm: hidden;  /* hidden below sm */
+  --table-col-secondary-hide-md: hidden;  /* hidden below md */
+  --table-col-tertiary-hide-lg: hidden;   /* hidden below lg */
 }
 
 /* ─────────────────────────────────────────────

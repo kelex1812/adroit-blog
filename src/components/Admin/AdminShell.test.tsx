@@ -1,16 +1,35 @@
 /**
  * AdminShell — back-nav + sidebar nav integrity (G5, t_f94e01d5) + v5 nav
- * regroup (t_888621eb). The admin is a multi-page operating surface; the
- * "Back to site" link must live in the sidebar (NOT a modal) and point to the
- * public site so an admin can leave /admin back to the marketing/blog surface.
+ * regroup (t_888621eb) + mobile off-canvas drawer (t_71a0d478, ADR-230).
+ * The admin is a multi-page operating surface; the "Back to site" link must
+ * live in the sidebar (NOT a modal) and point to the public site so an admin
+ * can leave /admin back to the marketing/blog surface.
  */
-import { describe, it, expect, vi } from "vitest";
-import { render, screen } from "@testing-library/react";
+import { describe, it, expect, vi, beforeEach } from "vitest";
+import { render, screen, fireEvent } from "@testing-library/react";
 import { AdminShell } from "./AdminShell";
 
+let currentPath = "/admin/courses";
 vi.mock("next/navigation", () => ({
-  usePathname: () => "/admin/courses",
+  usePathname: vi.fn(() => currentPath),
 }));
+
+/** Force a <md viewport so the off-canvas drawer behavior is exercised. */
+function setMobile() {
+  Object.defineProperty(window, "innerWidth", {
+    value: 390,
+    writable: true,
+    configurable: true,
+  });
+}
+
+function setDesktop() {
+  Object.defineProperty(window, "innerWidth", {
+    value: 1280,
+    writable: true,
+    configurable: true,
+  });
+}
 
 describe("AdminShell back-nav (t_f94e01d5)", () => {
   it("renders a Back to site link in the sidebar pointing to the public site", () => {
@@ -46,5 +65,89 @@ describe("AdminShell back-nav (t_f94e01d5)", () => {
       "aria-current",
       "page",
     );
+  });
+});
+
+describe("AdminShell mobile off-canvas drawer (t_71a0d478, ADR-230)", () => {
+  beforeEach(() => {
+    setMobile();
+  });
+
+  it("renders a hamburger toggle (md:hidden) wired to aria-expanded/controls", () => {
+    setMobile();
+    render(<AdminShell>content</AdminShell>);
+    const toggle = screen.getByRole("button", { name: /open navigation/i });
+    expect(toggle).toHaveAttribute("aria-expanded", "false");
+    expect(toggle).toHaveAttribute("aria-controls", "admin-drawer");
+  });
+
+  it("opens/closes the drawer via the toggle and mirrors aria-expanded", () => {
+    render(<AdminShell>content</AdminShell>);
+    const toggle = screen.getByRole("button", { name: /open navigation/i });
+    fireEvent.click(toggle);
+    expect(toggle).toHaveAttribute("aria-expanded", "true");
+    expect(toggle).toHaveAttribute("aria-label", "Close navigation");
+    // The aside is announced when open, hidden when closed.
+    expect(screen.getByLabelText("Admin navigation")).toHaveAttribute(
+      "aria-hidden",
+      "false",
+    );
+    fireEvent.click(toggle);
+    expect(toggle).toHaveAttribute("aria-expanded", "false");
+    expect(screen.getByLabelText("Admin navigation")).toHaveAttribute(
+      "aria-hidden",
+      "true",
+    );
+  });
+
+  it("keeps the drawer closed (aria-hidden) on a <md viewport before opening", () => {
+    render(<AdminShell>content</AdminShell>);
+    expect(screen.getByLabelText("Admin navigation")).toHaveAttribute(
+      "aria-hidden",
+      "true",
+    );
+  });
+
+  it("always exposes the sidebar on a md+ viewport (static desktop sidebar)", () => {
+    setDesktop();
+    render(<AdminShell>content</AdminShell>);
+    // Desktop: the aside is a visible layout landmark, never aria-hidden.
+    expect(screen.getByLabelText("Admin navigation")).toHaveAttribute(
+      "aria-hidden",
+      "false",
+    );
+  });
+
+  it("closes the drawer on route change (usePathname effect)", () => {
+    const { rerender } = render(<AdminShell>content</AdminShell>);
+    const toggle = screen.getByRole("button", { name: /open navigation/i });
+    fireEvent.click(toggle);
+    expect(toggle).toHaveAttribute("aria-expanded", "true");
+
+    // Simulate navigation to a different admin route → usePathname changes,
+    // the auto-close effect fires, and the same instance's drawer closes.
+    currentPath = "/admin/analytics";
+    rerender(<AdminShell>content</AdminShell>);
+    expect(toggle).toHaveAttribute("aria-expanded", "false");
+  });
+
+  it("closes the drawer on Escape and returns focus to the toggle", () => {
+    render(<AdminShell>content</AdminShell>);
+    const toggle = screen.getByRole("button", { name: /open navigation/i });
+    fireEvent.click(toggle);
+    expect(toggle).toHaveAttribute("aria-expanded", "true");
+
+    fireEvent.keyDown(window, { key: "Escape" });
+    expect(toggle).toHaveAttribute("aria-expanded", "false");
+    expect(toggle).toHaveFocus();
+  });
+
+  it("closes the drawer when a nav link is tapped", () => {
+    render(<AdminShell>content</AdminShell>);
+    const toggle = screen.getByRole("button", { name: /open navigation/i });
+    fireEvent.click(toggle);
+    expect(toggle).toHaveAttribute("aria-expanded", "true");
+    fireEvent.click(screen.getByRole("link", { name: "Audit Log" }));
+    expect(toggle).toHaveAttribute("aria-expanded", "false");
   });
 });
