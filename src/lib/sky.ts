@@ -98,6 +98,7 @@ export function buildConstellation(
     lit: completedSlugs.has(slug),
   }));
   const litStars = stars.filter((s) => s.lit).length;
+  const examPassed = input.examPassed ?? false;
   return {
     courseId: input.courseId,
     seriesSlug: input.seriesSlug,
@@ -107,8 +108,15 @@ export function buildConstellation(
     // Never below what already exists; a stale declaration must not shrink a course.
     curriculumLessons: Math.max(input.curriculumLessons ?? 0, stars.length),
     litStars,
-    complete: stars.length > 0 && litStars === stars.length,
-    examPassed: input.examPassed ?? false,
+    // A course is complete when every star is lit (all lessons done) OR when
+    // its cert-prep exam has been passed (Chris decision 2026-09-07): the
+    // exam pass completes the course even if individual lessons were never
+    // ticked, so the constellation reads as done. Individual star `lit` values
+    // stay lesson-derived — uncompleted lessons remain visibly open to revisit.
+    complete:
+      (stars.length > 0 && litStars === stars.length) ||
+      (stars.length > 0 && examPassed),
+    examPassed,
     stars,
   };
 }

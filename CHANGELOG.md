@@ -9,6 +9,22 @@ Baseline v1.0.0 — Omni content + course-structure/cert-standards bar + Constel
 
 ## [Unreleased]
 
+### Server-authoritative lesson auto-completion — checks + exam (`feat/server-authoritative-lesson-completion-t4005eb8b`)
+
+**What** — Made lesson auto-completion server-authoritative for the server-graded tiers. A perfect knowledge check (a full-coverage `quiz_attempt` set that re-derives as 100%) now marks its covered lessons complete, and passing the cert-prep exam marks the course complete and lights the constellation — both derived from the server-graded `quiz_attempt` rows, never a client-observed score. The exam pass deliberately does NOT write `lesson_completion` rows, so uncompleted lessons stay open for the learner to revisit.
+
+**Why** — Progress on the server-graded tiers previously had no server-side completion write: lesson completion only fired from `POST /api/progress/lesson` (the lesson-route path), so a perfect check or a passed exam didn't durably complete anything on the server. This routes all three paths through one shared helper (`completeLessonServer` in `src/lib/progress-complete.ts`) and factors the completion-event/course-complete logic out of the lesson route (no behavior change there).
+
+**What changed**
++ `src/lib/progress-complete.ts` (new) — `completeLessonServer()`: the single shared write helper. Upserts `lesson_completion` row(s), logs the `lesson`/`course` completion events, and derives course completion; `viaExamPass` mode logs the course event WITHOUT writing lesson rows. Also `checkCoveredLessonSlugs()` (check range → slugs) and `completeCheckLessonsOnPerfectScore()` (re-derive + complete on 100%).
++ `src/app/api/progress/lesson/route.ts` — POST now delegates to `completeLessonServer` (behavior unchanged; DELETE untouched).
++ `src/app/api/progress/quiz/route.ts` — after a graded check answer upsert, re-derives the whole check from `quiz_attempt`; a full-coverage 100% completes the check's covered lessons. Partial or imperfect sets never fire (AC-2).
++ `src/app/api/progress/quiz/batch/route.ts` — on exam pass (score >= 72) calls `completeLessonServer({ viaExamPass: true })`: course complete, no lesson rows.
++ `src/lib/sky.ts` — `buildConstellation.complete` now also derives true when the exam is passed (exam-passed course reads complete while individual uncompleted lessons stay visible/open).
+
+**Known issues** — none. The client-graded per-lesson quiz tier is unchanged (flagged for a separate follow-up). Constellation complete-via-exam requires the exam's graded `quiz_attempt` rows to be present (loadExamPassedBySeries), which the batch route writes.
+
+
 ### Public read surfaces — mobile thumb-conformance hardening (`feat/public-mobile-responsive-t_c4c0a710`)
 
 **What** — Hardened the public READ surfaces for small-viewport thumb use

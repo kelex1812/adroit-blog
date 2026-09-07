@@ -25,6 +25,7 @@ import { getSupabaseServiceClient } from "@/lib/supabase/service";
 import { getKnowledgeChecks, parseQuizName, resolveQuizByName } from "@/lib/quiz";
 import { areAllChecksPassed } from "@/lib/certificate";
 import { denyQuizNotAccessible } from "@/lib/access-gate";
+import { completeLessonServer } from "@/lib/progress-complete";
 import {
   checkOrigin,
   checkRateLimit,
@@ -270,6 +271,26 @@ export async function POST(req: NextRequest) {
       passed: score >= EXAM_PASS_PCT,
       results,
     };
+
+    // Exam-pass course completion (server-authoritative). A passed exam
+    // completes the COURSE and lights the constellation WITHOUT writing
+    // lesson_completion rows — the learner keeps uncompleted lessons open to
+    // revisit (Chris decision 2026-09-07). completeLessonServer's viaExamPass
+    // path appends the durable 'course' event (idempotent) and writes no
+    // lesson rows. The constellation crown itself derives from the graded
+    // quiz_attempt rows this request just upserted (loadExamPassedBySeries),
+    // so no separate lesson write is needed to light it. Best-effort: a log
+    // failure must not fail the grading reply.
+    if (score >= EXAM_PASS_PCT) {
+      await completeLessonServer({
+        userId: user.id,
+        series: parsed.series,
+        viaExamPass: true,
+      }).catch((err) => {
+        console.error("[exam] mark course complete", err);
+      });
+    }
+
     return NextResponse.json(result);
   } catch {
     return NextResponse.json({ status: "error" }, { status: 500 });
