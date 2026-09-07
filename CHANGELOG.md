@@ -9,6 +9,54 @@ Baseline v1.0.0 — Omni content + course-structure/cert-standards bar + Constel
 
 ## [Unreleased]
 
+### Account & auth surfaces — mobile thumb-conformance (`feat/account-auth-mobile-responsive-t_e086d55b`)
+
+**What** — Raised the sub-44px interactive targets on the /profile identity
+form, /settings appearance control,and /profile progress/achievement
+surfaces to the WCAG 2.5.8 44px touch floor, per kara's mobile sweep
+(t_bde7f68b.The account/auth forms (/login, /forgot-password,
+/reset-password) already shipped conformant 44px (`h-11`) inputs +
+buttons,and zero horizontal overflow at 390px, so no re-layout was needed —
+this is the light hardening the discovery brief scoped. Real sub-44px
+artifacts found and fixed:
++ **ProfileForm (`ProfileForm.tsx`)** — the two identity inputs(display name,
+   username)and the Clear / Save changes buttons grew from ~40px to a
+   guaranteed `min-h-[44px]`, so editing your identity is thumb-safe on phones.
+
++ **ThemeToggle segmented control (`ThemeToggle.tsx`)** — the Settings
+   System/Light/Dark radios grew from ~36px (`py-2`) to `min-h-[44px]`,
+   bringing the primary appearance control up to the touch floor. The compact
+(avatar-menu)and icon-only variants are untouched.
+
++ **CertificateSection (`CertificateSection.tsx`)** — "View cert" on /profile is
+   now a `min-h-[44px] inline-flex` target, so cert CTAs are thumb-safe,
+   not slim 24px text links.
+
+
++ **FullSkySection / profile constellation (`FullSkySection.tsx`)** — the course
+   links in the Constellations list grew to a `min-h-[44px] inline-flex`
+    target, so the progress/achievement navigation is captured by the 44px floor
+
+   (the constellation chart itself + `.cxc-toggle` belong to the Learn task
+   t_9ca96a47 — separate PR).
+
+*Rhythm/overflow:* verified at 390px in-browser — zero horizontal overflow
+on /login, /forgot-password, /reset-password?error=expired entry controls. The
+/progress UI was already mobile-first(grid-cols-2 sm:grid-cols-4 stat
+block, flex-wrap constellation list, clamp() display type. No token, data,
+contract, or API change — presentational-only.
+
+
+
+**Why** — Same contract as the rest of the sweep: `Touch: every interactive
+target ≥44px on touch` (kara's direction-brief. All additive; no shipped
+token replaced (ADR-233 philosophy.
+
+
+**Known issues** — none. Inline text links(Forgot password?, Back to blog,
+mode toggles) intentionally stay inline — WCAG 2.5.8 exempts target
+padding in running prose.
+
 ### Admin mobile-responsive sweep — off-canvas drawer + table hardening (`feat/admin-mobile-responsive-t_71a0d478`)
 
 **What** — the fixed `w-60` admin sidebar now collapses to an off-canvas

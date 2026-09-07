@@ -165,7 +165,7 @@ export default function ThemeToggle({
             tabIndex={active ? 0 : -1}
             onClick={() => handleChange(opt.value)}
             disabled={isPending}
-            className={`flex items-center justify-center gap-1.5 rounded-[7px] px-3 py-2 text-[13px] font-semibold transition-all duration-150 cursor-pointer border-none ${
+            className={`flex min-h-[44px] items-center justify-center gap-1.5 rounded-[7px] px-3 py-2 text-[13px] font-semibold transition-all duration-150 cursor-pointer border-none ${
               active
                 ? "bg-[var(--surface-card)] text-[var(--ink-primary)] shadow-sm"
                 : "bg-transparent text-[var(--ink-muted)] hover:text-[var(--ink-primary)]"
