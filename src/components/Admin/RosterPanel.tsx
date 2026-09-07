@@ -126,7 +126,7 @@ export function RosterPanel({
             type="button"
             disabled={selIds.length === 0}
             onClick={() => bulk("grant")}
-            className="text-[11.5px] font-semibold px-3 py-1.5 rounded-md text-white bg-[var(--color-red)] hover:bg-[var(--color-red-dark)] disabled:opacity-45 disabled:cursor-not-allowed transition-colors"
+            className="text-[11.5px] font-semibold px-3 py-1.5 min-h-[44px] md:min-h-0 rounded-md text-white bg-[var(--color-red)] hover:bg-[var(--color-red-dark)] disabled:opacity-45 disabled:cursor-not-allowed transition-colors"
           >
             Bulk grant
           </button>
@@ -134,7 +134,7 @@ export function RosterPanel({
             type="button"
             disabled={selIds.length === 0}
             onClick={() => bulk("revoke")}
-            className="text-[11.5px] font-semibold px-3 py-1.5 rounded-md border text-[var(--color-red-dark)] hover:bg-[var(--color-red)] hover:text-white disabled:opacity-45 disabled:cursor-not-allowed transition-colors"
+            className="text-[11.5px] font-semibold px-3 py-1.5 min-h-[44px] md:min-h-0 rounded-md border text-[var(--color-red-dark)] hover:bg-[var(--color-red)] hover:text-white disabled:opacity-45 disabled:cursor-not-allowed transition-colors"
             style={{ borderColor: "var(--color-red)" }}
           >
             Bulk revoke
@@ -147,7 +147,9 @@ export function RosterPanel({
             <thead>
               <tr className="font-mono text-[10px] font-bold uppercase tracking-[0.06em]" style={{ color: "var(--admin-table-head)" }}>
                 <th scope="col" className="px-3 py-2 w-8">
-                  <input type="checkbox" aria-label="Select all people" checked={allSelected} onChange={toggleAll} />
+                  <label className="flex h-11 w-11 items-center justify-center rounded hover:bg-[var(--surface-sunken)]">
+                    <input type="checkbox" className="h-4 w-4" aria-label="Select all people" checked={allSelected} onChange={toggleAll} />
+                  </label>
                 </th>
                 <th scope="col" className="px-3 py-2 text-left">Person</th>
                 <th scope="col" className="px-3 py-2 text-left">Effective access</th>
@@ -162,12 +164,15 @@ export function RosterPanel({
                   style={{ borderTop: "1px solid var(--admin-table-border)" }}
                 >
                   <td className="px-3 py-2.5">
-                    <input
-                      type="checkbox"
-                      aria-label={`Select ${u.display_name ?? u.email}`}
-                      checked={selected.has(u.user_id)}
-                      onChange={() => toggleUser(u.user_id)}
-                    />
+                    <label className="flex h-11 w-11 items-center justify-center rounded hover:bg-[var(--surface-sunken)]">
+                      <input
+                        type="checkbox"
+                        className="h-4 w-4"
+                        aria-label={`Select ${u.display_name ?? u.email}`}
+                        checked={selected.has(u.user_id)}
+                        onChange={() => toggleUser(u.user_id)}
+                      />
+                    </label>
                   </td>
                   <td className="px-3 py-2.5">
                     <span className="font-semibold text-[var(--ink-primary)]">{u.display_name ?? u.email}</span>

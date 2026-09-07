@@ -61,6 +61,88 @@ keeps every button at the 44px thumb floor while dropping the row to two
 lines on narrow phones — `docOverflowPx = 0` restored at 390px. On
 tablet/desktop widthsthe row still fits a single line, so no visual change.
 
+### Account & auth surfaces — mobile thumb-conformance (`feat/account-auth-mobile-responsive-t_e086d55b`)
+
+**What** — Raised the sub-44px interactive targets on the /profile identity
+form, /settings appearance control,and /profile progress/achievement
+surfaces to the WCAG 2.5.8 44px touch floor, per kara's mobile sweep
+(t_bde7f68b.The account/auth forms (/login, /forgot-password,
+/reset-password) already shipped conformant 44px (`h-11`) inputs +
+buttons,and zero horizontal overflow at 390px, so no re-layout was needed —
+this is the light hardening the discovery brief scoped. Real sub-44px
+artifacts found and fixed:
++ **ProfileForm (`ProfileForm.tsx`)** — the two identity inputs(display name,
+   username)and the Clear / Save changes buttons grew from ~40px to a
+   guaranteed `min-h-[44px]`, so editing your identity is thumb-safe on phones.
+
++ **ThemeToggle segmented control (`ThemeToggle.tsx`)** — the Settings
+   System/Light/Dark radios grew from ~36px (`py-2`) to `min-h-[44px]`,
+   bringing the primary appearance control up to the touch floor. The compact
+(avatar-menu)and icon-only variants are untouched.
+
++ **CertificateSection (`CertificateSection.tsx`)** — "View cert" on /profile is
+   now a `min-h-[44px] inline-flex` target, so cert CTAs are thumb-safe,
+   not slim 24px text links.
+
+
++ **FullSkySection / profile constellation (`FullSkySection.tsx`)** — the course
+   links in the Constellations list grew to a `min-h-[44px] inline-flex`
+    target, so the progress/achievement navigation is captured by the 44px floor
+
+   (the constellation chart itself + `.cxc-toggle` belong to the Learn task
+   t_9ca96a47 — separate PR).
+
+*Rhythm/overflow:* verified at 390px in-browser — zero horizontal overflow
+on /login, /forgot-password, /reset-password?error=expired entry controls. The
+/progress UI was already mobile-first(grid-cols-2 sm:grid-cols-4 stat
+block, flex-wrap constellation list, clamp() display type. No token, data,
+contract, or API change — presentational-only.
+
+
+
+**Why** — Same contract as the rest of the sweep: `Touch: every interactive
+target ≥44px on touch` (kara's direction-brief. All additive; no shipped
+token replaced (ADR-233 philosophy.
+
+
+**Known issues** — none. Inline text links(Forgot password?, Back to blog,
+mode toggles) intentionally stay inline — WCAG 2.5.8 exempts target
+padding in running prose.
+
+### Admin mobile-responsive sweep — off-canvas drawer + table hardening (`feat/admin-mobile-responsive-t_71a0d478`)
+
+**What** — the fixed `w-60` admin sidebar now collapses to an off-canvas
+hamburger drawer below the `md` (768px) breakpoint, restoring the full
+viewport to the Operate content column; at `md+` it remains the same static
+240px sidebar. The 3–7 column admin tables are hardened so no page scrolls
+horizontally: Courses and Audit gained the missing `overflow-x-auto` wrapper,
+secondary columns hide by breakpoint (`hidden md:table-cell` / `lg`), the
+Audit log reflows to label→value cards below `sm`, Analytics hides
+Enrolled/Signal/Lessons-done below their breakpoints, and every admin action
+(grant / revoke / one-time / adjust / launch / bulk / select) is a ≥44px
+touch target below `md`. The duplicate Status/Access-model header pair in the
+Courses table was reconciled into single columns (the selects are the real
+controls).
+
+**Why** — the Operate surface was the last un-responsive slice of the app: a
+fixed 240px sidebar + un-wrapped dense tables produced hard horizontal
+page-scrolls and unusable hit targets at phone widths (kara's
+`direction-brief-mobile-responsive-sweep.md`). This is a presentational pass
+only — zero data/contract/API change, public surfaces untouched
+(ADR-230..234).
+
+**How** — additive `--admin-*` / `--touch-target-*` tokens only (ADR-233),
+referenced via `var()` in the shell + tables. `drawerOpen` is client state:
+Escape closes it, the hamburger mirrors `aria-expanded`/`aria-controls`, and
+route change auto-closes it (React's adjust-state-on-prop-change pattern).
+Reduced-motion is respected by the existing global `prefers-reduced-motion`
+reset (visibility drives the closed drawer, so it still collapses cleanly).
+
+**Known issues** — none. The AccessGrid intentionally stays a horizontal
+scroll-matrix (cell semantics are lost in cards, ADR-231) with a below-`sm`
+"scroll ← →" hint; a searchable/sticky-person matrix is a separate backlog
+item. Blog filter toolbar rework (B-24) is deliberately out of scope.
+
 ### Hubble Field — constellations sized to the curriculum (`feat/hubble-field`)
 
 **What** — a course's constellation is chosen by the curriculum's *final*

@@ -177,10 +177,10 @@ export default function AdminAnalyticsPage() {
               <tr className="font-mono text-[10px] font-bold uppercase tracking-[0.07em] bg-gray-50 dark:bg-gray-900" style={{ color: "var(--ink-faint)", borderBottom: "1px solid var(--admin-table-border)" }}>
                 <th scope="col" className="px-5 py-3">Course</th>
                 <th scope="col" className="px-5 py-3">Status</th>
-                <th scope="col" className="px-5 py-3">Enrolled</th>
+                <th scope="col" className="px-5 py-3 hidden md:table-cell">Enrolled</th>
                 <th scope="col" className="px-5 py-3 w-2/5">Avg progress</th>
-                <th scope="col" className="px-5 py-3">Lessons done</th>
-                <th scope="col" className="px-5 py-3">Signal</th>
+                <th scope="col" className="px-5 py-3 hidden lg:table-cell">Lessons done</th>
+                <th scope="col" className="px-5 py-3 hidden lg:table-cell">Signal</th>
               </tr>
             </thead>
             <tbody>
@@ -210,7 +210,7 @@ export default function AdminAnalyticsPage() {
                       </div>
                     </td>
                     <td className="px-5 py-3"><StatusBadge status={c.status} /></td>
-                    <td className="px-5 py-3 font-mono font-semibold text-[var(--ink-primary)]">{c.enrollmentCount}</td>
+                    <td className="px-5 py-3 hidden md:table-cell font-mono font-semibold text-[var(--ink-primary)]">{c.enrollmentCount}</td>
                     <td className="px-5 py-3">
                       <div className="flex items-center gap-2.5">
                         <div className="analytics-bar flex-1">
@@ -221,10 +221,10 @@ export default function AdminAnalyticsPage() {
                         </span>
                       </div>
                     </td>
-                    <td className="px-5 py-3 font-mono text-[11.5px] text-[var(--ink-muted)]">
+                    <td className="px-5 py-3 hidden lg:table-cell font-mono text-[11.5px] text-[var(--ink-muted)]">
                       <b className="text-[var(--ink-primary)] font-semibold">{c.lessonsCompleted}</b> / {c.totalLessons} lessons
                     </td>
-                    <td className="px-5 py-3">
+                    <td className="px-5 py-3 hidden lg:table-cell">
                       <span className={`inline-block font-mono text-[9.5px] font-bold uppercase tracking-[0.05em] px-2 py-0.5 rounded-full ${sig.cls}`}>
                         {sig.label}
                       </span>

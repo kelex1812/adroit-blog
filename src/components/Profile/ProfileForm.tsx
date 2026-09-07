@@ -95,7 +95,7 @@ export default function ProfileForm() {
             }}
             placeholder="How you appear on the site"
             disabled={!loaded || isPending}
-            className="w-full px-3.5 py-2.5 rounded-lg border border-[var(--border-default)] bg-[var(--surface-card)] text-[14px] text-[var(--ink-body)] focus:outline-none focus:border-[var(--accent)] focus:ring-[3px] focus:ring-[var(--accent)]/[0.25] disabled:opacity-50 placeholder:text-[var(--ink-faint)]"
+            className="w-full px-3.5 py-2.5 min-h-[44px] rounded-lg border border-[var(--border-default)] bg-[var(--surface-card)] text-[14px] text-[var(--ink-body)] focus:outline-none focus:border-[var(--accent)] focus:ring-[3px] focus:ring-[var(--accent)]/[0.25] disabled:opacity-50 placeholder:text-[var(--ink-faint)]"
           />
           <div className="text-[11.5px] text-[var(--ink-faint)] mt-1">
             Shown in the avatar menu and on your profile.
@@ -115,7 +115,7 @@ export default function ProfileForm() {
             }}
             placeholder="janedoe"
             disabled={!loaded || isPending}
-            className="w-full px-3.5 py-2.5 rounded-lg border border-[var(--border-default)] bg-[var(--surface-card)] text-[14px] text-[var(--ink-body)] focus:outline-none focus:border-[var(--accent)] focus:ring-[3px] focus:ring-[var(--accent)]/[0.25] disabled:opacity-50 placeholder:text-[var(--ink-faint)]"
+            className="w-full px-3.5 py-2.5 min-h-[44px] rounded-lg border border-[var(--border-default)] bg-[var(--surface-card)] text-[14px] text-[var(--ink-body)] focus:outline-none focus:border-[var(--accent)] focus:ring-[3px] focus:ring-[var(--accent)]/[0.25] disabled:opacity-50 placeholder:text-[var(--ink-faint)]"
           />
           <div className="text-[11.5px] text-[var(--ink-faint)] mt-1">
             <span className="font-mono text-[10.5px]">@{username || "username"}</span>
@@ -144,7 +144,7 @@ export default function ProfileForm() {
             setError(null);
           }}
           disabled={isPending}
-          className="px-5 py-2.5 rounded-md border border-[var(--border-default)] text-[12.5px] font-semibold text-[var(--ink-muted)] bg-transparent hover:border-[var(--border-strong)] hover:text-[var(--ink-primary)] transition-colors duration-150 cursor-pointer disabled:opacity-50"
+          className="px-5 py-2.5 min-h-[44px] rounded-md border border-[var(--border-default)] text-[12.5px] font-semibold text-[var(--ink-muted)] bg-transparent hover:border-[var(--border-strong)] hover:text-[var(--ink-primary)] transition-colors duration-150 cursor-pointer disabled:opacity-50"
         >
           Clear
         </button>
@@ -152,7 +152,7 @@ export default function ProfileForm() {
           type="button"
           onClick={handleSave}
           disabled={!loaded || isPending}
-          className="px-5 py-2.5 rounded-md bg-[var(--surface-inverse)] text-[var(--ink-on-inverse)] text-[12.5px] font-semibold hover:bg-[var(--surface-inverse-hover)] hover:-translate-y-px active:scale-[0.98] transition-all duration-150 cursor-pointer disabled:opacity-45 disabled:cursor-not-allowed"
+          className="px-5 py-2.5 min-h-[44px] rounded-md bg-[var(--surface-inverse)] text-[var(--ink-on-inverse)] text-[12.5px] font-semibold hover:bg-[var(--surface-inverse-hover)] hover:-translate-y-px active:scale-[0.98] transition-all duration-150 cursor-pointer disabled:opacity-45 disabled:cursor-not-allowed"
         >
           {isPending ? "Saving…" : "Save changes"}
         </button>
