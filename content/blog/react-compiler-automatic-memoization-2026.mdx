@@ -23,6 +23,8 @@ The honest answer is "usually not for existing code, and only for performance in
 
 React Compiler is a build-time optimizer, not a runtime change. It lowers your JavaScript and JSX into a high-level intermediate representation, then runs multiple passes that reason about data flow and mutability before deciding which values and pieces of rendered output it can safely reuse.[^3] When it decides reuse is safe, it inserts the equivalent of `useMemo`, `useCallback`, and `React.memo` into the compiled output, without you writing any of them.[^1]
 
+![React Compiler replaces manual memoization with build-time automatic memoization, condensing the useMemo, useCallback, and React.memo stack into plain components the compiler optimizes](</diagrams/react-compiler-automatic-memoization-2026/1-compiler-vs-manual.png>)
+
 The distinguishing trick is that it can memoize conditionally. Manual memoization requires hooks to run in the same order on every render, which means you cannot call `useMemo` after an early `return`. The compiler has no such constraint, because it is not emitting hook calls the way you would; it can keep a value stable even after a conditional return in your component.[^1] That is not a small corner case. It is the case where manual memoization is impossible, which is precisely where components are hardest to optimize by hand.
 
 The compiler also ships validation passes that encode the Rules of React. Using its understanding of data flow and mutability, it flags code that breaks those rules, and those diagnostics now live in the normal `eslint-plugin-react-hooks` package under its `recommended` preset rather than in a separate compiler plugin.[^1] The most useful ones are `set-state-in-render`, which catches render loops, `set-state-in-effect`, which flags expensive work inside effects, and a `refs` rule that stops unsafe ref access during render.[^1] You can upgrade the linter before you ever turn the compiler on, and get the diagnostic value without the build change.
@@ -61,6 +63,8 @@ The second is annotation mode, using `compilationMode: 'annotation'` plus a `"us
 
 The third is runtime gating with feature flags. The compiler wraps optimized code in a runtime check against a flag you control, which lets you run A/B tests or roll the compiler out by user segment before committing to full adoption.[^4]
 
+![The three incremental adoption paths: Babel directory overrides, use memo annotation mode, and runtime gating with feature flags, plus the effect dependency pitfall where memoization doubles as behavior](</diagrams/react-compiler-automatic-memoization-2026/2-adoption-paths.png>)
+
 Two practical rules hold across all three. If you have poor test coverage, pin the compiler to an exact version such as 1.0.0 rather than a range, and upgrade it deliberately, because changing memoization can surface Rules of React violations that are not statically detectable.[^1] And use the `"use no memo"` directive to temporarily exclude a problematic component while you debug, rather than disabling the whole rollout.[^4]
 
 The compiler supports React 17 and later. Projects below React 19 configure a minimum target and add the `react-compiler-runtime` package, while React 19 needs none of that.[^1]
@@ -82,12 +86,6 @@ One year in, the story is maturity, not launch hype. The compiler is stable, its
 The rule of thumb is short. In new code, let the compiler memoize, and reach for the hooks only for precise control. In existing code, do not go on a delete spree. And for anything where object identity controls an effect or another behavioral contract, understand why the identity matters before you touch it, because that is the one place automatic memoization can quietly change what your app does.[^1][^3]
 
 React itself makes the broader point in the upgrade guidance: memoization that reduces work and identity stability that determines behavior are two different things.[^3] The compiler is excellent at the first and deliberately leaves the second to you. That is not a limitation to work around. It is the part of the job that still needs a human.
-
-![React Compiler replaces manual memoization with build-time automatic memoization, condensing the useMemo, useCallback, and React.memo stack into plain components the compiler optimizes](</diagrams/react-compiler-automatic-memoization-2026/1-compiler-vs-manual.png>)
-
-## Incremental adoption paths and the effect pitfall
-
-![The three incremental adoption paths: Babel directory overrides, use memo annotation mode, and runtime gating with feature flags, plus the effect dependency pitfall where memoization doubles as behavior](</diagrams/react-compiler-automatic-memoization-2026/2-adoption-paths.png>)
 
 [^1]: React Compiler v1.0 announcement, October 7, 2025. [react.dev](https://react.dev/blog/2025/10/07/react-compiler-1)
 [^2]: InfoQ, Meta's React Compiler 1.0 Brings Automatic Memoization to Production. [infoq.com](https://www.infoq.com/news/2025/12/react-compiler-meta/)
