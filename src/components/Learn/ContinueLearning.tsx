@@ -49,7 +49,7 @@ export default function ContinueLearning() {
                 "radial-gradient(60% 120% at 88% 10%, rgba(200,16,46,0.28) 0%, transparent 55%)",
             }}
           />
-          <div className="relative flex flex-wrap items-center justify-between gap-4 px-7 py-5">
+          <div className="relative flex flex-wrap items-center justify-between gap-3 sm:gap-4 px-5 sm:px-7 py-5">
             <div>
               <div className="flex items-center gap-1.5 font-mono text-[10px] font-bold uppercase tracking-[0.1em] text-white/65 mb-1">
                 <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent)] animate-pulse" aria-hidden />
@@ -67,7 +67,7 @@ export default function ContinueLearning() {
             {item.nextLessonSlug && (
               <Link
                 href={`/learn/${item.seriesSlug}/${item.nextLessonSlug}`}
-                className="inline-flex items-center gap-2 bg-white text-navy text-[13px] font-bold px-5 py-2.5 rounded-full no-underline hover:translate-x-0.5 hover:shadow-lg transition-all duration-150"
+                className="inline-flex items-center gap-2 bg-[var(--accent)] text-white dark:text-[#0f172a] text-[13px] font-bold px-5 py-2.5 rounded-full no-underline hover:bg-[var(--accent-hover)] hover:translate-x-0.5 hover:shadow-lg transition-all duration-150"
               >
                 Resume lesson <span aria-hidden>&rarr;</span>
               </Link>

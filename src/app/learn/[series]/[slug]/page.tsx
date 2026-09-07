@@ -246,6 +246,7 @@ export default async function LessonPage({ params }: Props) {
             <LessonQuiz
               quizName={lessonQuiz.quizName}
               lessonNumber={lesson.lesson}
+              lessonSlug={lesson.slug}
               questions={lessonQuiz.questions}
               backHref={`/learn/${series}/${slug}`}
             />
