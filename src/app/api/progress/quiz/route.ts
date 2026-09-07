@@ -20,8 +20,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
 import { getSupabaseServiceClient } from "@/lib/supabase/service";
-import { resolveQuizByName } from "@/lib/quiz";
+import { parseQuizName, resolveQuizByName } from "@/lib/quiz";
 import { denyQuizNotAccessible } from "@/lib/access-gate";
+import { completeCheckLessonsOnPerfectScore } from "@/lib/progress-complete";
 import {
   checkOrigin,
   checkRateLimit,
@@ -121,6 +122,28 @@ export async function POST(req: NextRequest) {
 
     if (error) {
       return NextResponse.json({ status: "error", error: sanitiseDbError(error) }, { status: 500 });
+    }
+
+    // Server-authoritative lesson auto-completion (knowledge-check tier):
+    // after the graded attempt is persisted, re-derive the WHOLE check's score
+    // from quiz_attempt rows. When the set derives as a full-coverage 100%,
+    // every lesson the check covers is marked complete via the shared helper.
+    // A partial/imperfect check never derives 100, so it never completes a
+    // lesson. Best-effort: a completion failure must not fail the graded reply.
+    const parsedName = parseQuizName(quizName);
+    // A wrong answer can never make the check's set derive as 100%, so only
+    // re-derive after a correct answer (saves a read per incorrect attempt).
+    if (parsedName?.tier === "check" && isCorrect) {
+      const checkN = Number(parsedName.id);
+      if (Number.isInteger(checkN) && checkN > 0) {
+        await completeCheckLessonsOnPerfectScore({
+          userId: user.id,
+          quizName,
+          series: parsedName.series,
+          checkN,
+          canonicalTotal: quiz.questions.length,
+        });
+      }
     }
 
     // Return the server-graded result so server-graded clients (check page,

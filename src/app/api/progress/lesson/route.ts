@@ -2,19 +2,19 @@
  * POST /api/progress/lesson — mark a lesson as complete.
  * DELETE /api/progress/lesson — unmark a lesson as complete (removes the row).
  *
- * Upserts a lesson_completion row in Supabase for authenticated users.
+ * Upserts a lesson_completion row in Supabase for authenticated users, then
+ * routes the durable write through the shared completeLessonServer() helper so
+ * the knowledge-check and exam tiers (both server-authoritative) reuse the same
+ * lesson/course completion logic.
+ *
  * Silently fails if no auth or Supabase is unavailable (client keeps
  * localStorage as the fallback).
  */
 import { NextRequest, NextResponse } from "next/server";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
-import {
-  getAllCanonicalLessonSlugs,
-  findSeriesForLessonSlug,
-  getLessonsForSeries,
-} from "@/lib/learn";
+import { getAllCanonicalLessonSlugs, findSeriesForLessonSlug } from "@/lib/learn";
 import { accessSeam } from "@/lib/access";
-import { appendCompletionEvent } from "@/lib/completion";
+import { completeLessonServer } from "@/lib/progress-complete";
 import {
   checkOrigin,
   checkRateLimit,
@@ -91,25 +91,20 @@ export async function POST(req: NextRequest) {
     const gateErr = await denyIfNotAccessible(user.id, parsed.lessonSlug);
     if (gateErr) return gateErr;
 
-    const { error } = await supabase.from("lesson_completion").upsert(
-      {
-        user_id: user.id,
-        lesson_slug: parsed.lessonSlug,
-        completed_at: new Date().toISOString(),
-      },
-      { onConflict: "user_id,lesson_slug" },
-    );
-
-    if (error) {
-      return NextResponse.json({ status: "error", error: sanitiseDbError(error) }, { status: 500 });
+    // Server-authoritative completion write: upsert the lesson_completion row,
+    // log the 'lesson' event, and log the 'course' event when that was the last
+    // published lesson in the series. The shared helper also powers the
+    // knowledge-check and exam tiers (no behavior change here).
+    const result = await completeLessonServer({
+      userId: user.id,
+      lessonSlugs: [parsed.lessonSlug],
+    });
+    if (!result.ok) {
+      return NextResponse.json(
+        { status: "error", error: sanitiseDbError(result.error) },
+        { status: 500 },
+      );
     }
-
-    // Completion foundation (plan §3f / ADR-211): append to the immutable
-    // completion_events log — a 'lesson' event now, and a 'course' event when
-    // the lesson that just completed was the last in its series. Best-effort:
-    // the primary lesson_completion write already succeeded, so a log failure
-    // must not fail the response (append is idempotent via the log itself).
-    await recordCompletionEvents(user.id, parsed.lessonSlug);
 
     return NextResponse.json({ status: "ok" });
   } catch {
@@ -183,62 +178,5 @@ async function denyIfNotAccessible(
     );
   } catch {
     return NextResponse.json({ error: "Server error" }, { status: 500 });
-  }
-}
-
-/**
- * Completion foundation append (plan §3f / ADR-211): logs a 'lesson'
- * completion event, then a 'course' event when the just-completed lesson was
- * the last in its series (every published lesson now completed). Best-effort —
- * any DB failure is swallowed so it never breaks the primary lesson write.
- * Both appends are idempotent (appendCompletionEvent skips duplicates).
- */
-async function recordCompletionEvents(
-  userId: string,
-  lessonSlug: string,
-): Promise<void> {
-  try {
-    const series = findSeriesForLessonSlug(lessonSlug);
-    if (!series) return;
-    const supabase = await getSupabaseServerClient();
-
-    // Resolve the course id + the lesson's number.
-    const { data: courseRow } = await supabase
-      .from("courses")
-      .select("id")
-      .eq("series_slug", series)
-      .maybeSingle();
-    const courseId = (courseRow as { id: string } | null)?.id ?? null;
-    if (!courseId) return;
-
-    const lesson = getLessonsForSeries(series).find(
-      (l) => l.slug === lessonSlug,
-    );
-    await appendCompletionEvent({
-      userId,
-      courseId,
-      eventType: "lesson",
-      lesson: lesson?.lesson ?? null,
-      lessonSlug,
-    });
-
-    // Course event: when every published lesson in the series is completed.
-    const slugs = getLessonsForSeries(series).map((l) => l.slug);
-    if (slugs.length > 0) {
-      const { count } = await supabase
-        .from("lesson_completion")
-        .select("lesson_slug", { count: "exact", head: true })
-        .eq("user_id", userId)
-        .in("lesson_slug", slugs);
-      if ((count ?? 0) >= slugs.length) {
-        await appendCompletionEvent({
-          userId,
-          courseId,
-          eventType: "course",
-        });
-      }
-    }
-  } catch (err) {
-    console.error("[completion] recordCompletionEvents", err);
   }
 }

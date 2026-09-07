@@ -70,6 +70,37 @@ describe("buildConstellation", () => {
     expect(none.complete).toBe(false);
   });
 
+  it("derives complete when the exam is passed, even with lessons outstanding (Chris 2026-09-07)", () => {
+    const passed = buildConstellation({
+      courseId: "c1",
+      seriesSlug: "s",
+      name: "n",
+      gradient: "g",
+      lessonSlugs: ["a", "b", "c"],
+      completedSlugs: new Set(["a"]), // only one lesson done
+      examPassed: true,
+    });
+    // Exam pass completes the COURSE → constellation reads complete.
+    expect(passed.examPassed).toBe(true);
+    expect(passed.complete).toBe(true);
+    // Individual stars stay lesson-derived — the two uncompleted lessons
+    // remain visibly open for the learner to revisit (AC-4).
+    expect(passed.stars.map((st) => st.lit)).toEqual([true, false, false]);
+  });
+
+  it("does NOT derive complete from a false/unset examPassed", () => {
+    const c = buildConstellation({
+      courseId: "c1",
+      seriesSlug: "s",
+      name: "n",
+      gradient: "g",
+      lessonSlugs: ["a", "b"],
+      completedSlugs: new Set(["a"]),
+      examPassed: false,
+    });
+    expect(c.complete).toBe(false);
+  });
+
   it("defaults curriculumLessons to the published star count", () => {
     const c = buildConstellation({
       courseId: "c1",
