@@ -9,6 +9,58 @@ Baseline v1.0.0 — Omni content + course-structure/cert-standards bar + Constel
 
 ## [Unreleased]
 
+### Public read surfaces — mobile thumb-conformance hardening (`feat/public-mobile-responsive-t_c4c0a710`)
+
+**What** — Hardened the public READ surfaces for small-viewport thumb use
+per kara's mobile sweep (t_bde7f68b): grew the primary nav + paging +
+share tap targets from sub-44px to the WCAG 2.5.8 44px floor, and let the
+footer bottom bar wrap cleanly on narrow phones. Every read surface is already
+mobile-first (max-w-[1120px] gutters, `grid-cols-1 md:grid-cols-2`,
+`clamp()` display type, shipped header drawer), so no re-layout was done —
+this is the light hardening the discovery brief scoped (home/blog/article/
+categories/tags/footer/Header-nav). Real sub-44px artifacts found and fixed:
++ **Header (`Header.tsx`)** — the mobile hamburger tap target grew from ~28x26px
+  (`p-1`) to a guaranteed ≥44px (`min-w-[44px] h-11` inline-flex, bars
+  centered), so the primary nav disclosure is thumb-safe. `aria-controls`/
+  `aria-expanded` contract unchanged.
++ **Blog listing (`BlogListingClient.tsx`)** — prev/number/next pagination
+  buttons grew from `w-9 h-9` (23x36px measured) to `min-w-[44px] min-h-[44px]`
+  (44x44px), locking the paging control to the touch floor. (`w-9` width
+  wasn't applying to the buttons anyway — explicit 44px arbitrary values fix
+  that latent tight-width defect too.)
++ **Article share bar (`ShareBar.tsx`)** — the 4 share/copy buttons grew from
+  `w-9 h-9` (36x36px) to `min-w-[44px] min-h-[44px]`, so the primary
+   article actions are thumb-safe on phones.
+
++ **Footer (`Footer.tsx`)** — themobile bottom bar (© + social icons) switched from
+  `flex justify-between` (which squeezed at ~390px) to
+  `flex flex-wrap ... gap`, so the social row drops below the copyright cleanly
++
+*Rhythm/overflow:* no fixed-width/nowrap overflow existed on any read
+surface (audited /, /, article, categories, tags, footer at 390px — all
+`docOverflowPx = 0`). Display type stays `clamp()`, grid breakpoints
+unchanged. The discovery verdict (public ~95% healthy) holds; this commit
+is the hardening that fills the remaining thumb-conformance gap.,
+
+**Why** — the full-site responsive sweep (ADR-230/233) made thumb
+conformance (≥44px WCAG 2.5.8) a boundary condition; the public
+Header hamburgerwas the single sub-44px tap target on the whole site,and the paging/
+share controls were next, all on read surfaces where thumb hit-accuracy matters
+most. Earning them to 44px reaches the touch floor without any visual re-layout
+of the (already-correct) mobile grid.,
+
+**Known issues** — none. The pre-existing `MDXArticle.tsx` unused-`kind`
+lint warning is untouched (shipped on main before this branch)).
+
+**Fix (`t_2a868238`)** — the `flex flex-wrap` hardening: at a 390px
+viewport the 12 (44x44px) pagination buttons (prev + 10 numbers +
+next) previously overran the ~375px content width, causing a 109px
+page-level horizontal overflow on / (home, →/blog redirect) and /blog. Letting
+the pager row wrap (`flex flex-wrap items-center justify-center gap-1.5`)
+keeps every button at the 44px thumb floor while dropping the row to two
+lines on narrow phones — `docOverflowPx = 0` restored at 390px. On
+tablet/desktop widthsthe row still fits a single line, so no visual change.
+
 ### Account & auth surfaces — mobile thumb-conformance (`feat/account-auth-mobile-responsive-t_e086d55b`)
 
 **What** — Raised the sub-44px interactive targets on the /profile identity
