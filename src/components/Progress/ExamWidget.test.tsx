@@ -151,4 +151,18 @@ describe("ExamWidget a11y (t_5664453e)", () => {
     expect(last).toHaveAttribute("aria-checked", "true");
     expect(document.activeElement).toBe(last);
   });
+
+  it("keeps the question-count progress bar on-screen on a phone (min-w-0 shrink, 6px floor only sm+)", () => {
+    render(<ExamWidget {...PROPS} />);
+    const bar = screen.getByRole("img", { name: "0 of 2 answered" });
+    const segments = Array.from(bar.querySelectorAll("div"));
+    expect(segments.length).toBe(2);
+    for (const seg of segments) {
+      // Mobile-first: 60 segments at a forced 6px min + 2.5px gaps overflow
+      // ~342px of phone content — allow shrink below sm, keep the 6px floor
+      // only at sm+ (matches QuizWidget's always-shrinkable bar).
+      expect(seg.className).toContain("min-w-0");
+      expect(seg.className).toContain("sm:min-w-[6px]");
+    }
+  });
 });

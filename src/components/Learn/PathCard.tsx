@@ -127,7 +127,7 @@ export default function PathCard({ series, gate, loginNext }: PathCardProps) {
             {isSignedInLocked && (
               <Link
                 href={`/learn/${series.slug}/preview`}
-                className="mt-3 inline-flex items-center gap-1.5 text-[12px] font-semibold no-underline hover:underline"
+                className="mt-3 inline-flex items-center gap-1.5 text-[12px] font-semibold no-underline hover:underline min-h-[44px] px-3"
                 style={{ color: "var(--accent, #C8102E)" }}
               >
                 Preview first lesson <span aria-hidden>&rarr;</span>

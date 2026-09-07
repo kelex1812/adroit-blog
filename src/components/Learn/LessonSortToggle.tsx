@@ -37,7 +37,7 @@ export default function LessonSortToggle({ compact = false }: LessonSortTogglePr
         onClick={() => setSort("asc")}
         aria-pressed={sort === "asc"}
         aria-label="Sort by lesson number ascending"
-        className={`px-3 py-1 rounded-full cursor-pointer transition-all duration-150 active:scale-[0.98] ${
+        className={`px-3 min-h-[44px] min-w-[44px] inline-flex items-center justify-center rounded-full cursor-pointer transition-all duration-150 active:scale-[0.98] ${
           sort === "asc"
             ? "bg-navy text-white"
             : "text-gray-500 dark:text-[var(--ink-muted)] hover:text-navy"
@@ -49,7 +49,7 @@ export default function LessonSortToggle({ compact = false }: LessonSortTogglePr
         onClick={() => setSort("desc")}
         aria-pressed={sort === "desc"}
         aria-label="Sort by lesson number descending"
-        className={`px-3 py-1 rounded-full cursor-pointer transition-all duration-150 active:scale-[0.98] ${
+        className={`px-3 min-h-[44px] min-w-[44px] inline-flex items-center justify-center rounded-full cursor-pointer transition-all duration-150 active:scale-[0.98] ${
           sort === "desc"
             ? "bg-navy text-white"
             : "text-gray-500 dark:text-[var(--ink-muted)] hover:text-navy"
