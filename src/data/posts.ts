@@ -2,6 +2,29 @@ import { BlogPost } from "./types";
 
 export const posts: BlogPost[] = [
   {
+    "slug": "daily-standup-coordination-ai-2026",
+    "title": "The Standup Is a Status Report on Yesterday's News",
+    "excerpt": "Machine status through tooling, human time for judgment. When agents build, the standup must reverse its ceremony.",
+    "category": "Project Management",
+    "categoryColor": "pm",
+    "categoryGradient": "from-teal to-teal-dark",
+    "date": "September 7, 2026",
+    "author": "Adroit Consulting",
+    "authorInitials": "AC",
+    "readTime": "10 min read",
+    "featured": false,
+    "tags": [
+      "Project Management",
+      "Agile",
+      "AI Agents",
+      "Standup",
+      "Coordination",
+      "Delivery"
+    ],
+    "bannerImage": "/banners/daily-standup-coordination-ai-2026.png",
+    "status": "published"
+  },
+  {
     "slug": "design-system-release-discipline-2026",
     "title": "When the Version Label Lies: Release Discipline",
     "excerpt": "A minor bump can break your product. Design systems fail at the social contract of change, not the version number. Here is how to define breaking.",
