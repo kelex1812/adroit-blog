@@ -13,8 +13,6 @@ tags: [DevOps, AI Infrastructure, Model Routing, Platform Engineering]
 bannerImage: "/banners/llm-gateway-model-routing-2026.png"
 ---
 
-# The Model Gateway Is the Control Plane Your LLM Stack Needs
-
 Model providers are not five-nines infrastructure. Anthropic's 90-day uptime sat near 98% as of April 2026, and OpenAI's global outage in mid-2025 ran more than fifteen hours [^1]. A team that calls one provider directly has built a single point of failure into the middle of its stack, and its only recovery option is a human noticing the error pages and editing an environment variable [^1].
 
 The gateway is the piece that sits between your application and every model provider. Your code talks to one HTTP endpoint with one API key, and the gateway handles the rest: routing decisions, cached responses, retries with fallback, rate limits, and cost accounting [^2]. Model spend hit $12.5 billion in 2025, up from $3.5 billion in late 2024, and 72% of organizations planned to grow that number through 2026 [^3]. Most of that budget leaks through the same three holes: routing every request to a frontier model regardless of difficulty, paying full token price for responses already computed, and depending on a single provider that takes the whole app down when it degrades [^3].

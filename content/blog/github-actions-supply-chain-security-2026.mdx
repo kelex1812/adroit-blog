@@ -13,8 +13,6 @@ tags: [DevOps, CI/CD, Security]
 bannerImage: "/banners/github-actions-supply-chain-security-2026.png"
 ---
 
-# GitHub Actions Is Getting a Lockfile: The 2026 Roadmap
-
 In March 2025, an attacker moved a few tags in the `tj-actions/changed-files` repository and thousands of workflows suddenly ran malicious code. The payload dumped CI runner memory, including secrets, into workflow logs on public repositories [^1]. It wasn't a novel technique. Move a mutable tag, and every workflow that references `@v44` silently starts executing something its maintainers never reviewed.
 
 That incident is the reason GitHub published its **Actions 2026 security roadmap** in March, and the reason parts of it are already shipping by August [^2]. The roadmap is a blunt admission that CI/CD infrastructure has become a first-class attack surface: runners execute untrusted code, hold sensitive credentials, and have unrestricted outbound network access [^2]. If you run GitHub Actions in production, or inherit a repo that does, this changes your threat model this year.

@@ -13,8 +13,6 @@ tags: [AI Agents, Prompt Engineering, AI Infrastructure]
 bannerImage: "/banners/agent-memory-context-engineering-2026.png"
 ---
 
-# Your Agent Isn't Forgetting. Its Memory Architecture Is.
-
 Somewhere between week two and month two of running an agent in production, the same scene plays out. The agent is eight tool calls deep into a task, and it contradicts a decision it made four steps ago. It re-fetches a record it already retrieved. It ignores a constraint the user stated at the top of the session. The model did not change. The prompts did not change. The agent simply stopped holding its context together.[^1]
 
 The instinct is to blame the model. The accurate diagnosis is a memory architecture problem. Most production agent failures are not model failures, they are failures of how the agent stores, retrieves, and evicts what it knows. The fix is not a smarter model. It is deciding what belongs in the context window, what belongs in a persistent store, and who decides when each gets cleared.

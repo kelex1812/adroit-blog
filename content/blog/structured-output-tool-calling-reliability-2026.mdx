@@ -13,8 +13,6 @@ tags: [AI Agents, AI Infrastructure, Structured Outputs, Tool Calling, Reliabili
 bannerImage: "/banners/structured-output-tool-calling-reliability-2026.png"
 ---
 
-# Valid JSON Isn't Correct Data: The Reliability Gap
-
 An agent writes a record back to your database and returns an object. It is valid JSON. Every field matches the schema. The `customer_id` is a string, the `amount` is a number, the enum matches an allowed value. Your pipeline accepts it without a second look. Then the ledger lands and the account that got debited is the wrong one, because the value was the correct type but the wrong content. The JSON passed every check that ran, and the system still did the wrong thing.[^2]
 
 This is the failure that structured output was supposed to retire, and in one sense it did. We spent 2024 and 2025 teaching ourselves to stop parsing ragged prose out of a model's mouth. Prompt-only JSON extraction fails 5 to 20 percent of the time depending on schema complexity, in five predictable ways: preamble contamination, hallucinated keys, missing required fields, type drift, and silent truncation mid-object.[^1] Native structured output, now shipped by every major provider, killed that entire class of failure. The APIs mask non-compliant tokens during generation, so a schema-valid token stream is the only thing the model can emit.[^1]

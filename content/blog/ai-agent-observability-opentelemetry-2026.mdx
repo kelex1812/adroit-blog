@@ -13,8 +13,6 @@ tags: [DevOps, Observability, AI Agents, LLMs, Architecture]
 bannerImage: /banners/ai-agent-observability-opentelemetry-2026.png
 ---
 
-# AI Agents Fail Quietly. OpenTelemetry Is How You Catch Them.
-
 Your agent just spent 45 seconds answering a simple question. Was it the model, a slow tool call, or a retry loop burning the time? With a traditional stack you cannot tell, because every LLM interaction kicks off a chain of model calls, tool invocations, and token exchanges that standard monitoring never records [^1].
 
 Here is the sharper problem. Agents do not usually fail loudly. They fail while looking like they succeeded: the output is well formed, the run completes, the dashboard stays green, and the agent quietly called the wrong tool, retrieved the wrong document, or reasoned its way to a confident wrong answer [^3]. McKinsey's survey found 88% of organizations use AI somewhere and most are experimenting with agents, yet fewer than 10% have scaled agentic AI to production. The thing that separates the pilots from the deployments is usually the ability to see what the agent actually did [^3].

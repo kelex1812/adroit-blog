@@ -13,8 +13,6 @@ tags: [AI Agents, Durable Execution, State Machines, Multi-Agent Pipelines, AI I
 bannerImage: "/banners/agent-durable-execution-state-machines-2026.png"
 ---
 
-# Durable Execution Is the Difference From Demo to Deployment
-
 A demo agent runs for ninety seconds, calls three tools, and prints a tidy answer. A production agent runs for ninety minutes, sometimes ninety hours, across dozens of tool calls, one process restart, two policy checks, and a human approval that takes a day to arrive. That gap between the demo and the deployment is exactly where most agentic projects die.[^1]
 
 The reason is rarely the model. Frontier models reason well enough to draft a plan and call the right tools. What breaks is the machinery around the model: the loop holds its progress in memory, and the first time a container restarts, a network call times out, or a reviewer says "not yet," the whole run forgets where it was and starts over. An agent that reconciles a quarter of invoices over three days cannot afford to restart at step one every time the worker pod is evicted. A chat agent can forget; an agent touching your ledger cannot.[^1]

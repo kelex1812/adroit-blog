@@ -13,8 +13,6 @@ tags: [DevOps, Observability, Security, Kubernetes, Platform Engineering]
 bannerImage: /banners/ebpf-kubernetes-observability-security-2026.png
 ---
 
-# eBPF Already Runs in Your Kernel. Stop Paying for It Twice.
-
 If you provisioned a cluster on EKS, GKE, or AKS in the last year, Cilium, an eBPF-based container network interface, is already running on your nodes as the default[^1]. The cloud provider made that call for you, no ticket in your backlog. The survey data shows how quietly it happened: 67 percent of teams running Kubernetes at scale have adopted at least one eBPF-based observability tool in production, according to the 2026 CNCF Observability TAG survey[^1]. It's a practitioner survey, not a vendor marketing sheet. But the more useful number sits right behind it: most of those teams adopted eBPF without ever deciding to.
 
 Many of those same teams still run the older stack in parallel: iptables-based policy engines, Envoy sidecar proxies, and userspace audit daemons. Two security stacks at once. One costs you in compute and operational overhead. The other is already sitting in the kernel, waiting to be used deliberately.

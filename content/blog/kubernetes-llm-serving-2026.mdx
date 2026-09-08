@@ -13,8 +13,6 @@ tags: [DevOps, Kubernetes, AI Infrastructure, Platform Engineering]
 bannerImage: /banners/kubernetes-llm-serving-2026.png
 ---
 
-# Kubernetes for LLM Inference in 2026: The Stack That Fits
-
 Kubernetes won the orchestration war. It runs web tiers, batch jobs, and databases for most of the industry, and generative AI is no exception: according to the Cloud Native Computing Foundation, 66% of organizations now host GenAI workloads on Kubernetes. The uncomfortable part of that number is the second one: only 7% deploy workloads to production daily [^1]. Kubernetes is where models live, not, for most teams, where models are served.
 
 The gap is not a skills problem. It is a model problem. Kubernetes was designed around three assumptions that inference violates: resources are fungible, pods are cheap to replace, and requests cost about the same to serve. None of those hold for LLMs, which is why the first wave of Kubernetes AI deployments stayed demos.
