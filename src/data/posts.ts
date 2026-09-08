@@ -2,6 +2,30 @@ import { BlogPost } from "./types";
 
 export const posts: BlogPost[] = [
   {
+    "slug": "agent-autonomy-governance-2026",
+    "title": "Autonomy Is a Ladder, Not a Switch: Govern by Blast Radius",
+    "excerpt": "Treat agent autonomy as a ladder, not a switch: set each agent's rung by the blast radius of its worst action, then govern proportionally.",
+    "category": "AI & Consulting",
+    "categoryColor": "ai",
+    "categoryGradient": "from-amber to-amber-dark",
+    "date": "September 08, 2026",
+    "author": "Adroit Consulting",
+    "authorInitials": "AC",
+    "readTime": "12 min read",
+    "featured": false,
+    "tags": [
+      "AI Agents",
+      "Governance",
+      "Autonomy",
+      "Human-in-the-Loop",
+      "Multi-Agent Pipelines",
+      "AI Infrastructure",
+      "Security"
+    ],
+    "bannerImage": "/banners/agent-autonomy-governance-2026.png",
+    "status": "published"
+  },
+  {
     "slug": "salesforce-build-order-feb-2027",
     "title": "Build the Salesforce Stack in Order: The Feb 2027 Deadline",
     "excerpt": "The Salesforce stack has a build order, and the Feb 2027 API deadline makes the foundation non-negotiable. Build identity, data, automation, portal, then agent.",
