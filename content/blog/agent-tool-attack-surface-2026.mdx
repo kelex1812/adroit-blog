@@ -13,8 +13,6 @@ tags: [AI Agents, MCP, Security]
 bannerImage: "/banners/agent-tool-attack-surface-2026.png"
 ---
 
-# MCP Security in 2026: The Tool-Layer Attack Surface
-
 For the first three years of the agent boom, we defended the wrong layer. Teams hardened system prompts, stacked "ignore any instruction that" clauses, and ran classifiers over user input. That work had a shelf life, and 2026 is when it ran out. The attack surface in production agents is no longer the prompt. It is the tool layer: the servers that connect an agent to your files, SaaS apps, databases, and outbound network.
 
 Model Context Protocol (MCP) went from a November 2024 Anthropic release to the default connector between agents and enterprise systems, and researchers responded in kind: more than 30 CVEs against MCP servers, clients, and infrastructure were filed between January and February 2026[^2]. This article is the practical version of that story: why the tool layer became the boundary, the attacks that now define it, and a defense you can actually build.

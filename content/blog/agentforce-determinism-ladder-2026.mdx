@@ -13,8 +13,6 @@ tags: [Salesforce, Agentforce, Flow, Apex, "Data Cloud", security]
 bannerImage: /banners/agentforce-determinism-ladder-2026.png
 ---
 
-# The Agentforce Determinism Ladder: Reliable Agents
-
 Most Agentforce deployments stall in the same place. The agent answers questions, resolves the easy cases, and then does something unpredictable on the tenth one: it picks the wrong action, invents a policy number, or hands a customer an answer that contradicts your actual business rules. Teams respond by writing longer instructions, which helps for a few weeks and then the drift returns. The assumption underneath all of it is wrong: reliability is not a prompt-tuning problem. It is a control problem, and Salesforce built a ladder for it.
 
 The Agentforce architect guide defines six levels of agentic control, from instruction-free reasoning up to fully deterministic, hard-coded execution.[^1] Each level is a build decision, not a writing decision. Climb the ladder and the same workflow gets more predictable, more auditable, and safer. Stop early and you are shipping an LLM with guardrails bolted on, which is the configuration most production failures come from. This article walks the six rungs, names the concrete implementation pattern that belongs on each, and maps every one to a real build task across Data Cloud, Flow, Apex, and Experience Cloud. It is the companion to our [integration seams](/blog/salesforce-integration-seams-2026) piece, which describes the layers and the wiring. This is the sequence that makes the thing reliable.

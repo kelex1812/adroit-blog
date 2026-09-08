@@ -13,8 +13,6 @@ tags: [Salesforce, Apex, Security, AI Agents]
 bannerImage: /banners/apex-summer-26-security-v67-migration.png
 ---
 
-# Apex Security Defaults Flip at API 67.0
-
 Apex classes compiled against API version 67.0 (the version that ships with Summer '26) behave differently from every class you wrote before, even when the code looks identical. This is not a new keyword you opt into. It is a reversal of the platform's default posture: implicit `with sharing`, database operations that run in user mode, and a `WITH SECURITY_ENFORCED` clause that no longer compiles.[^1]
 
 The practical consequence for a consulting team running multiple client orgs is that incrementing an org's API version is now a security migration, not routine maintenance. Code that passed tests on 66.0 can silently return fewer rows, throw access errors that used to be quiet, or refuse to compile. This article is the migration playbook: what changed, what breaks, and how to move an org to 67.0 without a production surprise.
