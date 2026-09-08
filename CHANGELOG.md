@@ -9,6 +9,18 @@ Baseline v1.0.0 — Omni content + course-structure/cert-standards bar + Constel
 
 ## [Unreleased]
 
+### Admin drawer: focus-on-open (`fix/admin-drawer-focus-open-t_6bfc64a0`)
+
+**What** — When the mobile off-canvas admin drawer opens (a <md viewport), focus now moves to the first nav link instead of staying on the hamburger trigger. A keyboard-only admin's forward-Tab from an open drawer now walks the drawer's nav links rather than dropping onto page content behind the navy scrim.
+
+**Why** — lara's A11y review (t_276b318e) of the mobile responsive sweep flagged that the off-canvas drawer left focus on `#admin-nav-toggle` when opened; the drawer's nav links were only reachable via Shift+Tab. This applies the accepted disclosure-navigation pattern (focus first nav link on open).
+
+**What changed**
++ `src/components/Admin/AdminShell.tsx` — added a `drawerRef` on the `#admin-drawer` aside and a focus-on-open effect: when `drawerOpen` flips true on a <md viewport it focuses the drawer's first nav link (`querySelector("nav a")`). Guarded on `!isDesktop` so the static desktop sidebar / a resize-to-desktop transition never yanks focus. All prior behavior is untouched: Escape closes + restores focus to the toggle, `aria-expanded`/`aria-controls`/`aria-hidden` stay in sync, scrim tap-away closes, auto-close on route change, resize re-evaluates the breakpoint, reduced-motion respected (visibility drives the closed state).
++ `src/components/Admin/AdminShell.test.tsx` — two new tests: (1) opening the drawer on a mobile viewport moves focus to the first nav link (`Overview`); (2) a desktop viewport mount does not steal focus into the drawer. Existing tests unchanged and passing.
+
+**Known issues** — none. Focus is not fully trapped inside the open drawer (Tab past the last nav link continues to the topbar content behind the scrim), which is out of scope for this follow-up and matches the accepted focus-on-open pattern; a focus-trap/modal-behavior pass is a candidate future enhancement.
+
 ### Server-authoritative lesson auto-completion — checks + exam (`feat/server-authoritative-lesson-completion-t4005eb8b`)
 
 **What** — Made lesson auto-completion server-authoritative for the server-graded tiers. A perfect knowledge check (a full-coverage `quiz_attempt` set that re-derives as 100%) now marks its covered lessons complete, and passing the cert-prep exam marks the course complete and lights the constellation — both derived from the server-graded `quiz_attempt` rows, never a client-observed score. The exam pass deliberately does NOT write `lesson_completion` rows, so uncompleted lessons stay open for the learner to revisit.
