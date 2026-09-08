@@ -2,6 +2,30 @@ import { BlogPost } from "./types";
 
 export const posts: BlogPost[] = [
   {
+    "slug": "salesforce-build-order-feb-2027",
+    "title": "Build the Salesforce Stack in Order: The Feb 2027 Deadline",
+    "excerpt": "The Salesforce stack has a build order, and the Feb 2027 API deadline makes the foundation non-negotiable. Build identity, data, automation, portal, then agent.",
+    "category": "Salesforce",
+    "categoryColor": "sf",
+    "categoryGradient": "from-sky to-sky-dark",
+    "date": "September 08, 2026",
+    "author": "Adroit Consulting",
+    "authorInitials": "AC",
+    "readTime": "13 min read",
+    "featured": false,
+    "tags": [
+      "Salesforce",
+      "Flow",
+      "Agentforce",
+      "Data Cloud",
+      "Experience Cloud",
+      "Apex",
+      "Security"
+    ],
+    "bannerImage": "/banners/salesforce-build-order-feb-2027.png",
+    "status": "published"
+  },
+  {
     "slug": "daily-standup-coordination-ai-2026",
     "title": "The Standup Is a Status Report on Yesterday's News",
     "excerpt": "Machine status through tooling, human time for judgment. When agents build, the standup must reverse its ceremony.",
