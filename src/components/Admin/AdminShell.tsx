@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 /**
  * AdminShell — navy sidebar + content column for the /admin operate surface.
@@ -22,6 +22,10 @@ import { useEffect, useState } from "react";
  * usePathname) and on Escape; aria-expanded/controls/aria-hidden stay in sync.
  * Reduced-motion is respected by the global prefers-reduced-motion reset —
  * visibility drives the closed state so the drawer still collapses cleanly.
+ *
+ * v7 (t_6bfc64a0): focus-on-open. When the drawer opens on a <md viewport,
+ * focus moves to the first nav link so forward-Tab from an open drawer walks
+ * the drawer's nav links instead of page content behind the scrim.
  */
 type NavSection = { section?: string; href: string; label: string; exact?: boolean };
 
@@ -43,6 +47,7 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
   const [isDesktop, setIsDesktop] = useState(
     typeof window !== "undefined" ? window.innerWidth >= MD_BREAKPOINT : false,
   );
+  const drawerRef = useRef<HTMLElement | null>(null);
   const isActive = (href: string, exact: boolean | undefined) =>
     exact ? pathname === href : pathname.startsWith(href);
 
@@ -78,6 +83,20 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
     }
   }, [drawerOpen]);
 
+  // Focus-on-open (t_6bfc64a0, lara A11y follow-up): when the off-canvas
+  // drawer is opened on a <md viewport, move focus to the first nav link so a
+  // keyboard user's forward Tab advances THROUGH the drawer's nav links
+  // instead of landing on page content behind the scrim. The nav links are
+  // always mounted (only visibility toggles), so a synchronous focus right
+  // after commit is safe — no mount delay. Guarded on !isDesktop so the
+  // static desktop sidebar (drawerOpen stays false there anyway) and any
+  // resize-to-desktop case never yank focus.
+  useEffect(() => {
+    if (drawerOpen && !isDesktop) {
+      drawerRef.current?.querySelector<HTMLElement>("nav a")?.focus();
+    }
+  }, [drawerOpen, isDesktop]);
+
   const close = () => setDrawerOpen(false);
   const open = isDesktop || drawerOpen;
 
@@ -99,6 +118,7 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
 
       <aside
         id="admin-drawer"
+        ref={drawerRef}
         aria-hidden={!open}
         aria-label="Admin navigation"
         className={`admin-drawer fixed inset-y-0 left-0 z-50 w-[var(--admin-drawer-w)] max-w-[var(--admin-drawer-max-w)] transition-transform duration-[var(--admin-drawer-dur)] ease-[var(--admin-drawer-ease)] ${

@@ -142,6 +142,28 @@ describe("AdminShell mobile off-canvas drawer (t_71a0d478, ADR-230)", () => {
     expect(toggle).toHaveFocus();
   });
 
+  it("moves focus into the first nav link when the drawer opens (focus-on-open)", () => {
+    render(<AdminShell>content</AdminShell>);
+    const toggle = screen.getByRole("button", { name: /open navigation/i });
+    fireEvent.click(toggle);
+    expect(toggle).toHaveAttribute("aria-expanded", "true");
+    // Focus must NOT stay on the hamburger: forward-Tab from here should walk
+    // the drawer's nav links, so focus lands on the first one (Overview).
+    const firstNavLink = screen.getByRole("link", { name: "Overview" });
+    expect(firstNavLink).toHaveFocus();
+  });
+
+  it("does not steal focus to the drawer on a md+ (desktop) viewport", () => {
+    setDesktop();
+    render(<AdminShell>content</AdminShell>);
+    // Desktop renders the static sidebar with drawerOpen=false — opening the
+    // drawer is impossible (hamburger is md:hidden), so nothing should be
+    // force-focused by the mount.
+    const firstNavLink = screen.getByRole("link", { name: "Overview" });
+    expect(firstNavLink).not.toHaveFocus();
+    expect(document.activeElement).not.toBe(firstNavLink);
+  });
+
   it("closes the drawer when a nav link is tapped", () => {
     render(<AdminShell>content</AdminShell>);
     const toggle = screen.getByRole("button", { name: /open navigation/i });
