@@ -32,11 +32,19 @@ The one idea to carry out of this lesson: **test the properties of outputs, not 
 
 The mistake that sinks most testing attempts is leading with the expensive part. Teams buy an eval platform, wire up LLM judges, and run them on every commit, then watch the bill and the run time climb and quietly stop. The better structure is a pyramid, costed so the layers run at the right cadence. [^5]
 
-**Layer one, assertions.** Deterministic, code-based checks on output shape and tool behavior: output parses as valid JSON and matches a schema, the tool call carries required parameters, the response stays under a token limit, no PII leaks, a classification lands in one of the expected buckets. These take seconds and cost nothing, so they belong on every pull request, and they catch a shockingly large share of production bugs. A huge fraction of agent incidents boil down to "the output was malformed JSON" or "it called the wrong function name," and a plain assertion catches both without an LLM sitting in the loop. [^5]
+![The three test layers as a pyramid: cheap code-based assertions form the wide base and run on every pull request, model-based evaluation sits above on a nightly or pre-release cadence, and live experiments cap the pyramid, run only after the lower layers pass](</diagrams/testing-agents-unit-integration-regression-evals/1-testing-pyramid.png>)
 
-**Layer two, model-based evaluation.** LLM-as-judge scoring on subjective dimensions: helpfulness, correctness, tone, safety, grounding. Slower and more expensive, so it runs on a cadence, nightly or before release, and after any prompt or model change. Its job is the quality that no assertion can see: an answer can be technically well-formed and still be confident nonsense. [^5]
+### Layer one: assertions
 
-**Layer three, live experiments.** Production traffic comparing two agent versions against real users. This is the final and most expensive layer, and it is only meaningful when the first two pass first. A/B testing an untested agent is shipping bugs to half your users and calling it statistical rigor. [^5]
+Deterministic, code-based checks on output shape and tool behavior: output parses as valid JSON and matches a schema, the tool call carries required parameters, the response stays under a token limit, no PII leaks, a classification lands in one of the expected buckets. These take seconds and cost nothing, so they belong on every pull request, and they catch a shockingly large share of production bugs. A huge fraction of agent incidents boil down to "the output was malformed JSON" or "it called the wrong function name," and a plain assertion catches both without an LLM sitting in the loop. [^5]
+
+### Layer two: model-based evaluation
+
+LLM-as-judge scoring on subjective dimensions: helpfulness, correctness, tone, safety, grounding. Slower and more expensive, so it runs on a cadence, nightly or before release, and after any prompt or model change. Its job is the quality that no assertion can see: an answer can be technically well-formed and still be confident nonsense. [^5]
+
+### Layer three: live experiments
+
+Production traffic comparing two agent versions against real users. This is the final and most expensive layer, and it is only meaningful when the first two pass first. A/B testing an untested agent is shipping bugs to half your users and calling it statistical rigor. [^5]
 
 The discipline across all three is the same: do not use a three-cent model call to check what a free string match could verify. If the evaluator is judging whether a field exists, you have built a very expensive `assert field is not None`. [^5]
 
@@ -104,6 +112,8 @@ def test_refund_status_does_not_call_lookup():
 
 Run those and you have pinned the tool routing the moment the model emits the call, before a single side effect executes. Notice what you did not assert: the wording of the answer. That is property testing applied to an agent. You test the structure, the routing, the arguments, the absence of an unwanted side effect, and you leave the fuzzy prose to the eval layer. [^5]
 
+![Unit tests pin the tool call, not the words: a returns question is asserted to route to the lookup_article tool with the topic returns, while a refund question is asserted to call refund_status with the order id and must never fire a booking or article side effect](</diagrams/testing-agents-unit-integration-regression-evals/2-tool-call-routing.png>)
+
 ## Integration tests: the whole loop, controlled world
 
 Unit tests prove each tool behaves. Integration tests prove the loop behaves: that the model sees the tool result, that it uses it in the next step, that the sequence of calls makes sense, that the agent does not loop, and that nothing destructive happened along the way. The distinction from an eval is important: an integration test runs the real orchestration against mocked external effects, so it is still deterministic and still cheap, and it catches wiring bugs that no unit test can, because a unit test never chains the steps together. [^7]
@@ -121,6 +131,8 @@ The load-bearing practice is the **frozen golden set**. You curate a small set o
 The final piece is a threshold gate. Decide on a bound, a scorer must not degrade more than a set amount against the frozen core, and make the pipeline fail, and page a human, when it does. Then the manual check, the human who runs a few questions and says "this feels off," has a concrete baseline to judge against instead of a vague sense. [^8] The system makes the vibes check smaller and more honest over time.
 
 Two metrics from Anthropic's guide to agent evals deserve a permanent place in your vocabulary, because they answer two different questions that teams routinely conflate. `pass@k` asks "can the agent do this at all," at least one of k attempts succeeds, which is the right question for capability. `pass^k` asks "is this reliable enough to trust," all k attempts succeed, which is the right question for production. They diverge fast. A task with a 70% per-trial success rate gives you a `pass@3` of 97%, the agent almost certainly succeeds if you give it three tries, but a `pass^3` of 34%, it fails all three about a third of the time. [^8] Whether that matters depends on whether your product gives users a retry button or treats the first answer as final. For a support assistant, the first answer is the product. Choose your metric to match that.
+
+![The same 70 percent per-trial success agent scores about 97 percent on pass@3 but only about 34 percent on pass^3, so the metric you gate on must match whether your product gives the user a retry](</diagrams/testing-agents-unit-integration-regression-evals/3-passk-vs-passall.png>)
 
 Then there is the cost problem, and it is real. Running end-to-end evals means making real model calls with the same token budget the task consumes in production, and a suite of fifty cases at several calls apiece burns thousands of tokens per run. Run that on every commit and the bill climbs before you ship anything. [^8] The answer the field has landed on is the same one traditional software uses for slow integration tests: do not run everything everywhere. The fast layers run on every commit, in every environment. The expensive evals trigger only on PRs that touch the agent's code surface, the system prompt, the tool definitions, the context management, the retrieval logic, and a change to the UI does not burn tokens on a full eval run. Map files to test surfaces and gate accordingly. [^8]
 
@@ -142,9 +154,9 @@ And the last, the one that undoes teams more slowly: none of this helps if the s
 
 ## Try it
 
-1. **Unit-test one tool for its routing.** Take an agent you have built, or the support agent from this lesson, and stub the model so it returns a fixed tool call. Assert the agent picks the right tool and forms the right arguments. Then add the negative: a query type that must not trigger a given tool, and assert it does not. [^3]
-2. **Nail down your golden set.** Write five to ten hand-curated cases with known-correct outcomes for your agent's most critical task, and a scorer that can check them. Decide a threshold that blocks a release. Then write the rule that keeps that set frozen, and add new cases from production traces to a separate set instead. [^8]
-3. **Pick your pass metric.** For your agent, decide whether the product gives users a retry. If it does not, your regression gate is `pass^k`, all attempts must succeed, not `pass@k`. State the threshold as the rate that must hold, and measure it over several eval runs, not one point estimate. [^8]
+1. Unit-test one tool for its routing. Take an agent you have built, or the support agent from this lesson, and stub the model so it returns a fixed tool call. Assert the agent picks the right tool and forms the right arguments. Then add the negative: a query type that must not trigger a given tool, and assert it does not. [^3]
+2. Nail down your golden set. Write five to ten hand-curated cases with known-correct outcomes for your agent's most critical task, and a scorer that can check them. Decide a threshold that blocks a release. Then write the rule that keeps that set frozen, and add new cases from production traces to a separate set instead. [^8]
+3. Pick your pass metric. For your agent, decide whether the product gives users a retry. If it does not, your regression gate is `pass^k`, all attempts must succeed, not `pass@k`. State the threshold as the rate that must hold, and measure it over several eval runs, not one point estimate. [^8]
 
 ## What's next
 
